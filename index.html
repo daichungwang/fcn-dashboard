@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>振宇 FCN 系統 V5.5</title>
+
+<style>
+body{
+  font-family:-apple-system;
+  background:#111;
+  color:#fff;
+  padding:16px;
+}
+.card{
+  background:#1c1c1e;
+  padding:12px;
+  border-radius:10px;
+  margin-top:12px;
+}
+.ok{color:#4cd964}
+.watch{color:#ffd60a}
+.risk{color:#ff453a}
+</style>
+</head>
+
+<body>
+
+<h1>振宇 FCN 系統 V5.5</h1>
+<div id="app">載入中...</div>
+
+<script>
+fetch("data.json")
+.then(res=>res.json())
+.then(data=>{
+
+let html = `
+<div class="card">
+更新時間：${data.updated_at}
+</div>
+
+<div class="card">
+<h3>今日結論</h3>
+${data.summary.main_conclusion}
+</div>
+
+<div class="card">
+<h3>今日推薦（直接可做）</h3>
+<div class="ok">可加入：${data.pool_recommend.add.join(", ")}</div>
+<div class="watch">觀察：${data.pool_recommend.watch.join(", ")}</div>
+<div class="risk">避免：${data.pool_recommend.avoid.join(", ")}</div>
+</div>
+
+<div class="card">
+<h3>情境建議</h3>
+${data.scenarios.map(s=>`
+  <div style="margin-top:8px;">
+  <b>${s.name}</b><br>
+  標的：${s.stocks.join(", ")}<br>
+  EKI：${s.eki}<br>
+  ${s.note}
+  </div>
+`).join("")}
+</div>
+`;
+
+document.getElementById("app").innerHTML = html;
+
+});
+</script>
+
+</body>
+</html>
