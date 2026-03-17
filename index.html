@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>振宇 FCN 系統 V5</title>
+<style>
+:root{
+  --bg:#0b0d10; --card:#171a1f; --line:#2a2f36; --text:#f3f5f7; --muted:#aab2bd;
+  --ok:#24c16b; --watch:#f0b429; --risk:#e25555;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:980px;margin:0 auto;padding:16px}
+h1{font-size:30px;margin:0 0 6px}
+h2{font-size:22px;margin:0 0 10px}
+.note,.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 18px}
+.kpi,.panel,.card{background:var(--card);border:1px solid var(--line);border-radius:14px}
+.kpi{padding:14px}
+.kpi .num{font-size:30px;font-weight:700;margin-top:8px}
+.panel{padding:12px}
+.card{padding:12px;margin-top:10px}
+.ok{color:var(--ok);font-weight:700}
+.watch{color:var(--watch);font-weight:700}
+.risk{color:var(--risk);font-weight:700}
+.pill{display:inline-block;padding:5px 10px;border-radius:999px;border:1px solid currentColor;font-size:13px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid var(--line);font-size:14px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:none}
+details{margin-top:10px;overflow:hidden}
+summary{list-style:none;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+.sumrow{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.actions button{border:none;border-radius:10px;padding:8px 14px;margin-right:8px;font-size:14px}
+.actions .yes{background:#2ecc71;color:#062d16}
+.actions .no{background:#ff5b5b;color:#fff}
+.section{margin-top:18px}
+.small{font-size:13px}
+.bar{height:10px;background:#111;border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.fill-watch{height:100%;background:var(--watch)}
+.fill-ok{height:100%;background:var(--ok)}
+.fill-risk{height:100%;background:var(--risk)}
+.tag{display:inline-block;padding:4px 8px;background:#111;border:1px solid var(--line);border-radius:999px;margin-right:6px;margin-top:6px;font-size:12px;color:var(--muted)}
+.error{padding:14px;background:#2a1111;border:1px solid #5a2222;border-radius:12px;color:#ffb3b3}
+@media (max-width:760px){
+  .grid{grid-template-columns:1fr 1fr}
+  h1{font-size:25px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>振宇 FCN 系統 V5</h1>
+  <div id="app"><div class="note">資料載入中...</div></div>
+</div>
+
+<script>
+function levelClass(level){
+  if(level === "ok") return "ok";
+  if(level === "risk") return "risk";
+  return "watch";
+}
+
+function escapeHtml(text){
+  return String(text ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function renderBriefCards(items){
+  return items.map(item => `
+    <div class="card">
+      <strong>${escapeHtml(item.title)}</strong>
+      <div class="small muted" style="margin-top:6px;">${escapeHtml(item.content)}</div>
+    </div>
+  `).join("");
+}
+
+function renderStrategyCards(items){
+  return items.map(item => `
+    <div class="card">
+      <div class="sumrow">
+        <div>
+          <strong>${escapeHtml(item.title)}</strong>
+          <div class="small muted">${escapeHtml(item.reason)}</div>
+        </div>
+        <div class="pill ${levelClass(item.level)}">${escapeHtml(item.action)}</div>
+      </div>
+      <div class="actions" style="margin-top:10px;">
+        <button class="yes">同意</button>
+        <button class="no">拒絕</button>
+      </div>
+    </div>
+  `).join("");
+}
+
+function renderRiskRadar(items){
+  return items.map(item => `
+    <div class="card">
+      <div class="small muted">${escapeHtml(item.label)}</div>
+      <div class="bar" style="margin-top:8px;">
+        <div class="fill-${levelClass(item.type)}" style="width:${item.value}%"></div>
+      </div>
+      <div class="small muted" style="margin-top:6px;">${item.value}%</div>
+    </div>
+  `).join("");
+}
+
+function renderRankings(items){
+  return items.map(item => `
+    <tr>
+      <td>${escapeHtml(item.code)}</td>
+      <td>${escapeHtml(item.stock)}</td>
+      <td>${item.price.toFixed(2)}</td>
+      <td>${item.strike.toFixed(2)}</td>
+      <td>${item.barrier.toFixed(2)}</td>
+      <td class="${levelClass(item.level)}">${escapeHtml(item.status)}</td>
+      <td>${item.distance_to_barrier_pct.toFixed(1)}%</td>
+    </tr>
+  `).join("");
+}
+
+function renderHoldings(items){
+  return items.map(item => `
+    <details class="card">
+      <summary>
+        <div class="sumrow">
+          <div>
+            <strong>${escapeHtml(item.code)}</strong>
+            <div class="small muted">Worst-of：${escapeHtml(item.stock)}</div>
+          </div>
+          <div class="pill ${levelClass(item.level)}">${escapeHtml(item.status)}</div>
+        </div>
+      </summary>
+      <div class="small muted" style="margin-top:10px;">
+        ${escapeHtml(item.stock)} 現價 ${item.price.toFixed(2)}，執行價 ${item.strike.toFixed(2)}，下限價 ${item.barrier.toFixed(2)}，距下限 ${item.distance_to_barrier_pct.toFixed(1)}%。
+      </div>
+    </details>
+  `).join("");
+}
+
+async function loadData(){
+  try{
+    const res = await fetch("data.json?t=" + Date.now());
+    if(!res.ok) throw new Error("讀取 data.json 失敗");
+    const data = await res.json();
+
+    const app = document.getElementById("app");
+
+    app.innerHTML = `
+      <div class="note">
+        V5 最終版：已整合 V4.5 的資料層、策略欄位與晨報模組。你之後只要更新 data.json，整頁就會跟著改。<br>
+        最後更新：${escapeHtml(data.updated_at)}
+      </div>
+
+      <div class="grid">
+        <div class="kpi"><div>持有中 FCN</div><div class="num">${data.summary.active_fcn_count}</div></div>
+        <div class="kpi"><div>最需留意</div><div class="num risk">${escapeHtml(data.summary.top_risk_code)}</div></div>
+        <div class="kpi"><div>Worst-of</div><div class="num watch">${escapeHtml(data.summary.worst_of)}</div></div>
+        <div class="kpi"><div>今日環境</div><div class="num ok">${escapeHtml(data.summary.market_env)}</div></div>
+      </div>
+
+      <div class="section panel">
+        <h2>🎯 今日結論</h2>
+        <div class="card">
+          <div><strong>主結論：</strong>${escapeHtml(data.summary.main_conclusion)}</div>
+          <div class="tag">核心池：NVDA / AVGO / TSM</div>
+          <div class="tag">高留意：ORCL / COIN</div>
+          <div class="tag">資料更新：${escapeHtml(data.updated_at)}</div>
+        </div>
+      </div>
+
+      <div class="section panel">
+        <h2>📊 風險總覽</h2>
+        <table>
+          <thead>
+            <tr><th>指標</th><th>說明</th></tr>
+          </thead>
+          <tbody>
+            ${data.risk_overview.map(row => `
+              <tr>
+                <td>${escapeHtml(row.label)}</td>
+                <td>${escapeHtml(row.text)}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section panel">
+        <h2>📉 風險雷達</h2>
+        ${renderRiskRadar(data.risk_radar)}
+      </div>
+
+      <div class="section panel">
+        <h2>📋 風險前 10 名</h2>
+        <table>
+          <thead>
+            <tr><th>FCN</th><th>最弱標的</th><th>現價</th><th>執行價</th><th>下限價</th><th>狀態</th><th>距下限</th></tr>
+          </thead>
+          <tbody>
+            ${renderRankings(data.fcn_rankings)}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="section panel">
+        <h2>🧠 今日策略</h2>
+        ${renderStrategyCards(data.strategy_cards)}
+      </div>
+
+      <div class="section panel">
+        <h2>🌍 晨報四模組</h2>
+        <div class="card"><strong>1. 國際新聞</strong>${renderBriefCards(data.morning_brief.international_news)}</div>
+        <div class="card"><strong>2. 國際財經</strong>${renderBriefCards(data.morning_brief.financial_news)}</div>
+        <div class="card"><strong>3. AI 趨勢</strong>${renderBriefCards(data.morning_brief.ai_trend)}</div>
+        <div class="card"><strong>4. 總經市場指標</strong>${renderBriefCards(data.morning_brief.macro)}</div>
+      </div>
+
+      <div class="section panel">
+        <h2>📂 持有中 FCN（精簡）</h2>
+        ${renderHoldings(data.holdings_brief)}
+      </div>
+    `;
+  }catch(err){
+    document.getElementById("app").innerHTML = `
+      <div class="error">
+        讀取失敗：${escapeHtml(err.message)}<br>
+        請確認 GitHub repo 裡同時有 <strong>index.html</strong> 和 <strong>data.json</strong>。
+      </div>
+    `;
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
