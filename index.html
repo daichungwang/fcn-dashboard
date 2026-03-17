@@ -1,0 +1,61 @@
+v4html"}
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>振宇 FCN V4</title>
+
+<style>
+body{background:#0b0d10;color:#fff;font-family:-apple-system;padding:16px}
+.card{background:#171a1f;padding:12px;border-radius:12px;margin-top:10px}
+.ok{color:#2ecc71}
+.watch{color:#f0b429}
+.risk{color:#e25555}
+</style>
+</head>
+
+<body>
+
+<h1>振宇 FCN 系統 V4（自動版）</h1>
+
+<div id="summary"></div>
+<div id="table"></div>
+
+<script>
+async function loadData(){
+  const res = await fetch('data.json');
+  const data = await res.json();
+
+  let html = "";
+  let table = "<div class='card'><b>風險排序</b><br><br>";
+
+  let sorted = data.fcns.map(f=>{
+    let dist = (f.price - f.barrier)/f.barrier*100;
+    return {...f, dist:dist};
+  }).sort((a,b)=>a.dist-b.dist);
+
+  let worst = sorted[0];
+
+  html += "<div class='card'>";
+  html += "最危險：<span class='risk'>" + worst.code + "</span><br>";
+  html += "Worst-of：" + worst.stock + "<br>";
+  html += "距下限：" + worst.dist.toFixed(1) + "%";
+  html += "</div>";
+
+  sorted.forEach(f=>{
+    let status = f.dist<15 ? "risk" : (f.dist<25?"watch":"ok");
+    table += f.code + " - " + f.stock + 
+      " <span class='"+status+"'>" + f.dist.toFixed(1) + "%</span><br>";
+  });
+
+  table += "</div>";
+
+  document.getElementById("summary").innerHTML = html;
+  document.getElementById("table").innerHTML = table;
+}
+
+loadData();
+</script>
+
+</body>
