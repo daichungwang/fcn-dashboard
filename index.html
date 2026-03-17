@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>振宇 FCN 系統 V3</title>
+<style>
+:root{
+  --bg:#0b0d10; --card:#171a1f; --line:#2a2f36; --text:#f3f5f7; --muted:#aab2bd;
+  --ok:#24c16b; --watch:#f0b429; --risk:#e25555;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:980px;margin:0 auto;padding:16px}
+h1{font-size:30px;margin:0 0 6px}
+h2{font-size:22px;margin:0 0 10px}
+.note,.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 18px}
+.kpi,.panel,.card{background:var(--card);border:1px solid var(--line);border-radius:14px}
+.kpi{padding:14px}
+.kpi .num{font-size:30px;font-weight:700;margin-top:8px}
+.panel{padding:12px}
+.card{padding:12px;margin-top:10px}
+.ok{color:var(--ok);font-weight:700}
+.watch{color:var(--watch);font-weight:700}
+.risk{color:var(--risk);font-weight:700}
+.pill{display:inline-block;padding:5px 10px;border-radius:999px;border:1px solid currentColor;font-size:13px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px 8px;border-bottom:1px solid var(--line);font-size:14px;text-align:left;vertical-align:top}
+th{color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:none}
+details{margin-top:10px;overflow:hidden}
+summary{list-style:none;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+.sumrow{display:flex;justify-content:space-between;gap:12px;align-items:center}
+.actions button{border:none;border-radius:10px;padding:8px 14px;margin-right:8px;font-size:14px}
+.actions .yes{background:#2ecc71;color:#062d16}
+.actions .no{background:#ff5b5b;color:#fff}
+.section{margin-top:18px}
+.small{font-size:13px}
+.bar{height:10px;background:#111;border-radius:999px;overflow:hidden;border:1px solid var(--line)}
+.fill-watch{height:100%;background:var(--watch)}
+.fill-ok{height:100%;background:var(--ok)}
+.tag{display:inline-block;padding:4px 8px;background:#111;border:1px solid var(--line);border-radius:999px;margin-right:6px;margin-top:6px;font-size:12px;color:var(--muted)}
+@media (max-width:760px){
+  .grid{grid-template-columns:1fr 1fr}
+  h1{font-size:25px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>振宇 FCN 系統 V3</h1>
+  <div class="note">V3 是半自動決策版：保留你現在可用的 FCN 風險頁，增加風險雷達、今日結論、晨報四模組與行動建議區。這版仍是快照頁，但已更接近你每天真正會用的決策介面。</div>
+
+  <div class="grid">
+    <div class="kpi"><div>持有中 FCN</div><div class="num">24</div></div>
+    <div class="kpi"><div>最需留意</div><div class="num risk">FCN710H</div></div>
+    <div class="kpi"><div>Worst-of</div><div class="num watch">ORCL</div></div>
+    <div class="kpi"><div>今日環境</div><div class="num ok">可做</div></div>
+  </div>
+
+  <div class="section panel">
+    <h2>🎯 今日結論</h2>
+    <div class="card">
+      <div><strong>主結論：</strong> 可以做 FCN，但優先配置 AI 核心股，並先處理 ORCL / COIN 這兩個風險集中的來源。</div>
+      <div class="tag">核心池：NVDA / AVGO / TSM</div>
+      <div class="tag">高留意：ORCL / COIN</div>
+      <div class="tag">策略：續抱 + 降風險集中</div>
+    </div>
+  </div>
+
+  <div class="section panel">
+    <h2>📊 風險總覽</h2>
+    <table>
+      <thead>
+        <tr><th>指標</th><th>說明</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>高優先監控</td><td><span class="risk">FCN710H</span>，Worst-of 為 ORCL，距下限 16.0%。</td></tr>
+        <tr><td>風險集中</td><td>前 10 名中，ORCL 與 COIN 重複出現，代表風險不是平均分散，而是集中在少數高敏感標的。</td></tr>
+        <tr><td>可續抱核心</td><td><span class="ok">NVDA / AVGO / TSM</span> 可作為主力 FCN 核心池，兼顧基本面與收益結構。</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section panel">
+    <h2>📉 風險雷達</h2>
+    <div class="card">
+      <div class="small muted">ORCL 風險集中度</div>
+      <div class="bar"><div class="fill-watch" style="width:68%"></div></div>
+      <div class="small muted" style="margin-top:8px;">COIN 風險集中度</div>
+      <div class="bar"><div class="fill-watch" style="width:61%"></div></div>
+      <div class="small muted" style="margin-top:8px;">AI 核心股安全度</div>
+      <div class="bar"><div class="fill-ok" style="width:74%"></div></div>
+    </div>
+  </div>
+
+  <div class="section panel">
+    <h2>📋 風險前 10 名</h2>
+    <table>
+      <thead>
+        <tr><th>FCN</th><th>最弱標的</th><th>現價</th><th>執行價</th><th>下限價</th><th>狀態</th><th>距下限</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>FCN710H</td><td>ORCL</td><td>155.97</td><td>185.01</td><td>134.44</td><td class="watch">持續關注</td><td>16.0%</td></tr>
+        <tr><td>FCN465K</td><td>ORCL</td><td>155.97</td><td>179.59</td><td>134.44</td><td class="watch">持續關注</td><td>16.0%</td></tr>
+        <tr><td>FCN935K</td><td>COIN</td><td>203.32</td><td>243.98</td><td>178.11</td><td class="watch">持續關注</td><td>14.2%</td></tr>
+        <tr><td>FCN791K</td><td>COIN</td><td>203.32</td><td>225.21</td><td>178.11</td><td class="watch">持續關注</td><td>14.2%</td></tr>
+        <tr><td>FCN499G</td><td>NVDA</td><td>183.22</td><td>189.98</td><td>151.98</td><td class="watch">持續關注</td><td>20.6%</td></tr>
+        <tr><td>FCN188P</td><td>TSLA</td><td>395.56</td><td>403.22</td><td>316.00</td><td class="watch">持續關注</td><td>25.2%</td></tr>
+        <tr><td>FCN820M</td><td>AMD</td><td>196.58</td><td>202.33</td><td>155.90</td><td class="watch">持續關注</td><td>26.1%</td></tr>
+        <tr><td>FCN603N</td><td>PLTR</td><td>152.72</td><td>148.40</td><td>111.30</td><td class="ok">健康</td><td>37.2%</td></tr>
+        <tr><td>FCN551Q</td><td>GOOGL</td><td>305.56</td><td>286.12</td><td>214.59</td><td class="ok">健康</td><td>42.4%</td></tr>
+        <tr><td>FCN334R</td><td>TSM</td><td>340.23</td><td>298.10</td><td>223.58</td><td class="ok">健康</td><td>52.2%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section panel">
+    <h2>🧠 今日策略</h2>
+    <div class="card">
+      <div class="sumrow">
+        <div><strong>先監控 ORCL</strong><div class="small muted">FCN710H 與 FCN465K 皆以 ORCL 為最弱標的，先看這兩檔即可掌握主要風險。</div></div>
+        <div class="pill watch">持續關注</div>
+      </div>
+      <div class="actions" style="margin-top:10px;"><button class="yes">同意</button><button class="no">拒絕</button></div>
+    </div>
+    <div class="card">
+      <div class="sumrow">
+        <div><strong>降低 COIN 類權重</strong><div class="small muted">COIN 波動大，雖收益高，但接股風險不適合過重配置。</div></div>
+        <div class="pill watch">降低權重</div>
+      </div>
+      <div class="actions" style="margin-top:10px;"><button class="yes">同意</button><button class="no">拒絕</button></div>
+    </div>
+    <div class="card">
+      <div class="sumrow">
+        <div><strong>續抱核心池</strong><div class="small muted">NVDA / AVGO / TSM 適合作為 AI Agent 時代的主力 FCN 池。</div></div>
+        <div class="pill ok">續抱 / 可配置</div>
+      </div>
+      <div class="actions" style="margin-top:10px;"><button class="yes">同意</button><button class="no">拒絕</button></div>
+    </div>
+  </div>
+
+  <div class="section panel">
+    <h2>🌍 晨報四模組</h2>
+    <div class="card"><strong>1. 國際新聞</strong><div class="small muted">中東與能源供應風險仍可能影響旅遊與景氣循環股。</div></div>
+    <div class="card"><strong>2. 國際財經</strong><div class="small muted">高利率環境仍支撐 FCN 收益，但高波動股不宜過度集中。</div></div>
+    <div class="card"><strong>3. AI 趨勢</strong><div class="small muted">AI Agent 仍是主線，算力與平台股優於純題材小型股。</div></div>
+    <div class="card"><strong>4. 總經市場指標</strong><div class="small muted">整體屬中性偏有利，可做 FCN，但策略以核心池為主。</div></div>
+  </div>
+
+  <div class="section panel">
+    <h2>📂 持有中 FCN（精簡）</h2>
+    <details class="card">
+      <summary><div class="sumrow"><div><strong>FCN710H</strong><div class="small muted">Worst-of：ORCL</div></div><div class="pill watch">持續關注</div></div></summary>
+      <div class="small muted" style="margin-top:10px;">ORCL 現價 155.97，執行價 185.01，下限價 134.44，距下限 16.0%。</div>
+    </details>
+    <details class="card">
+      <summary><div class="sumrow"><div><strong>FCN935K</strong><div class="small muted">Worst-of：COIN</div></div><div class="pill watch">持續關注</div></div></summary>
+      <div class="small muted" style="margin-top:10px;">COIN 現價 203.32，執行價 243.98，下限價 178.11，距下限 14.2%。</div>
+    </details>
+    <details class="card">
+      <summary><div class="sumrow"><div><strong>FCN499G</strong><div class="small muted">Worst-of：NVDA</div></div><div class="pill watch">持續關注</div></div></summary>
+      <div class="small muted" style="margin-top:10px;">NVDA 現價 183.22，執行價 189.98，下限價 151.98，距下限 20.6%。</div>
+    </details>
+  </div>
+
+  <div class="note" style="margin-top:18px;">下一步若要做真正自動版，就改成每日重新生成這一頁，讓你不用手動複製 HTML。</div>
+</div>
+</body>
+</html>
+"""
+
+path = Path("/mnt/data/振宇_FCN_V3.html")
+path.write_text(html_doc, encoding="utf-8")
+print(str(path))
