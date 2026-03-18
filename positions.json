@@ -1,0 +1,24 @@
+[
+  {
+    "id": "FCN001",
+    "rate": 22,
+    "duration": 9,
+    "stocks": [
+      { "symbol": "TSM", "score": 8 },
+      { "symbol": "MSFT", "score": 7 },
+      { "symbol": "NVDA", "score": 5 },
+      { "symbol": "AMZN", "score": 5 }
+    ]
+  },
+  {
+    "id": "FCN002",
+    "rate": 18,
+    "duration": 6,
+    "stocks": [
+      { "symbol": "GOOG", "score": 8 },
+      { "symbol": "AAPL", "score": 7 },
+      { "symbol": "AMAT", "score": 6 },
+      { "symbol": "ORCL", "score": 6 }
+    ]
+  }
+]
