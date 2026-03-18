@@ -1,253 +1,285 @@
 {
-  "updated_at": "2026-03-18 03:23",
+  "updated_at": "2026-03-18 03:34",
   "summary": {
     "active_fcn_count": 24,
     "top_risk_code": "FCN710H",
     "worst_of": "ORCL",
     "market_env": "保守做",
-    "main_conclusion": "今天可保守做 FCN，建議以 NVDA / AVGO / TSM 為主，避免進攻型標的過重。"
+    "main_conclusion": "今天可保守做 FCN，建議以 TSM / MSFT 為主，避免進攻型標的過重。"
   },
   "morning_brief": {
     "international_news": [
       {
-        "title": "OpenAI may owe Elon Musk as much as $109 billion; Tesla boss says ‘will in no way enrich myself’",
-        "summary": "Elon Musk's fraud lawsuit against Sam Altman, OpenAI and Microsoft threatens to reshape t…",
-        "content": "Elon Musk has never let a court filing speak for itself. Posting on X today, ahead of what promises to be one of the most dramatic corporate trials in recent memory, the world's richest man offered a… [+5558 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "If the oil price remains above US$100, Woodside shares could be raining dividends before Christmas",
+        "summary": "Surging oil prices are no fun at the petrol station, but they could be a boon for upcoming Woodside dividends…",
+        "content": "Woodside Energy Group Ltd (ASX: WDS) shares have been on fire in 2026. In early afternoon trade today, shares in the S&amp;P/ASX 200 Index (ASX: XJO) energy stock are down 0.2%, trading for $31.66 a… [+2786 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
       },
       {
-        "title": "Reliance Industries shares in focus on $3 billion deal with Samsung. Check details",
-        "summary": "Reliance Industries has signed a $3 billion long-term agreement with Samsung C&T to suppl…",
-        "content": "Shares of Mukesh Ambani-led Reliance Industries will be in focus heading into trade on Tuesday after the company announced it has entered into a binding long-term Supply and Purchase Agreement (SPA) … [+2260 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "ETMarkets Smart Talk | Diversified funds like flexicap and multicap best route in current volatility: Tata AMC’s Chandr…",
+        "summary": "Amidst global uncertainty and market volatility, investors are advised to stay disciplined and invest through…",
+        "content": "Amid rising global uncertainty and heightened volatility in equity markets, investors are increasingly looking for strategies that can help navigate the turbulence without compromising long-term weal… [+6180 chars]｜分類：地緣政治｜解讀：波動升高，FCN 敲入風險增加",
+        "affects_fcn": true,
+        "impact_score": -2
+      },
+      {
+        "title": "'You don't lose when markets panic, you lose when you panic': Devang Mehta's playbook for the current crash",
+        "summary": "Despite 18 months of market downturn and recent Middle East conflict-driven volatility, Indian equity investo…",
+        "content": "Eighteen months of red. That is the brutal reality Indian equity investors have lived through since September 2024 and the past two weeks have only intensified the pain, with the Middle East conflict… [+3777 chars]｜分類：地緣政治｜解讀：波動升高，FCN 敲入風險增加",
+        "affects_fcn": true,
+        "impact_score": -2
+      },
+      {
+        "title": "Undefeated Woodland boys basketball beats Cromwell to reach 1st CIAC final in program history",
+        "summary": "Woodland senior James Scampolino had 13 of his team-high 16 points in the second half.",
+        "content": "NORTH HAVEN - It has been a season of firsts for the Woodland boys basketball team. There was the first Naugatuck Valley League title in program history, and a first state quarterfinal victory. Afte… [+4029 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "What size tank is 36x12x18?",
+        "summary": "What Size Tank Is 36x12x18? Exploring Aquarium Volume A tank with dimensions 36 inches long, 12 inches wide,…",
+        "content": "A tank with dimensions 36 inches long, 12 inches wide, and 18 inches high holds approximately 33.7 gallons. Understanding this calculation is crucial for responsible aquarium keeping and ensuring the… [+8672 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Redington shares in focus as Middle East war disrupts operations of Gulf subsidiary",
+        "summary": "Redington said its Gulf subsidiary is operating under restrictions due to disruptions caused by the ongoing M…",
+        "content": "Shares of Redington will be in focus heading into trade on Tuesday after it said that its step-down subsidiary, Redington Gulf FZE, is operating in a restricted manner in the Gulf region due to the U… [+2912 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
       },
       {
         "title": "Alkyl Amines shares in focus as ammonia shortage from Iran war forces production halt at 3 sites",
-        "summary": "Alkyl Amines Chemicals has temporarily halted production of certain products at its Patal…",
-        "content": "Shares of Alkyl Amines Chemicals will be in focus heading into trade on Tuesday after the company said it has temporarily suspended the manufacturing of certain products at its Patalganga, Kurkumbh a… [+2190 chars]｜解讀：地緣政治升溫可能擴大市場波動",
-        "affects_fcn": true
+        "summary": "Alkyl Amines Chemicals has temporarily halted production of certain products at its Patalganga, Kurkumbh and…",
+        "content": "Shares of Alkyl Amines Chemicals will be in focus heading into trade on Tuesday after the company said it has temporarily suspended the manufacturing of certain products at its Patalganga, Kurkumbh a… [+2190 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
       },
       {
-        "title": "GSP Crop Science IPO Day 2: GMP, subscription status and other key details",
-        "summary": "The Rs 400 crore IPO of GSP Crop Science has entered Day 2 of subscription with a muted g…",
-        "content": "The Rs 400 crore IPO of GSP Crop Science has entered its second day of bidding. Grey market trends indicate a cautious start, with the grey market premium (GMP) currently around 0%, suggesting expect… [+2832 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "How does Arctic water not freeze?",
+        "summary": "How Does Arctic Water Not Freeze? Unveiling the Secrets of Sub-Zero Seas The Arctic Ocean, despite its frigid…",
+        "content": "The Arctic Ocean, despite its frigid temperatures well below the freezing point of freshwater, remains largely liquid due to several factors, most notably the impact of saltwater’s lower freezing poi… [+8236 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
       },
       {
-        "title": "Why Donald Trump is losing the war at home",
-        "summary": "No US president in living memory has gone to war with less public support than Donald Tru…",
-        "content": "No US president in living memory has gone to war with less public support than Donald Trump has for the war in Iran. Even Barack Obamas much-maligned Libyan intervention began with 60% of Americans i… [+5941 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "Rs 70,000 crore at stake! Can Iran war spell trouble for mega IPO plans of Jio, Flipkart, Zepto, others?",
+        "summary": "West Asian geopolitical tensions are casting a shadow over India's IPO pipeline. Mega listings worth nearly R…",
+        "content": "Escalating geopolitical tensions in West Asia are casting a shadow over India's IPO pipeline, with nearly Rs 70,000 crore worth mega listings from Jio Platforms, Flipkart Internet, Zepto, PhonePe and… [+4560 chars]｜分類：全球經濟｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
       },
       {
-        "title": "The next RedMagic Astra tablet has a 200Hz refresh rate screen and a bigger battery",
-        "summary": "RedMagic launched the Astra tablet back in June of last year, and it's now apparently har…",
-        "content": "RedMagic launched the Astra tablet back in June of last year, and it's now apparently hard at work on this tablet's successor, which we'll call the Astra 2 for simplicity's sake. While the original A… [+928 chars]｜解讀：影響有限",
-        "affects_fcn": false
-      },
-      {
-        "title": "Ethereum Foundation Moves $10M ETH After First-Ever Staking — More Coming?",
-        "summary": "Ethereum has reclaimed the $2,250 level as the broader cryptocurrency market shows signs…",
-        "content": "Ethereum has reclaimed the $2,250 level as the broader cryptocurrency market shows signs of a short-term bullish recovery following weeks of volatility and downward pressure. The recent move higher s… [+4497 chars]｜解讀：波動升高，FCN 敲入風險增加",
-        "affects_fcn": true
-      },
-      {
-        "title": "XRP Could Need Five Macro Cycles To Break $100, Analyst Says",
-        "summary": "XRP may need as many as five macro cycles to push beyond $100, according to a chart share…",
-        "content": "XRP may need as many as five macro cycles to push beyond $100, according to a chart shared by analyst TARA, known on X as @PrecisionTrade3, who outlined a long-range roadmap that places the tokens fi… [+3368 chars]｜解讀：影響有限",
-        "affects_fcn": false
-      },
-      {
-        "title": "Real Life: Singer Aled Jones on ‘mad’ rise to fame and first NZ tour",
-        "summary": "The child star behind surprise hit 'Walking in the Air' says it changed his life forever.",
-        "content": "I sing everything from the big hymns to the inspirational songs, to the more intimate music too. Its a lot of fun. Speaking to Real Life about his childhood in the public eye, Jones said it was a ma… [+2984 chars]｜解讀：影響有限",
-        "affects_fcn": false
-      },
-      {
-        "title": "Trump was warned of likely Iranian retaliation on Gulf allies: Sources",
-        "summary": "WASHINGTON: President Donald Trump was warned that attacking Iran could trigger retaliati…",
-        "content": "WASHINGTON: President Donald Trump was warned that attacking Iran could trigger retaliation against US Gulf allies despite his claims on Monday (Mar 16) that Tehran's reaction came as a surprise, sai… [+1787 chars]｜解讀：影響有限",
-        "affects_fcn": false
-      },
-      {
-        "title": "Israel Iran War Day 18 News Updates: Trump seeks support from allies, UAE gas field set ablaze & missile warnings in Du…",
-        "summary": "The conflict involving Iran, the US and Israel entered its 18th day with intensifying mil…",
-        "content": "The war in West Asia involving Iran, the United States and Israel entered 18th day on Tuesday, with growing global concern over energy supplies and maritime security.The US and Israel have kept pumme… [+4491 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "Reliance Industries shares in focus on $3 billion deal with Samsung. Check details",
+        "summary": "Reliance Industries has signed a $3 billion long-term agreement with Samsung C&T to supply green ammonia over…",
+        "content": "Shares of Mukesh Ambani-led Reliance Industries will be in focus heading into trade on Tuesday after the company announced it has entered into a binding long-term Supply and Purchase Agreement (SPA) … [+2260 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
       },
       {
         "title": "New study shows global democracy hasn’t been this bad since 1978. Australia should be worried",
-        "summary": "A new report assessing democratic values across more than 200 countries has found 6 billi…",
-        "content": "The health of global democracy is regressing to Cold War-era levels. For the average global citizen, democracy is now back where it was in 1978, according to new research assessing more than 200 coun… [+6014 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "summary": "A new report assessing democratic values across more than 200 countries has found 6 billion people live in au…",
+        "content": "The health of global democracy is regressing to Cold War-era levels. For the average global citizen, democracy is now back where it was in 1978, according to new research assessing more than 200 coun… [+6014 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Indonesia weighs response to price pressures from Middle East war",
+        "summary": "JAKARTA: Price pressures fuelled by the Middle East war may push Indonesia's government to reconsider its dog…",
+        "content": "JAKARTA: Price pressures fuelled by the Middle East war may push Indonesia's government to reconsider its dogged defence of energy subsidies and a costly meals scheme close to the heart of President … [+1859 chars]｜分類：全球經濟｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
       }
     ],
     "financial_news": [
       {
-        "title": "Fuel crisis forces gold miner to send two-thirds of workers home",
-        "summary": "Fuel shortages linked to the Middle East war are forcing a WA gold miner to halt operatio…",
-        "content": "Operations at a remote Western Australian gold mine will grind to a halt in one of the first signs that fuel shortages, created by the war in the Middle East, are impacting small and medium-sized bus… [+4491 chars]｜解讀：可能影響 FCN 環境，建議列入觀察",
-        "affects_fcn": true
+        "title": "Global Market Today: Asian stocks follow Wall Street higher, oil gains",
+        "summary": "Asian equities opened higher, mirroring Wall Street's optimism that more tankers could navigate the Strait of…",
+        "content": "Asian equities rose at the open after optimism that more tankers would be able to pass through the crucial Strait of Hormuz lifted gauges on Wall Street.Shares opened higher in Japan, South Korea and… [+3882 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
       },
       {
-        "title": "Lawsuit challenges Trump admin's plan to dismantle country’s largest climate research lab",
-        "summary": "A group of universities that oversee the country’s largest federal climate research cente…",
-        "content": "A group of universities that oversee the countrys largest federal climate research center filed a lawsuit Monday challenging the Trump administrations attempts to dismantle the lab. The new suit ch… [+4433 chars]｜解讀：利率環境改善時，FCN 收益 / 安全性通常較有利",
-        "affects_fcn": true
+        "title": "Ethereum Futures Volume Outruns Spot 6-to-1 As Macro Stress Weighs On Crypto",
+        "summary": "Ethereum has reclaimed the $2,200 level as the broader cryptocurrency market shows signs of short-term streng…",
+        "content": "Ethereum has reclaimed the $2,200 level as the broader cryptocurrency market shows signs of short-term strength following several weeks of volatility and uncertain momentum. The move higher suggests … [+4308 chars]｜分類：Fed / 利率｜解讀：波動升高，FCN 敲入風險增加",
+        "affects_fcn": true,
+        "impact_score": -2
       },
       {
-        "title": "The US built a blueprint to avoid civilian war casualties. Trump officials scrapped it",
-        "summary": "影響有限",
-        "content": "Images from the missile strike in southern Iran were more horrifying than any of the case studies Air Force combat veteran Wes J. Bryant had pored over in his mission to overhaul how the U.S. militar… [+18910 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "U.S. debt is competing with a record supply of corporate bonds, pushing up the cost of federal borrowing just as war sp…",
+        "summary": "Last Tuesday saw the single busiest day on record for U.S. corporate bond sales.",
+        "content": "The AI capital expenditure boom has created a gusher of corporate debt, forcing the Treasury Department to make its bonds more attractive to investors as the U.S. war on Iran adds to the deficit. Las… [+3025 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
+        "affects_fcn": true,
+        "impact_score": 1
       },
       {
-        "title": "Bitcoin briefly touches $76,000 ahead of key economic decisions this week",
-        "summary": "Bitcoin's surge highlights market volatility amid global economic shifts, underscoring in…",
-        "content": "Investors eye central banks as Bitcoin shows resilience amidst macroeconomic uncertainty. Bitcoin climbed as high as $76,000 on Binance on Monday, with investors piling into digital assets ahead of a… [+2169 chars]｜解讀：波動升高，FCN 敲入風險增加",
-        "affects_fcn": true
+        "title": "Could the Federal Reserve raise interest rates again despite earlier Fed rate cut signals? Why markets fear a hawkish J…",
+        "summary": "Global markets are watching Jerome Powell’s March 18 Federal Reserve meeting very closely. Interest-rate futu…",
+        "content": "A 25% probability of a Federal Reserve rate hike in 2026 is now being priced into financial markets a scenario that seemed almost impossible just weeks ago. The shift comes as global oil prices surge… [+7022 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
+        "affects_fcn": true,
+        "impact_score": 1
       },
       {
-        "title": "TETFund controversy: Should private varsities benefit from public education taxes?",
-        "summary": "Explore the TETFund controversy in Nigeria’s education sector. Proponents argue for inclu…",
-        "content": "A fresh debate has emerged over Nigerias higher education funding, with calls for private universities to be included in TETFund interventions. Proponents cite their growing contributions to national… [+10570 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "A ‘debt spiral’ before a fiscal crisis: Interest on the national debt will be growing faster than GDP in just 5 years,…",
+        "summary": "The Committee for a Responsible Federal Budget sees a critical threshold crossing by 2031—and the consequence…",
+        "content": "The U.S. national debt is hurtling toward $39 trillion, but a Washington fiscal watchdog says the more alarming milestone isnt a dollar figureits a ratio. And it arrives in just five years.According … [+3354 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
+        "affects_fcn": true,
+        "impact_score": 1
       },
       {
-        "title": "AZ GOP Lawmaker Presents Evidence of Voter Roll ‘Anomalies,’ Plans Federal Criminal Referral",
-        "summary": "Arizona State Rep. John Gillette’a referral cites potential violations of several federal…",
-        "content": "Skip to comments. AZ GOP Lawmaker Presents Evidence of Voter Roll Anomalies, Plans Federal Criminal ReferralCalifornia Globe ^ | 3/16/26 | Matthew Holloway Posted on 03/16/2026 7:48:36 PM PDT b… [+12415 chars]｜解讀：利率環境改善時，FCN 收益 / 安全性通常較有利",
-        "affects_fcn": true
+        "title": "US Stocks: US manufacturing output increases; homebuilder sentiment ticks up",
+        "summary": "U.S. factory production increased marginally in February as manufacturing remained constrained by tariffs on…",
+        "content": "U.S. factory production increased marginally in February as manufacturing remained constrained by tariffs on imports, and the conflict in the Middle East could raise operating costs. Other data on Mo… [+5692 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
       },
       {
-        "title": "Telephone conversation with Prime Minister of Ethiopia Abiy Ahmed",
-        "summary": "Vladimir Putin had a telephone conversation with Prime Minister of the Federal Democratic…",
-        "content": "Vladimir Putin had a telephone conversation with Prime Minister of the Federal Democratic Republic of Ethiopia Abiy Ahmed. March 16, 202613:25 The leaders discussed a number of current issues perta… [+631 chars]｜解讀：利率環境改善時，FCN 收益 / 安全性通常較有利",
-        "affects_fcn": true
+        "title": "Is a money market account the best option for savers now? Here's what experts think.",
+        "summary": "Money market accounts still offer good rates and other perks right now, but are they the top option to consid…",
+        "content": "Money market accounts could make sense in today's rate landscape, but are they really the best option for savers? Andrii Yalanskyi/Getty Images The best place to park your savings right now might n… [+6046 chars]｜分類：Fed / 利率｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
       },
       {
-        "title": "Bank of America agrees to settle claims it aided Epstein sex crimes",
-        "summary": "NEW YORK &mdash; Bank of America Corp. has agreed to settle a proposed class action lawsu…",
-        "content": "NEW YORK — Bank of America Corp. has agreed to settle a proposed class action lawsuit on behalf of Jeffrey Epstein victims who accused the bank of aiding in the deceased financier’s sex-trafficking, … [+3273 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "The Temu People Asked A Sports Reporter To Not Use Its Name As Shorthand For Crap Quality",
+        "summary": "Normally, a post about the signing of an NFL free agent wouldnt make it anywhere near these here Techdirt pag…",
+        "content": "The Fine Print: The following comments are owned by whoever posted them. We are not responsible for them in any way.｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
       },
       {
-        "title": "Reliance Industries shares in focus on $3 billion deal with Samsung. Check details",
-        "summary": "Reliance Industries has signed a $3 billion long-term agreement with Samsung C&T to suppl…",
-        "content": "Shares of Mukesh Ambani-led Reliance Industries will be in focus heading into trade on Tuesday after the company announced it has entered into a binding long-term Supply and Purchase Agreement (SPA) … [+2260 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "Rs 70,000 crore at stake! Can Iran war spell trouble for mega IPO plans of Jio, Flipkart, Zepto, others?",
+        "summary": "West Asian geopolitical tensions are casting a shadow over India's IPO pipeline. Mega listings worth nearly R…",
+        "content": "Escalating geopolitical tensions in West Asia are casting a shadow over India's IPO pipeline, with nearly Rs 70,000 crore worth mega listings from Jio Platforms, Flipkart Internet, Zepto, PhonePe and… [+4560 chars]｜分類：通膨 / 就業｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
       },
       {
-        "title": "Alkyl Amines shares in focus as ammonia shortage from Iran war forces production halt at 3 sites",
-        "summary": "Alkyl Amines Chemicals has temporarily halted production of certain products at its Patal…",
-        "content": "Shares of Alkyl Amines Chemicals will be in focus heading into trade on Tuesday after the company said it has temporarily suspended the manufacturing of certain products at its Patalganga, Kurkumbh a… [+2190 chars]｜解讀：地緣政治升溫可能擴大市場波動",
-        "affects_fcn": true
+        "title": "‘Buffy’ Autopsy Report: The Inside Story Of How High-Profile Reboot Was Shockingly Slayed",
+        "summary": "On her classic show Buffy the Vampire Slayer, Sarah Michelle Gellar’s Buffy Summers fought the undead. In rea…",
+        "content": "On her classic show Buffy the Vampire Slayer, Sarah Michelle Gellar‘s Buffy Summers fought the undead. In real life, the actress faced the death of her Buffy reboot at Hulu — and she is having a hard… [+5877 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
       },
       {
-        "title": "Why Donald Trump is losing the war at home",
-        "summary": "No US president in living memory has gone to war with less public support than Donald Tru…",
-        "content": "No US president in living memory has gone to war with less public support than Donald Trump has for the war in Iran. Even Barack Obamas much-maligned Libyan intervention began with 60% of Americans i… [+5941 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "New 'Vibe Coded' AI Translation Tool Splits the Video Game Preservation Community",
+        "summary": "An anonymous reader quotes a report from Ars Technica: Since Andrej Karpathy coined the term \"vibe coding\" ju…",
+        "content": "An anonymous reader quotes a report from Ars Technica: Since Andrej Karpathy coined the term \"vibe coding\" just over a year ago, we've seen a rapid increase in both the capabilities and popularity of… [+2152 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
       },
       {
-        "title": "Forget CBA shares, this ASX bank stock is tipped to soar another 70%",
-        "summary": "I'd put my money in this ASX bank stock instead. The post Forget CBA shares, this ASX ban…",
-        "content": "Commonwealth Bank of Australia (ASX: CBA) shares are fairly flat in Tuesday lunchtime trade. At the time of writing, the ASX bank stock is down 0.1% to $175.35. Despite today's softer share price, C… [+2948 chars]｜解讀：影響有限",
-        "affects_fcn": false
+        "title": "ETMarkets Smart Talk | Diversified funds like flexicap and multicap best route in current volatility: Tata AMC’s Chandr…",
+        "summary": "Amidst global uncertainty and market volatility, investors are advised to stay disciplined and invest through…",
+        "content": "Amid rising global uncertainty and heightened volatility in equity markets, investors are increasingly looking for strategies that can help navigate the turbulence without compromising long-term weal… [+6180 chars]｜分類：通膨 / 就業｜解讀：波動升高，FCN 敲入風險增加",
+        "affects_fcn": true,
+        "impact_score": -2
       }
     ],
     "ai_trend": [
       {
+        "title": "openmax 0.4.0",
+        "summary": "Multi AI Agent orchestration hub — dispatch interactive AI agents across terminal panes",
+        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "openmax 0.3.9",
+        "summary": "Multi AI Agent orchestration hub — dispatch interactive AI agents across terminal panes",
+        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "tribalmind 2.5.0",
+        "summary": "Shared memory for AI development agents - remember, recall, and share knowledge across projects and teams",
+        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "openmax 0.3.7",
+        "summary": "Multi AI Agent orchestration hub — dispatch interactive AI agents across terminal panes",
+        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "openmax 0.3.8",
+        "summary": "Multi AI Agent orchestration hub — dispatch interactive AI agents across terminal panes",
+        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
         "title": "Nvidia chief expects revenue of $1 trillion through 2027",
-        "summary": "Nvidia CEO Jensen Huang projected at least a trillion dollars in revenue through 2027, a…",
-        "content": "Nvidia chief Jensen Huang on Monday said he expects the artificial intelligence chip powerhouse to bring in at least a trillion dollars in revenue through next year.Huang made the ramped-up revenue f… [+1616 chars]｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false
+        "summary": "Nvidia CEO Jensen Huang projected at least a trillion dollars in revenue through 2027, a significant increase…",
+        "content": "Nvidia chief Jensen Huang on Monday said he expects the artificial intelligence chip powerhouse to bring in at least a trillion dollars in revenue through next year.Huang made the ramped-up revenue f… [+1616 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
       },
       {
-        "title": "Marcel’s Visa campaign turns online fraudsters’ AI tactics against them",
-        "summary": "Designed to raise awareness about the use of AI in online fraud, the campaign featured fa…",
-        "content": "The central idea behind Visa’s The Feathered Lamb campaign highlights the fact that the vast majority of scams on social media originate from fake ads which are increasingly hard to detect. Using th… [+2488 chars]｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false
+        "title": "simhacli 1.2.0",
+        "summary": "SimhaCLI — AI Coding Agent that runs inside your terminal",
+        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
       },
       {
-        "title": "[レポート]Snowflake Data for Breakfast Tokyo 2026 KEYNOTE #DataForBreakfast #Snowflake",
-        "summary": "[レポート]Snowflake Data for Breakfast Tokyo 2026 KEYNOTE #DataForBreakfast #Snowflake",
-        "content": "2026317Data for Breakfast Tokyo 2026 KEYNOTE <ul><li><ul><li>Snowflake Developer Relations Lead Developer Advocate</li></ul></li></ul> Snowflake Intelligence <ul><li>12Snowflake Intelligence</li>… [+673 chars]｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false
-      },
-      {
-        "title": "Special Weather Statement until TUE 7:45 AM EDT",
-        "summary": "Slippery Roads Through Tuesday Due to Snow Showers",
-        "content": "Slippery Roads Through Tuesday Due to Snow Showers Snow showers are expected to continue, primarily in the western mountains tonight, gradually tapering off to flurries by tomorrow. In other areas, … [+825 chars]｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false
-      },
-      {
-        "title": "OpenAI may owe Elon Musk as much as $109 billion; Tesla boss says ‘will in no way enrich myself’",
-        "summary": "Elon Musk's fraud lawsuit against Sam Altman, OpenAI and Microsoft threatens to reshape t…",
-        "content": "Elon Musk has never let a court filing speak for itself. Posting on X today, ahead of what promises to be one of the most dramatic corporate trials in recent memory, the world's richest man offered a… [+5558 chars]｜解讀：影響有限｜FCN Pool：AMAT｜建議關注：觀察池",
-        "affects_fcn": false
-      },
-      {
-        "title": "meshpop 4.9.5",
-        "summary": "MeshPOP Network Operations CLI with MCP server for AI integration",
-        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false
-      },
-      {
-        "title": "Why Donald Trump is losing the war at home",
-        "summary": "No US president in living memory has gone to war with less public support than Donald Tru…",
-        "content": "No US president in living memory has gone to war with less public support than Donald Trump has for the war in Iran. Even Barack Obamas much-maligned Libyan intervention began with 60% of Americans i… [+5941 chars]｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false
-      },
-      {
-        "title": "Israel Iran War Day 18 News Updates: Trump seeks support from allies, UAE gas field set ablaze & missile warnings in Du…",
-        "summary": "The conflict involving Iran, the US and Israel entered its 18th day with intensifying mil…",
-        "content": "The war in West Asia involving Iran, the United States and Israel entered 18th day on Tuesday, with growing global concern over energy supplies and maritime security.The US and Israel have kept pumme… [+4491 chars]｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false
+        "title": "finclaw-ai 0.1.0",
+        "summary": "AI-native quantitative finance platform with MCP server support",
+        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
       }
     ],
     "macro": [
       {
         "title": "CPI：327.46（+0.87）",
-        "summary": "通膨變化越溫和，通常越有利 FCN 環境。",
-        "content": "CPI 最新值：327.46（+0.87）。若通膨放緩，Fed 壓力可能下降，對 FCN 通常較有利。",
-        "affects_fcn": true
+        "summary": "通膨若放緩，通常有利 FCN 環境。",
+        "content": "通膨走勢會影響 Fed 與市場風險偏好。",
+        "affects_fcn": true,
+        "impact_score": 1
       },
       {
         "title": "Fed Funds：3.64%（+0.00%）",
-        "summary": "利率下行通常有利風險資產與 FCN 整體安全性。",
-        "content": "聯邦基金利率：3.64%（+0.00%）。利率若走低，市場波動通常較易收斂。",
-        "affects_fcn": true
+        "summary": "利率下行通常較有利風險資產。",
+        "content": "Fed 方向是 FCN 環境的重要核心變數。",
+        "affects_fcn": true,
+        "impact_score": 1
       },
       {
         "title": "VIX：23.51（-3.68）",
-        "summary": "VIX 上升通常代表敲入風險提升。",
-        "content": "VIX：23.51（-3.68）。VIX 若明顯走高，FCN 應降低進攻型配置。",
-        "affects_fcn": true
+        "summary": "VIX 上升代表 FCN 敲入風險上升。",
+        "content": "VIX 是你每日要看的核心指標。",
+        "affects_fcn": true,
+        "impact_score": -2
       },
       {
-        "title": "美債 10Y / 20Y：4.23%（-0.05%） / 4.83%（-0.06%）",
-        "summary": "中長期利率上升會壓抑科技估值，需留意 AI 核心股波動。",
-        "content": "10年期：4.23%（-0.05%）；20年期：4.83%（-0.06%）；利差：0.60%",
-        "affects_fcn": true
-      },
-      {
-        "title": "S&P 500：6716.09（+16.71）",
-        "summary": "美股大盤若維持上行，FCN 環境通常偏友善。",
-        "content": "S&P 500：6716.09（+16.71）。大盤穩定通常有利核心池如 NVDA / AVGO / TSM / MSFT。",
-        "affects_fcn": true
-      },
-      {
-        "title": "失業率：4.40%（+0.10%）",
-        "summary": "就業若明顯惡化，市場會提高對經濟放緩的擔憂。",
-        "content": "失業率：4.40%（+0.10%）。若就業轉弱過快，市場波動可能重新升高。",
-        "affects_fcn": true
+        "title": "10Y / 20Y：4.23%（-0.05%） / 4.83%（-0.06%）",
+        "summary": "中長期利率上升會壓抑科技估值。",
+        "content": "科技與 AI 核心股會受中長債殖利率影響。",
+        "affects_fcn": true,
+        "impact_score": -1
       },
       {
         "title": "油價 / 黃金：94.65（+3.88） / N/A",
-        "summary": "油價代表通膨與地緣風險，黃金代表避險需求。",
-        "content": "WTI：94.65（+3.88）；黃金：N/A。若油價與黃金同步上行，代表市場避險情緒增強。",
-        "affects_fcn": true
+        "summary": "油價與黃金反映通膨與避險情緒。",
+        "content": "若兩者同步走升，通常代表市場更保守。",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "失業率：4.40%（+0.10%）｜S&P500：6716.09（+16.71）",
+        "summary": "就業與股市穩定度共同反映風險偏好。",
+        "content": "若就業惡化且股市回落，FCN 需更保守。",
+        "affects_fcn": true,
+        "impact_score": 0
       }
     ]
   },
@@ -267,7 +299,7 @@
     {
       "title": "優先核心池",
       "action": "可配置",
-      "reason": "目前建議先看：NVDA / AVGO / TSM / MSFT。",
+      "reason": "目前建議先看：TSM / MSFT。",
       "level": "ok"
     }
   ],
@@ -278,11 +310,11 @@
     },
     {
       "label": "總經環境",
-      "text": "總經環境中性，FCN 可做但需偏保守，優先核心股並壓低進攻型曝險。"
+      "text": "總經環境中性，FCN 可做但需偏保守，優先核心股。"
     },
     {
-      "label": "今日建議",
-      "text": "可加入：NVDA / AVGO / TSM / MSFT；觀察：AMD / AMAT / MRVL；避免：ORCL / PLTR / COIN。"
+      "label": "今日推薦",
+      "text": "可加入：TSM / MSFT；觀察：NVDA / AVGO / UNH；避免：AMD / ORCL / AMAT。"
     }
   ],
   "risk_radar": [
@@ -402,9 +434,9 @@
         "eki": "80%",
         "day_change": "",
         "five_day": "",
-        "today": "可加入",
-        "reason": "屬核心池 / 防守池，且目前環境允許配置。",
-        "level": "ok"
+        "today": "持續觀察",
+        "reason": "可列觀察，但不宜重壓。",
+        "level": "watch"
       },
       {
         "symbol": "AVGO",
@@ -415,9 +447,9 @@
         "eki": "80%",
         "day_change": "",
         "five_day": "",
-        "today": "可加入",
-        "reason": "屬核心池 / 防守池，且目前環境允許配置。",
-        "level": "ok"
+        "today": "持續觀察",
+        "reason": "可列觀察，但不宜重壓。",
+        "level": "watch"
       },
       {
         "symbol": "TSM",
@@ -429,7 +461,7 @@
         "day_change": "",
         "five_day": "",
         "today": "可加入",
-        "reason": "屬核心池 / 防守池，且目前環境允許配置。",
+        "reason": "屬核心池 / 防守池，且現階段環境允許配置。",
         "level": "ok"
       },
       {
@@ -441,9 +473,9 @@
         "eki": "80%",
         "day_change": "",
         "five_day": "",
-        "today": "持續觀察",
-        "reason": "可列候補，但不宜重壓。",
-        "level": "watch"
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
       },
       {
         "symbol": "ORCL",
@@ -455,7 +487,7 @@
         "day_change": "",
         "five_day": "",
         "today": "暫不建議",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。",
+        "reason": "現階段波動或集中風險偏高。",
         "level": "risk"
       },
       {
@@ -468,7 +500,7 @@
         "day_change": "",
         "five_day": "",
         "today": "可加入",
-        "reason": "屬核心池 / 防守池，且目前環境允許配置。",
+        "reason": "屬核心池 / 防守池，且現階段環境允許配置。",
         "level": "ok"
       },
       {
@@ -480,9 +512,9 @@
         "eki": "80%",
         "day_change": "",
         "five_day": "",
-        "today": "持續觀察",
-        "reason": "可列候補，但不宜重壓。",
-        "level": "watch"
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
       },
       {
         "symbol": "PLTR",
@@ -494,7 +526,7 @@
         "day_change": "",
         "five_day": "",
         "today": "暫不建議",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。",
+        "reason": "現階段波動或集中風險偏高。",
         "level": "risk"
       },
       {
@@ -507,7 +539,7 @@
         "day_change": "",
         "five_day": "",
         "today": "暫不建議",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。",
+        "reason": "現階段波動或集中風險偏高。",
         "level": "risk"
       },
       {
@@ -520,7 +552,7 @@
         "day_change": "",
         "five_day": "",
         "today": "暫不建議",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。",
+        "reason": "現階段波動或集中風險偏高。",
         "level": "risk"
       }
     ],
@@ -535,7 +567,7 @@
         "day_change": "",
         "five_day": "",
         "today": "暫不建議",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。",
+        "reason": "現階段波動或集中風險偏高。",
         "level": "risk"
       },
       {
@@ -548,7 +580,7 @@
         "day_change": "",
         "five_day": "",
         "today": "暫不建議",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。",
+        "reason": "現階段波動或集中風險偏高。",
         "level": "risk"
       },
       {
@@ -560,9 +592,9 @@
         "eki": "75%",
         "day_change": "",
         "five_day": "",
-        "today": "持續觀察",
-        "reason": "可列候補，但不宜重壓。",
-        "level": "watch"
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
       },
       {
         "symbol": "ARM",
@@ -574,7 +606,7 @@
         "day_change": "",
         "five_day": "",
         "today": "暫不建議",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。",
+        "reason": "現階段波動或集中風險偏高。",
         "level": "risk"
       },
       {
@@ -587,7 +619,7 @@
         "day_change": "",
         "five_day": "",
         "today": "暫不建議",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。",
+        "reason": "現階段波動或集中風險偏高。",
         "level": "risk"
       },
       {
@@ -600,7 +632,7 @@
         "day_change": "",
         "five_day": "",
         "today": "持續觀察",
-        "reason": "可列候補，但不宜重壓。",
+        "reason": "可列觀察，但不宜重壓。",
         "level": "watch"
       }
     ]
@@ -608,94 +640,72 @@
   "today_recommendations": {
     "add": [
       {
-        "symbol": "NVDA",
-        "reason": "屬核心池 / 防守池，且目前環境允許配置。"
-      },
-      {
-        "symbol": "AVGO",
-        "reason": "屬核心池 / 防守池，且目前環境允許配置。"
-      },
-      {
         "symbol": "TSM",
-        "reason": "屬核心池 / 防守池，且目前環境允許配置。"
+        "reason": "屬核心池 / 防守池，且現階段環境允許配置。"
       },
       {
         "symbol": "MSFT",
-        "reason": "屬核心池 / 防守池，且目前環境允許配置。"
+        "reason": "屬核心池 / 防守池，且現階段環境允許配置。"
       }
     ],
     "watch": [
       {
-        "symbol": "AMD",
-        "reason": "可列候補，但不宜重壓。"
+        "symbol": "NVDA",
+        "reason": "可列觀察，但不宜重壓。"
       },
       {
-        "symbol": "AMAT",
-        "reason": "可列候補，但不宜重壓。"
-      },
-      {
-        "symbol": "MRVL",
-        "reason": "可列候補，但不宜重壓。"
+        "symbol": "AVGO",
+        "reason": "可列觀察，但不宜重壓。"
       },
       {
         "symbol": "UNH",
-        "reason": "可列候補，但不宜重壓。"
+        "reason": "可列觀察，但不宜重壓。"
       }
     ],
     "avoid": [
       {
+        "symbol": "AMD",
+        "reason": "現階段波動或集中風險偏高。"
+      },
+      {
         "symbol": "ORCL",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。"
+        "reason": "現階段波動或集中風險偏高。"
+      },
+      {
+        "symbol": "AMAT",
+        "reason": "現階段波動或集中風險偏高。"
       },
       {
         "symbol": "PLTR",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。"
+        "reason": "現階段波動或集中風險偏高。"
       },
       {
         "symbol": "COIN",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。"
-      },
-      {
-        "symbol": "TSLA",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。"
-      },
-      {
-        "symbol": "CRDO",
-        "reason": "現階段波動或集中風險偏高，暫不建議加碼。"
+        "reason": "現階段波動或集中風險偏高。"
       }
     ]
   },
   "scenario_suggestions": [
     {
-      "name": "情境 A：穩定收息",
+      "name": "穩定收息",
       "targets": [
         "TSM",
         "MSFT",
         "UNH"
       ],
       "eki": "80%–85%",
-      "tenor": "6–12 個月",
-      "goal": "防守為主"
+      "tenor": "6–12個月",
+      "goal": "防守優先"
     },
     {
-      "name": "情境 B：平衡收益",
+      "name": "平衡收益",
       "targets": [
         "NVDA",
         "AVGO"
       ],
       "eki": "75%–80%",
-      "tenor": "3–6 個月",
-      "goal": "只保留主力池"
-    },
-    {
-      "name": "情境 C：避險觀望",
-      "targets": [
-        "TSM",
-        "MSFT"
-      ],
-      "eki": "80%–85%",
-      "tenor": "短中期",
-      "goal": "降低高波動曝險"
+      "tenor": "3–6個月",
+      "goal": "只留主力池"
     }
   ]
 }
