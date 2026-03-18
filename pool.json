@@ -1,0 +1,21 @@
+[
+  { "symbol": "TSM", "category": "核心", "score": 1 },
+  { "symbol": "MSFT", "category": "核心", "score": 1 },
+  { "symbol": "GOOG", "category": "核心", "score": 1 },
+  { "symbol": "AAPL", "category": "核心", "score": 1 },
+
+  { "symbol": "UNH", "category": "防守", "score": 3 },
+  { "symbol": "COST", "category": "防守", "score": 3 },
+
+  { "symbol": "NVDA", "category": "高波動", "score": -3 },
+  { "symbol": "TSLA", "category": "高波動", "score": -3 },
+  { "symbol": "COIN", "category": "高波動", "score": -3 },
+
+  { "symbol": "CCL", "category": "景氣循環", "score": -2 },
+  { "symbol": "LVS", "category": "景氣循環", "score": -2 },
+  { "symbol": "AAL", "category": "景氣循環", "score": -2 },
+
+  { "symbol": "AMZN", "category": "核心", "score": 1 },
+  { "symbol": "AMAT", "category": "核心", "score": 1 },
+  { "symbol": "ORCL", "category": "核心", "score": 1 }
+]
