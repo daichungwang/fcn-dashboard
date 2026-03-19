@@ -2,6 +2,7 @@ import { renderModule1News } from "./modules/module1_news.js";
 import { renderModule2Health } from "./modules/module2_health.js";
 import { renderModule3Decision } from "./modules/module3_decision.js";
 
+// === 載入 JSON ===
 async function loadJson(path) {
   const res = await fetch(path);
   if (!res.ok) {
@@ -10,6 +11,7 @@ async function loadJson(path) {
   return res.json();
 }
 
+// === 主程式 ===
 async function init() {
   const m1 = document.getElementById("module1-news");
   const m2 = document.getElementById("module2-health");
@@ -18,7 +20,9 @@ async function init() {
   let positions = [];
   let pool = [];
   let newsData = null;
+  let config = {};
 
+  // === positions ===
   try {
     positions = await loadJson("../data/positions.json");
   } catch (error) {
@@ -26,6 +30,7 @@ async function init() {
     if (m2) m2.innerHTML = `<p>positions.json 載入失敗</p>`;
   }
 
+  // === pool ===
   try {
     pool = await loadJson("../data/pool.json");
   } catch (error) {
@@ -34,6 +39,7 @@ async function init() {
     if (m3) m3.innerHTML = `<p>pool.json 載入失敗</p>`;
   }
 
+  // === news ===
   try {
     newsData = await loadJson("../data/news.json");
   } catch (error) {
@@ -41,6 +47,15 @@ async function init() {
     if (m1) m1.innerHTML = `<p>news.json 載入失敗</p>`;
   }
 
+  // === config（你剛剛缺的重點）===
+  try {
+    config = await loadJson("../data/config.json");
+  } catch (error) {
+    console.error("config load error:", error);
+    // config 可有可無，不中斷
+  }
+
+  // === Module1 ===
   try {
     if (m1 && newsData) {
       m1.innerHTML = renderModule1News(newsData);
@@ -50,6 +65,7 @@ async function init() {
     if (m1) m1.innerHTML = `<p>module1 render 錯誤</p>`;
   }
 
+  // === Module2 ===
   try {
     if (m2 && positions.length > 0 && pool.length > 0) {
       m2.innerHTML = renderModule2Health(positions, pool);
@@ -61,6 +77,7 @@ async function init() {
     if (m2) m2.innerHTML = `<p>module2 render 錯誤</p>`;
   }
 
+  // === Module3（最重要）===
   try {
     if (m3 && pool.length > 0) {
       m3.innerHTML = renderModule3Decision(positions, pool, config);
@@ -73,4 +90,5 @@ async function init() {
   }
 }
 
+// === 啟動 ===
 init();
