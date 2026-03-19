@@ -20,7 +20,7 @@ async function init() {
   let newsData = null;
 
   try {
-    positions = await loadJson("./data/positions.json");
+    positions = await loadJson("../data/positions.json");
   } catch (error) {
     console.error("positions load error:", error);
     if (m2) m2.innerHTML = `<p>positions.json 載入失敗</p>`;
@@ -35,7 +35,7 @@ async function init() {
   }
 
   try {
-    newsData = await loadJson("./data/news.json");
+    newsData = await loadJson("../data/news.json");
   } catch (error) {
     console.error("news load error:", error);
     if (m1) m1.innerHTML = `<p>news.json 載入失敗</p>`;
