@@ -1,1 +1,6 @@
-{}
+{
+  "module3A": {
+    "recommended_symbols": ["NVDA", "TSM", "AVGO", "AMAT", "UNH"],
+    "avoid_symbols": ["TSLA", "COIN", "CCL"]
+  }
+}
