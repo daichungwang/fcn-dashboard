@@ -1,22 +1,23 @@
 [
   {
-    "id": "FCN001",
-    "symbols": ["NVDA", "TSM", "UNH"],
-    "worst_of": "NVDA",
-    "coupon_pa": 19.5,
-    "tenor_months": 6,
-    "ki": 60,
-    "strike": 70,
-    "gap": 10
-  },
-  {
-    "id": "FCN002",
-    "symbols": ["UNH", "TGT"],
-    "worst_of": "UNH",
-    "coupon_pa": 11.5,
-    "tenor_months": 12,
+    "id": "FCN710H",
+    "tenor": 9,
+    "yield": 25,
     "ki": 65,
-    "strike": 75,
-    "gap": 10
+    "strike": 75.84,
+    "stocks": [
+      {
+        "symbol": "NVDA",
+        "price": 159.37,
+        "ki_price": 103.59,
+        "strike_price": 120.87
+      },
+      {
+        "symbol": "ARM",
+        "price": 155.39,
+        "ki_price": 101.00,
+        "strike_price": 117.85
+      }
+    ]
   }
 ]
