@@ -1,6 +1,6 @@
-import { renderModule1News } from "./modules/module1_news.js";
-import { renderModule2Health } from "./modules/module2_health.js";
-import { renderModule3Decision } from "./modules/module3_decision.js";
+import { renderModule1News } from "./modules/module1_news.js"
+import { renderModule2Health } from "./modules/module2_health.js"
+import { renderModule3Decision } from "./modules/module3_decision.js"
 
 async function loadJson(path) {
   const res = await fetch(path);
