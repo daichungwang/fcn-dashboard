@@ -37,12 +37,19 @@ function getStrikeScore(strike) {
 }
 
 function getGapScore(gap) {
-  if (gap < 5) return -999;
-  if (gap < 8) return -6;
-  if (gap < 10) return -3;
-  if (gap < 15) return 0;
-  if (gap < 20) return 3;
-  return 5;
+  if (gap >= 25) return -999;
+
+  if (gap === 0) return 5;
+  if (gap > 0 && gap < 10) return -7;
+  if (gap === 10) return 5;
+  if (gap > 10 && gap <= 13) return 4;
+  if (gap > 13 && gap <= 15) return 3;
+  if (gap > 15 && gap <= 18) return 0;
+  if (gap > 18 && gap <= 20) return -4;
+  if (gap > 20 && gap <= 22) return -5;
+  if (gap > 22 && gap < 25) return -8;
+
+  return 0;
 }
 
 function applyIronRules(position, scores) {
