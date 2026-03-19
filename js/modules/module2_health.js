@@ -1,53 +1,21 @@
-import { getPoolItem } from "../core/pool.js?v=4";
+import { getPoolItem } from "../core/pool.js?v=5";
 
 function getHealthStatus(position, pool) {
   const worst = getPoolItem(pool, position.worst_of);
 
   if (!worst) {
-    return {
-      label: "待確認",
-      riskHint: "找不到 worst_of 對應資料",
-      category: "unknown"
-    };
+    return { label: "待確認", color: "#999", category: "unknown" };
   }
 
   if (worst.category === "high_vol") {
-    return {
-      label: "危險",
-      riskHint: "最差標的是高波動股，需特別注意接股風險",
-      category: worst.category
-    };
-  }
-
-  if (worst.category === "core") {
-    return {
-      label: "觀察",
-      riskHint: "最差標的是核心股，可持續追蹤但仍需留意",
-      category: worst.category
-    };
+    return { label: "危險", color: "#e53935", category: worst.category };
   }
 
   if (worst.category === "defensive") {
-    return {
-      label: "健康",
-      riskHint: "最差標的是防守股，整體風險相對可控",
-      category: worst.category
-    };
+    return { label: "健康", color: "#43a047", category: worst.category };
   }
 
-  if (worst.category === "cyclical") {
-    return {
-      label: "觀察",
-      riskHint: "最差標的是景氣循環股，需留意總經變化",
-      category: worst.category
-    };
-  }
-
-  return {
-    label: "觀察",
-    riskHint: "暫無明確分類，建議持續觀察",
-    category: worst.category || "unknown"
-  };
+  return { label: "觀察", color: "#fbc02d", category: worst.category };
 }
 
 export function renderModule2Health(positions, pool) {
@@ -55,38 +23,48 @@ export function renderModule2Health(positions, pool) {
     return `<p>目前沒有持倉</p>`;
   }
 
-  const summary = {
-    healthy: 0,
-    watch: 0,
-    danger: 0
-  };
+  let healthy = 0;
+  let watch = 0;
+  let danger = 0;
 
-  const cards = positions.map(position => {
-    const health = getHealthStatus(position, pool);
+  const cards = positions.map(p => {
+    const h = getHealthStatus(p, pool);
 
-    if (health.label === "健康") summary.healthy += 1;
-    if (health.label === "觀察") summary.watch += 1;
-    if (health.label === "危險") summary.danger += 1;
+    if (h.label === "健康") healthy++;
+    if (h.label === "觀察") watch++;
+    if (h.label === "危險") danger++;
 
     return `
-      <div style="margin-bottom:18px; padding:12px; border:1px solid #ddd; border-radius:8px;">
-        <strong>${position.id}</strong><br>
-        <span>標的：${(position.symbols || []).join(", ")}</span><br>
-        <span>Worst-of：${position.worst_of}</span><br>
-        <span>Worst 類別：${health.category}</span><br>
-        <span>健康狀態：${health.label}</span><br>
-        <span>風險提示：${health.riskHint}</span>
+      <div style="
+        border:1px solid #ddd;
+        border-radius:10px;
+        padding:12px;
+        margin-bottom:12px;
+      ">
+        <strong>${p.id}</strong><br>
+        標的：${p.symbols.join(", ")}<br>
+        Worst-of：${p.worst_of}<br>
+        類別：${h.category}<br>
+        狀態：<span style="color:${h.color}; font-weight:bold">${h.label}</span>
       </div>
     `;
   }).join("");
 
+  const total = positions.length;
+
   return `
-    <div style="margin-bottom:16px; padding:12px; border:1px solid #ccc; border-radius:8px;">
-      <strong>持倉總覽</strong><br>
-      健康：${summary.healthy}｜
-      觀察：${summary.watch}｜
-      危險：${summary.danger}
+    <div style="
+      border:1px solid #ccc;
+      border-radius:10px;
+      padding:12px;
+      margin-bottom:16px;
+    ">
+      <strong>持倉健康總覽</strong><br>
+      健康：${healthy}（${Math.round(healthy/total*100)}%）｜
+      觀察：${watch}（${Math.round(watch/total*100)}%）｜
+      危險：${danger}（${Math.round(danger/total*100)}%）
     </div>
+
     ${cards}
   `;
 }
