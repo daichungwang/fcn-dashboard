@@ -18,9 +18,9 @@ async function init() {
   let positions = [];
   let pool = [];
   let newsData = null;
+  let marketData = null;
   let config = {};
 
-  // positions
   try {
     positions = await loadJson("./data/positions.json");
   } catch (error) {
@@ -28,7 +28,6 @@ async function init() {
     if (m2) m2.innerHTML = `<p>positions.json 載入失敗</p>`;
   }
 
-  // pool
   try {
     pool = await loadJson("./data/pool.json");
   } catch (error) {
@@ -37,7 +36,6 @@ async function init() {
     if (m3) m3.innerHTML = `<p>pool.json 載入失敗</p>`;
   }
 
-  // news
   try {
     newsData = await loadJson("./data/news.json");
   } catch (error) {
@@ -45,25 +43,27 @@ async function init() {
     if (m1) m1.innerHTML = `<p>news.json 載入失敗</p>`;
   }
 
-  // config
+  try {
+    marketData = await loadJson("./data/market.json");
+  } catch (error) {
+    console.error("market load error:", error);
+  }
+
   try {
     config = await loadJson("./data/config.json");
   } catch (error) {
     console.error("config load error:", error);
-    // config 可有可無，不中斷
   }
 
-  // Module1
   try {
     if (m1 && newsData) {
-      m1.innerHTML = renderModule1News(newsData);
+      m1.innerHTML = renderModule1News(newsData, marketData);
     }
   } catch (error) {
     console.error("module1 render error:", error);
     if (m1) m1.innerHTML = `<p>module1 render 錯誤</p>`;
   }
 
-  // Module2
   try {
     if (m2 && positions.length > 0 && pool.length > 0) {
       m2.innerHTML = renderModule2Health(positions, pool);
@@ -75,9 +75,9 @@ async function init() {
     if (m2) m2.innerHTML = `<p>module2 render 錯誤</p>`;
   }
 
-  // Module3
   try {
     if (m3 && pool.length > 0) {
+      config.newsData = newsData;
       m3.innerHTML = renderModule3Decision(positions, pool, config);
     } else if (m3) {
       m3.innerHTML = `<p>目前沒有 Pool 資料</p>`;
