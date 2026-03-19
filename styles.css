@@ -1,297 +1,111 @@
-/* ===== 全站基礎 ===== */
-* {
-  box-sizing: border-box;
+import { renderModule1News } from "./modules/module1_news.js";
+import { renderModule2Health } from "./modules/module2_health.js";
+import { renderModule3Decision } from "./modules/module3_decision.js";
+
+async function loadJson(path) {
+  const res = await fetch(path);
+  if (!res.ok) {
+    throw new Error(`Failed to load ${path}`);
+  }
+  return res.json();
 }
 
-html {
-  font-size: 16px;
+async function init() {
+  const m1 = document.getElementById("module1-news");
+  const m2 = document.getElementById("module2-health");
+  const m3 = document.getElementById("module3-decision");
+
+  let positions = [];
+  let pool = [];
+  let newsData = null;
+  let marketData = null;
+  let config = {};
+
+  try {
+    positions = await loadJson("./data/positions.json");
+  } catch (error) {
+    console.error("positions load error:", error);
+    if (m2) m2.innerHTML = `<p>positions.json 載入失敗</p>`;
+  }
+
+  try {
+    pool = await loadJson("./data/pool.json");
+  } catch (error) {
+    console.error("pool load error:", error);
+    if (m2) m2.innerHTML = `<p>pool.json 載入失敗</p>`;
+    if (m3) m3.innerHTML = `<p>pool.json 載入失敗</p>`;
+  }
+
+  try {
+    newsData = await loadJson("./data/news.json");
+  } catch (error) {
+    console.error("news load error:", error);
+    if (m1) m1.innerHTML = `<p>news.json 載入失敗</p>`;
+  }
+
+  try {
+    marketData = await loadJson("./data/market.json");
+  } catch (error) {
+    console.error("market load error:", error);
+  }
+
+  try {
+    config = await loadJson("./data/config.json");
+  } catch (error) {
+    console.error("config load error:", error);
+  }
+
+  try {
+    if (m1 && newsData) {
+      m1.innerHTML = renderModule1News(newsData, marketData);
+    }
+  } catch (error) {
+    console.error("module1 render error:", error);
+    if (m1) m1.innerHTML = `<p>module1 render 錯誤</p>`;
+  }
+
+  try {
+    if (m2 && positions.length > 0 && pool.length > 0) {
+      m2.innerHTML = renderModule2Health(positions, pool);
+    } else if (m2 && positions.length === 0) {
+      m2.innerHTML = `<p>目前沒有持倉資料</p>`;
+    }
+  } catch (error) {
+    console.error("module2 render error:", error);
+    if (m2) m2.innerHTML = `<p>module2 render 錯誤</p>`;
+  }
+
+  try {
+    if (m3 && pool.length > 0) {
+      config.newsData = newsData;
+      m3.innerHTML = renderModule3Decision(positions, pool, config);
+    } else if (m3) {
+      m3.innerHTML = `<p>目前沒有 Pool 資料</p>`;
+    }
+  } catch (error) {
+    console.error("module3 render error:", error);
+    if (m3) m3.innerHTML = `<p>module3 render 錯誤</p>`;
+  }
 }
 
-body {
-  margin: 0;
-  padding: 20px 16px 60px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
-  line-height: 1.6;
-  color: #111;
-  background: #f7f7f7;
-}
-
-h1 {
-  font-size: 2.6rem;
-  line-height: 1.2;
-  margin: 0 0 28px;
-  font-weight: 800;
-  color: #000;
-}
-
-h2 {
-  font-size: 2rem;
-  line-height: 1.3;
-  margin: 32px 0 18px;
-  font-weight: 800;
-  color: #000;
-}
-
-h3 {
-  font-size: 1.4rem;
-  line-height: 1.4;
-  margin: 0 0 12px;
-  font-weight: 800;
-  color: #111;
-}
-
-p {
-  margin: 0 0 12px;
-}
-
-a {
-  color: #1565c0;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* ===== 主容器 ===== */
-.container,
-.wrapper,
-.app,
-main {
-  max-width: 920px;
-  margin: 0 auto;
-}
-
-/* ===== 模組區塊 ===== */
-.module,
-.module1,
-.module2,
-.module3 {
-  margin-bottom: 28px;
-}
-
-.section {
-  margin-bottom: 20px;
-}
-
-/* ===== 摘要卡 ===== */
-.summary {
-  font-weight: 700;
-  margin-bottom: 16px;
-  padding: 14px 16px;
-  border: 1px solid #d9d9d9;
-  border-radius: 14px;
+init();
+.news-btn {
+  border: 1px solid #cfcfcf;
   background: #fff;
-  line-height: 1.8;
-}
-
-/* ===== 一般卡片 ===== */
-.card,
-.stock-card,
-.position-card,
-.news-card {
-  border: 1px solid #dddddd;
-  border-radius: 14px;
-  padding: 14px 16px;
-  margin: 10px 0;
-  background: #ffffff;
-}
-
-.stock-card {
-  cursor: pointer;
-}
-
-.stock-title {
-  font-weight: 800;
-  font-size: 1.1rem;
-  line-height: 1.5;
-  color: #111;
-}
-
-.stock-detail {
-  margin-top: 8px;
-  font-size: 0.95rem;
-  color: #444;
-  line-height: 1.8;
-}
-
-.hidden {
-  display: none;
-}
-
-/* ===== Module1 新聞 ===== */
-.news-list {
-  display: block;
-}
-
-.news-card {
-  padding: 14px 16px;
-}
-
-.news-title {
-  font-size: 1.05rem;
-  font-weight: 800;
-  margin-bottom: 8px;
-  color: #111;
-}
-
-.news-summary {
-  font-size: 0.96rem;
   color: #333;
-  line-height: 1.8;
-  margin-bottom: 8px;
-}
-
-.news-meta {
-  font-size: 0.9rem;
-  color: #666;
-  line-height: 1.7;
-}
-
-.news-expand {
-  margin-top: 10px;
-  color: #1565c0;
-  font-size: 0.92rem;
+  border-radius: 8px;
+  padding: 6px 10px;
+  margin: 4px 6px 0 0;
+  font-size: 14px;
   cursor: pointer;
 }
 
-/* ===== Module2 狀態顏色 ===== */
-.status-danger {
-  color: #d32f2f;
-  font-weight: 800;
+.news-btn.active {
+  background: #1565c0;
+  color: #fff;
+  border-color: #1565c0;
 }
 
-.status-watch {
-  color: #f57c00;
-  font-weight: 800;
-}
-
-.status-healthy {
-  color: #388e3c;
-  font-weight: 800;
-}
-
-.status-unknown {
-  color: #9e9e9e;
-  font-weight: 800;
-}
-
-/* ===== Module2 區塊卡 ===== */
-.health-summary {
-  padding: 14px 16px;
-  border: 1px solid #d9d9d9;
-  border-radius: 14px;
-  background: #fff;
-  margin-bottom: 16px;
-}
-
-.top-risk-card {
-  padding: 14px 16px;
-  border: 1px solid #ef9a9a;
-  border-radius: 14px;
-  background: #ffebee;
-  margin-bottom: 16px;
-}
-
-.section-toggle {
-  display: inline-block;
-  margin-left: 8px;
-  font-size: 0.9rem;
-  color: #1565c0;
-  cursor: pointer;
-}
-
-/* ===== Module3 分群色彩 ===== */
-.group-core h3 {
-  color: #1b5e20;
-}
-
-.group-defensive h3 {
-  color: #1565c0;
-}
-
-.group-balanced h3 {
-  color: #6a1b9a;
-}
-
-.group-yield h3 {
-  color: #ef6c00;
-}
-
-.group-avoid h3 {
-  color: #c62828;
-}
-
-/* ===== 列表排版 ===== */
-.list-compact {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-/* ===== 小字資訊 ===== */
-.meta,
-.small-text {
-  font-size: 0.9rem;
-  color: #666;
-}
-
-/* ===== 按鈕 / 可點擊文字 ===== */
-.clickable {
-  cursor: pointer;
-  color: #1565c0;
-}
-
-.clickable:hover {
-  text-decoration: underline;
-}
-
-/* ===== 分隔 ===== */
-hr {
-  border: 0;
-  border-top: 1px solid #e5e5e5;
-  margin: 20px 0;
-}
-
-/* ===== 手機優化 ===== */
-@media (max-width: 640px) {
-  body {
-    padding: 18px 14px 50px;
-  }
-
-  h1 {
-    font-size: 2.2rem;
-    margin-bottom: 24px;
-  }
-
-  h2 {
-    font-size: 1.85rem;
-    margin: 28px 0 16px;
-  }
-
-  h3 {
-    font-size: 1.28rem;
-  }
-
-  .summary,
-  .card,
-  .stock-card,
-  .position-card,
-  .news-card,
-  .health-summary,
-  .top-risk-card {
-    padding: 12px 14px;
-    border-radius: 12px;
-  }
-
-  .stock-title,
-  .news-title {
-    font-size: 1rem;
-  }
-
-  .stock-detail,
-  .news-summary,
-  .news-meta {
-    font-size: 0.93rem;
-  }
+.news-controls {
+  margin-top: 8px;
 }
