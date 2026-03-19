@@ -9,10 +9,12 @@ export function renderModule3Decision(positions) {
     const result = totalDecisionScore(p);
 
     return `
-      <div style="margin-bottom:12px;">
+      <div style="margin-bottom:16px;">
         <strong>${p.id}</strong>｜
         利率分數：${result.couponScore}｜
         天期分數：${result.tenorScore}｜
+        KI分數：${result.kiScore}｜
+        Strike分數：${result.strikeScore}｜
         總分：${result.totalScore}｜
         建議：${result.decision}
       </div>
