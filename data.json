@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-19 11:42",
+  "updated_at": "2026-03-19 12:02",
   "summary": {
     "active_fcn_count": 24,
     "top_risk_code": "FCN710H",
@@ -10,28 +10,231 @@
   "morning_brief": {
     "international_news": [
       {
-        "title": "國際新聞資料來源未設定",
-        "summary": "目前未設定 NEWSAPI_KEY。",
-        "content": "設定 NEWSAPI_KEY 後，這裡會自動抓 10–20 則國際新聞。",
+        "title": "Why gold prices aren’t rising despite Iran war uncertainty — gold down 1% today now below $5,000",
+        "summary": "Why gold prices aren’t rising despite Iran War uncertainty shows gold holding steady around $5,000 per ounce…",
+        "content": "Gold prices have remained unexpectedly steady amid the ongoing US-Israel conflict with Iran, defying expectations for a sharp surge. As of March 17, 2026, spot gold hovered around $4,996 per ounce, w… [+7709 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Fed decision tonight will likely decide whether Bitcoin gets past $80k",
+        "summary": "Bitcoin traded between $73,000 and $74,600 on Wednesday as investors waited for the Federal Reserve's policy…",
+        "content": "Bitcoin has mostly traded around $74,000 on Wednesday as investors waited for the Federal Reserve's policy decision. However, as of press time, Bitcoin has just lost the $73,500 support, with a route… [+7165 chars]｜分類：地緣政治｜解讀：利率壓力若下降，FCN 環境通常較有利",
         "affects_fcn": true,
+        "impact_score": 1
+      },
+      {
+        "title": "Whales move over 44,000 Bitcoin to exchanges ahead of Fed meeting",
+        "summary": "Whale Bitcoin transfers to exchanges may signal increased market volatility, impacting investor sentiment ami…",
+        "content": "With no changes expected, attention will center on the Fed's updated economic projections and any signals around the rate path into 2026. A large volume of Bitcoin was moved to centralized exchanges … [+1391 chars]｜分類：地緣政治｜解讀：波動升高，FCN 敲入風險增加",
+        "affects_fcn": true,
+        "impact_score": -2
+      },
+      {
+        "title": "Carole Middleton is a ‘stalwart of the royal family’ & part of the ‘slimmed-down’ royals",
+        "summary": "Last week, Carole Middleton attended one day of the Cheltenham Festival, a somewhat fancy multi-day horse rac…",
+        "content": "Last week, Carole Middleton attended one day of the Cheltenham Festival, a somewhat fancy multi-day horse race thing. As it so happened, Carole attended the same day as Queen Camilla and Princess Ann… [+4928 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Israeli air raids kill 12, level buildings in Lebanon",
+        "summary": "Intense Israeli air raids strike central Beirut, killing at least 12 people including a Hezbollah TV director…",
+        "content": "Israel repeatedly struck central Beirut on Wednesday, with Lebanese authorities reporting a death toll of at least 12 including a director for Hezbollah’s Al Manar TV channel, and said it would strik… [+4207 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Posthaste: Despite economy, Canadians hold on to the housing dream",
+        "summary": "Canadians are clinging to their dream of owning a home despite the economic conditions that are making it dif…",
+        "content": "THIS CONTENT IS RESERVED FOR SUBSCRIBERS ONLY Subscribe now to read the latest news in your city and across Canada. <ul><li>Exclusive articles from Barbara Shecter, Joe O'Connor, Gabriel Friedman, … [+4966 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "UK commits £15 million for vulnerable people affected by Middle East conflict",
+        "summary": "Hundreds of thousands of people fleeing conflict in the Middle East will receive life‑saving assistance in re…",
+        "content": "Hundreds of thousands of people fleeing conflict in the Middle East will receive life-saving support, thanks to new funding announced today by the Foreign Secretary. In total, £15 million from the … [+2706 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "In 'Project Hail Mary,' Ryan Gosling Happily Drops the Movie Hero Stoicism",
+        "summary": "In an appearance at NASA's JPL, the actor explains why his latest intergalactic role was so 'liberating,' whi…",
+        "content": "The Apollo space missions, and the 20+ movies that immortalized them, featured daredevil former military test pilots heading into the unknown and returning as heroes. These brave souls forged new fro… [+5742 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Delinea Report Finds 90% of Organizations Pressure Security Teams to Loosen Identity Controls for AI",
+        "summary": "Delinea published new research examining how rapid AI adoption is reshaping identity security risks for enter…",
+        "content": "SAN FRANCISCO, March 18, 2026 (GLOBE NEWSWIRE) -- Delinea, a pioneering provider of solutions for securing human and machine identities through centralized authorization, today published new research… [+5011 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Research finds object storage underpins 91% of private AI deployments in production",
+        "summary": "New enterprise research finds data infrastructure rivals GPUs as a key constraint in scaling AI....",
+        "content": "SAN FRANCISCO, March 18, 2026 (GLOBE NEWSWIRE) -- Scality , a global leader in cyber-resilient storage software for the AI era, today announced new findings from independent research conducted by Fr… [+6580 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Xage Security Hits Record Growth by Architecting the Future of Zero Trust for AI and Critical Infrastructure",
+        "summary": "Zero Trust leader reports 81% revenue growth, driven by a global shift from perimeter-based tools to identity…",
+        "content": "PALO ALTO, Calif., March 18, 2026 (GLOBE NEWSWIRE) -- Xage Security , a global leader in Zero Trust access and protection, today reported 81% year-over-year revenue growth and 102% year-over-year gr… [+9675 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Employ Inc. Names Matthew Piercy as Chief Financial Officer",
+        "summary": "Known for Building Scalable, Customer-Focused Businesses, Employ Inc. Names Matthew Piercy as Chief Financial…",
+        "content": "DENVER, March 18, 2026 (GLOBE NEWSWIRE) -- Employ Inc., a leading provider of people-first, intelligent hiring solutions across JazzHR, Lever, and Jobvite, today announced the appointment of Matthew … [+2594 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
         "impact_score": 0
       }
     ],
     "financial_news": [
       {
-        "title": "國際財經新聞資料來源未設定",
-        "summary": "目前未設定 NEWSAPI_KEY。",
-        "content": "設定 NEWSAPI_KEY 後，這裡會自動抓 10–20 則國際財經新聞。",
+        "title": "Fed decision tonight will likely decide whether Bitcoin gets past $80k",
+        "summary": "Bitcoin traded between $73,000 and $74,600 on Wednesday as investors waited for the Federal Reserve's policy…",
+        "content": "Bitcoin has mostly traded around $74,000 on Wednesday as investors waited for the Federal Reserve's policy decision. However, as of press time, Bitcoin has just lost the $73,500 support, with a route… [+7165 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
         "affects_fcn": true,
+        "impact_score": 1
+      },
+      {
+        "title": "Mortgage refinance demand plunges 19% after interest rates shoot higher",
+        "summary": "Mortgage rates shot higher last week, as the war with Iran stoked fears over inflation. That caused a major d…",
+        "content": "Mortgage rates last week jumped to the highest level since the end of last year, causing a crash in the growing refinance demand the market had been seeing at the start of this year. That pushed tota… [+2281 chars]｜分類：Fed / 利率｜解讀：影響有限",
+        "affects_fcn": true,
+        "impact_score": 0
+      },
+      {
+        "title": "Share Market Highlights: Sensex jumps 633 pts, Nifty tops 23,700; rupee sinks to record close",
+        "summary": "Sensex, Nifty updates on 18 March 2026: Indian equity markets extended gains for a third straight session on…",
+        "content": "<li></li> March 18, 2026 16:04The live blog is now closed. <li></li> March 18, 2026 16:03UltraTech to acquire 26.18% stake in Sunsure Solarpark Seven for renewable energy supply UltraTech has ent… [+44156 chars]｜分類：Fed / 利率｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Treasury yields move lower as attention turns to Fed rates decision",
+        "summary": "利率壓力若下降，FCN 環境通常較有利",
+        "content": "Treasury yields fell on Wednesday as investors await the Federal Reserve's next policy decision on interest rates, due later in the session. The benchmark 10-year Treasury yield was down by around … [+1548 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
+        "affects_fcn": true,
+        "impact_score": 1
+      },
+      {
+        "title": "US Fed outcome today amid Iran war: What to expect and what it means for Indian markets",
+        "summary": "The US Federal Reserve is expected to hold rates amid rising uncertainty from the Iran conflict and mixed eco…",
+        "content": "The US Federal Reserve will announce its policy decision later today, with markets widely expecting the central bank to keep interest rates unchanged as it assesses the economic impact of the ongoing… [+2435 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
+        "affects_fcn": true,
+        "impact_score": 1
+      },
+      {
+        "title": "Why is the stock market rising today? Rs 5 lakh cr gains! Sensex jumps 500 pts, Nifty above 23,700: Easing oil prices a…",
+        "summary": "Indian stock markets saw strong gains for a third day. The Sensex climbed over 500 points, and the Nifty 50 s…",
+        "content": "Indian stock markets extended gains for a third consecutive session on Wednesday, with the Sensex rising more than 500 points and the Nifty 50 jumping above the 23,700 level, as easing oil prices and… [+3316 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "Sensex rises 300 points, Nifty opens above 23,600 as investors cheer easing oil prices",
+        "summary": "Indian stock markets extended gains for a third consecutive session, with the Sensex and Nifty 50 opening hig…",
+        "content": "Indian stock markets extended gains for a third consecutive session on Wednesday, with the Sensex rose 500 points higher and the Nifty 50 rising above the 23,700 level, as easing oil prices and other… [+6072 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "Asian stocks rally as oil retreats, Fed in spotlight",
+        "summary": "SYDNEY, March 18 : Asian shares rallied on Wednesday as oil prices paused their gains, with markets turning t…",
+        "content": "SYDNEY, March 18 : Asian shares rallied on Wednesday as oil prices paused their gains, with markets turning to the U.S. Federal Reserve meeting to see how policymakers will balance growth and inflati… [+3778 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
+        "affects_fcn": true,
+        "impact_score": 1
+      },
+      {
+        "title": "What does 6PPD-quinone from turf do? #science",
+        "summary": "What the study found about artificial turf and salmon A new study from the University of British Columbia lin…",
+        "content": "A new study from the University of British Columbia links artificial turf fields around Metro Vancouver to a chemical hazard for coho salmon. Researchers report that turf can leach 6PPD-quinone, a co… [+1612 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "How does microwave quantum networking handle heat? #science",
+        "summary": "Microwave quantum networks stay working during heat stress Researchers report that a microwave quantum networ…",
+        "content": "Researchers report that a microwave quantum network can maintain performance even when exposed to heat-related disturbances. The broader context is the growing push toward quantum communication syste… [+1675 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "QB competition to highlight Arizona State spring football",
+        "summary": "Arizona State football has a room full of quarterbacks ready to compete for the starting role in 2026.",
+        "content": "When Arizona State football coach Kenny Dillingham began talking to quarterback Mikey Keene about transferring to the school, the Sun Devils coach had to make sure the Chandler native knew he was par… [+4713 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "How does Linux Foundation help FOSS against AI slop? #tech",
+        "summary": "Linux Foundation launches grants to manage AI generated security noise The Linux Foundation announced $12.5 m…",
+        "content": "The Linux Foundation announced $12.5 million in total grants from Google and other backers to help open-source software maintainers cope with an influx of AI-generated security findings. The goal is … [+1789 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
         "impact_score": 0
       }
     ],
     "ai_trend": [
       {
-        "title": "AI 趨勢資料來源未設定",
-        "summary": "目前未設定 NEWSAPI_KEY。",
-        "content": "設定 NEWSAPI_KEY 後，這裡會自動抓取 AI agent / AI 基礎設施新聞。",
-        "affects_fcn": true,
+        "title": "Delinea Report Finds 90% of Organizations Pressure Security Teams to Loosen Identity Controls for AI",
+        "summary": "Delinea published new research examining how rapid AI adoption is reshaping identity security risks for enter…",
+        "content": "SAN FRANCISCO, March 18, 2026 (GLOBE NEWSWIRE) -- Delinea, a pioneering provider of solutions for securing human and machine identities through centralized authorization, today published new research… [+5011 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "How One Agency Startup Uses Real-Time Data To Develop Real-Time Ads",
+        "summary": "Audience preferences are constantly evolving. So why not ads that evolve in real time, too? No, really. Media…",
+        "content": "Audience preferences are constantly evolving. So why not ads that evolve in real time, too? No, really. Media agency Multiply claims to have “self-learning ads” and proprietary AI software that tra… [+3555 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Menlo Security takes on AI agent risk with new browser security platform",
+        "summary": "Browser security company Menlo Security Inc. today announced a new Browser Security Platform that is purpose-…",
+        "content": "Browser security company Menlo Security Inc. today announced a new Browser Security Platform that is purpose-built to secure “agentic enterprise,” where autonomous artificial intelligence agents incr… [+4242 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Fast followers will fall behind in the AI race, warns ServiceNow",
+        "summary": "ServiceNow experts and customers highlight why acting at pace, deploying cross-system AI agents and governanc…",
+        "content": "Many local executives aim to be fast followers in artificial intelligence (AI) adoption, but this approach is no longer sufficient, according to Pete Andrew, group vice-president for Australia and Ne… [+6679 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Show HN: Agent-fs – The missing filesystem for agents (and humans)",
+        "summary": "Hello there HN, coming back with more agentic suff :)If you saw my last post, we've been building agent-swarm…",
+        "content": "A persistent, searchable filesystem for AI agents.Built by desplega.sh by builders, for builders. Agent FS gives AI agents a structured filesystem with built-in semantic search, versioning, and iden… [+2955 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：ARM｜建議：觀察池",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Talent Connects, recruiting and HR platform, Partners with Fusemachines to Integrate Interview Agent for its 300+ Custo…",
+        "summary": "NEW YORK, March 18, 2026 (GLOBE NEWSWIRE) -- Fusemachines Inc. (NASDAQ: FUSE), a leading provider of enterpri…",
+        "content": "NEW YORK, March 18, 2026 (GLOBE NEWSWIRE) -- Fusemachines Inc. (NASDAQ: FUSE), a leading provider of enterprise Agentic AI technologies, today announced that Talent Connects, a recruiting and talen… [+6795 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "What is Xbow’s $120M security AI platform? #tech",
+        "summary": "Xbow raises $120M to automatically probe app vulnerabilities Xbow, a security startup that uses AI to examine…",
+        "content": "Xbow, a security startup that uses AI to examine applications for vulnerabilities, raised $120 million. The round was led by DFJ Growth and Northzone, and the company is now valued at over $1 billion… [+1482 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "How does Linux Foundation help FOSS against AI slop? #tech",
+        "summary": "Linux Foundation launches grants to manage AI generated security noise The Linux Foundation announced $12.5 m…",
+        "content": "The Linux Foundation announced $12.5 million in total grants from Google and other backers to help open-source software maintainers cope with an influx of AI-generated security findings. The goal is … [+1789 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
         "impact_score": 0
       }
     ],
