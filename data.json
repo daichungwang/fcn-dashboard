@@ -1,0 +1,508 @@
+{
+  "updated_at": "2026-03-19 06:47",
+  "summary": {
+    "active_fcn_count": 24,
+    "top_risk_code": "FCN710H",
+    "worst_of": "ORCL",
+    "market_env": "保守做",
+    "main_conclusion": "今天可保守做 FCN，建議以 TSM / MSFT 為主，避免進攻型標的過重。"
+  },
+  "morning_brief": {
+    "international_news": [
+      {
+        "title": "國際新聞資料來源未設定",
+        "summary": "目前未設定 NEWSAPI_KEY。",
+        "content": "設定 NEWSAPI_KEY 後，這裡會自動抓 10–20 則國際新聞。",
+        "affects_fcn": true,
+        "impact_score": 0
+      }
+    ],
+    "financial_news": [
+      {
+        "title": "國際財經新聞資料來源未設定",
+        "summary": "目前未設定 NEWSAPI_KEY。",
+        "content": "設定 NEWSAPI_KEY 後，這裡會自動抓 10–20 則國際財經新聞。",
+        "affects_fcn": true,
+        "impact_score": 0
+      }
+    ],
+    "ai_trend": [
+      {
+        "title": "AI 趨勢資料來源未設定",
+        "summary": "目前未設定 NEWSAPI_KEY。",
+        "content": "設定 NEWSAPI_KEY 後，這裡會自動抓取 AI agent / AI 基礎設施新聞。",
+        "affects_fcn": true,
+        "impact_score": 0
+      }
+    ],
+    "macro": [
+      {
+        "title": "CPI：327.46（+0.87）",
+        "summary": "通膨若放緩，通常有利 FCN 環境。",
+        "content": "通膨走勢會影響 Fed 與市場風險偏好。",
+        "affects_fcn": true,
+        "impact_score": 1
+      },
+      {
+        "title": "Fed Funds：3.64%（+0.00%）",
+        "summary": "利率下行通常較有利風險資產。",
+        "content": "Fed 方向是 FCN 環境的重要核心變數。",
+        "affects_fcn": true,
+        "impact_score": 1
+      },
+      {
+        "title": "VIX：22.37（-1.14）",
+        "summary": "VIX 上升代表 FCN 敲入風險上升。",
+        "content": "VIX 是你每日要看的核心指標。",
+        "affects_fcn": true,
+        "impact_score": -2
+      },
+      {
+        "title": "10Y / 20Y：4.20%（-0.03%） / 4.81%（-0.02%）",
+        "summary": "中長期利率上升會壓抑科技估值。",
+        "content": "科技與 AI 核心股會受中長債殖利率影響。",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "油價 / 黃金：93.39（-5.09） / N/A",
+        "summary": "油價與黃金反映通膨與避險情緒。",
+        "content": "若兩者同步走升，通常代表市場更保守。",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "失業率：4.40%（+0.10%）｜S&P500：6624.70（-91.39）",
+        "summary": "就業與股市穩定度共同反映風險偏好。",
+        "content": "若就業惡化且股市回落，FCN 需更保守。",
+        "affects_fcn": true,
+        "impact_score": 0
+      }
+    ]
+  },
+  "strategy_cards": [
+    {
+      "title": "監控 ORCL 風險集中",
+      "action": "持續關注",
+      "reason": "你目前高優先監控部位仍集中於 ORCL，需避免再加重同類曝險。",
+      "level": "watch"
+    },
+    {
+      "title": "降低 COIN / 高波動權重",
+      "action": "降低權重",
+      "reason": "若總經波動升高，高 beta 標的更容易放大 FCN 敲入風險。",
+      "level": "watch"
+    },
+    {
+      "title": "優先核心池",
+      "action": "可配置",
+      "reason": "目前建議先看：TSM / MSFT。",
+      "level": "ok"
+    }
+  ],
+  "risk_overview": [
+    {
+      "label": "高優先監控",
+      "text": "FCN710H，Worst-of 為 ORCL，距下限 16.0%。"
+    },
+    {
+      "label": "總經環境",
+      "text": "總經環境中性，FCN 可做但需偏保守，優先核心股。"
+    },
+    {
+      "label": "今日推薦",
+      "text": "可加入：TSM / MSFT；觀察：NVDA / AVGO / UNH；避免：AMD / ORCL / AMAT。"
+    }
+  ],
+  "risk_radar": [
+    {
+      "label": "ORCL 風險集中度",
+      "value": 68,
+      "type": "watch"
+    },
+    {
+      "label": "COIN 風險集中度",
+      "value": 61,
+      "type": "watch"
+    },
+    {
+      "label": "VIX 壓力",
+      "value": 44,
+      "type": "watch"
+    },
+    {
+      "label": "AI 核心股安全度",
+      "value": 62,
+      "type": "watch"
+    }
+  ],
+  "fcn_rankings": [
+    {
+      "code": "FCN710H",
+      "stock": "ORCL",
+      "price": 155.97,
+      "strike": 185.01,
+      "barrier": 134.44,
+      "status": "持續關注",
+      "distance_to_barrier_pct": 16.0,
+      "level": "watch"
+    },
+    {
+      "code": "FCN465K",
+      "stock": "ORCL",
+      "price": 155.97,
+      "strike": 179.59,
+      "barrier": 134.44,
+      "status": "持續關注",
+      "distance_to_barrier_pct": 16.0,
+      "level": "watch"
+    },
+    {
+      "code": "FCN935K",
+      "stock": "COIN",
+      "price": 203.32,
+      "strike": 243.98,
+      "barrier": 178.11,
+      "status": "持續關注",
+      "distance_to_barrier_pct": 14.2,
+      "level": "watch"
+    },
+    {
+      "code": "FCN791K",
+      "stock": "COIN",
+      "price": 203.32,
+      "strike": 225.21,
+      "barrier": 178.11,
+      "status": "持續關注",
+      "distance_to_barrier_pct": 14.2,
+      "level": "watch"
+    },
+    {
+      "code": "FCN499G",
+      "stock": "NVDA",
+      "price": 183.22,
+      "strike": 189.98,
+      "barrier": 151.98,
+      "status": "健康",
+      "distance_to_barrier_pct": 20.6,
+      "level": "ok"
+    }
+  ],
+  "holdings_brief": [
+    {
+      "code": "FCN710H",
+      "stock": "ORCL",
+      "price": 155.97,
+      "strike": 185.01,
+      "barrier": 134.44,
+      "status": "持續關注",
+      "distance_to_barrier_pct": 16.0,
+      "level": "watch"
+    },
+    {
+      "code": "FCN465K",
+      "stock": "ORCL",
+      "price": 155.97,
+      "strike": 179.59,
+      "barrier": 134.44,
+      "status": "持續關注",
+      "distance_to_barrier_pct": 16.0,
+      "level": "watch"
+    },
+    {
+      "code": "FCN935K",
+      "stock": "COIN",
+      "price": 203.32,
+      "strike": 243.98,
+      "barrier": 178.11,
+      "status": "持續關注",
+      "distance_to_barrier_pct": 14.2,
+      "level": "watch"
+    }
+  ],
+  "pool_analysis": {
+    "fixed_pool": [
+      {
+        "symbol": "NVDA",
+        "name": "NVIDIA",
+        "type": "AI/科技",
+        "risk": "中",
+        "volatility": "高",
+        "eki": "80%",
+        "day_change": "",
+        "five_day": "",
+        "today": "持續觀察",
+        "reason": "可列觀察，但不宜重壓。",
+        "level": "watch"
+      },
+      {
+        "symbol": "AVGO",
+        "name": "Broadcom",
+        "type": "AI/科技",
+        "risk": "中",
+        "volatility": "中",
+        "eki": "80%",
+        "day_change": "",
+        "five_day": "",
+        "today": "持續觀察",
+        "reason": "可列觀察，但不宜重壓。",
+        "level": "watch"
+      },
+      {
+        "symbol": "TSM",
+        "name": "Taiwan Semi",
+        "type": "AI/科技",
+        "risk": "低",
+        "volatility": "中",
+        "eki": "85%",
+        "day_change": "",
+        "five_day": "",
+        "today": "可加入",
+        "reason": "屬核心池 / 防守池，且現階段環境允許配置。",
+        "level": "ok"
+      },
+      {
+        "symbol": "AMD",
+        "name": "AMD",
+        "type": "AI/科技",
+        "risk": "中",
+        "volatility": "中",
+        "eki": "80%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      },
+      {
+        "symbol": "ORCL",
+        "name": "Oracle",
+        "type": "平台/資料庫",
+        "risk": "中",
+        "volatility": "中",
+        "eki": "80%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      },
+      {
+        "symbol": "MSFT",
+        "name": "Microsoft",
+        "type": "AI/雲端",
+        "risk": "低",
+        "volatility": "中",
+        "eki": "85%",
+        "day_change": "",
+        "five_day": "",
+        "today": "可加入",
+        "reason": "屬核心池 / 防守池，且現階段環境允許配置。",
+        "level": "ok"
+      },
+      {
+        "symbol": "AMAT",
+        "name": "Applied Materials",
+        "type": "半導體設備",
+        "risk": "中",
+        "volatility": "中",
+        "eki": "80%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      },
+      {
+        "symbol": "PLTR",
+        "name": "Palantir",
+        "type": "AI/軟體",
+        "risk": "高",
+        "volatility": "高",
+        "eki": "70%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      },
+      {
+        "symbol": "COIN",
+        "name": "Coinbase",
+        "type": "金融/加密",
+        "risk": "高",
+        "volatility": "高",
+        "eki": "65%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      },
+      {
+        "symbol": "TSLA",
+        "name": "Tesla",
+        "type": "科技/車用",
+        "risk": "高",
+        "volatility": "高",
+        "eki": "65%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      }
+    ],
+    "dynamic_pool": [
+      {
+        "symbol": "CRDO",
+        "name": "Credo",
+        "type": "AI/網通",
+        "risk": "高",
+        "volatility": "高",
+        "eki": "70%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      },
+      {
+        "symbol": "ALAB",
+        "name": "Astera Labs",
+        "type": "AI/連接晶片",
+        "risk": "高",
+        "volatility": "高",
+        "eki": "70%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      },
+      {
+        "symbol": "MRVL",
+        "name": "Marvell",
+        "type": "AI/半導體",
+        "risk": "中",
+        "volatility": "中",
+        "eki": "75%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      },
+      {
+        "symbol": "ARM",
+        "name": "Arm",
+        "type": "AI/IP",
+        "risk": "高",
+        "volatility": "高",
+        "eki": "70%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      },
+      {
+        "symbol": "LVS",
+        "name": "Las Vegas Sands",
+        "type": "景氣循環",
+        "risk": "中",
+        "volatility": "中",
+        "eki": "80%",
+        "day_change": "",
+        "five_day": "",
+        "today": "暫不建議",
+        "reason": "現階段波動或集中風險偏高。",
+        "level": "risk"
+      },
+      {
+        "symbol": "UNH",
+        "name": "UnitedHealth",
+        "type": "防守/醫療",
+        "risk": "低",
+        "volatility": "低",
+        "eki": "85%",
+        "day_change": "",
+        "five_day": "",
+        "today": "持續觀察",
+        "reason": "可列觀察，但不宜重壓。",
+        "level": "watch"
+      }
+    ]
+  },
+  "today_recommendations": {
+    "add": [
+      {
+        "symbol": "TSM",
+        "reason": "屬核心池 / 防守池，且現階段環境允許配置。"
+      },
+      {
+        "symbol": "MSFT",
+        "reason": "屬核心池 / 防守池，且現階段環境允許配置。"
+      }
+    ],
+    "watch": [
+      {
+        "symbol": "NVDA",
+        "reason": "可列觀察，但不宜重壓。"
+      },
+      {
+        "symbol": "AVGO",
+        "reason": "可列觀察，但不宜重壓。"
+      },
+      {
+        "symbol": "UNH",
+        "reason": "可列觀察，但不宜重壓。"
+      }
+    ],
+    "avoid": [
+      {
+        "symbol": "AMD",
+        "reason": "現階段波動或集中風險偏高。"
+      },
+      {
+        "symbol": "ORCL",
+        "reason": "現階段波動或集中風險偏高。"
+      },
+      {
+        "symbol": "AMAT",
+        "reason": "現階段波動或集中風險偏高。"
+      },
+      {
+        "symbol": "PLTR",
+        "reason": "現階段波動或集中風險偏高。"
+      },
+      {
+        "symbol": "COIN",
+        "reason": "現階段波動或集中風險偏高。"
+      }
+    ]
+  },
+  "scenario_suggestions": [
+    {
+      "name": "穩定收息",
+      "targets": [
+        "TSM",
+        "MSFT",
+        "UNH"
+      ],
+      "eki": "80%–85%",
+      "tenor": "6–12個月",
+      "goal": "防守優先"
+    },
+    {
+      "name": "平衡收益",
+      "targets": [
+        "NVDA",
+        "AVGO"
+      ],
+      "eki": "75%–80%",
+      "tenor": "3–6個月",
+      "goal": "只留主力池"
+    }
+  ]
+}
