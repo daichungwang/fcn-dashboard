@@ -1,33 +1,19 @@
 {
-  "generated_at": "2026-03-19T08:00:00+08:00",
-  "international": [
+  "global": [
     {
-      "title": "美國半導體出口政策再受關注",
-      "summary": "市場擔心高階晶片供應鏈受影響。",
-      "impact_symbols": ["NVDA", "TSM", "AMAT"],
-      "affects_pool": true,
-      "impact_level": "medium",
-      "source": "auto"
+      "title": "Fed signals rate cuts may be delayed",
+      "summary": "市場對降息預期轉弱，科技股承壓。投資人重新評估利率路徑。風險資產短期波動增加。",
+      "impact": "TSLA, NVDA",
+      "level": "high"
+    },
+    {
+      "title": "Oil prices rise on supply concerns",
+      "summary": "油價上升推升通膨預期。能源股走強。市場風險偏好下降。",
+      "impact": "XOM, CVX",
+      "level": "medium"
     }
   ],
-  "financial": [
-    {
-      "title": "美債殖利率回落，科技股評價壓力稍減",
-      "summary": "利率預期轉弱，成長股估值獲喘息。",
-      "impact_symbols": ["NVDA", "MSFT"],
-      "affects_pool": true,
-      "impact_level": "positive",
-      "source": "auto"
-    }
-  ],
-  "ai_trends": [
-    {
-      "title": "大型雲端業者持續擴大 AI 資本支出",
-      "summary": "AI 伺服器與高頻寬記憶體需求持續增強。",
-      "impact_symbols": ["NVDA", "AVGO", "MU", "TSM"],
-      "affects_pool": true,
-      "impact_level": "high",
-      "source": "auto"
-    }
-  ]
+  "finance": [],
+  "ai": [],
+  "fcn": []
 }
