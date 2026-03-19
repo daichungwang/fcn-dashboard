@@ -68,7 +68,8 @@ async function init() {
 
   try {
     if (m3) {
-      m3.innerHTML = renderModule3Decision(config);
+  m3.innerHTML = renderModule3Decision(pool);
+}
     }
   } catch (error) {
     console.error("module3 render error:", error);
