@@ -1,100 +1,107 @@
 {
-  "updated_at": "2026-03-19 13:31",
+  "updated_at": "2026-03-19 14:51",
   "summary": {
     "active_fcn_count": 24,
     "top_risk_code": "FCN710H",
     "worst_of": "ORCL",
-    "market_env": "保守做",
-    "main_conclusion": "今天可保守做 FCN，建議以 TSM / MSFT 為主，避免進攻型標的過重。"
+    "market_env": "觀望",
+    "main_conclusion": "今天較適合觀望或只做防守型 FCN，先避開高波動與風險集中的標的。"
   },
   "morning_brief": {
     "international_news": [
       {
-        "title": "Hunter Welcing could be one of Ohio State’s most underrated additions heading into 2026",
-        "summary": "﻿The veteran Northwestern transfer may not headline Ohio State’s offense, but Hunter Welcing’s experience, ve…",
-        "content": "Ohio States offseason headlines have largely centered on high-profile names. Jeremiah Smith remains the face of the offense. Julian Sayin returns as the quarterback expected to lead the Buckeyes into… [+5898 chars]｜分類：地緣政治｜解讀：影響有限",
+        "title": "US Oil Inventories Climb As Fears of Global Shortage Persist",
+        "summary": "Crude oil inventories in the United States increased by 6.2 million barrels during the week ending March 13,…",
+        "content": "U.S. shale producers remain cautious… Despite higher prices, U.S. shale… Oil markets are showing cautious… By Julianne Geiger - Mar 18, 2026, 9:50 AM CDTCrude oil inventories in the United States … [+2154 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "Piatt's OT: 'We're a community of five towns, but we're one heartbeat behind the Rockets'",
+        "summary": "Mar. 18—TOLONO — Matt Franks remembers the 1993-94 Unity boys' basketball team. In seventh grade at the time,…",
+        "content": "Mar. 18TOLONO Matt Franks remembers the 1993-94 Unity boys' basketball team. In seventh grade at the time, just two years away from putting on one of those Rockets jerseys himself, he thought those … [+5322 chars]｜分類：地緣政治｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "A Rather Feisty Interview With the Jews Blues News",
-        "summary": "To be frank, this entire interview occurred in the middle of a rather intense fever dream, which is probably…",
-        "content": "To be frank, this entire interview occurred in the middle of a rather intense fever dream, which is probably the only reason it went as well as it did. Nevertheless, I thought it should be shared. … [+10147 chars]｜分類：地緣政治｜解讀：影響有限",
+        "title": "ESPN analyst lays out potential 49ers-Trent Williams compromise",
+        "summary": "Trent Williams is due a bonus on Friday, potentially increasing the 49ers’ motivation to find a compromise.",
+        "content": "The 49ers have, overall, done an impressive job of plugging gaps in their roster during free agency, but there are still several issues that remain for San Francisco this offseason. And there is no … [+3550 chars]｜分類：地緣政治｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Portland's New Math on Housing Seems to Be Working",
-        "summary": "Portland didn't just say yes to more duplexes—it quietly rewrote the math that decides what actually gets bui…",
-        "content": "Portland didn't just say yes to more duplexes—it quietly rewrote the math that decides what actually gets built. And the approach appears to be working, reports the Washington Post. Instead of simply… [+1282 chars]｜分類：地緣政治｜解讀：影響有限",
+        "title": "Trans Mountain readies expansion in 2027 as pipeline space fills up",
+        "summary": "Trans Mountain Corp. is planning a series of expansions for its main pipeline that will add capacity beginnin…",
+        "content": "Trans Mountain Corp. is planning a series of expansion projects for its main pipeline that will add capacity beginning early next year just as export space out of western Canada becomes tight once ag… [+5233 chars]｜分類：地緣政治｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Destination warzone: How Lebanon's only international airport stays open amid Israeli strikes",
-        "summary": "Amid regular Israeli strikes, officials in Lebanon are working around the clock to keep the country's only in…",
-        "content": "BeirutRafic Hariris eastern runway juts into the Dahiyeh suburbs, a Hezbollah stronghold that Israel has targeted almost every day since March 2, when a salvo of rockets fired by the militants sparke… [+2042 chars]｜分類：地緣政治｜解讀：影響有限",
+        "title": "Indonesia’s energy gambit: Orchestrating a shift amid global turmoil",
+        "summary": "As the night sky over the Middle East ignites with the tracers of an escalating conflict involving the United…",
+        "content": "Jakarta (ANTARA) - As the night sky over the Middle East ignites with the tracers of an escalating conflict involving the United States, Israel, and Iran, the tremors are being felt thousands of mile… [+8644 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "Should King Charles postpone his US state visit?",
+        "summary": "Fears UK monarch would hand Donald Trump a diplomatic coup against backdrop of US attacks on Iran",
+        "content": "As the US continues to attack Iran and Donald Trump continues to criticise Keir Starmer, calls are growing to delay or cancel King Charles’ state visit to America. The visit hasn’t yet been formally… [+4229 chars]｜分類：地緣政治｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Stablecoin Firm TransFi Raises Nearly $20 Million",
-        "summary": "Stablecoin infrastructure firm TransFi has raised $19.2 million U.S. to help expand its operations.",
-        "content": "Stablecoin Firm TransFi Raises Nearly $20 Million Stablecoin infrastructure firm TransFi has raised $19.2 million U.S. to help expand its operations. The company reports that it raised $14.2 millio… [+1244 chars]｜分類：地緣政治｜解讀：影響有限",
+        "title": "Why Watching The Lord Of The Rings Trilogy Today May Be Challenging",
+        "summary": "The Lord of the Rings trilogy has aged like a fine wine, but there are several things you should consider if…",
+        "content": "The Lord of the Rings movies are among the finest fantasy movies ever produced. They tell a timeless story and beg to be rewatched again and again. The special effects also still hold up today, which… [+7355 chars]｜分類：地緣政治｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Flight Prices Rise",
-        "summary": "Plus: AI and entitlements, a new Turing prize winner, eight donuts a day, the first trailer for Dune 3, and m…",
-        "content": "Sky-high prices. Fuel costs will add $400 million to Delta's costs for the month of March alone, the airline's chief executive Ed Bastian said yesterday. And those costs will be passed on to consumer… [+5803 chars]｜分類：地緣政治｜解讀：影響有限",
+        "title": "India's data centre capacity grew fourfold to more than 1500 MW in 5 years: IT Ministry",
+        "summary": "Data centre capacity in the country has grown from 375 Megawatt (MW) in 2020 to more than 1500 MW till 2025,…",
+        "content": "Data centre capacity in the country has grown from 375 Megawatt (MW) in 2020 to more than 1500 MW till 2025, according to a statement released by the Ministry of Electronics &amp; IT.In line with Pri… [+2194 chars]｜分類：全球經濟｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Show HN: A single pane of glass for Claude Code",
-        "summary": "I ditched my IDE for Ghostty after Opus 4.6 but kept Alt+Tabbing away to manage, read and edit markdown and c…",
-        "content": "A single pane of glass for agentic development. Designed for builders and prototypers who've ditched their IDE. Tabs galore for managing multiple agents while easily moving, reading, and editing file… [+9086 chars]｜分類：地緣政治｜解讀：影響有限",
+        "title": "Consumer Battery Market Size to Worth USD 48.99 Billion by 2035 | Research by SNS Insider",
+        "summary": "Global Consumer Battery Market Size, Share, Revenue Trends & Segmentation Analysis, by Battery Type, by Appli…",
+        "content": "Austin, March 18, 2026 (GLOBE NEWSWIRE) -- Consumer Battery Market Size &amp; Growth Insights: According to the SNS Insider,The Consumer Battery Market Size was valued at USD 25.21 Billion in 2025 a… [+6783 chars]｜分類：全球經濟｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Jayson Myers and the rise of Canada’s next manufacturing era",
-        "summary": "How Canada’s manufacturing future hinges on turning innovation into adoption, building resilience and strengt…",
-        "content": "He frames cybersecurity as business continuity planning for the digital age. Companies must assume an incident will occur and prepare to keep operating when it does. For boards and executive teams,… [+3410 chars]｜分類：全球經濟｜解讀：影響有限",
+        "title": "Top 10 Eco-Friendly Companies Leading Sustainability in Australia in 2026",
+        "summary": "Sydney — As Australia intensifies its push toward net-zero emissions and circular economy practices in 2026,…",
+        "content": "Sydney — As Australia intensifies its push toward net-zero emissions and circular economy practices in 2026, a growing number of businesses are setting benchmarks for environmental responsibility. Fr… [+5609 chars]｜分類：全球經濟｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Modern CX tech stack: The core components and how to build it",
-        "summary": "A CX tech stack should integrate key components to unify customer data and support personalization. But the s…",
-        "content": "In a hyper-connected enterprise technology buying world, customer experience isn't just a slogan -- it's a technology-enabled differentiator. With the right mix of tech tools, CX leaders can optimize… [+4925 chars]｜分類：全球經濟｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
+        "title": "Top Business & Market Headlines Today — BL Morning Report, March 19, 2026",
+        "summary": "Stay updated on India’s energy, business, and finance news. In this episode, we cover LPG reforms and piped g…",
+        "content": "From LPG reforms and aviation updates to auto emission penalties and Lloyds GIFT City entry here are todays top energy, business, and finance stories you need to know. Oil Ministry offers 10% more c… [+2360 chars]｜分類：全球經濟｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
       },
       {
-        "title": "68% of Remote Workers in the USA Report Higher Productivity Despite Mixing Personal Tasks with Work — Jooble Survey",
-        "summary": "68% of US remote workers are more productive. 60% would take a pay cut for flexibility. Jooble 2026 study: au…",
-        "content": "NEW YORK, March 18, 2026 (GLOBE NEWSWIRE) -- A new study by global job search platform Jooble challenges long-standing assumptions about remote worker productivity. Based on a survey of 1756 U.S.-b… [+4265 chars]｜分類：全球經濟｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Jio's IPO prep; Nazara Technologies' fresh bets",
-        "summary": "Reliance Industries has roped in 17 top banks for the planned Jio Platforms IPO. This and more in today's ETt…",
-        "content": "Reliance Industries has roped in 17 top banks for the planned Jio Platforms IPO. This and more in today's ETtech Top 5.Also in the letter:Q-comm's early summer surgeLenovo exec interviewMicrosoft vs … [+6630 chars]｜分類：全球經濟｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Jio's IPO prep; Q-comm's early summer surge",
-        "summary": "Reliance Industries has roped in 17 top banks for the planned Jio Platforms IPO. This and more in today's ETt…",
-        "content": "Reliance Industries has roped in 17 top banks for the planned Jio Platforms IPO. This and more in today's ETtech Top 5.Also in the letter: Lenovo exec interviewMicrosoft vs Amazon-OpenAITencent's AI … [+6316 chars]｜分類：全球經濟｜解讀：影響有限",
+        "title": "Bitget Wallet Launches Bank Transfer in Bangladesh, Enabling Stablecoin Payouts to bKash and Nagad",
+        "summary": "Bitget Wallet, the everyday finance app, has expanded its Bank Transfer feature to Bangladesh via its partner…",
+        "content": "SAN SALVADOR, El Salvador, March 18, 2026 (GLOBE NEWSWIRE) -- Bitget Wallet , the everyday finance app, has expanded its Bank Transfer feature to Bangladesh via its partnership with its strategic li… [+3791 chars]｜分類：全球經濟｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       }
     ],
     "financial_news": [
+      {
+        "title": "Crop insurance as a climate risk management tool: Evidence from three districts of Punjab, Pakistan",
+        "summary": "Pakistan’s agricultural sector is increasingly vulnerable to climate change–induced shocks, posing serious ri…",
+        "content": "Citation: Khan M, Sidhu KA, Waraich YM, Ghardallou W (2026) Crop insurance as a climate risk management tool: Evidence from three districts of Punjab, Pakistan. PLoS One 21(3): e0344460. https://d… [+47953 chars]｜分類：Fed / 利率｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
       {
         "title": "Fed decision day: What Powell may say today about inflation, rates and growth",
         "summary": "Fed meeting today: The Fed meeting today comes at a critical moment. With oil prices surging due to the Middl…",
@@ -138,102 +145,95 @@
         "impact_score": 1
       },
       {
-        "title": "Why is the stock market rising today? Rs 5 lakh cr gains! Sensex jumps 500 pts, Nifty above 23,700: Easing oil prices a…",
-        "summary": "Indian stock markets saw strong gains for a third day. The Sensex climbed over 500 points, and the Nifty 50 s…",
-        "content": "Indian stock markets extended gains for a third consecutive session on Wednesday, with the Sensex rising more than 500 points and the Nifty 50 jumping above the 23,700 level, as easing oil prices and… [+3316 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
-        "affects_fcn": true,
-        "impact_score": -1
-      },
-      {
-        "title": "Social Security COLA news coming today - what it means as millions could see changes",
-        "summary": "Social Security COLA News 2027: Will Fed March 18 decision impact benefits increase forecast for retirees? Ea…",
-        "content": "Social Security COLA News 2027: The latest Social Security COLA news is set to take center stage as millions of retirees await a crucial economic update on March 18, 2026. With nearly 70 million Amer… [+5199 chars]｜分類：通膨 / 就業｜解讀：利率壓力若下降，FCN 環境通常較有利",
-        "affects_fcn": true,
-        "impact_score": 1
-      },
-      {
-        "title": "Stock market today: Dow, S&P 500, Nasdaq slide after PPI inflation comes in hot ahead of Fed decision",
-        "summary": "利率壓力若下降，FCN 環境通常較有利",
-        "content": "If you click 'Accept all', we and our partners, including 247 who are part of the IAB Transparency &amp; Consent Framework, will also store and / or access information on a device (in other words, us… [+1046 chars]｜分類：通膨 / 就業｜解讀：利率壓力若下降，FCN 環境通常較有利",
-        "affects_fcn": true,
-        "impact_score": 1
-      },
-      {
-        "title": "Stock market today: Dow, S&P 500, Nasdaq fall after PPI inflation comes in hot ahead of Fed decision",
-        "summary": "利率壓力若下降，FCN 環境通常較有利",
-        "content": "If you click 'Accept all', we and our partners, including 247 who are part of the IAB Transparency &amp; Consent Framework, will also store and / or access information on a device (in other words, us… [+1046 chars]｜分類：通膨 / 就業｜解讀：利率壓力若下降，FCN 環境通常較有利",
-        "affects_fcn": true,
-        "impact_score": 1
-      },
-      {
-        "title": "Show HN: CLI to score AI prompts after a prod failure",
-        "summary": "About six months ago I shipped a customer-facing feature where the system prompt had a subtle ambiguity in th…",
-        "content": "CostGuardAI scans prompts and AI workflows for jailbreak risk, ambiguity, hallucination risk, and cost blowups before they hit production. $ npm install -g @camj78/costguardai $ costguardai analyze… [+211 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "title": "How ServiceNow uses internal AI pilots to launch successful customer tools",
+        "summary": "ServiceNow's AI tools, developed internally under Kellie Romack, aim to boost IT services. The company noted…",
+        "content": "When Chris Bedi joined ServiceNow as chief digital information officer in September 2015, he oversaw a small team of data scientists focused on AI and machine learning development. Fast forward to 2… [+4162 chars]｜分類：通膨 / 就業｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Green Impact Exchange Appoints John Visneski as Chief Information Security Officer",
-        "summary": "Green Impact Exchange announces the appointment of John Visneski as Chief Information Security Officer (CISO)…",
-        "content": "NEW YORK, March 18, 2026 (GLOBE NEWSWIRE) -- Green Impact Exchange, LLC (GIX), one of only ten registered stock exchange operators in the U.S., today announced the appointment of John Visneski as Chi… [+3289 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "title": "Osun lawmaker awards scholarships to 1,240 students",
+        "summary": "Osun lawmaker Wole Oke awards scholarships to 1,240 technical school students to tackle unemployment and prom…",
+        "content": "The lawmaker representing Obokun/Oriade Federal Constituency of Osun State in the House of Representatives, Wole Oke, has awarded scholarships to no fewer than 1,240 students across nine technical sc… [+2078 chars]｜分類：通膨 / 就業｜解讀：利率壓力若下降，FCN 環境通常較有利",
+        "affects_fcn": true,
+        "impact_score": 1
+      },
+      {
+        "title": "Energy Bills Relief Act Would Get Cheap Energy onto the Grid",
+        "summary": "The Energy Bills Relief Act would provide support to help reduce consumer electricity bills",
+        "content": "(WASHINGTON, D.C.) Today Reps. Sean Casten (D-IL), Mike Levin (D-CA) and over 100 original co-sponsors introduced the Energy Bills Relief Act. Electricity bills are rising, and people need relief, s… [+811 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Report: Brighton pushing to complete deal to sign 19-year-old Bundesliga forward",
+        "summary": "Brighton Move Advances for El Mala as Transfer Nears CompletionBrighton Strategy Aligns with Emerging TalentB…",
+        "content": "If you click 'Accept all', we and our partners, including 247 who are part of the IAB Transparency &amp; Consent Framework, will also store and / or access information on a device (in other words, us… [+1046 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Mystikal Pleads Guilty to Rape, Faces 20 Years in Prison - Report",
+        "summary": "Sentencing is scheduled for June. Continue reading…",
+        "content": "Mystikal has reportedly entered a guilty plea in his Louisiana rape case and could spend up to 20 years in prison. On Tuesday (March 17), the rapper appeared in Ascension Parish court, where he plea… [+1480 chars]｜分類：通膨 / 就業｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       }
     ],
     "ai_trend": [
       {
-        "title": "agentcage 0.9.1",
-        "summary": "Defense-in-depth proxy sandbox for AI agents",
+        "title": "How ServiceNow uses internal AI pilots to launch successful customer tools",
+        "summary": "ServiceNow's AI tools, developed internally under Kellie Romack, aim to boost IT services. The company noted…",
+        "content": "When Chris Bedi joined ServiceNow as chief digital information officer in September 2015, he oversaw a small team of data scientists focused on AI and machine learning development. Fast forward to 2… [+4162 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "airsstool 1.0.2",
+        "summary": "RSSHub CLI Tool & MCP Server for AI Agents",
         "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "hindsight-pydantic-ai 0.4.19",
-        "summary": "Pydantic AI integration for Hindsight - persistent memory tools for AI agents",
+        "title": "PraisonAI 4.5.77",
+        "summary": "PraisonAI is an AI Agents Framework with Self Reflection. PraisonAI application combines PraisonAI Agents, Au…",
         "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Authentic Human Conversation™",
-        "summary": "Digg’s collapse, Reddit’s lawsuit, and a bot-filled ecosystem expose the fragile economics behind “authentic…",
-        "content": "Last Friday afternoon, Digg died. Again. Two months. That’s how long the relaunch lasted before CEO Justin Mezzell pinned a eulogy to the homepage. The platform had raised $15-20 million. It had Kev… [+15241 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "title": "Orchid Security Recognized by Gartner® As a Representative Vendor of Guardian Agents | HackerNoon",
+        "summary": "Orchid Security concurs with this assessment. The company finds that the growing use of AI agents exponential…",
+        "content": "PreviousGitGuardian Reports an 81% Surge of AI-Service Leaks as 29M Secrets Hit Public GitHub｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Respan Announces $5M in Funding from Gradient, Y Combinator and others; Launches First Proactive AI Observability Platf…",
-        "summary": "Respan helping more than 100 startups and enterprise teams proactively improve AI agents and prevent hallucin…",
-        "content": "SAN FRANCISCO, March 18, 2026 (GLOBE NEWSWIRE) -- Respan , the first proactive AI observability platform that closes the loop from evals to production, announced today that it has raised $5M in fund… [+5309 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Modern CX tech stack: The core components and how to build it",
-        "summary": "A CX tech stack should integrate key components to unify customer data and support personalization. But the s…",
-        "content": "In a hyper-connected enterprise technology buying world, customer experience isn't just a slogan -- it's a technology-enabled differentiator. With the right mix of tech tools, CX leaders can optimize… [+4925 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "hindsight-hermes added to PyPI",
-        "summary": "Hermes agent integration for Hindsight - persistent memory tools for AI agents",
+        "title": "llmfs 0.1.1",
+        "summary": "A filesystem-metaphor memory layer for LLMs and AI agents",
         "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "jira-service-desk-mcp 0.1.1",
-        "summary": "MCP server for Jira Service Management — connect Claude Code, Claude Desktop, Cursor and other AI assistants…",
-        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "title": "code-review-ai 0.1.0",
+        "summary": "Multi-agent code review CLI powered by LLMs. Runs specialized agents in parallel to review GitHub PRs or loca…",
+        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Jayson Myers and the rise of Canada’s next manufacturing era",
-        "summary": "How Canada’s manufacturing future hinges on turning innovation into adoption, building resilience and strengt…",
-        "content": "He frames cybersecurity as business continuity planning for the digital age. Companies must assume an incident will occur and prepare to keep operating when it does. For boards and executive teams,… [+3410 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "title": "Val Kilmer to Appear Via AI in Final Movie Role With Family's Blessing: 'Val Really Wanted to Be a Part of This'",
+        "summary": "Val Kilmer is being brought to life on the screen through AI. The late actor, who passed away in 2025 due to…",
+        "content": "Val Kilmer is being brought to life on the screen through AI. The late actor, who passed away in 2025 due to throat cancer, was cast in the upcoming movie As Deep as the Grave as a Catholic priest a… [+2598 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "New GoPro GP3 Image Sensor Could Power Next-Gen Cameras",
+        "summary": "GoPro has released a new teaser hinting at an upcoming camera, showcasing the video capabilities of its recen…",
+        "content": "GoPro has released a new teaser hinting at an upcoming camera, showcasing the video capabilities of its recently announced GoPro GP3 Image Sensor. The company previously shared a set of still images… [+2120 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       }
@@ -254,7 +254,7 @@
         "impact_score": 1
       },
       {
-        "title": "VIX：22.37（-1.14）",
+        "title": "VIX：25.09（+2.72）",
         "summary": "VIX 上升代表 FCN 敲入風險上升。",
         "content": "VIX 是你每日要看的核心指標。",
         "affects_fcn": true,
@@ -310,7 +310,7 @@
     },
     {
       "label": "總經環境",
-      "text": "總經環境中性，FCN 可做但需偏保守，優先核心股。"
+      "text": "總經壓力偏高，建議降低進攻型 FCN。"
     },
     {
       "label": "今日推薦",
@@ -330,12 +330,12 @@
     },
     {
       "label": "VIX 壓力",
-      "value": 44,
+      "value": 50,
       "type": "watch"
     },
     {
       "label": "AI 核心股安全度",
-      "value": 62,
+      "value": 45,
       "type": "watch"
     }
   ],
@@ -687,25 +687,14 @@
   },
   "scenario_suggestions": [
     {
-      "name": "穩定收息",
+      "name": "避險觀望",
       "targets": [
-        "TSM",
         "MSFT",
         "UNH"
       ],
       "eki": "80%–85%",
-      "tenor": "6–12個月",
-      "goal": "防守優先"
-    },
-    {
-      "name": "平衡收益",
-      "targets": [
-        "NVDA",
-        "AVGO"
-      ],
-      "eki": "75%–80%",
-      "tenor": "3–6個月",
-      "goal": "只留主力池"
+      "tenor": "短中期",
+      "goal": "只保留低波動核心"
     }
   ]
 }
