@@ -1,17 +1,13 @@
 {
   "vix": { "current": 21, "previous": 20 },
-  "nasdaq": { "current": 18240, "previous": 18000 },
-  "sp500": { "current": 5780, "previous": 5750 },
-  "dow": { "current": 42150, "previous": 42000 },
-
-  "us10y": { "current": 4.25, "previous": 4.10 },
-  "us20y": { "current": 4.45, "previous": 4.30 },
-
-  "oil": { "current": 82.3, "previous": 80.0 },
-  "gold": { "current": 2320, "previous": 2280 },
-
-  "cpi": { "current": 3.2, "previous": 3.4 },
-  "ppi": { "current": 2.8, "previous": 3.0 },
-
-  "tw_index": { "current": 23500, "previous": 23300 }
+  "sp500": { "current": 6606, "previous": 6550 },
+  "nasdaq": { "current": 22090, "previous": 21800 },
+  "dow": { "current": 46021, "previous": 45800 },
+  "us10y": { "current": 4.26, "previous": 4.20 },
+  "us20y": { "current": 4.84, "previous": 4.78 },
+  "oil": { "current": 95, "previous": 92 },
+  "gold": { "current": 2180, "previous": 2160 },
+  "cpi": { "current": 2.4, "previous": 2.6 },
+  "ppi": { "current": 0.7, "previous": 0.5 },
+  "tw_index": { "current": 19850, "previous": 19700 }
 }
