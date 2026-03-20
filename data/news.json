@@ -1,42 +1,222 @@
-[
-  {
-    "title": "聯準會延後降息預期升溫",
-    "summary": "市場預期2027年前降息機率降低，利率維持高檔。",
-    "impact": ["SPY", "QQQ"],
-    "level": "high",
-    "ai_direction": "negative",
-    "ai_strength": "medium",
-    "ai_reason": "高利率壓抑估值",
-    "user_direction": null
-  },
-  {
-    "title": "油價飆升至95美元",
-    "summary": "中東局勢推升油價，市場通膨壓力增加。",
-    "impact": ["SPY"],
-    "level": "high",
-    "ai_direction": "negative",
-    "ai_strength": "medium",
-    "ai_reason": "成本上升壓縮企業利潤",
-    "user_direction": null
-  },
-  {
-    "title": "Micron 財測不如預期",
-    "summary": "記憶體市場需求仍不穩定，股價承壓。",
-    "impact": ["MU"],
-    "level": "high",
-    "ai_direction": "negative",
-    "ai_strength": "high",
-    "ai_reason": "基本面轉弱",
-    "user_direction": null
-  },
-  {
-    "title": "AI需求持續強勁",
-    "summary": "AI伺服器需求推動晶片產業成長。",
-    "impact": ["NVDA", "TSM"],
-    "level": "high",
-    "ai_direction": "positive",
-    "ai_strength": "high",
-    "ai_reason": "需求強勁",
-    "user_direction": null
-  }
-]
+{
+  "global": [
+    {
+      "title": "聯準會維持高利率政策",
+      "summary": "市場預期降息時間延後，資金成本維持高檔",
+      "impact": ["SPY","QQQ"],
+      "level": "high",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "美國CPI高於預期",
+      "summary": "通膨壓力未消退，政策轉向延後",
+      "impact": ["SPY"],
+      "level": "high",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "10年期公債殖利率上升",
+      "summary": "資金流向債券，壓抑股市估值",
+      "impact": ["QQQ"],
+      "level": "high",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "油價突破95美元",
+      "summary": "能源成本上升，企業利潤受壓",
+      "impact": ["SPY"],
+      "level": "high",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "美元指數走強",
+      "summary": "新興市場壓力增加",
+      "impact": ["EEM"],
+      "level": "medium",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "地緣政治升溫",
+      "summary": "市場避險情緒升高",
+      "impact": ["GLD"],
+      "level": "high",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "美國就業市場仍強",
+      "summary": "經濟韌性支撐消費",
+      "impact": ["SPY"],
+      "level": "medium",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "歐洲經濟放緩",
+      "summary": "全球需求疲弱",
+      "impact": ["SPY"],
+      "level": "medium",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "中國刺激政策出台",
+      "summary": "試圖提振內需",
+      "impact": ["BABA"],
+      "level": "medium",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "全球PMI回升",
+      "summary": "景氣回暖跡象",
+      "impact": ["SPY"],
+      "level": "medium",
+      "ai_direction": "positive"
+    }
+  ],
+
+  "finance": [
+    {
+      "title": "SPY創新高",
+      "summary": "市場資金持續流入",
+      "impact": ["SPY"],
+      "level": "high",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "QQQ持續上漲",
+      "summary": "科技股帶動市場",
+      "impact": ["QQQ"],
+      "level": "high",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "銀行股回穩",
+      "summary": "金融壓力減輕",
+      "impact": ["JPM"],
+      "level": "medium",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "消費支出強勁",
+      "summary": "零售數據優於預期",
+      "impact": ["AMZN"],
+      "level": "medium",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "企業財報優於預期",
+      "summary": "盈利能力強",
+      "impact": ["SPY"],
+      "level": "high",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "ETF資金流入創高",
+      "summary": "被動資金支撐市場",
+      "impact": ["SPY"],
+      "level": "medium",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "債市波動上升",
+      "summary": "利率不確定性提高",
+      "impact": ["TLT"],
+      "level": "medium",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "高收益債利差擴大",
+      "summary": "風險偏好下降",
+      "impact": ["HYG"],
+      "level": "medium",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "房市降溫",
+      "summary": "高利率影響需求",
+      "impact": ["HD"],
+      "level": "medium",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "美元走強影響企業",
+      "summary": "海外收入壓力",
+      "impact": ["AAPL"],
+      "level": "medium",
+      "ai_direction": "negative"
+    }
+  ],
+
+  "ai": [
+    {
+      "title": "NVIDIA持續受惠AI需求",
+      "summary": "GPU需求強勁",
+      "impact": ["NVDA"],
+      "level": "high",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "TSM產能滿載",
+      "summary": "先進製程需求強",
+      "impact": ["TSM"],
+      "level": "high",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "AI伺服器需求爆發",
+      "summary": "資料中心擴張",
+      "impact": ["SMCI"],
+      "level": "high",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "記憶體市場復甦",
+      "summary": "價格回升",
+      "impact": ["MU"],
+      "level": "high",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "ARM成長動能強",
+      "summary": "AI應用擴展",
+      "impact": ["ARM"],
+      "level": "medium",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "AVGO AI收入提升",
+      "summary": "ASIC需求增加",
+      "impact": ["AVGO"],
+      "level": "high",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "AMD AI晶片競爭激烈",
+      "summary": "市場競爭加劇",
+      "impact": ["AMD"],
+      "level": "medium",
+      "ai_direction": "neutral"
+    },
+    {
+      "title": "AI泡沫疑慮升溫",
+      "summary": "估值偏高",
+      "impact": ["NVDA"],
+      "level": "high",
+      "ai_direction": "negative"
+    },
+    {
+      "title": "AI投資持續擴張",
+      "summary": "企業資本支出增加",
+      "impact": ["AMZN"],
+      "level": "medium",
+      "ai_direction": "positive"
+    },
+    {
+      "title": "AI應用加速落地",
+      "summary": "企業導入加快",
+      "impact": ["MSFT"],
+      "level": "medium",
+      "ai_direction": "positive"
+    }
+  ],
+
+  "fcn": []
+}
