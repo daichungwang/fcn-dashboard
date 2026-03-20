@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-03-20 13:11",
+  "updated_at": "2026-03-20 13:59",
   "summary": {
     "active_fcn_count": 24,
     "top_risk_code": "FCN710H",
@@ -51,7 +51,7 @@
         "impact_score": 1
       },
       {
-        "title": "VIX：25.09（+2.72）",
+        "title": "VIX：24.06（-1.03）",
         "summary": "VIX 上升代表 FCN 敲入風險上升。",
         "content": "VIX 是你每日要看的核心指標。",
         "affects_fcn": true,
@@ -127,7 +127,7 @@
     },
     {
       "label": "VIX 壓力",
-      "value": 50,
+      "value": 48,
       "type": "watch"
     },
     {
