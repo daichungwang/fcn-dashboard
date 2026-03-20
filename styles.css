@@ -639,3 +639,190 @@ init();
   font-size: 15px;
   background: #fff;
 }
+
+.m2-wrap {
+  padding: 16px;
+}
+
+.m2-summary-card,
+.m2-top-risk-card,
+.m2-section,
+.m2-position-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+}
+
+.m2-summary-title,
+.m2-section-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.m2-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.m2-summary-item {
+  border: 1px solid #e6e6e6;
+  border-radius: 14px;
+  padding: 12px;
+  background: #fafafa;
+}
+
+.m2-summary-item.healthy {
+  background: #f3fbf2;
+}
+.m2-summary-item.watch {
+  background: #fff8ec;
+}
+.m2-summary-item.danger {
+  background: #fff3f3;
+}
+.m2-summary-item.pending {
+  background: #f3f3f3;
+}
+
+.m2-summary-label {
+  font-size: 16px;
+  color: #666;
+}
+
+.m2-summary-value {
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.m2-summary-sub {
+  font-size: 14px;
+  color: #666;
+}
+
+.m2-position-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.m2-position-name {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.m2-status {
+  font-size: 14px;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+
+.m2-status-danger {
+  background: #ffe4e4;
+  color: #b54545;
+}
+.m2-status-watch {
+  background: #fff1d6;
+  color: #b97a1c;
+}
+.m2-status-healthy {
+  background: #e8f7e8;
+  color: #3b7f3b;
+}
+.m2-status-pending {
+  background: #ededed;
+  color: #777;
+}
+
+.m2-line {
+  font-size: 17px;
+  line-height: 1.8;
+  color: #333;
+}
+
+.m2-actions {
+  margin-top: 10px;
+}
+
+.m2-btn {
+  border: 1px solid #d0d0d0;
+  background: #f5f5f5;
+  color: #2f6fc2;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.m2-hidden {
+  display: none;
+}
+
+.m2-detail-box {
+  margin-top: 12px;
+  border-top: 1px solid #eee;
+  padding-top: 12px;
+}
+
+.m2-detail-summary {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.m2-detail-row {
+  border: 1px solid #ededed;
+  border-radius: 14px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #fcfcfc;
+}
+
+.m2-detail-symbol {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.m2-detail-metrics {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #333;
+}
+
+.m2-detail-conclusion {
+  font-size: 16px;
+  line-height: 1.8;
+  font-weight: 700;
+  color: #444;
+  margin-top: 8px;
+}
+
+.m2-section.danger {
+  border-left: 6px solid #d96b6b;
+}
+
+.m2-section.watch {
+  border-left: 6px solid #e0a545;
+}
+
+.m2-section.healthy {
+  border-left: 6px solid #62a864;
+}
+
+.m2-section.pending {
+  border-left: 6px solid #9d9d9d;
+}
+
+.m2-empty {
+  color: #777;
+  font-size: 16px;
+}
