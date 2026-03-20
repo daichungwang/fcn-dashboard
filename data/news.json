@@ -1,60 +1,42 @@
-{
-  "global": [
-    {
-      "title": "Fed signals rate cuts may be delayed",
-      "summary": "市場對降息預期轉弱，科技股承壓。投資人重新評估利率路徑。風險資產短期波動增加。",
-      "impact": "NVDA, TSLA, AMZN",
-      "level": "high",
-      "ai_direction": "negative",
-      "ai_strength": "high",
-      "ai_reason": "摘要顯示降息延後與風險資產承壓，屬偏負面市場語氣。",
-      "user_direction": null
-    },
-    {
-      "title": "Oil prices rise on supply concerns",
-      "summary": "油價上升推升通膨預期。能源股走強。市場風險偏好下降。",
-      "impact": "XOM, CVX",
-      "level": "medium",
-      "ai_direction": "negative",
-      "ai_strength": "medium",
-      "ai_reason": "油價上升通常增加通膨壓力，對整體股市偏負面。",
-      "user_direction": null
-    }
-  ],
-  "finance": [
-    {
-      "title": "Cloud providers keep expanding AI capex",
-      "summary": "大型雲端業者持續提高 AI 資本支出。伺服器與半導體供應鏈受惠。市場預期需求延續。",
-      "impact": "NVDA, TSM, AVGO, MU",
-      "level": "high",
-      "ai_direction": "positive",
-      "ai_strength": "high",
-      "ai_reason": "AI 資本支出擴大通常有利硬體供應鏈，屬明確利多。",
-      "user_direction": null
-    }
-  ],
-  "ai": [
-    {
-      "title": "NVIDIA launches next-generation AI chip",
-      "summary": "新一代 AI 晶片正式亮相。市場關注效能提升與客戶導入速度。供應鏈話題升溫。",
-      "impact": "NVDA, TSM, AVGO",
-      "level": "high",
-      "ai_direction": "positive",
-      "ai_strength": "medium",
-      "ai_reason": "新產品發布本身偏正面，但仍需觀察市場接受度與訂單轉化。",
-      "user_direction": null
-    }
-  ],
-  "fcn": [
-    {
-      "title": "High volatility names may offer better FCN yield",
-      "summary": "高波動股票近期 FCN 報價可能更高，但接股風險也同步上升。投資人應提高篩選標準。",
-      "impact": "TSLA, COIN, PLTR",
-      "level": "medium",
-      "ai_direction": "neutral",
-      "ai_strength": "medium",
-      "ai_reason": "這類訊息偏策略提醒，非單純利多或利空。",
-      "user_direction": null
-    }
-  ]
-}
+[
+  {
+    "title": "聯準會延後降息預期升溫",
+    "summary": "市場預期2027年前降息機率降低，利率維持高檔。",
+    "impact": ["SPY", "QQQ"],
+    "level": "high",
+    "ai_direction": "negative",
+    "ai_strength": "medium",
+    "ai_reason": "高利率壓抑估值",
+    "user_direction": null
+  },
+  {
+    "title": "油價飆升至95美元",
+    "summary": "中東局勢推升油價，市場通膨壓力增加。",
+    "impact": ["SPY"],
+    "level": "high",
+    "ai_direction": "negative",
+    "ai_strength": "medium",
+    "ai_reason": "成本上升壓縮企業利潤",
+    "user_direction": null
+  },
+  {
+    "title": "Micron 財測不如預期",
+    "summary": "記憶體市場需求仍不穩定，股價承壓。",
+    "impact": ["MU"],
+    "level": "high",
+    "ai_direction": "negative",
+    "ai_strength": "high",
+    "ai_reason": "基本面轉弱",
+    "user_direction": null
+  },
+  {
+    "title": "AI需求持續強勁",
+    "summary": "AI伺服器需求推動晶片產業成長。",
+    "impact": ["NVDA", "TSM"],
+    "level": "high",
+    "ai_direction": "positive",
+    "ai_strength": "high",
+    "ai_reason": "需求強勁",
+    "user_direction": null
+  }
+]
