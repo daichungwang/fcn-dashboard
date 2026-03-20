@@ -1,4 +1,17 @@
 export function renderModule3(data) {
+  const el = document.getElementById("module3-decision");
+
+  if (!el) return;
+
+  el.innerHTML = `
+    <div style="padding:16px;">
+      <h3>Module3 已成功載入 ✅</h3>
+      <p>Pool 數量：${data.pool?.length || 0}</p>
+    </div>
+  `;
+}
+
+export function renderModule3(data) {
   const container = document.getElementById("module3-decision");
   if (!container) return;
 
