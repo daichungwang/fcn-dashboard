@@ -257,6 +257,11 @@ export function renderModule1News(newsData, marketData) {
           : ""
       }
 
+     setTimeout(() => {
+       updateNewsModeUI();
+       bindNewsModeEvents();
+     }, 0);
+
       ${renderSection("🌍 國際新聞", newsData.global, "global")}
       ${renderSection("💰 財經新聞", newsData.finance, "finance")}
       ${renderSection("🤖 AI 趨勢", newsData.ai, "ai")}
