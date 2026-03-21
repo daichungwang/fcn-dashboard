@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>振宇 FCN 系統</title>
+
+  <link rel="stylesheet" href="./styles.css?v=66" />
+</head>
+
+<body>
+
+  <h1>振宇 FCN 系統</h1>
+
+  <h2>模組1：外部市場與新聞雷達</h2>
+  <h2>模組2：持倉健康</h2>
+
+  <!-- =========================
+       模組三：FCN 決策系統
+  ========================= -->
+  <div id="module3">
+
+    <h2>模組三｜FCN 決策系統</h2>
+
+    <!-- ===== 模型說明 ===== -->
+    <div class="m3-explain">
+      <h3>模型說明</h3>
+
+      <p><strong>Baseline</strong>：理性市場共識（長期定位）</p>
+      <p><strong>Pure</strong>：模型判斷（策略觀點）</p>
+      <p><strong>Event</strong>：市場情緒（短期偏移）</p>
+
+      <button class="explain-toggle-btn" onclick="toggleM3Explain()">
+        展開完整模型說明
+      </button>
+
+      <div id="m3-explain-detail" style="display:none;">
+        <div class="m3-explain-detail-inner">
+
+          <h4>三層模型定義</h4>
+          <p><strong>Baseline</strong> = 理性市場共識（Rational Market Consensus）</p>
+          <p><strong>Pure</strong> = 不含新聞事件的模型判斷</p>
+          <p><strong>Event</strong> = 加入市場事件後的結果</p>
+
+          <h4>統計解釋</h4>
+          <p><strong>ΔPure = Pure - Baseline</strong></p>
+          <p><strong>ΔEvent = Event - Pure</strong></p>
+
+          <h4>Decision Dashboard</h4>
+          <p>M1：機會（Coverage）</p>
+          <p>M2：風險指數（含 ΔPure / ΔEvent）</p>
+          <p>M3：FCN 適合度</p>
+          <p>M4：系統解釋度</p>
+
+          <h4>M3-A</h4>
+          <p>個股 Baseline / Pure / Event 評估</p>
+
+          <h4>M3-B</h4>
+          <p>FCN 組合遴選與建議</p>
+
+          <h4>M3-C</h4>
+          <p>外部 FCN 單筆評估</p>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Dashboard ===== -->
+    <div class="m3-dashboard">
+      <h3>Decision Dashboard</h3>
+
+      <div class="dashboard-grid">
+
+        <div class="card">
+          <h4>M1｜機會（Coverage）</h4>
+          <p id="m1-stock"></p>
+          <p id="m1-fcn"></p>
+        </div>
+
+        <div class="card">
+          <h4>M2｜本週風險指數</h4>
+          <p id="m2-risk"></p>
+          <p id="m2-dpure"></p>
+          <p id="m2-devent"></p>
+        </div>
+
+        <div class="card">
+          <h4>M3｜FCN適合度</h4>
+          <p id="m3-score"></p>
+        </div>
+
+        <div class="card">
+          <h4>M4｜系統解釋度</h4>
+          <p id="m4-score"></p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ===== Module3-A ===== -->
+    <div class="module-block">
+      <h3>Module3-A｜標的評級與策略定位</h3>
+      <div id="m3a-summary"></div>
+      <div id="m3a-content"></div>
+    </div>
+
+    <!-- ===== Module3-B ===== -->
+    <div class="module-block">
+      <h3>Module3-B｜FCN 組合遴選與建議</h3>
+      <div id="m3b-content"></div>
+    </div>
+
+    <!-- ===== Module3-C ===== -->
+    <div class="module-block">
+      <h3>Module3-C｜外部 FCN 單筆評估</h3>
+      <div id="m3c-content"></div>
+    </div>
+
+    <!-- ===== 股票查詢 ===== -->
+    <div class="module-block">
+      <h3>股票查詢</h3>
+      <input type="text" id="stock-search" placeholder="輸入股票代號">
+      <div id="stock-result"></div>
+    </div>
+
+    <!-- ===== Pool 管理 ===== -->
+    <div class="module-block">
+      <h3 onclick="togglePool()">⚙️ Pool 管理</h3>
+      <div id="pool-section" style="display:none;">
+        <p>（之後放股票 Pool / FCN Pool 管理）</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="module" src="./js/main.js?v=66"></script>
+
+</body>
+</html>
