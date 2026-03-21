@@ -227,12 +227,10 @@ export function renderModule1News(newsData, marketData) {
       ${
         topNews.length > 0
           ? `
-        <div class="section">
-          <h3>🔥 今日重點（${topNews.length}）</h3>
-          <div class="news-list">
-            ${topNews.map((news, idx) => renderNewsCard(news, `top-${idx}`, true)).join("")}
-          </div>
-        </div>
+       <div class="section">
+  <button type="button" class="news-blue-btn" onclick="rerunDecision()">🔄 套用判定並重新計算</button>
+  <button type="button" class="news-blue-btn pdf-btn" onclick="exportPDF()">📄 匯出 PDF 報告</button>
+</div>
       `
           : ""
       }
