@@ -434,3 +434,38 @@ body {
   color: #dc2626;
   font-weight: 700;
 }
+
+.m3a-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.m3a-summary-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.m3a-summary-title {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.m3a-summary-value {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111;
+}
+
+.m3a-summary-value.up {
+  color: #16a34a;
+}
+
+.m3a-summary-value.down {
+  color: #dc2626;
+}
