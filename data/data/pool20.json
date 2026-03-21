@@ -1,0 +1,842 @@
+[
+  {
+    "symbol": "TSM",
+    "name": "Taiwan Semiconductor Manufacturing",
+    "sector": "AI_SEMI",
+    "subsector": "FOUNDRY",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "核心",
+    "baseline_score": 10,
+    "baseline_note": "AI半導體核心資產，適合FCN主骨架",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "AI_CHAIN",
+    "downside_risk_level": "MEDIUM",
+    "basket_role": "CORE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "NVDA",
+    "name": "NVIDIA",
+    "sector": "AI_SEMI",
+    "subsector": "GPU",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "核心",
+    "baseline_score": 10,
+    "baseline_note": "AI主軸龍頭，但事件與波動需持續監控",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "HIGH",
+    "correlation_cluster": "AI_CHAIN",
+    "downside_risk_level": "HIGH",
+    "basket_role": "CORE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "AVGO",
+    "name": "Broadcom",
+    "sector": "AI_SEMI",
+    "subsector": "ASIC_NETWORKING",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "核心",
+    "baseline_score": 10,
+    "baseline_note": "AI與網通結合，適合核心配置",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "AI_CHAIN",
+    "downside_risk_level": "MEDIUM",
+    "basket_role": "CORE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "ASML",
+    "name": "ASML",
+    "sector": "AI_SEMI",
+    "subsector": "EQUIPMENT",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "核心",
+    "baseline_score": 10,
+    "baseline_note": "半導體設備核心資產",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "SEMI_EQUIPMENT",
+    "downside_risk_level": "MEDIUM",
+    "basket_role": "CORE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "AMAT",
+    "name": "Applied Materials",
+    "sector": "AI_SEMI",
+    "subsector": "EQUIPMENT",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "核心",
+    "baseline_score": 10,
+    "baseline_note": "設備股中屬可用核心配置",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "SEMI_EQUIPMENT",
+    "downside_risk_level": "MEDIUM",
+    "basket_role": "CORE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "MSFT",
+    "name": "Microsoft",
+    "sector": "CLOUD_SOFTWARE",
+    "subsector": "CLOUD_PLATFORM",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "核心",
+    "baseline_score": 10,
+    "baseline_note": "雲端與AI應用核心龍頭",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "LOW",
+    "correlation_cluster": "MEGA_SOFTWARE",
+    "downside_risk_level": "LOW",
+    "basket_role": "CORE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "GOOG",
+    "name": "Alphabet",
+    "sector": "CLOUD_SOFTWARE",
+    "subsector": "PLATFORM_CLOUD",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "核心",
+    "baseline_score": 10,
+    "baseline_note": "平台與雲端核心標的",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "LOW",
+    "correlation_cluster": "MEGA_SOFTWARE",
+    "downside_risk_level": "LOW",
+    "basket_role": "CORE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "AMZN",
+    "name": "Amazon",
+    "sector": "CLOUD_SOFTWARE",
+    "subsector": "CLOUD_CONSUMER",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "平衡",
+    "baseline_score": 8,
+    "baseline_note": "雲端強，但消費與估值使其較適合作為補位",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "MEGA_SOFTWARE",
+    "downside_risk_level": "MEDIUM",
+    "basket_role": "BALANCER",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "ORCL",
+    "name": "Oracle",
+    "sector": "CLOUD_SOFTWARE",
+    "subsector": "ENTERPRISE_SOFTWARE",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "平衡",
+    "baseline_score": 8,
+    "baseline_note": "企業軟體穩健，適合第二層補位",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "ENTERPRISE_SOFTWARE",
+    "downside_risk_level": "LOW",
+    "basket_role": "BALANCER",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "AAPL",
+    "name": "Apple",
+    "sector": "CONSUMER_PLATFORM",
+    "subsector": "CONSUMER_ECOSYSTEM",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "核心",
+    "baseline_score": 10,
+    "baseline_note": "消費平台核心資產，流動性佳",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "LOW",
+    "correlation_cluster": "MEGA_CONSUMER",
+    "downside_risk_level": "LOW",
+    "basket_role": "CORE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "META",
+    "name": "Meta Platforms",
+    "sector": "CONSUMER_PLATFORM",
+    "subsector": "DIGITAL_PLATFORM",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "平衡",
+    "baseline_score": 8,
+    "baseline_note": "平台型成長股，適合與核心搭配",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "DIGITAL_PLATFORM",
+    "downside_risk_level": "MEDIUM",
+    "basket_role": "BALANCER",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "TSLA",
+    "name": "Tesla",
+    "sector": "CONSUMER_PLATFORM",
+    "subsector": "EV_PLATFORM",
+    "allow_fcn": false,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "避免",
+    "baseline_score": 1,
+    "baseline_note": "高波動且事件驅動強，不適合作FCN核心",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "HIGH",
+    "correlation_cluster": "EV_HIGH_BETA",
+    "downside_risk_level": "HIGH",
+    "basket_role": "AVOID",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "JPM",
+    "name": "JPMorgan Chase",
+    "sector": "FINANCIAL",
+    "subsector": "BANK",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "防守",
+    "baseline_score": 7,
+    "baseline_note": "大型金融股，適合降低波動",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "LOW",
+    "correlation_cluster": "MEGA_BANK",
+    "downside_risk_level": "LOW",
+    "basket_role": "DEFENSIVE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "BAC",
+    "name": "Bank of America",
+    "sector": "FINANCIAL",
+    "subsector": "BANK",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "防守",
+    "baseline_score": 7,
+    "baseline_note": "金融補位股，可與核心搭配",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "MEGA_BANK",
+    "downside_risk_level": "MEDIUM",
+    "basket_role": "DEFENSIVE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "UNH",
+    "name": "UnitedHealth",
+    "sector": "HEALTHCARE",
+    "subsector": "MANAGED_CARE",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "防守",
+    "baseline_score": 7,
+    "baseline_note": "醫療防守核心，適合作為波動緩衝",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "LOW",
+    "correlation_cluster": "HEALTHCARE_DEF",
+    "downside_risk_level": "LOW",
+    "basket_role": "DEFENSIVE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "JNJ",
+    "name": "Johnson & Johnson",
+    "sector": "HEALTHCARE",
+    "subsector": "PHARMA_MEDTECH",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "防守",
+    "baseline_score": 7,
+    "baseline_note": "防守型醫療股，適合FCN穩定搭配",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "LOW",
+    "correlation_cluster": "HEALTHCARE_DEF",
+    "downside_risk_level": "LOW",
+    "basket_role": "DEFENSIVE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "XOM",
+    "name": "Exxon Mobil",
+    "sector": "ENERGY",
+    "subsector": "INTEGRATED_OIL",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "平衡",
+    "baseline_score": 8,
+    "baseline_note": "能源股可作平衡補位，但受油價影響較大",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "ENERGY_MAJOR",
+    "downside_risk_level": "MEDIUM",
+    "basket_role": "BALANCER",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "CVX",
+    "name": "Chevron",
+    "sector": "ENERGY",
+    "subsector": "INTEGRATED_OIL",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "平衡",
+    "baseline_score": 8,
+    "baseline_note": "能源平衡補位股",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "ENERGY_MAJOR",
+    "downside_risk_level": "MEDIUM",
+    "basket_role": "BALANCER",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "SPY",
+    "name": "SPDR S&P 500 ETF",
+    "sector": "ETF",
+    "subsector": "BROAD_MARKET",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "核心",
+    "baseline_score": 10,
+    "baseline_note": "最穩的大盤ETF核心資產",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "LOW",
+    "correlation_cluster": "ETF_BROAD",
+    "downside_risk_level": "LOW",
+    "basket_role": "CORE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "QQQ",
+    "name": "Invesco QQQ Trust",
+    "sector": "ETF",
+    "subsector": "TECH_BROAD",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "核心",
+    "baseline_score": 10,
+    "baseline_note": "科技ETF核心資產",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "MEDIUM",
+    "correlation_cluster": "ETF_TECH",
+    "downside_risk_level": "MEDIUM",
+    "basket_role": "CORE",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  },
+  {
+    "symbol": "LQD",
+    "name": "iShares iBoxx Investment Grade Corporate Bond ETF",
+    "sector": "ETF",
+    "subsector": "IG_BOND",
+    "allow_fcn": true,
+
+    "price": null,
+    "change": null,
+    "change_pct": null,
+    "range_1m_pct": null,
+    "range_6m_pct": null,
+    "eps_2025": null,
+    "pe_2025": null,
+    "eps_2026": null,
+    "pe_2026": null,
+    "last_update": null,
+
+    "baseline_group": "收益",
+    "baseline_score": 4,
+    "baseline_note": "收益工具型標的，可少量搭配",
+
+    "pure_score": null,
+    "pure_group": null,
+    "pure_formula_version": "M3A_PURE_V1",
+
+    "event_score": null,
+    "event_group": null,
+    "event_impact": null,
+    "event_formula_version": "M3A_EVENT_V1",
+
+    "volatility_level": "LOW",
+    "correlation_cluster": "ETF_BOND",
+    "downside_risk_level": "LOW",
+    "basket_role": "YIELD",
+
+    "shift_flag": false,
+    "shift_source": null,
+    "shift_note": null
+  }
+]
