@@ -314,7 +314,7 @@ window.rerunDecision = function() {
   alert("這一版已完成畫面與覆核流程。下一步再正式連動 Module3 重算。");
 };
 
-let newsMode = "on"; // 預設新聞加權
+window.newsMode = "news"; // 預設新聞加權
 
 function updateNewsModeUI() {
   const pureBtn = document.getElementById("mode-pure");
