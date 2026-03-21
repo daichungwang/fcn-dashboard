@@ -213,3 +213,77 @@ function initDashboard() {
 
 // 執行
 initDashboard();
+
+// ===== M3-A：讀取 pool20.json 並顯示 =====
+function renderStockCard(stock) {
+  const baselineGroup = stock.baseline_group ?? "--";
+  const baselineScore = stock.baseline_score ?? "--";
+  const pureGroup = stock.pure_group ?? "--";
+  const pureScore = stock.pure_score ?? "--";
+  const eventGroup = stock.event_group ?? "--";
+  const eventScore = stock.event_score ?? "--";
+  const eventImpact = stock.event_impact ?? "--";
+
+  return `
+    <div class="stock-card">
+      <div class="stock-head">
+        <strong>${stock.symbol}</strong> ｜ ${stock.name}
+      </div>
+
+      <div class="stock-meta">
+        ${stock.sector} ｜ ${stock.subsector} ｜ allow_fcn: ${stock.allow_fcn ? "Y" : "N"}
+      </div>
+
+      <div class="stock-row">
+        <span>Baseline：${baselineGroup}（${baselineScore}）</span>
+      </div>
+
+      <div class="stock-row">
+        <span>Pure：${pureGroup}（${pureScore}）</span>
+      </div>
+
+      <div class="stock-row">
+        <span>Event：${eventGroup}（${eventScore}）</span>
+      </div>
+
+      <div class="stock-row">
+        <span>ΔEvent：${eventImpact}</span>
+      </div>
+
+      <div class="stock-note">
+        ${stock.baseline_note ?? ""}
+      </div>
+    </div>
+  `;
+}
+
+function renderM3AStocks(pool) {
+  const el = document.getElementById("m3a-content");
+  if (!el) return;
+
+  if (!Array.isArray(pool) || pool.length === 0) {
+    el.innerHTML = `<p>目前沒有股票資料</p>`;
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="stock-list">
+      ${pool.map(renderStockCard).join("")}
+    </div>
+  `;
+}
+
+async function initM3A() {
+  try {
+    const pool20 = await loadJson("./data/pool20.json");
+    renderM3AStocks(pool20);
+  } catch (error) {
+    console.error("M3-A 載入失敗：", error);
+    const el = document.getElementById("m3a-content");
+    if (el) {
+      el.innerHTML = `<p>M3-A 資料載入失敗</p>`;
+    }
+  }
+}
+
+initM3A();
