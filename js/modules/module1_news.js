@@ -338,14 +338,19 @@ function bindNewsModeEvents() {
   if (!pureBtn || !newsBtn) return;
 
   pureBtn.onclick = () => {
-    window.newsMode = "pure";
-    updateNewsModeUI();
-    if (typeof window.init === "function") window.init();
-  };
+  window.newsMode = "pure";
+  updateNewsModeUI();
 
-  newsBtn.onclick = () => {
-    window.newsMode = "news";
-    updateNewsModeUI();
-    if (typeof window.init === "function") window.init();
-  };
-}
+  if (typeof window.renderModule3 === "function") {
+    window.renderModule3(window.__data);
+  }
+};
+
+newsBtn.onclick = () => {
+  window.newsMode = "news";
+  updateNewsModeUI();
+
+  if (typeof window.renderModule3 === "function") {
+    window.renderModule3(window.__data);
+  }
+};
