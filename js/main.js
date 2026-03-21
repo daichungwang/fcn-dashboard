@@ -371,14 +371,47 @@ function renderStockCard(stock) {
 
 function renderM3AStocks(pool) {
   const el = document.getElementById("m3a-content");
+  const summaryEl = document.getElementById("m3a-summary");
   if (!el) return;
 
   if (!Array.isArray(pool) || pool.length === 0) {
     el.innerHTML = `<p>目前沒有股票資料</p>`;
+    if (summaryEl) summaryEl.innerHTML = "";
     return;
   }
 
   const enrichedPool = pool.map(enrichStock);
+
+  const total = enrichedPool.length;
+  const allowFcnCount = enrichedPool.filter((s) => s.allow_fcn).length;
+  const eventUpCount = enrichedPool.filter((s) => Number(s.event_impact) > 0).length;
+  const eventDownCount = enrichedPool.filter((s) => Number(s.event_impact) < 0).length;
+
+  if (summaryEl) {
+    summaryEl.innerHTML = `
+      <div class="m3a-summary-grid">
+        <div class="m3a-summary-card">
+          <div class="m3a-summary-title">股票總數</div>
+          <div class="m3a-summary-value">${total}</div>
+        </div>
+
+        <div class="m3a-summary-card">
+          <div class="m3a-summary-title">可做 FCN</div>
+          <div class="m3a-summary-value">${allowFcnCount}</div>
+        </div>
+
+        <div class="m3a-summary-card">
+          <div class="m3a-summary-title">Event 上修</div>
+          <div class="m3a-summary-value up">${eventUpCount}</div>
+        </div>
+
+        <div class="m3a-summary-card">
+          <div class="m3a-summary-title">Event 下修</div>
+          <div class="m3a-summary-value down">${eventDownCount}</div>
+        </div>
+      </div>
+    `;
+  }
 
   el.innerHTML = `
     <div class="stock-list">
@@ -386,7 +419,6 @@ function renderM3AStocks(pool) {
     </div>
   `;
 }
-
 async function initM3A() {
   try {
     const pool20 = await loadJson("./data/pool20.json");
