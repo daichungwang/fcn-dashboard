@@ -917,3 +917,33 @@ init();
   color: #666;
   font-weight: 700;
 }
+/* ===== Module1 按鈕（與純模型同尺寸） ===== */
+.module1-action-row {
+  display: flex;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.module1-action-row .action-btn {
+  flex: 1;
+  min-height: 72px;
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 手機版 */
+@media (max-width: 768px) {
+  .module1-action-row {
+    gap: 12px;
+  }
+
+  .module1-action-row .action-btn {
+    min-height: 64px;
+    font-size: 16px;
+    padding: 0 12px;
+  }
+}
