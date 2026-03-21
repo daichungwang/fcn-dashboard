@@ -17,9 +17,77 @@
   <div id="module2-health"></div>
 
   <h2>模組3：進場決策</h2>
-  <div id="module3-decision"></div>
+  <div id="module3">
 
-  <link rel="stylesheet" href="./styles.css?v=57">
-  <script type="module" src="./js/main.js?v=57"></script>
+  <h2>模組三｜FCN 決策系統</h2>
+
+  <div class="m3-explain">
+    <h3>模型說明</h3>
+    <p>Baseline：理性市場共識（長期定位）</p>
+    <p>Pure：模型判斷（策略觀點）</p>
+    <p>Event：市場情緒（短期偏移）</p>
+  </div>
+
+  <div class="m3-dashboard">
+    <h3>Decision Dashboard</h3>
+
+    <div class="dashboard-grid">
+      <div class="card">
+        <h4>M1｜機會（Coverage）</h4>
+        <p id="m1-stock">股票建議率：--</p>
+        <p id="m1-fcn">FCN 建議率：--</p>
+      </div>
+
+      <div class="card">
+        <h4>M2｜本週風險指數</h4>
+        <p id="m2-risk">風險指數：--</p>
+        <p id="m2-dpure">ΔPure：--</p>
+        <p id="m2-devent">ΔEvent：--</p>
+      </div>
+
+      <div class="card">
+        <h4>M3｜FCN適合度</h4>
+        <p id="m3-score">適合度：--</p>
+      </div>
+
+      <div class="card">
+        <h4>M4｜系統解釋度</h4>
+        <p id="m4-score">System Score：--</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="module-block">
+    <h3>Module3-A｜標的評級與策略定位</h3>
+    <div id="m3a-content"></div>
+  </div>
+
+  <div class="module-block">
+    <h3>Module3-B｜FCN 組合遴選與建議</h3>
+    <div id="m3b-content"></div>
+  </div>
+
+  <div class="module-block">
+    <h3>Module3-C｜外部 FCN 單筆評估</h3>
+    <div id="m3c-content"></div>
+  </div>
+
+  <div class="module-block">
+    <h3>股票查詢</h3>
+    <input type="text" id="stock-search" placeholder="輸入股票代號">
+    <div id="stock-result"></div>
+  </div>
+
+  <div class="module-block">
+    <h3 onclick="togglePool()">⚙️ Pool 管理</h3>
+    <div id="pool-section" style="display:none;">
+      <p>（之後放股票 Pool / FCN Pool 管理）</p>
+    </div>
+  </div>
+
+</div>
+
+  <link rel="stylesheet" href="./styles.css?v=58">
+  <script type="module" src="./js/main.js?v=58"></script>
 </body>
 </html>
