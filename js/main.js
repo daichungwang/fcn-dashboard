@@ -120,7 +120,6 @@ async function init() {
   }
 
   // === Module3 ===
-  // === Module3 ===
 try {
   if (m3 && pool.length > 0) {
     config.newsData = newsData;
