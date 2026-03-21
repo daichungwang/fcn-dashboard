@@ -31,9 +31,11 @@ window.toggleM3Explain = function () {
 };
 
 window.toggleM2Detail = function (btn) {
-  if (!btn) return;
-  const detail = btn.nextElementSibling;
+  const container = btn.closest("div");
+  const detail = container.querySelector("[data-detail]");
+
   if (!detail) return;
+
   const isHidden = detail.style.display === "none" || detail.style.display === "";
   detail.style.display = isHidden ? "block" : "none";
   btn.textContent = isHidden ? "收合詳細" : "展開詳細";
