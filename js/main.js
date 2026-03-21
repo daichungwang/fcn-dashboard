@@ -441,3 +441,14 @@ window.toggleM3Explain = function () {
   el.style.display = el.style.display === "none" ? "block" : "none";
 };
 
+window.togglePool = function () {
+  const el = document.getElementById("pool-section");
+  if (!el) return;
+  el.style.display = el.style.display === "none" ? "block" : "none";
+};
+
+window.toggleM3Explain = function () {
+  const el = document.getElementById("m3-explain-detail");
+  if (!el) return;
+  el.style.display = el.style.display === "none" ? "block" : "none";
+};
