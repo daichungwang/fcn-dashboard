@@ -333,3 +333,7 @@ function bindNewsModeEvents() {
     }
   };
 }
+window.exportPDF = function () {
+  window.print();
+};
+
