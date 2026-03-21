@@ -164,21 +164,51 @@ window.togglePool = function () {
 
 // ✅ Dashboard 初始化
 function initDashboard() {
-  const m1Stock = document.getElementById("m1-stock");
-  const m1Fcn = document.getElementById("m1-fcn");
-  const m2Risk = document.getElementById("m2-risk");
-  const m2DPure = document.getElementById("m2-dpure");
-  const m2DEvent = document.getElementById("m2-devent");
-  const m3Score = document.getElementById("m3-score");
-  const m4Score = document.getElementById("m4-score");
 
-  if (m1Stock) m1Stock.textContent = "股票建議率：--";
-  if (m1Fcn) m1Fcn.textContent = "FCN 建議率：--";
-  if (m2Risk) m2Risk.textContent = "風險指數：--";
-  if (m2DPure) m2DPure.textContent = "ΔPure：--";
-  if (m2DEvent) m2DEvent.textContent = "ΔEvent：--";
-  if (m3Score) m3Score.textContent = "適合度：--";
-  if (m4Score) m4Score.textContent = "System Score：--";
+  // ===== M1：機會 =====
+  const stockTotal = 121;
+  const stockPick = 45;
+
+  const fcnTotal = 120;
+  const fcnPick = 32;
+
+  const stockRate = Math.round((stockPick / stockTotal) * 100);
+  const fcnRate = Math.round((fcnPick / fcnTotal) * 100);
+
+  document.getElementById("m1-stock").textContent =
+    `股票建議率：${stockRate}%`;
+
+  document.getElementById("m1-fcn").textContent =
+    `FCN 建議率：${fcnRate}%`;
+
+
+  // ===== M2：風險 =====
+  const risk = 7.1;
+  const dPure = -0.3;
+  const dEvent = -1.2;
+
+  document.getElementById("m2-risk").textContent =
+    `風險指數：${risk}`;
+
+  document.getElementById("m2-dpure").textContent =
+    `ΔPure：${dPure > 0 ? "+" : ""}${dPure}`;
+
+  document.getElementById("m2-devent").textContent =
+    `ΔEvent：${dEvent > 0 ? "+" : ""}${dEvent}`;
+
+
+  // ===== M3：適合度 =====
+  const fcnScore = 6.8;
+
+  document.getElementById("m3-score").textContent =
+    `適合度：${fcnScore}`;
+
+
+  // ===== M4：系統解釋度 =====
+  const systemScore = 8.2;
+
+  document.getElementById("m4-score").textContent =
+    `System Score：${systemScore}`;
 }
 
 // 執行
