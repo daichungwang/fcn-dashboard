@@ -45,7 +45,23 @@ window.toggleM2Detail = function (btn) {
   detail.style.display = isHidden ? "block" : "none";
   btn.textContent = isHidden ? "收合詳細" : "展開詳細";
 };
+window.expandAllM2Details = function () {
+  document.querySelectorAll(".m2-position-card").forEach((card) => {
+    const detail = card.querySelector("[data-detail]");
+    const btn = card.querySelector(".m2-detail-btn");
+    if (detail) detail.style.display = "block";
+    if (btn) btn.textContent = "收合詳細";
+  });
+};
 
+window.collapseAllM2Details = function () {
+  document.querySelectorAll(".m2-position-card").forEach((card) => {
+    const detail = card.querySelector("[data-detail]");
+    const btn = card.querySelector(".m2-detail-btn");
+    if (detail) detail.style.display = "none";
+    if (btn) btn.textContent = "展開詳細";
+  });
+};
 function getGroupClass(group) {
   if (group === "核心") return "tag-core";
   if (group === "平衡") return "tag-balance";
