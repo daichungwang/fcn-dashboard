@@ -872,3 +872,34 @@ init();
   font-weight: 700;
   color: #444;
 }
+.pdf-btn {
+  margin-top: 12px;
+}
+
+@media print {
+  .news-mode-bar,
+  .news-choice-row,
+  .news-link-btn,
+  .section-toggle-btn,
+  .news-blue-btn,
+  .m3-btn,
+  .m2-btn,
+  button {
+    display: none !important;
+  }
+
+  body {
+    background: #fff !important;
+  }
+
+  .section,
+  .m2-summary-card,
+  .m2-top-risk-card,
+  .m2-section,
+  .m3-card,
+  .news-card {
+    box-shadow: none !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}
