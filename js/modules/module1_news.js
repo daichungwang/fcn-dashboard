@@ -52,8 +52,8 @@ function renderMarketTable(marketData) {
     ? marketData
     : Object.entries(marketData || {}).map(([name, value]) => ({
         name,
-        value: value?.value ?? value,
-        previous: value?.previous ?? "-"
+        value: value && typeof value === "object" ? (value.value ?? "-") : (value ?? "-"),
+        previous: value && typeof value === "object" ? (value.previous ?? value.prev ?? "-") : "-"
       }));
 
   if (!rows.length) return "";
