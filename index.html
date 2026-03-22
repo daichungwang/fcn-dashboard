@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>振宇 FCN 系統</title>
+
+  <style>
+    :root{
+      --bg:#f5f7fb;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --blue:#2563eb;
+      --shadow:0 2px 10px rgba(0,0,0,.05);
+      --radius:18px;
+    }
+
+    *{ box-sizing:border-box; }
+
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+      line-height:1.5;
+    }
+
+    .page{
+      max-width:860px;
+      margin:0 auto;
+      padding:24px 16px 40px;
+    }
+
+    h1{
+      font-size:clamp(34px, 6vw, 52px);
+      margin:0 0 22px;
+      font-weight:900;
+      letter-spacing:.5px;
+    }
+
+    h2{
+      font-size:clamp(26px, 4.8vw, 40px);
+      margin:28px 0 14px;
+      font-weight:900;
+    }
+
+    h3{
+      font-size:clamp(22px, 4vw, 30px);
+      margin:0 0 12px;
+      font-weight:900;
+    }
+
+    .section{
+      margin-bottom:26px;
+    }
+
+    .module-block{
+      background:transparent;
+      margin-bottom:24px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:18px;
+      margin-bottom:14px;
+    }
+
+    .divider{
+      height:1px;
+      background:#d1d5db;
+      margin:28px 0;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .line{
+      margin:6px 0;
+      font-size:16px;
+    }
+
+    .muted{
+      color:var(--muted);
+    }
+
+    .big{
+      font-size:44px;
+      font-weight:900;
+      line-height:1;
+    }
+
+    .mini-title{
+      color:var(--muted);
+      font-size:14px;
+      margin-bottom:8px;
+    }
+
+    .up{ color:#16a34a; }
+    .down{ color:#dc2626; }
+
+    .btn,
+    .tab-btn{
+      appearance:none;
+      border:1px solid #cfd4dc;
+      background:#fff;
+      color:var(--blue);
+      padding:10px 16px;
+      border-radius:999px;
+      font-size:15px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 1px 2px rgba(0,0,0,.03);
+    }
+
+    .tab-btn.active{
+      background:var(--blue);
+      color:#fff;
+      border-color:var(--blue);
+    }
+
+    .group-tabs,
+    .btn-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin:0 0 14px;
+    }
+
+    input[type="text"]{
+      width:100%;
+      padding:14px 16px;
+      border:1px solid #d1d5db;
+      border-radius:14px;
+      font-size:16px;
+      background:#fff;
+    }
+
+    @media (max-width:640px){
+      .grid-2{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <h1>振宇 FCN 系統</h1>
+
+    <!-- Module 1 -->
+    <section id="module1" class="section">
+      <h2>模組1：外部市場與新聞雷達</h2>
+      <div id="module1-news"></div>
+    </section>
+
+    <!-- Module 2 -->
+    <section id="module2" class="section">
+      <h2>模組2：持倉健康</h2>
+      <div id="module2-health"></div>
+    </section>
+
+    <!-- Module 3 -->
+    <section id="module3" class="section">
+      <h2>模組三｜FCN 決策系統</h2>
+
+      <!-- 模型說明 -->
+      <div class="module-block">
+        <h3>Module3｜模型說明與 Dashboard</h3>
+        <div id="m3-model-content"></div>
+      </div>
+
+      <!-- Decision Dashboard -->
+      <div class="module-block">
+        <h3>Decision Dashboard</h3>
+        <div class="grid-2">
+          <div class="card">
+            <h3 style="font-size:22px;color:#2563eb;">M1｜機會（Coverage）</h3>
+            <div id="m1-stock" class="line">股票建議率：--</div>
+            <div id="m1-fcn" class="line">FCN 建議率：--</div>
+          </div>
+
+          <div class="card">
+            <h3 style="font-size:22px;color:#2563eb;">M2｜本週風險指數</h3>
+            <div id="m2-risk" class="line">風險指數：--</div>
+            <div id="m2-dpure" class="line">ΔPure：--</div>
+            <div id="m2-devent" class="line">ΔEvent：--</div>
+          </div>
+
+          <div class="card">
+            <h3 style="font-size:22px;color:#2563eb;">M3｜FCN 適合度</h3>
+            <div id="m3-score" class="line">適合度：--</div>
+          </div>
+
+          <div class="card">
+            <h3 style="font-size:22px;color:#2563eb;">M4｜系統解釋度</h3>
+            <div id="m4-score" class="line">System Score：--</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Module3-A -->
+      <div class="module-block">
+        <h3>Module3-A｜標的評級與策略定位</h3>
+        <div id="m3a-summary"></div>
+        <div id="m3a-content"></div>
+      </div>
+
+      <!-- Module3-B -->
+      <div class="module-block">
+        <h3>Module3-B｜FCN 組合遴選與建議</h3>
+        <div id="m3b-content"></div>
+      </div>
+
+      <!-- Module3-C -->
+      <div class="module-block">
+        <h3>Module3-C｜外部 FCN 單筆評估</h3>
+        <div id="m3c-content"></div>
+      </div>
+
+      <!-- 股票查詢 -->
+      <div class="module-block">
+        <h3>股票查詢</h3>
+        <input type="text" id="stock-search" placeholder="輸入股票代號" />
+        <div id="stock-result" style="margin-top:12px;"></div>
+      </div>
+
+      <!-- Pool 管理 -->
+      <div class="module-block">
+        <h3 onclick="togglePool()" style="cursor:pointer;">⚙️ Pool 管理</h3>
+        <div id="pool-section" style="display:none;">
+          <div class="card">
+            <p class="line">（之後放股票 Pool / FCN Pool 管理）</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script type="module" src="./js/main.js?v=8"></script>
+</body>
+</html>
