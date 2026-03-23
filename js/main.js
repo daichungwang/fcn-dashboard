@@ -1268,23 +1268,69 @@ window.toggleStockExtra = function (btn) {
   btn.textContent = hidden ? "收合細節" : "展開細節";
 };
 
-window.expandAllM3A = function () {
-  document.querySelectorAll(".m3a-stock-card").forEach((card) => {
-    const extra = card.querySelector(".stock-extra");
-    const btn = card.querySelector(".m3a-detail-btn");
-    if (extra) extra.style.display = "block";
-    if (btn) btn.textContent = "收合細節";
-  });
-};
+function renderM3A(data = window.poolData || []) {
+  const container = document.getElementById("m3a-container");
+  if (!container) return;
 
-window.collapseAllM3A = function () {
-  document.querySelectorAll(".m3a-stock-card").forEach((card) => {
-    const extra = card.querySelector(".stock-extra");
-    const btn = card.querySelector(".m3a-detail-btn");
-    if (extra) extra.style.display = "none";
-    if (btn) btn.textContent = "展開細節";
+  container.innerHTML = "";
+
+  data.forEach((stock) => {
+
+    const card = document.createElement("div");
+    card.className = "m3a-stock-card";
+
+    // ===== Summary =====
+    const summary = document.createElement("div");
+    summary.className = "stock-summary";
+
+    summary.innerHTML = `
+      <div style="font-weight:700;font-size:18px;">
+        ${stock.symbol} ｜ ${stock.name}
+      </div>
+      <div>
+        Baseline：${stock.baseline_label} (${stock.baseline_score})
+      </div>
+      <div>
+        Pure：${stock.pure_label} (${stock.pure_score})
+      </div>
+      <div style="color:${stock.delta_pure>=0?'green':'red'};">
+        ΔPure：${stock.delta_pure ?? 0}
+      </div>
+    `;
+
+    // ===== Button =====
+    const btn = document.createElement("button");
+    btn.className = "m3a-detail-btn";
+    btn.textContent = "展開細節";
+
+    // ===== Body =====
+    const body = document.createElement("div");
+    body.className = "stock-body";
+    body.style.display = "none";
+
+    body.innerHTML = `
+      <div>現價：${stock.price ?? "--"}</div>
+      <div>Ret：${stock.ret_1m ?? 0} / ${stock.ret_6m ?? 0} / ${stock.ret_12m ?? 0}</div>
+      <div>Vol：${stock.vol_1m ?? 0} / ${stock.vol_6m ?? 0} / ${stock.vol_12m ?? 0}</div>
+      <div>Vol Score：${stock.vol_score ?? 0}</div>
+      <div>FCN：${stock.fcn_pure ?? "-"} / ${stock.fcn_event ?? "-"}</div>
+    `;
+
+    // ===== Toggle =====
+    btn.onclick = () => {
+      const open = body.style.display === "block";
+      body.style.display = open ? "none" : "block";
+      btn.textContent = open ? "展開細節" : "收合細節";
+    };
+
+    // ===== 組裝 =====
+    card.appendChild(summary);
+    card.appendChild(btn);
+    card.appendChild(body);
+
+    container.appendChild(card);
   });
-};
+}
 
 // ---------- 啟動 ----------
 function initStockSearch() {
