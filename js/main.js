@@ -1,15 +1,14 @@
-// ====== fallback mock（保證有畫面） ======
-const mockStocks = [
-  { symbol: "NVDA", name: "NVIDIA", score: 10 },
-  { symbol: "TSM", name: "TSMC", score: 9 },
-  { symbol: "AAPL", name: "Apple", score: 8 },
-  { symbol: "MSFT", name: "Microsoft", score: 9 }
-];
+// ==========================================
+// 振宇 FCN 系統 main.js V7.5（完整穩定版）
+// ==========================================
+
+// ===== 全域狀態 =====
 const appState = {
   stocks: [],
   expandedAll: false
 };
 
+// ===== 模擬資料（一定會出畫面）=====
 const mockStocks = [
   { symbol: "NVDA", name: "NVIDIA", score: 10 },
   { symbol: "TSM", name: "TSMC", score: 9 },
@@ -20,38 +19,35 @@ const mockStocks = [
   { symbol: "META", name: "Meta", score: 7 }
 ];
 
+// ===== 初始化 =====
 document.addEventListener("DOMContentLoaded", () => {
   appState.stocks = mockStocks;
   renderStocks();
 });
 
+// ===== 渲染股票 =====
 function renderStocks() {
   const container = document.getElementById("stock-list");
   if (!container) return;
 
   container.innerHTML = "";
 
-  appState.stocks.forEach(stock => {
+  appState.stocks.forEach((stock, index) => {
     const card = document.createElement("div");
     card.className = "stock-card";
 
     card.innerHTML = `
-      <div style="font-size:18px;font-weight:600">
+      <div style="font-weight:bold; font-size:18px;">
         ${stock.symbol} | ${stock.name}
       </div>
+      <div>Score：${stock.score}</div>
 
-      <div style="margin-top:6px">
-        Score：${stock.score}
-      </div>
-
-      <button onclick="toggleDetail(this)">
+      <button onclick="toggleDetail(${index})">
         展開細節
       </button>
 
-      <div class="extra">
-        <div>FCN 評估：待接入</div>
-        <div>Worst-of：--</div>
-        <div>距離 KI：--</div>
+      <div id="detail-${index}" style="display:none; margin-top:10px;">
+        👉 這裡之後會放 FCN 分析
       </div>
     `;
 
@@ -59,34 +55,34 @@ function renderStocks() {
   });
 }
 
-window.toggleDetail = function(btn) {
-  const card = btn.closest(".stock-card");
-  const extra = card.querySelector(".extra");
+// ===== 單卡展開 =====
+function toggleDetail(index) {
+  const el = document.getElementById(`detail-${index}`);
+  if (!el) return;
 
-  const isHidden =
-    extra.style.display === "none" ||
-    extra.style.display === "";
+  if (el.style.display === "none") {
+    el.style.display = "block";
+  } else {
+    el.style.display = "none";
+  }
+}
 
-  extra.style.display = isHidden ? "block" : "none";
-  btn.innerText = isHidden ? "收合細節" : "展開細節";
-};
+// ===== 全部展開 =====
+function expandAll() {
+  appState.expandedAll = true;
 
-window.expandAll = function() {
-  document.querySelectorAll(".stock-card").forEach(card => {
-    const extra = card.querySelector(".extra");
-    const btn = card.querySelector("button");
-
-    if (extra) extra.style.display = "block";
-    if (btn) btn.innerText = "收合細節";
+  appState.stocks.forEach((_, index) => {
+    const el = document.getElementById(`detail-${index}`);
+    if (el) el.style.display = "block";
   });
-};
+}
 
-window.collapseAll = function() {
-  document.querySelectorAll(".stock-card").forEach(card => {
-    const extra = card.querySelector(".extra");
-    const btn = card.querySelector("button");
+// ===== 全部收合 =====
+function collapseAll() {
+  appState.expandedAll = false;
 
-    if (extra) extra.style.display = "none";
-    if (btn) btn.innerText = "展開細節";
+  appState.stocks.forEach((_, index) => {
+    const el = document.getElementById(`detail-${index}`);
+    if (el) el.style.display = "none";
   });
-};
+}
