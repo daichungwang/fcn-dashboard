@@ -7,7 +7,10 @@ import { FCN_SCENARIOS } from "../../data/fcn_scenarios.js";
 import { FCN_RUNTIME } from "../../data/fcn_runtime.js";
 import { calcFCNPure } from "../core/fcn_engine.js";
 
-
+function getActiveScenarios() {
+  const idSet = new Set(FCN_RUNTIME.activeScenarioIds || []);
+  return FCN_SCENARIOS.filter(s => idSet.has(s.id));
+}
 // ——————————————
 // 狀態
 // ——————————————
