@@ -124,20 +124,46 @@ symbols.forEach(sym => {
 const price = worst ? worst.price_now : "-";
 const ret = worst ? (worst.ret_1d * 100).toFixed(2) + "%" : "-";
 const worstSymbol = worst ? worst.symbol : "-";
-  container.innerHTML = results.map((r, i) => `
+  container.innerHTML = results.map((r, i) => {
+
+    // ⭐⭐⭐ 這裡才可以用 r ⭐⭐⭐
+
+    const symbols = r.detail.symbols || ["NVDA"];
+
+    let worst = null;
+    let worstRet = 999;
+
+    symbols.forEach(sym => {
+        const s = state.marketRuntime[sym];
+        if (!s || s.ret_1d == null) return;
+
+        if (s.ret_1d < worstRet) {
+            worstRet = s.ret_1d;
+            worst = s;
+            worst.symbol = sym;
+        }
+    });
+
+    const price = worst ? worst.price_now : "-";
+    const ret = worst ? (worst.ret_1d * 100).toFixed(2) + "%" : "-";
+    const worstSymbol = worst ? worst.symbol : "-";
+
+    return `
     <div>
-      <b>${r.name}｜${r.score}</b>
-      <button onclick="toggleDetail(${i})">展開</button>
-      <div id="detail-${i}" style="display:none;">
-        stock:${r.detail.stock} ｜ Worst: ${worstSymbol} ${price} (${ret})
-        rate:${r.detail.rate}<br>
-        period:${r.detail.period}<br>
-        p_risk:${r.detail.p_risk}<br>
-        sri:${r.detail.sri}<br>
-        eki:${r.detail.eki}
-      </div>
+        <b>${r.name} | ${r.score}</b>
+        <button onclick="toggleDetail(${i})">展開</button>
+
+        <div id="detail-${i}" style="display:none;">
+            stock:${r.detail.stock} ｜ Worst: ${worstSymbol} ${price} (${ret})<br>
+            rate:${r.detail.rate}<br>
+            period:${r.detail.period}<br>
+            p_risk:${r.detail.p_risk}<br>
+            sri:${r.detail.sri}<br>
+            eki:${r.detail.eki}
+        </div>
     </div>
-  `).join("");
+    `;
+}).join("");
 }
 
 // 展開
