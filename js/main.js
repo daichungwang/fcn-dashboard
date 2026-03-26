@@ -6,14 +6,8 @@
    3. 執行 M1 Event Engine
    4. 顯示 Top 10 股票
 ========================================== */
+import { buildNewsRuntime } from "./modules/m1_event_engine.js";
 
-buildNewsRuntime(
-  news,
-  pool,
-  impactTable,
-  sectorMap,
-  stockSensitivityMap
-)
 import { adjustSensitivity } from "./market_regime_adjuster.js";
 
 /* ---------- 工具 ---------- */
