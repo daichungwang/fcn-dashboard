@@ -107,26 +107,35 @@ function buildIndustryImpactMap(news, sectorMap) {
    5. Market 新聞 → impact_map
    公式：market_score = SID × category_rule
 ------------------------------------------ */
-function buildMarketImpactMap(news, marketRuleTable, stockCategoryMap) {
+function buildMarketImpactMap(news, marketRuleTable, stocks) {
   const result = {};
-  const sid = toNumber(news.sid_score, 0);
+  const sid = Number(news.sid_score || 0);
   const tag = news.subtype;
 
   const categoryRule = marketRuleTable?.[tag] || {};
-  const allSymbols = Object.keys(stockCategoryMap || {});
 
-  allSymbols.forEach((symbol) => {
-    const category = stockCategoryMap[symbol];
-    const rule = toNumber(categoryRule[category], 0);
+  stocks.forEach((stock) => {
+    const category = stock.category;
+    const symbol = stock.symbol;
+
+    const rule = Number(categoryRule[category] || 0);
     if (rule === 0) return;
 
     const score = sid * rule;
-    addImpact(result, symbol, score, news.id);
+
+    if (!result[symbol]) {
+      result[symbol] = { total: 0, news_ids: [] };
+    }
+
+    result[symbol].total += score;
+
+    if (!result[symbol].news_ids.includes(news.id)) {
+      result[symbol].news_ids.push(news.id);
+    }
   });
 
   return result;
 }
-
 /* ------------------------------------------
    6. 單則新聞 → impact_map
 ------------------------------------------ */
