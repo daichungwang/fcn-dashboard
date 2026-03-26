@@ -53,7 +53,7 @@ function addImpact(targetMap, symbol, score, newsId) {
    3. Macro 新聞 → impact_map
    公式：sid_score × sector_weight
 ------------------------------------------ */
-function buildMacroImpactMap(news, impactTable, sectorMap) {
+function buildMacroImpactMap(news, impactTable, sectorMap, stockSensitivityMap) {
   const result = {};
   const subtype = news.subtype;
   const sid = toNumber(news.sid_score, 0);
@@ -66,24 +66,17 @@ function buildMacroImpactMap(news, impactTable, sectorMap) {
       : Object.keys(weightTable);
 
   // ⭐ Step 1：先算總權重
-let totalWeight = 0;
-
 affectedSectors.forEach((sector) => {
-  totalWeight += toNumber(weightTable[sector], 0);
-});
+  const sectorWeight = toNumber(weightTable[sector], 0);
+  if (sectorWeight === 0) return;
 
-// ⭐ 防呆
-if (totalWeight === 0) return result;
-
-// ⭐ Step 2：平均化
-const avgWeight = totalWeight / affectedSectors.length;
-
-// ⭐ Step 3：再分配到股票
-affectedSectors.forEach((sector) => {
   const stocks = getStocksBySector(sector, sectorMap);
 
   stocks.forEach((symbol) => {
-    const score = sid * avgWeight;   // ⭐ 改這裡
+    const sensitivity =
+      stockSensitivityMap?.[symbol]?.[subtype] ?? 1;
+
+    const score = sid * sectorWeight * sensitivity;
     addImpact(result, symbol, score, news.id);
   });
 });
@@ -168,7 +161,7 @@ export function buildNewsImpactMap(
   if (!news || news.is_active === false) return {};
 
   if (news.type === "macro") {
-    return buildMacroImpactMap(news, impactTable, sectorMap);
+    return buildMacroImpactMap(news, impactTable, sectorMap, stockSensitivityMap);
   }
 
   if (news.type === "industry") {
