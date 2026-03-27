@@ -1,5 +1,5 @@
 import { normalizeNewsWithAI } from "./ai_normalizer.js";
-import { getCached, setCached } from "./cache.js";
+import { getCached, setCached } from "./news_cache.js";
 
 /* =========================
    Builder（低成本版）
