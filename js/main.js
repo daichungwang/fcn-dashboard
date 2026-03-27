@@ -2,7 +2,6 @@
 import { buildNewsRuntime } from "./modules/m1_event_engine.js";
 import { fetchNews } from "./news/fetch_news.js";
 import { buildNewsInput } from "./news/build_news_input.js";
-import { fetchNews } from "./news/fetch_news.js";
 /* =========================
    工具
 ========================= */
@@ -168,13 +167,15 @@ async function main() {
 
      const aiNewsInput = await buildNewsInput(raw);
      console.log("🤖 AI news_input:", aiNewsInput);
-    const [news, pool, sectorMap, impactTable, marketRuleTable] = await Promise.all([
-      loadJSON("./data/news_input.json"),
-      loadJSON("./data/pool30.json"),
-      loadJSON("./data/sector_map_v1.json"),
-      loadJSON("./data/impact_table_v2.json"),
-      loadJSON("./data/market_rule_table_v1.json")
-    ]);
+      const [pool, sectorMap, impactTable, marketRuleTable] = await Promise.all([
+  loadJSON("./data/pool30.json"),
+  loadJSON("./data/sector_map_v1.json"),
+  loadJSON("./data/impact_table_v2.json"),
+  loadJSON("./data/market_rule_table_v1.json")
+]);
+
+// ⭐ 用 AI 取代原本 news_input.json
+const news = aiNewsInput;
 
     const runtime = buildNewsRuntime(
       new Date().toISOString().slice(0, 10),
