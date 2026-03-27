@@ -1,12 +1,11 @@
 {
-  "AI_SEMI": ["NVDA","TSM","AVGO","AMAT","MU","AMD","ARM","MRVL","CRDO","ALAB"],
-  "CLOUD_SOFTWARE": ["MSFT","GOOG","AMZN","ORCL"],
-  "PLATFORM": ["META","AAPL"],
-  "CONSUMER": ["COST","TGT","EL"],
-  "FINANCIAL": ["COIN","SOFI"],
+  "AI_SEMI": ["NVDA", "TSM", "AVGO", "AMAT", "MU", "AMD", "MRVL", "CRDO", "ALAB"],
+  "AI_APPLICATION": ["MSFT", "GOOG", "AMZN", "ORCL", "PLTR", "ARM", "TSLA"],
+  "PLATFORM": ["META", "AAPL"],
+  "CONSUMER": ["COST", "TGT", "EL"],
+  "FINANCIAL": ["COIN", "SOFI"],
   "HEALTHCARE": ["UNH"],
-  "TRAVEL": ["CCL","AAL","LVS"],
-  "ETF": ["SMH","QQQ","LQD"],
-  "AUTO": ["TSLA"],
-  "AI_SOFTWARE": ["PLTR"]
+  "TRAVEL": ["CCL", "AAL", "LVS"],
+  "ETF": ["SMH", "QQQ", "LQD"],
+  "ENERGY": []
 }
