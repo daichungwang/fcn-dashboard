@@ -1,0 +1,42 @@
+[
+  { "symbol": "NVDA", "name": "NVIDIA", "sector": "AI_SEMI", "subsector": "GPU", "category": "growth" },
+  { "symbol": "TSM", "name": "TSMC", "sector": "AI_SEMI", "subsector": "FOUNDRY", "category": "core" },
+  { "symbol": "AVGO", "name": "Broadcom", "sector": "AI_SEMI", "subsector": "ASIC", "category": "core" },
+  { "symbol": "AMAT", "name": "Applied Materials", "sector": "AI_SEMI", "subsector": "EQUIPMENT", "category": "core" },
+  { "symbol": "MU", "name": "Micron", "sector": "AI_SEMI", "subsector": "MEMORY", "category": "growth" },
+  { "symbol": "AMD", "name": "AMD", "sector": "AI_SEMI", "subsector": "CPU_GPU", "category": "growth" },
+
+  { "symbol": "MSFT", "name": "Microsoft", "sector": "CLOUD_SOFTWARE", "subsector": "CLOUD", "category": "core" },
+  { "symbol": "GOOG", "name": "Google", "sector": "CLOUD_SOFTWARE", "subsector": "AI_CLOUD", "category": "core" },
+  { "symbol": "AMZN", "name": "Amazon", "sector": "CLOUD_SOFTWARE", "subsector": "AWS", "category": "core" },
+  { "symbol": "ORCL", "name": "Oracle", "sector": "CLOUD_SOFTWARE", "subsector": "DATABASE", "category": "core" },
+
+  { "symbol": "META", "name": "Meta", "sector": "PLATFORM", "subsector": "SOCIAL", "category": "core" },
+  { "symbol": "AAPL", "name": "Apple", "sector": "PLATFORM", "subsector": "ECOSYSTEM", "category": "core" },
+
+  { "symbol": "COST", "name": "Costco", "sector": "CONSUMER", "subsector": "RETAIL", "category": "defensive" },
+  { "symbol": "TGT", "name": "Target", "sector": "CONSUMER", "subsector": "RETAIL", "category": "defensive" },
+  { "symbol": "EL", "name": "Estee Lauder", "sector": "CONSUMER", "subsector": "BEAUTY", "category": "defensive" },
+
+  { "symbol": "COIN", "name": "Coinbase", "sector": "FINANCIAL", "subsector": "CRYPTO", "category": "speculative" },
+  { "symbol": "SOFI", "name": "SoFi", "sector": "FINANCIAL", "subsector": "FINTECH", "category": "speculative" },
+
+  { "symbol": "UNH", "name": "UnitedHealth", "sector": "HEALTHCARE", "subsector": "INSURANCE", "category": "defensive" },
+
+  { "symbol": "CCL", "name": "Carnival", "sector": "TRAVEL", "subsector": "CRUISE", "category": "income" },
+  { "symbol": "AAL", "name": "American Airlines", "sector": "TRAVEL", "subsector": "AIRLINE", "category": "income" },
+  { "symbol": "LVS", "name": "Las Vegas Sands", "sector": "TRAVEL", "subsector": "CASINO", "category": "income" },
+
+  { "symbol": "SMH", "name": "Semiconductor ETF", "sector": "ETF", "subsector": "SEMI", "category": "core" },
+  { "symbol": "QQQ", "name": "Nasdaq ETF", "sector": "ETF", "subsector": "TECH", "category": "core" },
+  { "symbol": "LQD", "name": "Bond ETF", "sector": "ETF", "subsector": "BOND", "category": "defensive" },
+
+  { "symbol": "ARM", "name": "ARM", "sector": "AI_SEMI", "subsector": "IP", "category": "growth" },
+  { "symbol": "MRVL", "name": "Marvell", "sector": "AI_SEMI", "subsector": "ASIC", "category": "growth" },
+
+  { "symbol": "TSLA", "name": "Tesla", "sector": "AUTO", "subsector": "EV", "category": "growth" },
+  { "symbol": "PLTR", "name": "Palantir", "sector": "AI_SOFTWARE", "subsector": "DATA", "category": "growth" },
+
+  { "symbol": "CRDO", "name": "Credo", "sector": "AI_SEMI", "subsector": "CONNECTIVITY", "category": "speculative" },
+  { "symbol": "ALAB", "name": "Astera Labs", "sector": "AI_SEMI", "subsector": "CONNECTIVITY", "category": "speculative" }
+]
