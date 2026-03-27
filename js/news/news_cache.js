@@ -1,7 +1,3 @@
-/* =========================================
-   Simple Cache（localStorage）
-========================================= */
-
 const KEY = "NEWS_CACHE_V1";
 
 export function loadCache() {
