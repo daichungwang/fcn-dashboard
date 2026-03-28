@@ -3,6 +3,7 @@ import { buildNewsRuntime } from "./modules/m1_event_engine.js";
 import { fetchNews } from "./news/fetch_news.js";
 import { buildNewsInput } from "./news/build_news_input.js";
 import { filterNews } from "./news/news_filter.js";
+import { generateFCNRecommendations } from "./modules/fcn_recommendation_engine.js";
 /* =========================
    工具
 ========================= */
