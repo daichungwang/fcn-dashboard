@@ -1,30 +1,35 @@
 /* =========================================
-   News Fetcher V1
-   功能：
-   1. 從 NewsAPI 抓新聞
-   2. 轉成系統可用的 raw format
+   News Fetcher V1 Debug
 ========================================= */
-console.log("🌐 Fetch URL:", url);
+
 export async function fetchNews() {
   try {
-    const API_KEY = "e334543f5b2046eba15d66f9ce060d28"; // 🔥 換成你的 key
+    const API_KEY = "e334543f5b2046eba15d66f9ce060d28";
 
-    const url = `https://newsapi.org/v2/everything?q=(
-  fed OR inflation OR interest rate OR CPI OR oil OR AI OR semiconductor OR stock market
-)&language=en&sortBy=publishedAt&pageSize=30&apiKey=${API_KEY}`;
+    const query = "fed OR inflation OR interest rate OR CPI OR oil OR AI OR semiconductor OR stock market";
+    const url =
+      `https://newsapi.org/v2/everything?` +
+      `q=${encodeURIComponent(query)}` +
+      `&language=en` +
+      `&sortBy=publishedAt` +
+      `&pageSize=30` +
+      `&apiKey=${API_KEY}`;
 
-console.log("🌐 Fetch URL:", url);
+    console.log("🌐 Fetch URL:", url);
 
-const res = await fetch(url);
+    const res = await fetch(url);
+    console.log("📡 response status:", res.status);
 
-console.log("📡 response status:", res.status);
+    const data = await res.json();
+    console.log("📦 API data:", data);
 
-const data = await res.json();
+    if (!res.ok) {
+      throw new Error(`News API 讀取失敗: ${res.status} ${data?.message || ""}`);
+    }
 
-console.log("📦 API data:", data); 
+    const articles = Array.isArray(data.articles) ? data.articles : [];
 
-    // 👉 轉成你系統用的格式
-    const rawNews = data.articles.map((a, i) => ({
+    const rawNews = articles.map((a, i) => ({
       id: "RAW_" + (i + 1),
       title: a.title || "",
       summary: a.description || "",
@@ -36,10 +41,8 @@ console.log("📦 API data:", data);
     console.log("✅ rawNews:", rawNews);
 
     return rawNews;
- 
   } catch (err) {
     console.error("❌ fetchNews error:", err);
     return [];
   }
 }
-console.log("📡 response status:", res.status);
