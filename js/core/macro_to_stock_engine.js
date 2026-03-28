@@ -239,13 +239,4 @@ export function applyMacroToStock({ macroEvents, stock }) {
     macroEvents || []
   );
 }
-// ==========================================
-// 🔧 相容舊版接口（M1 使用）
-// ==========================================
-export function applyMacroToStock({ macroEvents, stock }) {
-  return buildMacroStockSignal(
-    stock,
-    {},
-    macroEvents || []
-  );
-}
+
