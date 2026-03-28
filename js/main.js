@@ -184,13 +184,18 @@ const filterSummary = filterResult.summary;
 
 console.log("🧹 過濾後新聞:", filtered);
 console.log("📊 Filter summary:", filterSummary);
+console.log("🔥 Market news:", filterResult.marketNews);
+
+// 先存到全域，之後 dashboard 可直接讀
+window.filterSummary = filterSummary;
+window.filteredNews = filtered;
+window.marketNews = filterResult.marketNews;
+window.macroNews = filterResult.macroNews;
+window.industryNews = filterResult.industryNews;
+window.stockNews = filterResult.stockNews;
 
 const aiNewsInput = await buildNewsInput(filtered);
 console.log("🤖 AI news_input:", aiNewsInput);
-
-// ⭐ 可選：存到全域，之後 dashboard 可直接讀
-window.filterSummary = filterSummary;
-window.filteredNews = filtered;
 
     const runtime = buildNewsRuntime(
       new Date().toISOString().slice(0, 10),
