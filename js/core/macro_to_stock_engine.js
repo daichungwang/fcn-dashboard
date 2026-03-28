@@ -245,7 +245,7 @@ export function applyMacroToStock({ macroEvents, stock }) {
 export function applyMacroToStock({ macroEvents, stock }) {
   return buildMacroStockSignal(
     stock,
-    {},                 // macro 暫時不用
+    {},
     macroEvents || []
   );
 }
