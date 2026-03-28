@@ -4,23 +4,24 @@
    1. 從 NewsAPI 抓新聞
    2. 轉成系統可用的 raw format
 ========================================= */
-
+console.log("🌐 Fetch URL:", url);
 export async function fetchNews() {
   try {
     const API_KEY = "e334543f5b2046eba15d66f9ce060d28"; // 🔥 換成你的 key
 
     const url = `https://newsapi.org/v2/everything?q=(
-      fed OR inflation OR interest rate OR CPI OR oil OR AI OR semiconductor OR stock market
-    )&language=en&sortBy=publishedAt&pageSize=30&apiKey=${API_KEY}`;
+  fed OR inflation OR interest rate OR CPI OR oil OR AI OR semiconductor OR stock market
+)&language=en&sortBy=publishedAt&pageSize=30&apiKey=${API_KEY}`;
 
-    const res = await fetch(url);
-    if (!res.ok) {
-      throw new Error("News API 讀取失敗");
-    }
+console.log("🌐 Fetch URL:", url);
 
-    const data = await res.json();
+const res = await fetch(url);
 
-    console.log("📰 Raw News API:", data);
+console.log("📡 response status:", res.status);
+
+const data = await res.json();
+
+console.log("📦 API data:", data); 
 
     // 👉 轉成你系統用的格式
     const rawNews = data.articles.map((a, i) => ({
@@ -35,9 +36,10 @@ export async function fetchNews() {
     console.log("✅ rawNews:", rawNews);
 
     return rawNews;
-
+ 
   } catch (err) {
     console.error("❌ fetchNews error:", err);
     return [];
   }
 }
+console.log("📡 response status:", res.status);
