@@ -1,4 +1,4 @@
-import { applyMacroToStock } from "../core/macro_to_stock_engine.js";
+import { buildMacroStockSignals } from "../core/macro_to_stock_engine.js";
 
 /* =========================
    工具
