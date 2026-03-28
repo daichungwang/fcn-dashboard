@@ -1,0 +1,22 @@
+{
+  "利率下降": { "score": 2, "category": ["growth", "speculative"] },
+  "利率上升": { "score": -2, "category": ["growth", "speculative"] },
+
+  "通膨上升": { "score": -2, "category": ["consumer", "growth"] },
+  "通膨下降": { "score": 2, "category": ["consumer", "growth"] },
+
+  "VIX上升": { "score": -2, "category": ["growth", "speculative"] },
+  "VIX下降": { "score": 2, "category": ["growth"] },
+
+  "油價上升": { "score": -2, "category": ["travel", "consumer"] },
+  "油價下降": { "score": 2, "category": ["travel", "consumer"] },
+
+  "美元走強": { "score": -1, "category": ["export", "growth"] },
+  "美元走弱": { "score": 1, "category": ["export", "growth"] },
+
+  "就業強勁": { "score": 1, "category": ["consumer"] },
+  "就業疲弱": { "score": -1, "category": ["consumer"] },
+
+  "風險升溫": { "score": -2, "category": ["growth", "speculative"] },
+  "風險降溫": { "score": 2, "category": ["growth"] }
+}
