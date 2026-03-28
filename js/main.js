@@ -163,39 +163,39 @@ function renderDebugDashboard(stockMap, stockPool) {
 ========================= */
 async function main() {
   try {
-    const [pool, sectorMap, impactTable, marketRuleTable] = await Promise.all([
+    const [pool, sectorMap, impactTable, marketRuleTable, stockSensitivityMap] = await Promise.all([
       loadJSON("./data/pool30.json"),
       loadJSON("./data/sector_map_v1.json"),
       loadJSON("./data/impact_table_v2.json"),
-      loadJSON("./data/market_rule_table_v1.json")
+      loadJSON("./data/market_rule_table_v1.json"),
+      loadJSON("./data/stock_sensitivity_map_v1.json")
     ]);
 
     const raw = await fetchNews();
-console.log("🧪 原始新聞:", raw);
+    console.log("🧪 原始新聞:", raw);
 
-const filterResult = filterNews(raw, pool, {
-  minScore: 2,
-  maxItems: 10,
-  debug: true
-});
+    const filterResult = filterNews(raw, pool, {
+      minScore: 2,
+      maxItems: 10,
+      debug: true
+    });
 
-const filtered = filterResult.kept;
-const filterSummary = filterResult.summary;
+    const filtered = filterResult.kept;
+    const filterSummary = filterResult.summary;
 
-console.log("🧹 過濾後新聞:", filtered);
-console.log("📊 Filter summary:", filterSummary);
-console.log("🔥 Market news:", filterResult.marketNews);
+    console.log("🧹 過濾後新聞:", filtered);
+    console.log("📊 Filter summary:", filterSummary);
+    console.log("🔥 Market news:", filterResult.marketNews);
 
-// 先存到全域，之後 dashboard 可直接讀
-window.filterSummary = filterSummary;
-window.filteredNews = filtered;
-window.marketNews = filterResult.marketNews;
-window.macroNews = filterResult.macroNews;
-window.industryNews = filterResult.industryNews;
-window.stockNews = filterResult.stockNews;
+    window.filterSummary = filterSummary;
+    window.filteredNews = filtered;
+    window.marketNews = filterResult.marketNews;
+    window.macroNews = filterResult.macroNews;
+    window.industryNews = filterResult.industryNews;
+    window.stockNews = filterResult.stockNews;
 
-const aiNewsInput = await buildNewsInput(filtered);
-console.log("🤖 AI news_input:", aiNewsInput);
+    const aiNewsInput = await buildNewsInput(filtered);
+    console.log("🤖 AI news_input:", aiNewsInput);
 
     const runtime = buildNewsRuntime(
       new Date().toISOString().slice(0, 10),
@@ -204,7 +204,7 @@ console.log("🤖 AI news_input:", aiNewsInput);
       sectorMap,
       marketRuleTable,
       pool,
-      {}
+      stockSensitivityMap
     );
 
     console.log("🔥 runtime", runtime);
