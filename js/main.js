@@ -171,17 +171,26 @@ async function main() {
     ]);
 
     const raw = await fetchNews();
-    console.log("🧪 原始新聞:", raw);
+console.log("🧪 原始新聞:", raw);
 
-    const filtered = filterNews(raw, pool, {
-      minScore: 2,
-      maxItems: 10,
-      debug: true
-    });
-    console.log("🧹 過濾後新聞:", filtered);
+const filterResult = filterNews(raw, pool, {
+  minScore: 2,
+  maxItems: 10,
+  debug: true
+});
 
-    const aiNewsInput = await buildNewsInput(filtered);
-    console.log("🤖 AI news_input:", aiNewsInput);
+const filtered = filterResult.kept;
+const filterSummary = filterResult.summary;
+
+console.log("🧹 過濾後新聞:", filtered);
+console.log("📊 Filter summary:", filterSummary);
+
+const aiNewsInput = await buildNewsInput(filtered);
+console.log("🤖 AI news_input:", aiNewsInput);
+
+// ⭐ 可選：存到全域，之後 dashboard 可直接讀
+window.filterSummary = filterSummary;
+window.filteredNews = filtered;
 
     const runtime = buildNewsRuntime(
       new Date().toISOString().slice(0, 10),
