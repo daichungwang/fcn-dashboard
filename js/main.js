@@ -39,7 +39,7 @@ function toNumber(v, fallback = 0) {
 // ==========================================
 // M1：News Pipeline
 // ==========================================
-async function runNewsPipeline() {
+async function runNewsPipeline(pool) {
   let rawNews = await loadJSON("./data/news.json");
 
   if (!Array.isArray(rawNews) || rawNews.length === 0) {
@@ -71,7 +71,7 @@ async function runNewsPipeline() {
   console.log("📊 news_input:", newsInput);
 
   const safeNewsInput = Array.isArray(newsInput) ? newsInput : [];
-  const newsRuntime = buildNewsRuntime(safeNewsInput);
+  const newsRuntime = buildNewsRuntime(safeNewsInput, pool);
   console.log("🔥 news_runtime:", newsRuntime);
 
   return newsRuntime;
