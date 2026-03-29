@@ -3,7 +3,7 @@
 // ==========================================
 
 // M1
-import { buildNewsInput } from "./build_news_input.js";
+import { buildNewsInput } from "../build_news_input.js";
 import { buildNewsRuntime } from "./modules/m1_event_engine.js";
 
 // M3
