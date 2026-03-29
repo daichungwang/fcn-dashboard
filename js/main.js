@@ -81,6 +81,10 @@ async function runNewsPipeline(pool) {
     {}                                     // options
   );
 
+  console.log("🔥 news_runtime:", newsRuntime);
+
+  return newsRuntime;
+}
 // ==========================================
 // M3.1：Stock Evaluation
 // ==========================================
