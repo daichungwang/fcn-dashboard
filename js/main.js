@@ -1,25 +1,26 @@
 // ==========================================
-// 🚀 FCN SYSTEM V1 MAIN (FINAL FREEZE)
+// FCN SYSTEM V1 MAIN
+// Freeze Version
 // ==========================================
 
 // M1
 import { buildNewsInput } from "./news/build_news_input.js";
 import { buildNewsRuntime } from "./modules/m1_event_engine.js";
 
-// M3
+// M3.1
 import { evaluateStock } from "./core/stock_engine.js";
 import { applyMacroToStock } from "./core/macro_to_stock_engine.js";
 
-// FCN
+// M3.2
 import { calcFCNPure } from "./core/fcn_engine.js";
 
 // ==========================================
-// 🧩 工具：讀 JSON
+// 工具：讀 JSON
 // ==========================================
 async function loadJSON(path) {
   try {
     const res = await fetch(path);
-    if (!res.ok) throw new Error(path + " load fail");
+    if (!res.ok) throw new Error(`${path} load fail: ${res.status}`);
     return await res.json();
   } catch (e) {
     console.error("❌ loadJSON:", path, e);
@@ -28,128 +29,238 @@ async function loadJSON(path) {
 }
 
 // ==========================================
-// 🧠 Step 1：News Pipeline
+// 工具：安全數字
+// ==========================================
+function toNumber(v, fallback = 0) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : fallback;
+}
+
+// ==========================================
+// M1：News Pipeline
 // ==========================================
 async function runNewsPipeline() {
-
-  // 👉 讀原始新聞（如果沒有就用 mock）
   let rawNews = await loadJSON("./data/news.json");
 
-  if (!rawNews || rawNews.length === 0) {
-    console.warn("⚠️ 使用 mock news");
-
+  if (!Array.isArray(rawNews) || rawNews.length === 0) {
+    console.warn("⚠️ 使用 fallback news");
     rawNews = [
       {
-        id: "MOCK_1",
+        id: "TEST_1",
         title: "Fed signals rate cuts coming",
         summary: "Market expects easing",
+        source: "Fallback",
+        url: "",
+        published_at: new Date().toISOString()
       },
       {
-        id: "MOCK_2",
+        id: "TEST_2",
         title: "AI demand surges for semiconductors",
-        summary: "NVDA / TSM benefit",
+        summary: "NVDA and TSM benefit from stronger AI demand",
+        source: "Fallback",
+        url: "",
+        published_at: new Date().toISOString()
       }
     ];
   }
 
   console.log("📰 rawNews:", rawNews);
 
-  // 👉 build input
-  const newsInput = buildNewsInput(rawNews);
+  // ✅ 這裡一定要 await
+  const newsInput = await buildNewsInput(rawNews);
   console.log("📊 news_input:", newsInput);
 
-  // 👉 build runtime
-  const newsRuntime = buildNewsRuntime(newsInput);
+  const newsRuntime = buildNewsRuntime(newsInput || []);
   console.log("🔥 news_runtime:", newsRuntime);
 
   return newsRuntime;
 }
 
 // ==========================================
-// 🧠 Step 2：Stock 評分
+// M3.1：Stock Evaluation
 // ==========================================
 function runStockEvaluation(pool, newsRuntime) {
-
   const results = [];
+  const newsItems = Array.isArray(newsRuntime?.news_items) ? newsRuntime.news_items : [];
 
   for (const stock of pool) {
-
-    // 1️⃣ 純基本面
-    const pure = evaluateStock(stock);
-
-    // 2️⃣ event score
+    let pureScore = 0;
     let eventScore = 0;
 
-    for (const news of newsRuntime.news_items || []) {
-      eventScore += applyMacroToStock({
-        macroEvents: [news],
-        stock
-      });
+    // 純股票分數
+    try {
+      const pure = evaluateStock(stock);
+      pureScore = toNumber(pure?.score, 0);
+    } catch (e) {
+      console.warn(`⚠️ evaluateStock fail: ${stock.symbol}`, e);
     }
+
+    // Event 分數
+    try {
+      for (const news of newsItems) {
+        const s = applyMacroToStock({
+          macroEvents: [news],
+          stock
+        });
+
+        // 相容數字 / 物件
+        if (typeof s === "number") {
+          eventScore += s;
+        } else if (s && typeof s === "object") {
+          eventScore += toNumber(s.total_adjustment, 0);
+        }
+      }
+    } catch (e) {
+      console.warn(`⚠️ applyMacroToStock fail: ${stock.symbol}`, e);
+    }
+
+    const totalScore = pureScore + eventScore;
 
     results.push({
       symbol: stock.symbol,
-      pure_score: pure.score || 0,
+      pure_score: pureScore,
       event_score: eventScore,
-      total_score: (pure.score || 0) + eventScore
+      total_score: totalScore
     });
   }
 
-  return results.sort((a, b) => b.total_score - a.total_score);
+  results.sort((a, b) => b.total_score - a.total_score);
+  return results;
 }
 
 // ==========================================
-// 🧠 Step 3：UI
+// M3.2：FCN 簡易模擬
+// 目前先保留接口，後面再升級
 // ==========================================
-function render(results) {
+function runFCNEvaluation(stockResults) {
+  return stockResults.slice(0, 5).map((r, idx) => {
+    let fcnScore = 0;
 
-  const el = document.getElementById("app");
+    try {
+      // 先用簡化參數跑 pure FCN
+      const mockDeal = {
+        ki: 60,
+        strike: 65,
+        yield_pa: 16,
+        tenor_months: 6,
+        basket: [r.symbol]
+      };
 
-  el.innerHTML = `
-    <h2>🧠 FCN Stock Ranking</h2>
-    ${results.map((r, i) => `
-      <div style="padding:10px;border-bottom:1px solid #ddd">
-        #${i + 1} ${r.symbol}<br/>
-        Pure: ${r.pure_score.toFixed(2)} |
-        Event: ${r.event_score.toFixed(2)} |
-        Total: ${r.total_score.toFixed(2)}
+      const pure = calcFCNPure(mockDeal);
+      fcnScore = toNumber(pure?.score, 0);
+    } catch (e) {
+      console.warn(`⚠️ calcFCNPure fail: ${r.symbol}`, e);
+    }
+
+    return {
+      rank: idx + 1,
+      symbol: r.symbol,
+      stock_total_score: r.total_score,
+      fcn_pure_score: fcnScore,
+      combined_score: r.total_score + fcnScore
+    };
+  });
+}
+
+// ==========================================
+// UI
+// ==========================================
+function renderStockRanking(results, fcnResults) {
+  const app = document.getElementById("app");
+  if (!app) return;
+
+  const top10 = results.slice(0, 10);
+
+  app.innerHTML = `
+    <section style="margin-top:20px;">
+      <div style="background:#fff;border:1px solid #ddd;border-radius:16px;padding:16px;margin-bottom:16px;">
+        <h2 style="margin:0 0 12px 0;">🧠 FCN Stock Ranking</h2>
+        <div>總股票數：${results.length}</div>
       </div>
-    `).join("")}
+
+      <div style="background:#fff;border:1px solid #ddd;border-radius:16px;padding:16px;margin-bottom:16px;">
+        <h2 style="margin:0 0 12px 0;">🔥 Top 10 Stocks</h2>
+        ${top10.map((r, i) => `
+          <div style="padding:10px 0;border-bottom:${i === top10.length - 1 ? "none" : "1px solid #eee"};">
+            <div style="font-weight:700;">#${i + 1} ${r.symbol}</div>
+            <div>Pure: ${r.pure_score.toFixed(2)}</div>
+            <div>Event: ${r.event_score.toFixed(2)}</div>
+            <div>Total: ${r.total_score.toFixed(2)}</div>
+          </div>
+        `).join("")}
+      </div>
+
+      <div style="background:#fff;border:1px solid #ddd;border-radius:16px;padding:16px;margin-bottom:16px;">
+        <h2 style="margin:0 0 12px 0;">💵 FCN Suggestion Preview</h2>
+        ${fcnResults.map((r, i) => `
+          <div style="padding:10px 0;border-bottom:${i === fcnResults.length - 1 ? "none" : "1px solid #eee"};">
+            <div style="font-weight:700;">#${r.rank} ${r.symbol}</div>
+            <div>Stock Score: ${r.stock_total_score.toFixed(2)}</div>
+            <div>FCN Pure Score: ${r.fcn_pure_score.toFixed(2)}</div>
+            <div>Combined: ${r.combined_score.toFixed(2)}</div>
+          </div>
+        `).join("")}
+      </div>
+    </section>
   `;
 }
 
 // ==========================================
-// 🚀 MAIN
+// MAIN
 // ==========================================
 async function main() {
-
   console.log("🚀 FCN SYSTEM START");
 
-  // 👉 pool
+  // pool
   let pool = await loadJSON("./data/pool30.json");
 
-  if (!pool) {
-    console.warn("⚠️ 使用 mock pool");
-
+  if (!Array.isArray(pool) || pool.length === 0) {
+    console.warn("⚠️ 使用 fallback pool");
     pool = [
-      { symbol: "NVDA" },
-      { symbol: "TSM" },
-      { symbol: "AVGO" },
-      { symbol: "AMAT" },
-      { symbol: "MU" }
+      { symbol: "NVDA", sector: "AI_SEMI" },
+      { symbol: "TSM", sector: "AI_SEMI" },
+      { symbol: "AVGO", sector: "AI_SEMI" },
+      { symbol: "AMAT", sector: "AI_SEMI" },
+      { symbol: "MU", sector: "AI_SEMI" },
+      { symbol: "MSFT", sector: "PLATFORM" },
+      { symbol: "AMZN", sector: "PLATFORM" },
+      { symbol: "GOOG", sector: "PLATFORM" },
+      { symbol: "AAL", sector: "TRAVEL" },
+      { symbol: "CCL", sector: "TRAVEL" }
     ];
   }
 
-  // 👉 M1
+  // M1
   const newsRuntime = await runNewsPipeline();
 
-  // 👉 M3
-  const results = runStockEvaluation(pool, newsRuntime);
+  // M3.1
+  const stockResults = runStockEvaluation(pool, newsRuntime);
+  console.log("🏆 stockResults:", stockResults);
 
-  console.log("🏆 results:", results);
+  // M3.2
+  const fcnResults = runFCNEvaluation(stockResults);
+  console.log("💵 fcnResults:", fcnResults);
 
-  // 👉 UI
-  render(results);
+  // UI
+  renderStockRanking(stockResults, fcnResults);
+}
+
+// ==========================================
+// 啟動
+// ==========================================
+main().catch(err => {
+  console.error("❌ main fatal:", err);
+
+  const app = document.getElementById("app");
+  if (app) {
+    app.innerHTML = `
+      <div style="margin-top:20px;background:#fff;border:1px solid #f1b5b5;border-radius:16px;padding:16px;color:#b00020;">
+        <h2 style="margin:0 0 8px 0;">系統發生錯誤</h2>
+        <div>${err.message}</div>
+      </div>
+    `;
+  }
+});
 }
 
 // ==========================================
