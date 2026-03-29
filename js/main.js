@@ -66,16 +66,20 @@ async function runNewsPipeline(pool) {
 
   console.log("📰 rawNews:", rawNews);
 
-  // 這裡一定要 await
   const newsInput = await buildNewsInput(rawNews);
   console.log("📊 news_input:", newsInput);
 
   const safeNewsInput = Array.isArray(newsInput) ? newsInput : [];
-  const newsRuntime = buildNewsRuntime(safeNewsInput, pool);
-  console.log("🔥 news_runtime:", newsRuntime);
 
-  return newsRuntime;
-}
+  const newsRuntime = buildNewsRuntime(
+    new Date().toISOString().slice(0, 10), // date
+    safeNewsInput,                         // newsInput
+    {},                                    // impactTable
+    {},                                    // sectorMap
+    {},                                    // marketRuleTable
+    pool,                                  // pool
+    {}                                     // options
+  );
 
 // ==========================================
 // M3.1：Stock Evaluation
