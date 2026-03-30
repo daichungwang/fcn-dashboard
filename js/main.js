@@ -13,9 +13,7 @@ import { applyMacroToStock } from "./core/macro_to_stock_engine.js";
 
 // M3.2
 import { calcFCNPure } from "./core/fcn_engine.js";
-function round(num, digits = 2) {
-  return Number(num.toFixed(digits));
-}
+
 // ==========================================
 // 工具：讀 JSON
 // ==========================================
@@ -87,6 +85,7 @@ async function runNewsPipeline(pool) {
 
   return newsRuntime;
 }
+
 // ==========================================
 // M3.1：Stock Evaluation
 // ==========================================
@@ -100,22 +99,16 @@ function runStockEvaluation(pool, newsRuntime, context = {}) {
   for (const stock of pool) {
     let evalResult = null;
 
-    // ----------------------------------
     // 1️⃣ Stock Engine（核心）
-    // ----------------------------------
     try {
       evalResult = evaluateStock(stock, context);
-
       console.log("🧪 evaluateStock:", stock.symbol, evalResult);
     } catch (e) {
       console.warn(`⚠️ evaluateStock fail: ${stock.symbol}`, e);
       continue;
     }
 
-    // ----------------------------------
     // 2️⃣ Event Engine（新聞加權）
-    // （只補充 event impact，不取代 V4 結構）
-    // ----------------------------------
     let macroAdjustment = 0;
 
     try {
@@ -135,23 +128,16 @@ function runStockEvaluation(pool, newsRuntime, context = {}) {
       console.warn(`⚠️ applyMacroToStock fail: ${stock.symbol}`, e);
     }
 
-    // ----------------------------------
     // 3️⃣ 最終 Event Score（整合）
-    // ----------------------------------
     const finalEventScore =
-      toNumber(evalResult.event_stock_score, 0) +
-      macroAdjustment;
+      toNumber(evalResult.event_stock_score, 0) + macroAdjustment;
 
-    // ----------------------------------
     // 4️⃣ Final Total Score（排序用）
-    // ----------------------------------
     const totalScore =
       toNumber(evalResult.pure_score, 0) * 0.5 +
       finalEventScore * 0.5;
 
-    // ----------------------------------
     // 5️⃣ 輸出（完整可解釋）
-    // ----------------------------------
     results.push({
       symbol: evalResult.symbol,
       name: evalResult.name,
@@ -171,46 +157,21 @@ function runStockEvaluation(pool, newsRuntime, context = {}) {
       adjustment_reason: evalResult.adjustment_reason,
 
       event_impact_score:
-        toNumber(evalResult.event_impact_score, 0) +
-        macroAdjustment,
+        toNumber(evalResult.event_impact_score, 0) + macroAdjustment,
 
       event_reason: evalResult.event_reason,
 
       event_stock_score: finalEventScore,
 
       // === Decision ===
-     results.push({
-  symbol: evalResult.symbol,
-  name: evalResult.name,
-
-  trend: evalResult.trend,
-  trend_label: evalResult.trend_label,
-  trend_score: evalResult.trend_score,
-  trend_note: evalResult.trend_note,
-
-  pure_score: evalResult.pure_score,
-  pure_reason: evalResult.pure_reason,
-
-  adjustment_score: evalResult.adjustment_score,
-  adjustment_reason: evalResult.adjustment_reason,
-
-  event_impact_score:
-    toNumber(evalResult.event_impact_score, 0) + macroAdjustment,
-
-  event_reason: evalResult.event_reason,
-
-  event_stock_score: finalEventScore,
-
-  total_score: Number(totalScore.toFixed(4)),
-  total_bias: evalResult.total_bias,
-  eligible: evalResult.eligible,
-  suggestion: evalResult.suggestion
-});
+      total_score: Number(totalScore.toFixed(4)),
+      total_bias: evalResult.total_bias,
+      eligible: evalResult.eligible,
+      suggestion: evalResult.suggestion
+    });
   }
 
-  // ----------------------------------
   // 排序（依 total_score）
-  // ----------------------------------
   results.sort((a, b) => b.total_score - a.total_score);
 
   return results;
@@ -269,9 +230,11 @@ function renderStockRanking(results, fcnResults) {
         ${top10.map((r, i) => `
           <div style="padding:10px 0;border-bottom:${i === top10.length - 1 ? "none" : "1px solid #eee"};">
             <div style="font-weight:700;">#${i + 1} ${r.symbol}</div>
+            <div>Trend: ${r.trend_label}</div>
             <div>Pure: ${r.pure_score.toFixed(2)}</div>
-            <div>Event: ${r.event_score.toFixed(2)}</div>
+            <div>Event: ${r.event_stock_score.toFixed(2)}</div>
             <div>Total: ${r.total_score.toFixed(2)}</div>
+            <div>Suggestion: ${r.suggestion}</div>
           </div>
         `).join("")}
       </div>
@@ -298,10 +261,10 @@ function renderStockRanking(results, fcnResults) {
       <div style="background:#fff;border:1px solid #ddd;border-radius:16px;padding:16px;margin-bottom:16px;">
         <h2 style="margin:0 0 12px 0;">🧠 Debug Dashboard</h2>
         <div><b>Top 5</b></div>
-        ${top5.map(r => `<div>${r.symbol} (${r.total_score.toFixed(4)})</div>`).join("")}
+        ${top5.map(r => `<div>${r.symbol} (${r.total_score.toFixed(4)}) - ${r.trend_label}</div>`).join("")}
         <br/>
         <div><b>Bottom 5</b></div>
-        ${bottom5.map(r => `<div>${r.symbol} (${r.total_score.toFixed(4)})</div>`).join("")}
+        ${bottom5.map(r => `<div>${r.symbol} (${r.total_score.toFixed(4)}) - ${r.trend_label}</div>`).join("")}
       </div>
     `;
   }
