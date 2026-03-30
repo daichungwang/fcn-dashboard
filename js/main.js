@@ -179,11 +179,33 @@ function runStockEvaluation(pool, newsRuntime, context = {}) {
       event_stock_score: finalEventScore,
 
       // === Decision ===
-      total_score: round(totalScore, 4),
-      total_bias: evalResult.total_bias,
-      eligible: evalResult.eligible,
-      suggestion: evalResult.suggestion
-    });
+     results.push({
+  symbol: evalResult.symbol,
+  name: evalResult.name,
+
+  trend: evalResult.trend,
+  trend_label: evalResult.trend_label,
+  trend_score: evalResult.trend_score,
+  trend_note: evalResult.trend_note,
+
+  pure_score: evalResult.pure_score,
+  pure_reason: evalResult.pure_reason,
+
+  adjustment_score: evalResult.adjustment_score,
+  adjustment_reason: evalResult.adjustment_reason,
+
+  event_impact_score:
+    toNumber(evalResult.event_impact_score, 0) + macroAdjustment,
+
+  event_reason: evalResult.event_reason,
+
+  event_stock_score: finalEventScore,
+
+  total_score: Number(totalScore.toFixed(4)),
+  total_bias: evalResult.total_bias,
+  eligible: evalResult.eligible,
+  suggestion: evalResult.suggestion
+});
   }
 
   // ----------------------------------
