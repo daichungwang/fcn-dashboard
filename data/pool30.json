@@ -1,5 +1,5 @@
 [
-  { "symbol": "NVDA", "name": "NVIDIA", "sector": "AI_SEMI", "subsector": "GPU", "category": "growth" },
+  { "symbol": "NVDA", "name": "NVIDIA", "sector": "AI_SEMI", "subsector": "GPU", "category": "core" },
   { "symbol": "TSM", "name": "TSMC", "sector": "AI_SEMI", "subsector": "FOUNDRY", "category": "core" },
   { "symbol": "AVGO", "name": "Broadcom", "sector": "AI_SEMI", "subsector": "ASIC", "category": "core" },
   { "symbol": "AMAT", "name": "Applied Materials", "sector": "AI_SEMI", "subsector": "EQUIPMENT", "category": "core" },
@@ -9,20 +9,20 @@
   { "symbol": "CRDO", "name": "Credo", "sector": "AI_SEMI", "subsector": "CONNECTIVITY", "category": "speculative" },
   { "symbol": "ALAB", "name": "Astera Labs", "sector": "AI_SEMI", "subsector": "CONNECTIVITY", "category": "speculative" },
 
-  { "symbol": "MSFT", "name": "Microsoft", "sector": "AI_APPLICATION", "subsector": "CLOUD_PLATFORM", "category": "core" },
+  { "symbol": "MSFT", "name": "Microsoft", "sector": "AI_APPLICATION", "subsector": "CLOUD_PLATFORM", "category": "defensive" },
   { "symbol": "GOOG", "name": "Google", "sector": "AI_APPLICATION", "subsector": "AI_CLOUD", "category": "core" },
   { "symbol": "AMZN", "name": "Amazon", "sector": "AI_APPLICATION", "subsector": "CLOUD_COMMERCE", "category": "core" },
-  { "symbol": "ORCL", "name": "Oracle", "sector": "AI_APPLICATION", "subsector": "ENTERPRISE_SOFTWARE", "category": "core" },
+  { "symbol": "ORCL", "name": "Oracle", "sector": "AI_APPLICATION", "subsector": "ENTERPRISE_SOFTWARE", "category": "growth" },
   { "symbol": "PLTR", "name": "Palantir", "sector": "AI_APPLICATION", "subsector": "AI_SOFTWARE", "category": "growth" },
   { "symbol": "ARM", "name": "ARM", "sector": "AI_APPLICATION", "subsector": "AI_IP", "category": "growth" },
   { "symbol": "TSLA", "name": "Tesla", "sector": "AI_APPLICATION", "subsector": "AI_AUTO", "category": "growth" },
 
-  { "symbol": "META", "name": "Meta", "sector": "PLATFORM", "subsector": "SOCIAL_AD", "category": "core" },
-  { "symbol": "AAPL", "name": "Apple", "sector": "PLATFORM", "subsector": "ECOSYSTEM", "category": "core" },
+  { "symbol": "META", "name": "Meta", "sector": "PLATFORM", "subsector": "SOCIAL_AD", "category": "growth" },
+  { "symbol": "AAPL", "name": "Apple", "sector": "PLATFORM", "subsector": "ECOSYSTEM", "category": "income" },
 
   { "symbol": "COST", "name": "Costco", "sector": "CONSUMER", "subsector": "RETAIL", "category": "defensive" },
   { "symbol": "TGT", "name": "Target", "sector": "CONSUMER", "subsector": "RETAIL", "category": "defensive" },
-  { "symbol": "EL", "name": "Estee Lauder", "sector": "CONSUMER", "subsector": "BEAUTY", "category": "defensive" },
+  { "symbol": "EL", "name": "Estee Lauder", "sector": "CONSUMER", "subsector": "BEAUTY", "category": "speculative" },
 
   { "symbol": "COIN", "name": "Coinbase", "sector": "FINANCIAL", "subsector": "CRYPTO_FINANCE", "category": "speculative" },
   { "symbol": "SOFI", "name": "SoFi", "sector": "FINANCIAL", "subsector": "FINTECH", "category": "speculative" },
@@ -33,7 +33,7 @@
   { "symbol": "AAL", "name": "American Airlines", "sector": "TRAVEL", "subsector": "AIRLINE", "category": "income" },
   { "symbol": "LVS", "name": "Las Vegas Sands", "sector": "TRAVEL", "subsector": "CASINO_TRAVEL", "category": "income" },
 
-  { "symbol": "SMH", "name": "VanEck Semiconductor ETF", "sector": "ETF", "subsector": "SEMI_ETF", "category": "core" },
-  { "symbol": "QQQ", "name": "Invesco QQQ", "sector": "ETF", "subsector": "TECH_ETF", "category": "core" },
+  { "symbol": "SMH", "name": "VanEck Semiconductor ETF", "sector": "ETF", "subsector": "SEMI_ETF", "category": "defensive" },
+  { "symbol": "QQQ", "name": "Invesco QQQ", "sector": "ETF", "subsector": "TECH_ETF", "category": "defensive" },
   { "symbol": "LQD", "name": "iShares iBoxx Investment Grade Corporate Bond ETF", "sector": "ETF", "subsector": "BOND_ETF", "category": "defensive" }
 ]
