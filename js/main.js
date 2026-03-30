@@ -13,7 +13,9 @@ import { applyMacroToStock } from "./core/macro_to_stock_engine.js";
 
 // M3.2
 import { calcFCNPure } from "./core/fcn_engine.js";
-
+function round(num, digits = 2) {
+  return Number(num.toFixed(digits));
+}
 // ==========================================
 // 工具：讀 JSON
 // ==========================================
