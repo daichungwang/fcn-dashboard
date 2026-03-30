@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M4｜FCN Pool + Daily Key-in</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f6f8;
+      color: #111;
+    }
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 14px 50px;
+    }
+    h1 { margin: 0 0 16px; font-size: 32px; }
+    h2 { margin: 0 0 12px; font-size: 24px; }
+    h3 { margin: 0 0 8px; font-size: 18px; }
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 12px;
+    }
+    .field { grid-column: span 12; }
+    .field.half { grid-column: span 6; }
+    .field.third { grid-column: span 4; }
+    .field.quarter { grid-column: span 3; }
+
+    label {
+      display: block;
+      margin: 0 0 6px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 15px;
+      background: #fff;
+    }
+    textarea { min-height: 84px; resize: vertical; }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+    }
+    button.secondary { background: #666; }
+    button.warn { background: #b00020; }
+    button.light { background: #e9ecef; color: #111; }
+
+    .note {
+      font-size: 13px;
+      background: #fffbe6;
+      border: 1px solid #f1df9a;
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-top: 8px;
+    }
+
+    .divider {
+      height: 1px;
+      background: #eee;
+      margin: 12px 0;
+    }
+
+    .result-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 12px;
+      background: #fff;
+    }
+
+    .result-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .result-line {
+      margin: 4px 0;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .status-pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #ddd;
+      background: #fafafa;
+    }
+    .s-inquiry { background: #eef6ff; border-color: #b8d8ff; }
+    .s-watch { background: #fff7e8; border-color: #f0d298; }
+    .s-active { background: #ecfff1; border-color: #a9e2b4; }
+    .s-closed { background: #f5f5f5; border-color: #d6d6d6; }
+    .s-expired { background: #fff0f0; border-color: #f1b5b5; }
+
+    .edit-banner {
+      border: 1px solid #b8d8ff;
+      background: #eef6ff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .muted { color: #666; }
+
+    @media (max-width: 800px) {
+      .field.half, .field.third, .field.quarter { grid-column: span 12; }
+      button { width: 100%; }
+      .row { flex-direction: column; align-items: stretch; }
+      h1 { font-size: 26px; }
+      h2 { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>M4｜FCN Pool + Daily Key-in</h1>
+
+    <div class="card">
+      <h2>M4 定位</h2>
+      <div class="result-line">1. <b>pool30.json</b> 是股票池。</div>
+      <div class="result-line">2. <b>fcn_pool.json</b> 是 FCN total pool。</div>
+      <div class="result-line">3. 只有 <b>status = active</b> 的單，未來才進 M2 庫存監控。</div>
+      <div class="note">
+        建議狀態：inquiry / watch / active / closed / expired
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>New FCN / Edit FCN</h2>
+
+      <div id="editBanner" class="edit-banner">
+        目前為 Edit Mode，正在修改：
+        <b id="editIdText"></b>
+      </div>
+
+      <form id="fcnForm">
+        <div class="grid">
+          <div class="field half">
+            <label for="fcn_id">FCN ID</label>
+            <input id="fcn_id" type="text" placeholder="例如：20260330_NVDA_TSM_AVGO_60_65_6M_BA">
+          </div>
+
+          <div class="field half">
+            <label for="date">Date</label>
+            <input id="date" type="date">
+          </div>
+
+          <div class="field third">
+            <label for="bank">Bank（非必填）</label>
+            <input id="bank" type="text" placeholder="BA / BB / BC">
+          </div>
+
+          <div class="field third">
+            <label for="currency">Currency</label>
+            <select id="currency">
+              <option value="USD">USD</option>
+              <option value="TWD">TWD</option>
+              <option value="EUR">EUR</option>
+              <option value="HKD">HKD</option>
+            </select>
+          </div>
+
+          <div class="field third">
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="inquiry">inquiry</option>
+              <option value="watch">watch</option>
+              <option value="active">active</option>
+              <option value="closed">closed</option>
+              <option value="expired">expired</option>
+            </select>
+          </div>
+
+          <div class="field quarter"><label for="stock_1">Stock 1</label><input id="stock_1" type="text" placeholder="NVDA"></div>
+          <div class="field quarter"><label for="stock_2">Stock 2</label><input id="stock_2" type="text" placeholder="TSM"></div>
+          <div class="field quarter"><label for="stock_3">Stock 3</label><input id="stock_3" type="text" placeholder="AVGO"></div>
+          <div class="field quarter"><label for="stock_4">Stock 4（非必填）</label><input id="stock_4" type="text"></div>
+          <div class="field quarter"><label for="stock_5">Stock 5（非必填）</label><input id="stock_5" type="text"></div>
+
+          <div class="field quarter"><label for="ki">KI</label><input id="ki" type="number" step="0.01"></div>
+          <div class="field quarter"><label for="strike">Strike</label><input id="strike" type="number" step="0.01"></div>
+          <div class="field quarter"><label for="rate">Rate (%)</label><input id="rate" type="number" step="0.01"></div>
+          <div class="field quarter"><label for="tenor">Tenor (M)</label><input id="tenor" type="number" step="1"></div>
+
+          <div class="field third">
+            <label for="eki">EKI</label>
+            <select id="eki">
+              <option value="false">NO</option>
+              <option value="true">YES</option>
+            </select>
+          </div>
+
+          <div class="field third">
+            <label for="created_time">created_time（非必填）</label>
+            <input id="created_time" type="datetime-local">
+          </div>
+
+          <div class="field third">
+            <label for="entry_time">entry_time（非必填）</label>
+            <input id="entry_time" type="datetime-local">
+          </div>
+
+          <div class="field third">
+            <label for="exit_time">exit_time（非必填）</label>
+            <input id="exit_time" type="datetime-local">
+          </div>
+
+          <div class="field half">
+            <label for="decision_flag">decision_flag（非必填）</label>
+            <select id="decision_flag">
+              <option value="">空白</option>
+              <option value="auto">auto</option>
+              <option value="manual">manual</option>
+              <option value="rejected">rejected</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="note">Note（非必填）</label>
+            <textarea id="note" placeholder="補充說明"></textarea>
+          </div>
+        </div>
+
+        <div class="row" style="margin-top:14px;">
+          <button type="submit" id="saveBtn">新增 New FCN</button>
+          <button type="button" class="secondary" id="updateBtn">更新 Update</button>
+          <button type="button" class="warn" id="deleteBtn">刪除 Delete</button>
+          <button type="button" class="light" id="clearBtn">清空 Clear</button>
+          <button type="button" class="light" id="exportBtn">匯出 JSON</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="card">
+      <h2>FCN Inquiry</h2>
+
+      <div class="grid">
+        <div class="field third"><label for="q_date">Date</label><input id="q_date" type="date"></div>
+        <div class="field third"><label for="q_bank">Bank</label><input id="q_bank" type="text" placeholder="BA / BB / BC"></div>
+        <div class="field third">
+          <label for="q_status">Status</label>
+          <select id="q_status">
+            <option value="">全部</option>
+            <option value="inquiry">inquiry</option>
+            <option value="watch">watch</option>
+            <option value="active">active</option>
+            <option value="closed">closed</option>
+            <option value="expired">expired</option>
+          </select>
+        </div>
+
+        <div class="field third"><label for="q_symbol">Basket contains symbol</label><input id="q_symbol" type="text" placeholder="例如：NVDA"></div>
+        <div class="field third">
+          <label for="q_eki">EKI</label>
+          <select id="q_eki">
+            <option value="">全部</option>
+            <option value="true">YES</option>
+            <option value="false">NO</option>
+          </select>
+        </div>
+        <div class="field third"><label for="q_fcn_id">FCN ID</label><input id="q_fcn_id" type="text"></div>
+
+        <div class="field third"><label for="q_rate_min">Rate min</label><input id="q_rate_min" type="number" step="0.01"></div>
+        <div class="field third"><label for="q_rate_max">Rate max</label><input id="q_rate_max" type="number" step="0.01"></div>
+        <div class="field third"><label for="q_tenor">Tenor (M)</label><input id="q_tenor" type="number" step="1"></div>
+      </div>
+
+      <div class="row" style="margin-top:14px;">
+        <button type="button" id="searchBtn">查詢 Search</button>
+        <button type="button" class="light" id="resetSearchBtn">重設條件 Reset</button>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3>查詢結果</h3>
+      <div id="results"></div>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "fcn_pool_v1";
+    let currentEditId = null;
+
+    const seedData = [
+      {
+        fcn_id: "20260330_NVDA_TSM_AVGO_60_65_6M_BA",
+        date: "2026-03-30",
+        bank: "BA",
+        basket: ["NVDA", "TSM", "AVGO"],
+        ki: 60,
+        strike: 65,
+        rate: 16,
+        tenor: 6,
+        eki: false,
+        currency: "USD",
+        status: "inquiry",
+        created_time: "2026-03-30T09:00",
+        entry_time: null,
+        exit_time: null,
+        decision_flag: "",
+        note: "示範資料"
+      },
+      {
+        fcn_id: "20260330_AAL_CCL_LVS_55_65_9M_BC",
+        date: "2026-03-30",
+        bank: "BC",
+        basket: ["AAL", "CCL", "LVS"],
+        ki: 55,
+        strike: 65,
+        rate: 20,
+        tenor: 9,
+        eki: false,
+        currency: "USD",
+        status: "active",
+        created_time: "2026-03-30T09:20",
+        entry_time: "2026-03-30T10:00",
+        exit_time: null,
+        decision_flag: "manual",
+        note: "已進場，未來進 M2"
+      }
+    ];
+
+    function loadDB() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(seedData));
+        return [...seedData];
+      }
+      try {
+        return JSON.parse(raw);
+      } catch {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(seedData));
+        return [...seedData];
+      }
+    }
+
+    function saveDB(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function nowLocalInputValue() {
+      const d = new Date();
+      const pad = n => String(n).padStart(2, "0");
+      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    }
+
+    function getBasketFromForm() {
+      return ["stock_1","stock_2","stock_3","stock_4","stock_5"]
+        .map(id => document.getElementById(id).value.trim().toUpperCase())
+        .filter(Boolean);
+    }
+
+    function collectFormData() {
+      return {
+        fcn_id: document.getElementById("fcn_id").value.trim(),
+        date: document.getElementById("date").value || "",
+        bank: document.getElementById("bank").value.trim() || null,
+        basket: getBasketFromForm(),
+        ki: Number(document.getElementById("ki").value || 0),
+        strike: Number(document.getElementById("strike").value || 0),
+        rate: Number(document.getElementById("rate").value || 0),
+        tenor: Number(document.getElementById("tenor").value || 0),
+        eki: document.getElementById("eki").value === "true",
+        currency: document.getElementById("currency").value,
+        status: document.getElementById("status").value,
+        created_time: document.getElementById("created_time").value || null,
+        entry_time: document.getElementById("entry_time").value || null,
+        exit_time: document.getElementById("exit_time").value || null,
+        decision_flag: document.getElementById("decision_flag").value || "",
+        note: document.getElementById("note").value.trim()
+      };
+    }
+
+    function validateRecord(r) {
+      if (!r.fcn_id) return "FCN ID 不可空白";
+      if (!r.date) return "Date 不可空白";
+      if (r.basket.length < 2) return "Basket 至少要有 2 檔股票";
+      if (!r.ki) return "KI 不可空白";
+      if (!r.strike) return "Strike 不可空白";
+      if (!r.rate) return "Rate 不可空白";
+      if (!r.tenor) return "Tenor 不可空白";
+      return "";
+    }
+
+    function fillForm(r) {
+      document.getElementById("fcn_id").value = r.fcn_id || "";
+      document.getElementById("date").value = r.date || "";
+      document.getElementById("bank").value = r.bank || "";
+      document.getElementById("ki").value = r.ki ?? "";
+      document.getElementById("strike").value = r.strike ?? "";
+      document.getElementById("rate").value = r.rate ?? "";
+      document.getElementById("tenor").value = r.tenor ?? "";
+      document.getElementById("eki").value = String(!!r.eki);
+      document.getElementById("currency").value = r.currency || "USD";
+      document.getElementById("status").value = r.status || "inquiry";
+      document.getElementById("created_time").value = r.created_time || "";
+      document.getElementById("entry_time").value = r.entry_time || "";
+      document.getElementById("exit_time").value = r.exit_time || "";
+      document.getElementById("decision_flag").value = r.decision_flag || "";
+      document.getElementById("note").value = r.note || "";
+
+      ["stock_1","stock_2","stock_3","stock_4","stock_5"].forEach((id, idx) => {
+        document.getElementById(id).value = r.basket?.[idx] || "";
+      });
+    }
+
+    function clearForm() {
+      document.getElementById("fcnForm").reset();
+      document.getElementById("currency").value = "USD";
+      document.getElementById("status").value = "inquiry";
+      document.getElementById("eki").value = "false";
+      currentEditId = null;
+      document.getElementById("editBanner").style.display = "none";
+      document.getElementById("editIdText").textContent = "";
+      document.getElementById("saveBtn").textContent = "新增 New FCN";
+    }
+
+    function enterEditMode(record) {
+      currentEditId = record.fcn_id;
+      fillForm(record);
+      document.getElementById("editBanner").style.display = "block";
+      document.getElementById("editIdText").textContent = record.fcn_id;
+      document.getElementById("saveBtn").textContent = "目前是 Edit Mode，請用 Update";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function statusClass(status) {
+      return {
+        inquiry: "s-inquiry",
+        watch: "s-watch",
+        active: "s-active",
+        closed: "s-closed",
+        expired: "s-expired"
+      }[status] || "";
+    }
+
+    function renderResults(records) {
+      const box = document.getElementById("results");
+      if (!records.length) {
+        box.innerHTML = `<div class="muted">查無資料</div>`;
+        return;
+      }
+
+      box.innerHTML = records.map(r => `
+        <div class="result-card">
+          <div class="result-title">${r.fcn_id}</div>
+          <div class="result-line"><span class="status-pill ${statusClass(r.status)}">${r.status}</span></div>
+          <div class="result-line"><b>Basket:</b> ${(r.basket || []).join(" / ")}</div>
+          <div class="result-line"><b>條件:</b> KI ${r.ki} / Strike ${r.strike} / Rate ${r.rate}% / ${r.tenor}M / EKI ${r.eki ? "YES" : "NO"}</div>
+          <div class="result-line"><b>Date:</b> ${r.date || "-"} / <b>Bank:</b> ${r.bank || "-"}</div>
+          <div class="result-line"><b>created_time:</b> ${r.created_time || "-"} / <b>entry_time:</b> ${r.entry_time || "-"} / <b>exit_time:</b> ${r.exit_time || "-"}</div>
+          <div class="result-line"><b>Note:</b> ${r.note || "-"}</div>
+          <div class="row" style="margin-top:10px;">
+            <button type="button" onclick="editRecord('${r.fcn_id.replace(/'/g, "\\'")}')">Edit</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function searchRecords() {
+      const db = loadDB();
+
+      const q_date = document.getElementById("q_date").value;
+      const q_bank = document.getElementById("q_bank").value.trim().toUpperCase();
+      const q_status = document.getElementById("q_status").value;
+      const q_symbol = document.getElementById("q_symbol").value.trim().toUpperCase();
+      const q_eki = document.getElementById("q_eki").value;
+      const q_fcn_id = document.getElementById("q_fcn_id").value.trim().toUpperCase();
+      const q_rate_min = document.getElementById("q_rate_min").value;
+      const q_rate_max = document.getElementById("q_rate_max").value;
+      const q_tenor = document.getElementById("q_tenor").value;
+
+      const rows = db.filter(r => {
+        if (q_date && r.date !== q_date) return false;
+        if (q_bank && String(r.bank || "").toUpperCase() !== q_bank) return false;
+        if (q_status && r.status !== q_status) return false;
+        if (q_symbol && !(r.basket || []).includes(q_symbol)) return false;
+        if (q_eki && String(!!r.eki) !== q_eki) return false;
+        if (q_fcn_id && !String(r.fcn_id || "").toUpperCase().includes(q_fcn_id)) return false;
+        if (q_rate_min && Number(r.rate) < Number(q_rate_min)) return false;
+        if (q_rate_max && Number(r.rate) > Number(q_rate_max)) return false;
+        if (q_tenor && Number(r.tenor) !== Number(q_tenor)) return false;
+        return true;
+      });
+
+      renderResults(rows);
+    }
+
+    window.editRecord = function(fcnId) {
+      const db = loadDB();
+      const row = db.find(x => x.fcn_id === fcnId);
+      if (!row) return;
+      enterEditMode(row);
+    };
+
+    document.getElementById("fcnForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const db = loadDB();
+      const record = collectFormData();
+
+      if (!record.created_time) record.created_time = nowLocalInputValue();
+
+      const err = validateRecord(record);
+      if (err) { alert(err); return; }
+
+      const exists = db.some(x => x.fcn_id === record.fcn_id);
+      if (exists) {
+        alert("FCN ID 已存在，若要修改請先從 Inquiry 點 Edit，再按 Update。");
+        return;
+      }
+
+      db.unshift(record);
+      saveDB(db);
+      alert("新增成功");
+      clearForm();
+      searchRecords();
+    });
+
+    document.getElementById("updateBtn").addEventListener("click", function() {
+      if (!currentEditId) {
+        alert("請先從 Inquiry 點 Edit。");
+        return;
+      }
+
+      const db = loadDB();
+      const idx = db.findIndex(x => x.fcn_id === currentEditId);
+      if (idx === -1) {
+        alert("找不到要更新的資料。");
+        return;
+      }
+
+      const updated = collectFormData();
+      const err = validateRecord(updated);
+      if (err) { alert(err); return; }
+
+      updated.fcn_id = currentEditId;
+      if (!updated.created_time) {
+        updated.created_time = db[idx].created_time || nowLocalInputValue();
+      }
+
+      db[idx] = updated;
+      saveDB(db);
+      alert("更新成功");
+      clearForm();
+      searchRecords();
+    });
+
+    document.getElementById("deleteBtn").addEventListener("click", function() {
+      if (!currentEditId) {
+        alert("請先從 Inquiry 點 Edit。");
+        return;
+      }
+
+      const ok = confirm(`確定刪除 ${currentEditId} ?`);
+      if (!ok) return;
+
+      const db = loadDB().filter(x => x.fcn_id !== currentEditId);
+      saveDB(db);
+      alert("刪除成功");
+      clearForm();
+      searchRecords();
+    });
+
+    document.getElementById("clearBtn").addEventListener("click", clearForm);
+
+    document.getElementById("searchBtn").addEventListener("click", searchRecords);
+
+    document.getElementById("resetSearchBtn").addEventListener("click", function() {
+      ["q_date","q_bank","q_status","q_symbol","q_eki","q_fcn_id","q_rate_min","q_rate_max","q_tenor"]
+        .forEach(id => document.getElementById(id).value = "");
+      searchRecords();
+    });
+
+    document.getElementById("exportBtn").addEventListener("click", function() {
+      const db = loadDB();
+      const blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "fcn_pool_export.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById("date").value = new Date().toISOString().slice(0, 10);
+    searchRecords();
+  </script>
+</body>
+</html>
