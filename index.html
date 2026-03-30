@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>振宇 FCN 系統</title>
+
+  <style>
+    body {
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      color: #111;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 24px 0;
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    .card h2 {
+      margin: 0 0 12px 0;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .item {
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+      line-height: 1.6;
+    }
+
+    .item:last-child {
+      border-bottom: none;
+    }
+
+    .item-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .muted {
+      color: #666;
+    }
+
+    .error-box {
+      margin-top: 20px;
+      background: #fff;
+      border: 1px solid #f1b5b5;
+      border-radius: 16px;
+      padding: 16px;
+      color: #b00020;
+    }
+
+    .footer-note {
+      color: #666;
+      font-size: 14px;
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 14px;
+      }
+
+      h1 {
+        font-size: 34px;
+        margin-bottom: 18px;
+      }
+
+      .card h2 {
+        font-size: 24px;
+      }
+
+      .item-title {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>振宇 FCN 系統</h1>
+
+    <!-- 系統訊息 / 錯誤 -->
+    <div id="system-message"></div>
+
+    <!-- Stock Ranking -->
+    <section class="section">
+      <div id="stock-ranking">
+        <div class="card">
+          <h2>🧠 Stock Ranking</h2>
+          <div class="muted">系統載入中...</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FCN Ranking -->
+    <section class="section">
+      <div id="fcn-ranking">
+        <div class="card">
+          <h2>💰 FCN Ranking</h2>
+          <div class="muted">系統載入中...</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      FCN Dashboard V5
+    </div>
+  </div>
+
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
