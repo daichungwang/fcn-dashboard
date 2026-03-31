@@ -648,9 +648,9 @@ ${buildStockDetailTable(f.stocks || [])}
         renderM2();
         alert("M2 Health Engine 執行成功");
       } catch (err) {
-        console.error("M2 Health Engine 執行失敗", err);
-        alert("M2 Health Engine 執行失敗，請看 console");
-      }
+  console.error("M2 Health Engine 執行失敗", err);
+  alert("M2 Health Engine 執行失敗：" + err.message);
+}
     }
 
     function renderM2() {
