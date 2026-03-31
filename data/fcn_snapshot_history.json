@@ -1,0 +1,28 @@
+[
+  {
+    "date": "2026-03-31",
+    "fcn_id": "DACN2600066",
+    "bank": "NATIXIS",
+    "basket": ["TSM", "QQQ", "SMH"],
+    "tenor": 6,
+    "rate_market": 34.21,
+    "autocall": 100,
+    "strike": 85,
+    "ki": null,
+    "eki": true,
+    "currency": "USD",
+    "amt": 0,
+
+    "snapshot": 2.4,
+    "pure_fcn": 3.2,
+    "event_fcn": 4.1,
+    "avg_pure_stock": 7.8,
+    "avg_event_stock": 8.6,
+
+    "s_snapshot": null,
+    "s_rate": null,
+    "s_event_fcn": null,
+
+    "generated_at": "2026-03-31T08:00:00"
+  }
+]
