@@ -1,0 +1,27 @@
+{
+  "date": "2025-03-12",
+  "fcn_id": "FCN499G",
+
+  "basket": ["TSLA", "INTC", "NVDA", "ARM"],
+  "tenor": 12,
+  "rate": 34.45,
+  "autocall": 100,
+  "strike": 65,
+  "ki": 60,
+  "eki": false,
+
+  "bank": "B",
+
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+
+  "status": "active",
+  "created_time": "2025-03-12T09:00",
+  "entry_time": "2025-03-12T10:00",
+  "exit_time": null,
+
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "示範資料"
+}
