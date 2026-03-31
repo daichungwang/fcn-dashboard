@@ -1,1 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M2｜FCN Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f6f8;
+      color: #111;
+    }
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 20px 14px 50px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 32px;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 24px;
+    }
+    h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+    .subtitle {
+      color: #555;
+      font-size: 15px;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+    }
+    button.secondary { background: #666; }
+    button.light { background: #e9ecef; color: #111; }
+    .note {
+      font-size: 13px;
+      background: #fffbe6;
+      border: 1px solid #f1df9a;
+      border-radius: 10px;
+      padding: 10px 12px;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+    .muted { color: #666; }
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #ddd;
+      background: #fafafa;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    .healthy { background: #ecfff1; border-color: #a9e2b4; }
+    .watch { background: #fff7e8; border-color: #f0d298; }
+    .danger { background: #fff0f0; border-color: #f1b5b5; }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .summary-box {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+    .summary-label {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .summary-value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .summary-sub {
+      margin-top: 4px;
+      color: #666;
+      font-size: 13px;
+    }
+    .section-divider {
+      height: 1px;
+      background: #eee;
+      margin: 14px 0;
+    }
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+    th {
+      font-size: 13px;
+      color: #666;
+      font-weight: 700;
+      background: #fafafa;
+    }
+    .danger-row { background: #fff7f7; }
+    .watch-row { background: #fffdf7; }
+    .healthy-row { background: #fbfffb; }
 
+    .result-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 14px;
+      margin-top: 12px;
+      background: #fff;
+    }
+    .result-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .result-line {
+      margin: 4px 0;
+      line-height: 1.6;
+      word-break: break-word;
+    }
+    .status-pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #ddd;
+      background: #fafafa;
+    }
+    .status-danger { background: #fff0f0; border-color: #f1b5b5; }
+    .status-watch { background: #fff7e8; border-color: #f0d298; }
+    .status-healthy { background: #ecfff1; border-color: #a9e2b4; }
+
+    .analysis-list {
+      margin: 0;
+      padding-left: 18px;
+      line-height: 1.8;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      h1 { font-size: 26px; }
+      h2 { font-size: 20px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>M2｜FCN Dashboard</h1>
+    <div class="subtitle">
+      這一頁會讀取 <b>Decision Module V1</b> 算出來的最新結果，呈現：
+      <b>全貌 summary</b>、<b>FCN 風險排序</b>、<b>Worst-of 股票排序</b>、<b>綜合分析</b>。
+    </div>
+
+    <div class="card">
+      <div class="toolbar">
+        <button id="runDecisionBtn">啟動 / 重算 Decision Module V1</button>
+        <button class="secondary" id="refreshViewBtn">刷新 M2 畫面</button>
+        <button class="light" id="exportArtifactsBtn">匯出 runtime / history</button>
+      </div>
+      <div id="runtimeMeta" class="muted">尚未載入 runtime cache</div>
+      <div class="note">
+        M2 先讀 <b>localStorage 的 runtime_cache_v1</b>。<br>
+        如果你剛改了 <b>pool30 / fcn_pool / market_runtime</b>，請先按「啟動 / 重算」。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1. 全貌 Summary</h2>
+      <div id="summaryBlock"></div>
+    </div>
+
+    <div class="card">
+      <h2>2. FCN 風險排序</h2>
+      <div id="fcnRankingBlock"></div>
+    </div>
+
+    <div class="card">
+      <h2>3. Worst-of 股票排序</h2>
+      <div id="stockRankingBlock"></div>
+    </div>
+
+    <div class="card">
+      <h2>4. 綜合分析</h2>
+      <div id="analysisBlock"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import {
+      runDecisionModuleV1,
+      exportDecisionArtifacts
+    } from "./js/core/decision_module_v1.js";
+
+    const RUNTIME_CACHE_KEY = "runtime_cache_v1";
+
+    function toNumber(value, fallback = 0) {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : fallback;
+    }
+
+    function round(value, digits = 2) {
+      const factor = 10 ** digits;
+      return Math.round(value * factor) / factor;
+    }
+
+    function readRuntimeCache() {
+      try {
+        const raw = localStorage.getItem(RUNTIME_CACHE_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function classifyFCN(fcn) {
+      const event = toNumber(fcn.event_fcn, 0);
+      if (event >= 15) return "healthy";
+      if (event >= 10) return "watch";
+      return "danger";
+    }
+
+    function classifyText(bucket) {
+      if (bucket === "healthy") return "健康";
+      if (bucket === "watch") return "持續追蹤";
+      return "積極控管";
+    }
+
+    function formatAmt(num, currency = "USD") {
+      return `${currency} ${toLocaleNumber(num)}`;
+    }
+
+    function toLocaleNumber(num) {
+      return toNumber(num, 0).toLocaleString("en-US", {
+        maximumFractionDigits: 2
+      });
+    }
+
+    function buildSummary(fcns = []) {
+      const totalCount = fcns.length;
+      const totalAmt = fcns.reduce((sum, x) => sum + toNumber(x.amt, 0), 0);
+
+      const healthy = fcns.filter(x => classifyFCN(x) === "healthy");
+      const watch = fcns.filter(x => classifyFCN(x) === "watch");
+      const danger = fcns.filter(x => classifyFCN(x) === "danger");
+
+      const block = `
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="summary-label">持倉總擋數</div>
+            <div class="summary-value">${totalCount}</div>
+            <div class="summary-sub">總金額：${formatAmt(totalAmt)}</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="summary-label">健康</div>
+            <div class="summary-value">${healthy.length}</div>
+            <div class="summary-sub">${formatAmt(healthy.reduce((s, x) => s + toNumber(x.amt, 0), 0))}</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="summary-label">持續追蹤</div>
+            <div class="summary-value">${watch.length}</div>
+            <div class="summary-sub">${formatAmt(watch.reduce((s, x) => s + toNumber(x.amt, 0), 0))}</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="summary-label">積極控管</div>
+            <div class="summary-value">${danger.length}</div>
+            <div class="summary-sub">${formatAmt(danger.reduce((s, x) => s + toNumber(x.amt, 0), 0))}</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <span class="pill healthy">健康：event_fcn ≥ 15</span>
+          <span class="pill watch">持續追蹤：10 ≤ event_fcn &lt; 15</span>
+          <span class="pill danger">積極控管：event_fcn &lt; 10</span>
+        </div>
+      `;
+      return block;
+    }
+
+    function buildFCNRanking(fcns = []) {
+      if (!fcns.length) {
+        return `<div class="muted">尚無 FCN 計算結果</div>`;
+      }
+
+      const rows = [...fcns].sort((a, b) => {
+        const rankMap = { danger: 0, watch: 1, healthy: 2 };
+        const ba = rankMap[classifyFCN(a)];
+        const bb = rankMap[classifyFCN(b)];
+        if (ba !== bb) return ba - bb;
+        return toNumber(a.event_fcn, 0) - toNumber(b.event_fcn, 0);
+      });
+
+      const html = `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>分類</th>
+                <th>FCN ID</th>
+                <th>Basket</th>
+                <th>Worst-of</th>
+                <th>Amt</th>
+                <th>Pure</th>
+                <th>Event</th>
+                <th>Δ</th>
+                <th>建議</th>
+                <th>原因</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map(f => {
+                const bucket = classifyFCN(f);
+                const rowClass =
+                  bucket === "danger" ? "danger-row" :
+                  bucket === "watch" ? "watch-row" : "healthy-row";
+
+                const pillClass =
+                  bucket === "danger" ? "status-danger" :
+                  bucket === "watch" ? "status-watch" : "status-healthy";
+
+                return `
+                  <tr class="${rowClass}">
+                    <td><span class="status-pill ${pillClass}">${classifyText(bucket)}</span></td>
+                    <td><b>${f.fcn_id}</b></td>
+                    <td>${(f.basket || []).join(" / ")}</td>
+                    <td><b>${f.worst_of || "-"}</b></td>
+                    <td>${formatAmt(f.amt || 0, f.currency || "USD")}</td>
+                    <td>${toLocaleNumber(f.pure_fcn)}</td>
+                    <td>${toLocaleNumber(f.event_fcn)}</td>
+                    <td>${toLocaleNumber(f.delta_fcn)}</td>
+                    <td>${f.suggestion || "-"}</td>
+                    <td>${f.reason || "-"}</td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      return html;
+    }
+
+    function buildWorstOfStockRanking(fcns = []) {
+      if (!fcns.length) {
+        return `<div class="muted">尚無 Worst-of 股票資料</div>`;
+      }
+
+      const map = {};
+
+      fcns.forEach(f => {
+        const symbol = f.worst_of;
+        if (!symbol) return;
+
+        if (!map[symbol]) {
+          map[symbol] = {
+            symbol,
+            count: 0,
+            total_amt: 0,
+            fcns: []
+          };
+        }
+
+        map[symbol].count += 1;
+        map[symbol].total_amt += toNumber(f.amt, 0);
+        map[symbol].fcns.push(f.fcn_id);
+      });
+
+      const rows = Object.values(map).sort((a, b) => {
+        if (b.total_amt !== a.total_amt) return b.total_amt - a.total_amt;
+        return b.count - a.count;
+      });
+
+      const html = `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Worst-of Stock</th>
+                <th>出現次數</th>
+                <th>總影響金額</th>
+                <th>對應 FCN</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map(x => `
+                <tr>
+                  <td><b>${x.symbol}</b></td>
+                  <td>${x.count}</td>
+                  <td>${formatAmt(x.total_amt)}</td>
+                  <td>${x.fcns.join(" / ")}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      return html;
+    }
+
+    function buildAnalysis(fcns = [], stocks = {}) {
+      if (!fcns.length) {
+        return `<div class="muted">尚無分析資料</div>`;
+      }
+
+      const dangerFcns = fcns.filter(x => classifyFCN(x) === "danger");
+      const watchFcns = fcns.filter(x => classifyFCN(x) === "watch");
+      const healthyFcns = fcns.filter(x => classifyFCN(x) === "healthy");
+
+      const worstMap = {};
+      fcns.forEach(f => {
+        if (!f.worst_of) return;
+        worstMap[f.worst_of] = (worstMap[f.worst_of] || 0) + 1;
+      });
+
+      const topWorst = Object.entries(worstMap)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5)
+        .map(([sym, count]) => `${sym}（${count}）`);
+
+      const topDanger = [...dangerFcns]
+        .sort((a, b) => toNumber(a.event_fcn, 0) - toNumber(b.event_fcn, 0))
+        .slice(0, 3);
+
+      const notes = [];
+
+      notes.push(`目前 FCN 總擋數 ${fcns.length}，其中健康 ${healthyFcns.length} 檔、持續追蹤 ${watchFcns.length} 檔、積極控管 ${dangerFcns.length} 檔。`);
+
+      if (topWorst.length) {
+        notes.push(`Worst-of 集中股票為：${topWorst.join("、")}。`);
+      }
+
+      if (topDanger.length) {
+        notes.push(`優先關注單為：${topDanger.map(x => `${x.fcn_id}（${x.worst_of}）`).join("、")}。`);
+      }
+
+      const stockTrendNotes = topDanger.map(f => {
+        const s = stocks[f.worst_of];
+        if (!s) return null;
+        return `${f.worst_of}：${s.trend}，${s.trend_note}`;
+      }).filter(Boolean);
+
+      const html = `
+        <div class="two-col">
+          <div class="result-card">
+            <div class="result-title">系統重點</div>
+            <ul class="analysis-list">
+              ${notes.map(x => `<li>${x}</li>`).join("")}
+            </ul>
+          </div>
+
+          <div class="result-card">
+            <div class="result-title">Worst-of 趨勢觀察</div>
+            ${stockTrendNotes.length
+              ? `<ul class="analysis-list">${stockTrendNotes.map(x => `<li>${x}</li>`).join("")}</ul>`
+              : `<div class="muted">尚無足夠資料</div>`
+            }
+          </div>
+        </div>
+      `;
+
+      return html;
+    }
+
+    function renderM2FromRuntime() {
+      const cache = readRuntimeCache();
+
+      if (!cache || !cache.fcns) {
+        document.getElementById("runtimeMeta").innerHTML = "尚未找到 runtime_cache_v1，請先按「啟動 / 重算 Decision Module V1」";
+        document.getElementById("summaryBlock").innerHTML = `<div class="muted">尚無資料</div>`;
+        document.getElementById("fcnRankingBlock").innerHTML = `<div class="muted">尚無資料</div>`;
+        document.getElementById("stockRankingBlock").innerHTML = `<div class="muted">尚無資料</div>`;
+        document.getElementById("analysisBlock").innerHTML = `<div class="muted">尚無資料</div>`;
+        return;
+      }
+
+      const fcns = Object.values(cache.fcns || {});
+      const stocks = cache.stocks || {};
+
+      document.getElementById("runtimeMeta").innerHTML =
+        `最新 runtime 產生時間：<b>${cache.generated_at || "-"}</b>`;
+
+      document.getElementById("summaryBlock").innerHTML = buildSummary(fcns);
+      document.getElementById("fcnRankingBlock").innerHTML = buildFCNRanking(fcns);
+      document.getElementById("stockRankingBlock").innerHTML = buildWorstOfStockRanking(fcns);
+      document.getElementById("analysisBlock").innerHTML = buildAnalysis(fcns, stocks);
+    }
+
+    async function bootDecisionAndRender() {
+      try {
+        const result = await runDecisionModuleV1({
+          pool30Path: "./data/pool30.json",
+          fcnPoolPath: "./data/fcn_pool.json",
+          marketRuntimePath: "./data/market_runtime.json"
+        });
+
+        console.log("Decision Module V1 啟動成功", result);
+        window.decisionV1Result = result;
+        window.exportDecisionArtifacts = exportDecisionArtifacts;
+
+        renderM2FromRuntime();
+        alert("Decision Module V1 啟動成功");
+      } catch (err) {
+        console.error("Decision Module V1 啟動失敗", err);
+        alert("Decision Module V1 啟動失敗，請看 console");
+      }
+    }
+
+    document.getElementById("runDecisionBtn").addEventListener("click", bootDecisionAndRender);
+    document.getElementById("refreshViewBtn").addEventListener("click", renderM2FromRuntime);
+    document.getElementById("exportArtifactsBtn").addEventListener("click", exportDecisionArtifacts);
+
+    // 頁面初始先讀 cache
+    renderM2FromRuntime();
+  </script>
+</body>
+</html>
