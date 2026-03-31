@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-03-31T08:00:00",
+  "stocks": {
+    "NVDA": {
+      "pure_stock": 8.91,
+      "snapshot_score": 0,
+      "event_stock": 8.91,
+      "snapshot_bucket": "-5% ~ +5%",
+      "snapshot_reason": "中性區",
+      "trend": "中性",
+      "trend_note": "沒有明顯趨勢優勢，需要搭配 Snapshot 判斷"
+    },
+    "TSM": {
+      "pure_stock": 8.4,
+      "snapshot_score": 2,
+      "event_stock": 10.4,
+      "snapshot_bucket": "-10% ~ -5%",
+      "snapshot_reason": "開始變甜",
+      "trend": "長多回檔",
+      "trend_note": "長期趨勢仍強，短期修正，進入 FCN 甜蜜點"
+    }
+  },
+  "fcns": {
+    "DACN2600066": {
+      "worst_of": "SMH",
+      "snapshot": 2.4,
+      "pure_fcn": 3.2,
+      "event_fcn": 4.1,
+      "avg_pure_stock": 7.8,
+      "avg_event_stock": 8.6,
+      "suggestion": "觀察",
+      "reason": "結構可接受，但價格未明顯偏甜"
+    }
+  }
+}
