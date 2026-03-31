@@ -479,7 +479,8 @@
                 <button class="expand-btn" onclick="toggleDetail('${detailId}')">展開明細</button>
 
                 <div id="${detailId}" class="detail-box">
-                  ${buildStockDetailTable(f.stocks || [])}
+                  ${buildFCNMeta(f)}
+${buildStockDetailTable(f.stocks || [])}
                 </div>
               </div>
             `;
@@ -489,12 +490,12 @@
     }
 
     function buildZoneBlock(data) {
-      return `
-        <div class="zone-grid">
-          ${renderZoneColumn("🚨 積極處理", "zone-danger", data.danger, "danger")}
-          ${renderZoneColumn("⚠️ 持續追蹤", "zone-watch", data.watch, "watch")}
-          ${renderZoneColumn("✅ 健康", "zone-healthy", data.healthy, "healthy")}
-        </div>
+  return `
+    <div class="zone-grid">
+      ${renderZoneColumn("🚨 積極處理", "zone-danger", limitDisplay(data.danger, "danger"), "danger")}
+      ${renderZoneColumn("⚠️ 持續追蹤", "zone-watch", limitDisplay(data.watch, "watch"), "watch")}
+      ${renderZoneColumn("✅ 健康", "zone-healthy", limitDisplay(data.healthy, "healthy"), "healthy")}
+    </div>
       `;
     }
 
