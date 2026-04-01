@@ -1,1 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>M3｜FCN 評分</title>
 
+<style>
+body {
+  font-family: Arial, "Microsoft JhengHei", sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+}
+
+.page {
+  max-width: 1100px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: #111;
+  color: #fff;
+  padding: 10px;
+}
+
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.green { color: #2e7d32; }
+.red { color: #c62828; }
+
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<h1>📊 M3｜FCN 評分（簡化版）</h1>
+
+<div class="card">
+<table class="table" id="fcn-table">
+<thead>
+<tr>
+<th>Basket</th>
+<th>Worst</th>
+<th>Pure</th>
+<th>Event</th>
+<th>Delta</th>
+<th>建議</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+
+</div>
+
+<script>
+
+async function loadData() {
+  const data = await fetch("./data.json").then(r => r.json());
+
+  const tbody = document.querySelector("#fcn-table tbody");
+  tbody.innerHTML = "";
+
+  (data.fcn_list || []).forEach(f => {
+
+    const delta = f.delta_fcn_pct || 0;
+    const deltaClass = delta >= 0 ? "green" : "red";
+
+    tbody.innerHTML += `
+      <tr>
+        <td>${f.basket}</td>
+        <td>${f.worst_of}</td>
+        <td>${f.pure_fcn}</td>
+        <td>${f.event_fcn}</td>
+        <td class="${deltaClass}">${delta}%</td>
+        <td>${f.suggestion}</td>
+      </tr>
+    `;
+  });
+}
+
+loadData();
+
+</script>
+</body>
+</html>
