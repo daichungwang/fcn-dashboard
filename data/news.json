@@ -187,9 +187,9 @@
     "is_active": true
   },
  {
-  "id": "N100",
+  "id": "N12",
+   "title": "Snowflake sees strong AI data demand growth from enterprises",
   "type": "stock",
-  "title": "Snowflake sees strong AI data demand growth from enterprises",
   "summary": "Snowflake reported accelerating demand for AI-driven data platforms as enterprises increase spending on data infrastructure and analytics.",
   "source": "MockWire",
   "url": "",
@@ -201,17 +201,6 @@
     "SNOW": 3.0
   },
   "is_active": true
-  },
-  {
-  "id": "N100",
-  "type": "stock",
-  "title": "Snowflake sees strong AI data demand growth from enterprises",
-  "summary": "Snowflake reported accelerating demand for AI-driven data platforms as enterprises increase spending on data infrastructure and analytics.",
-  "source": "MockWire",
-  "url": "",
-  "published_at": "2026-04-01T06:30:00Z",
-  "affected_sectors": ["AI_APPLICATION"],
-  "sid_score": 2
   },
   {
     "id": "N010",
