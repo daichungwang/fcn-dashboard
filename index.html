@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>振宇 FCN 系統</title>
+
+  <style>
+    body {
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      color: #111;
+    }
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 24px 0;
+      font-size: 48px;
+      font-weight: 800;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .desc {
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      margin: 10px 0 14px 18px;
+      padding: 0;
+      color: #555;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: #111;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .btn.gray {
+      background: #666;
+    }
+
+    .btn:hover {
+      opacity: 0.85;
+    }
+
+    .muted {
+      color: #777;
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 32px;
+      }
+
+      .card h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <h1>振宇 FCN 系統</h1>
+
+  <!-- 系統模組說明 -->
+  <div class="card">
+    <h2>📊 系統架構</h2>
+    <ul>
+      <li>M1 完整版畫面可閱讀</li>
+      <li>M2 可監控 FCN 持倉健康</li>
+      <li>M3 可做 FCN 評分與排序</li>
+      <li>M4 可 key in / 編輯 / 查詢</li>
+      <li>M5 保留未來擴充</li>
+    </ul>
+  </div>
+
+  <!-- M1 -->
+  <div class="card">
+    <h2>📰 M1｜市場資訊</h2>
+    <div class="desc">
+      每日快速掌握：
+      國際新聞、財經新聞、AI趨勢、總經指標、核心股票
+    </div>
+    <ul>
+      <li>國際 / 財經新聞</li>
+      <li>AI 趨勢與重大事件</li>
+      <li>總經（CPI / VIX / 利率）</li>
+      <li>核心股票觀察</li>
+    </ul>
+
+    <!-- ✅ 修正重點：正確連到 m1.html -->
+    <a href="./m1.html" class="btn">打開主畫面</a>
+  </div>
+
+  <!-- M2 -->
+  <div class="card">
+    <h2>🧠 M2｜FCN 持倉健康</h2>
+    <div class="desc">
+      即時監控 FCN 風險（KI / Strike / Worst-of）
+    </div>
+
+    <a href="./m2.html" class="btn">進入持倉監控</a>
+  </div>
+
+  <!-- M3 -->
+  <div class="card">
+    <h2>💰 M3｜FCN 評分</h2>
+    <div class="desc">
+      Pure / Event / Worst-of 分析，找出最佳 FCN 組合
+    </div>
+
+    <a href="./m3.html" class="btn">查看評分</a>
+  </div>
+
+  <!-- M4 -->
+  <div class="card">
+    <h2>🛠 M4｜資料管理</h2>
+    <div class="desc">
+      FCN 建立 / 編輯 / 查詢
+    </div>
+
+    <a href="./m4.html" class="btn gray">進入管理</a>
+  </div>
+
+  <!-- Ranking（保留，不干擾主流程） -->
+  <div class="card">
+    <h2>📈 Ranking（輔助）</h2>
+    <div class="muted">快速查看 Stock / FCN 排名</div>
+
+    <br>
+    <a href="./ranking.html" class="btn gray">打開 Ranking</a>
+  </div>
+
+  <div class="footer">
+    FCN Dashboard V6｜Milestone 1
+  </div>
+
+</div>
+</body>
+</html>
