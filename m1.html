@@ -1,1 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>M1｜市場資訊</title>
 
+<style>
+body {
+  font-family: Arial, "Microsoft JhengHei";
+  background: #f5f5f5;
+  margin: 0;
+  padding: 16px;
+}
+
+.page {
+  max-width: 920px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+}
+
+.title {
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.table {
+  width: 100%;
+  font-size: 14px;
+}
+
+.table tr {
+  border-bottom: 1px solid #eee;
+}
+
+.table td {
+  padding: 6px;
+}
+
+.green { color:#0a8f3c; }
+.red { color:#c62828; }
+
+.news-item {
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.news-title {
+  font-weight: 700;
+}
+
+.small {
+  color:#666;
+  font-size:12px;
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.fire {
+  color:#ff5722;
+  font-weight:800;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<h1>📊 M1｜市場資訊</h1>
+
+<!-- 市場指標 -->
+<div class="card">
+  <div class="title">📊 市場指標</div>
+  <table class="table" id="macro"></table>
+</div>
+
+<!-- 國際新聞 -->
+<div class="card">
+  <div class="title">🌍 國際新聞</div>
+  <div id="news-global"></div>
+  <div class="btn" onclick="toggle('global')">展開完整</div>
+</div>
+
+<!-- 財經新聞 -->
+<div class="card">
+  <div class="title">💰 財經新聞</div>
+  <div id="news-finance"></div>
+  <div class="btn" onclick="toggle('finance')">展開完整</div>
+</div>
+
+<!-- AI新聞 -->
+<div class="card">
+  <div class="title">🤖 AI 趨勢</div>
+  <div id="news-ai"></div>
+  <div class="btn" onclick="toggle('ai')">展開完整</div>
+</div>
+
+</div>
+
+<script>
+
+let NEWS = {};
+let EXPAND = {
+  global:false,
+  finance:false,
+  ai:false
+};
+
+async function init() {
+  const news = await fetch("./data/news.json").then(r=>r.json());
+  const market = await fetch("./data/market_runtime.json").then(r=>r.json());
+
+  NEWS = classify(news);
+
+  renderMacro(market);
+  renderAll();
+}
+
+// ---------------------
+// 分類新聞（簡化版）
+// ---------------------
+function classify(data) {
+
+  return {
+    global: data.filter(n=>true),
+    finance: data.filter(n=>n.title.toLowerCase().includes("fed") || n.title.toLowerCase().includes("inflation")),
+    ai: data.filter(n=>n.title.toLowerCase().includes("ai") || n.title.toLowerCase().includes("nvidia"))
+  };
+}
+
+// ---------------------
+// 市場指標
+// ---------------------
+function renderMacro(m) {
+
+  const rows = [
+    ["VIX", m.VIX?.price_now, m.VIX?.price_ref_1d],
+    ["S&P500", m.SPY?.price_now, m.SPY?.price_ref_1d],
+    ["NASDAQ", m.QQQ?.price_now, m.QQQ?.price_ref_1d],
+    ["10Y", m.US10Y?.price_now, m.US10Y?.price_ref_1d]
+  ];
+
+  document.getElementById("macro").innerHTML =
+    rows.map(r=>{
+
+      const change = ((r[1]-r[2])/r[2]*100).toFixed(2);
+
+      return `
+        <tr>
+          <td>${r[0]}</td>
+          <td>${r[1] || "-"}</td>
+          <td>${r[2] || "-"}</td>
+          <td class="${change>=0?'green':'red'}">${change}%</td>
+        </tr>
+      `;
+    }).join("");
+}
+
+// ---------------------
+// render新聞
+// ---------------------
+function renderSection(list, type) {
+
+  const show = EXPAND[type] ? list : list.slice(0,3);
+
+  return show.map(n=>`
+
+    <div class="news-item">
+
+      <div class="news-title">
+        ${isImportant(n) ? '<span class="fire">🔥</span>' : ''}
+        ${n.title}
+      </div>
+
+      <div class="small">${n.summary}</div>
+
+      <div class="small">
+        影響：${n.impact || '-'}｜
+        強度：${n.strength || '-'}｜
+        分數：${n.event_score || '-'}
+      </div>
+
+      <div class="small">
+        完整說明：${n.reason || '未提供'}
+      </div>
+
+      <div class="small">
+        👉 ${n.url ? `<a href="${n.url}" target="_blank">查看原文</a>` : '未提供'}
+      </div>
+
+    </div>
+
+  `).join("");
+}
+
+function renderAll() {
+  document.getElementById("news-global").innerHTML = renderSection(NEWS.global,"global");
+  document.getElementById("news-finance").innerHTML = renderSection(NEWS.finance,"finance");
+  document.getElementById("news-ai").innerHTML = renderSection(NEWS.ai,"ai");
+}
+
+// ---------------------
+function toggle(type){
+  EXPAND[type] = !EXPAND[type];
+  renderAll();
+}
+
+// ---------------------
+function isImportant(n){
+  const t = n.title.toLowerCase();
+  return t.includes("fed") || t.includes("inflation") || t.includes("vix");
+}
+
+// ---------------------
+init();
+
+</script>
+
+</body>
+</html>
