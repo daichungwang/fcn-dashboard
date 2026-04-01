@@ -587,7 +587,7 @@
 
     function buildActionLists(discoveryCandidates = []) {
       const addList = discoveryCandidates
-        .filter((x) => Number(x.event_score) > 1)
+        .filter((x) => Number(x.event_score) > 0.2)
         .slice(0, 5)
         .map((x) => ({
           symbol: x.symbol,
