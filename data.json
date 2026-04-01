@@ -1,239 +1,239 @@
 {
-  "updated_at": "2026-03-31 00:04",
+  "updated_at": "2026-04-01 00:04",
   "summary": {
     "active_fcn_count": 24,
     "top_risk_code": "FCN710H",
     "worst_of": "ORCL",
-    "market_env": "觀望",
-    "main_conclusion": "今天較適合觀望或只做防守型 FCN，先避開高波動與風險集中的標的。"
+    "market_env": "保守做",
+    "main_conclusion": "今天可保守做 FCN，建議以 TSM / MSFT 為主，避免進攻型標的過重。"
   },
   "morning_brief": {
     "international_news": [
       {
-        "title": "What happened with CO2 supplies in the UK? #food",
-        "summary": "UK temporarily reopens a bioethanol plant for CO2 The UK is taking a temporary step to bolster CO2 supplies a…",
-        "content": "The UK is taking a temporary step to bolster CO2 supplies as geopolitical conflict continues to disrupt inputs for local industries. The move involves reopening a bioethanol plant, aimed at supportin… [+1319 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
+        "title": "What’s in the Chocolate-Espresso Matzo Icebox Cake? #food",
+        "summary": "Chocolate Espresso Matzo Icebox Cake: the layered build A no bake Passover style dessert called Chocolate Esp…",
+        "content": "A no-bake Passover-style dessert called Chocolate-Espresso Matzo Icebox Cake is assembled around a layered technique using matzo. The structure combines espresso-soaked matzo sheets with chocolate m… [+1131 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Are airlines cancelling flights due to Iran war? #travel",
+        "summary": "Iran conflict and flight disruptions Air travel disruption tied to the Iran war has been a major theme in rec…",
+        "content": "Air travel disruption tied to the Iran war has been a major theme in recent travel news. Reports indicate that global air travel is facing severe disruption, and that many passengers still cant trave… [+1445 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "In Iran, the US Manufactured an Enemy and Lost All Its Friends",
+        "summary": "The war on Iran was neither inevitable nor necessary. As recently as March 3, Director General of the Interna…",
+        "content": "The war on Iran was neither inevitable nor necessary. As recently as March 3, Director General of the International Atomic Energy Agency (IAEA) Rafael Grossi said the IAEA has found no evidence that … [+8216 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Stream It Or Skip It: ‘53 Sundays’ on Netflix, an Amusing, Dialogue-Driven Spanish Comedy About Serially Screwed-Up Sib…",
+        "summary": "Director Cesc Gay adapts his stage production into this tight little 78-minuter.",
+        "content": "53 Sundays (now on Netflix) presents the burning question: How many bickering siblings does it take to change a lightbulb? Thats not a joke or a metaphor but a literalism in Spanish director Cesc Gay… [+5813 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Are boys really in crisis? What the science says in the age of the manosphere",
+        "summary": "Some data suggest that boys and young men are struggling with school, health and masculinity. But does talk o…",
+        "content": "Last year, psychologist Lee Chambers set off across the United Kingdom to listen to boys. In his work training companies in equality, he had met hundreds of parents who said they were concerned that … [+11047 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Developing a novel index for neighborhood social determinants of cardiovascular diseases in the CARDIA study",
+        "summary": "Neighborhood social determinants of health influence cardiovascular risk, but early-life exposure effects rem…",
+        "content": "<li>Go, A. S. et al. Heart disease and stroke statistics-2013 update: a report from the American Heart Association. Circulation127, e6e245 (2013). Google Scholar </li><li>Havranek, E. P. et al. So… [+7618 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "The Quick Trek To Food And Fuel Rationing?",
+        "summary": "Recent headlines have reported sudden closures of TSA (Transportation Security Administration) lanes at major…",
+        "content": "Recent headlines have reported sudden closures of TSA (Transportation Security Administration) lanes at major airports and the strategic mobilization of Immigration and Customs Enforcement (ICE) agen… [+2204 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Marine heatwaves shift ocean net primary productivity from the tropics toward the poles",
+        "summary": "Marine heatwaves (MHWs) systematically alter ocean net primary production (NPP) patterns meridionally, reflec…",
+        "content": "<li>Intergovernmental Panel on Climate Change (IPCC). Climate Change 2021The Physical Science Basis: Working Group I Contribution to the Sixth Assessment Report of the Intergovernmental Panel on Clim… [+8596 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Markets close at over two-year low, rupee breaches 95 mark US iran-war-oil-prices",
+        "summary": "With investors more risk-averse toward emerging markets like India, the large-scale outflow increased stock m…",
+        "content": "Foreign Portfolio Investors (FPIs) recorded a historic monthly sell-off in March, withdrawing about Rs 1.18 lakh crore ($12.7 billion) from Indian stock markets amid rising global uncertainty and hei… [+2980 chars]｜分類：全球經濟｜解讀：地緣風險升高，需留意市場波動擴大",
         "affects_fcn": true,
         "impact_score": -1
       },
       {
-        "title": "Ancient Roman board game stumped experts for decades – until AI played",
-        "summary": "A slab of limestone excavated in 1984 from the ancient Coriovallum settlement in the Netherlands presented a…",
-        "content": "A slab of limestone excavated in 1984 from the ancient Coriovallum settlement in the Netherlands presented a puzzle for researchers of Roman history. Because of its distinct grooves and marks, the st… [+4541 chars]｜分類：地緣政治｜解讀：影響有限",
+        "title": "Silver nanoparticles synthesized from Sempervivum tectorum leaf extract show antibacterial activity against canine Stap…",
+        "summary": "Despite developing a broad spectrum of antibiotics, pathogenic bacteria remain the primary health concern. Th…",
+        "content": "<li>Farouk, S. M. et al. Biosynthesis and characterization of silver nanoparticles from Punica granatum (pomegranate) Peel waste and its application to inhibit foodborne pathogens. Sci. Rep.13, 19469… [+16342 chars]｜分類：全球經濟｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Does the Tail Wag the Dog? How Both Sides Are Missing the Bigger Picture",
-        "summary": "The joint US-Israeli war on Iran has thrust back into the spotlight a divisive debate about whether the dog w…",
-        "content": "The joint US-Israeli war on Iran has thrust back into the spotlight a divisive debate about whether the dog wags the tail, or the tail wags the dog. Who is in charge of this war: Israel or the United… [+15182 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Iran ‘Gone Wild’ in Dimona: Is Tehran Using Israel-US Madman Doctrine?",
-        "summary": "The wording is familiar. The urgency is always absolute. The implication is unmistakable: Israel is not choos…",
-        "content": "The wording is familiar. The urgency is always absolute. The implication is unmistakable: Israel is not choosing war. It is forced into it. For many, the claim is inherently contradictory. How can a… [+6371 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Iran’s Alleged 47-Year War on America: Debunking the 1,050 American Deaths Canard",
-        "summary": "On the eve of the horrific World Trade center attack on September 11, 2001, the mullahs and their IRGC hoolig…",
-        "content": "On the eve of the horrific World Trade center attack on September 11, 2001, the mullahs and their IRGC hooligans had been in power for nearly 22 years. Yet the record for that two decade interval sub… [+12397 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "UBQLN2 links proteotoxicity with lipid metabolism in neurodegeneration",
-        "summary": "ALS/FTD-linked mutations in UBQLN2, a protein quality control factor, impair degradation of enzymes essential…",
-        "content": "UBQLN2 mutations prolong protein half-lives and disrupt metabolic homeostasis To investigate UBQLN2 function in ALS/FTD, we introduced X-linked UBQLN2 mutations (P497H or P506T) into a male human iP… [+43331 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Explosion in south Lebanon kills UNIFIL peacekeeper",
-        "summary": "The United Nations peacekeeping mission ⁠in Lebanon (UNIFIL) said a peacekeeper was killed when a projectile…",
-        "content": "The United Nations peacekeeping mission in Lebanon (UNIFIL) said a peacekeeper was killed when a projectile exploded at one of its positions near the southern Lebanese village of Adchit al-Qusayr. A… [+3918 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "TAG Macau FBO Surges to the Top, Winning \"Best FBO - Rest of World\" at 2026 AIN Awards",
-        "summary": "MACAU and LONDON, March 30, 2026 /PRNewswire/ -- TAG Aviation today announced that TAG Macau FBO has achieved…",
-        "content": "MACAU and LONDON, March 30, 2026 /PRNewswire/ -- TAG Aviation today announced that TAG Macau FBO has achieved a major milestone after securing three top honours at the 2026 Aviation International New… [+2440 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "AI-guided multi-omics analysis identifies NPC1-modulated susceptibility to SARS-CoV-2 infection under PM2.5 exposure",
-        "summary": "Using artificial intelligence, authors model how air pollution may increase susceptibility to SARS-CoV-2. NPC…",
-        "content": "<li>Lancet COVID-19 Commissioners, Task Force Chairs, and Commission Secretariat. Lancet COVID-19 Commission Statement on the occasion of the 75th session of the UN General Assembly (vol 396, pg 1102… [+21146 chars]｜分類：全球經濟｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Weekly Health Quiz: Statins and Muscle Health, Molecular Hydrogen Explained, and Exercise Variety",
-        "summary": "1 Which supplement is typically recommended for statin-related muscle symptoms? <ul> <li>Fish oil capsules</l…",
-        "content": "Exciting news! We're thrilled to announce the development of a cutting-edge forum that will revolutionize how you engage with health information online. This major upgrade to our content management s… [+1990 chars]｜分類：全球經濟｜解讀：地緣風險升高，需留意市場波動擴大",
+        "title": "How A Magnet Shortage Could Bring The $10 Trillion Tech Sector to a Halt",
+        "summary": "REalloys (NASDAQ: ALOY) is assembling the only non-Chinese supply chain for a component powering nearly every…",
+        "content": "Labour education secretary Bridget Phillipson… After weeks of absorbing massive… Oil markets were dominated by… By Charles Kennedy - Mar 30, 2026, 7:00 PM CDTREalloys (NASDAQ: ALOY) is assembling … [+12494 chars]｜分類：全球經濟｜解讀：地緣風險升高，需留意市場波動擴大",
         "affects_fcn": true,
         "impact_score": -1
       },
       {
-        "title": "A megawatt ultra-wide bandgap semiconductor module for pulsed power electronics",
-        "summary": "Achieving high power scaling in ultrawide bandgap electronics remains challenging. Here, the authors present…",
-        "content": "<li>Zhang, Y. et al. Wide-bandgap semiconductors and power electronics as pathways to carbon neutrality. Nat. Rev. Electr. Eng.2, 155172 (2025). Google Scholar </li><li>Higashiwaki, M., Kaplar, R.… [+13720 chars]｜分類：全球經濟｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Inside the ‘self-driving’ lab revolution",
-        "summary": "AI-powered robotic tools are muscling in on tasks typically done by humans. What does the future hold?",
-        "content": "The robot scientist Eve was built at the University of Manchester, UK, before being moved to Sweden.Credit: Courtesy of Ross D. King Measuring 5 metres square by 3 metres high, Eve takes up at least… [+11481 chars]｜分類：全球經濟｜解讀：影響有限",
+        "title": "Failure-avoidance bayesian optimization with failure-boundary search for automatic exploration of digging control param…",
+        "summary": "Bayesian optimization is an effective framework for identifying optimal control parameters of excavation mach…",
+        "content": "<li>Shimizu, M. &amp; Matsumura, S. Productivity improvement by visualization of construction machinery operation. Komatsu Tech. Rep.65 (172), 1318 (2019). Google Scholar </li><li>Svanberg, A., La… [+5387 chars]｜分類：全球經濟｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       }
     ],
     "financial_news": [
       {
-        "title": "Stocks slide in Asia, Brent crude heads for record monthly rise",
-        "summary": "SYDNEY, March 30 : Stock futures slid in Asia on Monday as investors dug in for a protracted Gulf conflict th…",
-        "content": "SYDNEY, March 30 : Stock futures slid in Asia on Monday as investors dug in for a protracted Gulf conflict that already has oil prices heading for a record monthly rise, bringing a spike in inflation… [+3809 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
+        "title": "S&P 500 extends losing streak, Nasdaq slides, Dow Jones posts modest gains as oil prices rattle Wall Street – here's ho…",
+        "summary": "S&P 500​, Nasdaq, Dow Jones today: Wall Street experienced a mixed close as tech stocks fell and oil prices s…",
+        "content": "S&amp;P 500, Nasdaq, Dow Jones today: A volatile start to the week ended with a mixed close on Wall Street, as falling tech stocks and rising oil prices kept pressure on markets despite reassurance f… [+3485 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
         "affects_fcn": true,
         "impact_score": -1
       },
       {
-        "title": "From oil to food to markets: How a month of war on Iran has remade the world economy",
-        "summary": "The US and Israeli war on Iran is now a month old. In 30 days, the war has upended the world economy, affecti…",
-        "content": "It's not easy being the world economy right now. One month into the US and Israeli war on Iran, the shock is upending everything from supply chains to air travel. As the price of a barrel of oil se… [+8493 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
+        "title": "Are Front-Load Washing Machines a Better Value? I Did Some Math to Settle the Debate",
+        "summary": "Front-load washing machines are more expensive to buy but cost less to operate. I crunched the numbers over t…",
+        "content": "Home appliances are becoming more energy-efficient every year, including laundry units. But there are significant differences among models and types, making some a better long-term buy than others. W… [+17827 chars]｜分類：Fed / 利率｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "S&P set for another loss following worst week since Iran War began as oil keeps climbing",
+        "summary": "After jumping to an initial gain of 0.9%, the S&P 500 quickly erased nearly all of it before seesawing lower.",
+        "content": "U.S. stocks are swinging again Monday as oil prices keep climbing because of uncertainty about when the war with Iran could end.The S&amp;P 500 fell 0.3% and deepened its losses following its worst w… [+3913 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
         "affects_fcn": true,
         "impact_score": -1
       },
       {
-        "title": "Worries about global economic pain deepen as the war in Iran drags on",
-        "summary": "U.S. and Israeli attacks on Iran have driven up prices, darkened the outlook for the world economy, sent glob…",
-        "content": "U.S. and Israeli attacks on Iran have driven up prices, darkened the outlook for the world economy, sent global stock markets reeling and forced developing countries to ration fuel and subsidize ener… [+7149 chars]｜分類：Fed / 利率｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
+        "title": "US Bonds Rally as Traders Bet on Fed Rate Cut Bets in About-Face",
+        "summary": "The US bond market rallied back from its deepest selloff in 17 months as traders ditched wagers that the Fede…",
+        "content": "(Bloomberg) The US bond market rallied back from its deepest selloff in 17 months as traders ditched wagers that the Federal Reserve will hike interest rates, with the focus shifting to speculation t… [+5276 chars]｜分類：Fed / 利率｜解讀：波動升高，FCN 敲入風險增加",
+        "affects_fcn": true,
+        "impact_score": -2
       },
       {
-        "title": "Investor Unease Builds Entering War’s Fifth Week",
-        "summary": "A record month for crude, stocks in or near correction territory, bonds under pressure and a growing sense th…",
-        "content": "(Bloomberg) A record month for crude, stocks in or near correction territory, bonds under pressure and a growing sense that there are few tools to shield markets from an increasingly entrenched Iran … [+4854 chars]｜分類：Fed / 利率｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
+        "title": "Jerome Powell hints at US Fed holding rates, as it monitors how war affects economy",
+        "summary": "Federal Reserve Chair Jerome Powell on Monday said the U.S. central bank can wait to see how the ‌Iran war ⁠a…",
+        "content": "Federal Reserve Chair Jerome Powell on Monday said the U.S. central bank can wait to see how the Iran war affects the economy and inflation, noting that policymakers typically look through shocks suc… [+1547 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
+        "affects_fcn": true,
+        "impact_score": 1
       },
       {
-        "title": "JPMorgan, Pimco Say Bond Market Is Underestimating Slowdown Risk",
-        "summary": "Some of Wall Street’s biggest bond-fund managers say financial markets are underestimating the risk that the…",
-        "content": "(Bloomberg) Some of Wall Streets biggest bond-fund managers say financial markets are underestimating the risk that the US war in Iran will cause a sharp slowdown in an already sputtering economy. … [+5436 chars]｜分類：Fed / 利率｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Global economy takes gut punch from war in Iran, with nobody untouched the longer it goes on",
-        "summary": "The war also has dredged up a bad economic memory from the oil shocks of the 1970s: stagflation.",
-        "content": "U.S. and Israeli attacks on Iran have driven up prices, darkened the outlook for the world economy, sent global stock markets reeling and forced developing countries to ration fuel and subsidize ener… [+6971 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
+        "title": "Markets Turn Negative as Crude Oil Prices Surge",
+        "summary": "The S&P 500 Index ($SPX ) (SPY ) today is down -0.75%, the Dow Jones Industrial Average ($DOWI ) (DIA ) is do…",
+        "content": "The S&amp;P 500 Index ($SPX) (SPY) today is down -0.75%, the Dow Jones Industrial Average ($DOWI) (DIA) is down -0.21%, and the Nasdaq 100 Index ($IUXX) (QQQ) is down -1.18%. Stock indexes turned lo… [+7126 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
         "affects_fcn": true,
         "impact_score": -1
       },
       {
-        "title": "24-Years-Owned 1997 Dodge Viper GTS",
-        "summary": "This 1997 Dodge Viper GTS was acquired by the selling dealer in December 2001, and 9k of the 25k kilometers (…",
-        "content": "This 1997 Dodge Viper GTS was acquired by the selling dealer in December 2001, and 9k of the 25k kilometers (~15k miles) shown have been added since that time. It has been registered in Ontario from … [+1967 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "title": "Waiting for 3% mortgage rates? Here’s the reality check buyers need now",
+        "summary": "Mortgage rates were once below 3%, but now they are much higher. Many buyers are waiting for rates to fall ag…",
+        "content": "Mortgage rates were very low in 2021, even below 3%, but now they are much higher. According to Freddie Mac, the average 30-year mortgage rate is now above 6%. Because rates are high, many home buyer… [+3237 chars]｜分類：Fed / 利率｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Why are exfoliating deodorants trending now? #lifestyle",
-        "summary": "Exfoliating deodorants are catching on Exfoliating deodorants are becoming a spring grooming staple because t…",
-        "content": "Exfoliating deodorants are becoming a spring grooming staple because they promise more than odor control: theyre designed to also help with surface buildup that can contribute to irritation. The sto… [+1318 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "title": "Brent crude touches $115 a barrel, while U.S. stocks recover some losses",
+        "summary": "With stocks cheaper than they were before the Iran war, some investors are looking for an opportune time to b…",
+        "content": "Brent crude touched $115 a barrel on Monday amid new threats from President Trump that the U.S. could destroy Iranian infrastructure, including power plants and oil wells, if the Strait of Hormuz isn… [+3205 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "upgrade-assurance-cli added to PyPI",
+        "summary": "Upgrade Assurance CLI Tool",
+        "content": "This project is a simple CLI wrapper around the PAN-OS Upgrade Assurance library. Installation It is recommended to install this project with pipx. Installing with pipx will automatically make th… [+2616 chars]｜分類：通膨 / 就業｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Why is Project Hail Mary beating Avatar? #entertainment",
-        "summary": "Project Hail Mary’s box office momentum keeps climbing Ryan Gosling’s sci fi hit Project Hail Mary is gaining…",
-        "content": "Project Hail Marys box-office momentum keeps climbing Ryan Goslings sci-fi hit Project Hail Mary is gaining serious traction at the box office, with coverage highlighting how its now outperforming A… [+1430 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "title": "How did Trump threaten Iran’s energy grid? #world",
+        "summary": "Trump escalates pressure on Iran with threats against energy infrastructure President Donald Trump said the U…",
+        "content": "President Donald Trump said the United States would obliterate Irans power stations if a ceasefire is not reached shortly. The threat was linked to ongoing efforts to end the broader conflict and was… [+1515 chars]｜分類：通膨 / 就業｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Who tops Prime Video after Reacher? #entertainment",
-        "summary": "Guy Ritchie’s new series knocks Prime Video’s top spot Prime Video’s streaming rankings are shifting quickly,…",
-        "content": "Guy Ritchies new series knocks Prime Videos top spot Prime Videos streaming rankings are shifting quickly, with a report saying the services No. 1 spot flipped after Guy Ritchies latest hit series o… [+1225 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "title": "Red Bull Extreme and Blue Bull Extreme may be harmful due to hidden drug ingredient",
+        "summary": "The Food and Drug Administration is advising consumers not to purchase or use Red Bull Extreme or Blue Bull E…",
+        "content": "[3-30-2026] The Food and Drug Administration is advising consumers not to purchase or use Red Bull Extreme or Blue Bull Extreme, products promoted and sold for sexual enhancement on various websites … [+1665 chars]｜分類：通膨 / 就業｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "What made Crimson Desert’s Steam peak surge? #gaming",
-        "summary": "Crimson Desert spikes on Steam after major updates Crimson Desert’s Steam performance has jumped again, reach…",
-        "content": "Crimson Deserts Steam performance has jumped again, reaching a new concurrent player peak in its second weekend as the game continues to roll out game-changing improvements. Multiple recent entries a… [+1640 chars]｜分類：通膨 / 就業｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Klarna Vets’ Galdera Raises $1.7 Million for AI Financial Modeling",
-        "summary": "Galdera, a financial modeling startup founded by veterans of Klarna, is debuting with $1.7 million in pre-see…",
-        "content": "Galdera, a financial modeling startup founded by veterans of Klarna, is debuting with $1.7 million in pre-seed funding.The company, whose name comes from the Basque word for question, announced its n… [+2529 chars]｜分類：通膨 / 就業｜解讀：影響有限",
-        "affects_fcn": false,
+        "title": "How might Takeda layoffs affect biotech jobs? #health",
+        "summary": "Takeda plans layoffs in Cambridge Takeda Pharmaceuticals says it will lay off nearly 250 workers in Cambridge…",
+        "content": "Takeda Pharmaceuticals says it will lay off nearly 250 workers in Cambridge, Massachusetts, with the job cuts set to begin in July. The company filed notice through a state filing, according to the r… [+1315 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": true,
         "impact_score": 0
       }
     ],
     "ai_trend": [
       {
-        "title": "Klarna Vets’ Galdera Raises $1.7 Million for AI Financial Modeling",
-        "summary": "Galdera, a financial modeling startup founded by veterans of Klarna, is debuting with $1.7 million in pre-see…",
-        "content": "Galdera, a financial modeling startup founded by veterans of Klarna, is debuting with $1.7 million in pre-seed funding.The company, whose name comes from the Basque word for question, announced its n… [+2529 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "title": "Trésorier Gaina Review: Secure or Risky Trading Tool? Tested & Analyzed",
+        "summary": "Trésorier Gaina emerges as a recently introduced cryptocurrency trading platform built to streamline and enha…",
+        "content": "Trésorier Gaina emerges as a recently introduced cryptocurrency trading platform built to streamline and enhance the overall trading experience for individuals interested in crypto traders. The plat… [+12807 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Google Launches ADK for Java 1.0",
-        "summary": "Google launches ADK for Java 1.0, empowering Java developers to build, deploy, and scale AI agents and multi-…",
-        "content": "Google has announced ADK for Java 1.0, extending its Agent Development Kit (ADK) to one of the worlds most widely used enterprise programming languages. The release aims to make it easier for Java de… [+2718 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "title": "Our journey to AI-centricity, part 2: Crafting a strategy that scales",
+        "summary": "In the first part of this series, we discussed the messy and challenging work of fixing our foundation—standa…",
+        "content": "In the first part of this series, we discussed the messy and challenging work of fixing our foundationstandardizing on Red Hat OpenShift and cleaning up years of fragmented data. With that foundation… [+3698 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "cognitia 1.2.0",
-        "summary": "LLM-agnostic framework for building AI agents with pluggable runtimes, memory, tools, and observability",
+        "title": "AGENTS.md, {admiral}, and the AI-Assisted Programmer",
+        "summary": "Introduction AI coding assistants are becoming a natural part of how clinical R programmers work — autocomple…",
+        "content": "Introduction AI coding assistants are becoming a natural part of how clinical R programmers work autocompleting functions, suggesting test cases, drafting derivations. But out of the box, these agen… [+9039 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Using containers to bring software engineering rigor to AI workloads",
+        "summary": "As AI workloads move from experimental prototypes into production environments, enterprises face a familiar c…",
+        "content": "As AI workloads move from experimental prototypes into production environments, enterprises face a familiar challengehow do you protect, manage, and govern these new components with the same rigor yo… [+17692 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "getcalx 0.4.1",
+        "summary": "Behavioral governance compiler for AI agents. Compile corrections into enforceable mechanisms over MCP.",
         "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "aque added to PyPI",
-        "summary": "A tmux-based agent queue manager. You sit at the desk, agents come to you.",
-        "content": "A tmux-based agent queue manager. You sit at one \"desk\" and your AI agents come to you. Why? Running multiple AI coding agents (Claude Code, aider, Codex) at once? They all need your attention at d… [+2453 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "peaky-peek 0.1.8",
-        "summary": "Lightweight tracing SDK for AI agents. Capture decisions, tool calls, and LLM events with one context manager.",
+        "title": "1bcoder 0.1.3",
+        "summary": "AI coding assistant agent for 1B–7B local models (Ollama, LMStudio, llama.cpp). Terminal REPL with file editi…",
         "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "logicshield added to PyPI",
-        "summary": "Deterministic validation firewall for LLM outputs. Verify AI proposals against ground-truth state using deter…",
-        "content": "Deterministic validation firewall for LLM outputs. LogicShield validates AI-generated proposals against ground-truth state using deterministic rules. Before any AI output can be acted upon, it must … [+10471 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "title": "NASA Begins Countdown For Humanity's First Moon Launch in 53 Years",
+        "summary": "It's almost here!ScienceAlert stories are written, fact-checked, and edited by humans, never generated by AI.…",
+        "content": "CAPE CANAVERAL, Fla. (AP) NASA began the countdown Monday for humanity's first launch to the moon in 53 years. The 32-story Space Launch System rocket is poised to blast off Wednesday evening with f… [+1969 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Eli Lilly extends partnership with Insilico Medicine for AI-powered drug discovery",
-        "summary": "March 29 : Insilico Medicine said on Sunday it is partnering with Eli Lilly in a deal worth up to $2.75 billi…",
-        "content": "March 29 : Insilico Medicine said on Sunday it is partnering with Eli Lilly in a deal worth up to $2.75 billion, expanding an existing collaboration on AI-powered drug discovery. Lilly will use Insi… [+870 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Ancient Roman board game stumped experts for decades – until AI played",
-        "summary": "A slab of limestone excavated in 1984 from the ancient Coriovallum settlement in the Netherlands presented a…",
-        "content": "A slab of limestone excavated in 1984 from the ancient Coriovallum settlement in the Netherlands presented a puzzle for researchers of Roman history. Because of its distinct grooves and marks, the st… [+4541 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "title": "astromesh 0.23.0",
+        "summary": "Astromesh Agent Runtime Platform — multi-model, multi-pattern AI agent runtime",
+        "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       }
@@ -254,14 +254,14 @@
         "impact_score": 1
       },
       {
-        "title": "VIX：31.05（+3.61）",
+        "title": "VIX：30.61（-0.44）",
         "summary": "VIX 上升代表 FCN 敲入風險上升。",
         "content": "VIX 是你每日要看的核心指標。",
         "affects_fcn": true,
         "impact_score": -2
       },
       {
-        "title": "10Y / 20Y：4.44%（+0.02%） / 4.99%（+0.03%）",
+        "title": "10Y / 20Y：4.35%（-0.09%） / 4.92%（-0.07%）",
         "summary": "中長期利率上升會壓抑科技估值。",
         "content": "科技與 AI 核心股會受中長債殖利率影響。",
         "affects_fcn": true,
@@ -275,7 +275,7 @@
         "impact_score": -1
       },
       {
-        "title": "失業率：4.40%（+0.10%）｜S&P500：6343.72（-25.13）",
+        "title": "失業率：4.40%（+0.10%）｜S&P500：6528.52（+184.80）",
         "summary": "就業與股市穩定度共同反映風險偏好。",
         "content": "若就業惡化且股市回落，FCN 需更保守。",
         "affects_fcn": true,
@@ -310,7 +310,7 @@
     },
     {
       "label": "總經環境",
-      "text": "總經壓力偏高，建議降低進攻型 FCN。"
+      "text": "總經環境中性，FCN 可做但需偏保守，優先核心股。"
     },
     {
       "label": "今日推薦",
@@ -330,12 +330,12 @@
     },
     {
       "label": "VIX 壓力",
-      "value": 62,
+      "value": 61,
       "type": "risk"
     },
     {
       "label": "AI 核心股安全度",
-      "value": 45,
+      "value": 62,
       "type": "watch"
     }
   ],
@@ -687,14 +687,25 @@
   },
   "scenario_suggestions": [
     {
-      "name": "避險觀望",
+      "name": "穩定收息",
       "targets": [
+        "TSM",
         "MSFT",
         "UNH"
       ],
       "eki": "80%–85%",
-      "tenor": "短中期",
-      "goal": "只保留低波動核心"
+      "tenor": "6–12個月",
+      "goal": "防守優先"
+    },
+    {
+      "name": "平衡收益",
+      "targets": [
+        "NVDA",
+        "AVGO"
+      ],
+      "eki": "75%–80%",
+      "tenor": "3–6個月",
+      "goal": "只留主力池"
     }
   ]
 }
