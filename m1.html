@@ -632,6 +632,7 @@
 
         const stockEventMap = runtimeResult.stock_event_map || {};
         console.log("stockEventMap", stockEventMap);
+        console.log("傳進 UI 的 stockEventMap", stockEventMap);
         const stockScores = buildStockScores(pool, stockRuntime, stockEventMap);
         const discoveryCandidates = buildDiscoveryCandidates(stockRuntime, pool, stockEventMap);
         const { addList, reviseList } = buildActionLists(discoveryCandidates);
