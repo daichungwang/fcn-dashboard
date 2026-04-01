@@ -1,12 +1,24 @@
 [
  {
-    "id": "test_MACRO",
-   "TYPE": "macro",
-   "subtype": "利率下降"
-   "sid_score": 2,
-   "impact_map": {
-     "NADA" : 2,
-     "TSM" : 1
+    {
+  "id": "N001",
+  "title": "Fed signals first rate cut could come sooner than expected",
+  "summary": "Federal Reserve officials suggested inflation is cooling enough for markets to expect earlier rate cuts.",
+  "source": "MockWire",
+  "url": "",
+  "published_at": "2026-03-28T06:00:00Z",
+
+  "type": "macro",
+  "subtype": "利率下降",
+  "sid_label": "利多",
+  "sid_score": 2,
+  "impact_map": {
+    "NVDA": 1.5,
+    "TSM": 1.0,
+    "MSFT": 2.0
+  },
+  "is_active": true
+}
   },
   {
     "id": "N002",
