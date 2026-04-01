@@ -628,6 +628,7 @@
           <div class="item-line">End Interest：<span style="color:#2e7d32">${fmtAmt(d.stock.end_interest_amt)} (${fmtPct(d.stock.end_interest_pct)})</span></div>
           <div class="item-line"><b>End Net：</b><span style="color:${getPLColor(d.stock.end_balance_amt)}">${fmtAmt(d.stock.end_balance_amt)} (${fmtPct(d.stock.end_balance_pct)})</span></div>
           <div class="item-line"><b>決策：</b>${d.stock.decision_label}</div>
+          
           <button class="light" onclick="toggleStockFCNDetail('${subId}')">${subOpen ? "收合 FCN 明細" : "展開 FCN 明細"}</button>
           <div class="sub-detail ${subOpen ? "show" : ""}">
             ${buildFCNMeta(d.fcn)}
