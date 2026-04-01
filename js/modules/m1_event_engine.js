@@ -45,7 +45,17 @@ export function buildNewsRuntime(
   /* =========================
      🧠 Macro → Stock
   ========================= */
- 
+ for (const news of macroNews) {
+  const impactMap = news.impact_map || {};
+
+  Object.entries(impactMap).forEach(([symbol, value]) => {
+    if (!stockMap[symbol]) return;
+
+    const score = value * (news.sid_score || 1);
+
+    stockMap[symbol].macro_scores.push(score);
+  });
+}
 
   /* =========================
      🏭 Industry
