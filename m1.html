@@ -1,1 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M1｜振宇每日晨報</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f6f8;
+      color: #111;
+    }
+    .page {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 18px 14px 48px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+    .subtitle {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+    }
+    button.secondary {
+      background: #666;
+    }
+    button.light {
+      background: #e9ecef;
+      color: #111;
+      border: 1px solid #d8dde6;
+    }
+    .muted {
+      color: #666;
+    }
+    .note {
+      font-size: 13px;
+      background: #fffbe6;
+      border: 1px solid #f1df9a;
+      border-radius: 10px;
+      padding: 10px 12px;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .summary-box {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+    .summary-label {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .summary-value {
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .summary-sub {
+      margin-top: 4px;
+      color: #666;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .macro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .macro-box {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 14px;
+      background: #fafafa;
+    }
+    .macro-title {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 6px;
+    }
+    .macro-value {
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .macro-change {
+      margin-top: 4px;
+      font-size: 13px;
+    }
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .article-card {
+      border: 1px solid #e8e8e8;
+      border-radius: 14px;
+      padding: 12px;
+      margin-top: 10px;
+      background: #fff;
+    }
+    .article-title {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+    .article-meta {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    .article-summary {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #222;
+    }
+    .article-detail {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #ddd;
+      font-size: 14px;
+      line-height: 1.75;
+      color: #333;
+      white-space: pre-wrap;
+    }
+    .article-detail.show {
+      display: block;
+    }
+    .pill-row {
+      margin-top: 8px;
+      margin-bottom: 8px;
+    }
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #ddd;
+      background: #fafafa;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    .pill-hot {
+      background: #fff0f0;
+      border-color: #f1b5b5;
+      color: #b42318;
+    }
+    .pill-ai {
+      background: #eef4ff;
+      border-color: #bfd1ff;
+      color: #1d4ed8;
+    }
+    .pill-fin {
+      background: #f3fff5;
+      border-color: #bfe3c5;
+      color: #137333;
+    }
+    .pill-world {
+      background: #fff8e8;
+      border-color: #efd79b;
+      color: #8a5a00;
+    }
+    .empty {
+      color: #666;
+      font-size: 14px;
+      padding: 8px 0;
+    }
+    .footer-note {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.6;
+    }
 
+    @media (max-width: 900px) {
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+      .macro-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      h1 { font-size: 25px; }
+      h2 { font-size: 19px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .macro-grid { grid-template-columns: 1fr; }
+      .toolbar { flex-direction: column; }
+      button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>M1｜振宇每日晨報</h1>
+    <div class="subtitle">
+      模組 1 聚焦：<b>國際新聞 / 國際財經 / AI 趨勢 / 總經快照</b>。<br>
+      先把畫面做到穩、清楚、手機好讀，再慢慢補強資料細節。
+    </div>
+
+    <div class="card">
+      <div class="toolbar">
+        <button id="loadM1Btn">載入 M1</button>
+        <button class="secondary" id="refreshM1Btn">刷新畫面</button>
+        <button class="light" id="expandAllBtn">全部展開</button>
+        <button class="light" id="collapseAllBtn">全部收合</button>
+      </div>
+      <div id="runtimeMeta" class="muted">尚未載入 M1</div>
+      <div class="note">
+        M1 會讀取：
+        <b>./data/news.json</b> 與 <b>./data/market_runtime.json</b>。<br>
+        `news.json` 可以先不完美，這版會盡量自動容錯。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1. 今日總覽</h2>
+      <div id="summaryBlock"></div>
+    </div>
+
+    <div class="card">
+      <h2>2. 總經與市場快照</h2>
+      <div id="macroBlock"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <h2>3. 國際新聞</h2>
+      </div>
+      <div id="worldNewsBlock"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <h2>4. 國際財經新聞</h2>
+      </div>
+      <div id="financeNewsBlock"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <h2>5. AI 重大趨勢</h2>
+      </div>
+      <div id="aiNewsBlock"></div>
+    </div>
+
+    <div class="card">
+      <h2>6. 備註</h2>
+      <div class="footer-note">
+        這版先把 M1 的結構、閱讀體驗、分類呈現做穩。<br>
+        下一步再補：新聞影響判讀、FCN 關聯標記、重點公司自動提取、來源品質排序。
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    const M1_CACHE_KEY = "m1_cache_v1";
+    const expandedSet = new Set();
+
+    function toNumber(v, fallback = 0) {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : fallback;
+    }
+
+    function fmt(v, digits = 2) {
+      return toNumber(v).toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: digits
+      });
+    }
+
+    function fmtPct(v) {
+      const n = toNumber(v);
+      const sign = n > 0 ? "+" : "";
+      return `${sign}${fmt(n)}%`;
+    }
+
+    function readCache() {
+      try {
+        const raw = localStorage.getItem(M1_CACHE_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function writeCache(data) {
+      localStorage.setItem(M1_CACHE_KEY, JSON.stringify(data));
+    }
+
+    function safeArray(v) {
+      return Array.isArray(v) ? v : [];
+    }
+
+    function normalizeNews(data) {
+      const world =
+        safeArray(data.world) ||
+        safeArray(data.international);
+
+      const finance =
+        safeArray(data.finance) ||
+        safeArray(data.financial);
+
+      const ai =
+        safeArray(data.ai) ||
+        safeArray(data.ai_trend) ||
+        safeArray(data.ai_news);
+
+      const world2 = world.length ? world : safeArray(data.sections?.world);
+      const finance2 = finance.length ? finance : safeArray(data.sections?.finance);
+      const ai2 = ai.length ? ai : safeArray(data.sections?.ai);
+
+      return {
+        generated_at: data.generated_at || data.updated_at || "-",
+        world: world2,
+        finance: finance2,
+        ai: ai2
+      };
+    }
+
+    function getMarketItem(runtime, keys) {
+      for (const k of keys) {
+        if (runtime?.[k]) return runtime[k];
+      }
+      return null;
+    }
+
+    function buildSummary(newsData, marketRuntime) {
+      const worldCount = newsData.world.length;
+      const financeCount = newsData.finance.length;
+      const aiCount = newsData.ai.length;
+
+      const spx = getMarketItem(marketRuntime, ["SPX", "^GSPC", "SP500", "S&P500"]);
+      const ndx = getMarketItem(marketRuntime, ["NDX", "^NDX", "NASDAQ100", "QQQ"]);
+      const vix = getMarketItem(marketRuntime, ["VIX", "^VIX"]);
+
+      return `
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="summary-label">國際新聞</div>
+            <div class="summary-value">${worldCount}</div>
+            <div class="summary-sub">今日已載入筆數</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">國際財經</div>
+            <div class="summary-value">${financeCount}</div>
+            <div class="summary-sub">今日已載入筆數</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">AI 趨勢</div>
+            <div class="summary-value">${aiCount}</div>
+            <div class="summary-sub">今日已載入筆數</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">市場情緒</div>
+            <div class="summary-value">${vix ? fmt(vix.price_now || vix.value || 0) : "-"}</div>
+            <div class="summary-sub">
+              SPX：${spx ? fmtPct(spx.change_pct || spx.pct_change || 0) : "-"}<br>
+              NDX：${ndx ? fmtPct(ndx.change_pct || ndx.pct_change || 0) : "-"}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function buildMacroBlock(runtime) {
+      const items = [
+        { title: "S&P 500", data: getMarketItem(runtime, ["SPX", "^GSPC", "SP500", "S&P500"]) },
+        { title: "NASDAQ 100", data: getMarketItem(runtime, ["NDX", "^NDX", "NASDAQ100", "QQQ"]) },
+        { title: "VIX", data: getMarketItem(runtime, ["VIX", "^VIX"]) },
+        { title: "美國10Y", data: getMarketItem(runtime, ["US10Y", "TNX", "^TNX"]) },
+        { title: "油價", data: getMarketItem(runtime, ["WTI", "CL=F", "OIL"]) },
+        { title: "黃金", data: getMarketItem(runtime, ["GOLD", "GC=F"]) }
+      ];
+
+      const valid = items.filter(x => x.data);
+
+      if (!valid.length) {
+        return `<div class="empty">尚未找到總經與市場資料</div>`;
+      }
+
+      return `
+        <div class="macro-grid">
+          ${valid.map(x => `
+            <div class="macro-box">
+              <div class="macro-title">${x.title}</div>
+              <div class="macro-value">${fmt(x.data.price_now || x.data.value || 0)}</div>
+              <div class="macro-change">${fmtPct(x.data.change_pct || x.data.pct_change || 0)}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function getArticleId(section, idx, item) {
+      return `${section}_${idx}_${item.title || item.headline || "news"}`;
+    }
+
+    function getTagPills(section, item) {
+      const pills = [];
+      if (item.affects_fcn || item.fcn_related || item.hot) {
+        pills.push(`<span class="pill pill-hot">🔥 FCN 相關</span>`);
+      }
+      if (section === "world") {
+        pills.push(`<span class="pill pill-world">國際</span>`);
+      }
+      if (section === "finance") {
+        pills.push(`<span class="pill pill-fin">財經</span>`);
+      }
+      if (section === "ai") {
+        pills.push(`<span class="pill pill-ai">AI</span>`);
+      }
+      return pills.join("");
+    }
+
+    function renderArticle(section, item, idx) {
+      const title = item.title || item.headline || "(無標題)";
+      const summary = item.summary || item.description || item.snippet || "";
+      const detail = item.detail || item.content || item.full_text || item.body || "";
+      const source = item.source || item.publisher || "-";
+      const time = item.published_at || item.date || item.time || "-";
+      const id = getArticleId(section, idx, item);
+      const open = expandedSet.has(id);
+
+      return `
+        <div class="article-card">
+          <div class="article-title">${title}</div>
+          <div class="article-meta">來源：${source} ｜ 時間：${time}</div>
+          <div class="pill-row">${getTagPills(section, item)}</div>
+          <div class="article-summary">${summary || "尚無摘要"}</div>
+          <div style="margin-top:8px;">
+            <button class="light" onclick="toggleArticle('${id}')">
+              ${open ? "收合全文" : "展開全文"}
+            </button>
+          </div>
+          <div id="${id}" class="article-detail ${open ? "show" : ""}">
+            ${detail || "尚無更多內容"}
+          </div>
+        </div>
+      `;
+    }
+
+    function buildSection(section, rows) {
+      if (!rows.length) {
+        return `<div class="empty">目前沒有資料</div>`;
+      }
+      return rows.map((item, idx) => renderArticle(section, item, idx)).join("");
+    }
+
+    async function runM1() {
+      try {
+        const [newsRaw, marketRuntime] = await Promise.all([
+          fetch("./data/news.json").then(r => r.json()),
+          fetch("./data/market_runtime.json").then(r => r.json()).catch(() => ({}))
+        ]);
+
+        const newsData = normalizeNews(newsRaw);
+
+        const cache = {
+          generated_at: newsData.generated_at || new Date().toISOString(),
+          newsData,
+          marketRuntime
+        };
+
+        writeCache(cache);
+        renderM1();
+        alert("M1 載入成功");
+      } catch (err) {
+        console.error("M1 載入失敗", err);
+        alert("M1 載入失敗：" + err.message);
+      }
+    }
+
+    function renderM1() {
+      const cache = readCache();
+
+      if (!cache || !cache.newsData) {
+        document.getElementById("runtimeMeta").innerHTML =
+          "尚未找到 m1_cache_v1，請先按「載入 M1」";
+        document.getElementById("summaryBlock").innerHTML = `<div class="empty">尚無資料</div>`;
+        document.getElementById("macroBlock").innerHTML = `<div class="empty">尚無資料</div>`;
+        document.getElementById("worldNewsBlock").innerHTML = `<div class="empty">尚無資料</div>`;
+        document.getElementById("financeNewsBlock").innerHTML = `<div class="empty">尚無資料</div>`;
+        document.getElementById("aiNewsBlock").innerHTML = `<div class="empty">尚無資料</div>`;
+        return;
+      }
+
+      const { generated_at, newsData, marketRuntime } = cache;
+
+      document.getElementById("runtimeMeta").innerHTML =
+        `最新 M1 載入時間：<b>${generated_at || "-"}</b>`;
+
+      document.getElementById("summaryBlock").innerHTML = buildSummary(newsData, marketRuntime || {});
+      document.getElementById("macroBlock").innerHTML = buildMacroBlock(marketRuntime || {});
+      document.getElementById("worldNewsBlock").innerHTML = buildSection("world", newsData.world || []);
+      document.getElementById("financeNewsBlock").innerHTML = buildSection("finance", newsData.finance || []);
+      document.getElementById("aiNewsBlock").innerHTML = buildSection("ai", newsData.ai || []);
+    }
+
+    window.toggleArticle = function(id) {
+      if (expandedSet.has(id)) expandedSet.delete(id);
+      else expandedSet.add(id);
+      renderM1();
+    };
+
+    document.getElementById("loadM1Btn").addEventListener("click", runM1);
+    document.getElementById("refreshM1Btn").addEventListener("click", renderM1);
+    document.getElementById("expandAllBtn").addEventListener("click", () => {
+      const cache = readCache();
+      if (!cache?.newsData) return;
+      ["world", "finance", "ai"].forEach(section => {
+        (cache.newsData[section] || []).forEach((item, idx) => {
+          expandedSet.add(getArticleId(section, idx, item));
+        });
+      });
+      renderM1();
+    });
+    document.getElementById("collapseAllBtn").addEventListener("click", () => {
+      expandedSet.clear();
+      renderM1();
+    });
+
+    renderM1();
+  </script>
+</body>
+</html>
