@@ -855,42 +855,7 @@
       "ORCL": 235.8377
     }
   },
-  {
-    "date": "2025-07-25",
-    "fcn_id": "FCN85J",
-    "basket": [
-      "EL",
-      "MRVL",
-      "NKE",
-      "TGT",
-      "UNH"
-    ],
-    "tenor": 12,
-    "rate": 18.75,
-    "autocall": 100,
-    "strike": 70.00,
-    "ki": 60.0,
-    "eki": true,
-    "bank": "法國外貿銀行",
-    "has_position": true,
-    "amt": 100000.0,
-    "currency": "USD",
-    "status": "active",
-    "created_time": "2025-07-25T09:00",
-    "entry_time": "2025-07-25T09:00",
-    "exit_time": null,
-    "decision_flag": "manual",
-    "is_portfolio": true,
-    "note": "標的價格=VWAP",
-    "entry_prices": {
-      "EL": 88.8,
-      "MRVL": 73.9055,
-      "NKE": 75.99,
-      "TGT": 105.83,
-      "UNH": 283.2182
-    }
-  },
-  {
+   {
     "date": "2025-07-08",
     "fcn_id": "FCN751H",
     "basket": [
