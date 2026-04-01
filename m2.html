@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M2｜FCN 持倉健檢 V2.0</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f6f8;
+      color: #111;
+    }
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 14px 50px;
+    }
+    h1 { margin: 0 0 10px; font-size: 32px; }
+    h2 { margin: 0 0 12px; font-size: 24px; }
+    h3 { margin: 0 0 10px; font-size: 18px; }
+
+    .subtitle {
+      color: #555;
+      font-size: 15px;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+    }
+    button.secondary { background: #666; }
+    button.light {
+      background: #e9ecef;
+      color: #111;
+      border: 1px solid #d8dde6;
+    }
+
+    .note {
+      font-size: 13px;
+      background: #fffbe6;
+      border: 1px solid #f1df9a;
+      border-radius: 10px;
+      padding: 10px 12px;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+    .muted { color: #666; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .summary-box {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+    .summary-label {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .summary-value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .summary-sub {
+      margin-top: 4px;
+      color: #666;
+      font-size: 13px;
+    }
+
+    .zone-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    .zone-card {
+      border-radius: 14px;
+      padding: 14px;
+      border: 1px solid #ddd;
+      background: #fff;
+      min-height: 220px;
+    }
+    .zone-danger { background: #fff5f5; border-color: #efb0b0; }
+    .zone-watch { background: #fffaf0; border-color: #ecd7a3; }
+    .zone-healthy { background: #f5fff7; border-color: #b9e2c0; }
+
+    .zone-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .zone-meta {
+      font-size: 13px;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    .fcn-card {
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+      margin-top: 10px;
+    }
+    .fcn-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+    .fcn-id {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .fcn-line {
+      margin: 3px 0;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .pl-block {
+      margin-top: 8px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #fafafa;
+      border: 1px solid #eee;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .decision-box {
+      margin-top: 8px;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+      border: 1px solid #ddd;
+    }
+    .decision-red {
+      background: #fff1f1;
+      border-color: #efb0b0;
+    }
+    .decision-yellow {
+      background: #fffaf0;
+      border-color: #ecd7a3;
+    }
+    .decision-green {
+      background: #f3fff5;
+      border-color: #b9e2c0;
+    }
+
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #ddd;
+      background: #fafafa;
+    }
+    .pill-danger {
+      background: #fff0f0;
+      border-color: #f1b5b5;
+    }
+    .pill-watch {
+      background: #fff7e8;
+      border-color: #f0d298;
+    }
+    .pill-healthy {
+      background: #ecfff1;
+      border-color: #a9e2b4;
+    }
+
+    .expand-btn {
+      margin-top: 8px;
+      background: #f0f2f5;
+      color: #111;
+      border: 1px solid #d8dde6;
+    }
+
+    .detail-box {
+      display: none;
+      margin-top: 10px;
+      border-top: 1px dashed #ddd;
+      padding-top: 10px;
+    }
+    .detail-box.show {
+      display: block;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+    th {
+      font-size: 13px;
+      color: #666;
+      font-weight: 700;
+      background: #fafafa;
+    }
+
+    .stock-danger-row { background: #fff7f7; }
+    .stock-watch-row { background: #fffdf7; }
+    .stock-healthy-row { background: #fbfffb; }
+
+    .stock-analysis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .list-box {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .item-card {
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 8px;
+      background: #fafafa;
+    }
+
+    .item-line {
+      margin: 2px 0;
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .sub-detail {
+      display: none;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed #ddd;
+    }
+    .sub-detail.show {
+      display: block;
+    }
+
+    .mini-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-top: 8px;
+      margin-bottom: 6px;
+    }
+
+    .deep-section {
+      margin-top: 10px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #fff;
+      border: 1px solid #e6e6e6;
+    }
+
+    .deep-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .deep-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 14px;
+      margin-top: 8px;
+    }
+
+    .risk-danger { color: #c62828; font-weight: 700; }
+    .risk-watch { color: #b26a00; font-weight: 700; }
+    .risk-safe { color: #2e7d32; font-weight: 700; }
+
+    @media (max-width: 980px) {
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+      .zone-grid { grid-template-columns: 1fr; }
+      .stock-analysis-grid { grid-template-columns: 1fr; }
+      .deep-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      h1 { font-size: 26px; }
+      h2 { font-size: 20px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      button { width: 100%; }
+      .list-box button, .zone-card button, .fcn-card button { width: auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>M2｜FCN 持倉健檢 V2.0</h1>
+    <div class="subtitle">
+      只看 <b>active</b> 持倉。<br>
+      重點強化：<b>積極處理 / 持續追蹤</b> 區的深度決策資訊。
+    </div>
+
+    <div class="card">
+      <div class="toolbar">
+        <button id="runHealthBtn">執行 M2 Health Engine</button>
+        <button class="secondary" id="refreshBtn">刷新 M2 畫面</button>
+      </div>
+      <div id="runtimeMeta" class="muted">尚未執行 M2 Health Engine</div>
+      <div class="note">
+        M2 會讀：
+        <b>fcn_pool.json</b>、<b>market_runtime.json</b>、<b>pool30.json</b>，
+        並只取 <b>status = active</b> 的 FCN。
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>1. 全貌 Summary</h2>
+      <div id="summaryBlock"></div>
+    </div>
+
+    <div class="card">
+      <h2>2. 持倉分區</h2>
+      <div id="zoneBlock"></div>
+    </div>
+
+    <div class="card">
+      <h2>5. 股票風險分析</h2>
+      <div id="stockAnalysisBlock"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { runM2HealthEngine, buildFCNMeta, limitDisplay } from "./js/core/m2_health_engine_v1.js";
+
+    const M2_HEALTH_CACHE_KEY = "m2_health_cache_v1";
+    let showAllHealthy = false;
+    const expandedFCNIds = new Set();
+    const expandedStockIds = new Set();
+    const expandedStockFCNIds = new Set();
+
+    function toNumber(v, fallback = 0) {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : fallback;
+    }
+
+    function fmt(num, digits = 2) {
+      return toNumber(num).toLocaleString("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: digits
+      });
+    }
+
+    function fmtAmt(num, currency = "USD") {
+      const sign = toNumber(num) > 0 ? "+" : "";
+      return `${sign}${currency} ${fmt(num, 0)}`;
+    }
+
+    function fmtPct(num) {
+      const sign = toNumber(num) > 0 ? "+" : "";
+      return `${sign}${fmt(num, 2)}%`;
+    }
+
+    function readCache() {
+      try {
+        const raw = localStorage.getItem(M2_HEALTH_CACHE_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function writeCache(data) {
+      localStorage.setItem(M2_HEALTH_CACHE_KEY, JSON.stringify(data));
+    }
+
+    function healthLabel(v) {
+      if (v === "danger") return "積極處理";
+      if (v === "watch") return "持續追蹤";
+      return "健康";
+    }
+
+    function healthPillClass(v) {
+      if (v === "danger") return "pill pill-danger";
+      if (v === "watch") return "pill pill-watch";
+      return "pill pill-healthy";
+    }
+
+    function stockRowClass(v) {
+      if (v === "danger") return "stock-danger-row";
+      if (v === "watch") return "stock-watch-row";
+      return "stock-healthy-row";
+    }
+
+    function getCategoryLabel(cat) {
+      const map = {
+        core: "🟢 core",
+        growth: "🔵 growth",
+        defensive: "🟡 defensive",
+        income: "🟠 income",
+        speculative: "🔴 speculative"
+      };
+      return map[cat] || cat || "-";
+    }
+
+    function getPLColor(v) {
+      return toNumber(v) < 0 ? "#c62828" : "#2e7d32";
+    }
+
+    function getDecisionClass(signal) {
+      if (signal === "red") return "decision-box decision-red";
+      if (signal === "yellow") return "decision-box decision-yellow";
+      return "decision-box decision-green";
+    }
+
+    function buildSummary(data) {
+      const dangerAmt = data.danger.reduce((s, x) => s + toNumber(x.amt), 0);
+      const watchAmt = data.watch.reduce((s, x) => s + toNumber(x.amt), 0);
+      const healthyAmt = data.healthy.reduce((s, x) => s + toNumber(x.amt), 0);
+
+      return `
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="summary-label">持倉總擋數</div>
+            <div class="summary-value">${data.total}</div>
+            <div class="summary-sub">總金額：USD ${fmt(data.total_amt, 0)}</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">積極處理</div>
+            <div class="summary-value">${data.danger.length}</div>
+            <div class="summary-sub">USD ${fmt(dangerAmt, 0)}</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">持續追蹤</div>
+            <div class="summary-value">${data.watch.length}</div>
+            <div class="summary-sub">USD ${fmt(watchAmt, 0)}</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">健康</div>
+            <div class="summary-value">${data.healthy.length}</div>
+            <div class="summary-sub">USD ${fmt(healthyAmt, 0)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    window.toggleDetail = function(id) {
+      if (expandedFCNIds.has(id)) expandedFCNIds.delete(id);
+      else expandedFCNIds.add(id);
+      renderM2();
+    };
+
+    window.showAllHealthyRows = function() {
+      showAllHealthy = true;
+      renderM2();
+    };
+
+    window.hideHealthyRows = function() {
+      showAllHealthy = false;
+      renderM2();
+    };
+
+    window.toggleStockDetail = function(id) {
+      if (expandedStockIds.has(id)) expandedStockIds.delete(id);
+      else expandedStockIds.add(id);
+      renderM2();
+    };
+
+    window.toggleStockFCNDetail = function(id) {
+      if (expandedStockFCNIds.has(id)) expandedStockFCNIds.delete(id);
+      else expandedStockFCNIds.add(id);
+      renderM2();
+    };
+
+    function fmtTrend(v) {
+      if (v == null || !Number.isFinite(Number(v))) return "-";
+      const n = Number(v);
+      return fmtPct(Math.abs(n) <= 1.5 ? n * 100 : n);
+    }
+
+    function getTrendInfo(s) {
+      const ret1m = s.ret_1m ?? s.chg_1m ?? null;
+      const ret3m = s.ret_3m ?? s.chg_3m ?? null;
+      const ret6m = s.ret_6m ?? s.chg_6m ?? null;
+      const ret12m = s.ret_12m ?? s.chg_12m ?? null;
+
+      let trendLabel = "盤整";
+      let trendNote = "短中期方向不明。";
+
+      if (
+        Number.isFinite(Number(ret1m)) &&
+        Number.isFinite(Number(ret3m)) &&
+        Number.isFinite(Number(ret6m)) &&
+        Number(ret1m) < 0 && Number(ret3m) < 0 && Number(ret6m) < 0
+      ) {
+        trendLabel = "下降趨勢";
+        trendNote = "短中期同步轉弱。";
+      } else if (
+        Number.isFinite(Number(ret1m)) &&
+        Number.isFinite(Number(ret3m)) &&
+        Number.isFinite(Number(ret6m)) &&
+        Number(ret1m) > 0 && Number(ret3m) > 0 && Number(ret6m) > 0
+      ) {
+        trendLabel = "上升趨勢";
+        trendNote = "短中期維持正向。";
+      } else if (
+        Number.isFinite(Number(ret12m)) &&
+        Number(ret12m) < 0 &&
+        (!Number.isFinite(Number(ret1m)) || Number(ret1m) <= 0)
+      ) {
+        trendLabel = "長線偏弱";
+        trendNote = "長線仍弱，短線若沒有明顯反轉，不宜樂觀。";
+      }
+
+      return { trendLabel, trendNote };
+    }
+
+    function buildStockDetailTable(stocks = []) {
+      return `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>股票</th>
+                <th>類型</th>
+                <th>狀態</th>
+                <th>現價</th>
+                <th>KI距離</th>
+                <th>Pure</th>
+                <th>Event</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${stocks.map(s => `
+                <tr class="${stockRowClass(s.stock_health)}">
+                  <td><b>${s.symbol}</b></td>
+                  <td>${getCategoryLabel(s.category)}</td>
+                  <td><span class="${healthPillClass(s.stock_health)}">${healthLabel(s.stock_health)}</span></td>
+                  <td>${fmt(s.price_now)}</td>
+                  <td>${fmtPct(s.dist_to_ki_pct)}</td>
+                  <td>${s.pure_stock ?? "-"}</td>
+                  <td>${s.event_stock ?? "-"}</td>
+                </tr>
+                <tr>
+                  <td colspan="7" style="white-space: normal; color:#666;">
+                    ${s.trend_note || ""}
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderStockDetailCard(s, fcn) {
+      const entry = toNumber(s.entry_price ?? s.entry ?? s.price_entry, 0);
+      const now = toNumber(s.price_now ?? s.price, 0);
+
+      const strike = entry ? entry * (toNumber(fcn.strike) / 100) : 0;
+      const ki = entry ? entry * (toNumber(fcn.ki) / 100) : 0;
+
+      const vsEntry = entry ? ((now - entry) / entry) * 100 : 0;
+      const vsStrike = strike ? ((now - strike) / strike) * 100 : 0;
+      const vsKI = ki ? ((now - ki) / ki) * 100 : 0;
+
+      const ret1w = s.ret_1w ?? s.chg_1w ?? null;
+      const ret1m = s.ret_1m ?? s.chg_1m ?? null;
+      const ret3m = s.ret_3m ?? s.chg_3m ?? null;
+      const ret6m = s.ret_6m ?? s.chg_6m ?? null;
+      const ret12m = s.ret_12m ?? s.chg_12m ?? null;
+
+      const { trendLabel, trendNote } = getTrendInfo(s);
+      const snapshot = s.snapshot_score ?? s.snapshot ?? "-";
+
+      return `
+        <div class="item-card">
+          <div class="mini-title">${s.symbol}</div>
+
+          <div class="item-line"><b>接股核心價格</b></div>
+          <div class="item-line">現價：${now ? fmt(now, 2) : "-"}</div>
+          <div class="item-line">進場價：${entry ? fmt(entry, 2) : "-"}</div>
+          <div class="item-line">Strike：${strike ? fmt(strike, 2) : "-"}</div>
+          <div class="item-line">KI：${ki ? fmt(ki, 2) : "-"}</div>
+
+          <div class="item-line" style="margin-top:6px;"><b>相對位置</b></div>
+          <div class="item-line">vs Entry：${fmtPct(vsEntry)}</div>
+          <div class="item-line">vs Strike：${fmtPct(vsStrike)}</div>
+          <div class="item-line">vs KI：${fmtPct(vsKI)}</div>
+
+          <div class="item-line" style="margin-top:6px;"><b>趨勢</b></div>
+          <div class="item-line">1W：${fmtTrend(ret1w)} ｜ 1M：${fmtTrend(ret1m)}</div>
+          <div class="item-line">3M：${fmtTrend(ret3m)} ｜ 6M：${fmtTrend(ret6m)}</div>
+          <div class="item-line">12M：${fmtTrend(ret12m)}</div>
+          <div class="item-line">${trendLabel}</div>
+          <div class="item-line muted">${trendNote}</div>
+
+          <div class="item-line" style="margin-top:6px;"><b>評分</b></div>
+          <div class="item-line">Pure：${s.pure_stock ?? "-"} ｜ Event：${s.event_stock ?? "-"} ｜ Snapshot：${snapshot}</div>
+        </div>
+      `;
+    }
+
+    function renderFCNCard(fcn, code, idx) {
+      const detailId = `${code}_${idx}_${fcn.fcn_id}`;
+      const isOpen = expandedFCNIds.has(detailId);
+
+      const stocks = fcn.stocks || [];
+      const worst = stocks.find(s => s.symbol === fcn.worst_of) || {};
+
+      const entry = toNumber(worst.entry_price ?? worst.entry ?? worst.price_entry, 0);
+      const now = toNumber(worst.price_now ?? worst.price, 0);
+
+      const strikePct = toNumber(fcn.strike, 0);
+      const kiPct = toNumber(fcn.ki, 0);
+
+      const strikePrice = entry ? entry * (strikePct / 100) : 0;
+      const kiPrice = entry ? entry * (kiPct / 100) : 0;
+
+      const vsEntry = entry ? ((now - entry) / entry) * 100 : 0;
+      const vsStrike = strikePrice ? ((now - strikePrice) / strikePrice) * 100 : 0;
+      const vsKI = kiPrice ? ((now - kiPrice) / kiPrice) * 100 : 0;
+
+      const ret1w = worst.ret_1w ?? worst.chg_1w ?? null;
+      const ret1m = worst.ret_1m ?? worst.chg_1m ?? null;
+      const ret3m = worst.ret_3m ?? worst.chg_3m ?? null;
+      const ret6m = worst.ret_6m ?? worst.chg_6m ?? null;
+      const ret12m = worst.ret_12m ?? worst.chg_12m ?? null;
+
+      const { trendLabel, trendNote } = getTrendInfo(worst);
+
+      let risk = "";
+      let riskClass = "risk-safe";
+      let action = "";
+      let reason = "";
+
+      if (vsKI < 0) {
+        risk = "已跌破 KI（高風險）";
+        riskClass = "risk-danger";
+        action = "優先處理";
+        reason = "已進入接股區，結構保護失效。";
+      } else if (vsStrike < 0) {
+        risk = "已跌破 Strike（浮虧區）";
+        riskClass = "risk-watch";
+        action = "持續追蹤 / 反彈減碼";
+        reason = "雖未破 KI，但已低於接股成本。";
+      } else if (vsKI <= 10) {
+        risk = "接近 KI（警戒區）";
+        riskClass = "risk-watch";
+        action = "持續追蹤";
+        reason = "距 KI 已不遠，若市場轉弱將快速惡化。";
+      } else {
+        risk = "安全區";
+        riskClass = "risk-safe";
+        action = "可續抱";
+        reason = "Worst-of 仍高於 KI，結構暫時可控。";
+      }
+
+      let holdToEnd = "可考慮持有到期";
+      let holdToEndNote = "目前到期淨損益仍可接受，且結構尚未失控。";
+
+      if (vsKI < 0) {
+        holdToEnd = "❌ 不建議被動放到到期";
+        holdToEndNote = "若你不願意長期持有 Worst-of，應提早規劃處置。";
+      } else if (vsStrike < 0) {
+        holdToEnd = "⚠️ 可觀察後再決定是否抱到到期";
+        holdToEndNote = "重點是趨勢能否止穩，而不是只看現在損益。";
+      } else if (vsKI <= 10) {
+        holdToEnd = "⚠️ 暫可持有到期，但需緊盯";
+        holdToEndNote = "若 Worst-of 再走弱，持有到期的風險會明顯上升。";
+      }
+
+      const snapshot = worst.snapshot_score ?? worst.snapshot ?? "-";
+
+      return `
+        <div class="fcn-card">
+          <div class="fcn-head">
+            <div>
+              <div class="fcn-id">${fcn.fcn_id}</div>
+              <div class="fcn-line">Basket：${(fcn.basket || []).join(" / ")}</div>
+              <div class="fcn-line">Worst-of：<b>${fcn.worst_of}</b></div>
+              <div class="fcn-line">金額：USD ${fmt(fcn.amt, 0)}</div>
+            </div>
+            <span class="${healthPillClass(fcn.fcn_health)}">${healthLabel(fcn.fcn_health)}</span>
+          </div>
+
+          ${buildFCNMeta(fcn)}
+
+          <div class="pl-block">
+            <div><b>📍 Snapshot（現在）</b></div>
+            <div>Loss：<span style="color:${getPLColor(fcn.snapshot_loss_amt)}">${fmtAmt(fcn.snapshot_loss_amt, fcn.currency || "USD")} (${fmtPct(fcn.snapshot_loss_pct)})</span></div>
+            <div>Interest：<span style="color:#2e7d32">${fmtAmt(fcn.snapshot_interest_amt, fcn.currency || "USD")} (${fmtPct(fcn.snapshot_interest_pct)})</span> ｜ 已滿月：${fcn.months_held_full} 月</div>
+            <div><b>Balance：</b><span style="color:${getPLColor(fcn.snapshot_balance_amt)}"><b>${fmtAmt(fcn.snapshot_balance_amt, fcn.currency || "USD")} (${fmtPct(fcn.snapshot_balance_pct)})</b></span></div>
+          </div>
+
+          <div class="pl-block">
+            <div><b>🏁 End（到期）</b></div>
+            <div>Loss：<span style="color:${getPLColor(fcn.end_loss_amt)}">${fmtAmt(fcn.end_loss_amt, fcn.currency || "USD")} (${fmtPct(fcn.end_loss_pct)})</span></div>
+            <div>Interest：<span style="color:#2e7d32">${fmtAmt(fcn.end_interest_amt, fcn.currency || "USD")} (${fmtPct(fcn.end_interest_pct)})</span></div>
+            <div><b>Net：</b><span style="color:${getPLColor(fcn.end_balance_amt)}"><b>${fmtAmt(fcn.end_balance_amt, fcn.currency || "USD")} (${fmtPct(fcn.end_balance_pct)})</b></span></div>
+          </div>
+
+          <div class="${getDecisionClass(fcn.decision_signal)}">
+            <div><b>🧠 決策：</b>${fcn.decision_label}</div>
+            <div>${fcn.decision_note}</div>
+          </div>
+
+          <div class="fcn-line" style="margin-top:8px;">
+            <b>📊 風險：</b>
+            ${fcn.danger_count} / ${fcn.watch_count} / ${fcn.healthy_count}<br>
+            距 KI：${fmtPct(fcn.worst_dist_to_ki_pct)}｜
+            距 Strike：${fmtPct(fcn.worst_dist_to_strike_pct)}
+          </div>
+
+          <div class="deep-section">
+            <div class="deep-title">📌 Worst-of 深度分析</div>
+            <div class="item-line">股票：<b>${fcn.worst_of}</b></div>
+
+            <hr/>
+
+            <div class="deep-title">接股核心價格</div>
+            <div class="deep-grid">
+              <div class="item-line">現價：${now ? fmt(now, 2) : "-"}</div>
+              <div class="item-line">進場價：${entry ? fmt(entry, 2) : "-"}</div>
+              <div class="item-line">Strike：${strikePrice ? fmt(strikePrice, 2) : "-"}</div>
+              <div class="item-line">KI：${kiPrice ? fmt(kiPrice, 2) : "-"}</div>
+            </div>
+
+            <hr/>
+
+            <div class="deep-title">相對位置</div>
+            <div class="deep-grid">
+              <div class="item-line">vs Entry：${fmtPct(vsEntry)}</div>
+              <div class="item-line">vs Strike：${fmtPct(vsStrike)}</div>
+              <div class="item-line">vs KI：${fmtPct(vsKI)}</div>
+            </div>
+
+            <hr/>
+
+            <div class="deep-title">趨勢</div>
+            <div class="deep-grid">
+              <div class="item-line">1W：${fmtTrend(ret1w)}</div>
+              <div class="item-line">1M：${fmtTrend(ret1m)}</div>
+              <div class="item-line">3M：${fmtTrend(ret3m)}</div>
+              <div class="item-line">6M：${fmtTrend(ret6m)}</div>
+              <div class="item-line">12M：${fmtTrend(ret12m)}</div>
+              <div class="item-line"><b>${trendLabel}</b></div>
+            </div>
+            <div class="item-line muted">${trendNote}</div>
+
+            <hr/>
+
+            <div class="deep-title">評分</div>
+            <div class="item-line">Pure：${worst.pure_stock ?? "-"} ｜ Event：${worst.event_stock ?? "-"} ｜ Snapshot：${snapshot}</div>
+
+            <hr/>
+
+            <div class="deep-title">到期情境</div>
+            <div class="item-line">到期 Loss：<span style="color:${getPLColor(fcn.end_loss_amt)}">${fmtAmt(fcn.end_loss_amt, fcn.currency || "USD")}</span></div>
+            <div class="item-line">到期 Interest：<span style="color:#2e7d32">${fmtAmt(fcn.end_interest_amt, fcn.currency || "USD")}</span></div>
+            <div class="item-line">到期 Net：<span style="color:${getPLColor(fcn.end_balance_amt)}"><b>${fmtAmt(fcn.end_balance_amt, fcn.currency || "USD")}</b></span></div>
+            <div class="item-line"><b>是否可持有到期：</b>${holdToEnd}</div>
+            <div class="item-line muted">${holdToEndNote}</div>
+
+            <hr/>
+
+            <div class="item-line"><b>風險判斷：</b><span class="${riskClass}">${risk}</span></div>
+            <div class="item-line"><b>建議動作：</b>${action}</div>
+            <div class="item-line muted">${reason}</div>
+          </div>
+
+          <button class="expand-btn" onclick="toggleDetail('${detailId}')">
+            ${isOpen ? "收合明細" : "展開明細"}
+          </button>
+
+          <div class="detail-box ${isOpen ? "show" : ""}">
+            ${stocks.map(s => renderStockDetailCard(s, fcn)).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderZoneColumn(title, zoneClass, allRows, code, showHealthyControl = false) {
+      const rows = code === "healthy"
+        ? limitDisplay(allRows, "healthy", showAllHealthy)
+        : allRows;
+
+      const zoneAmt = rows.reduce((s, x) => s + toNumber(x.amt), 0);
+      const allAmt = allRows.reduce((s, x) => s + toNumber(x.amt), 0);
+
+      return `
+        <div class="zone-card ${zoneClass}">
+          <div class="zone-title">${title}</div>
+          <div class="zone-meta">
+            ${rows.length} 檔${code === "healthy" && !showAllHealthy && allRows.length > rows.length ? `（顯示前 ${rows.length} 檔）` : ""} ｜ 
+            USD ${fmt(code === "healthy" && !showAllHealthy ? zoneAmt : allAmt, 0)}
+          </div>
+
+          ${showHealthyControl && allRows.length > 5 ? `
+            <div style="margin-bottom:10px;">
+              ${showAllHealthy
+                ? `<button class="light" onclick="hideHealthyRows()">收合健康區</button>`
+                : `<button class="light" onclick="showAllHealthyRows()">顯示全部健康 FCN</button>`
+              }
+            </div>
+          ` : ""}
+
+          ${rows.length ? rows.map((f, idx) => renderFCNCard(f, code, idx)).join("") : `<div class="muted">目前沒有資料</div>`}
+        </div>
+      `;
+    }
+
+    function buildZoneBlock(data) {
+      return `
+        <div class="zone-grid">
+          ${renderZoneColumn("🚨 積極處理", "zone-danger", data.danger, "danger", false)}
+          ${renderZoneColumn("⚠️ 持續追蹤", "zone-watch", data.watch, "watch", false)}
+          ${renderZoneColumn("✅ 健康", "zone-healthy", data.healthy, "healthy", true)}
+        </div>
+      `;
+    }
+
+    function renderStockFCNDetailCard(d, subId, subOpen) {
+      const worst = d.worst_of || "UNKNOWN";
+      const worstStock = (d.components || []).find(s => s.symbol === worst) || {};
+
+      const now = toNumber(worstStock.price, 0);
+      const entry = toNumber(worstStock.entry_price ?? d.strike_price, 0);
+      const strike = toNumber(d.strike_price, 0);
+      const ki = toNumber(d.ki_price, 0);
+
+      const distKI = ki ? ((now - ki) / ki * 100).toFixed(2) : "-";
+      const distStrike = strike ? ((now - strike) / strike * 100).toFixed(2) : "-";
+
+      let riskText = "";
+      let actionText = "";
+
+      if (toNumber(now) < toNumber(ki)) {
+        riskText = "⚠️ 已跌破 KI（高風險）";
+        actionText = "👉 已進入接股區，需評估是否長期持有";
+      } else if (toNumber(now) < toNumber(strike)) {
+        riskText = "⚠️ 已跌破 Strike（可能虧損）";
+        actionText = "👉 目前浮虧，觀察是否反彈";
+      } else if (toNumber(distKI) < 10) {
+        riskText = "⚠️ 接近 KI（危險區）";
+        actionText = "👉 建議密切觀察";
+      } else {
+        riskText = "✅ 安全區";
+        actionText = "👉 可持續持有";
+      }
+
+      return `
+        <div class="item-card">
+          <div class="mini-title">${d.fcn_id}</div>
+
+          <div class="item-line">Snapshot Loss：
+            <span style="color:${getPLColor(d.stock.snapshot_loss_amt)}">
+              ${fmtAmt(d.stock.snapshot_loss_amt)}
+            </span>
+          </div>
+
+          <div class="item-line">Snapshot Interest：
+            <span style="color:#2e7d32">
+              ${fmtAmt(d.stock.snapshot_interest_amt)}
+            </span>
+          </div>
+
+          <div class="item-line"><b>Snapshot Balance：</b>
+            <span style="color:${getPLColor(d.stock.snapshot_balance_amt)}">
+              ${fmtAmt(d.stock.snapshot_balance_amt)}
+            </span>
+          </div>
+
+          <div class="item-line">End Loss：
+            <span style="color:${getPLColor(d.stock.end_loss_amt)}">
+              ${fmtAmt(d.stock.end_loss_amt)}
+            </span>
+          </div>
+
+          <div class="item-line">End Interest：
+            <span style="color:#2e7d32">
+              ${fmtAmt(d.stock.end_interest_amt)}
+            </span>
+          </div>
+
+          <div class="item-line"><b>End Net：</b>
+            <span style="color:${getPLColor(d.stock.end_balance_amt)}">
+              ${fmtAmt(d.stock.end_balance_amt)}
+            </span>
+          </div>
+
+          <div class="item-line"><b>決策：</b>${d.stock.decision_label}</div>
+
+          <hr/>
+
+          <div class="item-line"><b>📌 Worst-of：${worst}</b></div>
+          <div class="item-line">現價：${now ? fmt(now, 2) : "-"}</div>
+          <div class="item-line">進場價：${entry ? fmt(entry, 2) : "-"}</div>
+          <div class="item-line">Strike：${strike ? fmt(strike, 2) : "-"}</div>
+          <div class="item-line">KI：${ki ? fmt(ki, 2) : "-"}</div>
+
+          <div class="item-line">距 KI：${distKI}%</div>
+          <div class="item-line">距 Strike：${distStrike}%</div>
+
+          <hr/>
+
+          <div class="item-line"><b>風險判斷：</b>${riskText}</div>
+          <div class="item-line"><b>建議動作：</b>${actionText}</div>
+
+          <button class="light" onclick="toggleStockFCNDetail('${subId}')">
+            ${subOpen ? "收合 FCN 明細" : "展開 FCN 明細"}
+          </button>
+        </div>
+      `;
+    }
+
+    function buildStockAnalysis(data) {
+      const dangerRows = (data.stockMap || []).filter(x => x.danger > 0);
+      const watchRows = (data.stockMap || []).filter(x => x.watch > 0);
+      const exposureRows = data.stockMap || [];
+
+      return `
+        <div class="stock-analysis-grid">
+          <div class="list-box">
+            <h3>5.1 跌破下限價的股票</h3>
+            ${dangerRows.length ? dangerRows.map((info, idx) => {
+              const stockId = `danger_stock_${idx}_${info.symbol}`;
+              const isOpen = expandedStockIds.has(stockId);
+              return `
+                <div class="item-card">
+                  <div class="item-line"><b>${info.symbol}</b> ｜ ${getCategoryLabel(info.category)}</div>
+                  <div class="item-line">使用次數：${info.count}</div>
+                  <div class="item-line">投資金額：USD ${fmt(info.amt, 0)}</div>
+                  <div class="item-line">Pure：${info.pure_stock ?? "-"} ｜ Event：${info.event_stock ?? "-"}</div>
+                  <button class="light" onclick="toggleStockDetail('${stockId}')">${isOpen ? "收合" : "展開"}</button>
+                  <div class="sub-detail ${isOpen ? "show" : ""}">
+                    ${info.details.map((d, subIdx) => {
+                      const subId = `${stockId}_fcn_${subIdx}_${d.fcn_id}`;
+                      const subOpen = expandedStockFCNIds.has(subId);
+                      return renderStockFCNDetailCard(d, subId, subOpen);
+                    }).join("")}
+                  </div>
+                </div>
+              `;
+            }).join("") : `<div class="muted">目前沒有跌破 KI 的股票</div>`}
+          </div>
+
+          <div class="list-box">
+            <h3>5.2 跌破執行價的股票</h3>
+            ${watchRows.length ? watchRows.map((info, idx) => {
+              const stockId = `watch_stock_${idx}_${info.symbol}`;
+              const isOpen = expandedStockIds.has(stockId);
+              return `
+                <div class="item-card">
+                  <div class="item-line"><b>${info.symbol}</b> ｜ ${getCategoryLabel(info.category)}</div>
+                  <div class="item-line">使用次數：${info.count}</div>
+                  <div class="item-line">投資金額：USD ${fmt(info.amt, 0)}</div>
+                  <div class="item-line">Pure：${info.pure_stock ?? "-"} ｜ Event：${info.event_stock ?? "-"}</div>
+                  <button class="light" onclick="toggleStockDetail('${stockId}')">${isOpen ? "收合" : "展開"}</button>
+                  <div class="sub-detail ${isOpen ? "show" : ""}">
+                    ${info.details.map((d, subIdx) => {
+                      const subId = `${stockId}_fcn_${subIdx}_${d.fcn_id}`;
+                      const subOpen = expandedStockFCNIds.has(subId);
+                      return renderStockFCNDetailCard(d, subId, subOpen);
+                    }).join("")}
+                  </div>
+                </div>
+              `;
+            }).join("") : `<div class="muted">目前沒有跌破 Strike 的股票</div>`}
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px; padding:14px;">
+          <h3>5.3 股票投資屬性分析</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>股票</th>
+                  <th>類型</th>
+                  <th>使用次數</th>
+                  <th>投資金額</th>
+                  <th>Danger / Watch / Healthy</th>
+                  <th>Pure</th>
+                  <th>Event</th>
+                  <th>展開</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${exposureRows.map((info, idx) => {
+                  const blockId = `stock_attr_${idx}_${info.symbol}`;
+                  const stockOpen = expandedStockIds.has(blockId);
+
+                  return `
+                    <tr>
+                      <td><b>${info.symbol}</b></td>
+                      <td>${getCategoryLabel(info.category)}</td>
+                      <td>${info.count}</td>
+                      <td>USD ${fmt(info.amt, 0)}</td>
+                      <td>${info.danger} / ${info.watch} / ${info.healthy}</td>
+                      <td>${info.pure_stock ?? "-"}</td>
+                      <td>${info.event_stock ?? "-"}</td>
+                      <td><button class="light" onclick="toggleStockDetail('${blockId}')">${stockOpen ? "收合" : "展開"}</button></td>
+                    </tr>
+                    <tr>
+                      <td colspan="8" style="padding:0; border-bottom:1px solid #eee;">
+                        <div class="sub-detail ${stockOpen ? "show" : ""}">
+                          <div style="padding:10px;">
+                            ${info.details.map((d, subIdx) => {
+                              const subId = `${blockId}_fcn_${subIdx}_${d.fcn_id}`;
+                              const subOpen = expandedStockFCNIds.has(subId);
+                              return renderStockFCNDetailCard(d, subId, subOpen);
+                            }).join("")}
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  `;
+                }).join("")}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    async function runM2() {
+      try {
+        const [fcnPool, marketRuntime, pool30, runtimeCache] = await Promise.all([
+          fetch("./data/fcn_pool.json").then(r => r.json()),
+          fetch("./data/market_runtime.json").then(r => r.json()),
+          fetch("./data/pool30.json").then(r => r.json()),
+          (async () => {
+            try {
+              return JSON.parse(localStorage.getItem("runtime_cache_v1")) || {};
+            } catch {
+              return {};
+            }
+          })()
+        ]);
+
+        const marketMerged = {};
+        Object.keys(marketRuntime || {}).forEach(sym => {
+          marketMerged[sym] = {
+            ...(marketRuntime[sym] || {}),
+            ...((runtimeCache.stocks || {})[sym] || {})
+          };
+        });
+
+        const data = runM2HealthEngine({
+          fcnPool,
+          marketRuntime: marketMerged,
+          pool30
+        });
+
+        const cache = {
+          generated_at: new Date().toISOString(),
+          ...data
+        };
+
+        writeCache(cache);
+        renderM2();
+        alert("M2 Health Engine 執行成功");
+      } catch (err) {
+        console.error("M2 Health Engine 執行失敗", err);
+        alert("M2 Health Engine 執行失敗：" + err.message);
+      }
+    }
+
+    function renderM2() {
+      const cache = readCache();
+
+      if (!cache || !cache.fcns) {
+        document.getElementById("runtimeMeta").innerHTML =
+          "尚未找到 m2_health_cache_v1，請先按「執行 M2 Health Engine」";
+        document.getElementById("summaryBlock").innerHTML = `<div class="muted">尚無資料</div>`;
+        document.getElementById("zoneBlock").innerHTML = `<div class="muted">尚無資料</div>`;
+        document.getElementById("stockAnalysisBlock").innerHTML = `<div class="muted">尚無資料</div>`;
+        return;
+      }
+
+      document.getElementById("runtimeMeta").innerHTML =
+        `最新 M2 Health 執行時間：<b>${cache.generated_at || "-"}</b>`;
+
+      document.getElementById("summaryBlock").innerHTML = buildSummary(cache);
+      document.getElementById("zoneBlock").innerHTML = buildZoneBlock(cache);
+      document.getElementById("stockAnalysisBlock").innerHTML = buildStockAnalysis(cache);
+    }
+
+    document.getElementById("runHealthBtn").addEventListener("click", runM2);
+    document.getElementById("refreshBtn").addEventListener("click", renderM2);
+
+    renderM2();
+  </script>
+</body>
+</html>
