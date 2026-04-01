@@ -353,23 +353,7 @@
     return "-";
   }
 
-  function renderMarket(data) {
-    const tbody = document.querySelector("#market-table tbody");
-    tbody.innerHTML = "";
-
-    const rows = [
-      { label: "VIX", code: "VIX", keys: ["VIX", "^VIX"] },
-      { label: "S&P 500", code: "SPX", keys: ["SPX", "^GSPC", "SPY"] },
-      { label: "Nasdaq", code: "NDX", keys: ["NDX", "^NDX", "QQQ", "NASDAQ"] },
-      { label: "Dow", code: "DJI", keys: ["DJI", "^DJI", "DOW"] },
-      { label: "10Y", code: "US10Y", keys: ["US10Y", "TNX", "^TNX"] },
-      { label: "20Y", code: "US20Y", keys: ["US20Y", "TLT20Y", "US20YR"] },
-      { label: "Oil", code: "OIL", keys: ["OIL", "WTI", "CL=F"] },
-      { label: "Gold", code: "GOLD", keys: ["GOLD", "GC=F"] },
-      { label: "CPI", code: "CPI", keys: ["CPI"] },
-      { label: "PPI", code: "PPI", keys: ["PPI"] },
-      { label: "台股", code: "TAIEX", keys: ["TAIEX", "^TWII"] }
-    ];
+  
 
     rows.forEach(row => {
       const node = getMarketNode(data, row.keys);
