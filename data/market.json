@@ -1,1 +1,19 @@
+{
+  "last_update": "2026-04-01T08:00:00Z",
 
+  "VIX": { "value": 21, "prev": 20 },
+  "SPX": { "value": 6606, "prev": 6550 },
+  "NDX": { "value": 22090, "prev": 21800 },
+  "DJI": { "value": 46021, "prev": 45800 },
+
+  "US10Y": { "value": 4.26, "prev": 4.20 },
+  "US20Y": { "value": 4.84, "prev": 4.78 },
+
+  "OIL": { "value": 95, "prev": 92 },
+  "GOLD": { "value": 2180, "prev": 2160 },
+
+  "CPI": { "value": 2.4, "prev": 2.6 },
+  "PPI": { "value": 0.7, "prev": 0.5 },
+
+  "TAIEX": { "value": 19850, "prev": 19700 }
+}
