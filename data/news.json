@@ -142,7 +142,7 @@
     "source": "MockWire",
     "url": "",
     "published_at": "2026-03-28T08:20:00Z",
-    "type": "company",
+    "type": "stock",
     "subtype": "AI雲端利多",
     "sid_label": "利多",
     "sid_score": 2,
@@ -159,7 +159,7 @@
     "source": "MockWire",
     "url": "",
     "published_at": "2026-03-28T08:30:00Z",
-    "type": "company",
+    "type": "stock",
     "subtype": "AI基礎建設利多",
     "sid_label": "利多",
     "sid_score": 2,
@@ -196,7 +196,7 @@
   "published_at": "2026-04-01T06:30:00Z",
   "affected_sectors": ["AI_APPLICATION"],
   "sid_score": 3,
-   "ticker": "SNOW"
+   "ticker": "SNOW",
    "impact_map": {
     "SNOW": 3.0
   },
