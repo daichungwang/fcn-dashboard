@@ -170,6 +170,23 @@
     "is_active": true
   },
   {
+  "id": "N011",
+  "title": "Regeneron posts encouraging pipeline update and raises long-term confidence",
+  "summary": "Regeneron reported positive pipeline progress and strengthened investor confidence in its medium-term growth outlook.",
+  "source": "MockWire",
+  "url": "",
+  "published_at": "2026-03-28T09:00:00Z",
+  "type": "company",
+  "subtype": "pipeline利多",
+  "sid_label": "利多",
+  "sid_score": 2,
+  "ticker": "REGN",
+  "impact_map": {
+    "REGN": 2.0
+  },
+  "is_active": true
+  },
+  {
     "id": "N010",
     "title": "UnitedHealth faces policy scrutiny in Washington",
     "summary": "Policy-related scrutiny created a more cautious near-term outlook for managed care names.",
