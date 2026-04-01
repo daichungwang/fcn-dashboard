@@ -594,7 +594,7 @@
   // =========================
   async function init() {
     try {
-      const market = await fetch("./data/market_runtime.json").then(r => r.json());
+      const market = await fetch("./data/market.json").then(r => r.json());
       const newsRaw = await fetch("./data/news.json").then(r => r.json());
 
       NEWS_DATA = normalizeNews(newsRaw);
