@@ -2412,5 +2412,36 @@
       "SMH": 389.9622,
       "GOOG": 303.0181
     }
+  },
+  {
+    "date": "2025-03-26",
+    "fcn_id": "FCN901M",
+    "basket": [
+      "NVDA",
+      "PLTR",
+      "TSM"
+    ],
+    "tenor": 6,
+    "rate": 17.76,
+    "autocall": 100,
+    "strike": 65.0,
+    "ki": 50.0,
+    "eki": true,
+    "bank": "野村證券",
+    "has_position": true,
+    "amt": 20000.0,
+    "currency": "USD",
+    "status": "active",
+    "created_time": "2025-03-26T09:00",
+    "entry_time": "2025-03-26T09:00",
+    "exit_time": "2025-12-31T09:00",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "標的價格=VWAP",
+    "entry_prices": {
+      "NVDA": 173.3,
+      "PLTR": 149.3,
+      "TSM": 332.2
+    }
   }
 ]
