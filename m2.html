@@ -617,7 +617,105 @@
       `;
     }
 
-   
+   function renderStockFCNDetailCard(d, subId, subOpen) {
+  const worst = d.worst_of || "UNKNOWN";
+
+  // 嘗試抓 worst-of 股票資料
+  const worstStock = (d.components || []).find(s => s.symbol === worst) || {};
+
+  const now = worstStock.price || 0;
+  const entry = worstStock.entry_price || d.strike_price || 0;
+  const strike = d.strike_price || 0;
+  const ki = d.ki_price || 0;
+
+  const distKI = ki ? ((now - ki) / ki * 100).toFixed(2) : "-";
+  const distStrike = strike ? ((now - strike) / strike * 100).toFixed(2) : "-";
+
+  // =========================
+  // 🧠 智能判斷
+  // =========================
+  let riskText = "";
+  let actionText = "";
+
+  if (now < ki) {
+    riskText = "⚠️ 已跌破 KI（高風險）";
+    actionText = "👉 已進入接股區，需評估是否長期持有";
+  } else if (now < strike) {
+    riskText = "⚠️ 已跌破 Strike（可能虧損）";
+    actionText = "👉 目前浮虧，觀察是否反彈";
+  } else if (distKI < 10) {
+    riskText = "⚠️ 接近 KI（危險區）";
+    actionText = "👉 建議密切觀察";
+  } else {
+    riskText = "✅ 安全區";
+    actionText = "👉 可持續持有";
+  }
+
+  return `
+    <div class="item-card">
+      <div class="mini-title">${d.fcn_id}</div>
+
+      <div class="item-line">Snapshot Loss：
+        <span style="color:${getPLColor(d.stock.snapshot_loss_amt)}">
+          ${fmtAmt(d.stock.snapshot_loss_amt)}
+        </span>
+      </div>
+
+      <div class="item-line">Snapshot Interest：
+        <span style="color:#2e7d32">
+          ${fmtAmt(d.stock.snapshot_interest_amt)}
+        </span>
+      </div>
+
+      <div class="item-line"><b>Snapshot Balance：</b>
+        <span style="color:${getPLColor(d.stock.snapshot_balance_amt)}">
+          ${fmtAmt(d.stock.snapshot_balance_amt)}
+        </span>
+      </div>
+
+      <div class="item-line">End Loss：
+        <span style="color:${getPLColor(d.stock.end_loss_amt)}">
+          ${fmtAmt(d.stock.end_loss_amt)}
+        </span>
+      </div>
+
+      <div class="item-line">End Interest：
+        <span style="color:#2e7d32">
+          ${fmtAmt(d.stock.end_interest_amt)}
+        </span>
+      </div>
+
+      <div class="item-line"><b>End Net：</b>
+        <span style="color:${getPLColor(d.stock.end_balance_amt)}">
+          ${fmtAmt(d.stock.end_balance_amt)}
+        </span>
+      </div>
+
+      <div class="item-line"><b>決策：</b>${d.stock.decision_label}</div>
+
+      <hr/>
+
+      <div class="item-line"><b>📌 Worst-of：${worst}</b></div>
+
+      <div class="item-line">現價：${now}</div>
+      <div class="item-line">進場價：${entry}</div>
+      <div class="item-line">Strike：${strike}</div>
+      <div class="item-line">KI：${ki}</div>
+
+      <div class="item-line">距 KI：${distKI}%</div>
+      <div class="item-line">距 Strike：${distStrike}%</div>
+
+      <hr/>
+
+      <div class="item-line"><b>風險判斷：</b>${riskText}</div>
+      <div class="item-line"><b>建議動作：</b>${actionText}</div>
+
+      <button class="light" onclick="toggleStockFCNDetail('${subId}')">
+        ${subOpen ? "收合 FCN 明細" : "展開 FCN 明細"}
+      </button>
+    </div>
+  `;
+}
 
     function buildStockAnalysis(data) {
       const dangerRows = (data.stockMap || []).filter(x => x.danger > 0);
