@@ -1,1 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>M1｜市場資訊 V2.5</title>
 
+<style>
+  body {
+    font-family: Arial, "Microsoft JhengHei", sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+    color: #111;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: auto;
+  }
+
+  h1 {
+    font-size: 34px;
+    margin: 0 0 18px 0;
+  }
+
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 18px;
+    border: 1px solid #ddd;
+  }
+
+  .section-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .sub-note {
+    color: #666;
+    font-size: 13px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+
+  th {
+    background: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: left;
+  }
+
+  td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+  }
+
+  .green { color: #2e7d32; }
+  .red { color: #c62828; }
+  .gray { color: #777; }
+
+  .news-item {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .news-item:last-child {
+    border-bottom: none;
+  }
+
+  .news-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    line-height: 1.45;
+  }
+
+  .news-summary {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.65;
+    margin-bottom: 6px;
+  }
+
+  .news-line {
+    font-size: 13px;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-right: 6px;
+    margin-top: 4px;
+    border: 1px solid #ddd;
+    background: #fafafa;
+  }
+
+  .pill-pos {
+    color: #137333;
+    border-color: #b7dfc0;
+    background: #effaf2;
+  }
+
+  .pill-neg {
+    color: #b42318;
+    border-color: #f2b8b5;
+    background: #fff2f1;
+  }
+
+  .pill-neutral {
+    color: #555;
+    border-color: #ddd;
+    background: #f5f5f5;
+  }
+
+  .score-bar-wrap {
+    margin-top: 6px;
+    width: 180px;
+    height: 8px;
+    background: #eee;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .score-bar {
+    height: 100%;
+    border-radius: 999px;
+  }
+
+  .btn {
+    margin-top: 10px;
+    padding: 8px 14px;
+    background: #111;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .btn:hover {
+    opacity: 0.88;
+  }
+
+  .link {
+    color: #1976d2;
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  .link:hover {
+    text-decoration: underline;
+  }
+
+  .empty {
+    color: #777;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 13px;
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 14px; }
+    h1 { font-size: 28px; }
+    .news-title { font-size: 17px; }
+    table, th, td { font-size: 13px; }
+  }
+</style>
+</head>
+
+<body>
+<div class="page">
+
+  <h1>📊 M1｜市場資訊</h1>
+
+  <div class="card">
+    <div class="section-title">📈 市場指標</div>
+    <div class="sub-note">
+      先看總經與市場背景，再看國際 / 財經 / AI 新聞。
+    </div>
+    <table id="market-table">
+      <thead>
+        <tr>
+          <th>指標</th>
+          <th>數值</th>
+          <th>前值</th>
+          <th>變動</th>
+          <th>解讀</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-title">🌍 國際新聞（10）</div>
+    <div class="meta-row">
+      <span>先顯示 3 條摘要</span>
+      <span id="meta-global"></span>
+    </div>
+    <div id="news-global"></div>
+    <button class="btn" onclick="toggleSection('global')">展開 / 收合</button>
+  </div>
+
+  <div class="card">
+    <div class="section-title">💰 財經新聞（10）</div>
+    <div class="meta-row">
+      <span>先顯示 3 條摘要</span>
+      <span id="meta-finance"></span>
+    </div>
+    <div id="news-finance"></div>
+    <button class="btn" onclick="toggleSection('finance')">展開 / 收合</button>
+  </div>
+
+  <div class="card">
+    <div class="section-title">🤖 AI 趨勢（10）</div>
+    <div class="meta-row">
+      <span>先顯示 3 條摘要</span>
+      <span id="meta-ai"></span>
+    </div>
+    <div id="news-ai"></div>
+    <button class="btn" onclick="toggleSection('ai')">展開 / 收合</button>
+  </div>
+
+</div>
+
+<script>
+  let NEWS_DATA = { global: [], finance: [], ai: [] };
+  let EXPANDED = {
+    global: false,
+    finance: false,
+    ai: false
+  };
+
+  // =========================
+  // 工具
+  // =========================
+  function isNum(v) {
+    return typeof v === "number" && Number.isFinite(v);
+  }
+
+  function toNum(v, fallback = null) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : fallback;
+  }
+
+  function fmt(v, digits = 2) {
+    if (!isNum(v)) return "-";
+    return v.toLocaleString("en-US", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: digits
+    });
+  }
+
+  function fmtPct(v, digits = 2) {
+    if (!isNum(v)) return "-";
+    return `${v.toFixed(digits)}%`;
+  }
+
+  function pctFromNowPrev(now, prev) {
+    if (!isNum(now) || !isNum(prev) || prev === 0) return null;
+    return ((now - prev) / prev) * 100;
+  }
+
+  function getChangeClass(v) {
+    if (!isNum(v)) return "gray";
+    return v >= 0 ? "green" : "red";
+  }
+
+  function safeArray(v) {
+    return Array.isArray(v) ? v : [];
+  }
+
+  function lower(s) {
+    return String(s || "").toLowerCase();
+  }
+
+  function firstDefined(...vals) {
+    for (const v of vals) {
+      if (v !== undefined && v !== null && v !== "") return v;
+    }
+    return null;
+  }
+
+  // =========================
+  // market runtime 容錯讀取
+  // =========================
+  function getMarketNode(data, keys) {
+    for (const key of keys) {
+      if (data && data[key]) return data[key];
+    }
+    return null;
+  }
+
+  function readMarketNow(node) {
+    if (!node) return null;
+    return firstDefined(
+      toNum(node.value),
+      toNum(node.price_now),
+      toNum(node.last),
+      toNum(node.close)
+    );
+  }
+
+  function readMarketPrev(node) {
+    if (!node) return null;
+    return firstDefined(
+      toNum(node.prev),
+      toNum(node.price_ref_1d),
+      toNum(node.prev_close),
+      toNum(node.reference)
+    );
+  }
+
+  function interpretIndicator(code, chgPct) {
+    if (!isNum(chgPct)) return "-";
+
+    if (code === "VIX") return chgPct > 0 ? "恐慌升溫" : "市場穩定";
+    if (code === "SPX") return chgPct > 0 ? "大盤偏多" : "大盤轉弱";
+    if (code === "NDX") return chgPct > 0 ? "科技偏強" : "科技轉弱";
+    if (code === "DJI") return chgPct > 0 ? "權值偏穩" : "權值轉弱";
+    if (code === "US10Y") return chgPct > 0 ? "殖利率升" : "殖利率降";
+    if (code === "US20Y") return chgPct > 0 ? "長債殖利率升" : "長債殖利率降";
+    if (code === "OIL") return chgPct > 0 ? "通膨壓力升" : "通膨壓力降";
+    if (code === "GOLD") return chgPct > 0 ? "避險升溫" : "避險降溫";
+    if (code === "CPI") return chgPct > 0 ? "通膨升溫" : "通膨降溫";
+    if (code === "PPI") return chgPct > 0 ? "上游成本升" : "上游成本降";
+    if (code === "TAIEX") return chgPct > 0 ? "台股偏強" : "台股轉弱";
+
+    return "-";
+  }
+
+  function renderMarket(data) {
+    const tbody = document.querySelector("#market-table tbody");
+    tbody.innerHTML = "";
+
+    const rows = [
+      { label: "VIX", code: "VIX", keys: ["VIX", "^VIX"] },
+      { label: "S&P 500", code: "SPX", keys: ["SPX", "^GSPC", "SPY"] },
+      { label: "Nasdaq", code: "NDX", keys: ["NDX", "^NDX", "QQQ", "NASDAQ"] },
+      { label: "Dow", code: "DJI", keys: ["DJI", "^DJI", "DOW"] },
+      { label: "10Y", code: "US10Y", keys: ["US10Y", "TNX", "^TNX"] },
+      { label: "20Y", code: "US20Y", keys: ["US20Y", "TLT20Y", "US20YR"] },
+      { label: "Oil", code: "OIL", keys: ["OIL", "WTI", "CL=F"] },
+      { label: "Gold", code: "GOLD", keys: ["GOLD", "GC=F"] },
+      { label: "CPI", code: "CPI", keys: ["CPI"] },
+      { label: "PPI", code: "PPI", keys: ["PPI"] },
+      { label: "台股", code: "TAIEX", keys: ["TAIEX", "^TWII"] }
+    ];
+
+    rows.forEach(row => {
+      const node = getMarketNode(data, row.keys);
+      const now = readMarketNow(node);
+      const prev = readMarketPrev(node);
+
+      let chgPct = pctFromNowPrev(now, prev);
+
+      // 若 node 已有可直接使用的變動欄位，也容錯支援
+      if (!isNum(chgPct)) {
+        const direct = firstDefined(
+          toNum(node?.change_pct),
+          toNum(node?.pct_change),
+          toNum(node?.ret_1d)
+        );
+        if (isNum(direct)) {
+          chgPct = Math.abs(direct) <= 1 ? direct * 100 : direct;
+        }
+      }
+
+      const desc = interpretIndicator(row.code, chgPct);
+
+      tbody.innerHTML += `
+        <tr>
+          <td>${row.label}</td>
+          <td>${fmt(now)}</td>
+          <td>${fmt(prev)}</td>
+          <td class="${getChangeClass(chgPct)}">${fmtPct(chgPct)}</td>
+          <td>${desc}</td>
+        </tr>
+      `;
+    });
+  }
+
+  // =========================
+  // news 容錯與分類
+  // =========================
+  function normalizeNewsItem(n, idx = 0) {
+    const title = n.title || n.headline || `News ${idx + 1}`;
+    const summary = n.summary || n.description || n.snippet || "";
+    const reason = n.reason || n.detail || n.full_text || n.body || "未提供";
+    const url = n.url || n.link || "";
+
+    const impact =
+      n.impact ||
+      n.symbol ||
+      n.ticker ||
+      (Array.isArray(n.affected_stocks) ? n.affected_stocks.join(", ") : "-");
+
+    const strength = n.strength || n.impact_strength || n.level || "-";
+
+    const score =
+      firstDefined(
+        toNum(n.event_score),
+        toNum(n.score),
+        toNum(n.impact_score)
+      );
+
+    const direction = lower(
+      n.direction || n.sentiment || n.final_direction || n.ai_direction || ""
+    );
+
+    const publishedAt = n.published_at || n.date || n.time || "";
+
+    return {
+      raw: n,
+      title,
+      summary,
+      reason,
+      url,
+      impact: impact || "-",
+      strength: strength || "-",
+      score: isNum(score) ? score : null,
+      direction,
+      publishedAt
+    };
+  }
+
+  function classifyNewsFlatArray(arr) {
+    const global = [];
+    const finance = [];
+    const ai = [];
+
+    arr.forEach((x, idx) => {
+      const n = normalizeNewsItem(x, idx);
+      const text = `${lower(n.title)} ${lower(n.summary)} ${lower(n.reason)}`;
+
+      const isAI = [
+        "ai", "nvidia", "openai", "gpu", "semiconductor", "tsm", "tsmc",
+        "amd", "arm", "chatgpt", "gemini", "server"
+      ].some(k => text.includes(k));
+
+      const isFinance = [
+        "fed", "cpi", "ppi", "inflation", "yield", "bond", "treasury",
+        "rate", "rates", "oil", "gold", "vix", "market", "spy", "qqq",
+        "dow", "nasdaq", "s&p"
+      ].some(k => text.includes(k));
+
+      if (isAI) {
+        ai.push(n);
+      } else if (isFinance) {
+        finance.push(n);
+      } else {
+        global.push(n);
+      }
+    });
+
+    return { global, finance, ai };
+  }
+
+  function normalizeNews(raw) {
+    // 格式 A：已分類物件
+    if (!Array.isArray(raw) && raw && (raw.global || raw.finance || raw.ai)) {
+      return {
+        global: safeArray(raw.global).map(normalizeNewsItem),
+        finance: safeArray(raw.finance).map(normalizeNewsItem),
+        ai: safeArray(raw.ai).map(normalizeNewsItem)
+      };
+    }
+
+    // 格式 B：其他分類名稱
+    if (!Array.isArray(raw) && raw && (raw.world || raw.international || raw.financial || raw.ai_news || raw.ai_trend)) {
+      return {
+        global: safeArray(raw.global || raw.world || raw.international).map(normalizeNewsItem),
+        finance: safeArray(raw.finance || raw.financial).map(normalizeNewsItem),
+        ai: safeArray(raw.ai || raw.ai_news || raw.ai_trend).map(normalizeNewsItem)
+      };
+    }
+
+    // 格式 C：平面陣列
+    if (Array.isArray(raw)) {
+      return classifyNewsFlatArray(raw);
+    }
+
+    return { global: [], finance: [], ai: [] };
+  }
+
+  // =========================
+  // UI：新聞卡片
+  // =========================
+  function scoreColor(score) {
+    if (!isNum(score)) return "#bbb";
+    if (score >= 7) return "#2e7d32";
+    if (score >= 4) return "#f9a825";
+    return "#c62828";
+  }
+
+  function scoreWidth(score) {
+    if (!isNum(score)) return 0;
+    const capped = Math.max(0, Math.min(10, score));
+    return capped * 10;
+  }
+
+  function directionPill(direction) {
+    const d = lower(direction);
+    if (d.includes("pos") || d.includes("bull") || d.includes("正")) {
+      return `<span class="pill pill-pos">正向</span>`;
+    }
+    if (d.includes("neg") || d.includes("bear") || d.includes("負")) {
+      return `<span class="pill pill-neg">負向</span>`;
+    }
+    return `<span class="pill pill-neutral">中性</span>`;
+  }
+
+  function renderNewsList(list, elementId, key) {
+    const container = document.getElementById(elementId);
+    container.innerHTML = "";
+
+    if (!Array.isArray(list) || list.length === 0) {
+      container.innerHTML = `<div class="empty">目前沒有資料</div>`;
+      document.getElementById(`meta-${key}`).textContent = "0 / 0";
+      return;
+    }
+
+    const showList = EXPANDED[key] ? list.slice(0, 10) : list.slice(0, 3);
+    document.getElementById(`meta-${key}`).textContent = `${showList.length} / ${Math.min(10, list.length)}`;
+
+    showList.forEach(n => {
+      container.innerHTML += `
+        <div class="news-item">
+          <div class="news-title">${n.title}</div>
+          <div class="news-summary">${n.summary || "未提供摘要"}</div>
+
+          <div class="news-line">
+            影響：${n.impact}
+            ｜ 強度：${n.strength}
+            ｜ 分數：${isNum(n.score) ? n.score.toFixed(1) : "-"}
+            ｜ 方向：${directionPill(n.direction)}
+          </div>
+
+          <div class="score-bar-wrap">
+            <div class="score-bar" style="width:${scoreWidth(n.score)}%; background:${scoreColor(n.score)};"></div>
+          </div>
+
+          <div class="news-line">完整說明：${n.reason || "未提供"}</div>
+
+          <div class="news-line">
+            ${
+              n.url
+                ? `<a class="link" href="${n.url}" target="_blank" rel="noopener noreferrer">🔗 查看原文</a>`
+                : `<span class="gray">🔗 原文未提供</span>`
+            }
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function renderAllNews() {
+    renderNewsList(NEWS_DATA.global, "news-global", "global");
+    renderNewsList(NEWS_DATA.finance, "news-finance", "finance");
+    renderNewsList(NEWS_DATA.ai, "news-ai", "ai");
+  }
+
+  function toggleSection(key) {
+    EXPANDED[key] = !EXPANDED[key];
+    renderAllNews();
+  }
+
+  // =========================
+  // init
+  // =========================
+  async function init() {
+    try {
+      const market = await fetch("./data/market_runtime.json").then(r => r.json());
+      const newsRaw = await fetch("./data/news.json").then(r => r.json());
+
+      NEWS_DATA = normalizeNews(newsRaw);
+
+      renderMarket(market);
+      renderAllNews();
+    } catch (e) {
+      console.error("M1 init error:", e);
+      alert("M1 資料讀取失敗，請看 console");
+    }
+  }
+
+  init();
+</script>
+</body>
+</html>
