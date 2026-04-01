@@ -1,0 +1,189 @@
+[
+  {
+    "id": "N001",
+    "title": "Fed signals first rate cut could come sooner than expected",
+    "summary": "Federal Reserve officials suggested inflation is cooling enough for markets to expect earlier rate cuts.",
+    "source": "MockWire",
+    "url": "",
+    "published_at": "2026-03-28T06:00:00Z",
+    "type": "macro",
+    "subtype": "利率下降",
+    "sid_label": "利多",
+    "sid_score": 2,
+    "impact_map": {
+      "NVDA": 1.5,
+      "TSM": 1.0,
+      "MSFT": 2.0,
+      "AMZN": 1.0,
+      "QQQ": 1.0,
+      "SMH": 1.0
+    },
+    "is_active": true
+  },
+  {
+    "id": "N002",
+    "title": "US CPI comes in below expectations, easing inflation concerns",
+    "summary": "A softer-than-expected CPI reading strengthened hopes for lower interest rates and supported growth assets.",
+    "source": "MockWire",
+    "url": "",
+    "published_at": "2026-03-28T06:10:00Z",
+    "type": "macro",
+    "subtype": "通膨下降",
+    "sid_label": "利多",
+    "sid_score": 2,
+    "impact_map": {
+      "NVDA": 1.5,
+      "TSM": 1.0,
+      "AMD": 1.2,
+      "AMZN": 0.8,
+      "MSFT": 1.0,
+      "QQQ": 1.0
+    },
+    "is_active": true
+  },
+  {
+    "id": "N003",
+    "title": "US 10-year Treasury yield falls as bond market prices in policy easing",
+    "summary": "Treasury yields declined after weaker inflation data, helping long-duration assets and boosting sentiment toward technology shares.",
+    "source": "MockWire",
+    "url": "",
+    "published_at": "2026-03-28T06:20:00Z",
+    "type": "macro",
+    "subtype": "利率下降",
+    "sid_label": "利多",
+    "sid_score": 1,
+    "impact_map": {
+      "NVDA": 1.0,
+      "TSM": 0.8,
+      "MSFT": 1.0,
+      "GOOG": 0.8,
+      "QQQ": 0.8,
+      "SMH": 0.8
+    },
+    "is_active": true
+  },
+  {
+    "id": "N004",
+    "title": "AI server demand remains strong across hyperscalers",
+    "summary": "Cloud providers continued to signal strong capex demand for AI servers, GPUs and networking hardware.",
+    "source": "MockWire",
+    "url": "",
+    "published_at": "2026-03-28T07:00:00Z",
+    "type": "industry",
+    "subtype": "AI需求上升",
+    "sid_label": "利多",
+    "sid_score": 2,
+    "affected_sectors": ["AI_SEMI", "AI_APPLICATION"],
+    "impact_map": {
+      "NVDA": 2.0,
+      "AVGO": 1.5,
+      "TSM": 1.2,
+      "AMAT": 1.0,
+      "MRVL": 1.0,
+      "AMD": 1.0
+    },
+    "is_active": true
+  },
+  {
+    "id": "N005",
+    "title": "Memory pricing outlook improves on AI demand",
+    "summary": "Improving memory pricing and AI-related demand supported expectations for better fundamentals in the memory supply chain.",
+    "source": "MockWire",
+    "url": "",
+    "published_at": "2026-03-28T07:15:00Z",
+    "type": "industry",
+    "subtype": "記憶體景氣改善",
+    "sid_label": "利多",
+    "sid_score": 2,
+    "affected_sectors": ["AI_SEMI"],
+    "impact_map": {
+      "MU": 2.0,
+      "NVDA": 0.5,
+      "TSM": 0.5
+    },
+    "is_active": true
+  },
+  {
+    "id": "N006",
+    "title": "Travel demand strengthens into peak booking season",
+    "summary": "Travel operators reported resilient booking trends and improving leisure demand heading into the holiday period.",
+    "source": "MockWire",
+    "url": "",
+    "published_at": "2026-03-28T07:30:00Z",
+    "type": "industry",
+    "subtype": "旅遊需求上升",
+    "sid_label": "利多",
+    "sid_score": 1,
+    "affected_sectors": ["TRAVEL"],
+    "impact_map": {
+      "CCL": 1.5,
+      "AAL": 1.2,
+      "LVS": 1.0
+    },
+    "is_active": true
+  },
+  {
+    "id": "N007",
+    "title": "Risk appetite improves as volatility cools",
+    "summary": "A calmer volatility backdrop improved appetite for growth stocks and higher-beta technology names.",
+    "source": "MockWire",
+    "url": "",
+    "published_at": "2026-03-28T08:00:00Z",
+    "type": "market",
+    "subtype": "risk_on",
+    "sid_label": "利多",
+    "sid_score": 1,
+    "is_active": true
+  },
+  {
+    "id": "N008",
+    "title": "Microsoft expands AI cloud monetization roadmap",
+    "summary": "Microsoft highlighted broader monetization opportunities tied to Copilot and Azure AI services.",
+    "source": "MockWire",
+    "url": "",
+    "published_at": "2026-03-28T08:20:00Z",
+    "type": "company",
+    "subtype": "AI雲端利多",
+    "sid_label": "利多",
+    "sid_score": 2,
+    "ticker": "MSFT",
+    "impact_map": {
+      "MSFT": 2.0
+    },
+    "is_active": true
+  },
+  {
+    "id": "N009",
+    "title": "Oracle signs additional AI infrastructure customers",
+    "summary": "Oracle continued to benefit from enterprise demand for AI infrastructure and cloud capacity.",
+    "source": "MockWire",
+    "url": "",
+    "published_at": "2026-03-28T08:30:00Z",
+    "type": "company",
+    "subtype": "AI基礎建設利多",
+    "sid_label": "利多",
+    "sid_score": 2,
+    "ticker": "ORCL",
+    "impact_map": {
+      "ORCL": 2.0
+    },
+    "is_active": true
+  },
+  {
+    "id": "N010",
+    "title": "UnitedHealth faces policy scrutiny in Washington",
+    "summary": "Policy-related scrutiny created a more cautious near-term outlook for managed care names.",
+    "source": "MockWire",
+    "url": "",
+    "published_at": "2026-03-28T08:40:00Z",
+    "type": "company",
+    "subtype": "政策壓力",
+    "sid_label": "利空",
+    "sid_score": -2,
+    "ticker": "UNH",
+    "impact_map": {
+      "UNH": -2.0
+    },
+    "is_active": true
+  }
+]
