@@ -353,7 +353,60 @@
     return "-";
   }
 
-  
+    function renderMarket(data) {
+  const tbody = document.querySelector("#market-table tbody");
+  tbody.innerHTML = "";
+
+  const rows = [
+    { label: "VIX", key: "vix" },
+    { label: "S&P 500", key: "sp500" },
+    { label: "Nasdaq", key: "nasdaq" },
+    { label: "Dow", key: "dow" },
+    { label: "10Y", key: "us10y" },
+    { label: "20Y", key: "us20y" },
+    { label: "Oil", key: "oil" },
+    { label: "Gold", key: "gold" },
+    { label: "CPI", key: "cpi" },
+    { label: "PPI", key: "ppi" },
+    { label: "台股", key: "tw_index" }
+  ];
+
+  rows.forEach(row => {
+    const node = data[row.key] || {};
+    const now = Number(node.current);
+    const prev = Number(node.previous);
+
+    let chgPct = null;
+    if (Number.isFinite(now) && Number.isFinite(prev) && prev !== 0) {
+      chgPct = ((now - prev) / prev) * 100;
+    }
+
+    let desc = "-";
+    if (row.key === "vix") desc = chgPct > 0 ? "恐慌升溫" : "市場穩定";
+    if (row.key === "sp500") desc = chgPct > 0 ? "大盤偏多" : "大盤轉弱";
+    if (row.key === "nasdaq") desc = chgPct > 0 ? "科技偏強" : "科技轉弱";
+    if (row.key === "dow") desc = chgPct > 0 ? "權值偏穩" : "權值轉弱";
+    if (row.key === "us10y") desc = chgPct > 0 ? "殖利率升" : "殖利率降";
+    if (row.key === "us20y") desc = chgPct > 0 ? "長債殖利率升" : "長債殖利率降";
+    if (row.key === "oil") desc = chgPct > 0 ? "通膨壓力升" : "通膨壓力降";
+    if (row.key === "gold") desc = chgPct > 0 ? "避險升溫" : "避險降溫";
+    if (row.key === "cpi") desc = chgPct > 0 ? "通膨升溫" : "通膨降溫";
+    if (row.key === "ppi") desc = chgPct > 0 ? "上游成本升" : "上游成本降";
+    if (row.key === "tw_index") desc = chgPct > 0 ? "台股偏強" : "台股轉弱";
+
+    const chgClass = chgPct == null ? "gray" : (chgPct >= 0 ? "green" : "red");
+
+    tbody.innerHTML += `
+      <tr>
+        <td>${row.label}</td>
+        <td>${Number.isFinite(now) ? now.toFixed(2) : "-"}</td>
+        <td>${Number.isFinite(prev) ? prev.toFixed(2) : "-"}</td>
+        <td class="${chgClass}">${chgPct == null ? "-" : chgPct.toFixed(2) + "%"}</td>
+        <td>${desc}</td>
+      </tr>
+    `;
+  });
+}
 
     rows.forEach(row => {
       const node = getMarketNode(data, row.keys);
