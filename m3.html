@@ -79,7 +79,7 @@ h1 {
 <script>
 
 async function loadData() {
-  const data = await fetch("./data.json").then(r => r.json());
+  const data = await fetch("./data/fcn_results.json").then(r => r.json());
 
   const tbody = document.querySelector("#fcn-table tbody");
   tbody.innerHTML = "";
