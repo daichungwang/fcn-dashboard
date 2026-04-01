@@ -522,7 +522,150 @@
       `;
     }
 
-   
+   function renderFCNCard(fcn, code, idx) {
+  const detailId = `${code}_${idx}_${fcn.fcn_id}`;
+  const isOpen = expandedFCNIds.has(detailId);
+
+  const worstStock = (fcn.stocks || []).find(s => s.symbol === fcn.worst_of) || {};
+
+  const now = toNumber(worstStock.price_now, 0);
+  const ki = toNumber(fcn.ki, 0);
+  const strike = toNumber(fcn.strike, 0);
+
+  const distKI = toNumber(fcn.worst_dist_to_ki_pct, 0);
+  const distStrike = toNumber(fcn.worst_dist_to_strike_pct, 0);
+
+  // =========================
+  // 🧠 智能風險判斷
+  // =========================
+  let riskText = "";
+  let actionText = "";
+  let reasonText = "";
+
+  if (distKI < 0) {
+    riskText = "🔴 已跌破 KI（高風險）";
+    actionText = "👉 已進入接股區，請評估是否願意長期持有";
+    reasonText = "KI 已破，結構保護失效，FCN 已轉為股票風險";
+  } else if (distStrike < 0) {
+    riskText = "🟠 跌破 Strike（浮虧）";
+    actionText = "👉 已低於接股成本，需觀察趨勢是否轉弱";
+    reasonText = "雖未破 KI，但已進入虧損區";
+  } else if (distKI <= 10) {
+    riskText = "🟡 接近 KI（警戒）";
+    actionText = "👉 建議密切觀察，風險正在上升";
+    reasonText = "距 KI 過近，若市場轉弱將快速惡化";
+  } else {
+    riskText = "🟢 安全區";
+    actionText = "👉 可續抱";
+    reasonText = "距 KI 有安全距離";
+  }
+
+  // =========================
+  // 💰 Loss邏輯（你定義的版本）
+  // =========================
+  const loss = Math.min(toNumber(fcn.snapshot_loss_amt), 0);
+
+  return `
+    <div class="fcn-card">
+
+      <div class="fcn-head">
+        <div>
+          <div class="fcn-id">${fcn.fcn_id}</div>
+          <div class="fcn-line">Basket：${(fcn.basket || []).join(" / ")}</div>
+          <div class="fcn-line">Worst-of：<b>${fcn.worst_of}</b></div>
+          <div class="fcn-line">金額：USD ${fmt(fcn.amt, 0)}</div>
+        </div>
+        <span class="${healthPillClass(fcn.fcn_health)}">${healthLabel(fcn.fcn_health)}</span>
+      </div>
+
+      ${buildFCNMeta(fcn)}
+
+      <div class="pl-block">
+        <div><b>📍 Snapshot（現在）</b></div>
+
+        <div>Loss：
+          <span style="color:${getPLColor(loss)}">
+            ${fmtAmt(loss)} (${fmtPct(fcn.snapshot_loss_pct)})
+          </span>
+        </div>
+
+        <div>Interest：
+          <span style="color:#2e7d32">
+            ${fmtAmt(fcn.snapshot_interest_amt)}
+          </span>
+        </div>
+
+        <div><b>Balance：</b>
+          <span style="color:${getPLColor(fcn.snapshot_balance_amt)}">
+            <b>${fmtAmt(fcn.snapshot_balance_amt)}</b>
+          </span>
+        </div>
+      </div>
+
+      <div class="pl-block">
+        <div><b>🏁 End（到期）</b></div>
+
+        <div>Loss：
+          <span style="color:${getPLColor(fcn.end_loss_amt)}">
+            ${fmtAmt(fcn.end_loss_amt)}
+          </span>
+        </div>
+
+        <div>Interest：
+          <span style="color:#2e7d32">
+            ${fmtAmt(fcn.end_interest_amt)}
+          </span>
+        </div>
+
+        <div><b>Net：</b>
+          <span style="color:${getPLColor(fcn.end_balance_amt)}">
+            <b>${fmtAmt(fcn.end_balance_amt)}</b>
+          </span>
+        </div>
+      </div>
+
+      <div class="${getDecisionClass(fcn.decision_signal)}">
+        <div><b>🧠 決策：</b>${fcn.decision_label}</div>
+        <div>${fcn.decision_note}</div>
+      </div>
+
+      <div class="fcn-line" style="margin-top:8px;">
+        <b>📊 風險：</b>
+        ${fcn.danger_count} / ${fcn.watch_count} / ${fcn.healthy_count}<br>
+        距 KI：${fmtPct(distKI)}｜
+        距 Strike：${fmtPct(distStrike)}
+      </div>
+
+      <div class="pl-block">
+        <div><b>📌 Worst-of 深度分析</b></div>
+
+        <div>股票：<b>${fcn.worst_of}</b></div>
+        <div>現價：${now || "-"}</div>
+
+        <div>KI：${ki}%</div>
+        <div>Strike：${strike}%</div>
+
+        <div>距 KI：${fmtPct(distKI)}</div>
+        <div>距 Strike：${fmtPct(distStrike)}</div>
+
+        <hr/>
+
+        <div><b>風險判斷：</b>${riskText}</div>
+        <div><b>建議動作：</b>${actionText}</div>
+        <div class="muted">${reasonText}</div>
+      </div>
+
+      <button class="expand-btn" onclick="toggleDetail('${detailId}')">
+        ${isOpen ? "收合明細" : "展開明細"}
+      </button>
+
+      <div class="detail-box ${isOpen ? "show" : ""}">
+        ${buildStockDetailTable(fcn.stocks || [])}
+      </div>
+
+    </div>
+  `;
+}
 
     function renderZoneColumn(title, zoneClass, allRows, code, showHealthyControl = false) {
       const rows = code === "healthy"
