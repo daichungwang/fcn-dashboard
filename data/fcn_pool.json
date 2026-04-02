@@ -2326,7 +2326,7 @@
     "eki": false,
     "bank": "法國外貿銀行",
     "has_position": true,
-    "amt": 50000.0,
+    "amt": 80000.0,
     "currency": "USD",
     "status": "active",
     "created_time": "2026-03-11T09:00",
@@ -2341,6 +2341,41 @@
       "NVDA": 185.9744,
       "AVGO": 341.6622,
       "SMH": 401.366
+    }
+  },
+   {
+    "date": "2026-03-10",
+    "fcn_id": "FCN715M 富邦",
+    "basket": [
+      "ARM",
+      "TSM",
+      "NVDA",
+      "AVGO",
+      "MRVL"
+    ],
+    "tenor": 6,
+    "rate": 23.4,
+    "autocall": 100,
+    "strike": 65.0,
+    "ki": 50.0,
+    "eki": false,
+    "bank": "法國外貿銀行",
+    "has_position": true,
+    "amt": 80000.0,
+    "currency": "USD",
+    "status": "active",
+    "created_time": "2026-03-11T09:00",
+    "entry_time": "2026-03-11T09:00",
+    "exit_time": null,
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "標的價格=VWAP",
+    "entry_prices": {
+      "ARM": 120.6612,
+      "TSM": 348.2772,
+      "NVDA": 184.6503,
+      "AVGO": 344.91,
+      "MRVL": 93.565
     }
   },
   {
