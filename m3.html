@@ -1,1 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>M3｜FCN Decision</title>
 
+<style>
+body {
+  font-family: Arial, "Microsoft JhengHei";
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+}
+
+.page {
+  max-width: 1100px;
+  margin: auto;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+}
+
+h1 { font-size: 28px; }
+h2 { font-size: 20px; }
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: #111;
+  color: #fff;
+  padding: 10px;
+}
+
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.green { color: #2e7d32; }
+.red { color: #c62828; }
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<h1>📊 M3｜FCN 承做決策</h1>
+
+<div class="card">
+<button onclick="runM3()">▶ 執行 M3</button>
+<div id="status"></div>
+</div>
+
+<div class="card">
+<h2>🧠 Clean Pool</h2>
+<div id="pool"></div>
+</div>
+
+<div class="card">
+<h2>💰 FCN Ranking</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Basket</th>
+<th>Worst</th>
+<th>Pure</th>
+<th>Event</th>
+<th>Delta</th>
+<th>建議</th>
+</tr>
+</thead>
+<tbody id="fcn-table"></tbody>
+</table>
+</div>
+
+</div>
+
+<script type="module" src="./js/m3.js"></script>
+</body>
+</html>
