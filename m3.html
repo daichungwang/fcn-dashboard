@@ -927,11 +927,17 @@ M3.6 Blueprint
         ]);
 
         const stockSelectionCfg = config["M3_股票篩選情境參數"] || {};
-        const cleanMinPure = toNumber(stockSelectionCfg.clean_min_pure, 6);
-        const cleanMinEvent = toNumber(stockSelectionCfg.clean_min_event, 6);
-        const watchMinPure = toNumber(stockSelectionCfg.watch_min_pure, 5);
-        const rejectIfAvoid = !!stockSelectionCfg.reject_if_suggestion_avoid;
 
+const cleanMinPure = toNumber(stockSelectionCfg.clean_min_pure, 6);
+const cleanMinEvent = toNumber(stockSelectionCfg.clean_min_event, 6);
+const cleanMinDelta = toNumber(stockSelectionCfg.clean_min_delta, 0);
+const cleanUseDeltaGate = !!stockSelectionCfg.clean_use_delta_gate;
+
+const watchMinPure = toNumber(stockSelectionCfg.watch_min_pure, 5);
+const watchMinEvent = toNumber(stockSelectionCfg.watch_min_event, 5);
+const watchUseOrLogic = stockSelectionCfg.watch_use_or_logic !== false;
+
+const rejectIfAvoid = !!stockSelectionCfg.reject_if_suggestion_avoid;
         const stockResults = (pool30 || [])
           .map(stock => mergeStockData(stock, marketRuntime || {}))
           .map(stock => evaluateStock(stock))
@@ -940,15 +946,27 @@ M3.6 Blueprint
             const pure = toNumber(reviewed.pure_stock_score, 0);
             const eventScore = toNumber(reviewed.event_stock_score, 0);
 
-            if (rejectIfAvoid && reviewed.suggestion === "避免納入 FCN") {
-              reviewed.bucket = "reject";
-            } else if (pure >= cleanMinPure && eventScore >= cleanMinEvent && reviewed.delta_stock_score > 0) {
-              reviewed.bucket = "clean";
-            } else if (pure >= watchMinPure) {
-              reviewed.bucket = "watch";
-            } else {
-              reviewed.bucket = "reject";
-            }
+            const passCleanBase =
+  pure >= cleanMinPure &&
+  eventScore >= cleanMinEvent;
+
+const passCleanDelta =
+  !cleanUseDeltaGate || reviewed.delta_stock_score >= cleanMinDelta;
+
+const passWatch =
+  watchUseOrLogic
+    ? (pure >= watchMinPure || eventScore >= watchMinEvent)
+    : (pure >= watchMinPure && eventScore >= watchMinEvent);
+
+if (rejectIfAvoid && reviewed.suggestion === "避免納入 FCN") {
+  reviewed.bucket = "reject";
+} else if (passCleanBase && passCleanDelta) {
+  reviewed.bucket = "clean";
+} else if (passWatch) {
+  reviewed.bucket = "watch";
+} else {
+  reviewed.bucket = "reject";
+}
 
             return reviewed;
           })
