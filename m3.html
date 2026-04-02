@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<title>M3｜FCN 承做決策</title>
+
+<style>
+body { font-family: Arial; background:#f5f5f5; padding:20px;}
+.card { background:#fff; padding:16px; margin-bottom:16px; border-radius:10px;}
+h2 { margin-top:0;}
+.table { width:100%; border-collapse:collapse;}
+.table th { background:#111; color:#fff; padding:8px;}
+.table td { padding:8px; border-bottom:1px solid #eee;}
+.good{color:green}
+.warn{color:#ff9800}
+.bad{color:red}
+</style>
+</head>
+
+<body>
+
+<h1>📊 M3｜FCN 承做決策（完整版）</h1>
+<button onclick="runM3()">▶ 執行 M3</button>
+<div id="status"></div>
+
+<div class="card">
+<h2>M3.2｜Stock Selection</h2>
+<div id="stock-table"></div>
+</div>
+
+<div class="card">
+<h2>M3.3｜FCN Simulation</h2>
+<table class="table">
+<thead>
+<tr>
+<th>Basket</th>
+<th>Worst</th>
+<th>Pure</th>
+<th>Event</th>
+<th>Delta</th>
+<th>建議</th>
+</tr>
+</thead>
+<tbody id="fcn-body"></tbody>
+</table>
+</div>
+
+<div class="card">
+<h2>M3.4｜Conclusion</h2>
+<div id="conclusion"></div>
+</div>
+
+<script type="module">
+
+import { mergeStockData, evaluateStock } from "./js/core/stock_engine.js";
+import { evaluateFCN } from "./js/core/fcn_engine.js";
+
+async function loadJSON(p){return fetch(p).then(r=>r.json())}
+const num=v=>Number(v)||0;
+
+// =========================
+// MAIN
+// =========================
+window.runM3 = async function(){
+
+  document.getElementById("status").innerText="running...";
+
+  const pool = await loadJSON("./data/pool30.json");
+  const market = await loadJSON("./data/market_runtime.json");
+  const param = await loadJSON("./data/parameter_matrix.json");
+
+  // =========================
+  // M3.1 + M3.2 STOCK
+  // =========================
+  const stocks = pool.map(s=>evaluateStock(mergeStockData(s,market)));
+
+  stocks.forEach(s=>{
+    const pure=num(s.pure_stock_score);
+    const event=num(s.event_stock_score);
+
+    if(pure<4) s.tag="排除";
+    else if(pure>=5 && event>=6) s.tag="可用";
+    else s.tag="觀察";
+  });
+
+  const clean = stocks.filter(s=>s.tag!=="排除");
+
+  // UI STOCK
+  document.getElementById("stock-table").innerHTML =
+    `<table class="table">
+    <tr><th>Stock</th><th>Pure</th><th>Snapshot</th><th>Event</th><th>Tag</th><th>Trend</th></tr>
+    ${stocks.map(s=>`
+      <tr>
+        <td>${s.symbol}</td>
+        <td>${num(s.pure_stock_score).toFixed(2)}</td>
+        <td>${num(s.snapshot_score).toFixed(2)}</td>
+        <td>${num(s.event_stock_score).toFixed(2)}</td>
+        <td class="${s.tag==="可用"?"good":s.tag==="觀察"?"warn":"bad"}">${s.tag}</td>
+        <td>${s.trend_label}</td>
+      </tr>
+    `).join("")}
+    </table>`;
+
+  // =========================
+  // M3.3 FCN
+  // =========================
+  const results=[];
+
+  function combine(arr,k){
+    let r=[];
+    function f(start,c){
+      if(c.length===k){r.push([...c]);return;}
+      for(let i=start;i<arr.length;i++){
+        c.push(arr[i]);f(i+1,c);c.pop();
+      }
+    }
+    f(0,[]);
+    return r;
+  }
+
+  for(const p of param){
+
+    if(!p.enabled) continue;
+
+    const combos = combine(clean,p.basket_size);
+
+    for(const c of combos.slice(0,50)){ // 控制數量
+
+      const basket=c.map(s=>s.symbol);
+
+      const fcn=evaluateFCN({
+        id:p.id,
+        basket,
+        ki:p.ki,
+        strike:p.strike,
+        yield:p.rate,
+        period:p.tenor,
+        eki:p.eki
+      },stocks);
+
+      if(fcn) results.push(fcn);
+    }
+  }
+
+  results.sort((a,b)=>num(b.event_fcn)-num(a.event_fcn));
+  const top=results.slice(0,15);
+
+  // UI FCN
+  const tbody=document.getElementById("fcn-body");
+  tbody.innerHTML="";
+
+  top.forEach(f=>{
+    const d=num(f.delta_fcn_pct);
+    tbody.innerHTML+=`
+    <tr>
+      <td>${f.basket}</td>
+      <td>${f.worst_of}</td>
+      <td>${f.pure_fcn.toFixed(2)}</td>
+      <td>${f.event_fcn.toFixed(2)}</td>
+      <td class="${d>=0?"good":"bad"}">${d.toFixed(1)}%</td>
+      <td>${f.suggestion}</td>
+    </tr>`;
+  });
+
+  // =========================
+  // M3.4 Conclusion
+  // =========================
+  const best=top[0];
+
+  document.getElementById("conclusion").innerHTML=`
+    今日最佳組合：<b>${best?.basket||"-"}</b><br>
+    Event FCN：${best?.event_fcn?.toFixed(2)||"-"}<br>
+    建議：${best?.suggestion||"-"}
+  `;
+
+  document.getElementById("status").innerText=
+    `完成｜Stock:${stocks.length} | Clean:${clean.length} | FCN:${results.length}`;
+};
+
+</script>
+
+</body>
+</html>
