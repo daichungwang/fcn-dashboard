@@ -1,0 +1,154 @@
+{
+  "說明": "M3 系統主參數表（股票篩選 + 模擬前置過濾 + FCN 模板情境 + 排名邏輯）",
+
+  "M3_股票篩選情境參數": {
+    "說明": "決定哪些股票可以進入 Clean Pool / Watch / Reject",
+
+    "reject_if_suggestion_avoid": false,
+
+    "clean_min_pure": 4,
+    "clean_min_event": 4,
+    "clean_min_delta": 0,
+    "clean_use_delta_gate": false,
+
+    "watch_min_pure": 2.5,
+    "watch_min_event": 2.5,
+    "watch_use_or_logic": true
+  },
+
+  "M3_模擬前置過濾參數": {
+    "說明": "先過濾股票，再進 FCN 模擬，避免組合爆炸",
+
+    "enable_pre_filter": true,
+    "pre_filter_min_pure": 4,
+    "exclude_if_suggestion_avoid": true,
+    "allowed_buckets_for_simulation": ["clean"]
+  },
+
+  "M3_FCN模板情境參數": {
+    "說明": "FCN 模擬使用的固定模板，不做笛卡兒積展開，直接用模板控制",
+
+    "templates": [
+      {
+        "id": "tpl_04",
+        "name": "正常組A",
+        "enabled": true,
+        "rate": 15,
+        "tenor": 9,
+        "ki": 55,
+        "strike": 70,
+        "eki": true,
+        "basket_size": 4,
+        "risk_tag": "normal"
+      },
+      {
+        "id": "tpl_06",
+        "name": "正常組C",
+        "enabled": true,
+        "rate": 18,
+        "tenor": 9,
+        "ki": 55,
+        "strike": 65,
+        "eki": true,
+        "basket_size": 3,
+        "risk_tag": "normal"
+      },
+      {
+        "id": "tpl_08",
+        "name": "正常組E",
+        "enabled": true,
+        "rate": 18,
+        "tenor": 6,
+        "ki": 55,
+        "strike": 70,
+        "eki": true,
+        "basket_size": 4,
+        "risk_tag": "normal"
+      },
+      {
+        "id": "tpl_10",
+        "name": "積極組A",
+        "enabled": true,
+        "rate": 22,
+        "tenor": 9,
+        "ki": 55,
+        "strike": 70,
+        "eki": true,
+        "basket_size": 5,
+        "risk_tag": "aggressive"
+      },
+      {
+        "id": "tpl_11",
+        "name": "積極組B",
+        "enabled": true,
+        "rate": 24,
+        "tenor": 9,
+        "ki": 55,
+        "strike": 70,
+        "eki": false,
+        "basket_size": 5,
+        "risk_tag": "aggressive"
+      },
+      {
+        "id": "tpl_14",
+        "name": "夢幻組A",
+        "enabled": true,
+        "rate": 17,
+        "tenor": 3,
+        "ki": 55,
+        "strike": 70,
+        "eki": true,
+        "basket_size": 3,
+        "risk_tag": "dream"
+      },
+      {
+        "id": "tpl_16",
+        "name": "夢幻組C",
+        "enabled": true,
+        "rate": 22,
+        "tenor": 9,
+        "ki": 55,
+        "strike": 70,
+        "eki": true,
+        "basket_size": 5,
+        "risk_tag": "dream"
+      },
+      {
+        "id": "tpl_18",
+        "name": "接股組A",
+        "enabled": true,
+        "rate": 30,
+        "tenor": 2,
+        "ki": 65,
+        "strike": 80,
+        "eki": true,
+        "basket_size": 3,
+        "risk_tag": "take_stock"
+      }
+    ]
+  },
+
+  "M3_排名評分參數": {
+    "說明": "FCN 評分後的分級標準",
+
+    "strong_buy_min_event_fcn": 12,
+    "buy_min_event_fcn": 9,
+    "watch_min_event_fcn": 6
+  },
+
+  "M3_模擬控制參數": {
+    "說明": "控制效能與輸出數量",
+
+    "max_combinations_per_template": 100,
+    "top_n_output": 30,
+    "cache_stock_limit": 50,
+    "cache_simulation_limit": 50
+  },
+
+  "系統參數": {
+    "說明": "系統層級控制",
+
+    "version": "M3_V2_TEMPLATE_MODE",
+    "enable_debug_log": false
+  }
+}
