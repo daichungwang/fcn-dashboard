@@ -1,1 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>M3｜FCN 評分</title>
 
+<style>
+body {
+  font-family: Arial, "Microsoft JhengHei", sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 20px;
+}
+
+.page {
+  max-width: 1100px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ddd;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  background: #111;
+  color: #fff;
+  padding: 10px;
+}
+
+.table td {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.green { color: #2e7d32; }
+.red { color: #c62828; }
+
+.empty {
+  text-align: center;
+  padding: 20px;
+  color: #999;
+}
+</style>
+</head>
+
+<body>
+<div class="page">
+
+<h1>📊 M3｜FCN 評分（穩定版）</h1>
+
+<div class="card">
+<table class="table" id="fcn-table">
+<thead>
+<tr>
+<th>Basket</th>
+<th>Worst</th>
+<th>Pure</th>
+<th>Event</th>
+<th>Delta</th>
+<th>建議</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+
+</div>
+
+<script>
+
+// --------------------------------
+// 安全工具
+// --------------------------------
+function toNumber(v, d = 0) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : d;
+}
+
+function safeText(v) {
+  return v ?? "-";
+}
+
+// --------------------------------
+// 主載入
+// --------------------------------
+async function loadData() {
+  let data = null;
+
+  try {
+    const res = await fetch("./data/fcn_results.json");
+    data = await res.json();
+  } catch (e) {
+    console.warn("⚠️ 無 fcn_results.json，使用 fallback");
+  }
+
+  const tbody = document.querySelector("#fcn-table tbody");
+  tbody.innerHTML = "";
+
+  const list = data?.fcn_list || [];
+
+  // 👉 fallback（避免畫面空）
+  if (!list.length) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" class="empty">
+          ⚠️ 尚無 FCN 資料（請先產生 fcn_results.json）
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  list.forEach(f => {
+    const pure = toNumber(f.pure_fcn);
+    const event = toNumber(f.event_fcn);
+
+    // 👉 自動算 delta（即使沒有給）
+    const delta = pure !== 0
+      ? ((event - pure) / Math.abs(pure)) * 100
+      : 0;
+
+    const deltaClass = delta >= 0 ? "green" : "red";
+
+    const row = `
+      <tr>
+        <td>${safeText(f.basket)}</td>
+        <td>${safeText(f.worst_of)}</td>
+        <td>${pure.toFixed(2)}</td>
+        <td>${event.toFixed(2)}</td>
+        <td class="${deltaClass}">
+          ${delta >= 0 ? "+" : ""}${delta.toFixed(1)}%
+        </td>
+        <td>${safeText(f.suggestion)}</td>
+      </tr>
+    `;
+
+    tbody.innerHTML += row;
+  });
+}
+
+loadData();
+
+</script>
+</body>
+</html>
