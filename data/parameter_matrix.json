@@ -4,14 +4,20 @@
   "M3_股票篩選情境參數": {
     "說明": "決定哪些股票可以進入 Clean Pool / Watch / Reject",
 
-    "reject_if_suggestion_avoid": false,
+    "M3_股票篩選情境參數": {
+  "說明": "決定哪些股票可以進入 Clean Pool / Watch / Reject",
 
-    "clean_min_pure": 4,
-    "clean_min_event": 4,
+  "reject_if_suggestion_avoid": false,
 
-    "watch_min_pure": 2.5,
-    "watch_min_event": 2.5
-  },
+  "clean_min_pure": 4,
+  "clean_min_event": 4,
+  "clean_min_delta": 0,
+  "clean_use_delta_gate": false,
+
+  "watch_min_pure": 2.5,
+  "watch_min_event": 2.5,
+  "watch_use_or_logic": true
+}
 
   "M3_FCN情境組合參數": {
     "說明": "FCN 模擬使用的結構參數（可隨市場調整）",
