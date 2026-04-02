@@ -2434,7 +2434,7 @@
     "status": "active",
     "created_time": "2025-03-26T09:00",
     "entry_time": "2025-03-26T09:00",
-    "exit_time": "2025-12-31T09:00",
+    "exit_time": null,
     "decision_flag": "manual",
     "is_portfolio": true,
     "note": "標的價格=VWAP",
