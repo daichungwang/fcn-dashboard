@@ -1,89 +1,592 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>M3｜FCN Decision</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M3｜FCN 評分完整版</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f6f8;
+      color: #111;
+    }
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 14px 50px;
+    }
+    h1 {
+      margin: 0 0 10px;
+      font-size: 32px;
+    }
+    h2 {
+      margin: 0 0 12px;
+      font-size: 24px;
+    }
+    h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+    .subtitle {
+      color: #555;
+      font-size: 15px;
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #111;
+      color: #fff;
+    }
+    button.secondary { background: #666; }
+    button.light {
+      background: #e9ecef;
+      color: #111;
+      border: 1px solid #d8dde6;
+    }
+    .muted { color: #666; }
+    .note {
+      font-size: 13px;
+      background: #fffbe6;
+      border: 1px solid #f1df9a;
+      border-radius: 10px;
+      padding: 10px 12px;
+      line-height: 1.6;
+      margin-top: 8px;
+    }
 
-<style>
-body {
-  font-family: Arial, "Microsoft JhengHei";
-  background: #f5f5f5;
-  margin: 0;
-  padding: 20px;
-}
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .summary-box {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+    }
+    .summary-label {
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .summary-value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+    .summary-sub {
+      margin-top: 4px;
+      color: #666;
+      font-size: 13px;
+    }
 
-.page {
-  max-width: 1100px;
-  margin: auto;
-}
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #fff;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      border-bottom: 1px solid #eee;
+      vertical-align: top;
+      white-space: nowrap;
+    }
+    th {
+      font-size: 13px;
+      color: #fff;
+      font-weight: 700;
+      background: #111;
+    }
+    .green { color: #2e7d32; }
+    .red { color: #c62828; }
+    .orange { color: #ef6c00; }
 
-.card {
-  background: #fff;
-  border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 16px;
-  border: 1px solid #ddd;
-}
+    .pill {
+      display: inline-block;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #ddd;
+      background: #fafafa;
+    }
+    .pill-do {
+      background: #ecfff1;
+      border-color: #a9e2b4;
+      color: #1b5e20;
+    }
+    .pill-watch {
+      background: #fff7e8;
+      border-color: #f0d298;
+      color: #8d5d00;
+    }
+    .pill-no {
+      background: #fff0f0;
+      border-color: #f1b5b5;
+      color: #b71c1c;
+    }
 
-h1 { font-size: 28px; }
-h2 { font-size: 20px; }
+    .item-card {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
+      background: #fafafa;
+    }
+    .item-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .item-line {
+      margin: 3px 0;
+      line-height: 1.6;
+      font-size: 14px;
+      white-space: normal;
+    }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
+    .detail-box {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #ddd;
+    }
+    .detail-box.show {
+      display: block;
+    }
 
-.table th {
-  background: #111;
-  color: #fff;
-  padding: 10px;
-}
+    .split-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 14px;
+    }
 
-.table td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-}
+    .empty {
+      text-align: center;
+      padding: 24px 10px;
+      color: #999;
+    }
 
-.green { color: #2e7d32; }
-.red { color: #c62828; }
-</style>
+    .error-card {
+      background: #fff5f5;
+      border: 1px solid #efb0b0;
+      border-radius: 12px;
+      padding: 14px;
+      color: #b71c1c;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 980px) {
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+      .split-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 680px) {
+      h1 { font-size: 26px; }
+      h2 { font-size: 20px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      button { width: 100%; }
+    }
+  </style>
 </head>
-
 <body>
-<div class="page">
+  <div class="page">
+    <h1>📊 M3｜FCN 評分完整版</h1>
+    <div class="subtitle">
+      直接讀取 <b>pool30.json</b>、<b>market_runtime.json</b>、<b>fcn_pool.json</b>，
+      經過 <b>stock_engine.js</b> 與 <b>fcn_engine.js</b> 重新計算。
+    </div>
 
-<h1>📊 M3｜FCN 承做決策</h1>
+    <div class="card">
+      <div class="toolbar">
+        <button id="runBtn">執行 M3 評分</button>
+        <button class="secondary" id="refreshBtn">刷新畫面</button>
+      </div>
+      <div id="runtimeMeta" class="muted">尚未執行 M3 評分</div>
+      <div class="note">
+        本頁會優先讀取 <b>data/fcn_pool.json</b>。若裡面沒有可評分資料，才會使用內建 fallback 測試組合。
+      </div>
+    </div>
 
-<div class="card">
-<button onclick="runM3()">▶ 執行 M3</button>
-<div id="status"></div>
-</div>
+    <div class="card">
+      <h2>1. 全貌 Summary</h2>
+      <div id="summaryBlock"></div>
+    </div>
 
-<div class="card">
-<h2>🧠 Clean Pool</h2>
-<div id="pool"></div>
-</div>
+    <div class="split-grid">
+      <div class="card">
+        <h2>2. FCN Ranking</h2>
+        <div id="fcnTableBlock"></div>
+      </div>
 
-<div class="card">
-<h2>💰 FCN Ranking</h2>
-<table class="table">
-<thead>
-<tr>
-<th>Basket</th>
-<th>Worst</th>
-<th>Pure</th>
-<th>Event</th>
-<th>Delta</th>
-<th>建議</th>
-</tr>
-</thead>
-<tbody id="fcn-table"></tbody>
-</table>
-</div>
+      <div class="card">
+        <h2>3. Top Stock Ranking</h2>
+        <div id="stockRankingBlock"></div>
+      </div>
+    </div>
 
-</div>
+    <div class="card">
+      <h2>4. FCN 詳細卡</h2>
+      <div id="fcnDetailBlock"></div>
+    </div>
+  </div>
 
-<script type="module" src="./js/m3.js"></script>
+  <script type="module">
+    import { evaluateStockUniverse } from "./js/core/stock_engine.js";
+    import { evaluateFCN } from "./js/core/fcn_engine.js";
+
+    const M3_CACHE_KEY = "m3_full_cache_v1";
+    const expandedIds = new Set();
+
+    function toNumber(v, d = 0) {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : d;
+    }
+
+    function fmt(v, digits = 2) {
+      return toNumber(v, 0).toFixed(digits);
+    }
+
+    function safeText(v, fallback = "-") {
+      if (v === null || v === undefined || v === "") return fallback;
+      return String(v);
+    }
+
+    function suggestionClass(text = "") {
+      const t = String(text);
+      if (t.includes("強烈建議") || t.includes("可做")) return "pill pill-do";
+      if (t.includes("觀察")) return "pill pill-watch";
+      return "pill pill-no";
+    }
+
+    function deltaClass(v) {
+      return toNumber(v, 0) >= 0 ? "green" : "red";
+    }
+
+    function readCache() {
+      try {
+        const raw = localStorage.getItem(M3_CACHE_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch {
+        return null;
+      }
+    }
+
+    function writeCache(data) {
+      localStorage.setItem(M3_CACHE_KEY, JSON.stringify(data));
+    }
+
+    async function loadJSON(path) {
+      const res = await fetch(path);
+      if (!res.ok) throw new Error(`${path} 載入失敗：${res.status}`);
+      return await res.json();
+    }
+
+    function normalizeFCN(raw = {}) {
+      const basket = Array.isArray(raw.basket)
+        ? raw.basket
+        : String(raw.basket || "")
+            .split(/[\/,]/)
+            .map(x => x.trim())
+            .filter(Boolean);
+
+      return {
+        id: raw.id || raw.fcn_id || raw.code || `FCN_${Math.random().toString(36).slice(2, 8)}`,
+        bank: raw.bank || raw.issuer || "",
+        basket,
+        ki: toNumber(raw.ki, raw.ki_pct),
+        strike: toNumber(raw.strike, raw.strike_pct),
+        yield: toNumber(raw.yield, raw.rate),
+        period: toNumber(raw.period, raw.tenor),
+        eki: !!raw.eki
+      };
+    }
+
+    function buildFallbackFCNs() {
+      return [
+        {
+          id: "FCN_TEST_001",
+          basket: ["NVDA", "TSM", "AVGO", "AMAT"],
+          ki: 60,
+          strike: 65,
+          yield: 16,
+          period: 6,
+          eki: false
+        },
+        {
+          id: "FCN_TEST_002",
+          basket: ["MSFT", "GOOGL", "AMZN", "ORCL"],
+          ki: 65,
+          strike: 70,
+          yield: 14,
+          period: 6,
+          eki: false
+        },
+        {
+          id: "FCN_TEST_003",
+          basket: ["AAL", "CCL", "LVS", "BAC"],
+          ki: 55,
+          strike: 65,
+          yield: 20,
+          period: 9,
+          eki: false
+        }
+      ];
+    }
+
+    function normalizeFCNPool(rawPool = []) {
+      const filtered = (rawPool || [])
+        .map(normalizeFCN)
+        .filter(f =>
+          Array.isArray(f.basket) &&
+          f.basket.length >= 2 &&
+          f.yield > 0 &&
+          f.period > 0 &&
+          f.strike > 0
+        );
+
+      return filtered.length ? filtered : buildFallbackFCNs();
+    }
+
+    function buildSummary(data) {
+      const list = data.fcnResults || [];
+      const doCount = list.filter(x => String(x.suggestion).includes("可做") || String(x.suggestion).includes("強烈建議")).length;
+      const watchCount = list.filter(x => String(x.suggestion).includes("觀察")).length;
+      const noCount = list.length - doCount - watchCount;
+      const best = list[0];
+
+      return `
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="summary-label">FCN 總數</div>
+            <div class="summary-value">${list.length}</div>
+            <div class="summary-sub">本次實際評分組數</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">可做 / 強烈建議</div>
+            <div class="summary-value">${doCount}</div>
+            <div class="summary-sub">進場候選</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">觀察</div>
+            <div class="summary-value">${watchCount}</div>
+            <div class="summary-sub">條件不差，但未明顯便宜</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">避免 / 不做</div>
+            <div class="summary-value">${noCount}</div>
+            <div class="summary-sub">結構或 Worst-of 不適合</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function buildFCNTable(data) {
+      const list = data.fcnResults || [];
+      if (!list.length) return `<div class="empty">尚無可評分 FCN</div>`;
+
+      return `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>ID</th>
+                <th>Basket</th>
+                <th>Worst-of</th>
+                <th>Pure FCN</th>
+                <th>Event FCN</th>
+                <th>Delta</th>
+                <th>建議</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${list.map((f, idx) => `
+                <tr>
+                  <td>${idx + 1}</td>
+                  <td>${safeText(f.id)}</td>
+                  <td>${safeText(f.basket)}</td>
+                  <td>${safeText(f.worst_of)}</td>
+                  <td>${fmt(f.pure_fcn)}</td>
+                  <td>${fmt(f.event_fcn)}</td>
+                  <td class="${deltaClass(f.delta_fcn_pct)}">${toNumber(f.delta_fcn_pct) >= 0 ? "+" : ""}${fmt(f.delta_fcn_pct, 1)}%</td>
+                  <td><span class="${suggestionClass(f.suggestion)}">${safeText(f.suggestion)}</span></td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function buildStockRanking(data) {
+      const stocks = (data.stockResults || []).slice(0, 12);
+      if (!stocks.length) return `<div class="empty">尚無股票資料</div>`;
+
+      return `
+        ${stocks.map((s, idx) => `
+          <div class="item-card">
+            <div class="item-title">#${idx + 1} ${safeText(s.symbol)}</div>
+            <div class="item-line">分類：${safeText(s.category)} ｜ Trend：${safeText(s.trend_label)}</div>
+            <div class="item-line">Pure Stock：${fmt(s.pure_stock_score)} ｜ Snapshot：${fmt(s.snapshot_score)} ｜ Event Stock：${fmt(s.event_stock_score)}</div>
+            <div class="item-line">1D：${fmt(s.ret_1d * 100)}% ｜ 1W：${fmt(s.ret_1w * 100)}% ｜ 1M：${fmt(s.ret_1m * 100)}%</div>
+            <div class="item-line">Reason：${safeText(s.snapshot_reason)}</div>
+            <div class="item-line">Suggestion：${safeText(s.suggestion)}</div>
+          </div>
+        `).join("")}
+      `;
+    }
+
+    function buildFCNDetailCard(f, idx) {
+      const detailId = `fcn_detail_${idx}_${f.id}`;
+      const isOpen = expandedIds.has(detailId);
+
+      return `
+        <div class="item-card">
+          <div class="item-title">${safeText(f.id)} ${f.bank ? `｜ ${f.bank}` : ""}</div>
+          <div class="item-line">Basket：${safeText(f.basket)}</div>
+          <div class="item-line">條件：KI ${safeText(f.ki)} / Strike ${safeText(f.strike)} / Yield ${safeText(f.yield)}% / ${safeText(f.period)}M / EKI：${f.eki ? "YES" : "NO"}</div>
+          <div class="item-line">Worst-of：<b>${safeText(f.worst_of)}</b></div>
+          <div class="item-line">Pure FCN：${fmt(f.pure_fcn)} ｜ Event FCN：${fmt(f.event_fcn)} ｜ Delta：<span class="${deltaClass(f.delta_fcn_pct)}">${toNumber(f.delta_fcn_pct) >= 0 ? "+" : ""}${fmt(f.delta_fcn_pct, 1)}%</span></div>
+          <div class="item-line">Avg Pure Stock：${fmt(f.avgPureStock)} ｜ Avg Event Stock：${fmt(f.avgEventStock)} ｜ SRI：${fmt(f.sri)} ｜ P-risk：${fmt(f.priskScore)}</div>
+          <div class="item-line">建議：<span class="${suggestionClass(f.suggestion)}">${safeText(f.suggestion)}</span></div>
+          <div class="item-line">理由：${safeText(f.reason)}</div>
+
+          <button class="light" onclick="window.toggleM3Detail('${detailId}')">
+            ${isOpen ? "收合明細" : "展開明細"}
+          </button>
+
+          <div class="detail-box ${isOpen ? "show" : ""}">
+            <div class="item-line"><b>R1（Worst-of）</b>：${safeText(f.r1?.symbol)} ｜ ${safeText(f.r1?.trend_label)}<br>${safeText(f.r1?.trend_note)}</div>
+            <div class="item-line"><b>R2（最佳機會）</b>：${safeText(f.r2?.symbol)} ｜ ${safeText(f.r2?.trend_label)}<br>${safeText(f.r2?.trend_note)}</div>
+            <div class="item-line"><b>R3（整體氣氛）</b>：${safeText(f.r3?.symbol)} ｜ ${safeText(f.r3?.trend_label)}<br>${safeText(f.r3?.trend_note)}</div>
+
+            <div class="item-line" style="margin-top:8px;"><b>成分股明細</b></div>
+            ${(f.components || []).map(c => `
+              <div class="item-card" style="margin-top:8px;">
+                <div class="item-line"><b>${safeText(c.symbol)}</b></div>
+                <div class="item-line">Pure：${fmt(c.pure_stock_score)} ｜ Snapshot：${fmt(c.snapshot_score)} ｜ Event：${fmt(c.event_stock_score)}</div>
+                <div class="item-line">Snapshot Reason：${safeText(c.snapshot_reason)}</div>
+                <div class="item-line">Trend：${safeText(c.trend_label)} ｜ ${safeText(c.trend_note)}</div>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function buildFCNDetailBlock(data) {
+      const list = data.fcnResults || [];
+      if (!list.length) return `<div class="empty">尚無詳細資料</div>`;
+      return list.map((f, idx) => buildFCNDetailCard(f, idx)).join("");
+    }
+
+    function renderM3() {
+      const cache = readCache();
+
+      if (!cache) {
+        document.getElementById("runtimeMeta").innerHTML = "尚未找到 M3 cache，請先按「執行 M3 評分」";
+        document.getElementById("summaryBlock").innerHTML = `<div class="empty">尚無資料</div>`;
+        document.getElementById("fcnTableBlock").innerHTML = `<div class="empty">尚無資料</div>`;
+        document.getElementById("stockRankingBlock").innerHTML = `<div class="empty">尚無資料</div>`;
+        document.getElementById("fcnDetailBlock").innerHTML = `<div class="empty">尚無資料</div>`;
+        return;
+      }
+
+      document.getElementById("runtimeMeta").innerHTML =
+        `最新 M3 執行時間：<b>${safeText(cache.generated_at)}</b> ｜ 股票數：<b>${cache.stockResults.length}</b> ｜ FCN數：<b>${cache.fcnResults.length}</b>`;
+
+      document.getElementById("summaryBlock").innerHTML = buildSummary(cache);
+      document.getElementById("fcnTableBlock").innerHTML = buildFCNTable(cache);
+      document.getElementById("stockRankingBlock").innerHTML = buildStockRanking(cache);
+      document.getElementById("fcnDetailBlock").innerHTML = buildFCNDetailBlock(cache);
+    }
+
+    window.toggleM3Detail = function(id) {
+      if (expandedIds.has(id)) expandedIds.delete(id);
+      else expandedIds.add(id);
+      renderM3();
+    };
+
+    async function runM3() {
+      try {
+        const [pool30, marketRuntime, rawFCNPool] = await Promise.all([
+          loadJSON("./data/pool30.json"),
+          loadJSON("./data/market_runtime.json"),
+          loadJSON("./data/fcn_pool.json").catch(() => [])
+        ]);
+
+        const stockResults = evaluateStockUniverse(pool30 || [], marketRuntime || {})
+          .sort((a, b) => toNumber(b.event_stock_score, 0) - toNumber(a.event_stock_score, 0));
+
+        const fcnPool = normalizeFCNPool(rawFCNPool || []);
+
+        const fcnResults = fcnPool
+          .map(f => evaluateFCN(f, stockResults))
+          .filter(Boolean)
+          .map(r => ({
+            ...r,
+            basket: Array.isArray(r.basket_symbols) ? r.basket_symbols.join(" / ") : safeText(r.basket),
+            avgPureStock: toNumber(r.avgPureStock ?? r.avg_pure_stock, 0),
+            avgEventStock: toNumber(r.avgEventStock ?? r.avg_event_stock, 0),
+            priskScore: toNumber(r.priskScore ?? r.prisk_score, 0),
+            delta_fcn_pct: toNumber(r.delta_fcn_pct, 0)
+          }))
+          .sort((a, b) => toNumber(b.event_fcn, -999) - toNumber(a.event_fcn, -999));
+
+        const cache = {
+          generated_at: new Date().toISOString(),
+          stockResults,
+          fcnResults
+        };
+
+        writeCache(cache);
+        renderM3();
+        alert("M3 評分執行成功");
+      } catch (err) {
+        console.error("M3 run error", err);
+        document.getElementById("summaryBlock").innerHTML = `
+          <div class="error-card">
+            M3 執行失敗：${safeText(err.message)}
+          </div>
+        `;
+        document.getElementById("fcnTableBlock").innerHTML = `<div class="empty">執行失敗</div>`;
+        document.getElementById("stockRankingBlock").innerHTML = `<div class="empty">執行失敗</div>`;
+        document.getElementById("fcnDetailBlock").innerHTML = `<div class="empty">執行失敗</div>`;
+      }
+    }
+
+    document.getElementById("runBtn").addEventListener("click", runM3);
+    document.getElementById("refreshBtn").addEventListener("click", renderM3);
+
+    renderM3();
+  </script>
 </body>
 </html>
