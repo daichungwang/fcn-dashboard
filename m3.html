@@ -367,13 +367,29 @@
     }
 
     function readCache() {
-     
-        return null;
-     }
+  try {
+    const raw = localStorage.getItem(M3_CACHE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
 
     function writeCache(data) {
-      return;
-    }
+  const lite = {
+    generated_at: data.generated_at,
+    stockResults: (data.stockResults || []).slice(0, 50),
+    selection: data.selection || {
+      reviewed: [],
+      clean_pool: [],
+      watch_list: [],
+      reject_list: []
+    },
+    simulationResults: (data.simulationResults || []).slice(0, 50)
+  };
+
+  localStorage.setItem(M3_CACHE_KEY, JSON.stringify(lite));
+}
 
     async function loadJSON(path) {
       const res = await fetch(path);
