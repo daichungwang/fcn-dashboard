@@ -367,13 +367,9 @@
     }
 
     function readCache() {
-      try {
-        const raw = localStorage.getItem(M3_CACHE_KEY);
-        return raw ? JSON.parse(raw) : null;
-      } catch {
+     
         return null;
-      }
-    }
+     }
 
     function writeCache(data) {
       return;
