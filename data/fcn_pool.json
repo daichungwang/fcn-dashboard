@@ -1109,7 +1109,7 @@
     "autocall": 100,
     "strike": 70.0,
     "ki": 60.0,
-    "eki": false,
+    "eki": true,
     "bank": "西班牙對外銀行",
     "has_position": true,
     "amt": 100000.0,
