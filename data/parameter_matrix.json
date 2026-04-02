@@ -2,4 +2,67 @@
   "說明": "M3 系統主參數表（股票篩選 + FCN 模擬 + 排名邏輯）",
 
   "M3_股票篩選情境參數": 
-  
+  {
+  "說明": "M3 系統主參數表（股票篩選 + FCN 模擬 + 排名邏輯）",
+
+  "M3_股票篩選情境參數": {
+    "說明": "決定哪些股票可以進入 Clean Pool / Watch / Reject",
+
+    "reject_if_suggestion_avoid": false,
+
+    "clean_min_pure": 4,
+    "clean_min_event": 4,
+    "clean_min_delta": 0,
+    "clean_use_delta_gate": false,
+
+    "watch_min_pure": 2.5,
+    "watch_min_event": 2.5,
+    "watch_use_or_logic": true
+  },
+
+  "M3_FCN情境組合參數": {
+    "說明": "FCN 模擬使用的結構參數（可隨市場調整）",
+
+    "scenarios": [
+      {
+        "名稱": "核心收益型",
+        "說明": "主力策略，穩定收息",
+        "basket_size": [3, 4],
+        "ki": [55, 60],
+        "strike": [65, 70],
+        "tenor": [6],
+        "rate": [14, 16, 18],
+        "eki": [false]
+      },
+      {
+        "名稱": "高收益型",
+        "說明": "提高利率，承擔較高波動",
+        "basket_size": [4, 5],
+        "ki": [50, 55],
+        "strike": [60, 65],
+        "tenor": [6, 9],
+        "rate": [18, 20, 22],
+        "eki": [false]
+      }
+    ]
+  },
+
+  "M3_排名評分參數": {
+    "說明": "FCN 評分後的分級標準",
+    "strong_buy_min_event_fcn": 12,
+    "buy_min_event_fcn": 9,
+    "watch_min_event_fcn": 6
+  },
+
+  "M3_模擬控制參數": {
+    "說明": "控制效能與輸出數量",
+    "max_combinations": 200,
+    "top_n_output": 30
+  },
+
+  "系統參數": {
+    "說明": "系統層級控制",
+    "version": "M3_V1",
+    "enable_debug_log": false
+  }
+}
