@@ -223,6 +223,22 @@
       flex-wrap: wrap;
       margin-bottom: 10px;
     }
+    .blueprint-wrap {
+      display: none;
+    }
+    .blueprint-wrap.open {
+      display: block;
+    }
+    .blueprint-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 16px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
 
     @media (max-width: 980px) {
       .grid-2, .grid-4, .form-grid {
@@ -273,7 +289,7 @@
             <div class="form-group full">
               <label for="basket">Basket</label>
               <input id="basket" type="text" placeholder="例：NVDA,TSM,AMAT,CCL" />
-              <div class="helper">先輸入股票代號，按「建立股票區塊」後會對接 fcn_pool / market_runtime / runtime_cache_v1 / stock_engine.js</div>
+              <div class="helper">股票基礎資料用 pool30.json；價格/區間變化用 stock_runtime.json；股票評分用 stock_engine.js；FCN 總評分用頁面內建 FCN 公式。</div>
             </div>
 
             <div class="form-group">
@@ -304,6 +320,7 @@
             <button class="btn btn-primary" type="button" onclick="runM4Scoring()">執行評分</button>
             <button class="btn btn-secondary" type="button" onclick="saveDeal()">儲存紀錄</button>
             <button class="btn btn-secondary" type="button" onclick="resetForm()">清空表單</button>
+            <button class="btn btn-secondary" type="button" onclick="toggleBlueprint()">Blueprint 展開 / 收合</button>
           </div>
         </div>
 
@@ -340,7 +357,7 @@
             </div>
 
             <div class="form-group">
-              <label for="deltaFcnScore">Delta FCN Score</label>
+              <label for="deltaFcnScore">Delta FCN (%)</label>
               <input id="deltaFcnScore" type="number" placeholder="現在划算嗎" />
             </div>
             <div class="form-group">
@@ -395,6 +412,30 @@
                   <td><input id="l2GapScore" type="number" placeholder="Gap 分數" /></td>
                   <td><input id="l2GapComment" type="text" placeholder="Gap 說明" /></td>
                 </tr>
+                <tr>
+                  <td>Avg Pure Stock</td>
+                  <td><input id="l2AvgPureStockValue" type="number" placeholder="Avg Pure Stock" /></td>
+                  <td><input id="l2AvgPureStockScore" type="number" placeholder="Avg Pure Stock 分數" /></td>
+                  <td><input id="l2AvgPureStockComment" type="text" placeholder="Avg Pure Stock 說明" /></td>
+                </tr>
+                <tr>
+                  <td>Avg Event Stock</td>
+                  <td><input id="l2AvgEventStockValue" type="number" placeholder="Avg Event Stock" /></td>
+                  <td><input id="l2AvgEventStockScore" type="number" placeholder="Avg Event Stock 分數" /></td>
+                  <td><input id="l2AvgEventStockComment" type="text" placeholder="Avg Event Stock 說明" /></td>
+                </tr>
+                <tr>
+                  <td>SRI</td>
+                  <td><input id="l2SRIValue" type="number" placeholder="SRI" /></td>
+                  <td><input id="l2SRIScore" type="number" placeholder="SRI 分數" /></td>
+                  <td><input id="l2SRIComment" type="text" placeholder="SRI 說明" /></td>
+                </tr>
+                <tr>
+                  <td>Worst-of</td>
+                  <td><input id="l2WorstOfValue" type="text" placeholder="Worst-of" /></td>
+                  <td><input id="l2WorstOfScore" type="number" placeholder="Worst-of 分數" /></td>
+                  <td><input id="l2WorstOfComment" type="text" placeholder="Worst-of 說明" /></td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -446,6 +487,139 @@
 
           <div id="previewArea" class="result-block" style="display:none;"></div>
         </div>
+
+        <div class="card blueprint-wrap" id="blueprintWrap">
+          <div class="section-title">
+            <h2>📘 M4 Blueprint</h2>
+            <button class="btn btn-secondary" type="button" onclick="toggleBlueprint()">收合 / 展開</button>
+          </div>
+          <div class="blueprint-box">
+【資料來源】
+1. 股票基礎資料：data/pool30.json
+   - symbol / name / sector / subsector / category
+   - 這是股票的基礎分類資料
+
+2. 股票價格 / 報酬：data/stock_runtime.json
+   - price_now
+   - ret_1d / ret_1w / ret_1m / ret_6m / ret_12m
+
+3. 股票評分：js/core/stock_engine.js
+4. FCN 評分：本頁內建公式（依今天確認版本）
+5. localStorage.runtime_cache_v1
+   - 若有同股票資料，優先覆蓋最新值
+
+────────────────────────
+
+【股票層公式】
+Pure Stock Score
+= Baseline Score + Vol Score
+
+中期波動
+= 0.1×|1M| + 0.3×|6M| + 0.6×|12M|
+
+短期波動 / Snapshot Momentum
+= 0.6×1D + 0.3×1W + 0.1×1M
+
+Event Stock Score
+= Baseline Score + Vol Score + Snapshot Score + (0 × Event Score)
+= Pure Stock Score + Snapshot Score
+
+註：
+目前 M1 的 news / event 尚未正式納入，
+所以 Event / News Score 先顯示但不進總分。
+
+────────────────────────
+
+【Worst-of / Worst group】
+2–3檔 → 最差1檔
+4檔   → 最差2檔
+5檔   → 最差3檔
+
+────────────────────────
+
+【SRI（結構風險）】
+SRI
+= 0.6 × Worst-of penalty
++ 0.4 × ASSY penalty
+
+Category penalty：
+core       → worst 3 / assy 2
+defensive  → worst 2 / assy 1
+growth     → worst 2 / assy 0
+income     → worst 1 / assy 0
+speculative→ worst -2 / assy -2
+
+────────────────────────
+
+【Rate Score】
+<10    → -999
+10–12  → -4
+12–15  → -2
+15–16  → 0
+16–18  → 3
+18–20  → 5
+20–24  → 8
+>=24   → 10
+
+【Period Score】
+<=3    → 5
+<=6    → 2
+<=9    → -2
+<=12   → -5
+>12    → -999
+
+【P-Risk（Gap = Strike - KI）】
+gap = 0   → 5
+gap < 10  → -7
+gap = 10  → 5
+gap <= 13 → 4
+gap <= 15 → 3
+gap <= 18 → 0
+gap <= 20 → -4
+gap <= 22 → -5
+gap < 25  → -8
+其餘      → -999
+
+【EKI Bonus】
+EKI = 2
+非 EKI = 0
+
+────────────────────────
+
+【FCN 層公式】
+Avg Pure Stock
+= 所有股票 pure_stock_score 平均
+
+Avg Event Stock
+= 所有股票 event_stock_score 平均
+
+Pure FCN
+= 0.4 * Avg Pure Stock
++ 0.2 * Rate Score
++ 0.1 * Period Score
++ 0.1 * P-Risk Score
++ 0.1 * SRI
++ EKI Bonus
+
+Event FCN
+= 0.4 * Avg Event Stock
++ 0.2 * Rate Score
++ 0.1 * Period Score
++ 0.1 * P-Risk Score
++ 0.1 * SRI
++ EKI Bonus
+
+Delta FCN %
+= ((Event FCN - Pure FCN) / |Pure FCN|) * 100
+
+Delta Label
+>100   → 非常甜
+>50    → 偏甜
+>=-20  → 合理
+>=-50  → 偏貴
+其餘   → 很貴
+          </div>
+        </div>
       </div>
 
       <div>
@@ -466,20 +640,22 @@
         <div class="card">
           <h2>這一版重點</h2>
           <div class="muted">
-            1. 對齊 M2 資料來源<br>
-            2. 已接上 stock_engine.js V6<br>
-            3. 股票價格與變化優先讀取 market_runtime / runtime_cache<br>
-            4. Pure / Snapshot / Event 分數自動帶入
+            1. 保留你原本 M4 版型與欄位<br>
+            2. pool30.json 是股票基礎資料<br>
+            3. stock_runtime.json 是價格 / 區間報酬<br>
+            4. 股票分數由 stock_engine.js 產生<br>
+            5. FCN 公式直接寫進 M4<br>
+            6. Blueprint 可一鍵展開 / 收合
           </div>
         </div>
 
         <div class="card">
           <h2>資料來源</h2>
           <div class="muted">
-            • data/fcn_pool.json<br>
-            • data/market_runtime.json<br>
-            • localStorage.runtime_cache_v1<br>
-            • js/core/stock_engine.js
+            • data/pool30.json（股票基礎資料）<br>
+            • data/stock_runtime.json（價格 / 區間報酬）<br>
+            • js/core/stock_engine.js（股票評分）<br>
+            • localStorage.runtime_cache_v1（若存在則覆蓋）
           </div>
         </div>
       </div>
@@ -502,78 +678,52 @@
   <script type="module">
     import { evaluateStock } from "./js/core/stock_engine.js";
 
-    const STORAGE_KEY = "fcn_m4_records_v5";
+    const STORAGE_KEY = "fcn_m4_records_v7";
 
-    let FCN_POOL_DATA = [];
-    let FCN_POOL_MAP = {};
-
-    let MARKET_RUNTIME_DATA = {};
-    let MARKET_RUNTIME_MAP = {};
-
+    let POOL30_DATA = [];
+    let POOL30_MAP = {};
+    let STOCK_RUNTIME_DATA = {};
+    let STOCK_RUNTIME_MAP = {};
     let RUNTIME_CACHE = {};
     let RUNTIME_STOCKS_MAP = {};
 
-    async function loadFcnPool() {
-      try {
-        const res = await fetch("./data/fcn_pool.json");
-        if (!res.ok) throw new Error("fcn_pool.json not found");
-        const data = await res.json();
+    let LAST_STOCK_RESULTS = [];
+    let LAST_FCN_RESULT = null;
 
-        if (Array.isArray(data)) {
-          FCN_POOL_DATA = data;
-        } else if (Array.isArray(data.pool)) {
-          FCN_POOL_DATA = data.pool;
-        } else if (Array.isArray(data.items)) {
-          FCN_POOL_DATA = data.items;
-        } else {
-          FCN_POOL_DATA = [];
-        }
-
-        FCN_POOL_MAP = {};
-        FCN_POOL_DATA.forEach(item => {
-          const symbol = (item.symbol || item.ticker || item.stock || "").toString().trim().toUpperCase();
-          if (symbol) FCN_POOL_MAP[symbol] = item;
-        });
-      } catch (err) {
-        console.warn("⚠️ FCN Pool load failed", err);
-        FCN_POOL_DATA = [];
-        FCN_POOL_MAP = {};
-      }
+    function toNumber(v, fallback = 0) {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : fallback;
     }
 
-    async function loadMarketRuntime() {
-      try {
-        const res = await fetch("./data/market_runtime.json");
-        if (!res.ok) throw new Error("market_runtime.json not found");
-        const data = await res.json();
-
-        MARKET_RUNTIME_DATA = data || {};
-        MARKET_RUNTIME_MAP = {};
-
-        Object.keys(MARKET_RUNTIME_DATA || {}).forEach(sym => {
-          MARKET_RUNTIME_MAP[sym.toUpperCase()] = MARKET_RUNTIME_DATA[sym];
-        });
-      } catch (err) {
-        console.warn("⚠️ market_runtime load failed", err);
-        MARKET_RUNTIME_DATA = {};
-        MARKET_RUNTIME_MAP = {};
-      }
+    function round(v, digits = 2) {
+      return Number(toNumber(v, 0).toFixed(digits));
     }
 
-    function loadRuntimeCache() {
-      try {
-        RUNTIME_CACHE = JSON.parse(localStorage.getItem("runtime_cache_v1")) || {};
-        RUNTIME_STOCKS_MAP = (RUNTIME_CACHE && RUNTIME_CACHE.stocks) ? RUNTIME_CACHE.stocks : {};
-        const normalized = {};
-        Object.keys(RUNTIME_STOCKS_MAP || {}).forEach(sym => {
-          normalized[sym.toUpperCase()] = RUNTIME_STOCKS_MAP[sym];
-        });
-        RUNTIME_STOCKS_MAP = normalized;
-      } catch (err) {
-        console.warn("⚠️ runtime_cache_v1 load failed", err);
-        RUNTIME_CACHE = {};
-        RUNTIME_STOCKS_MAP = {};
-      }
+    function safeText(v) {
+      if (v === null || v === undefined) return "";
+      return String(v);
+    }
+
+    function normalizeBasket(input) {
+      return input.split(",").map(v => v.trim().toUpperCase()).filter(Boolean);
+    }
+
+    function getValue(id) {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : "";
+    }
+
+    function getNumber(id) {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const n = Number(el.value);
+      return Number.isFinite(n) && el.value !== "" ? n : null;
+    }
+
+    function setValue(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.value = value ?? "";
     }
 
     function pickField(obj, keys, fallback = "") {
@@ -585,12 +735,65 @@
       return fallback;
     }
 
-    function getPoolStock(symbol) {
-      return FCN_POOL_MAP[symbol.toUpperCase()] || null;
+    async function loadPool30() {
+      try {
+        const res = await fetch("./data/pool30.json");
+        if (!res.ok) throw new Error("pool30.json not found");
+        const data = await res.json();
+
+        POOL30_DATA = Array.isArray(data) ? data : [];
+        POOL30_MAP = {};
+        POOL30_DATA.forEach(item => {
+          const symbol = (item.symbol || "").toString().trim().toUpperCase();
+          if (symbol) POOL30_MAP[symbol] = item;
+        });
+      } catch (err) {
+        console.warn("⚠️ pool30 load failed", err);
+        POOL30_DATA = [];
+        POOL30_MAP = {};
+      }
     }
 
-    function getMarketStock(symbol) {
-      return MARKET_RUNTIME_MAP[symbol.toUpperCase()] || null;
+    async function loadStockRuntime() {
+      try {
+        const res = await fetch("./data/stock_runtime.json");
+        if (!res.ok) throw new Error("stock_runtime.json not found");
+        const data = await res.json();
+
+        STOCK_RUNTIME_DATA = data || {};
+        STOCK_RUNTIME_MAP = {};
+        Object.keys(STOCK_RUNTIME_DATA || {}).forEach(sym => {
+          STOCK_RUNTIME_MAP[sym.toUpperCase()] = STOCK_RUNTIME_DATA[sym];
+        });
+      } catch (err) {
+        console.warn("⚠️ stock_runtime load failed", err);
+        STOCK_RUNTIME_DATA = {};
+        STOCK_RUNTIME_MAP = {};
+      }
+    }
+
+    function loadRuntimeCache() {
+      try {
+        RUNTIME_CACHE = JSON.parse(localStorage.getItem("runtime_cache_v1")) || {};
+        const rawStocks = (RUNTIME_CACHE && RUNTIME_CACHE.stocks) ? RUNTIME_CACHE.stocks : {};
+        const normalized = {};
+        Object.keys(rawStocks || {}).forEach(sym => {
+          normalized[sym.toUpperCase()] = rawStocks[sym];
+        });
+        RUNTIME_STOCKS_MAP = normalized;
+      } catch (err) {
+        console.warn("⚠️ runtime_cache_v1 load failed", err);
+        RUNTIME_CACHE = {};
+        RUNTIME_STOCKS_MAP = {};
+      }
+    }
+
+    function getPoolStock(symbol) {
+      return POOL30_MAP[symbol.toUpperCase()] || null;
+    }
+
+    function getRuntimeStock(symbol) {
+      return STOCK_RUNTIME_MAP[symbol.toUpperCase()] || null;
     }
 
     function getRuntimeCacheStock(symbol) {
@@ -599,42 +802,225 @@
 
     function getMergedStock(symbol) {
       const pool = getPoolStock(symbol) || {};
-      const market = getMarketStock(symbol) || {};
+      const runtime = getRuntimeStock(symbol) || {};
       const cache = getRuntimeCacheStock(symbol) || {};
 
       return {
         ...pool,
-        ...market,
+        ...runtime,
         ...cache,
         symbol: symbol.toUpperCase()
       };
     }
 
-    function safeText(v) {
-      if (v === null || v === undefined) return "";
-      return String(v);
-    }
-
-    function fmtPctFromDecimal(v) {
+    function formatPctFromDecimal(v) {
       const n = Number(v);
       if (!Number.isFinite(n)) return "";
       return (n * 100).toFixed(2) + "%";
     }
 
-    function getDeals() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      } catch (e) {
-        return [];
+    // ===== FCN 公式（今天確認版） =====
+    function getWorstGroup(stocks = []) {
+      const sorted = [...stocks].sort((a, b) => toNumber(a.pure_stock_score, 0) - toNumber(b.pure_stock_score, 0));
+      const n = sorted.length;
+      if (n <= 3) return sorted.slice(0, 1);
+      if (n === 4) return sorted.slice(0, 2);
+      if (n >= 5) return sorted.slice(0, 3);
+      return sorted.slice(0, 1);
+    }
+
+    function getWorstStock(stocks = []) {
+      const worst = getWorstGroup(stocks);
+      return worst[0] || null;
+    }
+
+    function getCategoryPenalty(category) {
+      switch ((category || "").toLowerCase()) {
+        case "core":
+          return { worst: 3, assy: 2 };
+        case "defensive":
+          return { worst: 2, assy: 1 };
+        case "growth":
+          return { worst: 2, assy: 0 };
+        case "income":
+          return { worst: 1, assy: 0 };
+        case "speculative":
+          return { worst: -2, assy: -2 };
+        default:
+          return { worst: 0, assy: 0 };
       }
     }
 
-    function saveDeals(data) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    function calcSRI(stocks = []) {
+      if (!stocks.length) return 0;
+
+      const worstGroup = getWorstGroup(stocks);
+
+      const worstPenalty =
+        worstGroup.reduce((sum, s) => sum + getCategoryPenalty(s.category).worst, 0) / worstGroup.length;
+
+      const assyPenalty =
+        stocks.reduce((sum, s) => sum + getCategoryPenalty(s.category).assy, 0) / stocks.length;
+
+      return round(0.6 * worstPenalty + 0.4 * assyPenalty, 2);
     }
 
-    function normalizeBasket(input) {
-      return input.split(",").map(v => v.trim().toUpperCase()).filter(Boolean);
+    function calcRateScore(rate) {
+      const r = toNumber(rate);
+      if (r < 10) return -999;
+      if (r < 12) return -4;
+      if (r < 15) return -2;
+      if (r < 16) return 0;
+      if (r < 18) return 3;
+      if (r < 20) return 5;
+      if (r < 24) return 8;
+      return 10;
+    }
+
+    function calcPeriodScore(period) {
+      const m = toNumber(period);
+      if (m <= 3) return 5;
+      if (m <= 6) return 2;
+      if (m <= 9) return -2;
+      if (m <= 12) return -5;
+      return -999;
+    }
+
+    function calcPRiskScore(strike, ki) {
+      const gap = toNumber(strike) - toNumber(ki);
+      if (gap === 0) return 5;
+      if (gap < 10) return -7;
+      if (gap === 10) return 5;
+      if (gap <= 13) return 4;
+      if (gap <= 15) return 3;
+      if (gap <= 18) return 0;
+      if (gap <= 20) return -4;
+      if (gap <= 22) return -5;
+      if (gap < 25) return -8;
+      return -999;
+    }
+
+    function calcEKIBonus(isEKI) {
+      return isEKI ? 2 : 0;
+    }
+
+    function calcAvgPureStock(stocks = []) {
+      if (!stocks.length) return 0;
+      return round(stocks.reduce((sum, s) => sum + toNumber(s.pure_stock_score, 0), 0) / stocks.length, 2);
+    }
+
+    function calcAvgEventStock(stocks = []) {
+      if (!stocks.length) return 0;
+      return round(stocks.reduce((sum, s) => sum + toNumber(s.event_stock_score, 0), 0) / stocks.length, 2);
+    }
+
+    function calcFCNByBaseStock(baseStockScore, { rate, period, strike, ki, eki }, sri) {
+      const rateScore = calcRateScore(rate);
+      const periodScore = calcPeriodScore(period);
+      const priskScore = calcPRiskScore(strike, ki);
+      const ekiBonus = calcEKIBonus(eki);
+
+      if (rateScore === -999 || periodScore === -999 || priskScore === -999) {
+        return -999;
+      }
+
+      const score =
+        0.4 * toNumber(baseStockScore, 0) +
+        0.2 * rateScore +
+        0.1 * periodScore +
+        0.1 * priskScore +
+        0.1 * sri +
+        ekiBonus;
+
+      return round(score, 2);
+    }
+
+    function calcDeltaFCN(pureFcn, eventFcn) {
+      const p = toNumber(pureFcn, 0);
+      const e = toNumber(eventFcn, 0);
+      if (p === 0) return 0;
+      return round(((e - p) / Math.abs(p)) * 100, 2);
+    }
+
+    function getDeltaLabel(deltaPct) {
+      const d = toNumber(deltaPct, 0);
+      if (d > 100) return "非常甜";
+      if (d > 50) return "偏甜";
+      if (d >= -20) return "合理";
+      if (d >= -50) return "偏貴";
+      return "很貴";
+    }
+
+    function getSuggestion(pureFcn, eventFcn, deltaPct) {
+      if (pureFcn === -999 || eventFcn === -999) return "不做";
+      if (pureFcn >= 7 && eventFcn >= 8 && deltaPct > 0) return "可做";
+      if (pureFcn >= 4 && eventFcn >= 4) return "觀察";
+      return "不做";
+    }
+
+    function buildFCNResult(stocks = [], input = {}) {
+      const avgPureStock = calcAvgPureStock(stocks);
+      const avgEventStock = calcAvgEventStock(stocks);
+      const sri = calcSRI(stocks);
+      const worst = getWorstStock(stocks);
+
+      const pureFcn = calcFCNByBaseStock(avgPureStock, input, sri);
+      const eventFcn = calcFCNByBaseStock(avgEventStock, input, sri);
+      const deltaPct = calcDeltaFCN(pureFcn, eventFcn);
+      const deltaLabel = getDeltaLabel(deltaPct);
+
+      return {
+        avgPureStock,
+        avgEventStock,
+        sri,
+        worst_of: worst ? worst.symbol : "",
+        pure_fcn: pureFcn,
+        event_fcn: eventFcn,
+        delta_fcn_pct: deltaPct,
+        delta_label: deltaLabel,
+        rateScore: calcRateScore(input.rate),
+        periodScore: calcPeriodScore(input.period),
+        priskScore: calcPRiskScore(input.strike, input.ki),
+        ekiBonus: calcEKIBonus(input.eki),
+        suggestion: getSuggestion(pureFcn, eventFcn, deltaPct),
+        reason: `Avg Pure=${avgPureStock}｜Avg Event=${avgEventStock}｜SRI=${sri}｜Worst-of=${worst ? worst.symbol : "-"}｜Delta=${deltaLabel}`
+      };
+    }
+
+    function getRateComment(score) {
+      if (score === -999) return "利率 < 10%，不做";
+      if (score === -4) return "10–12%，偏低";
+      if (score === -2) return "12–15%，普通";
+      if (score === 0) return "15–16%，標準";
+      if (score === 3) return "16–18%，可接受";
+      if (score === 5) return "18–20%，不錯";
+      if (score === 8) return "20–24%，偏高，需警覺";
+      if (score === 10) return "≥24%，很高，需高度警覺";
+      return "";
+    }
+
+    function getPeriodComment(score) {
+      if (score === -999) return "天期 > 12 月，不做";
+      if (score === 5) return "0–3 月，短天期佳";
+      if (score === 2) return "≤6 月，偏佳";
+      if (score === -2) return "7–9 月，偏長";
+      if (score === -5) return "10–12 月，較長，風險提高";
+      return "";
+    }
+
+    function getPRiskComment(score, gap) {
+      const g = round(toNumber(gap), 2);
+      if (score === -999) return `Gap=${g}，超出可接受範圍`;
+      if (score === 5 && g === 0) return "Gap = 0，特殊可接受";
+      if (score === -7) return "Gap < 10，保護不足";
+      if (score === 5 && g === 10) return "Gap = 10，最佳區";
+      if (score === 4) return "10 < Gap ≤ 13，良好";
+      if (score === 3) return "13 < Gap ≤ 15，尚可";
+      if (score === 0) return "15 < Gap ≤ 18，標準";
+      if (score === -4) return "18 < Gap ≤ 20，偏大";
+      if (score === -5) return "20 < Gap ≤ 22，風險提高";
+      if (score === -8) return "22 < Gap < 25，偏危險";
+      return "";
     }
 
     function buildStockBlocks() {
@@ -646,35 +1032,43 @@
         return;
       }
 
-      wrap.innerHTML = basket.map((symbol, idx) => {
+      LAST_STOCK_RESULTS = basket.map((symbol) => {
         const stock = getMergedStock(symbol);
         const evalRes = evaluateStock(stock);
+        return {
+          ...evalRes,
+          ...stock,
+          symbol: symbol.toUpperCase()
+        };
+      });
 
+      wrap.innerHTML = LAST_STOCK_RESULTS.map((evalRes, idx) => {
+        const symbol = evalRes.symbol || "";
         const baselineValue = `${safeText(evalRes.baseline_label)} (${safeText(evalRes.baseline_score)})`;
         const baselineComment = `分類=${safeText(evalRes.category)}｜Baseline Score=${safeText(evalRes.baseline_score)}`;
 
         const typeValue = [
+          safeText(evalRes.name),
           safeText(evalRes.category),
           safeText(evalRes.sector),
           safeText(evalRes.subsector)
         ].filter(Boolean).join(" / ");
 
-        const poolRisk = pickField(stock, ["risk", "risk_level"], "");
-        const poolVol = pickField(stock, ["volatility", "vol", "vol_level"], "");
-        const poolPref = pickField(stock, ["fcn_preference", "preference"], "");
+        const poolRisk = pickField(evalRes, ["risk", "risk_level"], "");
+        const poolVol = pickField(evalRes, ["volatility", "vol", "vol_level"], "");
+        const poolPref = pickField(evalRes, ["fcn_preference", "preference"], "");
         const metaValue = [poolRisk, poolVol, poolPref].filter(Boolean).join("｜");
 
-        const currentPrice = pickField(stock, ["price_now", "current_price", "price", "last_price", "last", "close"], "");
-        const chg1d = pickField(stock, ["ret_1d", "change_1d", "chg_1d", "day_change", "change1d"], "");
-        const chg1w = pickField(stock, ["ret_1w", "change_1w", "chg_1w", "week_change", "change1w"], "");
-        const chg1m = pickField(stock, ["ret_1m", "change_1m", "chg_1m", "month_change", "change1m"], "");
-        const chg3m = pickField(stock, ["ret_3m", "change_3m", "chg_3m", "change3m"], "");
-        const chg6m = pickField(stock, ["ret_6m", "change_6m", "chg_6m", "change6m"], "");
-        const chg12m = pickField(stock, ["ret_12m", "change_12m", "chg_12m", "change12m"], "");
+        const currentPrice = pickField(evalRes, ["price_now", "current_price", "price", "last_price", "last", "close"], "");
+        const chg1d = pickField(evalRes, ["ret_1d"], "");
+        const chg1w = pickField(evalRes, ["ret_1w"], "");
+        const chg1m = pickField(evalRes, ["ret_1m"], "");
+        const chg3m = pickField(evalRes, ["ret_3m"], "");
+        const chg6m = pickField(evalRes, ["ret_6m"], "");
+        const chg12m = pickField(evalRes, ["ret_12m"], "");
 
         const pureVolComment = `中期波動 ${(Number(evalRes.mid_term_volatility || 0) * 100).toFixed(2)}%｜${safeText(evalRes.vol_label)}`;
-
-        const eventVolComment = "目前 stock_engine V6 未獨立提供 Event Volatility Score，先保留欄位";
+        const eventVolComment = "目前 Event 波動獨立欄位先保留，短期波動已反映於 Snapshot";
         const snapshotComment = [
           `Snapshot Score=${safeText(evalRes.snapshot_score)}`,
           `Momentum=${safeText(evalRes.snapshot_move_pct)}%`,
@@ -692,7 +1086,7 @@
             <div class="form-grid">
               <div class="form-group">
                 <label>${symbol}｜Baseline / Tier</label>
-                <input id="${symbol}_baseline" type="text" value="${baselineValue}" placeholder="core / conditional / restricted / banned" />
+                <input id="${symbol}_baseline" type="text" value="${baselineValue}" placeholder="core / growth / defensive / income / speculative" />
               </div>
               <div class="form-group">
                 <label>${symbol}｜Baseline 說明</label>
@@ -746,11 +1140,11 @@
 
               <div class="form-group">
                 <label>${symbol}｜Event / News Score</label>
-                <input id="${symbol}_news_score" type="number" value="${safeText(evalRes.snapshot_score)}" placeholder="News / Event 分數" />
+                <input id="${symbol}_news_score" type="number" value="0" placeholder="News / Event 分數" />
               </div>
               <div class="form-group">
                 <label>${symbol}｜Event / News 說明</label>
-                <input id="${symbol}_news_comment" type="text" value="${safeText(evalRes.snapshot_reason)}" placeholder="新聞 / 事件說明" />
+                <input id="${symbol}_news_comment" type="text" value="M1 轉換尚未正式接入，暫不納入總分" placeholder="新聞 / 事件說明" />
               </div>
             </div>
 
@@ -767,27 +1161,27 @@
                 </div>
                 <div class="form-group">
                   <label>1D</label>
-                  <input id="${symbol}_chg_1d" type="text" value="${safeText(chg1d)}" placeholder="1D 變化" />
+                  <input id="${symbol}_chg_1d" type="text" value="${formatPctFromDecimal(chg1d)}" placeholder="1D 變化" />
                 </div>
                 <div class="form-group">
                   <label>1W</label>
-                  <input id="${symbol}_chg_1w" type="text" value="${safeText(chg1w)}" placeholder="1W 變化" />
+                  <input id="${symbol}_chg_1w" type="text" value="${formatPctFromDecimal(chg1w)}" placeholder="1W 變化" />
                 </div>
                 <div class="form-group">
                   <label>1M</label>
-                  <input id="${symbol}_chg_1m" type="text" value="${safeText(chg1m)}" placeholder="1M 變化" />
+                  <input id="${symbol}_chg_1m" type="text" value="${formatPctFromDecimal(chg1m)}" placeholder="1M 變化" />
                 </div>
                 <div class="form-group">
                   <label>3M</label>
-                  <input id="${symbol}_chg_3m" type="text" value="${safeText(chg3m)}" placeholder="3M 變化" />
+                  <input id="${symbol}_chg_3m" type="text" value="${formatPctFromDecimal(chg3m)}" placeholder="3M 變化" />
                 </div>
                 <div class="form-group">
                   <label>6M</label>
-                  <input id="${symbol}_chg_6m" type="text" value="${safeText(chg6m)}" placeholder="6M 變化" />
+                  <input id="${symbol}_chg_6m" type="text" value="${formatPctFromDecimal(chg6m)}" placeholder="6M 變化" />
                 </div>
                 <div class="form-group">
                   <label>12M</label>
-                  <input id="${symbol}_chg_12m" type="text" value="${safeText(chg12m)}" placeholder="12M 變化" />
+                  <input id="${symbol}_chg_12m" type="text" value="${formatPctFromDecimal(chg12m)}" placeholder="12M 變化" />
                 </div>
                 <div class="form-group">
                   <label>狀態說明</label>
@@ -800,136 +1194,93 @@
       }).join("");
     }
 
-    function scoreKI(ki) {
-      if (ki > 75) return { score: null, comment: "KI > 75，不做" };
-      if (ki <= 55) return { score: 8, comment: "KI ≤ 55，安全度高" };
-      if (ki <= 60) return { score: 4, comment: "KI 55–60，偏安全" };
-      if (ki <= 65) return { score: 0, comment: "KI 60–65，標準" };
-      if (ki <= 70) return { score: -4, comment: "KI 65–70，偏高" };
-      return { score: -8, comment: "KI 70–75，風險偏高" };
-    }
-
-    function scoreStrike(strike) {
-      if (strike > 80) return { score: null, comment: "Strike > 80，不做" };
-      if (strike <= 60) return { score: 10, comment: "Strike ≤ 60，安全" };
-      if (strike <= 65) return { score: 5, comment: "Strike 60–65，合理" };
-      if (strike <= 67) return { score: -1, comment: "Strike 65–67，略高" };
-      if (strike <= 70) return { score: -3, comment: "Strike 67–70，偏高" };
-      if (strike <= 75) return { score: -5, comment: "Strike 70–75，風險提高" };
-      return { score: -10, comment: "Strike 75–80，偏危險" };
-    }
-
-    function scoreCoupon(coupon) {
-      if (coupon < 10) return { score: null, comment: "利率 < 10%，不做" };
-      if (coupon < 12) return { score: -4, comment: "10–12%，偏低" };
-      if (coupon < 15) return { score: -2, comment: "12–15%，普通" };
-      if (coupon < 16) return { score: 0, comment: "15–16%，標準" };
-      if (coupon < 18) return { score: 3, comment: "16–18%，可接受" };
-      if (coupon < 20) return { score: 5, comment: "18–20%，不錯" };
-      if (coupon < 24) return { score: 8, comment: "20–24%，偏高，需警覺" };
-      return { score: 10, comment: "≥24%，很高，需高度警覺" };
-    }
-
-    function scoreTenor(tenor) {
-      if (tenor > 12) return { score: null, comment: "天期 > 12 月，不做" };
-      if (tenor <= 3) return { score: 5, comment: "0–3 月，短天期佳" };
-      if (tenor < 6) return { score: 2, comment: "4–5 月，偏佳" };
-      if (tenor === 6) return { score: 0, comment: "6 月，標準" };
-      if (tenor <= 9) return { score: -2, comment: "7–9 月，偏長" };
-      return { score: -5, comment: "10–12 月，較長，風險提高" };
-    }
-
-    function scoreGap(gap) {
-      if (gap < 0) return { score: null, comment: "Gap < 0，資料錯誤" };
-      if (gap >= 25) return { score: null, comment: "Gap ≥ 25，不做" };
-      if (gap === 0) return { score: 5, comment: "Gap = 0，特殊可接受" };
-      if (gap < 10) return { score: -7, comment: "0 < Gap < 10，保護不足" };
-      if (gap === 10) return { score: 5, comment: "Gap = 10，最佳區" };
-      if (gap <= 13) return { score: 4, comment: "10 < Gap ≤ 13，良好" };
-      if (gap <= 15) return { score: 3, comment: "13 < Gap ≤ 15，尚可" };
-      if (gap <= 18) return { score: 0, comment: "15 < Gap ≤ 18，標準" };
-      if (gap <= 20) return { score: -4, comment: "18 < Gap ≤ 20，偏大" };
-      if (gap <= 22) return { score: -5, comment: "20 < Gap ≤ 22，風險提高" };
-      return { score: -8, comment: "22 < Gap < 25，偏危險" };
-    }
-
-    function setValue(id, value) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.value = value ?? "";
-    }
-
-    function runM4Scoring() {
-      const ki = Number(document.getElementById("ki").value);
-      const strike = Number(document.getElementById("strike").value);
-      const coupon = Number(document.getElementById("coupon").value);
-      const tenor = Number(document.getElementById("tenor").value);
-      const gap = strike - ki;
-
-      const kiRes = scoreKI(ki);
-      const strikeRes = scoreStrike(strike);
-      const couponRes = scoreCoupon(coupon);
-      const tenorRes = scoreTenor(tenor);
-      const gapRes = scoreGap(gap);
+    function fillFCNDisplay(stockResults, fcnResult) {
+      const ki = toNumber(getNumber("ki"));
+      const strike = toNumber(getNumber("strike"));
+      const coupon = toNumber(getNumber("coupon"));
+      const tenor = toNumber(getNumber("tenor"));
+      const gap = round(strike - ki, 2);
 
       setValue("l2KiValue", ki);
+      setValue("l2KiScore", "");
+      setValue("l2KiComment", "KI 顯示欄位保留");
+
       setValue("l2StrikeValue", strike);
+      setValue("l2StrikeScore", "");
+      setValue("l2StrikeComment", "Strike 顯示欄位保留");
+
       setValue("l2CouponValue", coupon);
+      setValue("l2CouponScore", fcnResult.rateScore);
+      setValue("l2CouponComment", getRateComment(fcnResult.rateScore));
+
       setValue("l2TenorValue", tenor);
+      setValue("l2TenorScore", fcnResult.periodScore);
+      setValue("l2TenorComment", getPeriodComment(fcnResult.periodScore));
+
       setValue("l2GapValue", gap);
+      setValue("l2GapScore", fcnResult.priskScore);
+      setValue("l2GapComment", getPRiskComment(fcnResult.priskScore, gap));
 
-      setValue("l2KiScore", kiRes.score);
-      setValue("l2KiComment", kiRes.comment);
+      setValue("l2AvgPureStockValue", fcnResult.avgPureStock);
+      setValue("l2AvgPureStockScore", fcnResult.avgPureStock);
+      setValue("l2AvgPureStockComment", "所有成分股 Pure Stock 平均");
 
-      setValue("l2StrikeScore", strikeRes.score);
-      setValue("l2StrikeComment", strikeRes.comment);
+      setValue("l2AvgEventStockValue", fcnResult.avgEventStock);
+      setValue("l2AvgEventStockScore", fcnResult.avgEventStock);
+      setValue("l2AvgEventStockComment", "所有成分股 Event Stock 平均");
 
-      setValue("l2CouponScore", couponRes.score);
-      setValue("l2CouponComment", couponRes.comment);
+      setValue("l2SRIValue", fcnResult.sri);
+      setValue("l2SRIScore", fcnResult.sri);
+      setValue("l2SRIComment", "0.6 × Worst-of + 0.4 × ASSY");
 
-      setValue("l2TenorScore", tenorRes.score);
-      setValue("l2TenorComment", tenorRes.comment);
+      setValue("l2WorstOfValue", fcnResult.worst_of);
+      const worst = stockResults.find(s => s.symbol === fcnResult.worst_of);
+      setValue("l2WorstOfScore", worst ? worst.pure_stock_score : "");
+      setValue("l2WorstOfComment", worst ? `${worst.symbol} 為 Worst-of；Pure=${worst.pure_stock_score} / Event=${worst.event_stock_score}` : "");
 
-      setValue("l2GapScore", gapRes.score);
-      setValue("l2GapComment", gapRes.comment);
+      setValue("overallFcnScore", fcnResult.event_fcn);
+      setValue("overallFcnComment", fcnResult.reason);
 
-      const parts = [kiRes, strikeRes, couponRes, tenorRes, gapRes];
-      const hasReject = parts.some(p => p.score === null);
+      setValue("eventFcnScore", fcnResult.event_fcn);
+      setValue("eventFcnComment", `Avg Event=${fcnResult.avgEventStock}｜SRI=${fcnResult.sri}`);
 
-      let total = null;
-      if (!hasReject) {
-        total = parts.reduce((sum, p) => sum + p.score, 0);
-      }
+      setValue("pureFcnScore", fcnResult.pure_fcn);
+      setValue("pureFcnComment", `Avg Pure=${fcnResult.avgPureStock}｜SRI=${fcnResult.sri}`);
 
-      setValue("overallFcnScore", total);
-      setValue(
-        "overallFcnComment",
-        hasReject ? "結構條件中有不做項" :
-        total >= 20 ? "整體結構偏佳" :
-        total >= 10 ? "整體結構中性偏可做" :
-        "整體結構偏弱"
-      );
+      setValue("deltaFcnScore", fcnResult.delta_fcn_pct);
+      setValue("deltaFcnComment", fcnResult.delta_label);
 
-      setValue("pureFcnScore", total);
-      setValue(
-        "pureFcnComment",
-        hasReject ? "長期本質不建議" :
-        "Pure FCN 先以結構條件做初步評估，後續再結合股票本質"
-      );
-
-      setValue("eventFcnScore", "");
-      setValue("eventFcnComment", "Event FCN 需結合事件 / 新聞 / 當下市場評價，這版先保留");
-
-      setValue("deltaFcnScore", "");
-      setValue("deltaFcnComment", "Delta FCN 需和平常報價比較，這版先保留");
+      setValue("worstOf", fcnResult.worst_of);
+      setValue("finalDecision", fcnResult.suggestion);
+      setValue("keyAdvantage", `Delta=${fcnResult.delta_label}｜Avg Event=${fcnResult.avgEventStock}`);
+      setValue("keyRisk", `Worst-of=${fcnResult.worst_of}｜P-Risk=${fcnResult.priskScore}`);
+      setValue("finalReason", fcnResult.reason);
 
       setValue(
         "l2FcnSummary",
-        hasReject
-          ? "本單至少有一項結構條件落入不做區間，需重新檢查。"
-          : `下限價 KI ${ki}、執行價 Strike ${strike}、票息 ${coupon}%、天期 ${tenor} 月、Gap ${gap}；目前結構總分 ${total}。`
+        `Rate=${fcnResult.rateScore}｜Period=${fcnResult.periodScore}｜P-Risk=${fcnResult.priskScore}｜SRI=${fcnResult.sri}｜Avg Pure=${fcnResult.avgPureStock}｜Avg Event=${fcnResult.avgEventStock}`
       );
+    }
 
+    function runM4Scoring() {
+      const basket = normalizeBasket(getValue("basket"));
+      if (!basket.length) {
+        alert("請先輸入 Basket");
+        return;
+      }
+
+      buildStockBlocks();
+
+      const input = {
+        rate: toNumber(getNumber("coupon")),
+        period: toNumber(getNumber("tenor")),
+        strike: toNumber(getNumber("strike")),
+        ki: toNumber(getNumber("ki")),
+        eki: getValue("productType") === "EKI"
+      };
+
+      LAST_FCN_RESULT = buildFCNResult(LAST_STOCK_RESULTS, input);
+      fillFCNDisplay(LAST_STOCK_RESULTS, LAST_FCN_RESULT);
       previewDeal();
     }
 
@@ -964,18 +1315,6 @@
         change_12m: getValue(`${symbol}_chg_12m`),
         snapshot_comment: getValue(`${symbol}_snapshot_comment`)
       }));
-    }
-
-    function getValue(id) {
-      const el = document.getElementById(id);
-      return el ? el.value.trim() : "";
-    }
-
-    function getNumber(id) {
-      const el = document.getElementById(id);
-      if (!el) return null;
-      const n = Number(el.value);
-      return Number.isFinite(n) && el.value !== "" ? n : null;
     }
 
     function buildRecord() {
@@ -1028,10 +1367,17 @@
           gap_score: getNumber("l2GapScore"),
           gap_comment: getValue("l2GapComment"),
 
+          avg_pure_stock: getNumber("l2AvgPureStockValue"),
+          avg_event_stock: getNumber("l2AvgEventStockValue"),
+          sri: getNumber("l2SRIValue"),
+          worst_of: getValue("l2WorstOfValue"),
+
           summary_comment: getValue("l2FcnSummary")
         },
 
         l2_l3_stocks: collectStocks(),
+
+        fcn_result: LAST_FCN_RESULT,
 
         final: {
           worst_of_symbol: getValue("worstOf"),
@@ -1041,6 +1387,18 @@
           final_reason: getValue("finalReason")
         }
       };
+    }
+
+    function getDeals() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function saveDeals(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
 
     function previewDeal() {
@@ -1133,14 +1491,14 @@
       `;
     }
 
-    window.deleteDeal = function(id) {
+    function deleteDeal(id) {
       const ok = confirm("確定刪除這筆 M4 紀錄？");
       if (!ok) return;
       const deals = getDeals().filter(d => d.id !== id);
       saveDeals(deals);
       renderHistory();
       updateSummary();
-    };
+    }
 
     function clearDeals() {
       const ok = confirm("確定清空全部 M4 紀錄？");
@@ -1150,7 +1508,6 @@
       updateSummary();
       document.getElementById("previewArea").style.display = "none";
     }
-    window.clearDeals = clearDeals;
 
     function exportDeals() {
       const deals = getDeals();
@@ -1166,7 +1523,6 @@
       a.click();
       URL.revokeObjectURL(url);
     }
-    window.exportDeals = exportDeals;
 
     function resetForm() {
       document.querySelectorAll("input, textarea, select").forEach(el => {
@@ -1191,8 +1547,9 @@
 
       document.getElementById("stockBlocks").innerHTML = "";
       document.getElementById("previewArea").style.display = "none";
+      LAST_STOCK_RESULTS = [];
+      LAST_FCN_RESULT = null;
     }
-    window.resetForm = resetForm;
 
     function updateSummary() {
       const deals = getDeals();
@@ -1200,17 +1557,15 @@
       document.getElementById("lastDealName").textContent = deals.length ? (deals[0].basic.deal_name || "-") : "-";
     }
 
-    function fmtMaybeDecimal(v) {
-      const n = Number(v);
-      if (!Number.isFinite(n)) return "";
-      return Math.abs(n) <= 2 ? (n * 100).toFixed(2) + "%" : n.toFixed(2) + "%";
+    function toggleBlueprint() {
+      document.getElementById("blueprintWrap").classList.toggle("open");
     }
 
     async function initM4() {
       loadRuntimeCache();
       await Promise.all([
-        loadFcnPool(),
-        loadMarketRuntime()
+        loadPool30(),
+        loadStockRuntime()
       ]);
       renderHistory();
       updateSummary();
@@ -1221,6 +1576,11 @@
     window.saveDeal = saveDeal;
     window.previewDeal = previewDeal;
     window.renderHistory = renderHistory;
+    window.deleteDeal = deleteDeal;
+    window.clearDeals = clearDeals;
+    window.exportDeals = exportDeals;
+    window.resetForm = resetForm;
+    window.toggleBlueprint = toggleBlueprint;
 
     initM4();
   </script>
