@@ -282,19 +282,19 @@
             </div>
 
             <div class="form-group">
-              <label for="ki">KI (%)</label>
+              <label for="ki">下限價 KI (%)</label>
               <input id="ki" type="number" value="55" />
             </div>
             <div class="form-group">
-              <label for="strike">Strike (%)</label>
+              <label for="strike">執行價 Strike (%)</label>
               <input id="strike" type="number" value="65" />
             </div>
             <div class="form-group">
-              <label for="coupon">Coupon / 年化利率 (%)</label>
+              <label for="coupon">票息 / 年化利率 Coupon (%)</label>
               <input id="coupon" type="number" value="18" />
             </div>
             <div class="form-group">
-              <label for="tenor">Tenor（月）</label>
+              <label for="tenor">天期 Tenor（月）</label>
               <input id="tenor" type="number" value="6" />
             </div>
 
@@ -302,12 +302,13 @@
               <label for="memo">案件備註</label>
               <textarea id="memo" placeholder="例：這次報價比平常高，懷疑市場在反映短期事件風險"></textarea>
             </div>
-            <div class="action-row">
-             <button class="btn btn-primary" type="button" onclick="buildStockBlocks()">建立股票區塊</button>
-             <button class="btn btn-primary" type="button" onclick="previewDeal()">執行評分</button>
-             <button class="btn btn-secondary" type="button" onclick="saveDeal()">儲存紀錄</button>
-             <button class="btn btn-secondary" type="button" onclick="resetForm()">清空表單</button>
-           </div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" type="button" onclick="buildStockBlocks()">建立股票區塊</button>
+            <button class="btn btn-primary" type="button" onclick="runM4Scoring()">執行評分</button>
+            <button class="btn btn-secondary" type="button" onclick="saveDeal()">儲存紀錄</button>
+            <button class="btn btn-secondary" type="button" onclick="resetForm()">清空表單</button>
           </div>
         </div>
 
@@ -370,31 +371,31 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>KI</td>
+                  <td>下限價 KI</td>
                   <td><input id="l2KiValue" type="number" value="55" /></td>
                   <td><input id="l2KiScore" type="number" placeholder="KI 分數" /></td>
                   <td><input id="l2KiComment" type="text" placeholder="KI 說明" /></td>
                 </tr>
                 <tr>
-                  <td>Strike</td>
+                  <td>執行價 Strike</td>
                   <td><input id="l2StrikeValue" type="number" value="65" /></td>
                   <td><input id="l2StrikeScore" type="number" placeholder="Strike 分數" /></td>
                   <td><input id="l2StrikeComment" type="text" placeholder="Strike 說明" /></td>
                 </tr>
                 <tr>
-                  <td>Coupon</td>
+                  <td>票息 Coupon</td>
                   <td><input id="l2CouponValue" type="number" value="18" /></td>
                   <td><input id="l2CouponScore" type="number" placeholder="Coupon 分數" /></td>
                   <td><input id="l2CouponComment" type="text" placeholder="Coupon 說明" /></td>
                 </tr>
                 <tr>
-                  <td>Tenor</td>
+                  <td>天期 Tenor</td>
                   <td><input id="l2TenorValue" type="number" value="6" /></td>
                   <td><input id="l2TenorScore" type="number" placeholder="Tenor 分數" /></td>
                   <td><input id="l2TenorComment" type="text" placeholder="Tenor 說明" /></td>
                 </tr>
                 <tr>
-                  <td>Gap</td>
+                  <td>Gap（執行價 - 下限價）</td>
                   <td><input id="l2GapValue" type="number" placeholder="Strike - KI" /></td>
                   <td><input id="l2GapScore" type="number" placeholder="Gap 分數" /></td>
                   <td><input id="l2GapComment" type="text" placeholder="Gap 說明" /></td>
@@ -445,9 +446,7 @@
           </div>
 
           <div class="action-row">
-            <button class="btn btn-primary" onclick="saveDeal()">儲存 M4 紀錄</button>
             <button class="btn btn-secondary" onclick="previewDeal()">預覽資料</button>
-            <button class="btn btn-secondary" onclick="resetForm()">清空表單</button>
           </div>
 
           <div id="previewArea" class="result-block" style="display:none;"></div>
@@ -642,6 +641,139 @@
           </div>
         </div>
       `).join("");
+    }
+
+    function scoreKI(ki) {
+      if (ki > 75) return { score: null, comment: "KI > 75，不做" };
+      if (ki <= 55) return { score: 8, comment: "KI ≤ 55，安全度高" };
+      if (ki <= 60) return { score: 4, comment: "KI 55–60，偏安全" };
+      if (ki <= 65) return { score: 0, comment: "KI 60–65，標準" };
+      if (ki <= 70) return { score: -4, comment: "KI 65–70，偏高" };
+      return { score: -8, comment: "KI 70–75，風險偏高" };
+    }
+
+    function scoreStrike(strike) {
+      if (strike > 80) return { score: null, comment: "Strike > 80，不做" };
+      if (strike <= 60) return { score: 10, comment: "Strike ≤ 60，安全" };
+      if (strike <= 65) return { score: 5, comment: "Strike 60–65，合理" };
+      if (strike <= 67) return { score: -1, comment: "Strike 65–67，略高" };
+      if (strike <= 70) return { score: -3, comment: "Strike 67–70，偏高" };
+      if (strike <= 75) return { score: -5, comment: "Strike 70–75，風險提高" };
+      return { score: -10, comment: "Strike 75–80，偏危險" };
+    }
+
+    function scoreCoupon(coupon) {
+      if (coupon < 10) return { score: null, comment: "利率 < 10%，不做" };
+      if (coupon < 12) return { score: -4, comment: "10–12%，偏低" };
+      if (coupon < 15) return { score: -2, comment: "12–15%，普通" };
+      if (coupon < 16) return { score: 0, comment: "15–16%，標準" };
+      if (coupon < 18) return { score: 3, comment: "16–18%，可接受" };
+      if (coupon < 20) return { score: 5, comment: "18–20%，不錯" };
+      if (coupon < 24) return { score: 8, comment: "20–24%，偏高，需警覺" };
+      return { score: 10, comment: "≥24%，很高，需高度警覺" };
+    }
+
+    function scoreTenor(tenor) {
+      if (tenor > 12) return { score: null, comment: "天期 > 12 月，不做" };
+      if (tenor <= 3) return { score: 5, comment: "0–3 月，短天期佳" };
+      if (tenor < 6) return { score: 2, comment: "4–5 月，偏佳" };
+      if (tenor === 6) return { score: 0, comment: "6 月，標準" };
+      if (tenor <= 9) return { score: -2, comment: "7–9 月，偏長" };
+      return { score: -5, comment: "10–12 月，較長，風險提高" };
+    }
+
+    function scoreGap(gap) {
+      if (gap < 0) return { score: null, comment: "Gap < 0，資料錯誤" };
+      if (gap >= 25) return { score: null, comment: "Gap ≥ 25，不做" };
+      if (gap === 0) return { score: 5, comment: "Gap = 0，特殊可接受" };
+      if (gap < 10) return { score: -7, comment: "0 < Gap < 10，保護不足" };
+      if (gap === 10) return { score: 5, comment: "Gap = 10，最佳區" };
+      if (gap <= 13) return { score: 4, comment: "10 < Gap ≤ 13，良好" };
+      if (gap <= 15) return { score: 3, comment: "13 < Gap ≤ 15，尚可" };
+      if (gap <= 18) return { score: 0, comment: "15 < Gap ≤ 18，標準" };
+      if (gap <= 20) return { score: -4, comment: "18 < Gap ≤ 20，偏大" };
+      if (gap <= 22) return { score: -5, comment: "20 < Gap ≤ 22，風險提高" };
+      return { score: -8, comment: "22 < Gap < 25，偏危險" };
+    }
+
+    function setValue(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.value = value ?? "";
+    }
+
+    function runM4Scoring() {
+      const ki = Number(document.getElementById("ki").value);
+      const strike = Number(document.getElementById("strike").value);
+      const coupon = Number(document.getElementById("coupon").value);
+      const tenor = Number(document.getElementById("tenor").value);
+      const gap = strike - ki;
+
+      const kiRes = scoreKI(ki);
+      const strikeRes = scoreStrike(strike);
+      const couponRes = scoreCoupon(coupon);
+      const tenorRes = scoreTenor(tenor);
+      const gapRes = scoreGap(gap);
+
+      setValue("l2KiValue", ki);
+      setValue("l2StrikeValue", strike);
+      setValue("l2CouponValue", coupon);
+      setValue("l2TenorValue", tenor);
+      setValue("l2GapValue", gap);
+
+      setValue("l2KiScore", kiRes.score);
+      setValue("l2KiComment", kiRes.comment);
+
+      setValue("l2StrikeScore", strikeRes.score);
+      setValue("l2StrikeComment", strikeRes.comment);
+
+      setValue("l2CouponScore", couponRes.score);
+      setValue("l2CouponComment", couponRes.comment);
+
+      setValue("l2TenorScore", tenorRes.score);
+      setValue("l2TenorComment", tenorRes.comment);
+
+      setValue("l2GapScore", gapRes.score);
+      setValue("l2GapComment", gapRes.comment);
+
+      const parts = [kiRes, strikeRes, couponRes, tenorRes, gapRes];
+      const hasReject = parts.some(p => p.score === null);
+
+      let total = null;
+      if (!hasReject) {
+        total = parts.reduce((sum, p) => sum + p.score, 0);
+      }
+
+      setValue("overallFcnScore", total);
+      setValue(
+        "overallFcnComment",
+        hasReject ? "結構條件中有不做項" :
+        total >= 20 ? "整體結構偏佳" :
+        total >= 10 ? "整體結構中性偏可做" :
+        "整體結構偏弱"
+      );
+
+      setValue("pureFcnScore", total);
+      setValue(
+        "pureFcnComment",
+        hasReject ? "長期本質不建議" :
+        "Pure FCN 先以結構條件做初步評估，後續再結合股票本質"
+      );
+
+      setValue("eventFcnScore", "");
+      setValue("eventFcnComment", "Event FCN 需結合事件 / 新聞 / 當下市場評價，這版先保留");
+
+      setValue("deltaFcnScore", "");
+      setValue("deltaFcnComment", "Delta FCN 需和平常報價比較，這版先保留");
+
+      setValue(
+        "l2FcnSummary",
+        hasReject
+          ? "本單至少有一項結構條件落入不做區間，需重新檢查。"
+          : `下限價 KI ${ki}、執行價 Strike ${strike}、票息 ${coupon}%、天期 ${tenor} 月、Gap ${gap}；目前結構總分 ${total}。`
+      );
+
+      previewDeal();
     }
 
     function collectStocks() {
