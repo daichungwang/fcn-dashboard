@@ -37,6 +37,6 @@
   { "symbol": "QQQ", "name": "Invesco QQQ", "sector": "ETF", "subsector": "TECH_ETF", "category": "defensive" },
   { "symbol": "LQD", "name": "iShares iBoxx Investment Grade Corporate Bond ETF", "sector": "ETF", "subsector": "BOND_ETF", "category": "income" },
   { "symbol": "INTC", "name": "Intel", "sector": "AI_SEMI", "subsector": "CPU_FOUNDRY", "category": "defensive" },
-  { "symbol": "NKE", "name": "Nike", "sector": "CONSUMER", "subsector": "APPAREL", "category": "income" },
+  { "symbol": "NKE", "name": "Nike", "sector": "CONSUMER", "subsector": "APPAREL", "category": "speculative" },
   { "symbol": "REGN", "name": "Regeneron", "sector": "HEALTHCARE", "subsector": "BIOTECH", "category": "income" }
 ]
