@@ -3,833 +3,840 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M4｜FCN Pool + Daily Key-in</title>
+  <title>振宇 FCN 系統｜M4 資料管理</title>
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", Arial, sans-serif;
       background: #f5f6f8;
-      color: #111;
+      color: #1f2937;
     }
-    .page {
+    .container {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 20px 14px 50px;
+      padding: 20px;
     }
-    h1 { margin: 0 0 16px; font-size: 32px; }
-    h2 { margin: 0 0 12px; font-size: 24px; }
-    h3 { margin: 0 0 8px; font-size: 18px; }
-
-    .card {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 12px;
-    }
-    .field { grid-column: span 12; }
-    .field.half { grid-column: span 6; }
-    .field.third { grid-column: span 4; }
-    .field.quarter { grid-column: span 3; }
-
-    label {
-      display: block;
-      margin: 0 0 6px;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 10px 12px;
-      font-size: 15px;
-      background: #fff;
-    }
-
-    textarea {
-      min-height: 84px;
-      resize: vertical;
-    }
-
-    .row {
+    .topbar {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
+      justify-content: space-between;
       align-items: center;
+      margin-bottom: 20px;
     }
-
-    button {
-      border: 0;
+    .title-wrap h1 {
+      margin: 0 0 6px 0;
+      font-size: 32px;
+      font-weight: 800;
+    }
+    .title-wrap p {
+      margin: 0;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn, button {
+      border: none;
       border-radius: 10px;
       padding: 10px 14px;
       font-size: 14px;
       cursor: pointer;
-      background: #111;
-      color: #fff;
-    }
-    button.secondary { background: #666; }
-    button.warn { background: #b00020; }
-    button.light { background: #e9ecef; color: #111; }
-
-    .note {
-      font-size: 13px;
-      background: #fffbe6;
-      border: 1px solid #f1df9a;
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin-top: 8px;
-      line-height: 1.6;
-    }
-
-    .divider {
-      height: 1px;
-      background: #eee;
-      margin: 12px 0;
-    }
-
-    .result-card {
-      border: 1px solid #e5e5e5;
-      border-radius: 14px;
-      padding: 14px;
-      margin-top: 12px;
-      background: #fff;
-    }
-
-    .result-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .result-line {
-      margin: 4px 0;
-      line-height: 1.5;
-      word-break: break-word;
-    }
-
-    .status-pill {
+      text-decoration: none;
       display: inline-block;
+      transition: 0.2s ease;
+    }
+    .btn-primary {
+      background: #111827;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #000;
+    }
+    .btn-secondary {
+      background: white;
+      color: #111827;
+      border: 1px solid #d1d5db;
+    }
+    .btn-secondary:hover {
+      background: #f9fafb;
+    }
+    .btn-danger {
+      background: #dc2626;
+      color: white;
+    }
+    .btn-danger:hover {
+      background: #b91c1c;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+      margin-bottom: 20px;
+    }
+    .card h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 24px;
+    }
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+    .muted {
+      color: #6b7280;
+      font-size: 14px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+    label {
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+    }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      padding: 11px 12px;
+      font-size: 14px;
+      background: white;
+    }
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+    .helper {
+      color: #6b7280;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+    .section-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .result-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+    .score-big {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 5px 10px;
       border-radius: 999px;
-      padding: 4px 10px;
       font-size: 12px;
       font-weight: 700;
-      border: 1px solid #ddd;
-      background: #fafafa;
+      margin-right: 6px;
+      margin-bottom: 6px;
     }
-    .s-inquiry { background: #eef6ff; border-color: #b8d8ff; }
-    .s-watch { background: #fff7e8; border-color: #f0d298; }
-    .s-active { background: #ecfff1; border-color: #a9e2b4; }
-    .s-closed { background: #f5f5f5; border-color: #d6d6d6; }
-    .s-expired { background: #fff0f0; border-color: #f1b5b5; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-yellow { background: #fef3c7; color: #92400e; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-gray { background: #e5e7eb; color: #374151; }
 
-    .edit-banner {
-      border: 1px solid #b8d8ff;
-      background: #eef6ff;
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .mini-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .mini-card .k {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+    .mini-card .v {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+    th, td {
+      padding: 12px 10px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+      font-size: 14px;
+      vertical-align: top;
+    }
+    th {
+      background: #f9fafb;
+      color: #374151;
+      font-weight: 700;
+      position: sticky;
+      top: 0;
+    }
+    .small {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #eef2ff;
+      color: #3730a3;
+    }
+    .danger-note {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
       border-radius: 12px;
-      padding: 10px 12px;
-      margin-bottom: 12px;
-      display: none;
+      color: #9a3412;
+      font-size: 14px;
+    }
+    .empty {
+      text-align: center;
+      color: #6b7280;
+      padding: 28px 10px;
+      font-size: 14px;
+    }
+    .footer-note {
+      margin-top: 10px;
+      color: #6b7280;
+      font-size: 12px;
     }
 
-    .muted { color: #666; }
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .mini-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .title-wrap h1 {
+        font-size: 26px;
+      }
+    }
 
-    @media (max-width: 800px) {
-      .field.half, .field.third, .field.quarter { grid-column: span 12; }
-      button { width: 100%; }
-      .row { flex-direction: column; align-items: stretch; }
-      h1 { font-size: 26px; }
-      h2 { font-size: 20px; }
+    @media (max-width: 640px) {
+      .container {
+        padding: 14px;
+      }
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+      .btn, button {
+        width: 100%;
+        text-align: center;
+      }
+      .top-actions {
+        width: 100%;
+      }
+      .top-actions a, .top-actions button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <h1>M4｜FCN Pool + Daily Key-in</h1>
+  <div class="container">
+    <div class="topbar">
+      <div class="title-wrap">
+        <h1>🛠️ M4｜FCN 資料管理</h1>
+        <p>Daily Key-in / Inquiry / Edit / 歷史資料管理｜Milestone 2 核心頁</p>
+      </div>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="index.html">回系統首頁</a>
+        <a class="btn btn-secondary" href="milestone2_index.html">回 Milestone 2</a>
+      </div>
+    </div>
 
-    <div class="card">
-      <h2>M4 定位</h2>
-      <div class="result-line">1. <b>pool30.json</b> 是股票池。</div>
-      <div class="result-line">2. <b>fcn_pool.json</b> 是 FCN total pool。</div>
-      <div class="result-line">3. 只有 <b>status = active</b> 的單，未來才會進 M2 庫存監控。</div>
-      <div class="note">
-        FCN ID = 商品代號。最大長度 15 字元。<br>
-        本版已補上 <b>amt</b>、<b>autocall</b>、<b>has_position</b>，並移除沒有決策價值的 <b>open_price</b>。
+    <div class="grid">
+      <!-- 左側：輸入與評分 -->
+      <div>
+        <div class="card">
+          <h2>今日外單輸入</h2>
+          <p class="muted">這一版先採用本機儲存（localStorage），不需要額外接資料庫，可以先讓 M4 跑起來。</p>
+
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="dealName">案件名稱 / 備註</label>
+              <input id="dealName" type="text" placeholder="例：今日銀行外單 1 / CCL 高息單 / 核心科技組合" />
+            </div>
+
+            <div class="form-group full">
+              <label for="stocks">股票 Basket</label>
+              <input id="stocks" type="text" placeholder="例：NVDA,TSM,AMAT,CCL" />
+              <div class="helper">請用逗號分隔，2～5 檔都可以</div>
+            </div>
+
+            <div class="form-group">
+              <label for="ki">KI（下限價 %）</label>
+              <input id="ki" type="number" placeholder="55" value="55" />
+            </div>
+
+            <div class="form-group">
+              <label for="strike">Strike（執行價 %）</label>
+              <input id="strike" type="number" placeholder="65" value="65" />
+            </div>
+
+            <div class="form-group">
+              <label for="rate">年化利率 %</label>
+              <input id="rate" type="number" placeholder="18" value="18" />
+            </div>
+
+            <div class="form-group">
+              <label for="tenor">天期（月）</label>
+              <input id="tenor" type="number" placeholder="6" value="6" />
+            </div>
+
+            <div class="form-group">
+              <label for="productType">FCN 類型</label>
+              <select id="productType">
+                <option value="EKI">EKI</option>
+                <option value="AKI">AKI / MKI</option>
+                <option value="Pure FCN">Pure FCN</option>
+                <option value="Event FCN">Event FCN</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="bank">銀行 / 券商</label>
+              <input id="bank" type="text" placeholder="例：Bank A / 券商 B" />
+            </div>
+
+            <div class="form-group full">
+              <label for="memo">備註</label>
+              <textarea id="memo" placeholder="可記錄特殊事件，例如：中東戰爭影響、MU 利率異常偏高、科技股回檔後報價變甜..."></textarea>
+            </div>
+          </div>
+
+          <div class="section-actions">
+            <button class="btn btn-primary" onclick="evaluateDeal()">立即評分</button>
+            <button class="btn btn-secondary" onclick="resetForm()">清空表單</button>
+          </div>
+
+          <div id="resultArea" class="result-box" style="display:none;"></div>
+        </div>
+      </div>
+
+      <!-- 右側：摘要 -->
+      <div>
+        <div class="card">
+          <h3>M4 目前用途</h3>
+          <div class="muted">
+            1. 輸入每日外部 FCN 報價<br>
+            2. 用目前規則先做初步評分<br>
+            3. 存成歷史資料<br>
+            4. 後續可回饋 M1 / M2 / M3
+          </div>
+
+          <div class="mini-grid">
+            <div class="mini-card">
+              <div class="k">歷史案件數</div>
+              <div class="v" id="totalDeals">0</div>
+            </div>
+            <div class="mini-card">
+              <div class="k">平均分數</div>
+              <div class="v" id="avgScore">0</div>
+            </div>
+            <div class="mini-card">
+              <div class="k">A / B 級案件</div>
+              <div class="v" id="goodDeals">0</div>
+            </div>
+            <div class="mini-card">
+              <div class="k">高風險案件</div>
+              <div class="v" id="badDeals">0</div>
+            </div>
+          </div>
+
+          <div class="danger-note">
+            這一版先求穩：<br>
+            不接 API、不搬資料夾、不改整站架構。<br>
+            先把 M4 的輸入、評分、查詢、刪除做起來。
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>目前評分邏輯</h3>
+          <div class="small">
+            • KI 越低越安全<br>
+            • Strike 越低越安全<br>
+            • 利率太低不做，太高也要提高警覺<br>
+            • 天期越長風險越高<br>
+            • Gap = Strike - KI 過小或過大都不好<br>
+            • Basket 內若出現明顯高風險股，要保守看待
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="card">
-      <h2>New FCN / Edit FCN</h2>
+      <h2>歷史紀錄</h2>
+      <p class="muted">這裡會保存你在這台裝置上做過的 M4 外單評估紀錄。</p>
 
-      <div id="editBanner" class="edit-banner">
-        目前為 Edit Mode，正在修改：
-        <b id="editIdText"></b>
+      <div class="section-actions">
+        <button class="btn btn-secondary" onclick="renderHistory()">重新整理</button>
+        <button class="btn btn-secondary" onclick="exportDeals()">匯出 JSON</button>
+        <button class="btn btn-danger" onclick="clearAllDeals()">清空全部紀錄</button>
       </div>
 
-      <form id="fcnForm">
-        <div class="grid">
-
-          <!-- 市場習慣順序 -->
-          <div class="field half">
-            <label for="date">Date</label>
-            <input id="date" type="date">
-          </div>
-
-          <div class="field half">
-            <label for="fcn_id">FCN ID（商品代號）</label>
-            <input id="fcn_id" type="text" maxlength="15" placeholder="例如：FCN499G">
-          </div>
-
-          <div class="field">
-            <label>Basket（標的）</label>
-          </div>
-
-          <div class="field quarter">
-            <label for="stock_1">Stock 1</label>
-            <input id="stock_1" type="text" placeholder="NVDA">
-          </div>
-          <div class="field quarter">
-            <label for="stock_2">Stock 2</label>
-            <input id="stock_2" type="text" placeholder="TSM">
-          </div>
-          <div class="field quarter">
-            <label for="stock_3">Stock 3</label>
-            <input id="stock_3" type="text" placeholder="AVGO">
-          </div>
-          <div class="field quarter">
-            <label for="stock_4">Stock 4（非必填）</label>
-            <input id="stock_4" type="text">
-          </div>
-          <div class="field quarter">
-            <label for="stock_5">Stock 5（非必填）</label>
-            <input id="stock_5" type="text">
-          </div>
-
-          <div class="field third">
-            <label for="tenor">期間 Tenor (M)</label>
-            <input id="tenor" type="number" step="1">
-          </div>
-
-          <div class="field third">
-            <label for="rate">年化收益 Rate (%)</label>
-            <input id="rate" type="number" step="0.01">
-          </div>
-
-          <div class="field third">
-            <label for="autocall">提前出場價 Autocall (%)</label>
-            <input id="autocall" type="number" step="0.01" value="100">
-          </div>
-
-          <div class="field third">
-            <label for="strike">執行價 Strike (%)</label>
-            <input id="strike" type="number" step="0.01">
-          </div>
-
-          <div class="field third">
-            <label for="ki">下限價 KI (%)</label>
-            <input id="ki" type="number" step="0.01" placeholder="若 EKI 可留空">
-          </div>
-
-          <div class="field third">
-            <label for="eki">EKI</label>
-            <select id="eki">
-              <option value="false">NO</option>
-              <option value="true">YES</option>
-            </select>
-          </div>
-
-          <div class="field half">
-            <label for="bank">Bank / Dealer（非必填）</label>
-            <input id="bank" type="text" placeholder="B / BA / BB / BC / NATIXIS">
-          </div>
-
-          <div class="field quarter">
-            <label for="amt">承做金額 amt</label>
-            <input id="amt" type="number" step="0.01" placeholder="例如：30000">
-          </div>
-
-          <div class="field quarter">
-            <label for="currency">Currency</label>
-            <select id="currency">
-              <option value="USD">USD</option>
-              <option value="TWD">TWD</option>
-              <option value="EUR">EUR</option>
-              <option value="HKD">HKD</option>
-            </select>
-          </div>
-
-          <div class="field third">
-            <label for="has_position">是否承做 has_position</label>
-            <select id="has_position">
-              <option value="false">NO</option>
-              <option value="true">YES</option>
-            </select>
-          </div>
-
-          <div class="field third">
-            <label for="is_portfolio">是否進庫存（M2）</label>
-            <select id="is_portfolio">
-              <option value="false">NO</option>
-              <option value="true">YES</option>
-            </select>
-          </div>
-
-          <div class="field third">
-            <label for="status">Status</label>
-            <select id="status">
-              <option value="inquiry">inquiry</option>
-              <option value="watch">watch</option>
-              <option value="active">active</option>
-              <option value="closed">closed</option>
-              <option value="expired">expired</option>
-            </select>
-          </div>
-
-          <div class="field third">
-            <label for="created_time">created_time（非必填）</label>
-            <input id="created_time" type="datetime-local">
-          </div>
-
-          <div class="field third">
-            <label for="entry_time">entry_time（非必填）</label>
-            <input id="entry_time" type="datetime-local">
-          </div>
-
-          <div class="field third">
-            <label for="exit_time">exit_time（非必填）</label>
-            <input id="exit_time" type="datetime-local">
-          </div>
-
-          <div class="field half">
-            <label for="decision_flag">decision_flag（非必填）</label>
-            <select id="decision_flag">
-              <option value="">空白</option>
-              <option value="auto">auto</option>
-              <option value="manual">manual</option>
-              <option value="rejected">rejected</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="note">Note（非必填）</label>
-            <textarea id="note" placeholder="補充說明"></textarea>
-          </div>
-        </div>
-
-        <div class="row" style="margin-top:14px;">
-          <button type="submit" id="saveBtn">新增 New FCN</button>
-          <button type="button" class="secondary" id="updateBtn">更新 Update</button>
-          <button type="button" class="warn" id="deleteBtn">刪除 Delete</button>
-          <button type="button" class="light" id="clearBtn">清空 Clear</button>
-          <button type="button" class="light" id="exportBtn">匯出 JSON</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="card">
-      <h2>FCN Inquiry</h2>
-
-      <div class="grid">
-        <div class="field third">
-          <label for="q_date">Date</label>
-          <input id="q_date" type="date">
-        </div>
-
-        <div class="field third">
-          <label for="q_bank">Bank</label>
-          <input id="q_bank" type="text" placeholder="B / BA / BB / BC">
-        </div>
-
-        <div class="field third">
-          <label for="q_status">Status</label>
-          <select id="q_status">
-            <option value="">全部</option>
-            <option value="inquiry">inquiry</option>
-            <option value="watch">watch</option>
-            <option value="active">active</option>
-            <option value="closed">closed</option>
-            <option value="expired">expired</option>
-          </select>
-        </div>
-
-        <div class="field third">
-          <label for="q_symbol">Basket contains symbol</label>
-          <input id="q_symbol" type="text" placeholder="例如：NVDA">
-        </div>
-
-        <div class="field third">
-          <label for="q_eki">EKI</label>
-          <select id="q_eki">
-            <option value="">全部</option>
-            <option value="true">YES</option>
-            <option value="false">NO</option>
-          </select>
-        </div>
-
-        <div class="field third">
-          <label for="q_fcn_id">FCN ID</label>
-          <input id="q_fcn_id" type="text">
-        </div>
-
-        <div class="field third">
-          <label for="q_rate_min">Rate min</label>
-          <input id="q_rate_min" type="number" step="0.01">
-        </div>
-
-        <div class="field third">
-          <label for="q_rate_max">Rate max</label>
-          <input id="q_rate_max" type="number" step="0.01">
-        </div>
-
-        <div class="field third">
-          <label for="q_tenor">Tenor (M)</label>
-          <input id="q_tenor" type="number" step="1">
-        </div>
+      <div class="table-wrap" id="historyWrap"></div>
+      <div class="footer-note">
+        註：目前資料存在瀏覽器 localStorage。若換裝置、清除瀏覽器資料，紀錄會消失。這是 M4 第一版的刻意設計。
       </div>
-
-      <div class="row" style="margin-top:14px;">
-        <button type="button" id="searchBtn">查詢 Search</button>
-        <button type="button" class="light" id="resetSearchBtn">重設條件 Reset</button>
-      </div>
-
-      <div class="divider"></div>
-
-      <h3>查詢結果</h3>
-      <div id="results"></div>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = "fcn_pool_v3";
-    let currentEditId = null;
+    const STORAGE_KEY = "fcn_external_deals_v1";
 
-    const seedData = [
-      {
-        date: "2025-03-12",
-        fcn_id: "FCN499G",
-        basket: ["TSLA", "INTC", "NVDA", "ARM"],
-        tenor: 12,
-        rate: 34.45,
-        autocall: 100,
-        strike: 65,
-        ki: 60,
-        eki: false,
-        bank: "B",
-        has_position: true,
-        amt: 30000,
-        currency: "USD",
-        status: "active",
-        created_time: "2025-03-12T09:00",
-        entry_time: "2025-03-12T10:00",
-        exit_time: null,
-        decision_flag: "manual",
-        is_portfolio: true,
-        note: "示範資料"
-      },
-      {
-        date: "2025-04-01",
-        fcn_id: "FCNS81G",
-        basket: ["NVDA", "TSM", "AVGO"],
-        tenor: 6,
-        rate: 16,
-        autocall: 100,
-        strike: 65,
-        ki: 60,
-        eki: false,
-        bank: "B",
-        has_position: false,
-        amt: 0,
-        currency: "USD",
-        status: "inquiry",
-        created_time: "2025-04-01T09:00",
-        entry_time: null,
-        exit_time: null,
-        decision_flag: "",
-        is_portfolio: false,
-        note: "示範資料"
-      },
-      {
-        date: "2025-04-08",
-        fcn_id: "FCN609G",
-        basket: ["MSFT", "GOOGL", "AMZN"],
-        tenor: 6,
-        rate: 14,
-        autocall: 100,
-        strike: 70,
-        ki: 65,
-        eki: false,
-        bank: "B",
-        has_position: false,
-        amt: 0,
-        currency: "USD",
-        status: "watch",
-        created_time: "2025-04-08T09:00",
-        entry_time: null,
-        exit_time: null,
-        decision_flag: "",
-        is_portfolio: false,
-        note: "示範資料"
-      }
-    ];
-
-    function loadDB() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(seedData));
-        return [...seedData];
-      }
+    function getDeals() {
       try {
-        return JSON.parse(raw);
-      } catch {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(seedData));
-        return [...seedData];
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch (e) {
+        return [];
       }
     }
 
-    function saveDB(data) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    function saveDeals(deals) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(deals));
     }
 
-    function nowLocalInputValue() {
-      const d = new Date();
-      const pad = n => String(n).padStart(2, "0");
-      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    }
-
-    function getBasketFromForm() {
-      return ["stock_1","stock_2","stock_3","stock_4","stock_5"]
-        .map(id => document.getElementById(id).value.trim().toUpperCase())
+    function normalizeStocks(input) {
+      return input
+        .split(",")
+        .map(s => s.trim().toUpperCase())
         .filter(Boolean);
     }
 
-    function collectFormData() {
-      const kiValue = document.getElementById("ki").value.trim();
+    function stockRiskPenalty(stocks) {
+      const highRisk = ["COIN", "SOFI", "ALAB", "CRDO", "SMCI", "PLTR", "CCL", "AAL", "TSLA"];
+      const midRisk = ["MU", "ARM", "MRVL", "NCLH", "UAL", "BA", "ROKU", "ON"];
+      let penalty = 0;
+      let notes = [];
 
-      return {
-        date: document.getElementById("date").value || "",
-        fcn_id: document.getElementById("fcn_id").value.trim(),
-        basket: getBasketFromForm(),
-        tenor: Number(document.getElementById("tenor").value || 0),
-        rate: Number(document.getElementById("rate").value || 0),
-        autocall: Number(document.getElementById("autocall").value || 0),
-        strike: Number(document.getElementById("strike").value || 0),
-        ki: kiValue === "" ? null : Number(kiValue),
-        eki: document.getElementById("eki").value === "true",
-        bank: document.getElementById("bank").value.trim() || null,
-        has_position: document.getElementById("has_position").value === "true",
-        amt: Number(document.getElementById("amt").value || 0),
-        currency: document.getElementById("currency").value,
-        status: document.getElementById("status").value,
-        created_time: document.getElementById("created_time").value || null,
-        entry_time: document.getElementById("entry_time").value || null,
-        exit_time: document.getElementById("exit_time").value || null,
-        decision_flag: document.getElementById("decision_flag").value || "",
-        is_portfolio: document.getElementById("is_portfolio").value === "true",
-        note: document.getElementById("note").value.trim()
-      };
-    }
-
-    function validateRecord(r) {
-      if (!r.fcn_id) return "FCN ID 不可空白";
-      if (r.fcn_id.length > 15) return "FCN ID 不可超過 15 個字元";
-      if (!r.date) return "Date 不可空白";
-      if (r.basket.length < 2) return "Basket 至少要有 2 檔股票";
-      if (!r.tenor) return "Tenor 不可空白";
-      if (!r.rate) return "Rate 不可空白";
-      if (!r.autocall && r.autocall !== 0) return "Autocall 不可空白";
-      if (!r.strike) return "Strike 不可空白";
-
-      // EKI = false 時，KI 必填
-      if (!r.eki && (r.ki === null || Number.isNaN(r.ki))) {
-        return "非 EKI 結構時，KI 不可空白";
-      }
-
-      if (r.has_position && !r.amt) return "有承做時，amt 不可空白";
-      if (r.amt < 0) return "amt 不可為負數";
-
-      return "";
-    }
-
-    function fillForm(r) {
-      document.getElementById("date").value = r.date || "";
-      document.getElementById("fcn_id").value = r.fcn_id || "";
-      document.getElementById("tenor").value = r.tenor ?? "";
-      document.getElementById("rate").value = r.rate ?? "";
-      document.getElementById("autocall").value = r.autocall ?? 100;
-      document.getElementById("strike").value = r.strike ?? "";
-      document.getElementById("ki").value = r.ki ?? "";
-      document.getElementById("eki").value = String(!!r.eki);
-      document.getElementById("bank").value = r.bank || "";
-      document.getElementById("has_position").value = String(!!r.has_position);
-      document.getElementById("amt").value = r.amt ?? "";
-      document.getElementById("currency").value = r.currency || "USD";
-      document.getElementById("status").value = r.status || "inquiry";
-      document.getElementById("created_time").value = r.created_time || "";
-      document.getElementById("entry_time").value = r.entry_time || "";
-      document.getElementById("exit_time").value = r.exit_time || "";
-      document.getElementById("decision_flag").value = r.decision_flag || "";
-      document.getElementById("is_portfolio").value = String(!!r.is_portfolio);
-      document.getElementById("note").value = r.note || "";
-
-      ["stock_1","stock_2","stock_3","stock_4","stock_5"].forEach((id, idx) => {
-        document.getElementById(id).value = r.basket?.[idx] || "";
+      stocks.forEach(s => {
+        if (highRisk.includes(s)) {
+          penalty -= 4;
+          notes.push(s + " 屬高風險股");
+        } else if (midRisk.includes(s)) {
+          penalty -= 2;
+          notes.push(s + " 屬中高波動股");
+        }
       });
+
+      return { penalty, notes };
     }
 
-    function clearForm() {
-      document.getElementById("fcnForm").reset();
-      document.getElementById("currency").value = "USD";
-      document.getElementById("status").value = "inquiry";
-      document.getElementById("eki").value = "false";
-      document.getElementById("has_position").value = "false";
-      document.getElementById("is_portfolio").value = "false";
-      document.getElementById("autocall").value = "100";
-      currentEditId = null;
-      document.getElementById("editBanner").style.display = "none";
-      document.getElementById("editIdText").textContent = "";
-      document.getElementById("saveBtn").textContent = "新增 New FCN";
+    function scoreKI(ki) {
+      if (ki > 75) return { score: -999, text: "KI > 75，❌不做" };
+      if (ki <= 55) return { score: 8, text: "KI ≤ 55，+8" };
+      if (ki <= 60) return { score: 4, text: "KI 55–60，+4" };
+      if (ki <= 65) return { score: 0, text: "KI 60–65，0" };
+      if (ki <= 70) return { score: -4, text: "KI 65–70，-4" };
+      return { score: -8, text: "KI 70–75，-8" };
     }
 
-    function enterEditMode(record) {
-      currentEditId = record.fcn_id;
-      fillForm(record);
-      document.getElementById("editBanner").style.display = "block";
-      document.getElementById("editIdText").textContent = record.fcn_id;
-      document.getElementById("saveBtn").textContent = "目前是 Edit Mode，請用 Update";
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    function scoreStrike(strike) {
+      if (strike > 80) return { score: -999, text: "Strike > 80，❌不做" };
+      if (strike <= 60) return { score: 10, text: "Strike ≤ 60，+10" };
+      if (strike <= 65) return { score: 5, text: "Strike 60–65，+5" };
+      if (strike <= 67) return { score: -1, text: "Strike 65–67，-1" };
+      if (strike <= 70) return { score: -3, text: "Strike 67–70，-3" };
+      if (strike <= 75) return { score: -5, text: "Strike 70–75，-5" };
+      return { score: -10, text: "Strike 75–80，-10" };
     }
 
-    function statusClass(status) {
-      return {
-        inquiry: "s-inquiry",
-        watch: "s-watch",
-        active: "s-active",
-        closed: "s-closed",
-        expired: "s-expired"
-      }[status] || "";
+    function scoreRate(rate) {
+      if (rate < 10) return { score: -999, text: "利率 < 10%，❌不做" };
+      if (rate < 12) return { score: -4, text: "10–12%，-4" };
+      if (rate < 15) return { score: -2, text: "12–15%，-2" };
+      if (rate < 16) return { score: 0, text: "15–16%，0" };
+      if (rate < 18) return { score: 3, text: "16–18%，+3" };
+      if (rate < 20) return { score: 5, text: "18–20%，+5" };
+      if (rate < 24) return { score: 8, text: "20–24%，+8" };
+      return { score: 10, text: "≥24%，+10（高息但要提高警覺）" };
     }
 
-    function renderResults(records) {
-      const box = document.getElementById("results");
-      if (!records.length) {
-        box.innerHTML = `<div class="muted">查無資料</div>`;
+    function scoreTenor(tenor) {
+      if (tenor > 12) return { score: -999, text: "天期 > 12 月，❌不做" };
+      if (tenor <= 3) return { score: 5, text: "0–3 月，+5" };
+      if (tenor <= 6) return { score: 2, text: "4–6 月，+2" };
+      if (tenor === 6) return { score: 0, text: "6 月，標準 0" };
+      if (tenor <= 9) return { score: -2, text: "7–9 月，-2" };
+      return { score: -5, text: "10–12 月，-5" };
+    }
+
+    function scoreGap(strike, ki) {
+      const gap = strike - ki;
+      if (gap < 0) return { score: -999, gap, text: "Strike < KI，資料異常" };
+      if (gap >= 25) return { score: -999, gap, text: "Gap ≥ 25，❌不做" };
+      if (gap === 0) return { score: 5, gap, text: "Gap = 0，+5" };
+      if (gap < 10) return { score: -7, gap, text: "0 < Gap < 10，-7" };
+      if (gap === 10) return { score: 5, gap, text: "Gap = 10，+5" };
+      if (gap <= 13) return { score: 4, gap, text: "10 < Gap ≤ 13，+4" };
+      if (gap <= 15) return { score: 3, gap, text: "13 < Gap ≤ 15，+3" };
+      if (gap <= 18) return { score: 0, gap, text: "15 < Gap ≤ 18，0" };
+      if (gap <= 20) return { score: -4, gap, text: "18 < Gap ≤ 20，-4" };
+      if (gap <= 22) return { score: -5, gap, text: "20 < Gap ≤ 22，-5" };
+      return { score: -8, gap, text: "22 < Gap < 25，-8" };
+    }
+
+    function getWorstStock(stocks) {
+      const highRisk = ["COIN", "SOFI", "ALAB", "CRDO", "SMCI", "PLTR", "CCL", "AAL", "TSLA"];
+      const midRisk = ["MU", "ARM", "MRVL", "NCLH", "UAL", "BA", "ROKU", "ON"];
+      for (const s of stocks) {
+        if (highRisk.includes(s)) return s;
+      }
+      for (const s of stocks) {
+        if (midRisk.includes(s)) return s;
+      }
+      return stocks[stocks.length - 1] || "-";
+    }
+
+    function getGrade(score) {
+      if (score >= 26) return "A";
+      if (score >= 18) return "B";
+      if (score >= 10) return "C";
+      if (score >= 0) return "D";
+      return "E";
+    }
+
+    function getDecision(grade, hardReject) {
+      if (hardReject) return "❌ 不做";
+      if (grade === "A") return "✅ 可做";
+      if (grade === "B") return "🟡 可觀察";
+      if (grade === "C") return "🟠 保守觀察";
+      return "❌ 不做";
+    }
+
+    function getRiskFlag(grade, hardReject) {
+      if (hardReject) return "危險";
+      if (grade === "A") return "健康";
+      if (grade === "B") return "觀察";
+      return "危險";
+    }
+
+    function evaluateDeal() {
+      const dealName = document.getElementById("dealName").value.trim();
+      const stocksInput = document.getElementById("stocks").value.trim();
+      const ki = Number(document.getElementById("ki").value);
+      const strike = Number(document.getElementById("strike").value);
+      const rate = Number(document.getElementById("rate").value);
+      const tenor = Number(document.getElementById("tenor").value);
+      const productType = document.getElementById("productType").value;
+      const bank = document.getElementById("bank").value.trim();
+      const memo = document.getElementById("memo").value.trim();
+
+      const stocks = normalizeStocks(stocksInput);
+
+      if (stocks.length < 2 || stocks.length > 5) {
+        alert("Basket 請輸入 2～5 檔股票，並以逗號分隔。");
         return;
       }
 
-      box.innerHTML = records.map(r => `
-        <div class="result-card">
-          <div class="result-title">${r.fcn_id}</div>
-          <div class="result-line"><span class="status-pill ${statusClass(r.status)}">${r.status}</span></div>
-          <div class="result-line"><b>Date:</b> ${r.date || "-"}</div>
-          <div class="result-line"><b>Basket:</b> ${(r.basket || []).join(" / ")}</div>
-          <div class="result-line"><b>條件:</b> ${r.tenor}M / Rate ${r.rate}% / Autocall ${r.autocall}% / Strike ${r.strike}% / KI ${r.ki ?? "N/A"} / EKI ${r.eki ? "YES" : "NO"}</div>
-          <div class="result-line"><b>Bank:</b> ${r.bank || "-"}</div>
-          <div class="result-line"><b>是否承做:</b> ${r.has_position ? "YES" : "NO"} / <b>進庫存:</b> ${r.is_portfolio ? "YES" : "NO"}</div>
-          <div class="result-line"><b>Amt:</b> ${r.amt ?? 0} ${r.currency || ""}</div>
-          <div class="result-line"><b>created_time:</b> ${r.created_time || "-"} / <b>entry_time:</b> ${r.entry_time || "-"} / <b>exit_time:</b> ${r.exit_time || "-"}</div>
-          <div class="result-line"><b>Note:</b> ${r.note || "-"}</div>
-          <div class="row" style="margin-top:10px;">
-            <button type="button" onclick="editRecord('${r.fcn_id.replace(/'/g, "\\'")}')">Edit</button>
+      if (!Number.isFinite(ki) || !Number.isFinite(strike) || !Number.isFinite(rate) || !Number.isFinite(tenor)) {
+        alert("KI / Strike / 利率 / 天期 都必須填數字。");
+        return;
+      }
+
+      const kiRes = scoreKI(ki);
+      const strikeRes = scoreStrike(strike);
+      const rateRes = scoreRate(rate);
+      const tenorRes = scoreTenor(tenor);
+      const gapRes = scoreGap(strike, ki);
+      const riskRes = stockRiskPenalty(stocks);
+
+      const hardReject = [kiRes.score, strikeRes.score, rateRes.score, tenorRes.score, gapRes.score].some(s => s <= -999);
+
+      let totalScore = 0;
+      if (!hardReject) {
+        totalScore =
+          kiRes.score +
+          strikeRes.score +
+          rateRes.score +
+          tenorRes.score +
+          gapRes.score +
+          riskRes.penalty;
+      }
+
+      const grade = hardReject ? "E" : getGrade(totalScore);
+      const decision = getDecision(grade, hardReject);
+      const riskFlag = getRiskFlag(grade, hardReject);
+      const worstStock = getWorstStock(stocks);
+
+      const record = {
+        id: "DEAL-" + Date.now(),
+        created_at: new Date().toLocaleString("zh-TW"),
+        deal_name: dealName || "未命名案件",
+        stocks,
+        ki,
+        strike,
+        rate,
+        tenor,
+        product_type: productType,
+        bank,
+        memo,
+        gap: gapRes.gap,
+        score: hardReject ? -999 : totalScore,
+        grade,
+        decision,
+        risk_flag: riskFlag,
+        worst_stock: worstStock,
+        details: {
+          ki: kiRes,
+          strike: strikeRes,
+          rate: rateRes,
+          tenor: tenorRes,
+          gap: gapRes,
+          stockRisk: riskRes
+        }
+      };
+
+      const deals = getDeals();
+      deals.unshift(record);
+      saveDeals(deals);
+
+      renderResult(record);
+      renderHistory();
+      renderSummary();
+    }
+
+    function renderResult(record) {
+      const box = document.getElementById("resultArea");
+      const scoreText = record.score === -999 ? "不做" : record.score;
+      let badgeClass = "badge-gray";
+      if (record.risk_flag === "健康") badgeClass = "badge-green";
+      else if (record.risk_flag === "觀察") badgeClass = "badge-yellow";
+      else badgeClass = "badge-red";
+
+      const stockNotes = record.details.stockRisk.notes.length
+        ? record.details.stockRisk.notes.map(n => `<li>${n}</li>`).join("")
+        : "<li>未偵測到明顯高風險股加重扣分</li>";
+
+      box.style.display = "block";
+      box.innerHTML = `
+        <div class="score-big">${scoreText}</div>
+        <div style="margin-bottom:10px;">
+          <span class="badge ${badgeClass}">${record.risk_flag}</span>
+          <span class="badge badge-gray">Grade ${record.grade}</span>
+          <span class="badge badge-gray">${record.decision}</span>
+        </div>
+
+        <div><strong>案件：</strong> ${record.deal_name}</div>
+        <div><strong>Basket：</strong> ${record.stocks.join(", ")}</div>
+        <div><strong>Worst-of 觀察：</strong> ${record.worst_stock}</div>
+        <div><strong>類型：</strong> ${record.product_type}</div>
+        <div><strong>銀行：</strong> ${record.bank || "-"}</div>
+
+        <div class="mini-grid" style="margin-top:14px;">
+          <div class="mini-card">
+            <div class="k">KI</div>
+            <div class="v">${record.ki}%</div>
+            <div class="small">${record.details.ki.text}</div>
+          </div>
+          <div class="mini-card">
+            <div class="k">Strike</div>
+            <div class="v">${record.strike}%</div>
+            <div class="small">${record.details.strike.text}</div>
+          </div>
+          <div class="mini-card">
+            <div class="k">Rate</div>
+            <div class="v">${record.rate}%</div>
+            <div class="small">${record.details.rate.text}</div>
+          </div>
+          <div class="mini-card">
+            <div class="k">Tenor</div>
+            <div class="v">${record.tenor}M</div>
+            <div class="small">${record.details.tenor.text}</div>
+          </div>
+          <div class="mini-card">
+            <div class="k">Gap</div>
+            <div class="v">${record.gap}</div>
+            <div class="small">${record.details.gap.text}</div>
+          </div>
+          <div class="mini-card">
+            <div class="k">Stock Risk</div>
+            <div class="v">${record.details.stockRisk.penalty}</div>
+            <div class="small">Basket 額外風險扣分</div>
           </div>
         </div>
-      `).join("");
+
+        <div class="danger-note">
+          <strong>Basket 風險提示：</strong>
+          <ul style="margin:8px 0 0 18px; padding:0;">
+            ${stockNotes}
+          </ul>
+        </div>
+      `;
     }
 
-    function searchRecords() {
-      const db = loadDB();
-
-      const q_date = document.getElementById("q_date").value;
-      const q_bank = document.getElementById("q_bank").value.trim().toUpperCase();
-      const q_status = document.getElementById("q_status").value;
-      const q_symbol = document.getElementById("q_symbol").value.trim().toUpperCase();
-      const q_eki = document.getElementById("q_eki").value;
-      const q_fcn_id = document.getElementById("q_fcn_id").value.trim().toUpperCase();
-      const q_rate_min = document.getElementById("q_rate_min").value;
-      const q_rate_max = document.getElementById("q_rate_max").value;
-      const q_tenor = document.getElementById("q_tenor").value;
-
-      const rows = db.filter(r => {
-        if (q_date && r.date !== q_date) return false;
-        if (q_bank && String(r.bank || "").toUpperCase() !== q_bank) return false;
-        if (q_status && r.status !== q_status) return false;
-        if (q_symbol && !(r.basket || []).includes(q_symbol)) return false;
-        if (q_eki && String(!!r.eki) !== q_eki) return false;
-        if (q_fcn_id && !String(r.fcn_id || "").toUpperCase().includes(q_fcn_id)) return false;
-        if (q_rate_min && Number(r.rate) < Number(q_rate_min)) return false;
-        if (q_rate_max && Number(r.rate) > Number(q_rate_max)) return false;
-        if (q_tenor && Number(r.tenor) !== Number(q_tenor)) return false;
-        return true;
-      });
-
-      renderResults(rows);
-    }
-
-    window.editRecord = function(fcnId) {
-      const db = loadDB();
-      const row = db.find(x => x.fcn_id === fcnId);
-      if (!row) return;
-      enterEditMode(row);
-    };
-
-    document.getElementById("fcnForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const db = loadDB();
-      const record = collectFormData();
-
-      if (!record.created_time) record.created_time = nowLocalInputValue();
-
-      const err = validateRecord(record);
-      if (err) {
-        alert(err);
-        return;
-      }
-
-      const exists = db.some(x => x.fcn_id === record.fcn_id);
-      if (exists) {
-        alert("FCN ID 已存在，若要修改請先從 Inquiry 點 Edit，再按 Update。");
-        return;
-      }
-
-      if ((record.has_position || record.is_portfolio) && !record.entry_time) {
-        record.entry_time = nowLocalInputValue();
-      }
-
-      if ((record.has_position || record.is_portfolio) && record.status !== "active") {
-        record.status = "active";
-      }
-
-      db.unshift(record);
-      saveDB(db);
-      alert("新增成功（已寫入 fcn_pool）");
-      clearForm();
-      searchRecords();
-    });
-
-    document.getElementById("updateBtn").addEventListener("click", function() {
-      if (!currentEditId) {
-        alert("請先從 Inquiry 點 Edit。");
-        return;
-      }
-
-      const db = loadDB();
-      const idx = db.findIndex(x => x.fcn_id === currentEditId);
-      if (idx === -1) {
-        alert("找不到要更新的資料。");
-        return;
-      }
-
-      const updated = collectFormData();
-      const err = validateRecord(updated);
-      if (err) {
-        alert(err);
-        return;
-      }
-
-      updated.fcn_id = currentEditId;
-
-      if (!updated.created_time) {
-        updated.created_time = db[idx].created_time || nowLocalInputValue();
-      }
-
-      if ((updated.has_position || updated.is_portfolio) && !updated.entry_time) {
-        updated.entry_time = db[idx].entry_time || nowLocalInputValue();
-      }
-
-      if ((updated.has_position || updated.is_portfolio) && updated.status !== "active") {
-        updated.status = "active";
-      }
-
-      db[idx] = updated;
-      saveDB(db);
-      alert("更新成功（已寫回 fcn_pool）");
-      clearForm();
-      searchRecords();
-    });
-
-    document.getElementById("deleteBtn").addEventListener("click", function() {
-      if (!currentEditId) {
-        alert("請先從 Inquiry 點 Edit。");
-        return;
-      }
-
-      const ok = confirm(`確定刪除 ${currentEditId} ?`);
+    function deleteDeal(id) {
+      const ok = confirm("確定要刪除這筆紀錄嗎？");
       if (!ok) return;
+      const deals = getDeals().filter(d => d.id !== id);
+      saveDeals(deals);
+      renderHistory();
+      renderSummary();
+    }
 
-      const db = loadDB().filter(x => x.fcn_id !== currentEditId);
-      saveDB(db);
-      alert("刪除成功");
-      clearForm();
-      searchRecords();
-    });
+    function clearAllDeals() {
+      const ok = confirm("確定要清空全部 M4 歷史紀錄？此動作無法復原。");
+      if (!ok) return;
+      localStorage.removeItem(STORAGE_KEY);
+      document.getElementById("resultArea").style.display = "none";
+      renderHistory();
+      renderSummary();
+    }
 
-    document.getElementById("clearBtn").addEventListener("click", clearForm);
+    function renderHistory() {
+      const wrap = document.getElementById("historyWrap");
+      const deals = getDeals();
 
-    document.getElementById("searchBtn").addEventListener("click", searchRecords);
+      if (!deals.length) {
+        wrap.innerHTML = `<div class="empty">目前還沒有任何 M4 歷史紀錄。</div>`;
+        return;
+      }
 
-    document.getElementById("resetSearchBtn").addEventListener("click", function() {
-      ["q_date","q_bank","q_status","q_symbol","q_eki","q_fcn_id","q_rate_min","q_rate_max","q_tenor"]
-        .forEach(id => document.getElementById(id).value = "");
-      searchRecords();
-    });
+      wrap.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>時間</th>
+              <th>案件</th>
+              <th>Basket</th>
+              <th>KI</th>
+              <th>Strike</th>
+              <th>Rate</th>
+              <th>Tenor</th>
+              <th>類型</th>
+              <th>Score</th>
+              <th>Grade</th>
+              <th>Risk</th>
+              <th>Decision</th>
+              <th>Worst-of</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${deals.map(d => `
+              <tr>
+                <td>${d.created_at}</td>
+                <td>
+                  <strong>${d.deal_name}</strong>
+                  <div class="small">${d.bank || "-"}</div>
+                </td>
+                <td>${d.stocks.join(", ")}</td>
+                <td>${d.ki}%</td>
+                <td>${d.strike}%</td>
+                <td>${d.rate}%</td>
+                <td>${d.tenor}M</td>
+                <td><span class="pill">${d.product_type}</span></td>
+                <td>${d.score === -999 ? "不做" : d.score}</td>
+                <td>${d.grade}</td>
+                <td>${d.risk_flag}</td>
+                <td>${d.decision}</td>
+                <td>${d.worst_stock}</td>
+                <td>
+                  <button class="btn btn-danger" style="padding:6px 10px;font-size:12px;" onclick="deleteDeal('${d.id}')">刪除</button>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
 
-    document.getElementById("exportBtn").addEventListener("click", function() {
-      const db = loadDB();
-      const blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+    function renderSummary() {
+      const deals = getDeals();
+      const total = deals.length;
+      const validScores = deals.filter(d => d.score !== -999).map(d => d.score);
+      const avg = validScores.length
+        ? (validScores.reduce((a, b) => a + b, 0) / validScores.length).toFixed(1)
+        : 0;
+
+      const good = deals.filter(d => d.grade === "A" || d.grade === "B").length;
+      const bad = deals.filter(d => d.risk_flag === "危險" || d.score === -999).length;
+
+      document.getElementById("totalDeals").textContent = total;
+      document.getElementById("avgScore").textContent = avg;
+      document.getElementById("goodDeals").textContent = good;
+      document.getElementById("badDeals").textContent = bad;
+    }
+
+    function exportDeals() {
+      const deals = getDeals();
+      if (!deals.length) {
+        alert("目前沒有資料可匯出。");
+        return;
+      }
+      const blob = new Blob([JSON.stringify(deals, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "fcn_pool_export.json";
+      a.download = "external_deals_export.json";
       a.click();
       URL.revokeObjectURL(url);
-    });
-
-    document.getElementById("date").value = new Date().toISOString().slice(0, 10);
-    document.getElementById("currency").value = "USD";
-    document.getElementById("status").value = "inquiry";
-    document.getElementById("eki").value = "false";
-    document.getElementById("has_position").value = "false";
-    document.getElementById("is_portfolio").value = "false";
-    document.getElementById("autocall").value = "100";
-   
-  
-    searchRecords();
-  </script>
-
-  <script type="module">
-  import {
-    runDecisionModuleV1,
-    exportDecisionArtifacts
-  } from "./js/core/decision_module_v1.js";
-
-  async function bootDecisionModule() {
-    try {
-      const result = await runDecisionModuleV1({
-        pool30Path: "./data/pool30.json",
-        fcnPoolPath: "./data/fcn_pool.json",
-        marketRuntimePath: "./data/market_runtime.json"
-      });
-
-      console.log("Decision Module V1 啟動成功", result);
-      window.decisionV1Result = result;
-      window.exportDecisionArtifacts = exportDecisionArtifacts;
-
-      alert("Decision Module V1 啟動成功");
-    } catch (err) {
-      console.error("Decision Module V1 啟動失敗", err);
-      alert("Decision Module V1 啟動失敗，請看 console");
     }
-  }
 
-  bootDecisionModule();
-</script>
+    function resetForm() {
+      document.getElementById("dealName").value = "";
+      document.getElementById("stocks").value = "";
+      document.getElementById("ki").value = "55";
+      document.getElementById("strike").value = "65";
+      document.getElementById("rate").value = "18";
+      document.getElementById("tenor").value = "6";
+      document.getElementById("productType").value = "EKI";
+      document.getElementById("bank").value = "";
+      document.getElementById("memo").value = "";
+      document.getElementById("resultArea").style.display = "none";
+    }
+
+    renderHistory();
+    renderSummary();
+  </script>
 </body>
 </html>
