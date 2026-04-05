@@ -3,833 +3,1226 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M4｜FCN Pool + Daily Key-in</title>
+  <title>振宇 FCN 系統｜M4 UI</title>
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Arial, "Microsoft JhengHei", sans-serif;
-      background: #f5f6f8;
-      color: #111;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
     }
-    .page {
-      max-width: 1100px;
+    .container {
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 20px 14px 50px;
+      padding: 18px;
     }
-    h1 { margin: 0 0 16px; font-size: 32px; }
-    h2 { margin: 0 0 12px; font-size: 24px; }
-    h3 { margin: 0 0 8px; font-size: 18px; }
+    .topbar {
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .title h1 {
+      margin: 0 0 6px 0;
+      font-size: 30px;
+      font-weight: 800;
+    }
+    .title p {
+      margin: 0;
+      font-size: 14px;
+      color: #6b7280;
+    }
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.2s ease;
+    }
+    .btn-primary { background: #111827; color: #fff; }
+    .btn-primary:hover { background: #000; }
+    .btn-secondary { background: #fff; color: #111827; border: 1px solid #d1d5db; }
+    .btn-secondary:hover { background: #f9fafb; }
+    .btn-danger { background: #dc2626; color: #fff; }
+    .btn-danger:hover { background: #b91c1c; }
 
     .card {
       background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      margin-bottom: 18px;
+    }
+    .card h2 {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+    }
+    .card h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+    }
+    .muted {
+      color: #6b7280;
+      font-size: 13px;
     }
 
-    .grid {
+    .grid-2 {
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 12px;
     }
-    .field { grid-column: span 12; }
-    .field.half { grid-column: span 6; }
-    .field.third { grid-column: span 4; }
-    .field.quarter { grid-column: span 3; }
-
-    label {
-      display: block;
-      margin: 0 0 6px;
-      font-size: 14px;
-      font-weight: 700;
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
     }
-
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+    label {
+      font-size: 13px;
+      font-weight: 800;
+      color: #374151;
+    }
     input, select, textarea {
       width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      padding: 10px 12px;
-      font-size: 15px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 14px;
       background: #fff;
     }
-
     textarea {
-      min-height: 84px;
       resize: vertical;
+      min-height: 88px;
+    }
+    .helper {
+      font-size: 12px;
+      color: #6b7280;
     }
 
-    .row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 14px;
-      cursor: pointer;
-      background: #111;
-      color: #fff;
-    }
-    button.secondary { background: #666; }
-    button.warn { background: #b00020; }
-    button.light { background: #e9ecef; color: #111; }
-
-    .note {
-      font-size: 13px;
-      background: #fffbe6;
-      border: 1px solid #f1df9a;
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin-top: 8px;
-      line-height: 1.6;
-    }
-
-    .divider {
-      height: 1px;
-      background: #eee;
-      margin: 12px 0;
-    }
-
-    .result-card {
-      border: 1px solid #e5e5e5;
+    .mini-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
       border-radius: 14px;
       padding: 14px;
-      margin-top: 12px;
-      background: #fff;
     }
-
-    .result-title {
-      font-size: 18px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .result-line {
-      margin: 4px 0;
-      line-height: 1.5;
-      word-break: break-word;
-    }
-
-    .status-pill {
-      display: inline-block;
-      border-radius: 999px;
-      padding: 4px 10px;
+    .mini-k {
       font-size: 12px;
-      font-weight: 700;
-      border: 1px solid #ddd;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+    .mini-v {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+    .badge-green { background: #dcfce7; color: #166534; }
+    .badge-yellow { background: #fef3c7; color: #92400e; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .badge-gray { background: #e5e7eb; color: #374151; }
+
+    .result-block {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+    }
+    th, td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 10px 8px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+    }
+    th {
+      background: #f9fafb;
+      font-weight: 800;
+      color: #374151;
+      position: sticky;
+      top: 0;
+    }
+    .small {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .empty {
+      text-align: center;
+      padding: 26px 10px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    .stock-row {
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
       background: #fafafa;
     }
-    .s-inquiry { background: #eef6ff; border-color: #b8d8ff; }
-    .s-watch { background: #fff7e8; border-color: #f0d298; }
-    .s-active { background: #ecfff1; border-color: #a9e2b4; }
-    .s-closed { background: #f5f5f5; border-color: #d6d6d6; }
-    .s-expired { background: #fff0f0; border-color: #f1b5b5; }
-
-    .edit-banner {
-      border: 1px solid #b8d8ff;
-      background: #eef6ff;
-      border-radius: 12px;
-      padding: 10px 12px;
-      margin-bottom: 12px;
-      display: none;
+    .stock-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
     }
 
-    .muted { color: #666; }
-
-    @media (max-width: 800px) {
-      .field.half, .field.third, .field.quarter { grid-column: span 12; }
-      button { width: 100%; }
-      .row { flex-direction: column; align-items: stretch; }
-      h1 { font-size: 26px; }
-      h2 { font-size: 20px; }
+    @media (max-width: 980px) {
+      .grid-2, .grid-4, .form-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <h1>M4｜FCN Pool + Daily Key-in</h1>
+  <div class="container">
+    <div class="topbar">
+      <div class="title">
+        <h1>🛠️ M4｜外在單評分與紀錄 UI</h1>
+        <p>FCN 三層評分架構：L1 總體評分 / L2 原因拆解 / L3 股票詳細資訊</p>
+      </div>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="index.html">回首頁</a>
+        <a class="btn btn-secondary" href="milestone2_index.html">回 Milestone 2</a>
+      </div>
+    </div>
 
-    <div class="card">
-      <h2>M4 定位</h2>
-      <div class="result-line">1. <b>pool30.json</b> 是股票池。</div>
-      <div class="result-line">2. <b>fcn_pool.json</b> 是 FCN total pool。</div>
-      <div class="result-line">3. 只有 <b>status = active</b> 的單，未來才會進 M2 庫存監控。</div>
-      <div class="note">
-        FCN ID = 商品代號。最大長度 15 字元。<br>
-        本版已補上 <b>amt</b>、<b>autocall</b>、<b>has_position</b>，並移除沒有決策價值的 <b>open_price</b>。
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <h2>基本資料</h2>
+          <p class="muted">先把外在單資料、L1 / L2 / L3 需要記錄的欄位完整存下來，方便未來回測。</p>
+
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="dealName">案件名稱</label>
+              <input id="dealName" type="text" placeholder="例：今日外在單 / 科技收益單 / 高息事件單" />
+            </div>
+
+            <div class="form-group">
+              <label for="bank">銀行 / 券商</label>
+              <input id="bank" type="text" placeholder="例：DB / UBS / 某銀行" />
+            </div>
+
+            <div class="form-group">
+              <label for="productType">產品類型</label>
+              <select id="productType">
+                <option value="EKI">EKI</option>
+                <option value="AKI / MKI">AKI / MKI</option>
+                <option value="DACN">DACN</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label for="basket">Basket</label>
+              <input id="basket" type="text" placeholder="例：NVDA,TSM,AMAT,CCL" />
+              <div class="helper">先輸入股票代號，按「建立股票區塊」後會對接 fcn_pool / market_runtime / runtime_cache_v1 / stock_engine.js</div>
+            </div>
+
+            <div class="form-group">
+              <label for="ki">下限價 KI (%)</label>
+              <input id="ki" type="number" value="55" />
+            </div>
+            <div class="form-group">
+              <label for="strike">執行價 Strike (%)</label>
+              <input id="strike" type="number" value="65" />
+            </div>
+            <div class="form-group">
+              <label for="coupon">票息 / 年化利率 Coupon (%)</label>
+              <input id="coupon" type="number" value="18" />
+            </div>
+            <div class="form-group">
+              <label for="tenor">天期 Tenor（月）</label>
+              <input id="tenor" type="number" value="6" />
+            </div>
+
+            <div class="form-group full">
+              <label for="memo">案件備註</label>
+              <textarea id="memo" placeholder="例：這次報價比平常高，懷疑市場在反映短期事件風險"></textarea>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" type="button" onclick="buildStockBlocks()">建立股票區塊</button>
+            <button class="btn btn-primary" type="button" onclick="runM4Scoring()">執行評分</button>
+            <button class="btn btn-secondary" type="button" onclick="saveDeal()">儲存紀錄</button>
+            <button class="btn btn-secondary" type="button" onclick="resetForm()">清空表單</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>L1｜FCN 總體評分</h2>
+          <p class="muted">L1 先看整體，不先拆股票細節。</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="overallFcnScore">Overall FCN Score</label>
+              <input id="overallFcnScore" type="number" placeholder="總體分數" />
+            </div>
+            <div class="form-group">
+              <label for="overallFcnComment">Overall FCN 說明</label>
+              <input id="overallFcnComment" type="text" placeholder="整體這單好不好" />
+            </div>
+
+            <div class="form-group">
+              <label for="eventFcnScore">Event FCN Score</label>
+              <input id="eventFcnScore" type="number" placeholder="當下評價分數" />
+            </div>
+            <div class="form-group">
+              <label for="eventFcnComment">Event FCN 說明</label>
+              <input id="eventFcnComment" type="text" placeholder="說明整體當下評價" />
+            </div>
+
+            <div class="form-group">
+              <label for="pureFcnScore">Pure FCN Score</label>
+              <input id="pureFcnScore" type="number" placeholder="長期評價分數" />
+            </div>
+            <div class="form-group">
+              <label for="pureFcnComment">Pure FCN 說明</label>
+              <input id="pureFcnComment" type="text" placeholder="說明長期本質評價" />
+            </div>
+
+            <div class="form-group">
+              <label for="deltaFcnScore">Delta FCN Score</label>
+              <input id="deltaFcnScore" type="number" placeholder="現在划算嗎" />
+            </div>
+            <div class="form-group">
+              <label for="deltaFcnComment">Delta FCN 說明</label>
+              <input id="deltaFcnComment" type="text" placeholder="現在做是否划算" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>L2｜FCN 條件拆解</h2>
+          <p class="muted">這一層是說明 why / why not，要有數字與文字。</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>條件</th>
+                  <th>值</th>
+                  <th>分數</th>
+                  <th>說明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>下限價 KI</td>
+                  <td><input id="l2KiValue" type="number" value="55" /></td>
+                  <td><input id="l2KiScore" type="number" placeholder="KI 分數" /></td>
+                  <td><input id="l2KiComment" type="text" placeholder="KI 說明" /></td>
+                </tr>
+                <tr>
+                  <td>執行價 Strike</td>
+                  <td><input id="l2StrikeValue" type="number" value="65" /></td>
+                  <td><input id="l2StrikeScore" type="number" placeholder="Strike 分數" /></td>
+                  <td><input id="l2StrikeComment" type="text" placeholder="Strike 說明" /></td>
+                </tr>
+                <tr>
+                  <td>票息 Coupon</td>
+                  <td><input id="l2CouponValue" type="number" value="18" /></td>
+                  <td><input id="l2CouponScore" type="number" placeholder="Coupon 分數" /></td>
+                  <td><input id="l2CouponComment" type="text" placeholder="Coupon 說明" /></td>
+                </tr>
+                <tr>
+                  <td>天期 Tenor</td>
+                  <td><input id="l2TenorValue" type="number" value="6" /></td>
+                  <td><input id="l2TenorScore" type="number" placeholder="Tenor 分數" /></td>
+                  <td><input id="l2TenorComment" type="text" placeholder="Tenor 說明" /></td>
+                </tr>
+                <tr>
+                  <td>Gap（執行價 - 下限價）</td>
+                  <td><input id="l2GapValue" type="number" placeholder="Strike - KI" /></td>
+                  <td><input id="l2GapScore" type="number" placeholder="Gap 分數" /></td>
+                  <td><input id="l2GapComment" type="text" placeholder="Gap 說明" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="form-group" style="margin-top:12px;">
+            <label for="l2FcnSummary">FCN 條件總結</label>
+            <textarea id="l2FcnSummary" placeholder="例：結構本身不差，但利率偏高需提高警覺"></textarea>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h2>L2 + L3｜股票評估與詳細資訊</h2>
+            <button class="btn btn-secondary" type="button" onclick="buildStockBlocks()">依 Basket 建立股票區塊</button>
+          </div>
+          <p class="muted">這裡先存 Pure Stock / Event Stock / 波動度分數 / 詳細價格變化，方便未來回測。</p>
+
+          <div id="stockBlocks"></div>
+        </div>
+
+        <div class="card">
+          <h2>最終結論</h2>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="worstOf">Worst-of</label>
+              <input id="worstOf" type="text" placeholder="最差股票代號" />
+            </div>
+            <div class="form-group">
+              <label for="finalDecision">Final Decision</label>
+              <input id="finalDecision" type="text" placeholder="可做 / 觀察 / 不做" />
+            </div>
+            <div class="form-group">
+              <label for="keyAdvantage">Key Advantage</label>
+              <input id="keyAdvantage" type="text" placeholder="主要優勢" />
+            </div>
+            <div class="form-group">
+              <label for="keyRisk">Key Risk</label>
+              <input id="keyRisk" type="text" placeholder="主要風險" />
+            </div>
+            <div class="form-group full">
+              <label for="finalReason">Final Reason</label>
+              <textarea id="finalReason" placeholder="最後結論與 why / why not"></textarea>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-secondary" onclick="previewDeal()">預覽資料</button>
+          </div>
+
+          <div id="previewArea" class="result-block" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h2>M4 目前狀態</h2>
+          <div class="grid-2">
+            <div class="mini-card">
+              <div class="mini-k">累積紀錄</div>
+              <div class="mini-v" id="totalDeals">0</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-k">最近案件</div>
+              <div class="mini-v" id="lastDealName">-</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>這一版重點</h2>
+          <div class="muted">
+            1. 對齊 M2 資料來源<br>
+            2. 已接上 stock_engine.js V6<br>
+            3. 股票價格與變化優先讀取 market_runtime / runtime_cache<br>
+            4. Pure / Snapshot / Event 分數自動帶入
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>資料來源</h2>
+          <div class="muted">
+            • data/fcn_pool.json<br>
+            • data/market_runtime.json<br>
+            • localStorage.runtime_cache_v1<br>
+            • js/core/stock_engine.js
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="card">
-      <h2>New FCN / Edit FCN</h2>
-
-      <div id="editBanner" class="edit-banner">
-        目前為 Edit Mode，正在修改：
-        <b id="editIdText"></b>
-      </div>
-
-      <form id="fcnForm">
-        <div class="grid">
-
-          <!-- 市場習慣順序 -->
-          <div class="field half">
-            <label for="date">Date</label>
-            <input id="date" type="date">
-          </div>
-
-          <div class="field half">
-            <label for="fcn_id">FCN ID（商品代號）</label>
-            <input id="fcn_id" type="text" maxlength="15" placeholder="例如：FCN499G">
-          </div>
-
-          <div class="field">
-            <label>Basket（標的）</label>
-          </div>
-
-          <div class="field quarter">
-            <label for="stock_1">Stock 1</label>
-            <input id="stock_1" type="text" placeholder="NVDA">
-          </div>
-          <div class="field quarter">
-            <label for="stock_2">Stock 2</label>
-            <input id="stock_2" type="text" placeholder="TSM">
-          </div>
-          <div class="field quarter">
-            <label for="stock_3">Stock 3</label>
-            <input id="stock_3" type="text" placeholder="AVGO">
-          </div>
-          <div class="field quarter">
-            <label for="stock_4">Stock 4（非必填）</label>
-            <input id="stock_4" type="text">
-          </div>
-          <div class="field quarter">
-            <label for="stock_5">Stock 5（非必填）</label>
-            <input id="stock_5" type="text">
-          </div>
-
-          <div class="field third">
-            <label for="tenor">期間 Tenor (M)</label>
-            <input id="tenor" type="number" step="1">
-          </div>
-
-          <div class="field third">
-            <label for="rate">年化收益 Rate (%)</label>
-            <input id="rate" type="number" step="0.01">
-          </div>
-
-          <div class="field third">
-            <label for="autocall">提前出場價 Autocall (%)</label>
-            <input id="autocall" type="number" step="0.01" value="100">
-          </div>
-
-          <div class="field third">
-            <label for="strike">執行價 Strike (%)</label>
-            <input id="strike" type="number" step="0.01">
-          </div>
-
-          <div class="field third">
-            <label for="ki">下限價 KI (%)</label>
-            <input id="ki" type="number" step="0.01" placeholder="若 EKI 可留空">
-          </div>
-
-          <div class="field third">
-            <label for="eki">EKI</label>
-            <select id="eki">
-              <option value="false">NO</option>
-              <option value="true">YES</option>
-            </select>
-          </div>
-
-          <div class="field half">
-            <label for="bank">Bank / Dealer（非必填）</label>
-            <input id="bank" type="text" placeholder="B / BA / BB / BC / NATIXIS">
-          </div>
-
-          <div class="field quarter">
-            <label for="amt">承做金額 amt</label>
-            <input id="amt" type="number" step="0.01" placeholder="例如：30000">
-          </div>
-
-          <div class="field quarter">
-            <label for="currency">Currency</label>
-            <select id="currency">
-              <option value="USD">USD</option>
-              <option value="TWD">TWD</option>
-              <option value="EUR">EUR</option>
-              <option value="HKD">HKD</option>
-            </select>
-          </div>
-
-          <div class="field third">
-            <label for="has_position">是否承做 has_position</label>
-            <select id="has_position">
-              <option value="false">NO</option>
-              <option value="true">YES</option>
-            </select>
-          </div>
-
-          <div class="field third">
-            <label for="is_portfolio">是否進庫存（M2）</label>
-            <select id="is_portfolio">
-              <option value="false">NO</option>
-              <option value="true">YES</option>
-            </select>
-          </div>
-
-          <div class="field third">
-            <label for="status">Status</label>
-            <select id="status">
-              <option value="inquiry">inquiry</option>
-              <option value="watch">watch</option>
-              <option value="active">active</option>
-              <option value="closed">closed</option>
-              <option value="expired">expired</option>
-            </select>
-          </div>
-
-          <div class="field third">
-            <label for="created_time">created_time（非必填）</label>
-            <input id="created_time" type="datetime-local">
-          </div>
-
-          <div class="field third">
-            <label for="entry_time">entry_time（非必填）</label>
-            <input id="entry_time" type="datetime-local">
-          </div>
-
-          <div class="field third">
-            <label for="exit_time">exit_time（非必填）</label>
-            <input id="exit_time" type="datetime-local">
-          </div>
-
-          <div class="field half">
-            <label for="decision_flag">decision_flag（非必填）</label>
-            <select id="decision_flag">
-              <option value="">空白</option>
-              <option value="auto">auto</option>
-              <option value="manual">manual</option>
-              <option value="rejected">rejected</option>
-            </select>
-          </div>
-
-          <div class="field">
-            <label for="note">Note（非必填）</label>
-            <textarea id="note" placeholder="補充說明"></textarea>
-          </div>
-        </div>
-
-        <div class="row" style="margin-top:14px;">
-          <button type="submit" id="saveBtn">新增 New FCN</button>
-          <button type="button" class="secondary" id="updateBtn">更新 Update</button>
-          <button type="button" class="warn" id="deleteBtn">刪除 Delete</button>
-          <button type="button" class="light" id="clearBtn">清空 Clear</button>
-          <button type="button" class="light" id="exportBtn">匯出 JSON</button>
-        </div>
-      </form>
-    </div>
-
-    <div class="card">
-      <h2>FCN Inquiry</h2>
-
-      <div class="grid">
-        <div class="field third">
-          <label for="q_date">Date</label>
-          <input id="q_date" type="date">
-        </div>
-
-        <div class="field third">
-          <label for="q_bank">Bank</label>
-          <input id="q_bank" type="text" placeholder="B / BA / BB / BC">
-        </div>
-
-        <div class="field third">
-          <label for="q_status">Status</label>
-          <select id="q_status">
-            <option value="">全部</option>
-            <option value="inquiry">inquiry</option>
-            <option value="watch">watch</option>
-            <option value="active">active</option>
-            <option value="closed">closed</option>
-            <option value="expired">expired</option>
-          </select>
-        </div>
-
-        <div class="field third">
-          <label for="q_symbol">Basket contains symbol</label>
-          <input id="q_symbol" type="text" placeholder="例如：NVDA">
-        </div>
-
-        <div class="field third">
-          <label for="q_eki">EKI</label>
-          <select id="q_eki">
-            <option value="">全部</option>
-            <option value="true">YES</option>
-            <option value="false">NO</option>
-          </select>
-        </div>
-
-        <div class="field third">
-          <label for="q_fcn_id">FCN ID</label>
-          <input id="q_fcn_id" type="text">
-        </div>
-
-        <div class="field third">
-          <label for="q_rate_min">Rate min</label>
-          <input id="q_rate_min" type="number" step="0.01">
-        </div>
-
-        <div class="field third">
-          <label for="q_rate_max">Rate max</label>
-          <input id="q_rate_max" type="number" step="0.01">
-        </div>
-
-        <div class="field third">
-          <label for="q_tenor">Tenor (M)</label>
-          <input id="q_tenor" type="number" step="1">
+      <div class="section-title">
+        <h2>M4 歷史紀錄</h2>
+        <div>
+          <button class="btn btn-secondary" onclick="renderHistory()">重新整理</button>
+          <button class="btn btn-secondary" onclick="exportDeals()">匯出 JSON</button>
+          <button class="btn btn-danger" onclick="clearDeals()">清空全部</button>
         </div>
       </div>
 
-      <div class="row" style="margin-top:14px;">
-        <button type="button" id="searchBtn">查詢 Search</button>
-        <button type="button" class="light" id="resetSearchBtn">重設條件 Reset</button>
-      </div>
-
-      <div class="divider"></div>
-
-      <h3>查詢結果</h3>
-      <div id="results"></div>
+      <div id="historyWrap"></div>
     </div>
   </div>
 
-  <script>
-    const STORAGE_KEY = "fcn_pool_v3";
-    let currentEditId = null;
+  <script type="module">
+    import { evaluateStock } from "./js/core/stock_engine.js";
 
-    const seedData = [
-      {
-        date: "2025-03-12",
-        fcn_id: "FCN499G",
-        basket: ["TSLA", "INTC", "NVDA", "ARM"],
-        tenor: 12,
-        rate: 34.45,
-        autocall: 100,
-        strike: 65,
-        ki: 60,
-        eki: false,
-        bank: "B",
-        has_position: true,
-        amt: 30000,
-        currency: "USD",
-        status: "active",
-        created_time: "2025-03-12T09:00",
-        entry_time: "2025-03-12T10:00",
-        exit_time: null,
-        decision_flag: "manual",
-        is_portfolio: true,
-        note: "示範資料"
-      },
-      {
-        date: "2025-04-01",
-        fcn_id: "FCNS81G",
-        basket: ["NVDA", "TSM", "AVGO"],
-        tenor: 6,
-        rate: 16,
-        autocall: 100,
-        strike: 65,
-        ki: 60,
-        eki: false,
-        bank: "B",
-        has_position: false,
-        amt: 0,
-        currency: "USD",
-        status: "inquiry",
-        created_time: "2025-04-01T09:00",
-        entry_time: null,
-        exit_time: null,
-        decision_flag: "",
-        is_portfolio: false,
-        note: "示範資料"
-      },
-      {
-        date: "2025-04-08",
-        fcn_id: "FCN609G",
-        basket: ["MSFT", "GOOGL", "AMZN"],
-        tenor: 6,
-        rate: 14,
-        autocall: 100,
-        strike: 70,
-        ki: 65,
-        eki: false,
-        bank: "B",
-        has_position: false,
-        amt: 0,
-        currency: "USD",
-        status: "watch",
-        created_time: "2025-04-08T09:00",
-        entry_time: null,
-        exit_time: null,
-        decision_flag: "",
-        is_portfolio: false,
-        note: "示範資料"
-      }
-    ];
+    const STORAGE_KEY = "fcn_m4_records_v5";
 
-    function loadDB() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(seedData));
-        return [...seedData];
-      }
+    let FCN_POOL_DATA = [];
+    let FCN_POOL_MAP = {};
+
+    let MARKET_RUNTIME_DATA = {};
+    let MARKET_RUNTIME_MAP = {};
+
+    let RUNTIME_CACHE = {};
+    let RUNTIME_STOCKS_MAP = {};
+
+    async function loadFcnPool() {
       try {
-        return JSON.parse(raw);
-      } catch {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(seedData));
-        return [...seedData];
+        const res = await fetch("./data/fcn_pool.json");
+        if (!res.ok) throw new Error("fcn_pool.json not found");
+        const data = await res.json();
+
+        if (Array.isArray(data)) {
+          FCN_POOL_DATA = data;
+        } else if (Array.isArray(data.pool)) {
+          FCN_POOL_DATA = data.pool;
+        } else if (Array.isArray(data.items)) {
+          FCN_POOL_DATA = data.items;
+        } else {
+          FCN_POOL_DATA = [];
+        }
+
+        FCN_POOL_MAP = {};
+        FCN_POOL_DATA.forEach(item => {
+          const symbol = (item.symbol || item.ticker || item.stock || "").toString().trim().toUpperCase();
+          if (symbol) FCN_POOL_MAP[symbol] = item;
+        });
+      } catch (err) {
+        console.warn("⚠️ FCN Pool load failed", err);
+        FCN_POOL_DATA = [];
+        FCN_POOL_MAP = {};
       }
     }
 
-    function saveDB(data) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    async function loadMarketRuntime() {
+      try {
+        const res = await fetch("./data/market_runtime.json");
+        if (!res.ok) throw new Error("market_runtime.json not found");
+        const data = await res.json();
+
+        MARKET_RUNTIME_DATA = data || {};
+        MARKET_RUNTIME_MAP = {};
+
+        Object.keys(MARKET_RUNTIME_DATA || {}).forEach(sym => {
+          MARKET_RUNTIME_MAP[sym.toUpperCase()] = MARKET_RUNTIME_DATA[sym];
+        });
+      } catch (err) {
+        console.warn("⚠️ market_runtime load failed", err);
+        MARKET_RUNTIME_DATA = {};
+        MARKET_RUNTIME_MAP = {};
+      }
     }
 
-    function nowLocalInputValue() {
-      const d = new Date();
-      const pad = n => String(n).padStart(2, "0");
-      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    function loadRuntimeCache() {
+      try {
+        RUNTIME_CACHE = JSON.parse(localStorage.getItem("runtime_cache_v1")) || {};
+        RUNTIME_STOCKS_MAP = (RUNTIME_CACHE && RUNTIME_CACHE.stocks) ? RUNTIME_CACHE.stocks : {};
+        const normalized = {};
+        Object.keys(RUNTIME_STOCKS_MAP || {}).forEach(sym => {
+          normalized[sym.toUpperCase()] = RUNTIME_STOCKS_MAP[sym];
+        });
+        RUNTIME_STOCKS_MAP = normalized;
+      } catch (err) {
+        console.warn("⚠️ runtime_cache_v1 load failed", err);
+        RUNTIME_CACHE = {};
+        RUNTIME_STOCKS_MAP = {};
+      }
     }
 
-    function getBasketFromForm() {
-      return ["stock_1","stock_2","stock_3","stock_4","stock_5"]
-        .map(id => document.getElementById(id).value.trim().toUpperCase())
-        .filter(Boolean);
+    function pickField(obj, keys, fallback = "") {
+      for (const key of keys) {
+        if (obj && obj[key] !== undefined && obj[key] !== null && obj[key] !== "") {
+          return obj[key];
+        }
+      }
+      return fallback;
     }
 
-    function collectFormData() {
-      const kiValue = document.getElementById("ki").value.trim();
+    function getPoolStock(symbol) {
+      return FCN_POOL_MAP[symbol.toUpperCase()] || null;
+    }
+
+    function getMarketStock(symbol) {
+      return MARKET_RUNTIME_MAP[symbol.toUpperCase()] || null;
+    }
+
+    function getRuntimeCacheStock(symbol) {
+      return RUNTIME_STOCKS_MAP[symbol.toUpperCase()] || null;
+    }
+
+    function getMergedStock(symbol) {
+      const pool = getPoolStock(symbol) || {};
+      const market = getMarketStock(symbol) || {};
+      const cache = getRuntimeCacheStock(symbol) || {};
 
       return {
-        date: document.getElementById("date").value || "",
-        fcn_id: document.getElementById("fcn_id").value.trim(),
-        basket: getBasketFromForm(),
-        tenor: Number(document.getElementById("tenor").value || 0),
-        rate: Number(document.getElementById("rate").value || 0),
-        autocall: Number(document.getElementById("autocall").value || 0),
-        strike: Number(document.getElementById("strike").value || 0),
-        ki: kiValue === "" ? null : Number(kiValue),
-        eki: document.getElementById("eki").value === "true",
-        bank: document.getElementById("bank").value.trim() || null,
-        has_position: document.getElementById("has_position").value === "true",
-        amt: Number(document.getElementById("amt").value || 0),
-        currency: document.getElementById("currency").value,
-        status: document.getElementById("status").value,
-        created_time: document.getElementById("created_time").value || null,
-        entry_time: document.getElementById("entry_time").value || null,
-        exit_time: document.getElementById("exit_time").value || null,
-        decision_flag: document.getElementById("decision_flag").value || "",
-        is_portfolio: document.getElementById("is_portfolio").value === "true",
-        note: document.getElementById("note").value.trim()
+        ...pool,
+        ...market,
+        ...cache,
+        symbol: symbol.toUpperCase()
       };
     }
 
-    function validateRecord(r) {
-      if (!r.fcn_id) return "FCN ID 不可空白";
-      if (r.fcn_id.length > 15) return "FCN ID 不可超過 15 個字元";
-      if (!r.date) return "Date 不可空白";
-      if (r.basket.length < 2) return "Basket 至少要有 2 檔股票";
-      if (!r.tenor) return "Tenor 不可空白";
-      if (!r.rate) return "Rate 不可空白";
-      if (!r.autocall && r.autocall !== 0) return "Autocall 不可空白";
-      if (!r.strike) return "Strike 不可空白";
+    function safeText(v) {
+      if (v === null || v === undefined) return "";
+      return String(v);
+    }
 
-      // EKI = false 時，KI 必填
-      if (!r.eki && (r.ki === null || Number.isNaN(r.ki))) {
-        return "非 EKI 結構時，KI 不可空白";
+    function fmtPctFromDecimal(v) {
+      const n = Number(v);
+      if (!Number.isFinite(n)) return "";
+      return (n * 100).toFixed(2) + "%";
+    }
+
+    function getDeals() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      } catch (e) {
+        return [];
       }
-
-      if (r.has_position && !r.amt) return "有承做時，amt 不可空白";
-      if (r.amt < 0) return "amt 不可為負數";
-
-      return "";
     }
 
-    function fillForm(r) {
-      document.getElementById("date").value = r.date || "";
-      document.getElementById("fcn_id").value = r.fcn_id || "";
-      document.getElementById("tenor").value = r.tenor ?? "";
-      document.getElementById("rate").value = r.rate ?? "";
-      document.getElementById("autocall").value = r.autocall ?? 100;
-      document.getElementById("strike").value = r.strike ?? "";
-      document.getElementById("ki").value = r.ki ?? "";
-      document.getElementById("eki").value = String(!!r.eki);
-      document.getElementById("bank").value = r.bank || "";
-      document.getElementById("has_position").value = String(!!r.has_position);
-      document.getElementById("amt").value = r.amt ?? "";
-      document.getElementById("currency").value = r.currency || "USD";
-      document.getElementById("status").value = r.status || "inquiry";
-      document.getElementById("created_time").value = r.created_time || "";
-      document.getElementById("entry_time").value = r.entry_time || "";
-      document.getElementById("exit_time").value = r.exit_time || "";
-      document.getElementById("decision_flag").value = r.decision_flag || "";
-      document.getElementById("is_portfolio").value = String(!!r.is_portfolio);
-      document.getElementById("note").value = r.note || "";
-
-      ["stock_1","stock_2","stock_3","stock_4","stock_5"].forEach((id, idx) => {
-        document.getElementById(id).value = r.basket?.[idx] || "";
-      });
+    function saveDeals(data) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     }
 
-    function clearForm() {
-      document.getElementById("fcnForm").reset();
-      document.getElementById("currency").value = "USD";
-      document.getElementById("status").value = "inquiry";
-      document.getElementById("eki").value = "false";
-      document.getElementById("has_position").value = "false";
-      document.getElementById("is_portfolio").value = "false";
-      document.getElementById("autocall").value = "100";
-      currentEditId = null;
-      document.getElementById("editBanner").style.display = "none";
-      document.getElementById("editIdText").textContent = "";
-      document.getElementById("saveBtn").textContent = "新增 New FCN";
+    function normalizeBasket(input) {
+      return input.split(",").map(v => v.trim().toUpperCase()).filter(Boolean);
     }
 
-    function enterEditMode(record) {
-      currentEditId = record.fcn_id;
-      fillForm(record);
-      document.getElementById("editBanner").style.display = "block";
-      document.getElementById("editIdText").textContent = record.fcn_id;
-      document.getElementById("saveBtn").textContent = "目前是 Edit Mode，請用 Update";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+    function buildStockBlocks() {
+      const basket = normalizeBasket(document.getElementById("basket").value);
+      const wrap = document.getElementById("stockBlocks");
 
-    function statusClass(status) {
-      return {
-        inquiry: "s-inquiry",
-        watch: "s-watch",
-        active: "s-active",
-        closed: "s-closed",
-        expired: "s-expired"
-      }[status] || "";
-    }
-
-    function renderResults(records) {
-      const box = document.getElementById("results");
-      if (!records.length) {
-        box.innerHTML = `<div class="muted">查無資料</div>`;
+      if (!basket.length) {
+        alert("請先輸入 Basket");
         return;
       }
 
-      box.innerHTML = records.map(r => `
-        <div class="result-card">
-          <div class="result-title">${r.fcn_id}</div>
-          <div class="result-line"><span class="status-pill ${statusClass(r.status)}">${r.status}</span></div>
-          <div class="result-line"><b>Date:</b> ${r.date || "-"}</div>
-          <div class="result-line"><b>Basket:</b> ${(r.basket || []).join(" / ")}</div>
-          <div class="result-line"><b>條件:</b> ${r.tenor}M / Rate ${r.rate}% / Autocall ${r.autocall}% / Strike ${r.strike}% / KI ${r.ki ?? "N/A"} / EKI ${r.eki ? "YES" : "NO"}</div>
-          <div class="result-line"><b>Bank:</b> ${r.bank || "-"}</div>
-          <div class="result-line"><b>是否承做:</b> ${r.has_position ? "YES" : "NO"} / <b>進庫存:</b> ${r.is_portfolio ? "YES" : "NO"}</div>
-          <div class="result-line"><b>Amt:</b> ${r.amt ?? 0} ${r.currency || ""}</div>
-          <div class="result-line"><b>created_time:</b> ${r.created_time || "-"} / <b>entry_time:</b> ${r.entry_time || "-"} / <b>exit_time:</b> ${r.exit_time || "-"}</div>
-          <div class="result-line"><b>Note:</b> ${r.note || "-"}</div>
-          <div class="row" style="margin-top:10px;">
-            <button type="button" onclick="editRecord('${r.fcn_id.replace(/'/g, "\\'")}')">Edit</button>
+      wrap.innerHTML = basket.map((symbol, idx) => {
+        const stock = getMergedStock(symbol);
+        const evalRes = evaluateStock(stock);
+
+        const baselineValue = `${safeText(evalRes.baseline_label)} (${safeText(evalRes.baseline_score)})`;
+        const baselineComment = `分類=${safeText(evalRes.category)}｜Baseline Score=${safeText(evalRes.baseline_score)}`;
+
+        const typeValue = [
+          safeText(evalRes.category),
+          safeText(evalRes.sector),
+          safeText(evalRes.subsector)
+        ].filter(Boolean).join(" / ");
+
+        const poolRisk = pickField(stock, ["risk", "risk_level"], "");
+        const poolVol = pickField(stock, ["volatility", "vol", "vol_level"], "");
+        const poolPref = pickField(stock, ["fcn_preference", "preference"], "");
+        const metaValue = [poolRisk, poolVol, poolPref].filter(Boolean).join("｜");
+
+        const currentPrice = pickField(stock, ["price_now", "current_price", "price", "last_price", "last", "close"], "");
+        const chg1d = pickField(stock, ["ret_1d", "change_1d", "chg_1d", "day_change", "change1d"], "");
+        const chg1w = pickField(stock, ["ret_1w", "change_1w", "chg_1w", "week_change", "change1w"], "");
+        const chg1m = pickField(stock, ["ret_1m", "change_1m", "chg_1m", "month_change", "change1m"], "");
+        const chg3m = pickField(stock, ["ret_3m", "change_3m", "chg_3m", "change3m"], "");
+        const chg6m = pickField(stock, ["ret_6m", "change_6m", "chg_6m", "change6m"], "");
+        const chg12m = pickField(stock, ["ret_12m", "change_12m", "chg_12m", "change12m"], "");
+
+        const pureVolComment = `中期波動 ${(Number(evalRes.mid_term_volatility || 0) * 100).toFixed(2)}%｜${safeText(evalRes.vol_label)}`;
+
+        const eventVolComment = "目前 stock_engine V6 未獨立提供 Event Volatility Score，先保留欄位";
+        const snapshotComment = [
+          `Snapshot Score=${safeText(evalRes.snapshot_score)}`,
+          `Momentum=${safeText(evalRes.snapshot_move_pct)}%`,
+          safeText(evalRes.snapshot_reason),
+          safeText(evalRes.trend_note)
+        ].filter(Boolean).join("｜");
+
+        return `
+          <div class="stock-row" data-symbol="${symbol}">
+            <div class="stock-head">
+              <h3 style="margin:0;">${symbol}</h3>
+              <span class="badge badge-blue">Stock ${idx + 1}</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label>${symbol}｜Baseline / Tier</label>
+                <input id="${symbol}_baseline" type="text" value="${baselineValue}" placeholder="core / conditional / restricted / banned" />
+              </div>
+              <div class="form-group">
+                <label>${symbol}｜Baseline 說明</label>
+                <input id="${symbol}_baseline_comment" type="text" value="${baselineComment}" placeholder="Baseline 說明" />
+              </div>
+
+              <div class="form-group">
+                <label>${symbol}｜Type</label>
+                <input id="${symbol}_type" type="text" value="${typeValue}" placeholder="AI / 半導體 / 事件 / 傳統" />
+              </div>
+              <div class="form-group">
+                <label>${symbol}｜Risk / Volatility / Preference</label>
+                <input id="${symbol}_meta" type="text" value="${metaValue}" placeholder="風險｜波動｜偏好" />
+              </div>
+
+              <div class="form-group">
+                <label>${symbol}｜Pure Stock Score</label>
+                <input id="${symbol}_pure_score" type="number" value="${safeText(evalRes.pure_stock_score)}" placeholder="Pure Stock 分數" />
+              </div>
+              <div class="form-group">
+                <label>${symbol}｜Pure Stock 說明</label>
+                <input id="${symbol}_pure_comment" type="text" value="${safeText(evalRes.pure_reason)}" placeholder="長期評價" />
+              </div>
+
+              <div class="form-group">
+                <label>${symbol}｜Pure Stock Volatility Score</label>
+                <input id="${symbol}_pure_vol_score" type="number" value="${safeText(evalRes.vol_score)}" placeholder="Pure 波動度分數" />
+              </div>
+              <div class="form-group">
+                <label>${symbol}｜Pure Vol 說明</label>
+                <input id="${symbol}_pure_vol_comment" type="text" value="${pureVolComment}" placeholder="Pure 波動度說明" />
+              </div>
+
+              <div class="form-group">
+                <label>${symbol}｜Event Stock Score</label>
+                <input id="${symbol}_event_score" type="number" value="${safeText(evalRes.event_stock_score)}" placeholder="Event Stock 分數" />
+              </div>
+              <div class="form-group">
+                <label>${symbol}｜Event Stock 說明</label>
+                <input id="${symbol}_event_comment" type="text" value="${safeText(evalRes.trend_label)}｜${safeText(evalRes.trend_note)}" placeholder="事件型評價" />
+              </div>
+
+              <div class="form-group">
+                <label>${symbol}｜Event Stock Volatility Score</label>
+                <input id="${symbol}_event_vol_score" type="number" placeholder="Event 波動度分數" />
+              </div>
+              <div class="form-group">
+                <label>${symbol}｜Event Vol 說明</label>
+                <input id="${symbol}_event_vol_comment" type="text" value="${eventVolComment}" placeholder="Event 波動度說明" />
+              </div>
+
+              <div class="form-group">
+                <label>${symbol}｜Event / News Score</label>
+                <input id="${symbol}_news_score" type="number" value="${safeText(evalRes.snapshot_score)}" placeholder="News / Event 分數" />
+              </div>
+              <div class="form-group">
+                <label>${symbol}｜Event / News 說明</label>
+                <input id="${symbol}_news_comment" type="text" value="${safeText(evalRes.snapshot_reason)}" placeholder="新聞 / 事件說明" />
+              </div>
+            </div>
+
+            <div class="result-block" style="margin-top:12px;">
+              <div class="section-title">
+                <strong>L3｜${symbol} 詳細資訊</strong>
+                <span class="small">價格 / 變化 / 最後說明</span>
+              </div>
+
+              <div class="grid-4">
+                <div class="form-group">
+                  <label>Current Price</label>
+                  <input id="${symbol}_current_price" type="number" value="${safeText(currentPrice)}" placeholder="現價" />
+                </div>
+                <div class="form-group">
+                  <label>1D</label>
+                  <input id="${symbol}_chg_1d" type="text" value="${safeText(chg1d)}" placeholder="1D 變化" />
+                </div>
+                <div class="form-group">
+                  <label>1W</label>
+                  <input id="${symbol}_chg_1w" type="text" value="${safeText(chg1w)}" placeholder="1W 變化" />
+                </div>
+                <div class="form-group">
+                  <label>1M</label>
+                  <input id="${symbol}_chg_1m" type="text" value="${safeText(chg1m)}" placeholder="1M 變化" />
+                </div>
+                <div class="form-group">
+                  <label>3M</label>
+                  <input id="${symbol}_chg_3m" type="text" value="${safeText(chg3m)}" placeholder="3M 變化" />
+                </div>
+                <div class="form-group">
+                  <label>6M</label>
+                  <input id="${symbol}_chg_6m" type="text" value="${safeText(chg6m)}" placeholder="6M 變化" />
+                </div>
+                <div class="form-group">
+                  <label>12M</label>
+                  <input id="${symbol}_chg_12m" type="text" value="${safeText(chg12m)}" placeholder="12M 變化" />
+                </div>
+                <div class="form-group">
+                  <label>狀態說明</label>
+                  <input id="${symbol}_snapshot_comment" type="text" value="${snapshotComment}" placeholder="當前價格狀態說明" />
+                </div>
+              </div>
+            </div>
           </div>
+        `;
+      }).join("");
+    }
+
+    function scoreKI(ki) {
+      if (ki > 75) return { score: null, comment: "KI > 75，不做" };
+      if (ki <= 55) return { score: 8, comment: "KI ≤ 55，安全度高" };
+      if (ki <= 60) return { score: 4, comment: "KI 55–60，偏安全" };
+      if (ki <= 65) return { score: 0, comment: "KI 60–65，標準" };
+      if (ki <= 70) return { score: -4, comment: "KI 65–70，偏高" };
+      return { score: -8, comment: "KI 70–75，風險偏高" };
+    }
+
+    function scoreStrike(strike) {
+      if (strike > 80) return { score: null, comment: "Strike > 80，不做" };
+      if (strike <= 60) return { score: 10, comment: "Strike ≤ 60，安全" };
+      if (strike <= 65) return { score: 5, comment: "Strike 60–65，合理" };
+      if (strike <= 67) return { score: -1, comment: "Strike 65–67，略高" };
+      if (strike <= 70) return { score: -3, comment: "Strike 67–70，偏高" };
+      if (strike <= 75) return { score: -5, comment: "Strike 70–75，風險提高" };
+      return { score: -10, comment: "Strike 75–80，偏危險" };
+    }
+
+    function scoreCoupon(coupon) {
+      if (coupon < 10) return { score: null, comment: "利率 < 10%，不做" };
+      if (coupon < 12) return { score: -4, comment: "10–12%，偏低" };
+      if (coupon < 15) return { score: -2, comment: "12–15%，普通" };
+      if (coupon < 16) return { score: 0, comment: "15–16%，標準" };
+      if (coupon < 18) return { score: 3, comment: "16–18%，可接受" };
+      if (coupon < 20) return { score: 5, comment: "18–20%，不錯" };
+      if (coupon < 24) return { score: 8, comment: "20–24%，偏高，需警覺" };
+      return { score: 10, comment: "≥24%，很高，需高度警覺" };
+    }
+
+    function scoreTenor(tenor) {
+      if (tenor > 12) return { score: null, comment: "天期 > 12 月，不做" };
+      if (tenor <= 3) return { score: 5, comment: "0–3 月，短天期佳" };
+      if (tenor < 6) return { score: 2, comment: "4–5 月，偏佳" };
+      if (tenor === 6) return { score: 0, comment: "6 月，標準" };
+      if (tenor <= 9) return { score: -2, comment: "7–9 月，偏長" };
+      return { score: -5, comment: "10–12 月，較長，風險提高" };
+    }
+
+    function scoreGap(gap) {
+      if (gap < 0) return { score: null, comment: "Gap < 0，資料錯誤" };
+      if (gap >= 25) return { score: null, comment: "Gap ≥ 25，不做" };
+      if (gap === 0) return { score: 5, comment: "Gap = 0，特殊可接受" };
+      if (gap < 10) return { score: -7, comment: "0 < Gap < 10，保護不足" };
+      if (gap === 10) return { score: 5, comment: "Gap = 10，最佳區" };
+      if (gap <= 13) return { score: 4, comment: "10 < Gap ≤ 13，良好" };
+      if (gap <= 15) return { score: 3, comment: "13 < Gap ≤ 15，尚可" };
+      if (gap <= 18) return { score: 0, comment: "15 < Gap ≤ 18，標準" };
+      if (gap <= 20) return { score: -4, comment: "18 < Gap ≤ 20，偏大" };
+      if (gap <= 22) return { score: -5, comment: "20 < Gap ≤ 22，風險提高" };
+      return { score: -8, comment: "22 < Gap < 25，偏危險" };
+    }
+
+    function setValue(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.value = value ?? "";
+    }
+
+    function runM4Scoring() {
+      const ki = Number(document.getElementById("ki").value);
+      const strike = Number(document.getElementById("strike").value);
+      const coupon = Number(document.getElementById("coupon").value);
+      const tenor = Number(document.getElementById("tenor").value);
+      const gap = strike - ki;
+
+      const kiRes = scoreKI(ki);
+      const strikeRes = scoreStrike(strike);
+      const couponRes = scoreCoupon(coupon);
+      const tenorRes = scoreTenor(tenor);
+      const gapRes = scoreGap(gap);
+
+      setValue("l2KiValue", ki);
+      setValue("l2StrikeValue", strike);
+      setValue("l2CouponValue", coupon);
+      setValue("l2TenorValue", tenor);
+      setValue("l2GapValue", gap);
+
+      setValue("l2KiScore", kiRes.score);
+      setValue("l2KiComment", kiRes.comment);
+
+      setValue("l2StrikeScore", strikeRes.score);
+      setValue("l2StrikeComment", strikeRes.comment);
+
+      setValue("l2CouponScore", couponRes.score);
+      setValue("l2CouponComment", couponRes.comment);
+
+      setValue("l2TenorScore", tenorRes.score);
+      setValue("l2TenorComment", tenorRes.comment);
+
+      setValue("l2GapScore", gapRes.score);
+      setValue("l2GapComment", gapRes.comment);
+
+      const parts = [kiRes, strikeRes, couponRes, tenorRes, gapRes];
+      const hasReject = parts.some(p => p.score === null);
+
+      let total = null;
+      if (!hasReject) {
+        total = parts.reduce((sum, p) => sum + p.score, 0);
+      }
+
+      setValue("overallFcnScore", total);
+      setValue(
+        "overallFcnComment",
+        hasReject ? "結構條件中有不做項" :
+        total >= 20 ? "整體結構偏佳" :
+        total >= 10 ? "整體結構中性偏可做" :
+        "整體結構偏弱"
+      );
+
+      setValue("pureFcnScore", total);
+      setValue(
+        "pureFcnComment",
+        hasReject ? "長期本質不建議" :
+        "Pure FCN 先以結構條件做初步評估，後續再結合股票本質"
+      );
+
+      setValue("eventFcnScore", "");
+      setValue("eventFcnComment", "Event FCN 需結合事件 / 新聞 / 當下市場評價，這版先保留");
+
+      setValue("deltaFcnScore", "");
+      setValue("deltaFcnComment", "Delta FCN 需和平常報價比較，這版先保留");
+
+      setValue(
+        "l2FcnSummary",
+        hasReject
+          ? "本單至少有一項結構條件落入不做區間，需重新檢查。"
+          : `下限價 KI ${ki}、執行價 Strike ${strike}、票息 ${coupon}%、天期 ${tenor} 月、Gap ${gap}；目前結構總分 ${total}。`
+      );
+
+      previewDeal();
+    }
+
+    function collectStocks() {
+      const basket = normalizeBasket(document.getElementById("basket").value);
+      return basket.map(symbol => ({
+        symbol,
+        baseline: getValue(`${symbol}_baseline`),
+        baseline_comment: getValue(`${symbol}_baseline_comment`),
+        type: getValue(`${symbol}_type`),
+        meta: getValue(`${symbol}_meta`),
+
+        pure_stock_score: getNumber(`${symbol}_pure_score`),
+        pure_stock_comment: getValue(`${symbol}_pure_comment`),
+        pure_stock_volatility_score: getNumber(`${symbol}_pure_vol_score`),
+        pure_stock_volatility_comment: getValue(`${symbol}_pure_vol_comment`),
+
+        event_stock_score: getNumber(`${symbol}_event_score`),
+        event_stock_comment: getValue(`${symbol}_event_comment`),
+        event_stock_volatility_score: getNumber(`${symbol}_event_vol_score`),
+        event_stock_volatility_comment: getValue(`${symbol}_event_vol_comment`),
+
+        event_news_score: getNumber(`${symbol}_news_score`),
+        event_news_comment: getValue(`${symbol}_news_comment`),
+
+        current_price: getNumber(`${symbol}_current_price`),
+        change_1d: getValue(`${symbol}_chg_1d`),
+        change_1w: getValue(`${symbol}_chg_1w`),
+        change_1m: getValue(`${symbol}_chg_1m`),
+        change_3m: getValue(`${symbol}_chg_3m`),
+        change_6m: getValue(`${symbol}_chg_6m`),
+        change_12m: getValue(`${symbol}_chg_12m`),
+        snapshot_comment: getValue(`${symbol}_snapshot_comment`)
+      }));
+    }
+
+    function getValue(id) {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : "";
+    }
+
+    function getNumber(id) {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const n = Number(el.value);
+      return Number.isFinite(n) && el.value !== "" ? n : null;
+    }
+
+    function buildRecord() {
+      const basket = normalizeBasket(getValue("basket"));
+      return {
+        id: "M4-" + Date.now(),
+        created_at: new Date().toLocaleString("zh-TW"),
+
+        basic: {
+          deal_name: getValue("dealName"),
+          bank: getValue("bank"),
+          product_type: getValue("productType"),
+          basket,
+          ki: getNumber("ki"),
+          strike: getNumber("strike"),
+          coupon: getNumber("coupon"),
+          tenor: getNumber("tenor"),
+          memo: getValue("memo")
+        },
+
+        l1: {
+          overall_fcn_score: getNumber("overallFcnScore"),
+          overall_fcn_comment: getValue("overallFcnComment"),
+          event_fcn_score: getNumber("eventFcnScore"),
+          event_fcn_comment: getValue("eventFcnComment"),
+          pure_fcn_score: getNumber("pureFcnScore"),
+          pure_fcn_comment: getValue("pureFcnComment"),
+          delta_fcn_score: getNumber("deltaFcnScore"),
+          delta_fcn_comment: getValue("deltaFcnComment")
+        },
+
+        l2_fcn: {
+          ki_value: getNumber("l2KiValue"),
+          ki_score: getNumber("l2KiScore"),
+          ki_comment: getValue("l2KiComment"),
+
+          strike_value: getNumber("l2StrikeValue"),
+          strike_score: getNumber("l2StrikeScore"),
+          strike_comment: getValue("l2StrikeComment"),
+
+          coupon_value: getNumber("l2CouponValue"),
+          coupon_score: getNumber("l2CouponScore"),
+          coupon_comment: getValue("l2CouponComment"),
+
+          tenor_value: getNumber("l2TenorValue"),
+          tenor_score: getNumber("l2TenorScore"),
+          tenor_comment: getValue("l2TenorComment"),
+
+          gap_value: getNumber("l2GapValue"),
+          gap_score: getNumber("l2GapScore"),
+          gap_comment: getValue("l2GapComment"),
+
+          summary_comment: getValue("l2FcnSummary")
+        },
+
+        l2_l3_stocks: collectStocks(),
+
+        final: {
+          worst_of_symbol: getValue("worstOf"),
+          final_decision: getValue("finalDecision"),
+          key_advantage: getValue("keyAdvantage"),
+          key_risk: getValue("keyRisk"),
+          final_reason: getValue("finalReason")
+        }
+      };
+    }
+
+    function previewDeal() {
+      const record = buildRecord();
+      const box = document.getElementById("previewArea");
+      box.style.display = "block";
+      box.innerHTML = `
+        <div class="badge badge-blue">預覽</div>
+        <div><strong>案件：</strong> ${record.basic.deal_name || "-"}</div>
+        <div><strong>Basket：</strong> ${record.basic.basket.join(", ") || "-"}</div>
+        <div><strong>L1：</strong> Overall ${record.l1.overall_fcn_score ?? "-"} / Pure ${record.l1.pure_fcn_score ?? "-"} / Event ${record.l1.event_fcn_score ?? "-"} / Delta ${record.l1.delta_fcn_score ?? "-"}</div>
+        <div><strong>Worst-of：</strong> ${record.final.worst_of_symbol || "-"}</div>
+        <div><strong>Decision：</strong> ${record.final.final_decision || "-"}</div>
+        <div class="small" style="margin-top:8px;">這裡只做預覽，實際回測欄位都會一起存入。</div>
+      `;
+    }
+
+    function saveDeal() {
+      const record = buildRecord();
+
+      if (!record.basic.deal_name) {
+        alert("請至少填寫案件名稱");
+        return;
+      }
+      if (!record.basic.basket.length) {
+        alert("請輸入 Basket");
+        return;
+      }
+
+      const deals = getDeals();
+      deals.unshift(record);
+      saveDeals(deals);
+      renderHistory();
+      updateSummary();
+      previewDeal();
+      alert("M4 紀錄已儲存");
+    }
+
+    function renderHistory() {
+      const deals = getDeals();
+      const wrap = document.getElementById("historyWrap");
+
+      if (!deals.length) {
+        wrap.innerHTML = `<div class="empty">目前沒有任何 M4 紀錄。</div>`;
+        return;
+      }
+
+      wrap.innerHTML = `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>時間</th>
+                <th>案件</th>
+                <th>Basket</th>
+                <th>類型</th>
+                <th>L1 Overall</th>
+                <th>Pure FCN</th>
+                <th>Event FCN</th>
+                <th>Delta FCN</th>
+                <th>Worst-of</th>
+                <th>Decision</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${deals.map(d => `
+                <tr>
+                  <td>${d.created_at}</td>
+                  <td>
+                    <strong>${d.basic.deal_name || "-"}</strong>
+                    <div class="small">${d.basic.bank || "-"}</div>
+                  </td>
+                  <td>${(d.basic.basket || []).join(", ")}</td>
+                  <td>${d.basic.product_type || "-"}</td>
+                  <td>${d.l1.overall_fcn_score ?? "-"}</td>
+                  <td>${d.l1.pure_fcn_score ?? "-"}</td>
+                  <td>${d.l1.event_fcn_score ?? "-"}</td>
+                  <td>${d.l1.delta_fcn_score ?? "-"}</td>
+                  <td>${d.final.worst_of_symbol || "-"}</td>
+                  <td>${d.final.final_decision || "-"}</td>
+                  <td>
+                    <button class="btn btn-danger" style="padding:6px 10px;font-size:12px;" onclick="deleteDeal('${d.id}')">刪除</button>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
         </div>
-      `).join("");
+      `;
     }
 
-    function searchRecords() {
-      const db = loadDB();
-
-      const q_date = document.getElementById("q_date").value;
-      const q_bank = document.getElementById("q_bank").value.trim().toUpperCase();
-      const q_status = document.getElementById("q_status").value;
-      const q_symbol = document.getElementById("q_symbol").value.trim().toUpperCase();
-      const q_eki = document.getElementById("q_eki").value;
-      const q_fcn_id = document.getElementById("q_fcn_id").value.trim().toUpperCase();
-      const q_rate_min = document.getElementById("q_rate_min").value;
-      const q_rate_max = document.getElementById("q_rate_max").value;
-      const q_tenor = document.getElementById("q_tenor").value;
-
-      const rows = db.filter(r => {
-        if (q_date && r.date !== q_date) return false;
-        if (q_bank && String(r.bank || "").toUpperCase() !== q_bank) return false;
-        if (q_status && r.status !== q_status) return false;
-        if (q_symbol && !(r.basket || []).includes(q_symbol)) return false;
-        if (q_eki && String(!!r.eki) !== q_eki) return false;
-        if (q_fcn_id && !String(r.fcn_id || "").toUpperCase().includes(q_fcn_id)) return false;
-        if (q_rate_min && Number(r.rate) < Number(q_rate_min)) return false;
-        if (q_rate_max && Number(r.rate) > Number(q_rate_max)) return false;
-        if (q_tenor && Number(r.tenor) !== Number(q_tenor)) return false;
-        return true;
-      });
-
-      renderResults(rows);
-    }
-
-    window.editRecord = function(fcnId) {
-      const db = loadDB();
-      const row = db.find(x => x.fcn_id === fcnId);
-      if (!row) return;
-      enterEditMode(row);
+    window.deleteDeal = function(id) {
+      const ok = confirm("確定刪除這筆 M4 紀錄？");
+      if (!ok) return;
+      const deals = getDeals().filter(d => d.id !== id);
+      saveDeals(deals);
+      renderHistory();
+      updateSummary();
     };
 
-    document.getElementById("fcnForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const db = loadDB();
-      const record = collectFormData();
-
-      if (!record.created_time) record.created_time = nowLocalInputValue();
-
-      const err = validateRecord(record);
-      if (err) {
-        alert(err);
-        return;
-      }
-
-      const exists = db.some(x => x.fcn_id === record.fcn_id);
-      if (exists) {
-        alert("FCN ID 已存在，若要修改請先從 Inquiry 點 Edit，再按 Update。");
-        return;
-      }
-
-      if ((record.has_position || record.is_portfolio) && !record.entry_time) {
-        record.entry_time = nowLocalInputValue();
-      }
-
-      if ((record.has_position || record.is_portfolio) && record.status !== "active") {
-        record.status = "active";
-      }
-
-      db.unshift(record);
-      saveDB(db);
-      alert("新增成功（已寫入 fcn_pool）");
-      clearForm();
-      searchRecords();
-    });
-
-    document.getElementById("updateBtn").addEventListener("click", function() {
-      if (!currentEditId) {
-        alert("請先從 Inquiry 點 Edit。");
-        return;
-      }
-
-      const db = loadDB();
-      const idx = db.findIndex(x => x.fcn_id === currentEditId);
-      if (idx === -1) {
-        alert("找不到要更新的資料。");
-        return;
-      }
-
-      const updated = collectFormData();
-      const err = validateRecord(updated);
-      if (err) {
-        alert(err);
-        return;
-      }
-
-      updated.fcn_id = currentEditId;
-
-      if (!updated.created_time) {
-        updated.created_time = db[idx].created_time || nowLocalInputValue();
-      }
-
-      if ((updated.has_position || updated.is_portfolio) && !updated.entry_time) {
-        updated.entry_time = db[idx].entry_time || nowLocalInputValue();
-      }
-
-      if ((updated.has_position || updated.is_portfolio) && updated.status !== "active") {
-        updated.status = "active";
-      }
-
-      db[idx] = updated;
-      saveDB(db);
-      alert("更新成功（已寫回 fcn_pool）");
-      clearForm();
-      searchRecords();
-    });
-
-    document.getElementById("deleteBtn").addEventListener("click", function() {
-      if (!currentEditId) {
-        alert("請先從 Inquiry 點 Edit。");
-        return;
-      }
-
-      const ok = confirm(`確定刪除 ${currentEditId} ?`);
+    function clearDeals() {
+      const ok = confirm("確定清空全部 M4 紀錄？");
       if (!ok) return;
+      localStorage.removeItem(STORAGE_KEY);
+      renderHistory();
+      updateSummary();
+      document.getElementById("previewArea").style.display = "none";
+    }
+    window.clearDeals = clearDeals;
 
-      const db = loadDB().filter(x => x.fcn_id !== currentEditId);
-      saveDB(db);
-      alert("刪除成功");
-      clearForm();
-      searchRecords();
-    });
-
-    document.getElementById("clearBtn").addEventListener("click", clearForm);
-
-    document.getElementById("searchBtn").addEventListener("click", searchRecords);
-
-    document.getElementById("resetSearchBtn").addEventListener("click", function() {
-      ["q_date","q_bank","q_status","q_symbol","q_eki","q_fcn_id","q_rate_min","q_rate_max","q_tenor"]
-        .forEach(id => document.getElementById(id).value = "");
-      searchRecords();
-    });
-
-    document.getElementById("exportBtn").addEventListener("click", function() {
-      const db = loadDB();
-      const blob = new Blob([JSON.stringify(db, null, 2)], { type: "application/json" });
+    function exportDeals() {
+      const deals = getDeals();
+      if (!deals.length) {
+        alert("目前沒有資料可匯出");
+        return;
+      }
+      const blob = new Blob([JSON.stringify(deals, null, 2)], { type: "application/json" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "fcn_pool_export.json";
+      a.download = "m4_records_export.json";
       a.click();
       URL.revokeObjectURL(url);
-    });
+    }
+    window.exportDeals = exportDeals;
 
-    document.getElementById("date").value = new Date().toISOString().slice(0, 10);
-    document.getElementById("currency").value = "USD";
-    document.getElementById("status").value = "inquiry";
-    document.getElementById("eki").value = "false";
-    document.getElementById("has_position").value = "false";
-    document.getElementById("is_portfolio").value = "false";
-    document.getElementById("autocall").value = "100";
-   
-  
-    searchRecords();
-  </script>
-
-  <script type="module">
-  import {
-    runDecisionModuleV1,
-    exportDecisionArtifacts
-  } from "./js/core/decision_module_v1.js";
-
-  async function bootDecisionModule() {
-    try {
-      const result = await runDecisionModuleV1({
-        pool30Path: "./data/pool30.json",
-        fcnPoolPath: "./data/fcn_pool.json",
-        marketRuntimePath: "./data/market_runtime.json"
+    function resetForm() {
+      document.querySelectorAll("input, textarea, select").forEach(el => {
+        if (el.tagName === "SELECT") {
+          el.selectedIndex = 0;
+        } else if (["ki","strike","coupon","tenor","l2KiValue","l2StrikeValue","l2CouponValue","l2TenorValue"].includes(el.id)) {
+          // keep defaults
+        } else {
+          el.value = "";
+        }
       });
 
-      console.log("Decision Module V1 啟動成功", result);
-      window.decisionV1Result = result;
-      window.exportDecisionArtifacts = exportDecisionArtifacts;
+      document.getElementById("ki").value = 55;
+      document.getElementById("strike").value = 65;
+      document.getElementById("coupon").value = 18;
+      document.getElementById("tenor").value = 6;
 
-      alert("Decision Module V1 啟動成功");
-    } catch (err) {
-      console.error("Decision Module V1 啟動失敗", err);
-      alert("Decision Module V1 啟動失敗，請看 console");
+      document.getElementById("l2KiValue").value = 55;
+      document.getElementById("l2StrikeValue").value = 65;
+      document.getElementById("l2CouponValue").value = 18;
+      document.getElementById("l2TenorValue").value = 6;
+
+      document.getElementById("stockBlocks").innerHTML = "";
+      document.getElementById("previewArea").style.display = "none";
     }
-  }
+    window.resetForm = resetForm;
 
-  bootDecisionModule();
-</script>
+    function updateSummary() {
+      const deals = getDeals();
+      document.getElementById("totalDeals").textContent = deals.length;
+      document.getElementById("lastDealName").textContent = deals.length ? (deals[0].basic.deal_name || "-") : "-";
+    }
+
+    function fmtMaybeDecimal(v) {
+      const n = Number(v);
+      if (!Number.isFinite(n)) return "";
+      return Math.abs(n) <= 2 ? (n * 100).toFixed(2) + "%" : n.toFixed(2) + "%";
+    }
+
+    async function initM4() {
+      loadRuntimeCache();
+      await Promise.all([
+        loadFcnPool(),
+        loadMarketRuntime()
+      ]);
+      renderHistory();
+      updateSummary();
+    }
+
+    window.buildStockBlocks = buildStockBlocks;
+    window.runM4Scoring = runM4Scoring;
+    window.saveDeal = saveDeal;
+    window.previewDeal = previewDeal;
+    window.renderHistory = renderHistory;
+
+    initM4();
+  </script>
 </body>
 </html>
