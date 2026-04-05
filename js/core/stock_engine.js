@@ -153,7 +153,127 @@ export function getPureReason(stock = {}) {
   return `${baselineLabel}股、Baseline=${baseline}、中期波動=${(midVol * 100).toFixed(1)}%、${volLabel}、VolScore=${volScore}`;
 }
 
+// ------------------------------------------
+// Snapshot 用：momentum
+// 新權重：0.4*1d + 0.5*1w + 0.1*1m
+// 注意：保留正負，不可取絕對值
+// ------------------------------------------
+export function calcMomentum(stock = {}) {
+  const r1d = toNumber(stock.ret_1d, 0);
+  const r1w = toNumber(stock.ret_1w, 0);
+  const r1m = toNumber(stock.ret_1m, 0);
 
+  return round(0.4 * r1d + 0.5 * r1w + 0.1 * r1m, 4);
+}
+
+// ------------------------------------------
+// Snapshot 分數表（定稿）
+// momentum 以百分比 movePct 判斷
+//
+// <= -28%      +10
+// -28% ~ -26%  +9
+// -26% ~ -22%  +8
+// -22% ~ -18%  +7
+// -18% ~ -14%  +6
+// -14% ~ -11%  +5
+// -11% ~ -8%   +4
+// -8%  ~ -5%   +3
+// -5%  ~ -3%   +2
+// -3%  ~ -1%   +1
+// -1%  ~ +1%    0
+// +1%  ~ +5%   -1
+// +5%  ~ +8%   -2
+// +8%  ~ +13%  -3
+// +13% ~ +18%  -4
+// +18% ~ +25%  -5
+// +25% ~ +30%  -6
+// > +30%       -8
+// ------------------------------------------
+export function calcSnapshotScore(movePct = 0) {
+  if (movePct <= -28) return 10;
+  if (movePct <= -26) return 9;
+  if (movePct <= -22) return 8;
+  if (movePct <= -18) return 7;
+  if (movePct <= -14) return 6;
+  if (movePct <= -11) return 5;
+  if (movePct <= -8) return 4;
+  if (movePct <= -5) return 3;
+  if (movePct <= -3) return 2;
+  if (movePct <= -1) return 1;
+
+  if (movePct < 1) return 0;
+
+  if (movePct <= 5) return -1;
+  if (movePct <= 8) return -2;
+  if (movePct <= 13) return -3;
+  if (movePct <= 18) return -4;
+  if (movePct <= 25) return -5;
+  if (movePct <= 30) return -6;
+
+  return -8;
+}
+
+export function getSnapshotBucket(movePct = 0) {
+  if (movePct <= -28) return "<= -28%";
+  if (movePct <= -26) return "-28% ~ -26%";
+  if (movePct <= -22) return "-26% ~ -22%";
+  if (movePct <= -18) return "-22% ~ -18%";
+  if (movePct <= -14) return "-18% ~ -14%";
+  if (movePct <= -11) return "-14% ~ -11%";
+  if (movePct <= -8) return "-11% ~ -8%";
+  if (movePct <= -5) return "-8% ~ -5%";
+  if (movePct <= -3) return "-5% ~ -3%";
+  if (movePct <= -1) return "-3% ~ -1%";
+
+  if (movePct < 1) return "-1% ~ +1%";
+
+  if (movePct <= 5) return "+1% ~ +5%";
+  if (movePct <= 8) return "+5% ~ +8%";
+  if (movePct <= 13) return "+8% ~ +13%";
+  if (movePct <= 18) return "+13% ~ +18%";
+  if (movePct <= 25) return "+18% ~ +25%";
+  if (movePct <= 30) return "+25% ~ +30%";
+
+  return "> +30%";
+}
+
+export function getSnapshotReason(movePct = 0) {
+  if (movePct <= -28) return "急跌超甜，但要確認不是壞掉";
+  if (movePct <= -26) return "很甜";
+  if (movePct <= -22) return "很甜";
+  if (movePct <= -18) return "甜";
+  if (movePct <= -14) return "偏甜";
+  if (movePct <= -11) return "健康修正";
+  if (movePct <= -8) return "健康修正";
+  if (movePct <= -5) return "開始變甜";
+  if (movePct <= -3) return "微甜";
+  if (movePct <= -1) return "小幅修正";
+
+  if (movePct < 1) return "中性區";
+
+  if (movePct <= 5) return "偏貴";
+  if (movePct <= 8) return "不甜";
+  if (movePct <= 13) return "偏熱";
+  if (movePct <= 18) return "過熱";
+  if (movePct <= 25) return "高位風險";
+  if (movePct <= 30) return "明顯過熱";
+
+  return "極度過熱";
+}
+
+export function calcSnapshot(stock = {}) {
+  const momentum = calcMomentum(stock);
+  const movePct = round(momentum * 100, 2);
+  const score = calcSnapshotScore(movePct);
+
+  return {
+    snapshot_momentum: momentum,
+    snapshot_move_pct: movePct,
+    snapshot_bucket: getSnapshotBucket(movePct),
+    snapshot_score: score,
+    snapshot_reason: getSnapshotReason(movePct)
+  };
+}
 
 // ------------------------------------------
 // Trend（解釋層）
