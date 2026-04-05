@@ -1,1 +1,1041 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>振宇 FCN 系統｜M4 UI</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+      background: #f5f7fb;
+      color: #1f2937;
+    }
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 18px;
+    }
+    .topbar {
+      display: flex;
+      gap: 12px;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .title h1 {
+      margin: 0 0 6px 0;
+      font-size: 30px;
+      font-weight: 800;
+    }
+    .title p {
+      margin: 0;
+      font-size: 14px;
+      color: #6b7280;
+    }
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: none;
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-block;
+      transition: 0.2s ease;
+    }
+    .btn-primary { background: #111827; color: #fff; }
+    .btn-primary:hover { background: #000; }
+    .btn-secondary { background: #fff; color: #111827; border: 1px solid #d1d5db; }
+    .btn-secondary:hover { background: #f9fafb; }
+    .btn-danger { background: #dc2626; color: #fff; }
+    .btn-danger:hover { background: #b91c1c; }
 
+    .card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+      margin-bottom: 18px;
+    }
+    .card h2 {
+      margin: 0 0 8px 0;
+      font-size: 24px;
+    }
+    .card h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+    }
+    .muted {
+      color: #6b7280;
+      font-size: 13px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 18px;
+    }
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+    label {
+      font-size: 13px;
+      font-weight: 800;
+      color: #374151;
+    }
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 11px 12px;
+      font-size: 14px;
+      background: #fff;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 88px;
+    }
+    .helper {
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    .mini-card {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .mini-k {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+    .mini-v {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-right: 6px;
+      margin-bottom: 6px;
+    }
+    .badge-blue { background: #dbeafe; color: #1d4ed8; }
+
+    .result-block {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 12px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1100px;
+      table-layout: fixed;
+    }
+    th, td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 10px 8px;
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+    }
+    th {
+      background: #f9fafb;
+      font-weight: 800;
+      color: #374151;
+      position: sticky;
+      top: 0;
+    }
+
+    .col-condition { width: 18%; }
+    .col-value { width: 24%; }
+    .col-score { width: 12%; }
+    .col-comment { width: 46%; }
+
+    .small {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .action-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .empty {
+      text-align: center;
+      padding: 26px 10px;
+      color: #6b7280;
+      font-size: 14px;
+    }
+    .stock-row {
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: #fafafa;
+    }
+    .stock-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .blueprint-wrap {
+      display: none;
+    }
+    .blueprint-wrap.open {
+      display: block;
+    }
+    .blueprint-box {
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 16px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .grid-2, .grid-4, .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="title">
+        <h1>🛠️ M4｜外在單評分與紀錄 UI</h1>
+        <p>FCN 三層評分架構：L1 總體評分 / L2 原因拆解 / L3 股票詳細資訊</p>
+      </div>
+      <div class="top-actions">
+        <a class="btn btn-secondary" href="index.html">回首頁</a>
+        <a class="btn btn-secondary" href="milestone2_index.html">回 Milestone 2</a>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <div class="card">
+          <h2>基本資料</h2>
+          <p class="muted">UI 只負責顯示；計算與儲存放在 module4_learning.js。</p>
+
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="dealName">案件名稱</label>
+              <input id="dealName" type="text" placeholder="例：今日外在單 / 科技收益單 / 高息事件單" />
+            </div>
+
+            <div class="form-group">
+              <label for="bank">銀行 / 券商</label>
+              <input id="bank" type="text" placeholder="例：DB / UBS / 某銀行" />
+            </div>
+
+            <div class="form-group">
+              <label for="productType">產品類型</label>
+              <select id="productType">
+                <option value="EKI">EKI</option>
+                <option value="AKI / MKI">AKI / MKI</option>
+                <option value="DACN">DACN</option>
+              </select>
+            </div>
+
+            <div class="form-group full">
+              <label for="basket">Basket</label>
+              <input id="basket" type="text" placeholder="例：NVDA,TSM,AMAT,CCL" />
+              <div class="helper">股票基礎資料用 pool30.json；價格/區間變化用 stock_runtime.json；計算放在 js/modules/module4_learning.js。</div>
+            </div>
+
+            <div class="form-group">
+              <label for="ki">下限價 KI (%)</label>
+              <input id="ki" type="number" value="55" />
+            </div>
+            <div class="form-group">
+              <label for="strike">執行價 Strike (%)</label>
+              <input id="strike" type="number" value="65" />
+            </div>
+            <div class="form-group">
+              <label for="coupon">票息 / 年化利率 Coupon (%)</label>
+              <input id="coupon" type="number" value="18" />
+            </div>
+            <div class="form-group">
+              <label for="tenor">天期 Tenor（月）</label>
+              <input id="tenor" type="number" value="6" />
+            </div>
+
+            <div class="form-group full">
+              <label for="memo">案件備註</label>
+              <textarea id="memo" placeholder="例：這次報價比平常高，懷疑市場在反映短期事件風險"></textarea>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-primary" type="button" onclick="buildStockBlocks()">建立股票區塊</button>
+            <button class="btn btn-primary" type="button" onclick="runM4Scoring()">執行評分</button>
+            <button class="btn btn-secondary" type="button" onclick="saveDeal()">儲存紀錄</button>
+            <button class="btn btn-secondary" type="button" onclick="resetForm()">清空表單</button>
+            <button class="btn btn-secondary" type="button" onclick="toggleBlueprint()">Blueprint 展開 / 收合</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>L1｜FCN 總體評分</h2>
+          <p class="muted">L1 只保留 Event / Pure / Delta。</p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="eventFcnScore">Event FCN Score</label>
+              <input id="eventFcnScore" type="number" placeholder="當下評價分數" />
+            </div>
+            <div class="form-group">
+              <label for="eventFcnComment">Event FCN 說明</label>
+              <input id="eventFcnComment" type="text" placeholder="說明整體當下評價" />
+            </div>
+
+            <div class="form-group">
+              <label for="pureFcnScore">Pure FCN Score</label>
+              <input id="pureFcnScore" type="number" placeholder="長期評價分數" />
+            </div>
+            <div class="form-group">
+              <label for="pureFcnComment">Pure FCN 說明</label>
+              <input id="pureFcnComment" type="text" placeholder="說明長期本質評價" />
+            </div>
+
+            <div class="form-group">
+              <label for="deltaFcnScore">Delta FCN (%)</label>
+              <input id="deltaFcnScore" type="number" placeholder="現在划算嗎" />
+            </div>
+            <div class="form-group">
+              <label for="deltaFcnComment">Delta FCN 說明</label>
+              <input id="deltaFcnComment" type="text" placeholder="現在做是否划算" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>L2｜FCN 條件拆解</h2>
+          <p class="muted">這一層是說明 why / why not，要有數字與文字。</p>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th class="col-condition">條件</th>
+                  <th class="col-value">值</th>
+                  <th class="col-score">分數</th>
+                  <th class="col-comment">說明</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>下限價 KI</td>
+                  <td><input id="l2KiValue" type="number" /></td>
+                  <td><input id="l2KiScore" type="number" /></td>
+                  <td><input id="l2KiComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>執行價 Strike</td>
+                  <td><input id="l2StrikeValue" type="number" /></td>
+                  <td><input id="l2StrikeScore" type="number" /></td>
+                  <td><input id="l2StrikeComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>票息 Coupon</td>
+                  <td><input id="l2CouponValue" type="number" /></td>
+                  <td><input id="l2CouponScore" type="number" /></td>
+                  <td><input id="l2CouponComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>天期 Tenor</td>
+                  <td><input id="l2TenorValue" type="number" /></td>
+                  <td><input id="l2TenorScore" type="number" /></td>
+                  <td><input id="l2TenorComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>Gap（執行價 - 下限價）</td>
+                  <td><input id="l2GapValue" type="number" /></td>
+                  <td><input id="l2GapScore" type="number" /></td>
+                  <td><input id="l2GapComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>Avg Pure Stock</td>
+                  <td><input id="l2AvgPureStockValue" type="number" /></td>
+                  <td><input id="l2AvgPureStockScore" type="number" /></td>
+                  <td><input id="l2AvgPureStockComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>Avg Event Stock</td>
+                  <td><input id="l2AvgEventStockValue" type="number" /></td>
+                  <td><input id="l2AvgEventStockScore" type="number" /></td>
+                  <td><input id="l2AvgEventStockComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>Pure FCN Volatility</td>
+                  <td><input id="l2PureFcnVolatilityValue" type="number" /></td>
+                  <td><input id="l2PureFcnVolatilityScore" type="number" /></td>
+                  <td><input id="l2PureFcnVolatilityComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>Event FCN Snapshot</td>
+                  <td><input id="l2EventFcnSnapshotValue" type="number" /></td>
+                  <td><input id="l2EventFcnSnapshotScore" type="number" /></td>
+                  <td><input id="l2EventFcnSnapshotComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>Avg Event / News Score</td>
+                  <td><input id="l2AvgEventNewsValue" type="number" /></td>
+                  <td><input id="l2AvgEventNewsScore" type="number" /></td>
+                  <td><input id="l2AvgEventNewsComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>SRI</td>
+                  <td><input id="l2SRIValue" type="number" /></td>
+                  <td><input id="l2SRIScore" type="number" /></td>
+                  <td><input id="l2SRIComment" type="text" /></td>
+                </tr>
+                <tr>
+                  <td>Worst-of</td>
+                  <td><input id="l2WorstOfValue" type="text" /></td>
+                  <td><input id="l2WorstOfScore" type="number" /></td>
+                  <td><input id="l2WorstOfComment" type="text" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="form-group" style="margin-top:12px;">
+            <label for="l2FcnSummary">FCN 條件總結</label>
+            <textarea id="l2FcnSummary" placeholder="例：結構本身不差，但利率偏高需提高警覺"></textarea>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-title">
+            <h2>L2 + L3｜股票評估與詳細資訊</h2>
+            <button class="btn btn-secondary" type="button" onclick="buildStockBlocks()">依 Basket 建立股票區塊</button>
+          </div>
+          <p class="muted">Event Stock Volatility Score = Snapshot Score。</p>
+
+          <div id="stockBlocks"></div>
+        </div>
+
+        <div class="card">
+          <h2>最終結論</h2>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="worstOf">Worst-of</label>
+              <input id="worstOf" type="text" />
+            </div>
+            <div class="form-group">
+              <label for="finalDecision">Final Decision</label>
+              <input id="finalDecision" type="text" />
+            </div>
+            <div class="form-group">
+              <label for="keyAdvantage">Key Advantage</label>
+              <input id="keyAdvantage" type="text" />
+            </div>
+            <div class="form-group">
+              <label for="keyRisk">Key Risk</label>
+              <input id="keyRisk" type="text" />
+            </div>
+            <div class="form-group full">
+              <label for="finalReason">Final Reason</label>
+              <textarea id="finalReason"></textarea>
+            </div>
+          </div>
+
+          <div class="action-row">
+            <button class="btn btn-secondary" onclick="previewDeal()">預覽資料</button>
+          </div>
+
+          <div id="previewArea" class="result-block" style="display:none;"></div>
+        </div>
+
+        <div class="card blueprint-wrap" id="blueprintWrap">
+          <div class="section-title">
+            <h2>📘 M4 Blueprint</h2>
+            <button class="btn btn-secondary" type="button" onclick="toggleBlueprint()">收合 / 展開</button>
+          </div>
+          <div class="blueprint-box">
+【資料來源】
+1. 股票基礎資料：data/pool30.json
+2. 股票價格 / 報酬：data/stock_runtime.json
+3. 股票評分：js/core/stock_engine.js
+4. M4 主引擎：js/modules/module4_learning.js
+5. localStorage.runtime_cache_v1：若存在則覆蓋最新值
+
+【單檔股票】
+Pure Stock Score = Baseline Score + Vol Score
+Event Stock Score = Pure Stock Score + Snapshot Score
+Event Stock Volatility Score = Snapshot Score
+Event / News Score：目前固定 0，尚未接 M1
+
+【FCN 主公式】
+Pure FCN Score
+= 0.4 × Avg Pure Stock
++ 0.2 × Rate Score
++ 0.1 × Period Score
++ 0.1 × P-Risk Score
++ 0.1 × SRI
++ Product Type Score
+
+Event FCN Score
+= 0.4 × Avg Event Stock
++ 0.2 × Rate Score
++ 0.1 × Period Score
++ 0.1 × P-Risk Score
++ 0.1 × SRI
++ Product Type Score
+
+【L2 輔助欄位】
+Pure FCN Volatility
+= 0.6 × Worst-of Vol Score
++ 0.4 × Avg Vol Score
+
+Event FCN Snapshot
+= 0.6 × Worst-of Event Snapshot
++ 0.4 × Avg Event Snapshot
+
+【Product Type Score】
+EKI = +2
+AKI / MKI = 0
+DACN = -1
+
+【說明】
+1. Overall FCN Score 已取消
+2. KI / Strike 分數僅供結構參考，不進主公式
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h2>M4 目前狀態</h2>
+          <div class="grid-2">
+            <div class="mini-card">
+              <div class="mini-k">累積紀錄</div>
+              <div class="mini-v" id="totalDeals">0</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-k">最近案件</div>
+              <div class="mini-v" id="lastDealName">-</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>這一版重點</h2>
+          <div class="muted">
+            1. 已取消 Overall FCN Score<br>
+            2. L2 分數欄縮短、說明欄拉長<br>
+            3. KI / Strike 顯示參考分數<br>
+            4. L2 新增 Pure FCN Volatility
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>資料來源</h2>
+          <div class="muted">
+            • data/pool30.json（股票基礎資料）<br>
+            • data/stock_runtime.json（價格 / 區間報酬）<br>
+            • js/core/stock_engine.js（股票評分）<br>
+            • js/modules/module4_learning.js（M4 主引擎）
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">
+        <h2>M4 歷史紀錄</h2>
+        <div>
+          <button class="btn btn-secondary" onclick="renderHistory()">重新整理</button>
+          <button class="btn btn-secondary" onclick="exportDeals()">匯出 JSON</button>
+          <button class="btn btn-danger" onclick="clearDeals()">清空全部</button>
+        </div>
+      </div>
+
+      <div id="historyWrap"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import {
+      loadSupportData,
+      buildStockBlocksData,
+      evaluateDeal,
+      saveExternalDeal,
+      getExternalDeals,
+      clearExternalDeals
+    } from "./js/modules/module4_learning.js";
+
+    let LAST_STOCKS = [];
+    let LAST_RESULT = null;
+
+    function normalizeBasket(input) {
+      return String(input || "")
+        .split(",")
+        .map(v => String(v).trim().toUpperCase())
+        .filter(Boolean);
+    }
+
+    function toNumber(v, fallback = 0) {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : fallback;
+    }
+
+    function setValue(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.value = value ?? "";
+    }
+
+    function getValue(id) {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : "";
+    }
+
+    function getNumber(id) {
+      const el = document.getElementById(id);
+      if (!el) return null;
+      const n = Number(el.value);
+      return Number.isFinite(n) && el.value !== "" ? n : null;
+    }
+
+    function fmtPctFromDecimal(v) {
+      const n = Number(v);
+      if (!Number.isFinite(n)) return "";
+      return (n * 100).toFixed(2) + "%";
+    }
+
+    function renderStockBlocks(stocks = []) {
+      const wrap = document.getElementById("stockBlocks");
+      wrap.innerHTML = stocks.map((s, idx) => {
+        const baselineValue = `${s.baseline_label || ""} (${s.baseline_score ?? ""})`;
+        const baselineComment = `分類=${s.category || ""} | Baseline Score=${s.baseline_score ?? ""}`;
+        const typeValue = [s.name, s.category, s.sector, s.subsector].filter(Boolean).join(" / ");
+        const pureVolComment = `中期波動 ${(toNumber(s.mid_term_volatility) * 100).toFixed(2)}% | ${s.vol_label || ""}`;
+        const eventVolComment = `Snapshot Momentum=${s.snapshot_move_pct ?? ""}% | Bucket=${s.snapshot_bucket || ""} | Snapshot Score=${s.snapshot_score ?? 0}`;
+        const eventComment = `${s.trend_label || ""} | ${s.trend_note || ""}`;
+
+        return `
+          <div class="stock-row">
+            <div class="stock-head">
+              <h3 style="margin:0;">${s.symbol}</h3>
+              <span class="badge badge-blue">Stock ${idx + 1}</span>
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label>${s.symbol}｜Baseline / Tier</label>
+                <input value="${baselineValue}" />
+              </div>
+              <div class="form-group">
+                <label>${s.symbol}｜Baseline 說明</label>
+                <input value="${baselineComment}" />
+              </div>
+
+              <div class="form-group">
+                <label>${s.symbol}｜Type</label>
+                <input value="${typeValue}" />
+              </div>
+              <div class="form-group">
+                <label>${s.symbol}｜Risk / Volatility / Preference</label>
+                <input value="" placeholder="風險 | 波動 | 偏好" />
+              </div>
+
+              <div class="form-group">
+                <label>${s.symbol}｜Pure Stock Score</label>
+                <input value="${s.pure_stock_score ?? ""}" />
+              </div>
+              <div class="form-group">
+                <label>${s.symbol}｜Pure Stock 說明</label>
+                <input value="${s.pure_reason || ""}" />
+              </div>
+
+              <div class="form-group">
+                <label>${s.symbol}｜Pure Stock Volatility Score</label>
+                <input value="${s.vol_score ?? ""}" />
+              </div>
+              <div class="form-group">
+                <label>${s.symbol}｜Pure Vol 說明</label>
+                <input value="${pureVolComment}" />
+              </div>
+
+              <div class="form-group">
+                <label>${s.symbol}｜Event Stock Score</label>
+                <input value="${s.event_stock_score ?? ""}" />
+              </div>
+              <div class="form-group">
+                <label>${s.symbol}｜Event Stock 說明</label>
+                <input value="${eventComment}" />
+              </div>
+
+              <div class="form-group">
+                <label>${s.symbol}｜Event Stock Volatility Score</label>
+                <input value="${s.snapshot_score ?? 0}" />
+              </div>
+              <div class="form-group">
+                <label>${s.symbol}｜Event Vol 說明</label>
+                <input value="${eventVolComment}" />
+              </div>
+
+              <div class="form-group">
+                <label>${s.symbol}｜Event / News Score</label>
+                <input value="${s.event_news_score ?? 0}" />
+              </div>
+              <div class="form-group">
+                <label>${s.symbol}｜Event / News 說明</label>
+                <input value="${s.event_news_reason || ""}" />
+              </div>
+            </div>
+
+            <div class="result-block" style="margin-top:12px;">
+              <div class="section-title">
+                <strong>L3｜${s.symbol} 詳細資訊</strong>
+                <span class="small">價格 / 變化 / 最後說明</span>
+              </div>
+
+              <div class="grid-4">
+                <div class="form-group">
+                  <label>Current Price</label>
+                  <input value="${s.price_now ?? ""}" />
+                </div>
+                <div class="form-group">
+                  <label>1D</label>
+                  <input value="${fmtPctFromDecimal(s.ret_1d)}" />
+                </div>
+                <div class="form-group">
+                  <label>1W</label>
+                  <input value="${fmtPctFromDecimal(s.ret_1w)}" />
+                </div>
+                <div class="form-group">
+                  <label>1M</label>
+                  <input value="${fmtPctFromDecimal(s.ret_1m)}" />
+                </div>
+                <div class="form-group">
+                  <label>3M</label>
+                  <input value="${fmtPctFromDecimal(s.ret_3m)}" />
+                </div>
+                <div class="form-group">
+                  <label>6M</label>
+                  <input value="${fmtPctFromDecimal(s.ret_6m)}" />
+                </div>
+                <div class="form-group">
+                  <label>12M</label>
+                  <input value="${fmtPctFromDecimal(s.ret_12m)}" />
+                </div>
+                <div class="form-group">
+                  <label>狀態說明</label>
+                  <input value="SnapshotScore=${s.snapshot_score ?? 0} | Momentum=${s.snapshot_move_pct ?? 0}% | ${s.snapshot_reason || ""}" />
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function buildDealInput() {
+      return {
+        deal_name: getValue("dealName"),
+        bank: getValue("bank"),
+        product_type: getValue("productType"),
+        basket: normalizeBasket(getValue("basket")),
+        ki: getNumber("ki"),
+        strike: getNumber("strike"),
+        coupon: getNumber("coupon"),
+        tenor: getNumber("tenor"),
+        memo: getValue("memo")
+      };
+    }
+
+    async function buildStockBlocks() {
+      const basket = normalizeBasket(getValue("basket"));
+      if (!basket.length) {
+        alert("請先輸入 Basket");
+        return;
+      }
+      LAST_STOCKS = buildStockBlocksData(basket);
+      renderStockBlocks(LAST_STOCKS);
+    }
+
+    async function runM4Scoring() {
+      const deal = buildDealInput();
+      if (!deal.basket.length) {
+        alert("請先輸入 Basket");
+        return;
+      }
+
+      LAST_RESULT = evaluateDeal(deal);
+      LAST_STOCKS = LAST_RESULT.stocks || [];
+      renderStockBlocks(LAST_STOCKS);
+
+      setValue("eventFcnScore", LAST_RESULT.event_fcn_score);
+      setValue("eventFcnComment", LAST_RESULT.event_fcn_comment);
+
+      setValue("pureFcnScore", LAST_RESULT.pure_fcn_score);
+      setValue("pureFcnComment", LAST_RESULT.pure_fcn_comment);
+
+      setValue("deltaFcnScore", LAST_RESULT.delta_fcn_score);
+      setValue("deltaFcnComment", LAST_RESULT.delta_fcn_comment);
+
+      setValue("l2KiValue", LAST_RESULT.l2.ki_value);
+      setValue("l2KiScore", LAST_RESULT.l2.ki_score);
+      setValue("l2KiComment", LAST_RESULT.l2.ki_comment);
+
+      setValue("l2StrikeValue", LAST_RESULT.l2.strike_value);
+      setValue("l2StrikeScore", LAST_RESULT.l2.strike_score);
+      setValue("l2StrikeComment", LAST_RESULT.l2.strike_comment);
+
+      setValue("l2CouponValue", LAST_RESULT.l2.coupon_value);
+      setValue("l2CouponScore", LAST_RESULT.l2.coupon_score);
+      setValue("l2CouponComment", LAST_RESULT.l2.coupon_comment);
+
+      setValue("l2TenorValue", LAST_RESULT.l2.tenor_value);
+      setValue("l2TenorScore", LAST_RESULT.l2.tenor_score);
+      setValue("l2TenorComment", LAST_RESULT.l2.tenor_comment);
+
+      setValue("l2GapValue", LAST_RESULT.l2.gap_value);
+      setValue("l2GapScore", LAST_RESULT.l2.gap_score);
+      setValue("l2GapComment", LAST_RESULT.l2.gap_comment);
+
+      setValue("l2AvgPureStockValue", LAST_RESULT.avg_pure_stock);
+      setValue("l2AvgPureStockScore", LAST_RESULT.avg_pure_stock);
+      setValue("l2AvgPureStockComment", "所有成分股 Pure Stock 平均");
+
+      setValue("l2AvgEventStockValue", LAST_RESULT.avg_event_stock);
+      setValue("l2AvgEventStockScore", LAST_RESULT.avg_event_stock);
+      setValue("l2AvgEventStockComment", "所有成分股 Event Stock 平均");
+
+      setValue("l2PureFcnVolatilityValue", LAST_RESULT.pure_fcn_volatility);
+      setValue("l2PureFcnVolatilityScore", LAST_RESULT.pure_fcn_volatility);
+      setValue("l2PureFcnVolatilityComment", `0.6 × Worst-of Vol Score(${LAST_RESULT.worst_of_pure_volatility}) + 0.4 × Avg Vol Score(${LAST_RESULT.avg_pure_volatility})`);
+
+      setValue("l2EventFcnSnapshotValue", LAST_RESULT.event_fcn_snapshot);
+      setValue("l2EventFcnSnapshotScore", LAST_RESULT.event_fcn_snapshot);
+      setValue("l2EventFcnSnapshotComment", `0.6 × Worst-of Event Snapshot(${LAST_RESULT.worst_of_event_snapshot}) + 0.4 × Avg Event Snapshot(${LAST_RESULT.avg_event_snapshot})`);
+
+      setValue("l2AvgEventNewsValue", LAST_RESULT.avg_event_news_score);
+      setValue("l2AvgEventNewsScore", LAST_RESULT.avg_event_news_score);
+      setValue("l2AvgEventNewsComment", "目前固定 0，尚未接入 M1");
+
+      setValue("l2SRIValue", LAST_RESULT.sri);
+      setValue("l2SRIScore", LAST_RESULT.sri);
+      setValue("l2SRIComment", "0.6 × Worst-of + 0.4 × ASSY");
+
+      const worstStock = (LAST_RESULT.stocks || []).find(s => s.symbol === LAST_RESULT.worst_of);
+      setValue("l2WorstOfValue", LAST_RESULT.worst_of);
+      setValue("l2WorstOfScore", worstStock ? worstStock.pure_stock_score : "");
+      setValue("l2WorstOfComment", worstStock ? `${worstStock.symbol} 為 Worst-of；Pure=${worstStock.pure_stock_score} / Event=${worstStock.event_stock_score}` : "");
+
+      setValue("l2FcnSummary", LAST_RESULT.l2.summary_comment);
+
+      setValue("worstOf", LAST_RESULT.worst_of);
+      setValue("finalDecision", LAST_RESULT.suggestion);
+      setValue("keyAdvantage", `Product Type Score=${LAST_RESULT.product_type_score} | Delta=${LAST_RESULT.delta_fcn_comment}`);
+      setValue("keyRisk", `Worst-of=${LAST_RESULT.worst_of} | P-Risk=${LAST_RESULT.prisk_score}`);
+      setValue("finalReason", `${LAST_RESULT.event_fcn_comment} | ${LAST_RESULT.pure_fcn_comment}`);
+
+      previewDeal();
+    }
+
+    async function saveDeal() {
+      const deal = buildDealInput();
+      if (!deal.deal_name) {
+        alert("請至少填寫案件名稱");
+        return;
+      }
+      if (!deal.basket.length) {
+        alert("請輸入 Basket");
+        return;
+      }
+      if (!LAST_RESULT) {
+        LAST_RESULT = evaluateDeal(deal);
+      }
+      await saveExternalDeal(deal, LAST_RESULT);
+      renderHistory();
+      updateSummary();
+      alert("M4 紀錄已儲存");
+    }
+
+    function previewDeal() {
+      const box = document.getElementById("previewArea");
+      box.style.display = "block";
+
+      const deal = buildDealInput();
+      box.innerHTML = `
+        <div class="badge badge-blue">預覽</div>
+        <div><strong>案件：</strong> ${deal.deal_name || "-"}</div>
+        <div><strong>Basket：</strong> ${(deal.basket || []).join(", ") || "-"}</div>
+        <div><strong>L1：</strong> Pure ${LAST_RESULT?.pure_fcn_score ?? "-"} / Event ${LAST_RESULT?.event_fcn_score ?? "-"} / Delta ${LAST_RESULT?.delta_fcn_score ?? "-"}</div>
+        <div><strong>Worst-of：</strong> ${LAST_RESULT?.worst_of || "-"}</div>
+        <div><strong>Decision：</strong> ${LAST_RESULT?.suggestion || "-"}</div>
+      `;
+    }
+
+    function renderHistory() {
+      const deals = getExternalDeals();
+      const wrap = document.getElementById("historyWrap");
+
+      if (!deals.length) {
+        wrap.innerHTML = `<div class="empty">目前沒有任何 M4 紀錄。</div>`;
+        return;
+      }
+
+      wrap.innerHTML = `
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>時間</th>
+                <th>案件</th>
+                <th>Basket</th>
+                <th>類型</th>
+                <th>Pure FCN</th>
+                <th>Event FCN</th>
+                <th>Delta FCN</th>
+                <th>Worst-of</th>
+                <th>Decision</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${deals.map(d => `
+                <tr>
+                  <td>${d.created_at || "-"}</td>
+                  <td>${d.deal_name || "-"}</td>
+                  <td>${(d.basket || []).join(", ")}</td>
+                  <td>${d.product_type || "-"}</td>
+                  <td>${d.pure_fcn_score ?? "-"}</td>
+                  <td>${d.event_fcn_score ?? "-"}</td>
+                  <td>${d.delta_fcn_score ?? "-"}</td>
+                  <td>${d.worst_of || "-"}</td>
+                  <td>${d.decision || "-"}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function exportDeals() {
+      const deals = getExternalDeals();
+      if (!deals.length) {
+        alert("目前沒有資料可匯出");
+        return;
+      }
+      const blob = new Blob([JSON.stringify(deals, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "m4_records_export.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function clearDeals() {
+      if (!confirm("確定清空全部 M4 紀錄？")) return;
+      clearExternalDeals();
+      renderHistory();
+      updateSummary();
+      document.getElementById("previewArea").style.display = "none";
+    }
+
+    function resetForm() {
+      document.querySelectorAll("input, textarea, select").forEach(el => {
+        if (el.tagName === "SELECT") {
+          el.selectedIndex = 0;
+        } else if (["ki", "strike", "coupon", "tenor"].includes(el.id)) {
+          // keep defaults
+        } else {
+          el.value = "";
+        }
+      });
+
+      document.getElementById("ki").value = 55;
+      document.getElementById("strike").value = 65;
+      document.getElementById("coupon").value = 18;
+      document.getElementById("tenor").value = 6;
+
+      document.getElementById("stockBlocks").innerHTML = "";
+      document.getElementById("previewArea").style.display = "none";
+      LAST_STOCKS = [];
+      LAST_RESULT = null;
+    }
+
+    function updateSummary() {
+      const deals = getExternalDeals();
+      document.getElementById("totalDeals").textContent = deals.length;
+      document.getElementById("lastDealName").textContent = deals.length ? (deals[0].deal_name || "-") : "-";
+    }
+
+    function toggleBlueprint() {
+      document.getElementById("blueprintWrap").classList.toggle("open");
+    }
+
+    window.buildStockBlocks = buildStockBlocks;
+    window.runM4Scoring = runM4Scoring;
+    window.saveDeal = saveDeal;
+    window.previewDeal = previewDeal;
+    window.renderHistory = renderHistory;
+    window.exportDeals = exportDeals;
+    window.clearDeals = clearDeals;
+    window.resetForm = resetForm;
+    window.toggleBlueprint = toggleBlueprint;
+
+    await loadSupportData();
+    renderHistory();
+    updateSummary();
+  </script>
+</body>
+</html>
