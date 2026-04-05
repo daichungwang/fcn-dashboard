@@ -190,15 +190,16 @@ export function calcMomentum(stock = {}) {
 // > +30     -8
 // ------------------------------------------
 export function calcSnapshotScore(movePct = 0) {
-  if (movePct <= -28) return 10;
-  if (movePct <= -26) return 8;
-  if (movePct <= -22) return 7;
-  if (movePct <= -18) return 6;
-  if (movePct <= -14) return 5;
-  if (movePct <= -11) return 4;
-   if (movePct <= -8) return 3;
-  if (movePct <= -5) return 2;
-  if (movePct <= -3) return 1;
+  if (movePct >= -28) return 10;
+  if (movePct >= -26) return 8;
+  if (movePct >= -22) return 7;
+  if (movePct >= -18) return 6;
+  if (movePct >= -14) return 5;
+  if (movePct >= -11) return 4;
+   if (movePct >= -8) return 3;
+  if (movePct >= -5) return 2;
+  if (movePct >= -3) return 1;
+    if (movePct >= -1) return 0;
   if (movePct < 1) return 0;
 
   if (movePct <= 5) return -1;
@@ -212,16 +213,16 @@ export function calcSnapshotScore(movePct = 0) {
 }
 
 export function getSnapshotBucket(movePct = 0) {
-  if (movePct <= -30) return "<= -30%";
-   if (movePct <= -28) return "-28% ~ -26%";
-  if (movePct <= -26) return "-26% ~ -22%";
-     if (movePct <= -22) return "-22% ~ -18%";
-     if (movePct <= -18) return "-18% ~ -14%";
-     if (movePct <= -14) return "-14% ~ -11%";
-  if (movePct <= -11) return "-11% ~ -8%";
-  if (movePct <= -8) return "-8% ~ -5%";
-  if (movePct <= -5) return "-5% ~ -3%";
-  if (movePct <= -3) return "-1% ~ -3%";
+  if (movePct >= -30) return "<= -30%";
+   if (movePct >= -28) return "-28% ~ -26%";
+  if (movePct >= -26) return "-26% ~ -22%";
+     if (movePct >= -22) return "-22% ~ -18%";
+     if (movePct >= -18) return "-18% ~ -14%";
+     if (movePct >= -14) return "-14% ~ -11%";
+  if (movePct >= -11) return "-11% ~ -8%";
+  if (movePct >= -8) return "-8% ~ -5%";
+  if (movePct >= -5) return "-5% ~ -3%";
+  if (movePct >= -3) return "-1% ~ -3%";
 
   if (movePct < 1) return "-1% ~ +1%";
 
