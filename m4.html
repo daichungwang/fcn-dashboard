@@ -1,1 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<title>M4｜外在單評分系統</title>
 
+<style>
+body { font-family: Arial; background:#f5f6fa; padding:20px;}
+.card { background:#fff; padding:20px; border-radius:10px; margin-bottom:20px;}
+h2 { margin-top:0; }
+
+input { padding:8px; width:100%; margin:5px 0;}
+
+button {
+  padding:10px 15px;
+  margin:5px;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.primary { background:#2c3e50; color:#fff; }
+.gray { background:#bdc3c7; }
+
+table { width:100%; border-collapse:collapse; margin-top:10px;}
+td, th { border-bottom:1px solid #ddd; padding:8px; text-align:left;}
+
+.blueprint { display:none; }
+.blueprint.open { display:block; }
+
+.badge { padding:4px 8px; border-radius:6px; background:#eee;}
+.good { background:#d4edda;}
+.mid { background:#fff3cd;}
+.bad { background:#f8d7da;}
+</style>
+</head>
+
+<body>
+
+<h1>🧠 M4｜外在單評分系統（完整版）</h1>
+
+<!-- 基本輸入 -->
+<div class="card">
+<h2>📌 基本資料</h2>
+
+Basket
+<input id="basket" value="TSM,GOOG,NVDA">
+
+KI
+<input id="ki" value="69.39">
+
+Strike
+<input id="strike" value="69.39">
+
+Coupon
+<input id="rate" value="15">
+
+Tenor(月)
+<input id="period" value="6">
+
+<label><input type="checkbox" id="eki"> EKI</label>
+
+<br>
+<button class="primary" onclick="run()">🚀 執行</button>
+<button class="gray" onclick="toggleBlueprint()">📘 Blueprint</button>
+</div>
+
+<!-- L1 FCN -->
+<div class="card">
+<h2>📊 L1｜FCN 評分</h2>
+
+<table>
+<tr><th>項目</th><th>數值</th></tr>
+<tr><td>Pure FCN</td><td id="pureFCN"></td></tr>
+<tr><td>Event FCN</td><td id="eventFCN"></td></tr>
+<tr><td>Delta FCN</td><td id="deltaFCN"></td></tr>
+<tr><td>Delta 判斷</td><td id="deltaLabel"></td></tr>
+<tr><td>Worst-of</td><td id="worst"></td></tr>
+<tr><td>SRI</td><td id="sri"></td></tr>
+</table>
+</div>
+
+<!-- L2 條件 -->
+<div class="card">
+<h2>📊 L2｜FCN 結構</h2>
+
+<table>
+<tr><th>項目</th><th>數值</th></tr>
+<tr><td>Rate Score</td><td id="rateScore"></td></tr>
+<tr><td>Period Score</td><td id="periodScore"></td></tr>
+<tr><td>P-Risk</td><td id="priskScore"></td></tr>
+</table>
+</div>
+
+<!-- 股票 -->
+<div class="card">
+<h2>📊 L2 + L3｜股票分析</h2>
+
+<table id="stockTable">
+<tr>
+<th>股票</th>
+<th>Pure</th>
+<th>Event</th>
+<th>中期波動</th>
+<th>短期波動</th>
+<th>1D</th>
+<th>1W</th>
+<th>1M</th>
+<th>6M</th>
+<th>12M</th>
+</tr>
+</table>
+
+</div>
+
+<!-- Blueprint -->
+<div class="card blueprint" id="blueprint">
+<h2>📘 Blueprint</h2>
+<pre>
+
+FCN = 0.4*Stock + 0.2*Rate + 0.1*Period + 0.1*PRisk + 0.1*SRI + EKI
+
+Pure Stock = Baseline + Vol
+Event Stock = Pure + Snapshot
+
+中期波動 = 0.1×1M + 0.3×6M + 0.6×12M
+短期波動 = 0.6×1D + 0.3×1W + 0.1×1M
+
+SRI = 0.6 Worst + 0.4 Avg
+
+資料來源：
+stock_runtime.json
+stock_engine.js
+fcn_engine.js
+
+</pre>
+</div>
+
+<script type="module">
+
+import { evaluateStock } from "./js/core/stock_engine.js";
+import { evaluateFCN } from "./js/core/fcn_engine.js";
+
+async function run() {
+
+  const basket = document.getElementById("basket").value.split(",");
+  const ki = Number(document.getElementById("ki").value);
+  const strike = Number(document.getElementById("strike").value);
+  const rate = Number(document.getElementById("rate").value);
+  const period = Number(document.getElementById("period").value);
+  const eki = document.getElementById("eki").checked;
+
+  const res = await fetch("./data/stock_runtime.json");
+  const runtime = await res.json();
+
+  const stocks = basket.map(s => {
+    const r = runtime[s];
+    return evaluateStock(s, r);
+  });
+
+  const fcn = evaluateFCN({
+    basket,
+    ki,
+    strike,
+    yield: rate,
+    period,
+    eki
+  }, stocks);
+
+  // L1
+  pureFCN.innerText = fcn.pure_fcn;
+  eventFCN.innerText = fcn.event_fcn;
+  deltaFCN.innerText = fcn.delta_pct + "%";
+  deltaLabel.innerText = fcn.delta_label;
+  worst.innerText = fcn.worst_symbol;
+  sri.innerText = fcn.sri;
+
+  // L2
+  rateScore.innerText = fcn.rate_score;
+  periodScore.innerText = fcn.period_score;
+  priskScore.innerText = fcn.prisk_score;
+
+  // 股票
+  const table = document.getElementById("stockTable");
+
+  stocks.forEach(s => {
+    const row = `
+    <tr>
+      <td>${s.symbol}</td>
+      <td>${s.pure_stock_score}</td>
+      <td>${s.event_stock_score}</td>
+      <td>${(s.mid_term_volatility*100).toFixed(2)}%</td>
+      <td>${(s.snapshot_move_pct).toFixed(2)}%</td>
+      <td>${(s.ret_1d*100).toFixed(2)}%</td>
+      <td>${(s.ret_1w*100).toFixed(2)}%</td>
+      <td>${(s.ret_1m*100).toFixed(2)}%</td>
+      <td>${(s.ret_6m*100).toFixed(2)}%</td>
+      <td>${(s.ret_12m*100).toFixed(2)}%</td>
+    </tr>`;
+    table.innerHTML += row;
+  });
+
+}
+
+window.run = run;
+
+window.toggleBlueprint = function() {
+  blueprint.classList.toggle("open");
+};
+
+</script>
+
+</body>
+</html>
