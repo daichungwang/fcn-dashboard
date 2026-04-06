@@ -923,7 +923,62 @@ DACN = -1
       `;
     }
 
-    
+    <script type="module">
+  // ...前面其他程式不動
+
+  function renderHistory() {
+    const deals = getExternalDeals();
+    const wrap = document.getElementById("historyWrap");
+
+    if (!deals.length) {
+      wrap.innerHTML = `<div class="empty">目前沒有任何 M4 紀錄。</div>`;
+      return;
+    }
+
+    wrap.innerHTML = `
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>時間</th>
+              <th>案件</th>
+              <th>Basket</th>
+              <th>類型</th>
+              <th>Pure FCN</th>
+              <th>Event FCN</th>
+              <th>Delta FCN</th>
+              <th>Worst-of</th>
+              <th>Decision</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${deals.map(d => {
+              const basic = d.basic || {};
+              const score = d.fcn_score || {};
+              const analysis = d.analysis || {};
+
+              return `
+                <tr>
+                  <td>${d.created_at || "-"}</td>
+                  <td>${basic.deal_name || "-"}</td>
+                  <td>${Array.isArray(basic.basket) ? basic.basket.join(", ") : "-"}</td>
+                  <td>${basic.product_type || "-"}</td>
+                  <td>${score.pure_fcn_score ?? "-"}</td>
+                  <td>${score.event_fcn_score ?? "-"}</td>
+                  <td>${score.delta_fcn ?? "-"}</td>
+                  <td>${score.worst_of || "-"}</td>
+                  <td>${analysis.decision || "-"}</td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+
+  // ...後面其他程式不動
+</script>
 
     function exportDeals() {
       const deals = getExternalDeals();
