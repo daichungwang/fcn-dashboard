@@ -288,15 +288,9 @@ function buildExposure(m2Node) {
 }
 
 function getExposureBaseline(category) {
-  if (category === "core") {
-    return { safe: 40, warning: 50 };
-  }
-  if (category === "defensive") {
-    return { safe: 35, warning: 45 };
-  }
-  if (category === "growth") {
-    return { safe: 25, warning: 35 };
-  }
+  if (category === "core") return { safe: 40, warning: 50 };
+  if (category === "defensive") return { safe: 35, warning: 45 };
+  if (category === "growth") return { safe: 25, warning: 35 };
   return { safe: 20, warning: 30 };
 }
 
