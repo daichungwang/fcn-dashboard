@@ -1,8 +1,8 @@
 // ==========================================
-// M7 Runtime Engine FINAL + M2 Exposure
+// M7 Runtime Engine FINAL + M2 Exposure + Today Highlight
 // 讀取：
 //   data/m7/m7_new_stock_pool.json
-//   data/m2/m2_stock_exposure.json
+//   data/m7/m2_stock_exposure.json
 // 輸出：
 //   data/m7/m7_new_stock_today.json
 // ==========================================
@@ -259,7 +259,7 @@ function calcCategoryAdjust(category) {
 }
 
 // ------------------------------------------
-// M2 曝險警示
+// M2 曝險
 // ------------------------------------------
 function buildExposure(m2Node) {
   const empty = {
@@ -287,43 +287,95 @@ function buildExposure(m2Node) {
   };
 }
 
-function buildExposureWarning(exposure) {
-  let level = "normal";
-  let text = "目前持倉曝險正常。";
+function getExposureBaseline(category) {
+  if (category === "core") {
+    return { safe: 40, warning: 50 };
+  }
+  if (category === "defensive") {
+    return { safe: 35, warning: 45 };
+  }
+  if (category === "growth") {
+    return { safe: 25, warning: 35 };
+  }
+  return { safe: 20, warning: 30 };
+}
 
-  if (exposure.invested_ratio > 30 || exposure.fcn_count > 15) {
+function buildExposureWarning(exposure, category) {
+  const baseline = getExposureBaseline(category);
+  const ratio = safeNum(exposure.invested_ratio, 0);
+
+  let level = "normal";
+  let text = `投入比 ${round2(ratio)}%（安全）。`;
+
+  if (ratio > baseline.warning) {
     level = "high";
-    text = `目前單一標的投入比 ${round2(exposure.invested_ratio)}% 且參與 ${exposure.fcn_count} 檔 FCN，集中度偏高，不宜再擴大部位。`;
-  } else if (
-    exposure.invested_ratio > 20 ||
-    exposure.fcn_count > 10 ||
-    exposure.danger > 0
-  ) {
+    text = `投入比 ${round2(ratio)}%（過高），高於 ${category} 類 baseline，建議停止新增並控制集中度。`;
+  } else if (ratio > baseline.safe) {
     level = "medium";
-    text = `目前持倉已偏高（投入比 ${round2(exposure.invested_ratio)}%，FCN數量 ${exposure.fcn_count}），建議控制加碼節奏。`;
+    text = `投入比 ${round2(ratio)}%（偏高），已高於 ${category} 類安全 baseline，建議保守處理。`;
   }
 
   if (exposure.danger > 0) {
     level = "high";
-    text = `目前已有 Danger 持倉 ${exposure.danger} 檔，應以風控為先，不宜再增加集中曝險。`;
+    text = `目前已有 Danger 持倉 ${exposure.danger} 檔，且投入比 ${round2(ratio)}%，應先風控。`;
   }
 
-  return { level, text };
+  return { level, text, baseline };
+}
+
+// ------------------------------------------
+// 今日推薦判斷
+// 只做標示與排序，不做擋單
+// ------------------------------------------
+function evaluateTodayHighlight(candidate) {
+  const reasons = [];
+
+  const trend = candidate["趨勢判讀"] || {};
+  const longUp =
+    trend["趨勢狀態"] === "up_strong" || trend["趨勢狀態"] === "up_mild";
+  const pullback = trend["結構狀態"] === "pullback";
+  const notTop = trend["結構狀態"] !== "top";
+  const notDown = trend["趨勢狀態"] !== "down";
+
+  if (longUp) reasons.push("長期趨勢向上");
+  if (pullback) reasons.push("中期回檔");
+  if (candidate["估值資料"]?.PEG !== null && safeNum(candidate["估值資料"]?.PEG, 999) < 2) {
+    reasons.push("估值可接受");
+  }
+  if ((candidate["曝險警示"]?.level || "normal") !== "high") {
+    reasons.push("曝險可控");
+  }
+
+  const highlight =
+    notDown &&
+    notTop &&
+    longUp &&
+    pullback &&
+    (candidate["曝險警示"]?.level || "normal") !== "high";
+
+  return {
+    is_today_highlight: highlight,
+    today_highlight_reason: reasons.join(" / ")
+  };
 }
 
 // ------------------------------------------
 // 分類分桶
+// 不直接擋掉，只分類
 // ------------------------------------------
-function buildUIBucket(action) {
-  if (action === "加入") return "今日推薦";
-  if (action === "觀察") return "保守觀察";
-  return "建議剔除";
+function buildAction(row, structure, total) {
+  if (row.category === "speculative") return "移除";
+  if (structure.trend_state === "down") return "移除";
+  if (structure.structure_state === "top") return "移除";
+  if (total >= 75) return "加入";
+  if (total >= 55) return "觀察";
+  return "移除";
 }
 
-function isAggressiveOK(action, exposureWarning) {
-  if (action === "移除") return false;
-  if (exposureWarning.level === "high") return false;
-  return true;
+function buildUIBucket(action) {
+  if (action === "加入") return "積極推薦";
+  if (action === "觀察") return "觀察名單";
+  return "建議剔除";
 }
 
 // ------------------------------------------
@@ -353,16 +405,6 @@ function buildWhyNo(row, valuation, structure, moneyScore, exposureWarning) {
   if (row.category === "speculative") arr.push("高波動投機股，不適合 FCN");
   if (exposureWarning.level === "high") arr.push("現有持倉曝險偏高");
   return arr;
-}
-
-function buildAction(row, structure, total) {
-  if (row.allow_fcn === false) return "移除";
-  if (row.category === "speculative") return "移除";
-  if (structure.trend_state === "down") return "移除";
-  if (structure.structure_state === "top") return "移除";
-  if (total >= 75) return "加入";
-  if (total >= 55) return "觀察";
-  return "移除";
 }
 
 function buildFinalComment(action, valuation, structure, moneyScore, exposureWarning) {
@@ -424,16 +466,9 @@ function run() {
     const action = buildAction(row, structure, total);
 
     const exposure = buildExposure(m2.stocks?.[row.symbol]);
-    const exposureWarning = buildExposureWarning(exposure);
+    const exposureWarning = buildExposureWarning(exposure, row.category);
 
-    const uiBucket = buildUIBucket(action);
-    const aggressiveOK = isAggressiveOK(action, exposureWarning);
-
-    const whyYes = buildWhyYes(row, valuation, structure, moneyScore, qScore);
-    const whyNo = buildWhyNo(row, valuation, structure, moneyScore, exposureWarning);
-    const finalComment = buildFinalComment(action, valuation, structure, moneyScore, exposureWarning);
-
-    return {
+    const candidate = {
       "股號": row.symbol,
       "股名": row["名稱"],
       "產業": row.sector,
@@ -502,35 +537,55 @@ function run() {
       "曝險警示": exposureWarning,
 
       "建議動作": action,
-      "ui_bucket": uiBucket,
-      "aggressive_ok": aggressiveOK,
-      "why_yes": whyYes,
-      "why_no": whyNo,
-      "估值說明": valuation.text,
-      "結構說明": structure.structure_text,
-      "最終說明": finalComment
+      "ui_bucket": buildUIBucket(action)
     };
+
+    const highlight = evaluateTodayHighlight(candidate);
+    candidate.is_today_highlight = highlight.is_today_highlight;
+    candidate.today_highlight_reason = highlight.today_highlight_reason;
+
+    candidate.why_yes = buildWhyYes(row, valuation, structure, moneyScore, qScore);
+    candidate.why_no = buildWhyNo(row, valuation, structure, moneyScore, exposureWarning);
+    candidate["估值說明"] = valuation.text;
+    candidate["結構說明"] = structure.structure_text;
+    candidate["最終說明"] = buildFinalComment(action, valuation, structure, moneyScore, exposureWarning);
+
+    return candidate;
   });
 
   const sorted = result
     .filter((x) => x["股號"])
-    .sort((a, b) => b.today_score - a.today_score)
+    .sort((a, b) => {
+      return (b.is_today_highlight === true) - (a.is_today_highlight === true)
+        || b.today_score - a.today_score;
+    })
     .map((x, i) => ({
       "排名": i + 1,
       ...x
     }));
+
+  const aggressiveRecommend = sorted.filter(x => x.ui_bucket === "積極推薦");
+  const watchBucket = sorted.filter(x => x.ui_bucket === "觀察名單");
+  const removeBucket = sorted.filter(x => x.ui_bucket === "建議剔除");
 
   const output = {
     generated_at: new Date().toISOString(),
     m2_generated_at: m2.generated_at,
     total_count: sorted.length,
 
-    today_recommend: sorted.filter(x => x.ui_bucket === "今日推薦"),
-    conservative_watch: sorted.filter(x => x.ui_bucket === "保守觀察"),
-    remove_list: sorted.filter(x => x.ui_bucket === "建議剔除"),
+    pullback_count: sorted.filter(x => x["趨勢判讀"]?.["結構狀態"] === "pullback").length,
+    overheat_count: sorted.filter(x => x["趨勢判讀"]?.["溫度狀態"] === "overheat").length,
+    top_count: sorted.filter(x => x["趨勢判讀"]?.["結構狀態"] === "top").length,
+    downtrend_count: sorted.filter(x => x["趨勢判讀"]?.["趨勢狀態"] === "down").length,
 
-    aggressive_recommend: sorted.filter(x => x.ui_bucket === "今日推薦" && x.aggressive_ok),
-    watch_list: sorted.filter(x => x.ui_bucket === "保守觀察" && x.aggressive_ok),
+    high_exposure: sorted.filter(x => x["曝險警示"]?.level === "high").length,
+    mid_exposure: sorted.filter(x => x["曝險警示"]?.level === "medium").length,
+
+    market_comment: `回檔結構 ${sorted.filter(x => x["趨勢判讀"]?.["結構狀態"] === "pullback").length} 檔，做頭結構 ${sorted.filter(x => x["趨勢判讀"]?.["結構狀態"] === "top").length} 檔，今日宜重結構、輕追價。`,
+
+    aggressive_recommend: aggressiveRecommend,
+    watch_list: watchBucket,
+    remove_list: removeBucket,
 
     all: sorted
   };
