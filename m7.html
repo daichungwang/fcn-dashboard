@@ -1,64 +1,107 @@
-// ==========================================
-// M7 UI（今日選股顯示）
-// ==========================================
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>M7 今日選股</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-async function loadM7Today() {
-  const wrap = document.getElementById("m7-list");
+  <style>
+    body {
+      font-family: -apple-system;
+      background: #f5f6f8;
+      margin: 0;
+      padding: 12px;
+    }
 
-  try {
-    const res = await fetch("./data/m7/m7_new_stock_today.json?v=" + Date.now());
-    const data = await res.json();
+    h1 {
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
 
-    document.getElementById("m7-time").innerText =
-      "更新時間：" + (data.generated_at || "--");
+    .meta {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
 
-    document.getElementById("m7-summary").innerText =
-      `今日候選 ${data.today_pick_count} / ${data.total_count}`;
+    .card {
+      background: white;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
 
-    wrap.innerHTML = data.today_picks.map(renderCard).join("");
-  } catch (err) {
-    wrap.innerHTML = `<div style="color:red">載入失敗</div>`;
-  }
-}
+    .top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
 
-function renderCard(row) {
-  return `
-    <div class="card">
-      <div class="top">
-        <div>
-          <div class="title">${row.排名}. ${row.股號} ${row.股名}</div>
-          <div class="sub">${row.產業} ｜ 風險：${row.風險等級}</div>
-        </div>
-        <div class="right">
-          <div class="score ${getScoreClass(row.today_score)}">${row.today_score}</div>
-          <div class="action ${getActionClass(row.建議動作)}">${row.建議動作}</div>
-        </div>
-      </div>
+    .title {
+      font-size: 18px;
+      font-weight: bold;
+    }
 
-      <div class="grid">
-        <div>股價：${row.股價}</div>
-        <div>PEG：${row.PEG}</div>
-        <div>估值：${row.valuation_score}</div>
-        <div>技術：${row.technical_score}</div>
-        <div>資金：${row.money_score}</div>
-        <div>Quality：${row.quality_score}</div>
-        <div>1M：${row["1月漲跌幅"]}%</div>
-        <div>3M：${row["3月漲跌幅"]}%</div>
-      </div>
-    </div>
-  `;
-}
+    .sub {
+      font-size: 13px;
+      color: #666;
+    }
 
-function getScoreClass(score) {
-  if (score >= 75) return "good";
-  if (score >= 60) return "mid";
-  return "bad";
-}
+    .right {
+      text-align: right;
+    }
 
-function getActionClass(a) {
-  if (a === "加入") return "add";
-  if (a === "觀察") return "watch";
-  return "remove";
-}
+    .score {
+      font-size: 22px;
+      font-weight: bold;
+    }
 
-document.addEventListener("DOMContentLoaded", loadM7Today);
+    .good { color: green; }
+    .mid { color: orange; }
+    .bad { color: red; }
+
+    .action {
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      margin-top: 4px;
+      display: inline-block;
+    }
+
+    .add {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .watch {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .remove {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      font-size: 13px;
+      gap: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>📊 M7 今日選股</h1>
+<div id="m7-time" class="meta"></div>
+<div id="m7-summary" class="meta"></div>
+
+<div id="m7-list"></div>
+
+<script src="./js/m7/m7_ui.js"></script>
+
+</body>
+</html>
