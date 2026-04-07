@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'data/m7/m7_fundamental_data.json'
+      - 'data/m7/m2_stock_exposure.json'
       - 'js/m7/m7_pool_converter.js'
       - 'js/m7/m7_runtime_engine.js'
       - 'js/m7/m7_stock_profile.js'
