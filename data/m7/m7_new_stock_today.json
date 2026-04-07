@@ -1,1 +1,63 @@
-
+{
+  "generated_at": "2026-04-07T08:10:00+08:00",
+  "count": 3,
+  "data": [
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA",
+      "sector": "AI/半導體",
+      "risk_level": "中",
+      "quality_level": "高",
+      "price": 183.22,
+      "eps_now": 3.1,
+      "eps_next": 4.2,
+      "peg": 1.41,
+      "quality_score": 5,
+      "peg_score": 0,
+      "pool_score": 5,
+      "ret_1w": 2.8,
+      "ret_1m": 8.5,
+      "ret_3m": 15.2,
+      "volume_ratio": 1.42,
+      "狀態": "保留"
+    },
+    {
+      "symbol": "TSM",
+      "name": "TSMC",
+      "sector": "半導體",
+      "risk_level": "低",
+      "quality_level": "高",
+      "price": 340.23,
+      "eps_now": 8.2,
+      "eps_next": 10.1,
+      "peg": 1.47,
+      "quality_score": 5,
+      "peg_score": 0,
+      "pool_score": 5,
+      "ret_1w": 1.9,
+      "ret_1m": 6.2,
+      "ret_3m": 12.5,
+      "volume_ratio": 1.18,
+      "狀態": "保留"
+    },
+    {
+      "symbol": "AMZN",
+      "name": "Amazon",
+      "sector": "平台/AI",
+      "risk_level": "中",
+      "quality_level": "中",
+      "price": 211.74,
+      "eps_now": 4.1,
+      "eps_next": 5.0,
+      "peg": 2.07,
+      "quality_score": 2,
+      "peg_score": -4,
+      "pool_score": -2,
+      "ret_1w": 1.1,
+      "ret_1m": 4.8,
+      "ret_3m": 9.3,
+      "volume_ratio": 1.05,
+      "狀態": "保留"
+    }
+  ]
+}
