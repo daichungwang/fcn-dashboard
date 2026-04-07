@@ -1,70 +1,17 @@
-<div class="blueprint-card">
-
-  <div class="blueprint-header" onclick="toggleBlueprint()">
-    📘 M7 Blueprint（系統邏輯說明）
-  </div>
-
-  <div id="blueprint-body" class="blueprint-body hidden">
-
-    <div class="bp-section">
-      <b>1. 核心原則</b><br>
-      - 先確保不會死，再去賺利息<br>
-      - 只會接到最爛的那一檔<br>
-      - 利率越高越要懷疑
-    </div>
-
-    <div class="bp-section">
-      <b>2. 評分構成</b><br>
-      估值 + 趨勢 + 結構 + 時機 + 資金 + 品質 + 類別調整
-    </div>
-
-    <div class="bp-section">
-      <b>3. 技術面邏輯</b><br>
-      - 年線 → 長期趨勢<br>
-      - 6M / 3M → 中期結構<br>
-      - 1W → 短期波動（找切入點）
-    </div>
-
-    <div class="bp-section">
-      <b>4. 結構分類</b><br>
-      - Pullback（最佳）<br>
-      - Hot（偏熱）<br>
-      - Top（做頭，避免）<br>
-      - Downtrend（不做）
-    </div>
-
-    <div class="bp-section">
-      <b>5. 曝險規則</b><br>
-      Core：40%安全 / 50%警戒<br>
-      Growth：25%安全 / 35%警戒<br>
-      超過 → 警示但不擋單
-    </div>
-
-    <div class="bp-section">
-      <b>6. 今日推薦邏輯</b><br>
-      長期向上 + 中期回檔 + 曝險可控 → 🔥 今日推薦
-    </div>
-
-  </div>
-
-</div>
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>📊 M7 FCN Dashboard</title>
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- CSS（你原本的 styles.css） -->
-  <link rel="stylesheet" href="./styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
       background: #f5f7fb;
       margin: 0;
       padding: 0;
+      color: #111827;
     }
 
     .container {
@@ -74,7 +21,8 @@
     }
 
     h1 {
-      margin-bottom: 4px;
+      margin: 0 0 6px;
+      font-size: 30px;
     }
 
     #m7-time {
@@ -87,6 +35,50 @@
       font-size: 12px;
       color: #999;
       margin-bottom: 16px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* ---------------- Blueprint ---------------- */
+    .blueprint-card {
+      background: #fff;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    }
+
+    .blueprint-header {
+      padding: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+    }
+
+    .blueprint-body {
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .bp-toggle {
+      margin-bottom: 12px;
+    }
+
+    .bp-toggle button {
+      margin-right: 8px;
+      border: 0;
+      background: #111827;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .bp-section {
+      margin-bottom: 10px;
     }
 
     /* ---------------- Dashboard ---------------- */
@@ -112,16 +104,22 @@
 
     .dash-value {
       font-size: 14px;
-      font-weight: bold;
+      font-weight: 700;
       margin-bottom: 6px;
+      line-height: 1.7;
+    }
+
+    .text-block {
+      word-break: break-word;
     }
 
     .dash-desc {
       font-size: 12px;
       color: #888;
+      line-height: 1.6;
     }
 
-    /* ---------------- 主卡 ---------------- */
+    /* ---------------- Main cards ---------------- */
     .main-card {
       background: #fff;
       border-radius: 14px;
@@ -132,6 +130,8 @@
     .main-header {
       display: flex;
       justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
       padding: 12px;
       cursor: pointer;
       border-bottom: 1px solid #eee;
@@ -139,81 +139,135 @@
 
     .main-title {
       font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 4px;
     }
 
     .main-desc {
       font-size: 12px;
       color: #888;
+      line-height: 1.6;
+    }
+
+    .main-count {
+      font-size: 13px;
+      background: #111827;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
     }
 
     .main-body {
       padding: 12px;
     }
 
-    .hidden {
-      display: none;
-    }
-
     .name-summary {
       font-size: 12px;
       margin-bottom: 10px;
       color: #444;
+      line-height: 1.6;
     }
 
-    /* ---------------- 股票卡 ---------------- */
+    .toggle-row {
+      margin-top: 8px;
+    }
+
+    .toggle-btn,
+    .detail-btn {
+      border: 0;
+      background: #111827;
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    /* ---------------- Stock cards ---------------- */
     .stock-card {
       border: 1px solid #eee;
       border-radius: 10px;
       padding: 10px;
       margin-bottom: 10px;
+      background: #fff;
     }
 
     .card-head {
       display: flex;
       justify-content: space-between;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .card-left {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .title-row {
+      display: flex;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 4px;
     }
 
     .stock-title {
       font-weight: bold;
+      font-size: 17px;
+    }
+
+    .today-tag {
+      font-size: 12px;
+      background: #fff5cc;
+      color: #8a5b00;
+      padding: 2px 8px;
+      border-radius: 999px;
     }
 
     .stock-sub {
       font-size: 12px;
       color: #666;
+      line-height: 1.6;
+    }
+
+    .card-right {
+      text-align: right;
+      min-width: 70px;
     }
 
     .score {
       font-weight: bold;
-      font-size: 16px;
+      font-size: 18px;
+      cursor: pointer;
     }
 
     .score-good { color: #0a8; }
     .score-mid { color: #f90; }
     .score-bad { color: #c33; }
 
-    .pill-add {
-      background: #e6f7f2;
-      color: #0a8;
+    .action-pill {
+      display: inline-block;
+      margin-top: 6px;
       padding: 2px 6px;
       border-radius: 6px;
       font-size: 12px;
+    }
+
+    .pill-add {
+      background: #e6f7f2;
+      color: #0a8;
     }
 
     .pill-watch {
       background: #fff5e6;
       color: #f90;
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-size: 12px;
     }
 
     .pill-remove {
       background: #ffeaea;
       color: #c33;
-      padding: 2px 6px;
-      border-radius: 6px;
-      font-size: 12px;
     }
 
     .highlight-box {
@@ -222,14 +276,16 @@
       margin-top: 8px;
       border-radius: 8px;
       font-size: 13px;
+      line-height: 1.6;
     }
 
     .summary-box {
       margin-top: 8px;
       font-size: 13px;
+      line-height: 1.7;
     }
 
-    /* ---------------- 曝險 ---------------- */
+    /* ---------------- Exposure ---------------- */
     .exposure-box {
       margin-top: 8px;
       background: #f7f9fc;
@@ -238,71 +294,217 @@
       font-size: 12px;
     }
 
+    .exposure-head {
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .mini-item {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    .mini-label {
+      display: block;
+      color: #666;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .mini-value {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
     .warn-box {
-      margin-top: 6px;
+      margin-top: 8px;
       font-size: 12px;
+      line-height: 1.6;
     }
 
     .warn-box.high { color: #c33; }
     .warn-box.medium { color: #f90; }
+    .warn-box.normal { color: #0a8; }
 
-    /* ---------------- 詳細 ---------------- */
-    .detail-btn {
+    /* ---------------- Detail ---------------- */
+    .detail-btn-row {
       margin-top: 8px;
-      font-size: 12px;
+    }
+
+    .detail-wrap {
+      margin-top: 10px;
     }
 
     .analysis-section {
       margin-top: 10px;
       font-size: 12px;
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 10px;
     }
 
     .analysis-title {
       font-weight: bold;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
+      font-size: 13px;
     }
 
     .analysis-row {
       display: flex;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      gap: 10px;
     }
 
     .analysis-label {
       width: 80px;
       color: #666;
+      flex-shrink: 0;
     }
 
     .analysis-value {
       flex: 1;
+      line-height: 1.7;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
     }
 
     .why-box {
-      margin-top: 6px;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 8px;
     }
 
+    .why-title {
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .why-item {
+      margin-bottom: 4px;
+      line-height: 1.6;
+    }
+
+    .error-box {
+      background: #fff;
+      padding: 12px;
+      border-radius: 10px;
+      color: #c33;
+    }
+
+    @media (max-width: 900px) {
+      .dash-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .why-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card-head {
+        flex-direction: column;
+      }
+
+      .card-right {
+        text-align: left;
+      }
+
+      .analysis-row {
+        flex-direction: column;
+      }
+
+      .analysis-label {
+        width: auto;
+      }
+    }
   </style>
 </head>
-
 <body>
   <div class="container">
-
     <h1>📊 M7 FCN Dashboard</h1>
 
     <div id="m7-time"></div>
     <div id="m7-subtitle"></div>
 
-    <!-- Dashboard -->
+    <div class="blueprint-card">
+      <div class="blueprint-header" onclick="toggleBlueprint()">
+        📘 M7 Blueprint（點擊展開）
+      </div>
+
+      <div id="blueprint-body" class="blueprint-body hidden">
+        <div class="bp-toggle">
+          <button onclick="setBPMode('simple')">簡易版</button>
+          <button onclick="setBPMode('pro')">專業版</button>
+        </div>
+
+        <div id="bp-simple">
+          <div class="bp-section">
+            <b>核心邏輯</b><br>
+            ✔ 長期向上<br>
+            ✔ 中期回檔<br>
+            ✔ 曝險可控<br>
+            → 🔥 今日推薦
+          </div>
+
+          <div class="bp-section">
+            <b>不做條件</b><br>
+            ❌ 做頭<br>
+            ❌ 年線下行<br>
+            ❌ 投機股
+          </div>
+        </div>
+
+        <div id="bp-pro" class="hidden">
+          <div class="bp-section">
+            <b>評分結構</b><br>
+            估值 + 趨勢 + 結構 + 時機 + 資金 + 品質 + 類別調整
+          </div>
+
+          <div class="bp-section">
+            <b>技術面</b><br>
+            年線（長期） / 6M / 3M（中期） / 1W（短期）
+          </div>
+
+          <div class="bp-section">
+            <b>結構分類</b><br>
+            Pullback（最佳） / Hot / Top（避免） / Downtrend（不做）
+          </div>
+
+          <div class="bp-section">
+            <b>曝險</b><br>
+            Core：40%安全 / 50%警戒<br>
+            Growth：25% / 35%<br>
+            Defensive：35% / 45%
+          </div>
+
+          <div class="bp-section">
+            <b>今日推薦邏輯</b><br>
+            長期向上 + 中期回檔 + 曝險非高警示 → 今日推薦
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="m7-dashboard"></div>
-
-    <!-- 三大卡 -->
     <div id="m7-sections"></div>
-
   </div>
-
-  <!-- JS -->
-  <script src="./js/m7/m7_ui.js"></script>
-</body>
-</html>
 
   <script src="./js/m7/m7_ui.js"></script>
 </body>
