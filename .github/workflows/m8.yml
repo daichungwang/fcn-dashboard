@@ -1,0 +1,44 @@
+name: M8 Auto Build
+
+on:
+  push:
+    paths:
+      - 'data/m7/m7_new_stock_today.json'
+      - 'js/m8/m8_engine.js'
+      - '.github/workflows/m8.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-m8:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Ensure data/m8 exists
+        run: mkdir -p data/m8
+
+      - name: Run M8 engine
+        run: node js/m8/m8_engine.js
+
+      - name: Commit generated M8 JSON
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/m8/m8_today.json
+
+          git diff --cached --quiet || git commit -m "Auto update M8 JSON"
+          git push
