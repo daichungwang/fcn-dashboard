@@ -1,0 +1,270 @@
+{
+  "generated_at": "2026-04-07T07:00:00Z",
+  "total_invested": 3870000,
+  "stocks": {
+    "NVDA": {
+      "category": "core",
+      "fcn_count": 21,
+      "invested_amount": 640000,
+      "invested_ratio": 16.54,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 21,
+      "avg_score_pure": 8.6,
+      "avg_score_event": 8.6
+    },
+    "TSM": {
+      "category": "core",
+      "fcn_count": 15,
+      "invested_amount": 460000,
+      "invested_ratio": 11.89,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 15,
+      "avg_score_pure": 7.5,
+      "avg_score_event": 7.5
+    },
+    "ARM": {
+      "category": "growth",
+      "fcn_count": 8,
+      "invested_amount": 280000,
+      "invested_ratio": 7.24,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 8,
+      "avg_score_pure": 6.8,
+      "avg_score_event": 6.8
+    },
+    "MRVL": {
+      "category": "growth",
+      "fcn_count": 3,
+      "invested_amount": 280000,
+      "invested_ratio": 7.24,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 3,
+      "avg_score_pure": 6.0,
+      "avg_score_event": 4.0
+    },
+    "AVGO": {
+      "category": "core",
+      "fcn_count": 10,
+      "invested_amount": 260000,
+      "invested_ratio": 6.72,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 10,
+      "avg_score_pure": 8.0,
+      "avg_score_event": 8.0
+    },
+    "MU": {
+      "category": "core",
+      "fcn_count": 10,
+      "invested_amount": 230000,
+      "invested_ratio": 5.94,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 10,
+      "avg_score_pure": 7.0,
+      "avg_score_event": 7.0
+    },
+    "TSLA": {
+      "category": "growth",
+      "fcn_count": 14,
+      "invested_amount": 210000,
+      "invested_ratio": 5.43,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 14,
+      "avg_score_pure": 7.0,
+      "avg_score_event": 7.0
+    },
+    "PLTR": {
+      "category": "growth",
+      "fcn_count": 13,
+      "invested_amount": 210000,
+      "invested_ratio": 5.43,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 13,
+      "avg_score_pure": 6.2,
+      "avg_score_event": 6.2
+    },
+    "UNH": {
+      "category": "defensive",
+      "fcn_count": 2,
+      "invested_amount": 200000,
+      "invested_ratio": 5.17,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 2,
+      "avg_score_pure": 5.8,
+      "avg_score_event": 5.8
+    },
+    "SMH": {
+      "category": "defensive",
+      "fcn_count": 3,
+      "invested_amount": 170000,
+      "invested_ratio": 4.39,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 3,
+      "avg_score_pure": 5.0,
+      "avg_score_event": 5.0
+    },
+    "GOOG": {
+      "category": "growth",
+      "fcn_count": 4,
+      "invested_amount": 160000,
+      "invested_ratio": 4.13,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 4,
+      "avg_score_pure": 6.0,
+      "avg_score_event": 6.0
+    },
+    "AMD": {
+      "category": "growth",
+      "fcn_count": 7,
+      "invested_amount": 110000,
+      "invested_ratio": 2.84,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 7,
+      "avg_score_pure": 5.5,
+      "avg_score_event": 5.5
+    },
+    "NKE": {
+      "category": "income",
+      "fcn_count": 1,
+      "invested_amount": 100000,
+      "invested_ratio": 2.58,
+      "danger": 1,
+      "watch": 0,
+      "healthy": 0,
+      "avg_score_pure": 4.8,
+      "avg_score_event": 10.8
+    },
+    "EL": {
+      "category": "income",
+      "fcn_count": 1,
+      "invested_amount": 100000,
+      "invested_ratio": 2.58,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 1,
+      "avg_score_pure": 5.6,
+      "avg_score_event": 5.6
+    },
+    "TGT": {
+      "category": "defensive",
+      "fcn_count": 1,
+      "invested_amount": 100000,
+      "invested_ratio": 2.58,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 1,
+      "avg_score_pure": 6.2,
+      "avg_score_event": 6.2
+    },
+    "CCL": {
+      "category": "income",
+      "fcn_count": 1,
+      "invested_amount": 100000,
+      "invested_ratio": 2.58,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 1,
+      "avg_score_pure": 5.2,
+      "avg_score_event": 5.2
+    },
+    "AAPL": {
+      "category": "core",
+      "fcn_count": 1,
+      "invested_amount": 70000,
+      "invested_ratio": 1.81,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 1,
+      "avg_score_pure": 9.8,
+      "avg_score_event": 9.8
+    },
+    "ORCL": {
+      "category": "growth",
+      "fcn_count": 2,
+      "invested_amount": 40000,
+      "invested_ratio": 1.03,
+      "danger": 1,
+      "watch": 1,
+      "healthy": 0,
+      "avg_score_pure": 7.4,
+      "avg_score_event": 7.4
+    },
+    "ALAB": {
+      "category": "speculative",
+      "fcn_count": 3,
+      "invested_amount": 40000,
+      "invested_ratio": 1.03,
+      "danger": 1,
+      "watch": 1,
+      "healthy": 1,
+      "avg_score_pure": -1.0,
+      "avg_score_event": 1.0
+    },
+    "META": {
+      "category": "growth",
+      "fcn_count": 1,
+      "invested_amount": 30000,
+      "invested_ratio": 0.78,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 1,
+      "avg_score_pure": 7.8,
+      "avg_score_event": 7.8
+    },
+    "AMZN": {
+      "category": "core",
+      "fcn_count": 1,
+      "invested_amount": 30000,
+      "invested_ratio": 0.78,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 1,
+      "avg_score_pure": 9.8,
+      "avg_score_event": 9.8
+    },
+    "COIN": {
+      "category": "speculative",
+      "fcn_count": 2,
+      "invested_amount": 20000,
+      "invested_ratio": 0.52,
+      "danger": 1,
+      "watch": 1,
+      "healthy": 0,
+      "avg_score_pure": 0.4,
+      "avg_score_event": 0.4
+    },
+    "CRDO": {
+      "category": "speculative",
+      "fcn_count": 1,
+      "invested_amount": 20000,
+      "invested_ratio": 0.52,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 1,
+      "avg_score_pure": -2.0,
+      "avg_score_event": -2.0
+    },
+    "INTC": {
+      "category": "defensive",
+      "fcn_count": 1,
+      "invested_amount": 10000,
+      "invested_ratio": 0.26,
+      "danger": 0,
+      "watch": 0,
+      "healthy": 1,
+      "avg_score_pure": 4.0,
+      "avg_score_event": 3.0
+    }
+  }
+}
