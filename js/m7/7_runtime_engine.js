@@ -191,14 +191,16 @@ function run() {
   });
 
   const sorted = result
-    .filter((x) => x["股號"])
-    .sort((a, b) => b.today_score - a.today_score)
-    .map((x, i) => ({
-      "排名": i + 1,
-      ...x
-    }));
+  .filter((x) => x["股號"])
+  .filter((x) => x["建議動作"] !== "移除")
+  .filter((x) => x["分類"] !== "speculative")
+  .sort((a, b) => b.today_score - a.today_score)
+  .map((x, i) => ({
+    "排名": i + 1,
+    ...x
+  }));
 
-  const picks = sorted.filter((x) => x["建議動作"] !== "移除");
+ const picks = sorted;
 
   const output = {
     generated_at: new Date().toISOString(),
