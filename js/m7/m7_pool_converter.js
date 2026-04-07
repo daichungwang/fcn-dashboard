@@ -1,7 +1,7 @@
 // ==========================================
-// M7 Pool Converter
+// M7 Pool Converter FINAL
 // fundamental_data → m7_new_stock_pool
-// 保留原始邏輯 + stock profile 升級版
+// 保留原始邏輯 + stock profile
 // ==========================================
 
 import fs from "fs";
@@ -74,7 +74,6 @@ function toRows(raw) {
   return [];
 }
 
-// 把 array 轉成 symbol-keyed object 與你原本 convertPool 相容
 function arrayToSymbolMap(rows) {
   const out = {};
   for (const row of rows) {
@@ -85,7 +84,6 @@ function arrayToSymbolMap(rows) {
   return out;
 }
 
-// 主函數：沿用你原本 convertPool 風格
 function convertPool(data) {
   let output = {};
 
@@ -144,6 +142,8 @@ function convertPool(data) {
       "1週漲跌幅": s["1週漲跌幅"] ?? s.ret_1w ?? null,
       "1月漲跌幅": s["1月漲跌幅"] ?? s.ret_1m ?? null,
       "3月漲跌幅": s["3月漲跌幅"] ?? s.ret_3m ?? null,
+      "6月漲跌幅": s["6月漲跌幅"] ?? s.ret_6m ?? null,
+      "12月漲跌幅": s["12月漲跌幅"] ?? s.ret_12m ?? null,
       "量比": s["量比"] ?? s.volume_ratio ?? null,
 
       "備註": s["備註"] ?? "",
