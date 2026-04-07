@@ -133,8 +133,8 @@ function renderSections(data) {
 function section(title, list, desc) {
   if (!list || !list.length) return "";
 
-  const preview = list.slice(0, 3);
-  const hidden = list.slice(3);
+  const preview = list.slice(0, 1);
+  const hidden = list.slice(1);
   const sectionId = "sec_" + title.replace(/\s+/g, "_");
 
   return `
