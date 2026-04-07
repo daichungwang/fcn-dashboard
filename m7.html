@@ -7,71 +7,115 @@
 
   <style>
     body {
-      font-family: -apple-system;
-      background: #f5f6f8;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f3f4f6;
       margin: 0;
-      padding: 12px;
+      padding: 14px;
+      color: #111827;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
     }
 
     h1 {
-      font-size: 22px;
-      margin-bottom: 6px;
+      font-size: 28px;
+      margin: 0 0 8px;
+      font-weight: 800;
     }
 
     .meta {
-      color: #666;
+      color: #6b7280;
       font-size: 14px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+    }
+
+    .summary-box {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin: 14px 0 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
     .card {
-      background: white;
-      border-radius: 14px;
-      padding: 14px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      background: #ffffff;
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+      border: 1px solid #eceff3;
     }
 
     .top {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 10px;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+
+    .left-block {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .rank-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 4px;
+    }
+
+    .rank-badge {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: #ede9fe;
+      color: #5b21b6;
+      font-weight: 700;
     }
 
     .title {
-      font-size: 18px;
-      font-weight: bold;
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.2;
     }
 
     .sub {
-      font-size: 13px;
-      color: #666;
+      font-size: 14px;
+      color: #6b7280;
     }
 
     .right {
       text-align: right;
+      min-width: 72px;
     }
 
     .score {
-      font-size: 22px;
-      font-weight: bold;
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1;
     }
 
-    .good { color: green; }
-    .mid { color: orange; }
-    .bad { color: red; }
+    .good { color: #15803d; }
+    .mid { color: #d97706; }
+    .bad { color: #dc2626; }
 
     .action {
       font-size: 12px;
-      padding: 4px 8px;
+      padding: 5px 10px;
       border-radius: 999px;
-      margin-top: 4px;
+      margin-top: 8px;
       display: inline-block;
+      font-weight: 700;
     }
 
     .add {
-      background: #d1fae5;
-      color: #065f46;
+      background: #dcfce7;
+      color: #166534;
     }
 
     .watch {
@@ -84,24 +128,119 @@
       color: #991b1b;
     }
 
+    .scorebar-wrap {
+      margin-bottom: 12px;
+    }
+
+    .scorebar-label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .scorebar {
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .scorebar-fill {
+      height: 100%;
+      border-radius: 999px;
+    }
+
+    .fill-good { background: #22c55e; }
+    .fill-mid { background: #f59e0b; }
+    .fill-bad { background: #ef4444; }
+
+    .reason-box {
+      background: #f9fafb;
+      border-left: 4px solid #cbd5e1;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .reason-title {
+      font-weight: 800;
+    }
+
+    .tag-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #4338ca;
+      font-weight: 600;
+    }
+
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      font-size: 13px;
-      gap: 6px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 12px;
+      font-size: 14px;
+    }
+
+    .empty-box,
+    .error-box {
+      background: #ffffff;
+      padding: 16px;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      font-size: 14px;
+    }
+
+    .error-box {
+      color: #b91c1c;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 10px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .title {
+        font-size: 18px;
+      }
+
+      .score {
+        font-size: 28px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 
 <body>
+  <div class="page">
+    <h1>📊 M7 今日選股</h1>
 
-<h1>📊 M7 今日選股</h1>
-<div id="m7-time" class="meta"></div>
-<div id="m7-summary" class="meta"></div>
+    <div class="summary-box">
+      <div id="m7-time" class="meta">更新時間：--</div>
+      <div id="m7-summary" class="meta">今日候選 -- / --</div>
+    </div>
 
-<div id="m7-list"></div>
+    <div id="m7-list"></div>
+  </div>
 
-<script src="./js/m7/m7_ui.js"></script>
-
+  <script src="./js/m7/m7_ui.js"></script>
 </body>
 </html>
