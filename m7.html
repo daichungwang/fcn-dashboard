@@ -2,11 +2,12 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8" />
-  <title>M7 今日選股</title>
+  <title>M7 Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
       background: #f3f4f6;
       margin: 0;
       padding: 14px;
@@ -14,38 +15,42 @@
     }
 
     .page {
-      max-width: 1120px;
+      max-width: 1180px;
       margin: 0 auto;
     }
 
     h1 {
-      font-size: 32px;
-      margin: 0 0 10px;
+      font-size: 30px;
+      margin: 0 0 8px;
       font-weight: 900;
     }
 
-    .summary-box {
+    .top-meta {
       background: #fff;
       border-radius: 16px;
       padding: 14px 16px;
       margin-bottom: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     }
 
-    .meta {
+    .meta-line {
       color: #6b7280;
       font-size: 14px;
       margin: 4px 0;
     }
 
-    .dashboard-grid {
+    .dash-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
-    .metric-card {
+    .dash-grid-2 {
+      margin-top: 0;
+    }
+
+    .dash-card {
       background: #fff;
       border-radius: 16px;
       padding: 14px;
@@ -53,31 +58,32 @@
       border: 1px solid #eceff3;
     }
 
-    .metric-title {
+    .dash-title {
       font-size: 13px;
       color: #6b7280;
       margin-bottom: 8px;
     }
 
-    .metric-value {
+    .dash-value {
       font-size: 28px;
       font-weight: 900;
       margin-bottom: 6px;
     }
 
-    .metric-sub {
+    .dash-sub {
       font-size: 13px;
       color: #4b5563;
+      line-height: 1.5;
     }
 
-    .dashboard-notes {
+    .dash-notes {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 12px;
       margin-bottom: 18px;
     }
 
-    .note-box {
+    .note-card {
       background: #fff;
       border-radius: 16px;
       padding: 14px;
@@ -87,21 +93,55 @@
 
     .note-title {
       font-size: 15px;
-      font-weight: 800;
+      font-weight: 900;
       margin-bottom: 8px;
     }
 
-    .note-body {
+    .note-text {
       font-size: 14px;
       color: #374151;
       line-height: 1.7;
+    }
+
+    .section-block {
+      margin-bottom: 20px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .section-desc {
+      font-size: 14px;
+      color: #6b7280;
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+
+    .section-count {
+      background: #111827;
+      color: #fff;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
     .stock-card {
       background: #fff;
       border-radius: 18px;
       padding: 16px;
-      margin-bottom: 16px;
+      margin-bottom: 12px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.06);
       border: 1px solid #eceff3;
     }
@@ -109,7 +149,7 @@
     .card-head {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
+      gap: 14px;
       align-items: flex-start;
       margin-bottom: 12px;
     }
@@ -119,7 +159,7 @@
       min-width: 0;
     }
 
-    .rank-row {
+    .title-row {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -127,33 +167,34 @@
       margin-bottom: 4px;
     }
 
-    .rank-badge {
+    .stock-title {
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .bucket-tag {
       font-size: 12px;
       padding: 4px 10px;
       border-radius: 999px;
-      background: #ede9fe;
-      color: #5b21b6;
+      background: #eef2ff;
+      color: #4338ca;
       font-weight: 700;
     }
 
-    .card-title {
-      font-size: 22px;
-      font-weight: 900;
-    }
-
-    .card-sub {
+    .stock-sub {
       font-size: 14px;
       color: #6b7280;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     .card-right {
       text-align: right;
-      min-width: 90px;
+      min-width: 84px;
     }
 
-    .score-number {
-      font-size: 42px;
+    .score {
+      font-size: 38px;
       font-weight: 900;
       line-height: 1;
     }
@@ -186,48 +227,85 @@
       color: #991b1b;
     }
 
-    .scorebar-wrap {
-      margin-bottom: 12px;
-    }
-
-    .scorebar-label {
-      font-size: 12px;
-      color: #6b7280;
-      margin-bottom: 6px;
-    }
-
-    .scorebar {
-      width: 100%;
-      height: 10px;
-      border-radius: 999px;
-      background: #e5e7eb;
-      overflow: hidden;
-    }
-
-    .scorebar-fill {
-      height: 100%;
-      border-radius: 999px;
-    }
-
-    .bar-good { background: #22c55e; }
-    .bar-mid { background: #f59e0b; }
-    .bar-bad { background: #ef4444; }
-
-    .quick-summary {
+    .summary-box {
       background: #f9fafb;
       border-left: 4px solid #cbd5e1;
       padding: 10px 12px;
       border-radius: 10px;
       font-size: 14px;
       line-height: 1.7;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
-    .toggle-row {
-      margin-bottom: 10px;
+    .exposure-box {
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
     }
 
-    .toggle-btn {
+    .exposure-head {
+      font-size: 14px;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .mini-item {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 8px 10px;
+    }
+
+    .mini-label {
+      display: block;
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .mini-value {
+      font-size: 14px;
+      font-weight: 800;
+      color: #111827;
+    }
+
+    .warn-box {
+      font-size: 13px;
+      line-height: 1.6;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-weight: 600;
+    }
+
+    .warn-box.high {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .warn-box.medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .warn-box.normal {
+      background: #ecfdf5;
+      color: #166534;
+    }
+
+    .detail-btn-row {
+      margin-bottom: 8px;
+    }
+
+    .detail-btn, .toggle-btn {
       border: 0;
       background: #111827;
       color: #fff;
@@ -238,10 +316,6 @@
       cursor: pointer;
     }
 
-    .detail-wrap.hidden {
-      display: none;
-    }
-
     .analysis-section {
       background: #f8fafc;
       border: 1px solid #e5e7eb;
@@ -250,7 +324,7 @@
       margin-bottom: 12px;
     }
 
-    .section-title {
+    .analysis-title {
       font-size: 15px;
       font-weight: 900;
       margin-bottom: 10px;
@@ -258,9 +332,8 @@
 
     .analysis-table {
       display: grid;
-      grid-template-columns: 160px 1fr;
+      grid-template-columns: 180px 1fr;
       gap: 8px 12px;
-      margin-bottom: 10px;
     }
 
     .analysis-row {
@@ -270,22 +343,14 @@
     .analysis-label {
       font-size: 13px;
       color: #6b7280;
+      line-height: 1.6;
     }
 
     .analysis-value {
       font-size: 14px;
-      font-weight: 700;
       color: #111827;
-    }
-
-    .analysis-comment {
-      font-size: 14px;
+      font-weight: 700;
       line-height: 1.7;
-      color: #374151;
-      background: #fff;
-      border-radius: 10px;
-      padding: 10px 12px;
-      border: 1px solid #e5e7eb;
     }
 
     .why-grid {
@@ -296,8 +361,8 @@
 
     .why-box {
       background: #fff;
-      border-radius: 12px;
       border: 1px solid #e5e7eb;
+      border-radius: 12px;
       padding: 12px;
     }
 
@@ -317,80 +382,89 @@
       margin-bottom: 4px;
     }
 
-    .formula-line {
-      font-size: 14px;
-      line-height: 1.8;
+    .formula-box {
       background: #fff;
       border: 1px solid #e5e7eb;
       border-radius: 10px;
       padding: 10px 12px;
+      font-size: 14px;
+      line-height: 1.8;
     }
 
-    .empty-box,
+    .hidden {
+      display: none;
+    }
+
+    .section-toggle-row {
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+
     .error-box {
       background: #fff;
       border-radius: 14px;
       padding: 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.05);
       font-size: 14px;
-    }
-
-    .error-box {
       color: #b91c1c;
     }
 
-    @media (max-width: 900px) {
-      .dashboard-grid {
+    @media (max-width: 980px) {
+      .dash-grid,
+      .dash-notes,
+      .why-grid {
         grid-template-columns: 1fr 1fr;
       }
 
-      .dashboard-notes {
-        grid-template-columns: 1fr;
-      }
-
-      .why-grid {
+      .mini-grid {
         grid-template-columns: 1fr;
       }
     }
 
-    @media (max-width: 640px) {
-      body {
-        padding: 10px;
-      }
-
-      h1 {
-        font-size: 26px;
-      }
-
-      .card-title {
-        font-size: 18px;
-      }
-
-      .score-number {
-        font-size: 32px;
+    @media (max-width: 700px) {
+      .dash-grid,
+      .dash-notes,
+      .why-grid {
+        grid-template-columns: 1fr;
       }
 
       .analysis-table {
         grid-template-columns: 1fr;
       }
 
-      .dashboard-grid {
-        grid-template-columns: 1fr;
+      .card-head {
+        flex-direction: column;
+      }
+
+      .card-right {
+        text-align: left;
+      }
+
+      .stock-title {
+        font-size: 18px;
+      }
+
+      .score {
+        font-size: 30px;
+      }
+
+      h1 {
+        font-size: 24px;
       }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <h1>📊 M7 今日選股</h1>
+    <h1>📊 M7 Dashboard</h1>
 
-    <div class="summary-box">
-      <div id="m7-time" class="meta">更新時間：--</div>
-      <div id="m7-summary" class="meta">全部 -- ｜ 加入 -- ｜ 觀察 -- ｜ 移除 --</div>
+    <div class="top-meta">
+      <div id="m7-time" class="meta-line">更新時間：--</div>
+      <div id="m7-subtitle" class="meta-line">M7 總樣本 -- 檔</div>
     </div>
 
     <div id="m7-dashboard"></div>
-    <div id="m7-list"></div>
+    <div id="m7-sections"></div>
   </div>
 
   <script src="./js/m7/m7_ui.js"></script>
