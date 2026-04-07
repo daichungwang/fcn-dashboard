@@ -1,251 +1,356 @@
 // ==========================================
-// M7 UI FINAL（Dashboard + 開發版明細）
+// M7 UI FINAL PRO
+// Dashboard + 分區 + 展開分析 + M2 曝險整合
 // ==========================================
 
-async function loadM7Today() {
-  const listWrap = document.getElementById("m7-list");
-
+async function loadM7() {
   try {
     const res = await fetch("./data/m7/m7_new_stock_today.json?v=" + Date.now());
     if (!res.ok) throw new Error("無法讀取 m7_new_stock_today.json");
-
     const data = await res.json();
-    const rows = data.all || [];
 
-    renderTopSummary(data, rows);
-    renderDashboard(rows);
-
-    if (!rows.length) {
-      listWrap.innerHTML = `<div class="empty-box">目前沒有資料</div>`;
-      return;
-    }
-
-    listWrap.innerHTML = rows.map(renderCard).join("");
-    bindCardToggle();
+    renderTop(data);
+    renderDashboard(data);
+    renderSections(data);
   } catch (err) {
-    listWrap.innerHTML = `<div class="error-box">載入失敗：${err.message}</div>`;
+    const wrap = document.getElementById("m7-sections");
+    if (wrap) {
+      wrap.innerHTML = `<div class="error-box">載入失敗：${err.message}</div>`;
+    }
   }
 }
 
 // ------------------------------------------
-// Top summary
+// TOP
 // ------------------------------------------
-function renderTopSummary(data, rows) {
+function renderTop(data) {
   const timeEl = document.getElementById("m7-time");
-  const summaryEl = document.getElementById("m7-summary");
+  const subEl = document.getElementById("m7-subtitle");
 
-  const total = rows.length;
-  const addCount = rows.filter(x => x["建議動作"] === "加入").length;
-  const watchCount = rows.filter(x => x["建議動作"] === "觀察").length;
-  const removeCount = rows.filter(x => x["建議動作"] === "移除").length;
+  if (timeEl) {
+    timeEl.innerText = `更新時間：${safe(data.generated_at) || "--"}`;
+  }
 
-  timeEl.textContent = `更新時間：${data.generated_at || "--"}`;
-  summaryEl.textContent = `全部 ${total} 檔 ｜ 加入 ${addCount} ｜ 觀察 ${watchCount} ｜ 移除 ${removeCount}`;
+  if (subEl) {
+    subEl.innerText =
+      `M7 總樣本 ${num(data.total_count)} 檔` +
+      (data.m2_generated_at ? ` ｜ M2 更新：${data.m2_generated_at}` : "");
+  }
 }
 
 // ------------------------------------------
-// Dashboard
+// DASHBOARD
 // ------------------------------------------
-function renderDashboard(rows) {
+function renderDashboard(data) {
   const wrap = document.getElementById("m7-dashboard");
   if (!wrap) return;
 
-  const total = rows.length || 1;
+  const all = data.all || [];
+  const todayRecommend = data.today_recommend || [];
+  const conservativeWatch = data.conservative_watch || [];
+  const removeList = data.remove_list || [];
+  const aggressiveRecommend = data.aggressive_recommend || [];
+  const watchList = data.watch_list || [];
 
-  const addCount = rows.filter(x => x["建議動作"] === "加入").length;
-  const watchCount = rows.filter(x => x["建議動作"] === "觀察").length;
-  const removeCount = rows.filter(x => x["建議動作"] === "移除").length;
+  const avgScore = avg(all.map(x => num(x["today_score"])));
+  const avgPEG = avg(all.map(x => num(x["估值資料"]?.["PEG"])));
+  const avgVolRatio = avg(all.map(x => num(x["量比"])));
 
-  const trendUp = rows.filter(x => {
-    const s = x["趨勢判讀"]?.["趨勢狀態"];
-    return s === "up_strong" || s === "up_mild";
-  }).length;
+  const pullbackCount = all.filter(x => x["趨勢判讀"]?.["結構狀態"] === "pullback").length;
+  const hotCount = all.filter(x => x["趨勢判讀"]?.["結構狀態"] === "hot").length;
+  const topCount = all.filter(x => x["趨勢判讀"]?.["結構狀態"] === "top").length;
+  const downtrendCount = all.filter(x => x["趨勢判讀"]?.["趨勢狀態"] === "down").length;
 
-  const topStruct = rows.filter(x => x["趨勢判讀"]?.["結構狀態"] === "top").length;
-  const pullbackStruct = rows.filter(x => x["趨勢判讀"]?.["結構狀態"] === "pullback").length;
-  const hotStruct = rows.filter(x => x["趨勢判讀"]?.["結構狀態"] === "hot").length;
-
-  const avgScore = avg(rows.map(x => num(x["today_score"])));
-  const avgPeg = avg(rows.map(x => num(x["估值資料"]?.["PEG"])));
-  const avgVolRatio = avg(rows.map(x => num(x["量比"])));
-
-  const scoreBands = {
-    high: rows.filter(x => num(x["today_score"]) >= 75).length,
-    mid: rows.filter(x => num(x["today_score"]) >= 55 && num(x["today_score"]) < 75).length,
-    low: rows.filter(x => num(x["today_score"]) < 55).length
-  };
+  const highExposureCount = all.filter(x => x["曝險警示"]?.level === "high").length;
+  const mediumExposureCount = all.filter(x => x["曝險警示"]?.level === "medium").length;
 
   wrap.innerHTML = `
-    <div class="dashboard-grid">
-      ${metricCard("總體平均分", formatNum(avgScore, 1), `高分 ${scoreBands.high} ｜ 中分 ${scoreBands.mid} ｜ 低分 ${scoreBands.low}`)}
-      ${metricCard("長期趨勢向上", `${trendUp}/${total}`, `占比 ${pct(trendUp, total)}%`)}
-      ${metricCard("回檔結構", `${pullbackStruct}`, "FCN 較理想結構")}
-      ${metricCard("做頭結構", `${topStruct}`, "中期轉弱，應按兵不動")}
-      ${metricCard("偏熱結構", `${hotStruct}`, "結構健康但不宜追高")}
-      ${metricCard("平均量比", formatNum(avgVolRatio, 2), "觀察市場資金參與度")}
+    <div class="dash-grid">
+      ${dashCard("積極推薦", aggressiveRecommend.length, "今日推薦中，扣除曝險過高標的")}
+      ${dashCard("今日推薦", todayRecommend.length, "條件符合，可列入今日候選")}
+      ${dashCard("觀察名單", watchList.length, "保守觀察中，曝險較可控者")}
+      ${dashCard("保守觀察", conservativeWatch.length, "條件部分符合，仍需等待")}
+      ${dashCard("建議剔除", removeList.length, "結構或風險不適合 FCN")}
+      ${dashCard("平均總分", formatNum(avgScore, 1), "全部樣本平均 today score")}
     </div>
 
-    <div class="dashboard-notes">
-      <div class="note-box">
-        <div class="note-title">整體判讀</div>
-        <div class="note-body">
-          目前樣本中，長期趨勢向上的股票共 <strong>${trendUp}</strong> 檔；
-          其中屬於 <strong>中期回檔</strong> 的有 <strong>${pullbackStruct}</strong> 檔，
-          屬於 <strong>做頭結構</strong> 的有 <strong>${topStruct}</strong> 檔。
-          平均 PEG 為 <strong>${formatNum(avgPeg, 2)}</strong>，
-          平均量比為 <strong>${formatNum(avgVolRatio, 2)}</strong>。
+    <div class="dash-grid dash-grid-2">
+      ${dashCard("回檔結構", pullbackCount, "長期向上、中期回檔，較理想")}
+      ${dashCard("偏熱結構", hotCount, "結構健康，但位置偏熱")}
+      ${dashCard("做頭結構", topCount, "3M / 6M 同步轉弱")}
+      ${dashCard("年線下行", downtrendCount, "長期趨勢有問題")}
+      ${dashCard("高曝險警示", highExposureCount, "投入比或 FCN 參與度偏高")}
+      ${dashCard("中曝險警示", mediumExposureCount, "應控制加碼節奏")}
+    </div>
+
+    <div class="dash-notes">
+      <div class="note-card">
+        <div class="note-title">整體市場 / 結構概況</div>
+        <div class="note-text">
+          平均 PEG：<strong>${formatNum(avgPEG, 2)}</strong> ｜ 
+          平均量比：<strong>${formatNum(avgVolRatio, 2)}</strong><br>
+          目前較理想的「回檔結構」共 <strong>${pullbackCount}</strong> 檔，
+          「做頭結構」共 <strong>${topCount}</strong> 檔。
         </div>
       </div>
 
-      <div class="note-box">
+      <div class="note-card">
         <div class="note-title">開發版說明</div>
-        <div class="note-body">
-          本頁目前保留所有股票，包括低分與移除名單，方便觀察不同結構、估值、資金與品質狀態，不做最終刪除。
+        <div class="note-text">
+          目前畫面保留全部股票，包含低分與建議剔除名單，目的是協助觀察不同結構、估值、資金與持倉曝險狀態。
         </div>
       </div>
     </div>
   `;
 }
 
-function metricCard(title, value, sub) {
+function dashCard(title, value, sub) {
   return `
-    <div class="metric-card">
-      <div class="metric-title">${title}</div>
-      <div class="metric-value">${value}</div>
-      <div class="metric-sub">${sub}</div>
+    <div class="dash-card">
+      <div class="dash-title">${title}</div>
+      <div class="dash-value">${value}</div>
+      <div class="dash-sub">${sub}</div>
     </div>
   `;
 }
 
 // ------------------------------------------
-// Card
+// 分區
 // ------------------------------------------
-function renderCard(row) {
-  const rankBadge = getRankBadge(row["排名"]);
-  const scoreClass = getScoreClass(row["today_score"]);
-  const actionClass = getActionClass(row["建議動作"]);
+function renderSections(data) {
+  const wrap = document.getElementById("m7-sections");
+  if (!wrap) return;
 
-  const breakdown = row["分數拆解"] || {};
-  const trend = row["趨勢判讀"] || {};
-  const valData = row["估值資料"] || {};
+  wrap.innerHTML = `
+    ${section("積極推薦", data.aggressive_recommend || [], "最值得優先查看；條件符合，且目前曝險不算過高。")}
+    ${section("今日推薦", data.today_recommend || [], "符合今日候選邏輯，但不代表可無限制加碼。")}
+    ${section("觀察名單", data.watch_list || [], "保守觀察中，相對可追蹤的名單。")}
+    ${section("保守觀察", data.conservative_watch || [], "條件部分符合，需等待更佳結構或價格。")}
+    ${section("建議剔除", data.remove_list || [], "目前結構或風險不適合做 FCN，但保留供開發觀察。")}
+  `;
+}
+
+function section(title, list, desc) {
+  if (!list || !list.length) return "";
+
+  const preview = list.slice(0, 3);
+  const hidden = list.slice(3);
+  const sectionId = "sec_" + title.replace(/\s+/g, "_");
+
+  return `
+    <div class="section-block">
+      <div class="section-head">
+        <div>
+          <div class="section-title">${title}</div>
+          <div class="section-desc">${desc}</div>
+        </div>
+        <div class="section-count">${list.length} 檔</div>
+      </div>
+
+      <div class="section-cards">
+        ${preview.map(cardHTML).join("")}
+      </div>
+
+      ${
+        hidden.length > 0
+          ? `
+        <div class="section-toggle-row">
+          <button class="toggle-btn" onclick="toggleSection('${sectionId}', this)">
+            展開全部 (${list.length})
+          </button>
+        </div>
+        <div id="${sectionId}" class="hidden-list hidden">
+          ${hidden.map(cardHTML).join("")}
+        </div>
+      `
+          : ""
+      }
+    </div>
+  `;
+}
+
+// ------------------------------------------
+// 卡片
+// ------------------------------------------
+function cardHTML(x) {
+  const warn = x["曝險警示"] || {};
+  const scoreClass = scoreCls(num(x["today_score"]));
+  const actionClass = actionCls(x["建議動作"]);
+  const bucket = safe(x["ui_bucket"]);
 
   return `
     <div class="stock-card">
       <div class="card-head">
         <div class="card-left">
-          <div class="rank-row">
-            ${rankBadge ? `<span class="rank-badge">${rankBadge}</span>` : ""}
-            <div class="card-title">${safe(row["排名"])}. ${safe(row["股號"])} ${safe(row["股名"])}</div>
+          <div class="title-row">
+            <div class="stock-title">${safe(x["股號"])} ${safe(x["股名"])}</div>
+            <div class="bucket-tag">${bucket}</div>
           </div>
-          <div class="card-sub">
-            ${safe(row["產業"])} ｜ ${safe(row["子產業"])} ｜ 分類：${safe(row["分類"])} ｜ 風險：${safe(row["風險等級"])}
+          <div class="stock-sub">
+            ${safe(x["產業"])} ｜ ${safe(x["子產業"])} ｜ 分類：${safe(x["分類"])} ｜ 風險：${safe(x["風險等級"])}
           </div>
         </div>
 
         <div class="card-right">
-          <div class="score-number ${scoreClass}">${safe(row["today_score"])}</div>
-          <div class="action-pill ${actionClass}">${safe(row["建議動作"])}</div>
+          <div class="score ${scoreClass}">${num(x["today_score"])}</div>
+          <div class="action-pill ${actionClass}">${safe(x["建議動作"])}</div>
         </div>
       </div>
 
-      <div class="scorebar-wrap">
-        <div class="scorebar-label">Today Score</div>
-        <div class="scorebar">
-          <div class="scorebar-fill ${getBarClass(row["today_score"])}" style="width:${clamp(num(row["today_score"]), 0, 100)}%"></div>
-        </div>
+      <div class="summary-box">
+        <strong>總結：</strong>${safe(x["最終說明"])}
       </div>
 
-      <div class="quick-summary">
-        <strong>總結：</strong>${safe(row["最終說明"] || "--")}
+      ${exposureBlock(x)}
+
+      <div class="detail-btn-row">
+        <button class="detail-btn" onclick="toggleDetail(this)">展開分析</button>
       </div>
 
-      <div class="toggle-row">
-        <button class="toggle-btn" data-target="detail-${safe(row["排名"])}">展開分析</button>
-      </div>
-
-      <div id="detail-${safe(row["排名"])}" class="detail-wrap hidden">
-
-        ${renderSection(
-          "估值面",
-          [
-            ["PEG", showValue(valData["PEG"])],
-            ["Forward PE", showValue(valData["ForwardPE"])],
-            ["EPS成長率", showPercentNoGap(valData["EPS成長率"])],
-            ["估值分數", showValue(breakdown["估值分"])]
-          ],
-          safe(row["估值說明"] || "--")
-        )}
-
-        ${renderSection(
-          "技術面",
-          [
-            ["年線方向", arrowText(trend["年線"], row["12月漲跌幅"])],
-            ["6月線方向", arrowText(trend["6月線"], row["6月漲跌幅"])],
-            ["3月線方向", arrowText(trend["3月線"], row["3月漲跌幅"])],
-            ["1W短期波動", showPercentNoGap(row["1週漲跌幅"])],
-            ["趨勢分", showValue(breakdown["趨勢分"])],
-            ["結構分", showValue(breakdown["結構分"])],
-            ["時機調整", showValue(breakdown["時機調整"])]
-          ],
-          buildTechnicalComment(row)
-        )}
-
-        ${renderSection(
-          "資金面",
-          [
-            ["量比", showValue(row["量比"])],
-            ["資金分數", showValue(breakdown["資金分"])]
-          ],
-          buildMoneyComment(row)
-        )}
-
-        ${renderSection(
-          "標的品質",
-          [
-            ["品質等級", qualityText(row, breakdown)],
-            ["品質分數", showValue(breakdown["品質分"])],
-            ["類別調整", showValue(breakdown["類別調整"])]
-          ],
-          buildQualityComment(row)
-        )}
-
-        <div class="analysis-section">
-          <div class="section-title">Why / Why not</div>
-          <div class="why-grid">
-            <div class="why-box">
-              <div class="why-title">Why</div>
-              <div class="why-body">${renderWhyList(row["why_yes"])}</div>
-            </div>
-            <div class="why-box">
-              <div class="why-title">Why not</div>
-              <div class="why-body">${renderWhyList(row["why_no"])}</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="analysis-section">
-          <div class="section-title">分數拆解</div>
-          <div class="formula-line">
-            估值 ${showValue(breakdown["估值分"])}
-            + 趨勢 ${showValue(breakdown["趨勢分"])}
-            + 結構 ${showValue(breakdown["結構分"])}
-            + 時機 ${showValue(breakdown["時機調整"])}
-            + 資金 ${showValue(breakdown["資金分"])}
-            + 品質 ${showValue(breakdown["品質分"])}
-            + 類別 ${showValue(breakdown["類別調整"])}
-            = <strong>${showValue(breakdown["總分"])}</strong>
-          </div>
-        </div>
-
+      <div class="detail-wrap hidden">
+        ${analysisBlock(x)}
       </div>
     </div>
   `;
 }
 
-function renderSection(title, rows, comment) {
+// ------------------------------------------
+// 曝險區塊
+// ------------------------------------------
+function exposureBlock(x) {
+  const e = x["持倉曝險"] || {};
+  const warn = x["曝險警示"] || {};
+
+  return `
+    <div class="exposure-box">
+      <div class="exposure-head">持倉曝險</div>
+
+      <div class="mini-grid">
+        <div class="mini-item"><span class="mini-label">FCN數量</span><span class="mini-value">${num(e["FCN數量"])}</span></div>
+        <div class="mini-item"><span class="mini-label">投入資金比</span><span class="mini-value">${formatNum(num(e["投入資金比"]), 2)}%</span></div>
+        <div class="mini-item"><span class="mini-label">Danger / Watch / Healthy</span><span class="mini-value">${num(e["Danger"])} / ${num(e["Watch"])} / ${num(e["Healthy"])}</span></div>
+      </div>
+
+      <div class="warn-box ${warn.level || "normal"}">
+        ${safe(warn.text)}
+      </div>
+    </div>
+  `;
+}
+
+// ------------------------------------------
+// 分析區
+// ------------------------------------------
+function analysisBlock(x) {
+  const breakdown = x["分數拆解"] || {};
+  const valData = x["估值資料"] || {};
+  const trend = x["趨勢判讀"] || {};
+  const exp = x["持倉曝險"] || {};
+
+  return `
+    ${analysisSection(
+      "估值面",
+      [
+        ["本益比 / PEG", valueLine(
+          `Forward PE：${showValue(valData["ForwardPE"])}`,
+          `PEG：${showValue(valData["PEG"])}`
+        )],
+        ["成長動能", showPercent(valData["EPS成長率"])],
+        ["估值分數", showValue(breakdown["估值分"])],
+        ["判斷", valuationComment(x)]
+      ]
+    )}
+
+    ${analysisSection(
+      "技術面",
+      [
+        ["長期趨勢", valueLine(
+          `年線：${showValue(trend["年線"])}`,
+          `12M：${showPercent(x["12月漲跌幅"])}`
+        )],
+        ["中期結構", valueLine(
+          `6月線：${showValue(trend["6月線"])} / ${showPercent(x["6月漲跌幅"])}`,
+          `3月線：${showValue(trend["3月線"])} / ${showPercent(x["3月漲跌幅"])}`
+        )],
+        ["短期波動", valueLine(
+          `1W短期波動：${showPercent(x["1週漲跌幅"])}`,
+          `溫度：${showValue(trend["溫度狀態"])}`
+        )],
+        ["分數", valueLine(
+          `趨勢分：${showValue(breakdown["趨勢分"])}`,
+          `結構分：${showValue(breakdown["結構分"])}`,
+          `時機調整：${showValue(breakdown["時機調整"])}`
+        )],
+        ["說明", safe(x["結構說明"])]
+      ]
+    )}
+
+    ${analysisSection(
+      "資金面",
+      [
+        ["量比", showValue(x["量比"])],
+        ["資金分數", showValue(breakdown["資金分"])],
+        ["判斷", moneyComment(x)]
+      ]
+    )}
+
+    ${analysisSection(
+      "標的品質",
+      [
+        ["品質等級", qualityLabel(x, breakdown)],
+        ["品質分數", showValue(breakdown["品質分"])],
+        ["類別調整", showValue(breakdown["類別調整"])],
+        ["判斷", qualityComment(x)]
+      ]
+    )}
+
+    ${analysisSection(
+      "持倉曝險",
+      [
+        ["參與程度", valueLine(
+          `FCN數量：${num(exp["FCN數量"])}`,
+          `投入金額：USD ${formatInt(exp["投入金額"])}`
+        )],
+        ["投入資金比", `${formatNum(num(exp["投入資金比"]), 2)}%`],
+        ["健康度分析", `${num(exp["Danger"])} / ${num(exp["Watch"])} / ${num(exp["Healthy"])}`],
+        ["判斷", safe(x["曝險警示"]?.text)]
+      ]
+    )}
+
+    <div class="analysis-section">
+      <div class="analysis-title">Why / Why not</div>
+      <div class="why-grid">
+        <div class="why-box">
+          <div class="why-title">Why</div>
+          <div class="why-body">${renderWhyList(x["why_yes"])}</div>
+        </div>
+        <div class="why-box">
+          <div class="why-title">Why not</div>
+          <div class="why-body">${renderWhyList(x["why_no"])}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="analysis-section">
+      <div class="analysis-title">分數拆解</div>
+      <div class="formula-box">
+        估值 ${showValue(breakdown["估值分"])}
+        + 趨勢 ${showValue(breakdown["趨勢分"])}
+        + 結構 ${showValue(breakdown["結構分"])}
+        + 時機 ${showValue(breakdown["時機調整"])}
+        + 資金 ${showValue(breakdown["資金分"])}
+        + 品質 ${showValue(breakdown["品質分"])}
+        + 類別 ${showValue(breakdown["類別調整"])}
+        = <strong>${showValue(breakdown["總分"])}</strong>
+      </div>
+    </div>
+  `;
+}
+
+function analysisSection(title, rows) {
   return `
     <div class="analysis-section">
-      <div class="section-title">${title}</div>
+      <div class="analysis-title">${title}</div>
       <div class="analysis-table">
         ${rows.map(([label, value]) => `
           <div class="analysis-row">
@@ -254,128 +359,123 @@ function renderSection(title, rows, comment) {
           </div>
         `).join("")}
       </div>
-      <div class="analysis-comment">${comment}</div>
     </div>
   `;
 }
 
 // ------------------------------------------
-// Text builders
+// Comment builders
 // ------------------------------------------
-function buildTechnicalComment(row) {
-  const trend = row["趨勢判讀"] || {};
-  const trendState = trend["趨勢狀態"];
-  const structureState = trend["結構狀態"];
-  const timingState = trend["溫度狀態"];
+function valuationComment(x) {
+  const valData = x["估值資料"] || {};
+  const peg = num(valData["PEG"]);
+  const pe = num(valData["ForwardPE"]);
+  const growth = num(valData["EPS成長率"]);
+  const model = safe(x["估值模型"]);
 
-  const longText =
-    trendState === "up_strong" ? "長期趨勢向上且明確" :
-    trendState === "up_mild" ? "長期趨勢仍向上，但斜率較緩" :
-    trendState === "down" ? "長期趨勢向下，方向有問題" :
-    "長期趨勢資料不足";
+  if (model === "ETF") {
+    return "ETF 不適用 PEG，採中性估值。";
+  }
 
-  const midText =
-    structureState === "pullback" ? "中期屬回檔結構，位置較合理" :
-    structureState === "hot" ? "中期結構健康，但位置偏熱" :
-    structureState === "top" ? "中期結構轉弱，屬做頭型態" :
-    structureState === "rebound" ? "中期偏弱，目前較像反彈" :
-    "中期結構中性";
+  if (model === "NON_PEG") {
+    return `這類股票不以 PEG 為主，觀察本益比 ${formatNum(pe, 1)} 與成長率 ${formatNum(growth, 1)}%，目前採中性估值。`;
+  }
 
-  const shortText =
-    timingState === "dip" ? "短期波動屬回檔，有利觀察進場點" :
-    timingState === "overheat" ? "短期波動偏熱，不宜追高" :
-    "短期波動中性";
+  let pegText = "合理";
+  if (peg > 1.6) pegText = "偏高";
+  else if (peg > 1.3) pegText = "偏貴";
+  else if (peg < 0.8) pegText = "偏低";
 
-  return `長期：${longText}；中期：${midText}；短期：${shortText}。`;
+  let growthText = "穩健";
+  if (growth >= 25) growthText = "強";
+  else if (growth < 10) growthText = "弱";
+
+  return `PEG ${formatNum(peg, 2)}，本益比約 ${formatNum(pe, 1)}，成長動能 ${growthText}；整體估值 ${pegText}。`;
 }
 
-function buildMoneyComment(row) {
-  const vr = num(row["量比"]);
-  const score = num(row["分數拆解"]?.["資金分"]);
-
-  if (vr >= 1.5) {
-    return `量比 ${formatNum(vr, 2)}，市場資金明顯放大，資金面偏強。`;
-  }
-  if (vr >= 1.0) {
-    return `量比 ${formatNum(vr, 2)}，市場資金維持正常，資金面中性偏穩。`;
-  }
-  if (vr >= 0.7) {
-    return `量比 ${formatNum(vr, 2)}，短期資金偏保守，尚未見到強力追價。`;
-  }
-  return `量比 ${formatNum(vr, 2)}，資金參與度偏低，雖可觀察，但短期推升力不足。`;
+function moneyComment(x) {
+  const vr = num(x["量比"]);
+  if (vr >= 1.5) return `市場資金明顯追捧，量比 ${formatNum(vr, 2)}，資金面偏強。`;
+  if (vr >= 1.0) return `市場資金維持正常，量比 ${formatNum(vr, 2)}，資金面中性。`;
+  if (vr >= 0.7) return `量比 ${formatNum(vr, 2)}，短期資金略保守，但未明顯失血。`;
+  return `量比 ${formatNum(vr, 2)} 偏低，雖然短期股價可能偏弱，但需觀察是否只是等待量能回流。`;
 }
 
-function buildQualityComment(row) {
-  const risk = safe(row["風險等級"]);
-  const category = safe(row["分類"]);
-  const q = num(row["分數拆解"]?.["品質分"]);
+function qualityComment(x) {
+  const category = safe(x["分類"]);
+  const risk = safe(x["風險等級"]);
+  if (category === "core") return `屬核心可接標的，風險屬 ${risk}，可作為基本持股候選。`;
+  if (category === "growth") return `屬成長型標的，風險屬 ${risk}，需更重視結構與價格位置。`;
+  if (category === "defensive") return `屬防禦型標的，風險相對可控，適合保守配置。`;
+  if (category === "income") return `屬收益型標的，需同時觀察事件風險與結構。`;
+  return `屬高風險投機類型，需特別謹慎。`;
+}
 
+function qualityLabel(x, breakdown) {
+  const score = num(breakdown["品質分"]);
   let level = "中";
-  if (q >= 5) level = "高";
-  else if (q < 0) level = "低";
-
-  return `標的品質屬${level}，分類為 ${category}，風險等級為 ${risk}。${category === "core" ? "屬核心可接標的。" : "需搭配結構與價格判斷。"} `;
+  if (score >= 5) level = "高";
+  else if (score < 0) level = "低";
+  return `${level}（${safe(x["分類"])} / 風險 ${safe(x["風險等級"])})`;
 }
 
-function qualityText(row, breakdown) {
-  const q = num(breakdown["品質分"]);
-  let level = "中";
-  if (q >= 5) level = "高";
-  else if (q < 0) level = "低";
-  return `${level}（分類 ${safe(row["分類"])} / 風險 ${safe(row["風險等級"])})`;
+// ------------------------------------------
+// Toggle
+// ------------------------------------------
+function toggleSection(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle("hidden");
+  btn.textContent = el.classList.contains("hidden") ? "展開全部" : "收合";
 }
 
-function renderWhyList(arr) {
-  if (!Array.isArray(arr) || !arr.length) return "—";
-  return arr.map(x => `<div class="why-item">• ${safe(x)}</div>`).join("");
-}
-
-function arrowText(arrow, val) {
-  if (!arrow || arrow === "未知") return "未知";
-  return `${arrow}（${showPercentNoGap(val)}）`;
+function toggleDetail(btn) {
+  const detail = btn.parentElement.nextElementSibling;
+  if (!detail) return;
+  detail.classList.toggle("hidden");
+  btn.textContent = detail.classList.contains("hidden") ? "展開分析" : "收起分析";
 }
 
 // ------------------------------------------
 // helpers
 // ------------------------------------------
-function bindCardToggle() {
-  document.querySelectorAll(".toggle-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const targetId = btn.getAttribute("data-target");
-      const el = document.getElementById(targetId);
-      if (!el) return;
-
-      el.classList.toggle("hidden");
-      btn.textContent = el.classList.contains("hidden") ? "展開分析" : "收起分析";
-    });
-  });
+function renderWhyList(arr) {
+  if (!Array.isArray(arr) || !arr.length) return "—";
+  return arr.map(x => `<div class="why-item">• ${safe(x)}</div>`).join("");
 }
 
-function getRankBadge(rank) {
-  if (rank === 1) return "🔥 今日最強";
-  if (rank === 2) return "⭐ 核心觀察";
-  if (rank === 3) return "📌 重點追蹤";
-  return "";
+function valueLine(...items) {
+  return items.filter(Boolean).join(" ｜ ");
 }
 
-function getScoreClass(score) {
-  const s = num(score);
-  if (s >= 75) return "score-good";
-  if (s >= 55) return "score-mid";
+function scoreCls(score) {
+  if (score >= 75) return "score-good";
+  if (score >= 55) return "score-mid";
   return "score-bad";
 }
 
-function getBarClass(score) {
-  const s = num(score);
-  if (s >= 75) return "bar-good";
-  if (s >= 55) return "bar-mid";
-  return "bar-bad";
+function actionCls(action) {
+  if (action === "加入") return "pill-add";
+  if (action === "觀察") return "pill-watch";
+  return "pill-remove";
 }
 
-function getActionClass(a) {
-  if (a === "加入") return "pill-add";
-  if (a === "觀察") return "pill-watch";
-  return "pill-remove";
+function showValue(v) {
+  return v === undefined || v === null || v === "" ? "--" : v;
+}
+
+function showPercent(v) {
+  return v === undefined || v === null || v === "" ? "--" : `${formatNum(v, 2)}%`;
+}
+
+function formatNum(v, digits = 2) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n.toFixed(digits) : "--";
+}
+
+function formatInt(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n.toLocaleString() : "--";
 }
 
 function num(v) {
@@ -389,30 +489,8 @@ function avg(arr) {
   return valid.reduce((a, b) => a + b, 0) / valid.length;
 }
 
-function pct(n, d) {
-  if (!d) return 0;
-  return Math.round((n / d) * 100);
-}
-
-function formatNum(v, digits = 2) {
-  const n = Number(v);
-  return Number.isFinite(n) ? n.toFixed(digits) : "--";
-}
-
-function showValue(v) {
-  return v === undefined || v === null || v === "" ? "--" : v;
-}
-
-function showPercentNoGap(v) {
-  return v === undefined || v === null || v === "" ? "--" : `${Number(v).toFixed(2)}%`;
-}
-
 function safe(v) {
   return v === undefined || v === null ? "" : String(v);
 }
 
-function clamp(v, min, max) {
-  return Math.max(min, Math.min(max, v));
-}
-
-document.addEventListener("DOMContentLoaded", loadM7Today);
+document.addEventListener("DOMContentLoaded", loadM7);
