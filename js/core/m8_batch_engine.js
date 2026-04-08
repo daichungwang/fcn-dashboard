@@ -4,6 +4,10 @@ async function loadM7() {
   return await res.json();
 }
 
+/**
+ * 若你不想讓 INTC fallback 參與計算
+ * 直接改成 const FALLBACK_STOCKS = {};
+ */
 const FALLBACK_STOCKS = {
   INTC: {
     "股號": "INTC",
@@ -11,7 +15,7 @@ const FALLBACK_STOCKS = {
     "產業": "AI_SEMI",
     "子產業": "CPU",
     "風險等級": "中",
-    "today_score": 40,
+    "today_score": 62,
     "_source": "fallback"
   }
 };
@@ -29,20 +33,37 @@ function findStock(m7json, symbol) {
   const stock = allM7Stocks(m7json).find(
     s => String(s["股號"] || "").toUpperCase() === symbol
   );
+
   if (stock) return { ...stock, _source: "m7" };
   if (FALLBACK_STOCKS[symbol]) return FALLBACK_STOCKS[symbol];
+
   throw new Error(`M7 找不到股票: ${symbol}`);
 }
 
-function getTodayScore(stock) { return Number(stock.today_score || 0); }
-function getSector(stock) { return String(stock["產業"] || "OTHER"); }
-function getSubsector(stock) { return String(stock["子產業"] || "OTHER"); }
-function getRiskLevel(stock) { return String(stock["風險等級"] || ""); }
+function getTodayScore(stock) {
+  return Number(stock.today_score || 0);
+}
+
+function getSector(stock) {
+  return String(stock["產業"] || "OTHER");
+}
+
+function getSubsector(stock) {
+  return String(stock["子產業"] || "OTHER");
+}
+
+function getRiskLevel(stock) {
+  return String(stock["風險等級"] || "");
+}
 
 function calcWeaknesses(scores) {
   return scores.map(s => 100 - s).sort((a, b) => b - a);
 }
 
+/**
+ * BW：目前先維持你既有邏輯
+ * 2~5 檔支援
+ */
 function calcBW(scores) {
   const weaknesses = calcWeaknesses(scores);
   const n = weaknesses.length;
@@ -52,30 +73,51 @@ function calcBW(scores) {
   if (n === 3) return 0.6 * weaknesses[0] + 0.4 * avg;
   if (n === 4) return 0.5 * weaknesses[0] + 0.3 * weaknesses[1] + 0.2 * avg;
   if (n === 5) return 0.45 * weaknesses[0] + 0.3 * weaknesses[1] + 0.15 * weaknesses[2] + 0.1 * avg;
+
   throw new Error("FCN basket 只支援 2~5 檔");
 }
 
+/**
+ * KI：新 base
+ * KI=55 -> 0.5
+ */
 function calcKIAdj(KI) {
-  return 0.18 * (KI - 65) + 0.006 * Math.pow(KI - 65, 2);
+  return 0.5 + 0.12 * (KI - 55) + 0.004 * Math.pow(KI - 55, 2);
 }
 
+/**
+ * Tenor：2M=0, 6M=1
+ */
 function calcTenorAdj(T) {
-  const x = 0.18 * (T - 6) + 0.012 * Math.pow(T - 6, 2);
-  return Math.min(3, Math.max(-1, x));
+  return 0.25 * (T - 2);
 }
 
+/**
+ * Strike：base = 55
+ * Strike=65 -> 1
+ */
 function calcStrikeAdj(strike) {
-  return 0.09 * (strike - 55) + 0.003 * Math.pow(strike - 55, 2);
+  return 0.1 * (strike - 55);
 }
 
+/**
+ * Type：你最新定義
+ * EKI=0, DACN=0.5, AKI=1
+ */
 function calcTypeAdj(type) {
-  if (type === "DACN") return -0.5;
-  if (type === "EKI") return -1;
-  return 0;
+  if (type === "DACN") return 0.5;
+  if (type === "AKI") return 1;
+  return 0; // EKI
 }
 
-function calcResonanceAdj(stocks) {
+/**
+ * Resonance：保留，但改溫和版
+ * 0.45 sector + 0.35 theme + 0.20 valuation/risk sync
+ * 最後用 0.6 * idx^2
+ */
+function calcResonance(stocks) {
   const N = stocks.length;
+
   const sectorCount = {};
   const themeCount = {};
   let highRiskCount = 0;
@@ -96,11 +138,13 @@ function calcResonanceAdj(stocks) {
         : sec;
 
     themeCount[themeKey] = (themeCount[themeKey] || 0) + 1;
+
     if (risk === "高") highRiskCount += 1;
   }
 
   const maxSector = Math.max(...Object.values(sectorCount));
   const maxTheme = Math.max(...Object.values(themeCount));
+
   const sectorScore = maxSector / N;
   const themeScore = maxTheme / N;
   const valuationSync = highRiskCount / N;
@@ -110,26 +154,48 @@ function calcResonanceAdj(stocks) {
     0.35 * themeScore +
     0.20 * valuationSync;
 
-  return Math.min(1.2, 1.2 * Math.pow(resonanceIndex, 2));
+  const resonanceAdj = 0.6 * Math.pow(resonanceIndex, 2);
+
+  return {
+    resonance_index: Number(resonanceIndex.toFixed(4)),
+    resonance_adj: Number(resonanceAdj.toFixed(2)),
+    sector_score: Number(sectorScore.toFixed(4)),
+    theme_score: Number(themeScore.toFixed(4)),
+    valuation_sync: Number(valuationSync.toFixed(4))
+  };
 }
 
+/**
+ * Structure v2
+ * Gap 先不納入
+ */
 function calcStructure(KI, T, strike, type, stocks) {
   const kiAdj = calcKIAdj(KI);
   const tenorAdj = calcTenorAdj(T);
   const strikeAdj = calcStrikeAdj(strike);
   const typeAdj = calcTypeAdj(type);
-  const resonanceAdj = calcResonanceAdj(stocks);
+  const resonance = calcResonance(stocks);
 
-  const raw = kiAdj + tenorAdj + strikeAdj + typeAdj + resonanceAdj;
-  const capped = Math.min(6, raw);
+  const raw =
+    kiAdj +
+    tenorAdj +
+    strikeAdj +
+    typeAdj +
+    resonance.resonance_adj;
 
   return {
     ki_adj: Number(kiAdj.toFixed(2)),
     tenor_adj: Number(tenorAdj.toFixed(2)),
     strike_adj: Number(strikeAdj.toFixed(2)),
     type_adj: Number(typeAdj.toFixed(2)),
-    resonance_adj: Number(resonanceAdj.toFixed(2)),
-    structure_total: Number(capped.toFixed(2))
+    resonance_index: resonance.resonance_index,
+    resonance_adj: resonance.resonance_adj,
+    resonance_breakdown: {
+      sector_score: resonance.sector_score,
+      theme_score: resonance.theme_score,
+      valuation_sync: resonance.valuation_sync
+    },
+    structure_total: Number(raw.toFixed(2))
   };
 }
 
@@ -142,12 +208,12 @@ function pricingView(diff) {
 }
 
 async function runM8Case({ caseName, symbols, KI, Strike, T, type, marketYield }) {
-  if (symbols.length < 2 || symbols.length > 5) {
+  if (!Array.isArray(symbols) || symbols.length < 2 || symbols.length > 5) {
     throw new Error(`${caseName}: basket 只支援 2~5 檔`);
   }
 
   const m7 = await loadM7();
-  const stocks = symbols.map(sym => findStock(m7, sym.toUpperCase()));
+  const stocks = symbols.map(sym => findStock(m7, String(sym).toUpperCase()));
   const scores = stocks.map(getTodayScore);
 
   const BW = calcBW(scores);
@@ -157,27 +223,41 @@ async function runM8Case({ caseName, symbols, KI, Strike, T, type, marketYield }
   const fairYield = 6 + basketPremium + structure.structure_total;
   const delta = marketYield - fairYield;
 
-  let note = '';
-  if (basketPremium < 7 && marketYield - fairYield > 4) {
-    note = 'Basket 偏低';
-  } else if (structure.structure_total > 5 && marketYield - fairYield < -2) {
-    note = 'Structure 偏重';
+  let note = "";
+  if (basketPremium < 7 && delta > 4) {
+    note = "Basket 偏低";
   } else if (Math.abs(delta) <= 1) {
-    note = '接近';
+    note = "接近";
   }
 
   return {
     case_name: caseName,
     symbols,
+    KI: Number(KI),
+    strike: Number(Strike),
+    tenor: Number(T),
     type,
+    stock_sources: stocks.map(s => ({
+      symbol: s["股號"],
+      source: s._source || "m7"
+    })),
+
+    scores: scores.map(x => Number(x.toFixed(2))),
+    weaknesses: calcWeaknesses(scores).map(x => Number(x.toFixed(2))),
+    BW: Number(BW.toFixed(2)),
+
     market_yield: Number(marketYield.toFixed(2)),
     base: 6,
     basket_premium: Number(basketPremium.toFixed(2)),
+
     ki_adj: structure.ki_adj,
     tenor_adj: structure.tenor_adj,
     strike_adj: structure.strike_adj,
     type_adj: structure.type_adj,
+    resonance_index: structure.resonance_index,
     resonance_adj: structure.resonance_adj,
+    resonance_breakdown: structure.resonance_breakdown,
+
     structure_total: structure.structure_total,
     fair_yield: Number(fairYield.toFixed(2)),
     pricing_delta: Number(delta.toFixed(2)),
