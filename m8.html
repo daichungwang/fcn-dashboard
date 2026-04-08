@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>M8 Engine</title>
+<style>
+  body{
+    font-family: Arial, sans-serif;
+    margin: 16px;
+    line-height: 1.4;
+  }
+  h2{
+    margin-bottom: 20px;
+  }
+  .row{
+    margin-bottom: 14px;
+  }
+  input, select, button{
+    font-size: 16px;
+    padding: 6px 8px;
+    margin-right: 8px;
+    margin-bottom: 6px;
+  }
+  input{
+    width: 110px;
+  }
+  .wide{
+    width: 140px;
+  }
+  button{
+    cursor: pointer;
+  }
+  pre{
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: #f6f6f6;
+    padding: 12px;
+    border-radius: 8px;
+  }
+</style>
+</head>
+
+<body>
+
+<h2>M8 Fair Yield Engine</h2>
+
+<div class="row">
+  Symbols:
+  <input id="s1" placeholder="AMD">
+  <input id="s2" placeholder="NVDA">
+  <input id="s3" placeholder="TSLA">
+  <input id="s4" placeholder="INTC">
+  <input id="s5" placeholder="">
+</div>
+
+<div class="row">
+  KI
+  <input id="ki" value="60">
+
+  Strike
+  <input id="strike" value="70">
+
+  Tenor
+  <input id="tenor" value="6">
+</div>
+
+<div class="row">
+  Type
+  <select id="type">
+    <option value="AKI">AKI</option>
+    <option value="DACN">DACN</option>
+    <option value="EKI">EKI</option>
+  </select>
+
+  Market Yield
+  <input id="marketYield" class="wide" value="">
+</div>
+
+<div class="row">
+  <button onclick="run()">Run</button>
+</div>
+
+<pre id="out"></pre>
+
+<script src="js/core/m8_fair_yield_engine.js"></script>
+
+<script>
+async function run(){
+  try{
+    const rawSymbols = [
+      document.getElementById("s1").value,
+      document.getElementById("s2").value,
+      document.getElementById("s3").value,
+      document.getElementById("s4").value,
+      document.getElementById("s5").value
+    ];
+
+    const symbols = rawSymbols
+      .map(x => String(x || "").trim().toUpperCase())
+      .filter(x => x !== "");
+
+    const ki = Number(document.getElementById("ki").value);
+    const strike = Number(document.getElementById("strike").value);
+    const tenor = Number(document.getElementById("tenor").value);
+    const type = document.getElementById("type").value;
+
+    const marketRaw = document.getElementById("marketYield").value.trim();
+    const marketYield = marketRaw === "" ? null : Number(marketRaw);
+
+    const result = await runM8(symbols, ki, strike, tenor, type, marketYield);
+
+    document.getElementById("out").textContent = JSON.stringify(result, null, 2);
+  }catch(err){
+    document.getElementById("out").textContent = "Error: " + err.message;
+  }
+}
+</script>
+
+</body>
+</html>
