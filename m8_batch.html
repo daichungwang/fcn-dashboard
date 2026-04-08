@@ -1,318 +1,166 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M8 Batch Pricing Tool</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f7fa;
-      margin: 0;
-      padding: 24px;
-      color: #222;
-    }
-
-    h1 {
-      margin-top: 0;
-      font-size: 28px;
-      line-height: 1.3;
-    }
-
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,.08);
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 180px;
-      font-family: Consolas, monospace;
-      font-size: 14px;
-      padding: 10px;
-      box-sizing: border-box;
-      border-radius: 10px;
-      border: 1px solid #d1d5db;
-    }
-
-    button {
-      padding: 10px 14px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-right: 8px;
-      margin-top: 8px;
-      font-size: 14px;
-    }
-
-    .primary { background: #2563eb; color: white; }
-    .secondary { background: #e5e7eb; color: #111; }
-    .danger { background: #dc2626; color: white; }
-
-    .muted {
-      color: #666;
-      font-size: 13px;
-      line-height: 1.6;
-    }
-
-    .scroll {
-      overflow: auto;
-      max-height: 65vh;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      min-width: 1200px;
-    }
-
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: center;
-      white-space: nowrap;
-    }
-
-    th {
-      background: #f0f4f8;
-      position: sticky;
-      top: 0;
-      z-index: 1;
-    }
-
-    .ok { color: #0f766e; font-weight: bold; }
-    .warn { color: #b45309; font-weight: bold; }
-    .bad { color: #b91c1c; font-weight: bold; }
-
-    .small {
-      font-size: 12px;
-      color: #666;
-    }
-
-    @media (max-width: 768px) {
-      body { padding: 16px; }
-      h1 { font-size: 22px; }
-      button { width: 100%; margin-right: 0; }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>M8 Batch Pricing Tool v2</title>
+<style>
+body { font-family: Arial; padding:20px; background:#f5f7fa; }
+textarea { width:100%; height:140px; font-family: monospace; }
+button { margin:5px; padding:8px 12px; }
+table { border-collapse: collapse; width:100%; font-size:12px; }
+th, td { border:1px solid #ccc; padding:6px; text-align:center; }
+th { background:#eee; }
+.ok { color:green; font-weight:bold; }
+.warn { color:orange; font-weight:bold; }
+.bad { color:red; font-weight:bold; }
+</style>
 </head>
+
 <body>
-  <h1>📊 M8 多筆定價 / 比較工具</h1>
 
-  <div class="card">
-    <div><b>輸入格式：</b>每行一筆，欄位用逗號分隔：</div>
-    <div class="muted">
-      名稱,股票1|股票2|股票3|股票4|股票5,KI,Strike,Tenor,Type,MarketYield
-      <br>
-      Type 只接受：AKI / DACN / EKI
-    </div>
+<h2>M8 Batch Pricing Tool v2</h2>
 
-    <textarea id="batchInput">Case1,TSM|AMD|NVDA|AVGO,55,68,12,EKI,19.16
+<textarea id="input">
+Case1,TSM|AMD|NVDA|AVGO,55,68,12,EKI,19.16
 Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62
 Case3,AAPL|COIN|GOOG|META,50,60,10,EKI,17.31
 Case4,AMD|NVDA|TSLA|TSM,55,65,6,EKI,17.24
-Case5,AAPL|NVDA|TSM,77,77,6,AKI,15</textarea>
+Case5,AAPL|NVDA|TSM,77,77,6,AKI,15
+</textarea>
 
-    <div>
-      <button class="primary" onclick="runBatch()">執行批次</button>
-      <button class="secondary" onclick="loadExample()">載入範例</button>
-      <button class="secondary" onclick="exportCSV()">Export CSV</button>
-      <button class="secondary" onclick="exportJSON()">Export JSON</button>
-      <button class="danger" onclick="clearResults()">清空結果</button>
-    </div>
-  </div>
+<br>
+<button onclick="run()">執行</button>
+<button onclick="exportCSV()">Export CSV</button>
+<button onclick="exportJSON()">Export JSON</button>
 
-  <div class="card">
-    <div><b>目前結構共識：</b></div>
-    <div class="muted">
-      KI base = 65；Strike base = 55；Gap 暫停（=0）；
-      AKI = 0、DACN = -0.5、EKI = -1；Structure capped at 6
-    </div>
-  </div>
+<p id="status"></p>
 
-  <div class="card">
-    <div id="status">尚未執行。</div>
-  </div>
+<table id="table">
+<thead>
+<tr>
+<th>Case</th>
+<th>Basket</th>
+<th>KI</th>
+<th>Strike</th>
+<th>Tenor</th>
+<th>Type</th>
+<th>Market</th>
 
-  <div class="card scroll">
-    <table id="resultTable">
-      <thead>
-        <tr>
-          <th>Case</th>
-          <th>Basket</th>
-          <th>Type</th>
-          <th>Market</th>
-          <th>Base</th>
-          <th>Basket</th>
-          <th>KI</th>
-          <th>Tenor</th>
-          <th>Strike</th>
-          <th>TypeAdj</th>
-          <th>Reson</th>
-          <th>Structure</th>
-          <th>Fair</th>
-          <th>Δ(M-F)</th>
-          <th>View</th>
-          <th>備註</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+<th>Score</th>
+<th>BW</th>
 
-  <script src="js/core/m8_batch_engine.js"></script>
-  <script>
-    let latestResults = [];
+<th>Basket</th>
+<th>KIAdj</th>
+<th>TenorAdj</th>
+<th>StrikeAdj</th>
+<th>TypeAdj</th>
+<th>Reson</th>
 
-    function loadExample() {
-      document.getElementById("batchInput").value =
-`Case1,TSM|AMD|NVDA|AVGO,55,68,12,EKI,19.16
-Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62
-Case3,AAPL|COIN|GOOG|META,50,60,10,EKI,17.31
-Case4,AMD|NVDA|TSLA|TSM,55,65,6,EKI,17.24
-Case5,AAPL|NVDA|TSM,77,77,6,AKI,15`;
-    }
+<th>Structure</th>
+<th>Fair</th>
+<th>Δ</th>
+<th>View</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
 
-    function clearResults() {
-      latestResults = [];
-      document.querySelector("#resultTable tbody").innerHTML = "";
-      document.getElementById("status").textContent = "已清空。";
-    }
+<script src="js/core/m8_batch_engine.js"></script>
 
-    function fmt(x) {
-      if (x === null || x === undefined || Number.isNaN(x)) return "";
-      if (typeof x === "number") return x.toFixed(2);
-      return x;
-    }
+<script>
+let results = [];
 
-    function renderTable(rows) {
-      const tbody = document.querySelector("#resultTable tbody");
-      tbody.innerHTML = "";
+function viewClass(v){
+  if(v==="便宜") return "warn";
+  if(v==="合理") return "ok";
+  return "bad";
+}
 
-      for (const r of rows) {
-        const tr = document.createElement("tr");
-        const viewClass =
-          r.pricing_view === "合理"
-            ? "ok"
-            : (r.pricing_delta >= 0 ? "warn" : "bad");
+function render(){
+  const tbody = document.querySelector("#table tbody");
+  tbody.innerHTML="";
 
-        tr.innerHTML = `
-          <td>${r.case_name}</td>
-          <td>${r.symbols.join(" / ")}</td>
-          <td>${r.type}</td>
-          <td>${fmt(r.market_yield)}</td>
-          <td>${fmt(r.base)}</td>
-          <td>${fmt(r.basket_premium)}</td>
-          <td>${fmt(r.ki_adj)}</td>
-          <td>${fmt(r.tenor_adj)}</td>
-          <td>${fmt(r.strike_adj)}</td>
-          <td>${fmt(r.type_adj)}</td>
-          <td>${fmt(r.resonance_adj)}</td>
-          <td>${fmt(r.structure_total)}</td>
-          <td><b>${fmt(r.fair_yield)}</b></td>
-          <td>${fmt(r.pricing_delta)}</td>
-          <td class="${viewClass}">${r.pricing_view}</td>
-          <td>${r.note || ""}</td>
-        `;
-        tbody.appendChild(tr);
-      }
-    }
+  results.forEach(r=>{
+    const tr = document.createElement("tr");
 
-    async function runBatch() {
-      const raw = document.getElementById("batchInput").value.trim();
+    tr.innerHTML = `
+<td>${r.case_name}</td>
+<td>${r.symbols.join("/")}</td>
+<td>${r.KI}</td>
+<td>${r.strike}</td>
+<td>${r.tenor}</td>
+<td>${r.type}</td>
+<td>${r.market_yield}</td>
 
-      if (!raw) {
-        document.getElementById("status").textContent = "請先輸入資料。";
-        return;
-      }
+<td>${r.scores.join("/")}</td>
+<td>${r.BW}</td>
 
-      try {
-        const lines = raw.split(/\n+/).map(x => x.trim()).filter(Boolean);
-        const rows = [];
+<td>${r.basket_premium}</td>
+<td>${r.ki_adj}</td>
+<td>${r.tenor_adj}</td>
+<td>${r.strike_adj}</td>
+<td>${r.type_adj}</td>
+<td>${r.resonance_adj}</td>
 
-        for (const line of lines) {
-          const parts = line.split(",").map(x => x.trim());
+<td>${r.structure_total}</td>
+<td><b>${r.fair_yield}</b></td>
+<td>${r.pricing_delta}</td>
+<td class="${viewClass(r.pricing_view)}">${r.pricing_view}</td>
+<td>${r.note||""}</td>
+`;
+    tbody.appendChild(tr);
+  });
+}
 
-          if (parts.length < 7) {
-            throw new Error(`格式錯誤：${line}`);
-          }
+async function run(){
+  const lines = document.getElementById("input").value.trim().split("\n");
 
-          const [caseName, basketStr, ki, strike, tenor, type, marketYield] = parts;
+  results = [];
 
-          const symbols = basketStr
-            .split("|")
-            .map(x => x.trim())
-            .filter(Boolean);
+  for(const line of lines){
+    if(!line.trim()) continue;
 
-          const res = await runM8Case({
-            caseName,
-            symbols,
-            KI: Number(ki),
-            Strike: Number(strike),
-            T: Number(tenor),
-            type,
-            marketYield: Number(marketYield)
-          });
+    const [name, basket, KI, strike, tenor, type, market] = line.split(",");
 
-          rows.push(res);
-        }
+    const res = await runM8Case({
+      caseName: name,
+      symbols: basket.split("|"),
+      KI: Number(KI),
+      Strike: Number(strike),
+      T: Number(tenor),
+      type: type,
+      marketYield: Number(market)
+    });
 
-        latestResults = rows;
-        renderTable(rows);
-        document.getElementById("status").textContent = `已完成 ${rows.length} 筆。`;
-      } catch (err) {
-        document.getElementById("status").textContent = "Error: " + err.message;
-      }
-    }
+    results.push(res);
+  }
 
-    function exportCSV() {
-      if (!latestResults.length) {
-        document.getElementById("status").textContent = "沒有結果可匯出。";
-        return;
-      }
+  render();
+  document.getElementById("status").innerText = "完成 "+results.length+" 筆";
+}
 
-      const headers = [
-        "case_name", "symbols", "type", "market_yield", "base",
-        "basket_premium", "ki_adj", "tenor_adj", "strike_adj",
-        "type_adj", "resonance_adj", "structure_total",
-        "fair_yield", "pricing_delta", "pricing_view", "note"
-      ];
+function exportCSV(){
+  let csv = Object.keys(results[0]).join(",")+"\n";
+  results.forEach(r=>{
+    csv += Object.values(r).join(",")+"\n";
+  });
 
-      const rows = latestResults.map(r =>
-        headers.map(h => {
-          const v = h === "symbols" ? r.symbols.join("|") : r[h];
-          return `"${String(v ?? "").replace(/"/g, '""')}"`;
-        }).join(",")
-      );
+  const blob = new Blob([csv]);
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "m8.csv";
+  a.click();
+}
 
-      const csv = [headers.join(","), ...rows].join("\n");
-      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "m8_batch_results.csv";
-      a.click();
-    }
+function exportJSON(){
+  const blob = new Blob([JSON.stringify(results,null,2)]);
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "m8.json";
+  a.click();
+}
+</script>
 
-    function exportJSON() {
-      if (!latestResults.length) {
-        document.getElementById("status").textContent = "沒有結果可匯出。";
-        return;
-      }
-
-      const blob = new Blob(
-        [JSON.stringify(latestResults, null, 2)],
-        { type: "application/json;charset=utf-8;" }
-      );
-
-      const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = "m8_batch_results.json";
-      a.click();
-    }
-  </script>
 </body>
 </html>
