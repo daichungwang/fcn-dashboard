@@ -114,7 +114,7 @@ function calcTenorAdj(T) {
  * 權重已減半
  */
 function calcStrikeAdj(strike) {
-  return 0.05 * (strike - 50)+ 0.0002 * Math.pow(strike - 55, 2);
+  return 0.05 * (strike - 50)+ 0.0001 * Math.pow(strike - 55, 2);
 }
 
 /**
