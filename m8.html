@@ -10,13 +10,14 @@
 
 Symbols:
 <input id="s1" value="AMD">
-<input id="s2" value="AVGO">
-<input id="s3" value="NVDA">
-<input id="s4" value="TSM"><br><br>
+<input id="s2" value="NVDA">
+<input id="s3" value="">
+<input id="s4" value="">
+<input id="s5" value=""><br><br>
 
-KI <input id="ki" value="55">
-Strike <input id="strike" value="68">
-Tenor <input id="tenor" value="12"><br><br>
+KI <input id="ki" value="60">
+Strike <input id="strike" value="70">
+Tenor <input id="tenor" value="6"><br><br>
 
 Type
 <select id="type">
@@ -26,7 +27,7 @@ Type
 </select>
 
 Market Yield
-<input id="marketYield" value="19.16"><br><br>
+<input id="marketYield" value="19.28"><br><br>
 
 <button onclick="run()">Run</button>
 
@@ -36,20 +37,25 @@ Market Yield
 <script>
 async function run(){
   try {
-    const symbols = [
-      s1.value.toUpperCase(),
-      s2.value.toUpperCase(),
-      s3.value.toUpperCase(),
-      s4.value.toUpperCase()
+    const rawSymbols = [
+      document.getElementById("s1").value,
+      document.getElementById("s2").value,
+      document.getElementById("s3").value,
+      document.getElementById("s4").value,
+      document.getElementById("s5").value
     ];
+
+    const symbols = rawSymbols
+      .map(s => s.trim().toUpperCase())
+      .filter(s => s !== "");
 
     const res = await runM8(
       symbols,
-      Number(ki.value),
-      Number(strike.value),
-      Number(tenor.value),
-      type.value,
-      Number(marketYield.value)
+      Number(document.getElementById("ki").value),
+      Number(document.getElementById("strike").value),
+      Number(document.getElementById("tenor").value),
+      document.getElementById("type").value,
+      Number(document.getElementById("marketYield").value)
     );
 
     document.getElementById("out").textContent =
