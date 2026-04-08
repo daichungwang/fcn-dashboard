@@ -1,165 +1,45 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>M8 Fair Yield Engine</title>
-<style>
-  body { font-family: Arial; padding: 20px; background:#f5f7fa; }
-  h1 { font-size: 22px; }
-  .card {
-    background: white;
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  }
-  input, select {
-    padding: 6px;
-    margin: 4px;
-    width: 80px;
-  }
-  button {
-    padding: 10px 16px;
-    background: #0066ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  .result { font-size: 18px; font-weight: bold; }
-</style>
+<title>M8 Engine</title>
 </head>
 
 <body>
 
-<h1>🔥 M8 Fair Yield Engine</h1>
+<h2>M8 Fair Yield Test</h2>
 
-<div class="card">
-  <h3>Stock Scores (from M7)</h3>
-  <input id="s1" placeholder="S1">
-  <input id="s2" placeholder="S2">
-  <input id="s3" placeholder="S3">
-  <input id="s4" placeholder="S4">
-</div>
+Symbols:
+<input id="s1" value="AMD">
+<input id="s2" value="AVGO">
+<input id="s3" value="NVDA">
+<input id="s4" value="TSM"><br><br>
 
-<div class="card">
-  <h3>FCN 條件</h3>
-  KI <input id="ki">
-  Strike <input id="strike">
-  Tenor(月) <input id="tenor">
-  
-  <br><br>
-  
-  Type
-  <select id="type">
-    <option>AKI</option>
-    <option>DACN</option>
-    <option>EKI</option>
-  </select>
+KI <input id="ki" value="55">
+Strike <input id="strike" value="68">
+Tenor <input id="tenor" value="12"><br><br>
 
-  Corr
-  <select id="corr">
-    <option value="0">Low</option>
-    <option value="0.5">Mid</option>
-    <option value="1">High</option>
-    <option value="1.5">Very High</option>
-  </select>
-</div>
+<button onclick="run()">Run</button>
 
-<div class="card">
-  <button onclick="runM8()">計算 Fair Yield</button>
-</div>
+<pre id="out"></pre>
 
-<div class="card">
-  <div class="result" id="result">結果顯示</div>
-</div>
+<script src="js/core/m8_fair_yield_engine.js"></script>
 
 <script>
+async function run(){
+  const symbols = [s1.value,s2.value,s3.value,s4.value];
 
-function runM8(){
+  const res = await runM8(
+    symbols,
+    Number(ki.value),
+    Number(strike.value),
+    Number(tenor.value),
+    "AKI"
+  );
 
-  // ===== 讀 input =====
-  let scores = [
-    Number(s1.value),
-    Number(s2.value),
-    Number(s3.value),
-    Number(s4.value)
-  ];
-
-  let KI = Number(ki.value);
-  let Strike = Number(strike.value);
-  let T = Number(tenor.value);
-  let Type = document.getElementById("type").value;
-  let CorrAdj = Number(document.getElementById("corr").value);
-
-  // ===== Weakness =====
-  let w = scores.map(s => 100 - s);
-  w.sort((a,b)=>b-a);
-
-  let avg = w.reduce((a,b)=>a+b,0)/4;
-
-  let BW = 0.5*w[0] + 0.3*w[1] + 0.2*avg;
-
-  let BasketPremium = 0.15 * BW;
-
-  // ===== KI =====
-  let KIAdj = 0.18*(KI-65) + 0.006*Math.pow(KI-65,2);
-
-  // ===== GAP =====
-  let Gap = Strike - KI;
-  let GapAdj = 0;
-
-  if (Gap < 10 || Gap >= 25){
-    document.getElementById("result").innerHTML = "❌ Invalid GAP";
-    return;
-  }
-
-  if (Gap > 13){
-    GapAdj = 0.25*(Gap-13) + 0.015*Math.pow(Gap-13,2);
-    GapAdj = Math.min(GapAdj,3.5);
-  }
-
-  // ===== Tenor =====
-  let TenorAdj = 0.22*(T-6) + 0.018*Math.pow(T-6,2);
-  TenorAdj = Math.min(4, Math.max(-1, TenorAdj));
-
-  // ===== Strike =====
-  let ideal = 74 - 2*T;
-  let delta = Strike - ideal;
-
-  let StrikeAdj = 0.12*delta + 0.01*Math.pow(delta,2);
-  StrikeAdj = Math.min(2.5, Math.max(-1, StrikeAdj));
-
-  // ===== Type =====
-  let TypeAdj = 0;
-  if (Type === "DACN") TypeAdj = 1;
-  if (Type === "EKI") TypeAdj = -1;
-
-  // ===== Final =====
-  let FairYield =
-    6
-    + BasketPremium
-    + KIAdj
-    + GapAdj
-    + TenorAdj
-    + CorrAdj
-    + StrikeAdj
-    + TypeAdj;
-
-  // ===== Output =====
-  document.getElementById("result").innerHTML = `
-    Fair Yield: ${FairYield.toFixed(2)}% <br><br>
-    BW: ${BW.toFixed(2)} <br>
-    Basket: ${BasketPremium.toFixed(2)} <br>
-    KI: ${KIAdj.toFixed(2)} <br>
-    Gap: ${GapAdj.toFixed(2)} <br>
-    Tenor: ${TenorAdj.toFixed(2)} <br>
-    Corr: ${CorrAdj.toFixed(2)} <br>
-    Strike: ${StrikeAdj.toFixed(2)} <br>
-    Type: ${TypeAdj.toFixed(2)}
-  `;
+  document.getElementById("out").textContent =
+    JSON.stringify(res,null,2);
 }
-
 </script>
 
 </body>
