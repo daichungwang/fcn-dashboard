@@ -11,7 +11,7 @@ const FALLBACK_STOCKS = {
     "產業": "AI_SEMI",
     "子產業": "CPU",
     "風險等級": "中",
-    "today_score": 62,
+    "today_score": 40,
     "_source": "fallback"
   }
 };
