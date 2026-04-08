@@ -5,7 +5,7 @@ async function loadM7() {
 }
 
 /**
- * 若你不想讓 INTC fallback 參與計算
+ * 若不想讓 fallback 參與計算
  * 直接改成 const FALLBACK_STOCKS = {};
  */
 const FALLBACK_STOCKS = {
@@ -15,7 +15,7 @@ const FALLBACK_STOCKS = {
     "產業": "AI_SEMI",
     "子產業": "CPU",
     "風險等級": "中",
-    "today_score": 40,
+    "today_score": 62,
     "_source": "fallback"
   }
 };
@@ -61,59 +61,67 @@ function calcWeaknesses(scores) {
 }
 
 /**
- * BW：目前先維持你既有邏輯
- * 2~5 檔支援
+ * 新版 BW：soft worst
+ * BW = 0.5 * worst + 0.5 * avg
  */
-function calcBW(scores) {
-  const weaknesses = calcWeaknesses(scores);
-  const n = weaknesses.length;
-  const avg = weaknesses.reduce((a, b) => a + b, 0) / n;
+function calcBW(weaknesses) {
+  const sorted = [...weaknesses].sort((a, b) => b - a);
+  const worst = sorted[0];
+  const avg = weaknesses.reduce((a, b) => a + b, 0) / weaknesses.length;
 
-  if (n === 2) return 0.7 * weaknesses[0] + 0.3 * avg;
-  if (n === 3) return 0.6 * weaknesses[0] + 0.4 * avg;
-  if (n === 4) return 0.5 * weaknesses[0] + 0.3 * weaknesses[1] + 0.2 * avg;
-  if (n === 5) return 0.45 * weaknesses[0] + 0.3 * weaknesses[1] + 0.15 * weaknesses[2] + 0.1 * avg;
-
-  throw new Error("FCN basket 只支援 2~5 檔");
+  return 0.5 * worst + 0.5 * avg;
 }
 
 /**
- * KI：新 base
- * KI=55 -> 0.5
+ * Tail：縮小版
+ * TailAdj = 0.05 * (worst - avg)
+ */
+function calcTailAdj(weaknesses) {
+  const sorted = [...weaknesses].sort((a, b) => b - a);
+  const worst = sorted[0];
+  const avg = weaknesses.reduce((a, b) => a + b, 0) / weaknesses.length;
+
+  return 0.05 * (worst - avg);
+}
+
+/**
+ * KI：
+ * - KI=55 -> 0.5
+ * - 55~75 正常加速
+ * - >75 降速，避免高 KI 爆掉
  */
 function calcKIAdj(KI) {
-  // 55 為新 base，KI=55 -> 0.5
-  // 55~72 正常加速，>72 改為降速，避免高 KI 爆掉
-
-  if (KI <= 72) {
+  if (KI <= 75) {
     return 0.5 + 0.12 * (KI - 55) + 0.004 * Math.pow(KI - 55, 2);
   }
 
-  // 先算到 72 的值，作為分段銜接點
-  const kiAt72 = 0.5 + 0.12 * (72 - 55) + 0.004 * Math.pow(72 - 55, 2);
-
-  // 72 以上只用低斜率增加
-  return kiAt72 + 0.05 * (KI - 72);
+  const kiAt75 = 0.5 + 0.12 * (75 - 55) + 0.004 * Math.pow(75 - 55, 2);
+  return kiAt75 + 0.05 * (KI - 75);
 }
 
 /**
- * Tenor：2M=0, 6M=1
+ * Tenor：
+ * 2M = 0
+ * 6M = 1
  */
 function calcTenorAdj(T) {
   return 0.25 * (T - 2);
 }
 
 /**
- * Strike：base = 55
- * Strike=65 -> 1
+ * Strike：
+ * base = 55
+ * 權重已減半
  */
 function calcStrikeAdj(strike) {
   return 0.05 * (strike - 55);
 }
 
 /**
- * Type：你最新定義
- * EKI=0, DACN=0.5, AKI=1
+ * Type：
+ * EKI = 0
+ * DACN = 0.5
+ * AKI = 1
  */
 function calcTypeAdj(type) {
   if (type === "DACN") return 0.5;
@@ -122,9 +130,7 @@ function calcTypeAdj(type) {
 }
 
 /**
- * Resonance：保留，但改溫和版
- * 0.45 sector + 0.35 theme + 0.20 valuation/risk sync
- * 最後用 0.6 * idx^2
+ * Resonance：保留，但溫和版
  */
 function calcResonance(stocks) {
   const N = stocks.length;
@@ -170,14 +176,16 @@ function calcResonance(stocks) {
   return {
     resonance_index: Number(resonanceIndex.toFixed(4)),
     resonance_adj: Number(resonanceAdj.toFixed(2)),
-    sector_score: Number(sectorScore.toFixed(4)),
-    theme_score: Number(themeScore.toFixed(4)),
-    valuation_sync: Number(valuationSync.toFixed(4))
+    resonance_breakdown: {
+      sector_score: Number(sectorScore.toFixed(4)),
+      theme_score: Number(themeScore.toFixed(4)),
+      valuation_sync: Number(valuationSync.toFixed(4))
+    }
   };
 }
 
 /**
- * Structure v2
+ * Structure：
  * Gap 先不納入
  */
 function calcStructure(KI, T, strike, type, stocks) {
@@ -201,11 +209,7 @@ function calcStructure(KI, T, strike, type, stocks) {
     type_adj: Number(typeAdj.toFixed(2)),
     resonance_index: resonance.resonance_index,
     resonance_adj: resonance.resonance_adj,
-    resonance_breakdown: {
-      sector_score: resonance.sector_score,
-      theme_score: resonance.theme_score,
-      valuation_sync: resonance.valuation_sync
-    },
+    resonance_breakdown: resonance.resonance_breakdown,
     structure_total: Number(raw.toFixed(2))
   };
 }
@@ -227,17 +231,23 @@ async function runM8Case({ caseName, symbols, KI, Strike, T, type, marketYield }
   const stocks = symbols.map(sym => findStock(m7, String(sym).toUpperCase()));
   const scores = stocks.map(getTodayScore);
 
-BW = 0.5 * worst + 0.5 * avg;
+  const weaknesses = calcWeaknesses(scores);
+  const BW = calcBW(weaknesses);
 
-BasketPremium =
-  0.15 * BW +
-  0.0008 * BW * BW;
+  const basketPremium =
+    0.15 * BW +
+    0.0008 * BW * BW;
 
-TailAdj =
-  0.05 * (worst - avg);
+  const tailAdj = calcTailAdj(weaknesses);
+
   const structure = calcStructure(KI, T, Strike, type, stocks);
 
-  const fairYield = 6 + basketPremium + structure.structure_total;
+  const fairYield =
+    6 +
+    basketPremium +
+    structure.structure_total +
+    tailAdj;
+
   const delta = marketYield - fairYield;
 
   let note = "";
@@ -254,14 +264,16 @@ TailAdj =
     strike: Number(Strike),
     tenor: Number(T),
     type,
+
     stock_sources: stocks.map(s => ({
       symbol: s["股號"],
       source: s._source || "m7"
     })),
 
     scores: scores.map(x => Number(x.toFixed(2))),
-    weaknesses: calcWeaknesses(scores).map(x => Number(x.toFixed(2))),
+    weaknesses: weaknesses.map(x => Number(x.toFixed(2))),
     BW: Number(BW.toFixed(2)),
+    tail_adj: Number(tailAdj.toFixed(2)),
 
     market_yield: Number(marketYield.toFixed(2)),
     base: 6,
