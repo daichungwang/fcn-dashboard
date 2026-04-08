@@ -92,37 +92,19 @@ function calcTailAdj(weaknesses) {
  */
 function calcKIAdj(KI) {
   if (KI <= 70) {
-    return 0.5 + 0.12 * (KI - 55) + 0.006 * Math.pow(KI - 55, 2);
+    return 0.5 + 0.12 * (KI - 55) + 0.004 * Math.pow(KI - 55, 2);
   }
-
-  const kiAt70 = 0.5 + 0.12 * (70 - 55) + 0.004 * Math.pow(70 - 55, 2);
-  return kiAt70 + 0.05 * (KI - 70);
+  return 4.5 + 0.02 * (KI - 70);
 }
 
-/**
- * Tenor：
- * 2M = 0
- * 6M = 1
- */
+function calcStrikeAdj(strike) {
+  return 0.05 * (strike - 50) + 0.00002 * Math.pow(KI - 50, 2);
+}
+
 function calcTenorAdj(T) {
   return 0.25 * (T - 2);
 }
 
-/**
- * Strike：
- * base = 55
- * 權重已減半
- */
-function calcStrikeAdj(strike) {
-  return 0.05 * (strike - 50)+ 0.0001 * Math.pow(strike - 55, 2);
-}
-
-/**
- * Type：
- * EKI = 0
- * DACN = 0.5
- * AKI = 1
- */
 function calcTypeAdj(type) {
   if (type === "DACN") return 0.5;
   if (type === "AKI") return 1;
