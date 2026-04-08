@@ -6,7 +6,6 @@
 </head>
 
 <body>
-
 <h2>M8 Fair Yield Test</h2>
 
 Symbols:
@@ -19,28 +18,46 @@ KI <input id="ki" value="55">
 Strike <input id="strike" value="68">
 Tenor <input id="tenor" value="12"><br><br>
 
+Type
+<select id="type">
+  <option value="AKI">AKI</option>
+  <option value="DACN">DACN</option>
+  <option value="EKI">EKI</option>
+</select>
+
+Market Yield
+<input id="marketYield" value="19.16"><br><br>
+
 <button onclick="run()">Run</button>
 
 <pre id="out"></pre>
 
 <script src="js/core/m8_fair_yield_engine.js"></script>
-
 <script>
 async function run(){
-  const symbols = [s1.value,s2.value,s3.value,s4.value];
+  try {
+    const symbols = [
+      s1.value.toUpperCase(),
+      s2.value.toUpperCase(),
+      s3.value.toUpperCase(),
+      s4.value.toUpperCase()
+    ];
 
-  const res = await runM8(
-    symbols,
-    Number(ki.value),
-    Number(strike.value),
-    Number(tenor.value),
-    "AKI"
-  );
+    const res = await runM8(
+      symbols,
+      Number(ki.value),
+      Number(strike.value),
+      Number(tenor.value),
+      type.value,
+      Number(marketYield.value)
+    );
 
-  document.getElementById("out").textContent =
-    JSON.stringify(res,null,2);
+    document.getElementById("out").textContent =
+      JSON.stringify(res, null, 2);
+  } catch (err) {
+    document.getElementById("out").textContent = "Error: " + err.message;
+  }
 }
 </script>
-
 </body>
 </html>
