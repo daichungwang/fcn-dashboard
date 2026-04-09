@@ -1,166 +1,641 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<title>M8 Batch Pricing Tool v2</title>
-<style>
-body { font-family: Arial; padding:20px; background:#f5f7fa; }
-textarea { width:100%; height:140px; font-family: monospace; }
-button { margin:5px; padding:8px 12px; }
-table { border-collapse: collapse; width:100%; font-size:12px; }
-th, td { border:1px solid #ccc; padding:6px; text-align:center; }
-th { background:#eee; }
-.ok { color:green; font-weight:bold; }
-.warn { color:orange; font-weight:bold; }
-.bad { color:red; font-weight:bold; }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M8 FCN 定價模型</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, "Noto Sans TC", sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 18px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e8ebf2;
+    }
+
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #444;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border: 1px solid #cfd6e4;
+      border-radius: 10px;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    .form-group textarea {
+      min-height: 72px;
+      resize: vertical;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: #2f6fed;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #eef2ff;
+      color: #2447b2;
+    }
+
+    .btn-danger {
+      background: #ffe8e8;
+      color: #b42318;
+    }
+
+    .muted {
+      color: #667085;
+      font-size: 13px;
+    }
+
+    .result-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pill.ok {
+      background: #ecfdf3;
+      color: #027a48;
+    }
+
+    .pill.warn {
+      background: #fff7ed;
+      color: #b54708;
+    }
+
+    .pill.bad {
+      background: #fef3f2;
+      color: #b42318;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .summary-box {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fafafa;
+    }
+
+    .summary-box .k {
+      font-size: 12px;
+      color: #667085;
+      margin-bottom: 6px;
+    }
+
+    .summary-box .v {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111827;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 10px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 700;
+    }
+
+    .section-title {
+      margin: 18px 0 10px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #1d2939;
+    }
+
+    .mono {
+      font-family: Consolas, Monaco, monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .blueprint-card {
+      margin-top: 18px;
+    }
+
+    .bp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .bp-block {
+      margin-top: 14px;
+    }
+
+    .bp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .bp-table th,
+    .bp-table td {
+      border: 1px solid #ddd;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .bp-table th {
+      width: 220px;
+      background: #f7f7f7;
+    }
+
+    .empty {
+      padding: 24px;
+      text-align: center;
+      color: #667085;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 12px;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      th, td {
+        font-size: 13px;
+        padding: 8px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="page">
+    <h1>FCN M8 定價模型（乾淨版）</h1>
 
-<h2>M8 Batch Pricing Tool v2</h2>
+    <div class="grid">
+      <!-- 左側控制區 -->
+      <section class="card">
+        <h2>案例輸入</h2>
 
-<textarea id="input">
-Case1,TSM|AMD|NVDA|AVGO,55,68,12,EKI,19.16
-Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62
-Case3,AAPL|COIN|GOOG|META,50,60,10,EKI,17.31
-Case4,AMD|NVDA|TSLA|TSM,55,65,6,EKI,17.24
-Case5,AAPL|NVDA|TSM,77,77,6,AKI,15
-</textarea>
+        <div class="form-group">
+          <label for="caseName">案例名稱</label>
+          <input id="caseName" type="text" value="Case 1" />
+        </div>
 
-<br>
-<button onclick="run()">執行</button>
-<button onclick="exportCSV()">Export CSV</button>
-<button onclick="exportJSON()">Export JSON</button>
+        <div class="form-group">
+          <label for="symbols">股票代號（逗號分隔，2~5 檔）</label>
+          <textarea id="symbols">TSM,AAPL,MSFT,LQD</textarea>
+        </div>
 
-<p id="status"></p>
+        <div class="form-group">
+          <label for="ki">KI</label>
+          <input id="ki" type="number" value="55" />
+        </div>
 
-<table id="table">
-<thead>
-<tr>
-<th>Case</th>
-<th>Basket</th>
-<th>KI</th>
-<th>Strike</th>
-<th>Tenor</th>
-<th>Type</th>
-<th>Market</th>
+        <div class="form-group">
+          <label for="strike">Strike</label>
+          <input id="strike" type="number" value="65" />
+        </div>
 
-<th>Score</th>
-<th>BW</th>
+        <div class="form-group">
+          <label for="tenor">Tenor（月）</label>
+          <input id="tenor" type="number" value="6" />
+        </div>
 
-<th>Basket</th>
-<th>KIAdj</th>
-<th>TenorAdj</th>
-<th>StrikeAdj</th>
-<th>TypeAdj</th>
-<th>Reson</th>
+        <div class="form-group">
+          <label for="type">Type</label>
+          <select id="type">
+            <option value="EKI">EKI</option>
+            <option value="DACN">DACN</option>
+            <option value="AKI">AKI</option>
+          </select>
+        </div>
 
-<th>Structure</th>
-<th>Fair</th>
-<th>Δ</th>
-<th>View</th>
-<th>Note</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+        <div class="form-group">
+          <label for="marketYield">Market Yield (%)</label>
+          <input id="marketYield" type="number" step="0.01" value="14" />
+        </div>
 
-<script src="js/core/m8_batch_engine.js"></script>
+        <div class="btn-row">
+          <button class="btn-primary" id="runBtn">執行 M8</button>
+          <button class="btn-secondary" id="demoBtn">載入示範案例</button>
+          <button class="btn-danger" id="clearBtn">清空結果</button>
+        </div>
 
-<script>
-let results = [];
+        <p class="muted" style="margin-top:12px;">
+          說明：Vol 模組已正式納入，不再另外加 ResonanceAdj。
+        </p>
+      </section>
 
-function viewClass(v){
-  if(v==="便宜") return "warn";
-  if(v==="合理") return "ok";
-  return "bad";
-}
+      <!-- 右側結果區 -->
+      <section class="card">
+        <div class="result-top">
+          <h2 style="margin:0;">M8 結果</h2>
+          <span id="pricingBadge" class="pill ok">尚未執行</span>
+        </div>
 
-function render(){
-  const tbody = document.querySelector("#table tbody");
-  tbody.innerHTML="";
+        <div id="resultArea">
+          <div class="empty">請先輸入案例後，按「執行 M8」</div>
+        </div>
+      </section>
+    </div>
 
-  results.forEach(r=>{
-    const tr = document.createElement("tr");
+    <!-- Blueprint -->
+    <section class="card blueprint-card">
+      <div class="bp-header">
+        <h2 style="margin:0;">M8 Blueprint（完整邏輯 / 公式 / 參數）</h2>
+        <button id="toggleBlueprintBtn" class="btn-secondary" type="button">一鍵展開</button>
+      </div>
 
-    tr.innerHTML = `
-<td>${r.case_name}</td>
-<td>${r.symbols.join("/")}</td>
-<td>${r.KI}</td>
-<td>${r.strike}</td>
-<td>${r.tenor}</td>
-<td>${r.type}</td>
-<td>${r.market_yield}</td>
+      <div id="blueprintPanel" style="display:none; margin-top:12px;">
+        <div id="blueprintContent"></div>
+      </div>
+    </section>
+  </div>
 
-<td>${r.scores.join("/")}</td>
-<td>${r.BW}</td>
+  <script type="module">
+    import { runM8Case, getM8Blueprint } from "./js/m8/m8_engine.js";
 
-<td>${r.basket_premium}</td>
-<td>${r.ki_adj}</td>
-<td>${r.tenor_adj}</td>
-<td>${r.strike_adj}</td>
-<td>${r.type_adj}</td>
-<td>${r.resonance_adj}</td>
+    const $ = (id) => document.getElementById(id);
 
-<td>${r.structure_total}</td>
-<td><b>${r.fair_yield}</b></td>
-<td>${r.pricing_delta}</td>
-<td class="${viewClass(r.pricing_view)}">${r.pricing_view}</td>
-<td>${r.note||""}</td>
-`;
-    tbody.appendChild(tr);
-  });
-}
+    function badgeClass(view) {
+      if (view === "便宜" || view === "略便宜") return "pill ok";
+      if (view === "合理") return "pill warn";
+      return "pill bad";
+    }
 
-async function run(){
-  const lines = document.getElementById("input").value.trim().split("\n");
+    function num(v) {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : 0;
+    }
 
-  results = [];
+    function fmt(v) {
+      return Number(num(v).toFixed(2));
+    }
 
-  for(const line of lines){
-    if(!line.trim()) continue;
+    function parseSymbols(text) {
+      return String(text || "")
+        .split(",")
+        .map(s => s.trim().toUpperCase())
+        .filter(Boolean);
+    }
 
-    const [name, basket, KI, strike, tenor, type, market] = line.split(",");
+    function renderBlueprint() {
+      const bp = getM8Blueprint();
+      const container = $("blueprintContent");
+      if (!container) return;
 
-    const res = await runM8Case({
-      caseName: name,
-      symbols: basket.split("|"),
-      KI: Number(KI),
-      Strike: Number(strike),
-      T: Number(tenor),
-      type: type,
-      marketYield: Number(market)
+      container.innerHTML = `
+        <div class="bp-block">
+          <h3>${bp.version}</h3>
+          <ul>
+            ${bp.summary.map(x => `<li>${x}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div class="bp-block">
+          <h3>完整公式</h3>
+          <table class="bp-table">
+            <tbody>
+              ${Object.entries(bp.formulas).map(([k, v]) => `
+                <tr>
+                  <th>${k}</th>
+                  <td>${v}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="bp-block">
+          <h3>參數設定</h3>
+          <table class="bp-table">
+            <tbody>
+              <tr>
+                <th>Base</th>
+                <td>${bp.parameters.base}</td>
+              </tr>
+              <tr>
+                <th>Type</th>
+                <td>
+                  EKI=${bp.parameters.type_map.EKI},
+                  DACN=${bp.parameters.type_map.DACN},
+                  AKI=${bp.parameters.type_map.AKI}
+                </td>
+              </tr>
+              <tr>
+                <th>Tenor</th>
+                <td>
+                  ${bp.parameters.tenor.short} /
+                  ${bp.parameters.tenor.mid} /
+                  ${bp.parameters.tenor.long} /
+                  max=${bp.parameters.tenor.max}
+                </td>
+              </tr>
+              <tr>
+                <th>Vol Note</th>
+                <td>${bp.parameters.vol_note}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function setupBlueprintToggle() {
+      const btn = $("toggleBlueprintBtn");
+      const panel = $("blueprintPanel");
+      if (!btn || !panel) return;
+
+      btn.addEventListener("click", () => {
+        const isOpen = panel.style.display !== "none";
+        panel.style.display = isOpen ? "none" : "block";
+        btn.textContent = isOpen ? "一鍵展開" : "一鍵收合";
+      });
+    }
+
+    function renderResult(r) {
+      $("pricingBadge").className = badgeClass(r.pricing_view);
+      $("pricingBadge").textContent = r.pricing_view;
+
+      const stockRows = (r.stock_sources || []).map((s, idx) => `
+        <tr>
+          <td>${idx + 1}</td>
+          <td>${s.symbol || ""}</td>
+          <td>${s.source || ""}</td>
+          <td>${s.sector || ""}</td>
+          <td>${s.subsector || ""}</td>
+          <td>${s.risk || ""}</td>
+          <td>${fmt(r.scores?.[idx])}</td>
+          <td>${fmt(r.weaknesses?.[idx])}</td>
+          <td>${fmt(r.short_swings?.[idx])}</td>
+        </tr>
+      `).join("");
+
+      const swingRows = (r.short_swing_days || []).map((days, idx) => `
+        <tr>
+          <td>${r.symbols?.[idx] || ""}</td>
+          <td>${(days || []).map(x => fmt(x)).join(" / ")}</td>
+        </tr>
+      `).join("");
+
+      $("resultArea").innerHTML = `
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="k">Market Yield</div>
+            <div class="v">${fmt(r.market_yield)}%</div>
+          </div>
+          <div class="summary-box">
+            <div class="k">Fair Yield</div>
+            <div class="v">${fmt(r.fair_yield)}%</div>
+          </div>
+          <div class="summary-box">
+            <div class="k">Pricing Delta</div>
+            <div class="v">${fmt(r.pricing_delta)}%</div>
+          </div>
+          <div class="summary-box">
+            <div class="k">BasketVol / VolAdj</div>
+            <div class="v">${fmt(r.basket_vol)} / ${fmt(r.vol_adj)}%</div>
+          </div>
+        </div>
+
+        <div class="section-title">案例摘要</div>
+        <table>
+          <tbody>
+            <tr><th>Case Name</th><td>${r.case_name}</td></tr>
+            <tr><th>Symbols</th><td>${(r.symbols || []).join(", ")}</td></tr>
+            <tr><th>KI / Strike / Tenor / Type</th><td>${fmt(r.KI)} / ${fmt(r.strike)} / ${fmt(r.tenor)} / ${r.type}</td></tr>
+            <tr><th>Note</th><td>${r.note || "-"}</td></tr>
+          </tbody>
+        </table>
+
+        <div class="section-title">Basket / Structure / Vol / Brake</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Base</th>
+              <th>BW</th>
+              <th>BasketPremium</th>
+              <th>TailAdj</th>
+              <th>KIAdj</th>
+              <th>TenorAdj</th>
+              <th>StrikeAdj</th>
+              <th>TypeAdj</th>
+              <th>StructureTotal</th>
+              <th>BasketVol</th>
+              <th>VolAdj</th>
+              <th>PreRate</th>
+              <th>HighRateBrake</th>
+              <th>FairYield</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>${fmt(r.base)}</td>
+              <td>${fmt(r.BW)}</td>
+              <td>${fmt(r.basket_premium)}</td>
+              <td>${fmt(r.tail_adj)}</td>
+              <td>${fmt(r.ki_adj)}</td>
+              <td>${fmt(r.tenor_adj)}</td>
+              <td>${fmt(r.strike_adj)}</td>
+              <td>${fmt(r.type_adj)}</td>
+              <td>${fmt(r.structure_total)}</td>
+              <td>${fmt(r.basket_vol)}</td>
+              <td>${fmt(r.vol_adj)}</td>
+              <td>${fmt(r.pre_rate)}</td>
+              <td>${fmt(r.high_rate_brake)}</td>
+              <td>${fmt(r.fair_yield)}</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="section-title">股票明細</div>
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Symbol</th>
+              <th>Source</th>
+              <th>Sector</th>
+              <th>Subsector</th>
+              <th>Risk</th>
+              <th>Today Score</th>
+              <th>Weakness</th>
+              <th>ShortSwing</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${stockRows || `<tr><td colspan="9">無資料</td></tr>`}
+          </tbody>
+        </table>
+
+        <div class="section-title">6日振幅輸入</div>
+        <table>
+          <thead>
+            <tr>
+              <th>Symbol</th>
+              <th>d0 / d1 / d2 / d3 / d4 / d5</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${swingRows || `<tr><td colspan="2">無資料</td></tr>`}
+          </tbody>
+        </table>
+
+        <div class="section-title">Raw JSON</div>
+        <div class="card mono" style="padding:12px;">${JSON.stringify(r, null, 2)}</div>
+      `;
+    }
+
+    async function runCase() {
+      try {
+        const payload = {
+          caseName: $("caseName").value.trim() || "Case 1",
+          symbols: parseSymbols($("symbols").value),
+          KI: num($("ki").value),
+          Strike: num($("strike").value),
+          T: num($("tenor").value),
+          type: $("type").value,
+          marketYield: num($("marketYield").value)
+        };
+
+        const result = await runM8Case(payload);
+        renderResult(result);
+      } catch (err) {
+        $("pricingBadge").className = "pill bad";
+        $("pricingBadge").textContent = "執行失敗";
+        $("resultArea").innerHTML = `
+          <div class="empty" style="color:#b42318;">
+            ${err.message || err}
+          </div>
+        `;
+      }
+    }
+
+    function loadDemo() {
+      $("caseName").value = "Demo - 保守型 Basket";
+      $("symbols").value = "TSM,AAPL,MSFT,LQD";
+      $("ki").value = 55;
+      $("strike").value = 65;
+      $("tenor").value = 6;
+      $("type").value = "EKI";
+      $("marketYield").value = 14;
+    }
+
+    function clearResult() {
+      $("pricingBadge").className = "pill ok";
+      $("pricingBadge").textContent = "尚未執行";
+      $("resultArea").innerHTML = `<div class="empty">請先輸入案例後，按「執行 M8」</div>`;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderBlueprint();
+      setupBlueprintToggle();
+
+      $("runBtn").addEventListener("click", runCase);
+      $("demoBtn").addEventListener("click", loadDemo);
+      $("clearBtn").addEventListener("click", clearResult);
     });
-
-    results.push(res);
-  }
-
-  render();
-  document.getElementById("status").innerText = "完成 "+results.length+" 筆";
-}
-
-function exportCSV(){
-  let csv = Object.keys(results[0]).join(",")+"\n";
-  results.forEach(r=>{
-    csv += Object.values(r).join(",")+"\n";
-  });
-
-  const blob = new Blob([csv]);
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "m8.csv";
-  a.click();
-}
-
-function exportJSON(){
-  const blob = new Blob([JSON.stringify(results,null,2)]);
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = "m8.json";
-  a.click();
-}
-</script>
-
+  </script>
 </body>
 </html>
