@@ -100,7 +100,7 @@ function calcTenorAdj(T) {
   if (T <= 3) {
     x = 0.1 * (T - 1);
   } else if (T <= 10) {
-    x = 0.2 + 0.06 * (T - 3) + 0.03 * Math.pow(T - 3, 2);
+    x = 0.2 + 0.06 * (T - 3) + 0.02 * Math.pow(T - 3, 2);
   } else {
     x = 1.88 + 0.06 * (T - 10);
   }
