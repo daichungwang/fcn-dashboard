@@ -1,12 +1,13 @@
 # ==========================================
-# update_market_runtime.py V3.1 FINAL
+# update_market_runtime.py V4.2 FINAL
 # 功能：
 # 1. 從 Yahoo Finance 抓歷史價格
-# 2. 自動 fallback（避免 null / NaN）
-# 3. 計算 1d / 1w / 1m / 3m / 6m / 12m 報酬
-# 4. 輸出合法 JSON（不會出現 NaN / Infinity）
-# 5. 輸出 data/market_runtime.json
-# 6. 自動輸出 data/m7/m7_fundamental_data.json
+# 2. 用 fast_info.lastPrice 優先取得當前價格
+# 3. 歷史資料仍用於計算 1d / 1w / 1m / 3m / 6m / 12m 報酬
+# 4. 新增 swing_days（M8 用）
+# 5. 避免最後一筆 Close 異常導致 price_now = 0
+# 6. 輸出 data/market_runtime.json
+# 7. 自動輸出 data/m7/m7_fundamental_data.json
 # ==========================================
 
 import json
@@ -16,9 +17,8 @@ from pathlib import Path
 
 import yfinance as yf
 
-# ------------------------------------------
-# 參數
-# ------------------------------------------
+print("🔥 update_market_runtime.py V4.2 current-price version loaded")
+
 WINDOWS = {
     "1d": 1,
     "1w": 5,
@@ -32,9 +32,6 @@ POOL_PATH = "data/pool30.json"
 OUTPUT_PATH = "data/market_runtime.json"
 M7_OUTPUT_PATH = "data/m7/m7_fundamental_data.json"
 
-# ------------------------------------------
-# M7 靜態資料表
-# ------------------------------------------
 M7_STATIC_PROFILE = {
     "NVDA": {"name": "NVIDIA", "eps_now": 3.1, "eps_next": 4.2, "quality_level": "高", "risk_level": "中"},
     "TSM":  {"name": "TSMC", "eps_now": 8.2, "eps_next": 10.1, "quality_level": "高", "risk_level": "低"},
@@ -75,11 +72,10 @@ M7_STATIC_PROFILE = {
     "SMH":  {"name": "VanEck Semiconductor ETF", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "中"},
     "QQQ":  {"name": "Invesco QQQ", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "中"},
     "LQD":  {"name": "iShares iBoxx Investment Grade Corporate Bond ETF", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "低"},
+
+    "INTC": {"name": "Intel", "eps_now": 1.8, "eps_next": 2.1, "quality_level": "中", "risk_level": "中"},
 }
 
-# ------------------------------------------
-# 工具：安全數字
-# ------------------------------------------
 def safe_number(v, default=0):
     try:
         if v is None:
@@ -90,7 +86,6 @@ def safe_number(v, default=0):
         return n
     except Exception:
         return default
-
 
 def safe_int(v, default=None):
     try:
@@ -103,7 +98,6 @@ def safe_int(v, default=None):
     except Exception:
         return default
 
-
 def get_price_safe(series, idx):
     try:
         if series is None or len(series) == 0:
@@ -114,47 +108,110 @@ def get_price_safe(series, idx):
     except Exception:
         return None
 
+def get_last_valid_close(series):
+    try:
+        if series is None or len(series) == 0:
+            return None
+        cleaned = []
+        for v in series:
+            n = safe_number(v, None)
+            if n is not None and n > 0:
+                cleaned.append(n)
+        if not cleaned:
+            return None
+        return cleaned[-1]
+    except Exception:
+        return None
+
+def get_current_price(ticker, close_series):
+    # 優先取即時/最新 quote 價格
+    try:
+        fi = ticker.fast_info
+        if fi:
+            for key in ["lastPrice", "regularMarketPrice", "previousClose"]:
+                if key in fi:
+                    v = safe_number(fi[key], None)
+                    if v is not None and v > 0:
+                        return v
+    except Exception:
+        pass
+
+    # 次優先：用 info
+    try:
+        info = ticker.info
+        for key in ["regularMarketPrice", "currentPrice", "previousClose"]:
+            v = safe_number(info.get(key), None)
+            if v is not None and v > 0:
+                return v
+    except Exception:
+        pass
+
+    # 最後 fallback：歷史最後一筆有效 close
+    return safe_number(get_last_valid_close(close_series), 0)
 
 def calc_return(now, past):
     now = safe_number(now, None)
     past = safe_number(past, None)
-
     if now is None or past is None or past == 0:
         return 0
-
     return round((now - past) / past, 6)
-
 
 def calc_volume_ratio(volume_series):
     try:
         if volume_series is None or len(volume_series) < 21:
             return 1.0
-
         latest = safe_number(volume_series.iloc[-1], None)
         avg20 = safe_number(volume_series.tail(20).mean(), None)
-
         if latest is None or avg20 in (None, 0):
             return 1.0
-
         return round(latest / avg20, 2)
     except Exception:
         return 1.0
 
-
 def pct_to_percent_number(v):
     return round(safe_number(v, 0) * 100, 2)
 
-# ------------------------------------------
-# 讀取 pool
-# ------------------------------------------
+def calc_swing_days(hist):
+    swings = []
+    if hist is None or len(hist) == 0:
+        return [0, 0, 0, 0, 0, 0]
+
+    limit = min(6, len(hist))
+    for i in range(limit):
+        try:
+            row = hist.iloc[-1 - i]
+            open_price = safe_number(row.get("Open"), None)
+            close_price = safe_number(row.get("Close"), None)
+
+            if open_price in (None, 0) or close_price in (None, 0):
+                swings.append(0)
+                continue
+
+            amp = abs(close_price - open_price) / open_price * 100
+            swings.append(round(amp, 2))
+        except Exception:
+            swings.append(0)
+
+    while len(swings) < 6:
+        swings.append(0)
+
+    return swings
+
 def load_pool():
     with open(POOL_PATH, "r", encoding="utf-8") as f:
         pool = json.load(f)
-    return [s["symbol"] for s in pool if s.get("symbol")]
 
-# ------------------------------------------
-# 抓市場資料
-# ------------------------------------------
+    symbols = [s["symbol"] for s in pool if s.get("symbol")]
+    extra_symbols = ["INTC"]
+
+    final = []
+    seen = set()
+    for sym in symbols + extra_symbols:
+        if sym and sym not in seen:
+            seen.add(sym)
+            final.append(sym)
+    return final
+
 def fetch_market_runtime(symbols):
     result = {}
 
@@ -163,7 +220,7 @@ def fetch_market_runtime(symbols):
 
         try:
             ticker = yf.Ticker(symbol)
-            hist = ticker.history(period="1y")
+            hist = ticker.history(period="1y", auto_adjust=False)
 
             if hist is None or len(hist) < 10:
                 raise Exception("Not enough data")
@@ -171,12 +228,17 @@ def fetch_market_runtime(symbols):
             close = hist["Close"]
             volume_series = hist["Volume"] if "Volume" in hist.columns else None
 
-            price_now = safe_number(get_price_safe(close, -1), 0)
+            price_now = safe_number(get_current_price(ticker, close), 0)
 
             ref_prices = {}
             for k, days in WINDOWS.items():
                 ref = get_price_safe(close, -1 - days)
-                ref_prices[k] = safe_number(ref, price_now)
+                ref = safe_number(ref, None)
+                if ref is None or ref <= 0:
+                    ref = safe_number(get_last_valid_close(close), 0)
+                ref_prices[k] = ref
+
+            swing_days = calc_swing_days(hist)
 
             result[symbol] = {
                 "price_now": safe_number(price_now, 0),
@@ -196,7 +258,10 @@ def fetch_market_runtime(symbols):
                 "ret_1m": safe_number(calc_return(price_now, ref_prices["1m"]), 0),
                 "ret_3m": safe_number(calc_return(price_now, ref_prices["3m"]), 0),
                 "ret_6m": safe_number(calc_return(price_now, ref_prices["6m"]), 0),
-                "ret_12m": safe_number(calc_return(price_now, ref_prices["12m"]), 0)
+                "ret_12m": safe_number(calc_return(price_now, ref_prices["12m"]), 0),
+
+                "swing_days": swing_days,
+                "amp_1d": swing_days[0] if swing_days else 0
             }
 
         except Exception as e:
@@ -219,24 +284,14 @@ def fetch_market_runtime(symbols):
                 "ret_1m": 0,
                 "ret_3m": 0,
                 "ret_6m": 0,
-                "ret_12m": 0
+                "ret_12m": 0,
+
+                "swing_days": [0, 0, 0, 0, 0, 0],
+                "amp_1d": 0
             }
 
-    cleaned = {}
-    for symbol, node in result.items():
-        cleaned_node = {}
-        for k, v in node.items():
-            if isinstance(v, (int, float)):
-                cleaned_node[k] = safe_number(v, 0)
-            else:
-                cleaned_node[k] = v
-        cleaned[symbol] = cleaned_node
+    return result
 
-    return cleaned
-
-# ------------------------------------------
-# 輸出 market_runtime.json
-# ------------------------------------------
 def save_market_runtime(result):
     output_path = Path(OUTPUT_PATH)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -246,9 +301,6 @@ def save_market_runtime(result):
 
     print("✅ market_runtime.json updated")
 
-# ------------------------------------------
-# 建立 M7 fundamental data
-# ------------------------------------------
 def build_m7_fundamental_data(market_runtime):
     output = []
 
@@ -270,14 +322,13 @@ def build_m7_fundamental_data(market_runtime):
             "ret_3m": pct_to_percent_number(market.get("ret_3m")),
             "ret_6m": pct_to_percent_number(market.get("ret_6m")),
             "ret_12m": pct_to_percent_number(market.get("ret_12m")),
-            "volume_ratio": safe_number(market.get("volume_ratio"), 1.0)
+            "volume_ratio": safe_number(market.get("volume_ratio"), 1.0),
+            "swing_days": market.get("swing_days", [0, 0, 0, 0, 0, 0]),
+            "amp_1d": safe_number(market.get("amp_1d"), 0)
         })
 
     return output
 
-# ------------------------------------------
-# 輸出 m7_fundamental_data.json
-# ------------------------------------------
 def save_m7_fundamental_data(market_runtime):
     output_path = Path(M7_OUTPUT_PATH)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -289,9 +340,6 @@ def save_m7_fundamental_data(market_runtime):
 
     print(f"✅ m7_fundamental_data.json updated, total {len(data)} symbols")
 
-# ------------------------------------------
-# 主程式
-# ------------------------------------------
 def main():
     symbols = load_pool()
     market_runtime = fetch_market_runtime(symbols)
