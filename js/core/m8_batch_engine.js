@@ -400,7 +400,7 @@ export function getM8Blueprint() {
     },
     summary: [
       "M8 主讀 m7_fundamental_data.json",
-      "today_score 改回優先讀 m7_new_stock_today.json",
+      "today_score 優先讀 m7_new_stock_today.json",
       "只有找不到 today_score 才 fallback 推估",
       "BW = 0.5 × worst + 0.5 × avg",
       "BasketPremium = 0.15×BW + 0.0008×BW²",
@@ -411,7 +411,41 @@ export function getM8Blueprint() {
       "BasketVol = 0.5×s1 + 0.3×s2 + 0.2×avgSwing",
       "VolAdj 採平滑函數",
       "HighRateBrake 用來抑制極端高利率失真"
-    ]
+    ],
+    formulas: {
+      today_score: "優先使用 m7_new_stock_today.json 的 today_score；缺值才 fallback 推估",
+      derived_today_score:
+        "today_score(推估) = quality_score + risk_penalty + trend_score + volatility_penalty",
+      weaknesses: "weakness = 100 - today_score",
+      BW: "BW = 0.5 × worst + 0.5 × avg",
+      basket_premium: "BasketPremium = 0.15×BW + 0.0008×BW²",
+      tail_adj: "TailAdj = 0.05 × (worst - avg)",
+      ki_adj: "KIAdj = 0.08×(KI-55) + 0.0002×(KI-55)^2",
+      tenor_adj: "1–3慢、3–9加速、9–12放緩，max=2",
+      strike_adj: "StrikeAdj = 0.5 + 0.08×(Strike-55) + 0.001×(Strike-55)^2",
+      type_adj: "EKI=0, DACN=0.5, AKI=1",
+      short_swing: "ShortSwing = 0.35*d0 + 0.25*d1 + 0.15*d2 + 0.10*d3 + 0.08*d4 + 0.07*d5",
+      basket_vol: "BasketVol = 0.5×s1 + 0.3×s2 + 0.2×avgSwing",
+      vol_adj: "VolAdj: if v<=3 => -0.6+0.35v; if 3<v<=6 => 0.45+0.85(v-3)+0.22(v-3)^2; if v>6 => 4.03+0.45(v-6)-0.04(v-6)^2",
+      brake: "HighRateBrake: 18以下不煞，18~22輕煞，22~26加強，26以上強煞",
+      final_yield: "FairYield = Base + BasketPremium + TailAdj + StructureTotal + VolAdj - HighRateBrake(PreRate)"
+    },
+    parameters: {
+      base: 6,
+      type_map: {
+        EKI: 0,
+        DACN: 0.5,
+        AKI: 1
+      },
+      tenor: {
+        short: "1–3 月慢速",
+        mid: "3–10 月加速",
+        long: "10–12 月放緩",
+        max: 2
+      },
+      today_score_source: "m7_new_stock_today.json 優先，fundamental fallback",
+      vol_note: "VolImpact = VolAdj，不再外掛 ResonanceAdj"
+    }
   };
 }
 
