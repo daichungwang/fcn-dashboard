@@ -421,10 +421,14 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
         </p>
 
         <div class="section-title">歷史詢價單</div>
-        <div class="sticky-box">
-          <div id="historyList" class="muted" style="padding:12px;">尚無資料</div>
+        <div class="btn-row" style="margin-bottom:10px;">
+        <button class="btn-secondary" id="exportJsonBtn">匯出 JSON</button>
+        <button class="btn-secondary" id="exportCsvBtn">匯出 CSV</button>
+        <button class="btn-danger" id="clearHistoryBtn">清空全部</button>
         </div>
-
+        <div class="sticky-box">
+        <div id="historyList" class="muted" style="padding:12px;">尚無資料</div>
+        </div>
         <div class="section-title">同 Basket 歷史比較</div>
         <div class="sticky-box">
           <div id="basketCompare" class="muted" style="padding:12px;">尚無資料</div>
