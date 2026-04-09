@@ -91,18 +91,14 @@ function calcTailAdj(weaknesses) {
  * - >70 降速，避免高 KI 爆掉
  */
 function calcKIAdj(KI) {
-  if (KI <= 70) {
-    return 0.5 + 0.1 * (KI - 55) + 0.003 * Math.pow(KI - 55, 2);
-  }
-  return 3 + 0.1 * (KI - 70);
+  return  0.08 * (KI - 55) + 0.0002 * Math.pow(KI - 55, 2);
 }
 
 function calcStrikeAdj(strike) {
-  return 0.05 * (strike - 50) + 0.00002 * Math.pow(strike - 50, 2);
-}
-
-function calcTenorAdj(T) {
-  return 0.25 * (T - 2);
+  return (
+    0.5 + 0.08 * (strike - 55) +
+    0.001 * Math.pow(strike - 55, 2)
+  );
 }
 
 function calcTypeAdj(type) {
