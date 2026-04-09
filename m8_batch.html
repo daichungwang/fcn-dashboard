@@ -463,7 +463,7 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
     import { runM8Case, getM8Blueprint } from "./js/core/m8_batch_engine.js";
 
     const $ = (id) => document.getElementById(id);
-
+     let currentEditingInquiryNo = null;
     function badgeClass(view) {
       if (view === "便宜" || view === "略便宜") return "pill ok";
       if (view === "合理") return "pill warn";
