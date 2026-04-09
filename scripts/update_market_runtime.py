@@ -1,13 +1,6 @@
 # ==========================================
 # update_market_runtime.py V4 FINAL
-# 功能：
-# 1. 從 Yahoo Finance 抓歷史價格
-# 2. 自動 fallback（避免 null / NaN）
-# 3. 計算 1d / 1w / 1m / 3m / 6m / 12m 報酬
-# 4. 新增 swing_days（M8 用）
-# 5. 輸出合法 JSON（不會出現 NaN / Infinity）
-# 6. 輸出 data/market_runtime.json
-# 7. 自動輸出 data/m7/m7_fundamental_data.json
+# 保留舊功能 + 新增 swing_days / amp_1d
 # ==========================================
 
 import json
@@ -17,9 +10,8 @@ from pathlib import Path
 
 import yfinance as yf
 
-# ------------------------------------------
-# 參數
-# ------------------------------------------
+print("🔥 update_market_runtime.py V4 with swing_days loaded")
+
 WINDOWS = {
     "1d": 1,
     "1w": 5,
@@ -33,9 +25,6 @@ POOL_PATH = "data/pool30.json"
 OUTPUT_PATH = "data/market_runtime.json"
 M7_OUTPUT_PATH = "data/m7/m7_fundamental_data.json"
 
-# ------------------------------------------
-# M7 靜態資料表
-# ------------------------------------------
 M7_STATIC_PROFILE = {
     "NVDA": {"name": "NVIDIA", "eps_now": 3.1, "eps_next": 4.2, "quality_level": "高", "risk_level": "中"},
     "TSM":  {"name": "TSMC", "eps_now": 8.2, "eps_next": 10.1, "quality_level": "高", "risk_level": "低"},
@@ -46,7 +35,6 @@ M7_STATIC_PROFILE = {
     "MRVL": {"name": "Marvell", "eps_now": 1.9, "eps_next": 2.6, "quality_level": "中", "risk_level": "高"},
     "CRDO": {"name": "Credo", "eps_now": 1.2, "eps_next": 1.7, "quality_level": "低", "risk_level": "高"},
     "ALAB": {"name": "Astera Labs", "eps_now": 0.9, "eps_next": 1.4, "quality_level": "低", "risk_level": "高"},
-
     "MSFT": {"name": "Microsoft", "eps_now": 11.2, "eps_next": 12.8, "quality_level": "高", "risk_level": "低"},
     "GOOG": {"name": "Google", "eps_now": 9.1, "eps_next": 10.3, "quality_level": "高", "risk_level": "中"},
     "AMZN": {"name": "Amazon", "eps_now": 4.1, "eps_next": 5.0, "quality_level": "高", "risk_level": "中"},
@@ -54,54 +42,25 @@ M7_STATIC_PROFILE = {
     "PLTR": {"name": "Palantir", "eps_now": 1.2, "eps_next": 1.6, "quality_level": "中", "risk_level": "高"},
     "ARM":  {"name": "ARM", "eps_now": 1.5, "eps_next": 2.0, "quality_level": "中", "risk_level": "高"},
     "TSLA": {"name": "Tesla", "eps_now": 3.0, "eps_next": 3.7, "quality_level": "中", "risk_level": "高"},
-
     "META": {"name": "Meta", "eps_now": 17.4, "eps_next": 19.2, "quality_level": "高", "risk_level": "中"},
     "AAPL": {"name": "Apple", "eps_now": 7.3, "eps_next": 8.0, "quality_level": "高", "risk_level": "低"},
-
     "COST": {"name": "Costco", "eps_now": 16.5, "eps_next": 18.1, "quality_level": "高", "risk_level": "低"},
     "TGT":  {"name": "Target", "eps_now": 8.1, "eps_next": 8.8, "quality_level": "中", "risk_level": "中"},
     "EL":   {"name": "Estee Lauder", "eps_now": 2.6, "eps_next": 3.2, "quality_level": "中", "risk_level": "中"},
     "NKE":  {"name": "Nike", "eps_now": 2.9, "eps_next": 3.3, "quality_level": "低", "risk_level": "中"},
-
     "COIN": {"name": "Coinbase", "eps_now": 5.1, "eps_next": 5.8, "quality_level": "低", "risk_level": "高"},
     "SOFI": {"name": "SoFi", "eps_now": 0.6, "eps_next": 0.9, "quality_level": "低", "risk_level": "高"},
-
     "UNH":  {"name": "UnitedHealth", "eps_now": 24.3, "eps_next": 26.1, "quality_level": "高", "risk_level": "低"},
     "REGN": {"name": "Regeneron", "eps_now": 36.5, "eps_next": 39.0, "quality_level": "中", "risk_level": "中"},
-
     "CCL":  {"name": "Carnival", "eps_now": 1.1, "eps_next": 1.5, "quality_level": "中", "risk_level": "高"},
     "AAL":  {"name": "American Airlines", "eps_now": 0.9, "eps_next": 1.2, "quality_level": "低", "risk_level": "高"},
     "LVS":  {"name": "Las Vegas Sands", "eps_now": 2.4, "eps_next": 2.9, "quality_level": "中", "risk_level": "中"},
-
     "SMH":  {"name": "VanEck Semiconductor ETF", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "中"},
     "QQQ":  {"name": "Invesco QQQ", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "中"},
     "LQD":  {"name": "iShares iBoxx Investment Grade Corporate Bond ETF", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "低"},
-
-    # 額外常用測試股，可先補在這裡
     "INTC": {"name": "Intel", "eps_now": 1.8, "eps_next": 2.1, "quality_level": "中", "risk_level": "中"},
-    "BAC":  {"name": "Bank of America", "eps_now": 3.1, "eps_next": 3.3, "quality_level": "中", "risk_level": "中"},
-    "C":    {"name": "Citigroup", "eps_now": 5.7, "eps_next": 6.0, "quality_level": "中", "risk_level": "中"},
-    "BA":   {"name": "Boeing", "eps_now": 0.5, "eps_next": 1.2, "quality_level": "低", "risk_level": "高"},
-    "DIS":  {"name": "Disney", "eps_now": 4.4, "eps_next": 4.9, "quality_level": "中", "risk_level": "中"},
-    "NCLH": {"name": "Norwegian Cruise", "eps_now": 1.0, "eps_next": 1.3, "quality_level": "低", "risk_level": "高"},
-    "UAL":  {"name": "United Airlines", "eps_now": 3.2, "eps_next": 3.6, "quality_level": "中", "risk_level": "高"},
-    "WMT":  {"name": "Walmart", "eps_now": 2.7, "eps_next": 2.9, "quality_level": "高", "risk_level": "低"},
-    "F":    {"name": "Ford", "eps_now": 1.8, "eps_next": 1.9, "quality_level": "低", "risk_level": "中"},
-    "AA":   {"name": "Alcoa", "eps_now": 2.2, "eps_next": 2.5, "quality_level": "低", "risk_level": "高"},
-    "JNJ":  {"name": "Johnson & Johnson", "eps_now": 10.2, "eps_next": 10.6, "quality_level": "高", "risk_level": "低"},
-    "PG":   {"name": "Procter & Gamble", "eps_now": 6.3, "eps_next": 6.6, "quality_level": "高", "risk_level": "低"},
-    "KO":   {"name": "Coca-Cola", "eps_now": 2.6, "eps_next": 2.8, "quality_level": "高", "risk_level": "低"},
-    "PEP":  {"name": "PepsiCo", "eps_now": 7.9, "eps_next": 8.2, "quality_level": "高", "risk_level": "低"},
-    "XOM":  {"name": "Exxon Mobil", "eps_now": 8.4, "eps_next": 8.7, "quality_level": "中", "risk_level": "中"},
-    "JPM":  {"name": "JPMorgan", "eps_now": 16.1, "eps_next": 16.8, "quality_level": "高", "risk_level": "低"},
-    "GS":   {"name": "Goldman Sachs", "eps_now": 34.0, "eps_next": 36.0, "quality_level": "中", "risk_level": "中"},
-    "CAT":  {"name": "Caterpillar", "eps_now": 21.5, "eps_next": 22.4, "quality_level": "高", "risk_level": "中"},
-    "DE":   {"name": "Deere", "eps_now": 23.4, "eps_next": 24.0, "quality_level": "高", "risk_level": "中"},
 }
 
-# ------------------------------------------
-# 工具：安全數字
-# ------------------------------------------
 def safe_number(v, default=0):
     try:
         if v is None:
@@ -112,7 +71,6 @@ def safe_number(v, default=0):
         return n
     except Exception:
         return default
-
 
 def safe_int(v, default=None):
     try:
@@ -125,7 +83,6 @@ def safe_int(v, default=None):
     except Exception:
         return default
 
-
 def get_price_safe(series, idx):
     try:
         if series is None or len(series) == 0:
@@ -136,50 +93,34 @@ def get_price_safe(series, idx):
     except Exception:
         return None
 
-
 def calc_return(now, past):
     now = safe_number(now, None)
     past = safe_number(past, None)
-
     if now is None or past is None or past == 0:
         return 0
-
     return round((now - past) / past, 6)
-
 
 def calc_volume_ratio(volume_series):
     try:
         if volume_series is None or len(volume_series) < 21:
             return 1.0
-
         latest = safe_number(volume_series.iloc[-1], None)
         avg20 = safe_number(volume_series.tail(20).mean(), None)
-
         if latest is None or avg20 in (None, 0):
             return 1.0
-
         return round(latest / avg20, 2)
     except Exception:
         return 1.0
 
-
 def pct_to_percent_number(v):
     return round(safe_number(v, 0) * 100, 2)
 
-
-# ------------------------------------------
-# M8 用：計算最近 6 日 swing_days
-# 定義：
-# abs(Close - Open) / Open * 100
-# ------------------------------------------
 def calc_swing_days(hist):
     swings = []
-
     if hist is None or len(hist) == 0:
         return [0, 0, 0, 0, 0, 0]
 
     limit = min(6, len(hist))
-
     for i in range(limit):
         try:
             row = hist.iloc[-1 - i]
@@ -200,36 +141,21 @@ def calc_swing_days(hist):
 
     return swings
 
-
-# ------------------------------------------
-# 讀取 pool
-# ------------------------------------------
 def load_pool():
     with open(POOL_PATH, "r", encoding="utf-8") as f:
         pool = json.load(f)
 
     symbols = [s["symbol"] for s in pool if s.get("symbol")]
-
-    # 額外補常用測試/比較股，避免只靠 pool30
-    extra_symbols = [
-        "INTC", "BAC", "C", "BA", "DIS", "NCLH", "UAL", "WMT", "F", "AA",
-        "JNJ", "PG", "KO", "PEP", "XOM", "JPM", "GS", "CAT", "DE", "NKE"
-    ]
+    extra_symbols = ["INTC"]
 
     final = []
     seen = set()
-
     for sym in symbols + extra_symbols:
         if sym and sym not in seen:
             seen.add(sym)
             final.append(sym)
-
     return final
 
-
-# ------------------------------------------
-# 抓市場資料
-# ------------------------------------------
 def fetch_market_runtime(symbols):
     result = {}
 
@@ -245,7 +171,6 @@ def fetch_market_runtime(symbols):
 
             close = hist["Close"]
             volume_series = hist["Volume"] if "Volume" in hist.columns else None
-
             price_now = safe_number(get_price_safe(close, -1), 0)
 
             ref_prices = {}
@@ -253,7 +178,6 @@ def fetch_market_runtime(symbols):
                 ref = get_price_safe(close, -1 - days)
                 ref_prices[k] = safe_number(ref, price_now)
 
-            # M8 新增
             swing_days = calc_swing_days(hist)
 
             result[symbol] = {
@@ -276,7 +200,6 @@ def fetch_market_runtime(symbols):
                 "ret_6m": safe_number(calc_return(price_now, ref_prices["6m"]), 0),
                 "ret_12m": safe_number(calc_return(price_now, ref_prices["12m"]), 0),
 
-                # M8 runtime
                 "swing_days": swing_days,
                 "amp_1d": swing_days[0] if swing_days else 0
             }
@@ -303,7 +226,6 @@ def fetch_market_runtime(symbols):
                 "ret_6m": 0,
                 "ret_12m": 0,
 
-                # M8 runtime fallback
                 "swing_days": [0, 0, 0, 0, 0, 0],
                 "amp_1d": 0
             }
@@ -322,10 +244,6 @@ def fetch_market_runtime(symbols):
 
     return cleaned
 
-
-# ------------------------------------------
-# 輸出 market_runtime.json
-# ------------------------------------------
 def save_market_runtime(result):
     output_path = Path(OUTPUT_PATH)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -335,10 +253,6 @@ def save_market_runtime(result):
 
     print("✅ market_runtime.json updated")
 
-
-# ------------------------------------------
-# 建立 M7 fundamental data
-# ------------------------------------------
 def build_m7_fundamental_data(market_runtime):
     output = []
 
@@ -362,17 +276,12 @@ def build_m7_fundamental_data(market_runtime):
             "ret_12m": pct_to_percent_number(market.get("ret_12m")),
             "volume_ratio": safe_number(market.get("volume_ratio"), 1.0),
 
-            # M8 附加欄位，先帶著，未來可用
             "swing_days": market.get("swing_days", [0, 0, 0, 0, 0, 0]),
             "amp_1d": safe_number(market.get("amp_1d"), 0)
         })
 
     return output
 
-
-# ------------------------------------------
-# 輸出 m7_fundamental_data.json
-# ------------------------------------------
 def save_m7_fundamental_data(market_runtime):
     output_path = Path(M7_OUTPUT_PATH)
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -384,17 +293,12 @@ def save_m7_fundamental_data(market_runtime):
 
     print(f"✅ m7_fundamental_data.json updated, total {len(data)} symbols")
 
-
-# ------------------------------------------
-# 主程式
-# ------------------------------------------
 def main():
     symbols = load_pool()
     market_runtime = fetch_market_runtime(symbols)
     save_market_runtime(market_runtime)
     save_m7_fundamental_data(market_runtime)
     print("✅ update_market_runtime.py finished")
-
 
 if __name__ == "__main__":
     main()
