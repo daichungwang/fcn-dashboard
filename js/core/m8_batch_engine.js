@@ -95,7 +95,7 @@ function calcKIAdj(KI) {
 }
 
 function calcTenorAdj(T) {
-  return 0.25 * (T - 2);
+  return 0.15 * (T - 3);
 }
 
 function calcStrikeAdj(strike) {
