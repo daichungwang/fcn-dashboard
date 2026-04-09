@@ -1,13 +1,14 @@
 # ==========================================
-# update_market_runtime.py V4.2 FINAL
+# update_market_runtime.py V4.3 REAL-AMPLITUDE FINAL
 # 功能：
 # 1. 從 Yahoo Finance 抓歷史價格
 # 2. 用 fast_info.lastPrice 優先取得當前價格
 # 3. 歷史資料仍用於計算 1d / 1w / 1m / 3m / 6m / 12m 報酬
-# 4. 新增 swing_days（M8 用）
+# 4. swing_days 改為真實振幅：(High - Low) / Prev Close * 100
 # 5. 避免最後一筆 Close 異常導致 price_now = 0
 # 6. 輸出 data/market_runtime.json
 # 7. 自動輸出 data/m7/m7_fundamental_data.json
+# 8. 補入 sector / subsector 給 M8 使用
 # ==========================================
 
 import json
@@ -17,7 +18,7 @@ from pathlib import Path
 
 import yfinance as yf
 
-print("🔥 update_market_runtime.py V4.2 current-price version loaded")
+print("🔥 update_market_runtime.py V4.3 real-amplitude version loaded")
 
 WINDOWS = {
     "1d": 1,
@@ -33,47 +34,47 @@ OUTPUT_PATH = "data/market_runtime.json"
 M7_OUTPUT_PATH = "data/m7/m7_fundamental_data.json"
 
 M7_STATIC_PROFILE = {
-    "NVDA": {"name": "NVIDIA", "eps_now": 3.1, "eps_next": 4.2, "quality_level": "高", "risk_level": "中"},
-    "TSM":  {"name": "TSMC", "eps_now": 8.2, "eps_next": 10.1, "quality_level": "高", "risk_level": "低"},
-    "AVGO": {"name": "Broadcom", "eps_now": 5.9, "eps_next": 7.1, "quality_level": "高", "risk_level": "中"},
-    "AMAT": {"name": "Applied Materials", "eps_now": 8.4, "eps_next": 9.6, "quality_level": "高", "risk_level": "中"},
-    "MU":   {"name": "Micron", "eps_now": 6.1, "eps_next": 8.4, "quality_level": "中", "risk_level": "高"},
-    "AMD":  {"name": "AMD", "eps_now": 3.6, "eps_next": 4.8, "quality_level": "中", "risk_level": "高"},
-    "MRVL": {"name": "Marvell", "eps_now": 1.9, "eps_next": 2.6, "quality_level": "中", "risk_level": "高"},
-    "CRDO": {"name": "Credo", "eps_now": 1.2, "eps_next": 1.7, "quality_level": "低", "risk_level": "高"},
-    "ALAB": {"name": "Astera Labs", "eps_now": 0.9, "eps_next": 1.4, "quality_level": "低", "risk_level": "高"},
+    "NVDA": {"name": "NVIDIA", "eps_now": 3.1, "eps_next": 4.2, "quality_level": "高", "risk_level": "中", "sector": "AI_SEMI", "subsector": "GPU"},
+    "TSM":  {"name": "TSMC", "eps_now": 8.2, "eps_next": 10.1, "quality_level": "高", "risk_level": "低", "sector": "AI_SEMI", "subsector": "FOUNDRY"},
+    "AVGO": {"name": "Broadcom", "eps_now": 5.9, "eps_next": 7.1, "quality_level": "高", "risk_level": "中", "sector": "AI_SEMI", "subsector": "ASIC"},
+    "AMAT": {"name": "Applied Materials", "eps_now": 8.4, "eps_next": 9.6, "quality_level": "高", "risk_level": "中", "sector": "AI_SEMI", "subsector": "SEMI_EQUIP"},
+    "MU":   {"name": "Micron", "eps_now": 6.1, "eps_next": 8.4, "quality_level": "中", "risk_level": "高", "sector": "AI_SEMI", "subsector": "MEMORY"},
+    "AMD":  {"name": "AMD", "eps_now": 3.6, "eps_next": 4.8, "quality_level": "中", "risk_level": "高", "sector": "AI_SEMI", "subsector": "CPU_GPU"},
+    "MRVL": {"name": "Marvell", "eps_now": 1.9, "eps_next": 2.6, "quality_level": "中", "risk_level": "高", "sector": "AI_SEMI", "subsector": "NETWORKING"},
+    "CRDO": {"name": "Credo", "eps_now": 1.2, "eps_next": 1.7, "quality_level": "低", "risk_level": "高", "sector": "AI_SEMI", "subsector": "CONNECTIVITY"},
+    "ALAB": {"name": "Astera Labs", "eps_now": 0.9, "eps_next": 1.4, "quality_level": "低", "risk_level": "高", "sector": "AI_SEMI", "subsector": "CONNECTIVITY"},
 
-    "MSFT": {"name": "Microsoft", "eps_now": 11.2, "eps_next": 12.8, "quality_level": "高", "risk_level": "低"},
-    "GOOG": {"name": "Google", "eps_now": 9.1, "eps_next": 10.3, "quality_level": "高", "risk_level": "中"},
-    "AMZN": {"name": "Amazon", "eps_now": 4.1, "eps_next": 5.0, "quality_level": "高", "risk_level": "中"},
-    "ORCL": {"name": "Oracle", "eps_now": 5.8, "eps_next": 6.4, "quality_level": "中", "risk_level": "中"},
-    "PLTR": {"name": "Palantir", "eps_now": 1.2, "eps_next": 1.6, "quality_level": "中", "risk_level": "高"},
-    "ARM":  {"name": "ARM", "eps_now": 1.5, "eps_next": 2.0, "quality_level": "中", "risk_level": "高"},
-    "TSLA": {"name": "Tesla", "eps_now": 3.0, "eps_next": 3.7, "quality_level": "中", "risk_level": "高"},
+    "MSFT": {"name": "Microsoft", "eps_now": 11.2, "eps_next": 12.8, "quality_level": "高", "risk_level": "低", "sector": "AI_PLATFORM", "subsector": "CLOUD"},
+    "GOOG": {"name": "Google", "eps_now": 9.1, "eps_next": 10.3, "quality_level": "高", "risk_level": "中", "sector": "AI_PLATFORM", "subsector": "SEARCH_CLOUD"},
+    "AMZN": {"name": "Amazon", "eps_now": 4.1, "eps_next": 5.0, "quality_level": "高", "risk_level": "中", "sector": "AI_PLATFORM", "subsector": "CLOUD_ECOM"},
+    "ORCL": {"name": "Oracle", "eps_now": 5.8, "eps_next": 6.4, "quality_level": "中", "risk_level": "中", "sector": "AI_PLATFORM", "subsector": "DATABASE_CLOUD"},
+    "PLTR": {"name": "Palantir", "eps_now": 1.2, "eps_next": 1.6, "quality_level": "中", "risk_level": "高", "sector": "AI_SOFTWARE", "subsector": "ANALYTICS"},
+    "ARM":  {"name": "ARM", "eps_now": 1.5, "eps_next": 2.0, "quality_level": "中", "risk_level": "高", "sector": "AI_SEMI", "subsector": "CPU_IP"},
+    "TSLA": {"name": "Tesla", "eps_now": 3.0, "eps_next": 3.7, "quality_level": "中", "risk_level": "高", "sector": "EV_AI", "subsector": "EV"},
 
-    "META": {"name": "Meta", "eps_now": 17.4, "eps_next": 19.2, "quality_level": "高", "risk_level": "中"},
-    "AAPL": {"name": "Apple", "eps_now": 7.3, "eps_next": 8.0, "quality_level": "高", "risk_level": "低"},
+    "META": {"name": "Meta", "eps_now": 17.4, "eps_next": 19.2, "quality_level": "高", "risk_level": "中", "sector": "AI_PLATFORM", "subsector": "ADS_SOCIAL"},
+    "AAPL": {"name": "Apple", "eps_now": 7.3, "eps_next": 8.0, "quality_level": "高", "risk_level": "低", "sector": "TECH_DEF", "subsector": "DEVICE"},
 
-    "COST": {"name": "Costco", "eps_now": 16.5, "eps_next": 18.1, "quality_level": "高", "risk_level": "低"},
-    "TGT":  {"name": "Target", "eps_now": 8.1, "eps_next": 8.8, "quality_level": "中", "risk_level": "中"},
-    "EL":   {"name": "Estee Lauder", "eps_now": 2.6, "eps_next": 3.2, "quality_level": "中", "risk_level": "中"},
-    "NKE":  {"name": "Nike", "eps_now": 2.9, "eps_next": 3.3, "quality_level": "低", "risk_level": "中"},
+    "COST": {"name": "Costco", "eps_now": 16.5, "eps_next": 18.1, "quality_level": "高", "risk_level": "低", "sector": "DEFENSIVE", "subsector": "RETAIL"},
+    "TGT":  {"name": "Target", "eps_now": 8.1, "eps_next": 8.8, "quality_level": "中", "risk_level": "中", "sector": "DEFENSIVE", "subsector": "RETAIL"},
+    "EL":   {"name": "Estee Lauder", "eps_now": 2.6, "eps_next": 3.2, "quality_level": "中", "risk_level": "中", "sector": "CONSUMER", "subsector": "BEAUTY"},
+    "NKE":  {"name": "Nike", "eps_now": 2.9, "eps_next": 3.3, "quality_level": "低", "risk_level": "中", "sector": "CONSUMER", "subsector": "APPAREL"},
 
-    "COIN": {"name": "Coinbase", "eps_now": 5.1, "eps_next": 5.8, "quality_level": "低", "risk_level": "高"},
-    "SOFI": {"name": "SoFi", "eps_now": 0.6, "eps_next": 0.9, "quality_level": "低", "risk_level": "高"},
+    "COIN": {"name": "Coinbase", "eps_now": 5.1, "eps_next": 5.8, "quality_level": "低", "risk_level": "高", "sector": "CRYPTO", "subsector": "EXCHANGE"},
+    "SOFI": {"name": "SoFi", "eps_now": 0.6, "eps_next": 0.9, "quality_level": "低", "risk_level": "高", "sector": "FINTECH", "subsector": "LENDING"},
 
-    "UNH":  {"name": "UnitedHealth", "eps_now": 24.3, "eps_next": 26.1, "quality_level": "高", "risk_level": "低"},
-    "REGN": {"name": "Regeneron", "eps_now": 36.5, "eps_next": 39.0, "quality_level": "中", "risk_level": "中"},
+    "UNH":  {"name": "UnitedHealth", "eps_now": 24.3, "eps_next": 26.1, "quality_level": "高", "risk_level": "低", "sector": "DEFENSIVE", "subsector": "HEALTHCARE"},
+    "REGN": {"name": "Regeneron", "eps_now": 36.5, "eps_next": 39.0, "quality_level": "中", "risk_level": "中", "sector": "DEFENSIVE", "subsector": "BIOPHARMA"},
 
-    "CCL":  {"name": "Carnival", "eps_now": 1.1, "eps_next": 1.5, "quality_level": "中", "risk_level": "高"},
-    "AAL":  {"name": "American Airlines", "eps_now": 0.9, "eps_next": 1.2, "quality_level": "低", "risk_level": "高"},
-    "LVS":  {"name": "Las Vegas Sands", "eps_now": 2.4, "eps_next": 2.9, "quality_level": "中", "risk_level": "中"},
+    "CCL":  {"name": "Carnival", "eps_now": 1.1, "eps_next": 1.5, "quality_level": "中", "risk_level": "高", "sector": "TRAVEL", "subsector": "CRUISE"},
+    "AAL":  {"name": "American Airlines", "eps_now": 0.9, "eps_next": 1.2, "quality_level": "低", "risk_level": "高", "sector": "TRAVEL", "subsector": "AIRLINE"},
+    "LVS":  {"name": "Las Vegas Sands", "eps_now": 2.4, "eps_next": 2.9, "quality_level": "中", "risk_level": "中", "sector": "TRAVEL", "subsector": "CASINO"},
 
-    "SMH":  {"name": "VanEck Semiconductor ETF", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "中"},
-    "QQQ":  {"name": "Invesco QQQ", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "中"},
-    "LQD":  {"name": "iShares iBoxx Investment Grade Corporate Bond ETF", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "低"},
+    "SMH":  {"name": "VanEck Semiconductor ETF", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "中", "sector": "ETF", "subsector": "SEMI_ETF"},
+    "QQQ":  {"name": "Invesco QQQ", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "中", "sector": "ETF", "subsector": "NASDAQ_ETF"},
+    "LQD":  {"name": "iShares iBoxx Investment Grade Corporate Bond ETF", "eps_now": 0, "eps_next": 0, "quality_level": "高", "risk_level": "低", "sector": "ETF", "subsector": "BOND_ETF"},
 
-    "INTC": {"name": "Intel", "eps_now": 1.8, "eps_next": 2.1, "quality_level": "中", "risk_level": "中"},
+    "INTC": {"name": "Intel", "eps_now": 1.8, "eps_next": 2.1, "quality_level": "中", "risk_level": "中", "sector": "AI_SEMI", "subsector": "CPU"},
 }
 
 def safe_number(v, default=0):
@@ -124,7 +125,6 @@ def get_last_valid_close(series):
         return None
 
 def get_current_price(ticker, close_series):
-    # 優先取即時/最新 quote 價格
     try:
         fi = ticker.fast_info
         if fi:
@@ -136,7 +136,6 @@ def get_current_price(ticker, close_series):
     except Exception:
         pass
 
-    # 次優先：用 info
     try:
         info = ticker.info
         for key in ["regularMarketPrice", "currentPrice", "previousClose"]:
@@ -146,7 +145,6 @@ def get_current_price(ticker, close_series):
     except Exception:
         pass
 
-    # 最後 fallback：歷史最後一筆有效 close
     return safe_number(get_last_valid_close(close_series), 0)
 
 def calc_return(now, past):
@@ -172,23 +170,46 @@ def pct_to_percent_number(v):
     return round(safe_number(v, 0) * 100, 2)
 
 def calc_swing_days(hist):
+    """
+    真實振幅版：
+    swing = (High - Low) / Prev Close * 100
+
+    規則：
+    - d0 = 最新一日
+    - 若前一日 close 取不到，fallback 用當日 open
+    - 若 high / low 無效，記 0
+    """
     swings = []
     if hist is None or len(hist) == 0:
         return [0, 0, 0, 0, 0, 0]
 
+    hist = hist.copy()
+
     limit = min(6, len(hist))
     for i in range(limit):
         try:
-            row = hist.iloc[-1 - i]
-            open_price = safe_number(row.get("Open"), None)
-            close_price = safe_number(row.get("Close"), None)
+            row_idx = len(hist) - 1 - i
+            row = hist.iloc[row_idx]
 
-            if open_price in (None, 0) or close_price in (None, 0):
+            high_price = safe_number(row.get("High"), None)
+            low_price = safe_number(row.get("Low"), None)
+            open_price = safe_number(row.get("Open"), None)
+
+            prev_close = None
+            if row_idx - 1 >= 0:
+                prev_close = safe_number(hist.iloc[row_idx - 1].get("Close"), None)
+
+            base_price = prev_close
+            if base_price in (None, 0):
+                base_price = open_price
+
+            if high_price in (None, 0) or low_price in (None, 0) or base_price in (None, 0):
                 swings.append(0)
                 continue
 
-            amp = abs(close_price - open_price) / open_price * 100
-            swings.append(round(amp, 2))
+            amp = (high_price - low_price) / base_price * 100
+            swings.append(round(max(0, amp), 2))
+
         except Exception:
             swings.append(0)
 
@@ -317,6 +338,8 @@ def build_m7_fundamental_data(market_runtime):
             "eps_next": safe_number(static["eps_next"], 0),
             "quality_level": static["quality_level"],
             "risk_level": static["risk_level"],
+            "sector": static.get("sector", "OTHER"),
+            "subsector": static.get("subsector", "OTHER"),
             "ret_1w": pct_to_percent_number(market.get("ret_1w")),
             "ret_1m": pct_to_percent_number(market.get("ret_1m")),
             "ret_3m": pct_to_percent_number(market.get("ret_3m")),
