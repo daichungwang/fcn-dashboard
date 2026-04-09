@@ -278,14 +278,6 @@
       gap: 10px;
     }
 
-    .clickable-row {
-      cursor: pointer;
-    }
-
-    .clickable-row:hover {
-      background: #f8fafc;
-    }
-
     .sticky-box {
       max-height: 360px;
       overflow: auto;
@@ -421,6 +413,11 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
         </p>
 
         <div class="section-title">歷史詢價單</div>
+        <div class="btn-row" style="margin-bottom:10px;">
+          <button class="btn-secondary" id="exportJsonBtn">匯出 JSON</button>
+          <button class="btn-secondary" id="exportCsvBtn">匯出 CSV</button>
+          <button class="btn-danger" id="clearHistoryBtn">清空全部</button>
+        </div>
         <div class="sticky-box">
           <div id="historyList" class="muted" style="padding:12px;">尚無資料</div>
         </div>
@@ -459,6 +456,7 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
     import { runM8Case, getM8Blueprint } from "./js/core/m8_batch_engine.js";
 
     const $ = (id) => document.getElementById(id);
+    let currentEditingInquiryNo = null;
 
     function badgeClass(view) {
       if (view === "便宜" || view === "略便宜") return "pill ok";
@@ -509,7 +507,11 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
 
     function refreshInquiryNo() {
       const dateStr = $("inquiryDate").value || todayStr();
-      $("inquiryNo").value = previewInquiryNo(dateStr);
+      if (currentEditingInquiryNo) {
+        $("inquiryNo").value = currentEditingInquiryNo;
+      } else {
+        $("inquiryNo").value = previewInquiryNo(dateStr);
+      }
     }
 
     function normalizeBasket(symbols) {
@@ -538,17 +540,19 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
 
         const [caseName, symbolText, ki, strike, tenor, type, marketYield] = parts;
 
+        const symbols = symbolText.split("|").map(x => x.trim().toUpperCase()).filter(Boolean);
+
         output.push({
           inquiry_date: inquiryDate,
           inquiry_no: generateInquiryNo(inquiryDate),
           case_name: caseName,
-          symbols: symbolText.split("|").map(x => x.trim().toUpperCase()).filter(Boolean),
+          symbols,
           KI: Number(ki),
           Strike: Number(strike),
           T: Number(tenor),
           type,
           marketYield: Number(marketYield),
-          basket_key: normalizeBasket(symbolText.split("|").map(x => x.trim().toUpperCase()).filter(Boolean)),
+          basket_key: normalizeBasket(symbols),
           created_at: new Date().toISOString(),
           status: "imported_only"
         });
@@ -881,27 +885,49 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
               <th>Symbols</th>
               <th>Yield</th>
               <th>Fair</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
             ${store.map((r, idx) => `
-              <tr class="clickable-row" data-load-index="${idx}">
+              <tr>
                 <td>${r.inquiry_no || ""}</td>
                 <td>${r.inquiry_date || ""}</td>
                 <td>${r.case_name || ""}</td>
                 <td>${(r.symbols || []).join("|")}</td>
                 <td>${r.marketYield != null ? fmt(r.marketYield) : "-"}</td>
                 <td>${r.result?.fair_yield != null ? fmt(r.result.fair_yield) : "-"}</td>
+                <td>
+                  <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <button class="btn-secondary" data-load-index="${idx}">載入</button>
+                    <button class="btn-success" data-edit-index="${idx}">編輯</button>
+                    <button class="btn-danger" data-delete-index="${idx}">刪除</button>
+                  </div>
+                </td>
               </tr>
             `).join("")}
           </tbody>
         </table>
       `;
 
-      box.querySelectorAll("[data-load-index]").forEach((tr) => {
-        tr.addEventListener("click", () => {
-          const idx = Number(tr.getAttribute("data-load-index"));
+      box.querySelectorAll("[data-load-index]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-load-index"));
           loadHistoryBySortedIndex(idx);
+        });
+      });
+
+      box.querySelectorAll("[data-edit-index]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-edit-index"));
+          editHistoryBySortedIndex(idx);
+        });
+      });
+
+      box.querySelectorAll("[data-delete-index]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-delete-index"));
+          deleteHistoryBySortedIndex(idx);
         });
       });
     }
@@ -966,7 +992,10 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       `;
     }
 
-    function fillSingleFormFromRecord(r) {
+    function loadRecordIntoForm(r, editing = false) {
+      if (!r) return;
+
+      $("inquiryDate").value = r.inquiry_date || todayStr();
       $("caseName").value = r.case_name || "Case 1";
       $("symbols").value = (r.symbols || []).join(",");
       $("ki").value = r.KI ?? 0;
@@ -974,8 +1003,19 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       $("tenor").value = r.T ?? 0;
       $("type").value = r.type || "EKI";
       $("marketYield").value = r.marketYield ?? 0;
+
       $("inputMode").value = "single";
       setupInputMode();
+
+      if (editing) {
+        currentEditingInquiryNo = r.inquiry_no || null;
+        $("inquiryNo").value = r.inquiry_no || "";
+      } else {
+        currentEditingInquiryNo = null;
+        refreshInquiryNo();
+      }
+
+      renderBasketCompare(r.symbols || []);
     }
 
     function loadHistoryBySortedIndex(sortedIndex) {
@@ -983,8 +1023,7 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       const r = sorted[sortedIndex];
       if (!r) return;
 
-      fillSingleFormFromRecord(r);
-      renderBasketCompare(r.symbols || []);
+      loadRecordIntoForm(r, false);
 
       if (r.result) {
         $("pricingBadge").className = badgeClass(r.result.pricing_view || "合理");
@@ -992,9 +1031,162 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       }
     }
 
+    function editHistoryBySortedIndex(sortedIndex) {
+      const sorted = getInquiryStore().slice().sort((a, b) => (b.inquiry_no || "").localeCompare(a.inquiry_no || ""));
+      const r = sorted[sortedIndex];
+      if (!r) return;
+
+      loadRecordIntoForm(r, true);
+      alert(`已載入編輯模式：${r.inquiry_no}`);
+    }
+
+    function deleteHistoryBySortedIndex(sortedIndex) {
+      const sorted = getInquiryStore().slice().sort((a, b) => (b.inquiry_no || "").localeCompare(a.inquiry_no || ""));
+      const target = sorted[sortedIndex];
+      if (!target) return;
+
+      const ok = confirm(`確定刪除 ${target.inquiry_no} 嗎？`);
+      if (!ok) return;
+
+      const store = getInquiryStore().filter(x => x.inquiry_no !== target.inquiry_no);
+      saveInquiryStore(store);
+
+      if (currentEditingInquiryNo === target.inquiry_no) {
+        currentEditingInquiryNo = null;
+        refreshInquiryNo();
+      }
+
+      renderHistory();
+      renderBasketCompare(parseSymbols($("symbols").value));
+    }
+
+    function downloadFile(filename, content, mimeType = "text/plain;charset=utf-8") {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function csvEscape(value) {
+      const s = String(value ?? "");
+      if (s.includes('"') || s.includes(",") || s.includes("\n")) {
+        return `"${s.replace(/"/g, '""')}"`;
+      }
+      return s;
+    }
+
+    function exportHistoryJson() {
+      const store = getInquiryStore();
+      if (!store.length) {
+        alert("目前沒有可匯出的歷史資料");
+        return;
+      }
+      downloadFile(
+        `fcn_inquiries_${todayStr().replaceAll("-", "")}.json`,
+        JSON.stringify(store, null, 2),
+        "application/json;charset=utf-8"
+      );
+    }
+
+    function exportHistoryCsv() {
+      const store = getInquiryStore();
+      if (!store.length) {
+        alert("目前沒有可匯出的歷史資料");
+        return;
+      }
+
+      const rows = [
+        [
+          "inquiry_date",
+          "inquiry_no",
+          "case_name",
+          "symbols",
+          "KI",
+          "Strike",
+          "T",
+          "type",
+          "marketYield",
+          "fair_yield",
+          "basket_vol",
+          "vol_adj",
+          "pricing_view",
+          "pricing_delta",
+          "created_at",
+          "updated_at"
+        ].join(",")
+      ];
+
+      store.forEach(r => {
+        rows.push([
+          csvEscape(r.inquiry_date),
+          csvEscape(r.inquiry_no),
+          csvEscape(r.case_name),
+          csvEscape((r.symbols || []).join("|")),
+          csvEscape(r.KI),
+          csvEscape(r.Strike),
+          csvEscape(r.T),
+          csvEscape(r.type),
+          csvEscape(r.marketYield),
+          csvEscape(r.result?.fair_yield ?? ""),
+          csvEscape(r.result?.basket_vol ?? ""),
+          csvEscape(r.result?.vol_adj ?? ""),
+          csvEscape(r.result?.pricing_view ?? ""),
+          csvEscape(r.result?.pricing_delta ?? ""),
+          csvEscape(r.created_at ?? ""),
+          csvEscape(r.updated_at ?? "")
+        ].join(","));
+      });
+
+      downloadFile(
+        `fcn_inquiries_${todayStr().replaceAll("-", "")}.csv`,
+        rows.join("\n"),
+        "text/csv;charset=utf-8"
+      );
+    }
+
+    function clearAllHistory() {
+      const store = getInquiryStore();
+      if (!store.length) {
+        alert("目前沒有資料可清空");
+        return;
+      }
+
+      const ok = confirm("確定要清空全部歷史詢價單嗎？此動作無法復原。");
+      if (!ok) return;
+
+      localStorage.removeItem("fcn_inquiries");
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("fcn_inquiry_seq_")) {
+          localStorage.removeItem(key);
+        }
+      });
+
+      currentEditingInquiryNo = null;
+      refreshInquiryNo();
+      renderHistory();
+      renderBasketCompare();
+      clearResult();
+    }
+
     async function saveCurrentRun(result, payload) {
       const inquiryDate = $("inquiryDate").value || todayStr();
-      const inquiryNo = generateInquiryNo(inquiryDate);
+      const store = getInquiryStore();
+
+      let inquiryNo = currentEditingInquiryNo;
+      let existingIndex = -1;
+
+      if (inquiryNo) {
+        existingIndex = store.findIndex(x => x.inquiry_no === inquiryNo);
+      }
+
+      if (!inquiryNo || existingIndex === -1) {
+        inquiryNo = generateInquiryNo(inquiryDate);
+      }
 
       const row = {
         inquiry_date: inquiryDate,
@@ -1007,7 +1199,8 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
         type: payload.type,
         marketYield: payload.marketYield,
         basket_key: normalizeBasket(payload.symbols),
-        created_at: new Date().toISOString(),
+        created_at: existingIndex >= 0 ? (store[existingIndex].created_at || new Date().toISOString()) : new Date().toISOString(),
+        updated_at: new Date().toISOString(),
         result: {
           fair_yield: result.fair_yield,
           basket_vol: result.basket_vol,
@@ -1019,10 +1212,15 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
         }
       };
 
-      const store = getInquiryStore();
-      store.push(row);
+      if (existingIndex >= 0) {
+        store[existingIndex] = row;
+      } else {
+        store.push(row);
+      }
+
       saveInquiryStore(store);
 
+      currentEditingInquiryNo = null;
       $("inquiryNo").value = inquiryNo;
       refreshInquiryNo();
       renderHistory();
@@ -1085,11 +1283,16 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       $("type").value = "EKI";
       $("marketYield").value = 23.35;
       $("inputMode").value = "single";
+      currentEditingInquiryNo = null;
       setupInputMode();
+      refreshInquiryNo();
       renderBasketCompare(parseSymbols($("symbols").value));
     }
 
     function clearResult() {
+      currentEditingInquiryNo = null;
+      refreshInquiryNo();
+
       $("pricingBadge").className = "pill ok";
       $("pricingBadge").textContent = "尚未執行";
       $("resultArea").innerHTML = `<div class="empty">請先輸入案例後，按「執行 M8 並留存」</div>`;
@@ -1107,13 +1310,20 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       renderBasketCompare();
       setupInputMode();
 
-      $("inquiryDate").addEventListener("change", refreshInquiryNo);
+      $("inquiryDate").addEventListener("change", () => {
+        if (!currentEditingInquiryNo) refreshInquiryNo();
+      });
+
       $("inputMode").addEventListener("change", setupInputMode);
 
       $("runBtn").addEventListener("click", runCase);
       $("demoBtn").addEventListener("click", loadDemo);
       $("clearBtn").addEventListener("click", clearResult);
       $("importBatchBtn").addEventListener("click", importBatchInquiry);
+
+      $("exportJsonBtn").addEventListener("click", exportHistoryJson);
+      $("exportCsvBtn").addEventListener("click", exportHistoryCsv);
+      $("clearHistoryBtn").addEventListener("click", clearAllHistory);
 
       ["symbols", "ki", "strike", "tenor", "type", "marketYield"].forEach(id => {
         const el = $(id);
