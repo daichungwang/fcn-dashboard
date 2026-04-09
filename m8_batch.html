@@ -353,289 +353,251 @@
     </section>
   </div>
 
+
   <script type="module">
-    import { runM8Case, getM8Blueprint } from "./js/m8/m8_batch_engine.js";
+  import { runM8Case, getM8Blueprint } from "./js/core/m8_batch_engine.js";
 
-    const $ = (id) => document.getElementById(id);
+  const $ = (id) => document.getElementById(id);
 
-    function badgeClass(view) {
-      if (view === "便宜" || view === "略便宜") return "pill ok";
-      if (view === "合理") return "pill warn";
-      return "pill bad";
-    }
+  function badgeClass(view) {
+    if (view === "便宜" || view === "略便宜") return "pill ok";
+    if (view === "合理") return "pill warn";
+    return "pill bad";
+  }
 
-    function num(v) {
-      const n = Number(v);
-      return Number.isFinite(n) ? n : 0;
-    }
+  function num(v) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  }
 
-    function fmt(v) {
-      return Number(num(v).toFixed(2));
-    }
+  function fmt(v) {
+    return Number(num(v).toFixed(2));
+  }
 
-    function parseSymbols(text) {
-      return String(text || "")
-        .split(",")
-        .map(s => s.trim().toUpperCase())
-        .filter(Boolean);
-    }
+  function parseSymbols(text) {
+    return String(text || "")
+      .split(",")
+      .map(s => s.trim().toUpperCase())
+      .filter(Boolean);
+  }
 
-    function renderBlueprint() {
-      const bp = getM8Blueprint();
-      const container = $("blueprintContent");
-      if (!container) return;
+  function renderBlueprint() {
+    const bp = getM8Blueprint();
+    const container = $("blueprintContent");
+    if (!container) return;
 
-      container.innerHTML = `
-        <div class="bp-block">
-          <h3>${bp.version}</h3>
-          <ul>
-            ${bp.summary.map(x => `<li>${x}</li>`).join("")}
-          </ul>
-        </div>
+    container.innerHTML = `
+      <div class="bp-block">
+        <h3>${bp.version}</h3>
+        <ul>
+          ${bp.summary.map(x => `<li>${x}</li>`).join("")}
+        </ul>
+      </div>
 
-        <div class="bp-block">
-          <h3>完整公式</h3>
-          <table class="bp-table">
-            <tbody>
-              ${Object.entries(bp.formulas).map(([k, v]) => `
-                <tr>
-                  <th>${k}</th>
-                  <td>${v}</td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
-        </div>
-
-        <div class="bp-block">
-          <h3>參數設定</h3>
-          <table class="bp-table">
-            <tbody>
-              <tr>
-                <th>Base</th>
-                <td>${bp.parameters.base}</td>
-              </tr>
-              <tr>
-                <th>Type</th>
-                <td>
-                  EKI=${bp.parameters.type_map.EKI},
-                  DACN=${bp.parameters.type_map.DACN},
-                  AKI=${bp.parameters.type_map.AKI}
-                </td>
-              </tr>
-              <tr>
-                <th>Tenor</th>
-                <td>
-                  ${bp.parameters.tenor.short} /
-                  ${bp.parameters.tenor.mid} /
-                  ${bp.parameters.tenor.long} /
-                  max=${bp.parameters.tenor.max}
-                </td>
-              </tr>
-              <tr>
-                <th>Vol Note</th>
-                <td>${bp.parameters.vol_note}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      `;
-    }
-
-    function setupBlueprintToggle() {
-      const btn = $("toggleBlueprintBtn");
-      const panel = $("blueprintPanel");
-      if (!btn || !panel) return;
-
-      btn.addEventListener("click", () => {
-        const isOpen = panel.style.display !== "none";
-        panel.style.display = isOpen ? "none" : "block";
-        btn.textContent = isOpen ? "一鍵展開" : "一鍵收合";
-      });
-    }
-
-    function renderResult(r) {
-      $("pricingBadge").className = badgeClass(r.pricing_view);
-      $("pricingBadge").textContent = r.pricing_view;
-
-      const stockRows = (r.stock_sources || []).map((s, idx) => `
-        <tr>
-          <td>${idx + 1}</td>
-          <td>${s.symbol || ""}</td>
-          <td>${s.source || ""}</td>
-          <td>${s.sector || ""}</td>
-          <td>${s.subsector || ""}</td>
-          <td>${s.risk || ""}</td>
-          <td>${fmt(r.scores?.[idx])}</td>
-          <td>${fmt(r.weaknesses?.[idx])}</td>
-          <td>${fmt(r.short_swings?.[idx])}</td>
-        </tr>
-      `).join("");
-
-      const swingRows = (r.short_swing_days || []).map((days, idx) => `
-        <tr>
-          <td>${r.symbols?.[idx] || ""}</td>
-          <td>${(days || []).map(x => fmt(x)).join(" / ")}</td>
-        </tr>
-      `).join("");
-
-      $("resultArea").innerHTML = `
-        <div class="summary-grid">
-          <div class="summary-box">
-            <div class="k">Market Yield</div>
-            <div class="v">${fmt(r.market_yield)}%</div>
-          </div>
-          <div class="summary-box">
-            <div class="k">Fair Yield</div>
-            <div class="v">${fmt(r.fair_yield)}%</div>
-          </div>
-          <div class="summary-box">
-            <div class="k">Pricing Delta</div>
-            <div class="v">${fmt(r.pricing_delta)}%</div>
-          </div>
-          <div class="summary-box">
-            <div class="k">BasketVol / VolAdj</div>
-            <div class="v">${fmt(r.basket_vol)} / ${fmt(r.vol_adj)}%</div>
-          </div>
-        </div>
-
-        <div class="section-title">案例摘要</div>
-        <table>
+      <div class="bp-block">
+        <h3>完整公式</h3>
+        <table class="bp-table">
           <tbody>
-            <tr><th>Case Name</th><td>${r.case_name}</td></tr>
-            <tr><th>Symbols</th><td>${(r.symbols || []).join(", ")}</td></tr>
-            <tr><th>KI / Strike / Tenor / Type</th><td>${fmt(r.KI)} / ${fmt(r.strike)} / ${fmt(r.tenor)} / ${r.type}</td></tr>
-            <tr><th>Note</th><td>${r.note || "-"}</td></tr>
+            ${Object.entries(bp.formulas).map(([k, v]) => `
+              <tr>
+                <th>${k}</th>
+                <td>${v}</td>
+              </tr>
+            `).join("")}
           </tbody>
         </table>
+      </div>
 
-        <div class="section-title">Basket / Structure / Vol / Brake</div>
-        <table>
-          <thead>
-            <tr>
-              <th>Base</th>
-              <th>BW</th>
-              <th>BasketPremium</th>
-              <th>TailAdj</th>
-              <th>KIAdj</th>
-              <th>TenorAdj</th>
-              <th>StrikeAdj</th>
-              <th>TypeAdj</th>
-              <th>StructureTotal</th>
-              <th>BasketVol</th>
-              <th>VolAdj</th>
-              <th>PreRate</th>
-              <th>HighRateBrake</th>
-              <th>FairYield</th>
-            </tr>
-          </thead>
+      <div class="bp-block">
+        <h3>參數設定</h3>
+        <table class="bp-table">
           <tbody>
-            <tr>
-              <td>${fmt(r.base)}</td>
-              <td>${fmt(r.BW)}</td>
-              <td>${fmt(r.basket_premium)}</td>
-              <td>${fmt(r.tail_adj)}</td>
-              <td>${fmt(r.ki_adj)}</td>
-              <td>${fmt(r.tenor_adj)}</td>
-              <td>${fmt(r.strike_adj)}</td>
-              <td>${fmt(r.type_adj)}</td>
-              <td>${fmt(r.structure_total)}</td>
-              <td>${fmt(r.basket_vol)}</td>
-              <td>${fmt(r.vol_adj)}</td>
-              <td>${fmt(r.pre_rate)}</td>
-              <td>${fmt(r.high_rate_brake)}</td>
-              <td>${fmt(r.fair_yield)}</td>
-            </tr>
+            <tr><th>Base</th><td>${bp.parameters.base}</td></tr>
+            <tr><th>Type</th><td>EKI=${bp.parameters.type_map.EKI}, DACN=${bp.parameters.type_map.DACN}, AKI=${bp.parameters.type_map.AKI}</td></tr>
+            <tr><th>Tenor</th><td>${bp.parameters.tenor.short} / ${bp.parameters.tenor.mid} / ${bp.parameters.tenor.long} / max=${bp.parameters.tenor.max}</td></tr>
+            <tr><th>Vol Note</th><td>${bp.parameters.vol_note}</td></tr>
           </tbody>
         </table>
+      </div>
+    `;
+  }
 
-        <div class="section-title">股票明細</div>
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Symbol</th>
-              <th>Source</th>
-              <th>Sector</th>
-              <th>Subsector</th>
-              <th>Risk</th>
-              <th>Today Score</th>
-              <th>Weakness</th>
-              <th>ShortSwing</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${stockRows || `<tr><td colspan="9">無資料</td></tr>`}
-          </tbody>
-        </table>
+  function setupBlueprintToggle() {
+    const btn = $("toggleBlueprintBtn");
+    const panel = $("blueprintPanel");
+    if (!btn || !panel) return;
 
-        <div class="section-title">6日振幅輸入</div>
-        <table>
-          <thead>
-            <tr>
-              <th>Symbol</th>
-              <th>d0 / d1 / d2 / d3 / d4 / d5</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${swingRows || `<tr><td colspan="2">無資料</td></tr>`}
-          </tbody>
-        </table>
-
-        <div class="section-title">Raw JSON</div>
-        <div class="card mono" style="padding:12px;">${JSON.stringify(r, null, 2)}</div>
-      `;
-    }
-
-    async function runCase() {
-      try {
-        const payload = {
-          caseName: $("caseName").value.trim() || "Case 1",
-          symbols: parseSymbols($("symbols").value),
-          KI: num($("ki").value),
-          Strike: num($("strike").value),
-          T: num($("tenor").value),
-          type: $("type").value,
-          marketYield: num($("marketYield").value)
-        };
-
-        const result = await runM8Case(payload);
-        renderResult(result);
-      } catch (err) {
-        $("pricingBadge").className = "pill bad";
-        $("pricingBadge").textContent = "執行失敗";
-        $("resultArea").innerHTML = `
-          <div class="empty" style="color:#b42318;">
-            ${err.message || err}
-          </div>
-        `;
-      }
-    }
-
-    function loadDemo() {
-      $("caseName").value = "Demo - 保守型 Basket";
-      $("symbols").value = "TSM,AAPL,MSFT,LQD";
-      $("ki").value = 55;
-      $("strike").value = 65;
-      $("tenor").value = 6;
-      $("type").value = "EKI";
-      $("marketYield").value = 14;
-    }
-
-    function clearResult() {
-      $("pricingBadge").className = "pill ok";
-      $("pricingBadge").textContent = "尚未執行";
-      $("resultArea").innerHTML = `<div class="empty">請先輸入案例後，按「執行 M8」</div>`;
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      renderBlueprint();
-      setupBlueprintToggle();
-
-      $("runBtn").addEventListener("click", runCase);
-      $("demoBtn").addEventListener("click", loadDemo);
-      $("clearBtn").addEventListener("click", clearResult);
+    btn.addEventListener("click", () => {
+      const isOpen = panel.style.display !== "none";
+      panel.style.display = isOpen ? "none" : "block";
+      btn.textContent = isOpen ? "一鍵展開" : "一鍵收合";
     });
-  </script>
+  }
+
+  function renderResult(r) {
+    $("pricingBadge").className = badgeClass(r.pricing_view);
+    $("pricingBadge").textContent = r.pricing_view;
+
+    const stockRows = (r.stock_sources || []).map((s, idx) => `
+      <tr>
+        <td>${idx + 1}</td>
+        <td>${s.symbol || ""}</td>
+        <td>${s.source || ""}</td>
+        <td>${s.sector || ""}</td>
+        <td>${s.subsector || ""}</td>
+        <td>${s.risk || ""}</td>
+        <td>${fmt(r.scores?.[idx])}</td>
+        <td>${fmt(r.weaknesses?.[idx])}</td>
+        <td>${fmt(r.short_swings?.[idx])}</td>
+      </tr>
+    `).join("");
+
+    const swingRows = (r.short_swing_days || []).map((days, idx) => `
+      <tr>
+        <td>${r.symbols?.[idx] || ""}</td>
+        <td>${(days || []).map(x => fmt(x)).join(" / ")}</td>
+      </tr>
+    `).join("");
+
+    $("resultArea").innerHTML = `
+      <div class="summary-grid">
+        <div class="summary-box"><div class="k">Market Yield</div><div class="v">${fmt(r.market_yield)}%</div></div>
+        <div class="summary-box"><div class="k">Fair Yield</div><div class="v">${fmt(r.fair_yield)}%</div></div>
+        <div class="summary-box"><div class="k">Pricing Delta</div><div class="v">${fmt(r.pricing_delta)}%</div></div>
+        <div class="summary-box"><div class="k">BasketVol / VolAdj</div><div class="v">${fmt(r.basket_vol)} / ${fmt(r.vol_adj)}%</div></div>
+      </div>
+
+      <div class="section-title">案例摘要</div>
+      <table>
+        <tbody>
+          <tr><th>Case Name</th><td>${r.case_name}</td></tr>
+          <tr><th>Symbols</th><td>${(r.symbols || []).join(", ")}</td></tr>
+          <tr><th>KI / Strike / Tenor / Type</th><td>${fmt(r.KI)} / ${fmt(r.strike)} / ${fmt(r.tenor)} / ${r.type}</td></tr>
+          <tr><th>Note</th><td>${r.note || "-"}</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-title">Basket / Structure / Vol / Brake</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Base</th>
+            <th>BW</th>
+            <th>BasketPremium</th>
+            <th>TailAdj</th>
+            <th>KIAdj</th>
+            <th>TenorAdj</th>
+            <th>StrikeAdj</th>
+            <th>TypeAdj</th>
+            <th>StructureTotal</th>
+            <th>BasketVol</th>
+            <th>VolAdj</th>
+            <th>PreRate</th>
+            <th>HighRateBrake</th>
+            <th>FairYield</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>${fmt(r.base)}</td>
+            <td>${fmt(r.BW)}</td>
+            <td>${fmt(r.basket_premium)}</td>
+            <td>${fmt(r.tail_adj)}</td>
+            <td>${fmt(r.ki_adj)}</td>
+            <td>${fmt(r.tenor_adj)}</td>
+            <td>${fmt(r.strike_adj)}</td>
+            <td>${fmt(r.type_adj)}</td>
+            <td>${fmt(r.structure_total)}</td>
+            <td>${fmt(r.basket_vol)}</td>
+            <td>${fmt(r.vol_adj)}</td>
+            <td>${fmt(r.pre_rate)}</td>
+            <td>${fmt(r.high_rate_brake)}</td>
+            <td>${fmt(r.fair_yield)}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-title">股票明細</div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Symbol</th>
+            <th>Source</th>
+            <th>Sector</th>
+            <th>Subsector</th>
+            <th>Risk</th>
+            <th>Today Score</th>
+            <th>Weakness</th>
+            <th>ShortSwing</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${stockRows || `<tr><td colspan="9">無資料</td></tr>`}
+        </tbody>
+      </table>
+
+      <div class="section-title">6日振幅輸入</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>d0 / d1 / d2 / d3 / d4 / d5</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${swingRows || `<tr><td colspan="2">無資料</td></tr>`}
+        </tbody>
+      </table>
+    `;
+  }
+
+  async function runCase() {
+    try {
+      const payload = {
+        caseName: $("caseName").value.trim() || "Case 1",
+        symbols: parseSymbols($("symbols").value),
+        KI: num($("ki").value),
+        Strike: num($("strike").value),
+        T: num($("tenor").value),
+        type: $("type").value,
+        marketYield: num($("marketYield").value)
+      };
+
+      const result = await runM8Case(payload);
+      renderResult(result);
+    } catch (err) {
+      $("pricingBadge").className = "pill bad";
+      $("pricingBadge").textContent = "執行失敗";
+      $("resultArea").innerHTML = `<div class="empty" style="color:#b42318;">${err.message || err}</div>`;
+    }
+  }
+
+  function loadDemo() {
+    $("caseName").value = "fcn20260409001";
+    $("symbols").value = "ARM,GOOG,INTC,TSM";
+    $("ki").value = 60;
+    $("strike").value = 70;
+    $("tenor").value = 6;
+    $("type").value = "EKI";
+    $("marketYield").value = 23.35;
+  }
+
+  function clearResult() {
+    $("pricingBadge").className = "pill ok";
+    $("pricingBadge").textContent = "尚未執行";
+    $("resultArea").innerHTML = `<div class="empty">請先輸入案例後，按「執行 M8」</div>`;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    console.log("m8_batch html loaded");
+    renderBlueprint();
+    setupBlueprintToggle();
+
+    $("runBtn").addEventListener("click", runCase);
+    $("demoBtn").addEventListener("click", loadDemo);
+    $("clearBtn").addEventListener("click", clearResult);
+  });
+</script>
 </body>
 </html>
