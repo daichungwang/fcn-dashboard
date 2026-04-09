@@ -86,7 +86,7 @@ function calcTailAdj(weaknesses) {
 
 /**
  * KI：
- * - KI=55 -> 0.5
+ * - KI=55 -> 0
  * - 55~70 正常加速
  * - >70 降速，避免高 KI 爆掉
  */
