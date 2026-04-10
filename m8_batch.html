@@ -14,7 +14,7 @@
     }
 
     .page {
-      max-width: 1600px;
+      max-width: 1680px;
       margin: 0 auto;
     }
 
@@ -25,7 +25,7 @@
 
     .grid {
       display: grid;
-      grid-template-columns: 420px 1fr;
+      grid-template-columns: 480px 1fr;
       gap: 18px;
     }
 
@@ -87,25 +87,10 @@
       font-weight: 700;
     }
 
-    .btn-primary {
-      background: #2f6fed;
-      color: #fff;
-    }
-
-    .btn-secondary {
-      background: #eef2ff;
-      color: #2447b2;
-    }
-
-    .btn-danger {
-      background: #ffe8e8;
-      color: #b42318;
-    }
-
-    .btn-success {
-      background: #ecfdf3;
-      color: #027a48;
-    }
+    .btn-primary { background: #2f6fed; color: #fff; }
+    .btn-secondary { background: #eef2ff; color: #2447b2; }
+    .btn-danger { background: #ffe8e8; color: #b42318; }
+    .btn-success { background: #ecfdf3; color: #027a48; }
 
     .muted {
       color: #667085;
@@ -129,20 +114,10 @@
       font-weight: 700;
     }
 
-    .pill.ok {
-      background: #ecfdf3;
-      color: #027a48;
-    }
-
-    .pill.warn {
-      background: #fff7ed;
-      color: #b54708;
-    }
-
-    .pill.bad {
-      background: #fef3f2;
-      color: #b42318;
-    }
+    .pill.ok { background: #ecfdf3; color: #027a48; }
+    .pill.warn { background: #fff7ed; color: #b54708; }
+    .pill.bad { background: #fef3f2; color: #b42318; }
+    .pill.info { background: #eff8ff; color: #175cd3; }
 
     .summary-grid {
       display: grid;
@@ -278,6 +253,12 @@
       gap: 10px;
     }
 
+    .split-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
     .sticky-box {
       max-height: 360px;
       overflow: auto;
@@ -286,7 +267,13 @@
       background: #fff;
     }
 
-    @media (max-width: 1080px) {
+    .history-meta {
+      font-size: 12px;
+      color: #667085;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1180px) {
       .grid {
         grid-template-columns: 1fr;
       }
@@ -295,7 +282,8 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .split-2 {
+      .split-2,
+      .split-3 {
         grid-template-columns: 1fr;
       }
     }
@@ -345,9 +333,53 @@
         </div>
 
         <div id="singleInputPanel">
-          <div class="form-group">
-            <label for="caseName">上手銀行</label>
-            <input id="caseName" type="text" value="Case 1" />
+          <div class="split-2">
+            <div class="form-group">
+              <label for="issuer">承做機構</label>
+              <select id="issuer">
+                <option value="">請選擇</option>
+                <option value="富邦">富邦</option>
+                <option value="永豐">永豐</option>
+                <option value="中信">中信</option>
+                <option value="國泰">國泰</option>
+                <option value="台新">台新</option>
+                <option value="星展">星展</option>
+                <option value="元大">元大</option>
+                <option value="第一">第一</option>
+                <option value="其他">其他</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="upstreamBank">上手銀行</label>
+              <select id="upstreamBank">
+                <option value="">請選擇</option>
+                <option value="NATIXIS">NATIXIS｜法國外貿銀行</option>
+                <option value="UBS">UBS｜瑞士銀行</option>
+                <option value="NOMURA">NOMURA｜野村銀行</option>
+                <option value="GS">GS｜高盛</option>
+                <option value="BARCLAYS">BARCLAYS｜巴克萊銀行</option>
+                <option value="DBS">DBS｜星展銀行</option>
+                <option value="HSBC">HSBC｜香港上海匯豐銀行</option>
+                <option value="CA">CA｜法國農業信貸銀行</option>
+                <option value="BBVA">BBVA｜西班牙對外銀行</option>
+                <option value="MS">MS｜摩根士丹利</option>
+                <option value="SG">SG｜法國興業銀行</option>
+                <option value="BNP">BNP｜法國巴黎銀行</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="split-2">
+            <div class="form-group">
+              <label for="rm">RM / 聯絡人</label>
+              <input id="rm" type="text" placeholder="例如：王小姐" />
+            </div>
+
+            <div class="form-group">
+              <label for="caseName">案例名稱</label>
+              <input id="caseName" type="text" value="Case 1" />
+            </div>
           </div>
 
           <div class="form-group">
@@ -383,9 +415,16 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="marketYield">Market Yield (%)</label>
-            <input id="marketYield" type="number" step="0.01" value="14" />
+          <div class="split-2">
+            <div class="form-group">
+              <label for="marketYield">Market Yield (%)</label>
+              <input id="marketYield" type="number" step="0.01" value="14" />
+            </div>
+
+            <div class="form-group">
+              <label for="note">備註</label>
+              <input id="note" type="text" placeholder="例如：核心科技籃子" />
+            </div>
           </div>
 
           <div class="btn-row">
@@ -398,18 +437,20 @@
         <div id="batchInputPanel" style="display:none;">
           <div class="form-group">
             <label for="batchInput">整批貼上</label>
-            <textarea id="batchInput" placeholder="Case1,TSM|AMD|NVDA|AVGO,55,68,12,EKI,19.16
-Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
-            <div class="small-note">格式：CaseName,股票1|股票2|股票3,KI,Strike,Tenor,Type,MarketYield</div>
+            <textarea id="batchInput" placeholder="承做機構,上手銀行,RM,CaseName,股票1|股票2|股票3,KI,Strike,Tenor,Type,MarketYield,備註
+富邦,NATIXIS,王小姐,Case1,TSM|AAPL|MSFT|LQD,55,65,6,EKI,14,核心科技
+永豐,UBS,陳先生,Case2,NVDA|AMD|AVGO|TSM,60,70,9,AKI,18.5,AI高波動"></textarea>
+            <div class="small-note">新格式：承做機構,上手銀行,RM,CaseName,股票1|股票2|股票3,KI,Strike,Tenor,Type,MarketYield,備註</div>
+            <div class="small-note">舊格式也相容：CaseName,股票1|股票2|股票3,KI,Strike,Tenor,Type,MarketYield</div>
           </div>
 
           <div class="btn-row">
-            <button class="btn-success" id="importBatchBtn">匯入整批詢價單</button>
+            <button class="btn-success" id="importBatchBtn">匯入整批詢價單並執行 M8</button>
           </div>
         </div>
 
         <p class="muted" style="margin-top:12px;">
-          說明：Vol 模組已正式納入，不再另外加 ResonanceAdj。
+          說明：Vol 模組已正式納入，不再另外加 ResonanceAdj。這版 storage 已升級為統一 schema，可供後續 M2 / M3 使用。
         </p>
 
         <div class="section-title">歷史詢價單</div>
@@ -456,11 +497,13 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
     import { runM8Case, getM8Blueprint } from "./js/core/m8_batch_engine.js";
 
     const $ = (id) => document.getElementById(id);
+    const STORAGE_KEY = "fcn_quote_history_v3";
     let currentEditingInquiryNo = null;
 
     function badgeClass(view) {
       if (view === "便宜" || view === "略便宜") return "pill ok";
       if (view === "合理") return "pill warn";
+      if (view === "尚未執行") return "pill info";
       return "pill bad";
     }
 
@@ -519,11 +562,135 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
     }
 
     function getInquiryStore() {
-      return JSON.parse(localStorage.getItem("fcn_inquiries") || "[]");
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
     }
 
     function saveInquiryStore(rows) {
-      localStorage.setItem("fcn_inquiries", JSON.stringify(rows));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+    }
+
+    function getUpstreamBankLabel(code) {
+      const map = {
+        NATIXIS: "NATIXIS｜法國外貿銀行",
+        UBS: "UBS｜瑞士銀行",
+        NOMURA: "NOMURA｜野村銀行",
+        GS: "GS｜高盛",
+        BARCLAYS: "BARCLAYS｜巴克萊銀行",
+        DBS: "DBS｜星展銀行",
+        HSBC: "HSBC｜香港上海匯豐銀行",
+        CA: "CA｜法國農業信貸銀行",
+        BBVA: "BBVA｜西班牙對外銀行",
+        MS: "MS｜摩根士丹利",
+        SG: "SG｜法國興業銀行",
+        BNP: "BNP｜法國巴黎銀行"
+      };
+      return map[code] || code || "";
+    }
+
+    function getMarketContext(basketVol) {
+      const v = num(basketVol);
+      if (v > 6) return "高波動";
+      if (v > 3) return "中波動";
+      return "低波動";
+    }
+
+    function getActionPriority(edge, basketVol) {
+      if (edge < -1 || basketVol > 6) return "高";
+      if (edge <= 1) return "中";
+      return "低";
+    }
+
+    function getSuggestedAction(edge, pricingView, basketVol) {
+      if (edge < -1) return "考慮調整或轉倉";
+      if (basketVol > 6) return "提高警覺 / 留意波動";
+      if (pricingView === "便宜" || pricingView === "略便宜") return "可持有觀察";
+      return "正常";
+    }
+
+    function buildEngineSchema(payload, result, existingCreatedAt = null) {
+      const marketYield = num(payload.marketYield);
+      const fairYield = num(result.fair_yield);
+      const edge = fmt(marketYield - fairYield);
+      const basketVol = num(result.basket_vol);
+      const marketContext = getMarketContext(basketVol);
+
+      return {
+        schema_version: "m8_quote_v3",
+
+        inquiry: {
+          inquiry_no: payload.inquiryNo,
+          inquiry_date: payload.inquiryDate
+        },
+
+        counterparty: {
+          issuer_local: payload.issuer || "",
+          upstream_bank_code: payload.upstreamBank || "",
+          upstream_bank_name: getUpstreamBankLabel(payload.upstreamBank),
+          rm: payload.rm || ""
+        },
+
+        quote: {
+          case_name: payload.caseName || "",
+          symbols: payload.symbols || [],
+          basket_key: normalizeBasket(payload.symbols || []),
+          KI: payload.KI,
+          strike: payload.Strike,
+          tenor: payload.T,
+          type: payload.type,
+          market_yield: payload.marketYield,
+          note: payload.note || ""
+        },
+
+        engine: {
+          fair_yield: fairYield,
+          basket_vol: basketVol,
+          vol_adj: num(result.vol_adj),
+          pricing_delta: num(result.pricing_delta),
+          pricing_view: result.pricing_view || "",
+          edge: edge,
+
+          base: num(result.base),
+          BW: num(result.BW),
+          basket_premium: num(result.basket_premium),
+          tail_adj: num(result.tail_adj),
+          ki_adj: num(result.ki_adj),
+          tenor_adj: num(result.tenor_adj),
+          strike_adj: num(result.strike_adj),
+          type_adj: num(result.type_adj),
+          structure_total: num(result.structure_total),
+          pre_rate: num(result.pre_rate),
+          high_rate_brake: num(result.high_rate_brake),
+
+          scores: result.scores || [],
+          weaknesses: result.weaknesses || [],
+          short_swings: result.short_swings || [],
+          short_swing_days: result.short_swing_days || [],
+          stock_sources: result.stock_sources || []
+        },
+
+        m2_callback: {
+          ready: true,
+          basket_key: normalizeBasket(payload.symbols || []),
+          basket_vol: basketVol,
+          vol_adj: num(result.vol_adj),
+          fair_yield_ref: fairYield,
+          pricing_delta: num(result.pricing_delta),
+          pricing_view: result.pricing_view || "",
+          market_context: marketContext,
+          action_priority: getActionPriority(edge, basketVol),
+          watch_reason:
+            basketVol > 6 ? "BasketVol 偏高" :
+            edge < -1 ? "市場條件轉差" :
+            "一般觀察",
+          need_active_attention: edge < -1 || basketVol > 6,
+          suggested_action: getSuggestedAction(edge, result.pricing_view, basketVol)
+        },
+
+        raw_engine_result: result,
+
+        created_at: existingCreatedAt || new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
     }
 
     function parseBatchText(text, inquiryDate) {
@@ -536,26 +703,71 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
 
       for (const line of lines) {
         const parts = line.split(",").map(x => x.trim());
-        if (parts.length < 7) continue;
 
-        const [caseName, symbolText, ki, strike, tenor, type, marketYield] = parts;
+        // 新格式：
+        // 承做機構,上手銀行,RM,CaseName,Symbols,KI,Strike,Tenor,Type,MarketYield,Note
+        if (parts.length >= 10) {
+          const issuer = parts[0] || "";
+          const upstreamBank = parts[1] || "";
+          const rm = parts[2] || "";
+          const caseName = parts[3] || "Case";
+          const symbolText = parts[4] || "";
+          const KI = Number(parts[5]);
+          const Strike = Number(parts[6]);
+          const T = Number(parts[7]);
+          const type = parts[8] || "EKI";
+          const marketYield = Number(parts[9]);
+          const note = parts[10] || "";
 
-        const symbols = symbolText.split("|").map(x => x.trim().toUpperCase()).filter(Boolean);
+          const symbols = symbolText.split("|").map(x => x.trim().toUpperCase()).filter(Boolean);
 
-        output.push({
-          inquiry_date: inquiryDate,
-          inquiry_no: generateInquiryNo(inquiryDate),
-          case_name: caseName,
-          symbols,
-          KI: Number(ki),
-          Strike: Number(strike),
-          T: Number(tenor),
-          type,
-          marketYield: Number(marketYield),
-          basket_key: normalizeBasket(symbols),
-          created_at: new Date().toISOString(),
-          status: "imported_only"
-        });
+          output.push({
+            inquiryDate,
+            inquiryNo: generateInquiryNo(inquiryDate),
+            issuer,
+            upstreamBank,
+            rm,
+            caseName,
+            symbols,
+            KI,
+            Strike,
+            T,
+            type,
+            marketYield,
+            note
+          });
+          continue;
+        }
+
+        // 舊格式：
+        // CaseName,Symbols,KI,Strike,Tenor,Type,MarketYield
+        if (parts.length >= 7) {
+          const caseName = parts[0] || "Case";
+          const symbolText = parts[1] || "";
+          const KI = Number(parts[2]);
+          const Strike = Number(parts[3]);
+          const T = Number(parts[4]);
+          const type = parts[5] || "EKI";
+          const marketYield = Number(parts[6]);
+
+          const symbols = symbolText.split("|").map(x => x.trim().toUpperCase()).filter(Boolean);
+
+          output.push({
+            inquiryDate,
+            inquiryNo: generateInquiryNo(inquiryDate),
+            issuer: "",
+            upstreamBank: "",
+            rm: "",
+            caseName,
+            symbols,
+            KI,
+            Strike,
+            T,
+            type,
+            marketYield,
+            note: ""
+          });
+        }
       }
 
       return output;
@@ -660,9 +872,9 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       };
     }
 
-    function renderResult(r) {
-      $("pricingBadge").className = badgeClass(r.pricing_view);
-      $("pricingBadge").textContent = r.pricing_view;
+    function renderResult(r, schema = null) {
+      $("pricingBadge").className = badgeClass(r.pricing_view || "尚未執行");
+      $("pricingBadge").textContent = r.pricing_view || "尚未執行";
 
       const sortedSwings = (r.short_swings || [])
         .map((v, idx) => ({ idx, v: num(v), symbol: r.symbols?.[idx] || "" }))
@@ -726,6 +938,21 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
         </tr>
       `).join("");
 
+      const counterpartyHtml = schema ? `
+        <div class="section-title">Counterparty / Schema</div>
+        <table>
+          <tbody>
+            <tr><th>承做機構</th><td>${schema.counterparty?.issuer_local || "-"}</td></tr>
+            <tr><th>上手銀行</th><td>${schema.counterparty?.upstream_bank_name || "-"}</td></tr>
+            <tr><th>RM</th><td>${schema.counterparty?.rm || "-"}</td></tr>
+            <tr><th>Basket Key</th><td>${schema.quote?.basket_key || "-"}</td></tr>
+            <tr><th>M2 市場環境</th><td>${schema.m2_callback?.market_context || "-"}</td></tr>
+            <tr><th>M2 處理優先級</th><td>${schema.m2_callback?.action_priority || "-"}</td></tr>
+            <tr><th>M2 建議</th><td>${schema.m2_callback?.suggested_action || "-"}</td></tr>
+          </tbody>
+        </table>
+      ` : "";
+
       $("resultArea").innerHTML = `
         <div class="summary-grid">
           <div class="summary-box"><div class="k">Market Yield</div><div class="v">${fmt(r.market_yield)}%</div></div>
@@ -737,12 +964,14 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
         <div class="section-title">案例摘要</div>
         <table>
           <tbody>
-            <tr><th>Case Name</th><td>${r.case_name}</td></tr>
+            <tr><th>Case Name</th><td>${r.case_name || "-"}</td></tr>
             <tr><th>Symbols</th><td>${(r.symbols || []).join(", ")}</td></tr>
             <tr><th>KI / Strike / Tenor / Type</th><td>${fmt(r.KI)} / ${fmt(r.strike)} / ${fmt(r.tenor)} / ${r.type}</td></tr>
             <tr><th>Note</th><td>${r.note || "-"}</td></tr>
           </tbody>
         </table>
+
+        ${counterpartyHtml}
 
         <div class="section-title">Basket / Structure / Vol / Brake</div>
         <table>
@@ -867,7 +1096,10 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
     }
 
     function renderHistory() {
-      const store = getInquiryStore().slice().sort((a, b) => (b.inquiry_no || "").localeCompare(a.inquiry_no || ""));
+      const store = getInquiryStore()
+        .slice()
+        .sort((a, b) => String(b.inquiry?.inquiry_no || "").localeCompare(String(a.inquiry?.inquiry_no || "")));
+
       const box = $("historyList");
 
       if (!store.length) {
@@ -881,22 +1113,30 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
             <tr>
               <th>詢價單號</th>
               <th>日期</th>
+              <th>承做</th>
+              <th>上手</th>
+              <th>RM</th>
               <th>Case</th>
               <th>Symbols</th>
-              <th>Yield</th>
+              <th>Market</th>
               <th>Fair</th>
+              <th>Edge</th>
               <th>操作</th>
             </tr>
           </thead>
           <tbody>
             ${store.map((r, idx) => `
               <tr>
-                <td>${r.inquiry_no || ""}</td>
-                <td>${r.inquiry_date || ""}</td>
-                <td>${r.case_name || ""}</td>
-                <td>${(r.symbols || []).join("|")}</td>
-                <td>${r.marketYield != null ? fmt(r.marketYield) : "-"}</td>
-                <td>${r.result?.fair_yield != null ? fmt(r.result.fair_yield) : "-"}</td>
+                <td>${r.inquiry?.inquiry_no || ""}</td>
+                <td>${r.inquiry?.inquiry_date || ""}</td>
+                <td>${r.counterparty?.issuer_local || "-"}</td>
+                <td>${r.counterparty?.upstream_bank_code || "-"}</td>
+                <td>${r.counterparty?.rm || "-"}</td>
+                <td>${r.quote?.case_name || ""}</td>
+                <td>${(r.quote?.symbols || []).join("|")}</td>
+                <td>${r.quote?.market_yield != null ? fmt(r.quote.market_yield) : "-"}</td>
+                <td>${r.engine?.fair_yield != null ? fmt(r.engine.fair_yield) : "-"}</td>
+                <td>${r.engine?.edge != null ? fmt(r.engine.edge) : "-"}</td>
                 <td>
                   <div style="display:flex; gap:6px; flex-wrap:wrap;">
                     <button class="btn-secondary" data-load-index="${idx}">載入</button>
@@ -956,8 +1196,8 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       }
 
       const rows = store
-        .filter(x => x.basket_key === basketKey)
-        .sort((a, b) => String(a.inquiry_date).localeCompare(String(b.inquiry_date)));
+        .filter(x => x.quote?.basket_key === basketKey)
+        .sort((a, b) => String(a.inquiry?.inquiry_date || "").localeCompare(String(b.inquiry?.inquiry_date || "")));
 
       if (!rows.length) {
         box.innerHTML = "尚無資料";
@@ -970,21 +1210,29 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
             <tr>
               <th>日期</th>
               <th>單號</th>
+              <th>承做</th>
+              <th>上手</th>
               <th>Market</th>
               <th>Fair</th>
+              <th>Edge</th>
               <th>BasketVol</th>
               <th>VolAdj</th>
+              <th>M2建議</th>
             </tr>
           </thead>
           <tbody>
             ${rows.map(r => `
               <tr>
-                <td>${r.inquiry_date || ""}</td>
-                <td>${r.inquiry_no || ""}</td>
-                <td>${r.marketYield != null ? fmt(r.marketYield) : "-"}</td>
-                <td>${r.result?.fair_yield != null ? fmt(r.result.fair_yield) : "-"}</td>
-                <td>${r.result?.basket_vol != null ? fmt(r.result.basket_vol) : "-"}</td>
-                <td>${r.result?.vol_adj != null ? fmt(r.result.vol_adj) : "-"}</td>
+                <td>${r.inquiry?.inquiry_date || ""}</td>
+                <td>${r.inquiry?.inquiry_no || ""}</td>
+                <td>${r.counterparty?.issuer_local || "-"}</td>
+                <td>${r.counterparty?.upstream_bank_code || "-"}</td>
+                <td>${r.quote?.market_yield != null ? fmt(r.quote.market_yield) : "-"}</td>
+                <td>${r.engine?.fair_yield != null ? fmt(r.engine.fair_yield) : "-"}</td>
+                <td>${r.engine?.edge != null ? fmt(r.engine.edge) : "-"}</td>
+                <td>${r.engine?.basket_vol != null ? fmt(r.engine.basket_vol) : "-"}</td>
+                <td>${r.engine?.vol_adj != null ? fmt(r.engine.vol_adj) : "-"}</td>
+                <td>${r.m2_callback?.suggested_action || "-"}</td>
               </tr>
             `).join("")}
           </tbody>
@@ -992,66 +1240,75 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       `;
     }
 
-    function loadRecordIntoForm(r, editing = false) {
-      if (!r) return;
+    function loadRecordIntoForm(schema, editing = false) {
+      if (!schema) return;
 
-      $("inquiryDate").value = r.inquiry_date || todayStr();
-      $("caseName").value = r.case_name || "Case 1";
-      $("symbols").value = (r.symbols || []).join(",");
-      $("ki").value = r.KI ?? 0;
-      $("strike").value = r.Strike ?? 0;
-      $("tenor").value = r.T ?? 0;
-      $("type").value = r.type || "EKI";
-      $("marketYield").value = r.marketYield ?? 0;
+      $("inquiryDate").value = schema.inquiry?.inquiry_date || todayStr();
+      $("issuer").value = schema.counterparty?.issuer_local || "";
+      $("upstreamBank").value = schema.counterparty?.upstream_bank_code || "";
+      $("rm").value = schema.counterparty?.rm || "";
+      $("caseName").value = schema.quote?.case_name || "Case 1";
+      $("symbols").value = (schema.quote?.symbols || []).join(",");
+      $("ki").value = schema.quote?.KI ?? 0;
+      $("strike").value = schema.quote?.strike ?? 0;
+      $("tenor").value = schema.quote?.tenor ?? 0;
+      $("type").value = schema.quote?.type || "EKI";
+      $("marketYield").value = schema.quote?.market_yield ?? 0;
+      $("note").value = schema.quote?.note || "";
 
       $("inputMode").value = "single";
       setupInputMode();
 
       if (editing) {
-        currentEditingInquiryNo = r.inquiry_no || null;
-        $("inquiryNo").value = r.inquiry_no || "";
+        currentEditingInquiryNo = schema.inquiry?.inquiry_no || null;
+        $("inquiryNo").value = schema.inquiry?.inquiry_no || "";
       } else {
         currentEditingInquiryNo = null;
         refreshInquiryNo();
       }
 
-      renderBasketCompare(r.symbols || []);
-    }
+      renderBasketCompare(schema.quote?.symbols || []);
 
-    function loadHistoryBySortedIndex(sortedIndex) {
-      const sorted = getInquiryStore().slice().sort((a, b) => (b.inquiry_no || "").localeCompare(a.inquiry_no || ""));
-      const r = sorted[sortedIndex];
-      if (!r) return;
-
-      loadRecordIntoForm(r, false);
-
-      if (r.result) {
-        $("pricingBadge").className = badgeClass(r.result.pricing_view || "合理");
-        $("pricingBadge").textContent = r.result.pricing_view || "已載入";
+      if (schema.raw_engine_result) {
+        renderResult(schema.raw_engine_result, schema);
       }
     }
 
-    function editHistoryBySortedIndex(sortedIndex) {
-      const sorted = getInquiryStore().slice().sort((a, b) => (b.inquiry_no || "").localeCompare(a.inquiry_no || ""));
-      const r = sorted[sortedIndex];
-      if (!r) return;
+    function loadHistoryBySortedIndex(sortedIndex) {
+      const sorted = getInquiryStore()
+        .slice()
+        .sort((a, b) => String(b.inquiry?.inquiry_no || "").localeCompare(String(a.inquiry?.inquiry_no || "")));
+      const schema = sorted[sortedIndex];
+      if (!schema) return;
 
-      loadRecordIntoForm(r, true);
-      alert(`已載入編輯模式：${r.inquiry_no}`);
+      loadRecordIntoForm(schema, false);
+    }
+
+    function editHistoryBySortedIndex(sortedIndex) {
+      const sorted = getInquiryStore()
+        .slice()
+        .sort((a, b) => String(b.inquiry?.inquiry_no || "").localeCompare(String(a.inquiry?.inquiry_no || "")));
+      const schema = sorted[sortedIndex];
+      if (!schema) return;
+
+      loadRecordIntoForm(schema, true);
+      alert(`已載入編輯模式：${schema.inquiry?.inquiry_no || ""}`);
     }
 
     function deleteHistoryBySortedIndex(sortedIndex) {
-      const sorted = getInquiryStore().slice().sort((a, b) => (b.inquiry_no || "").localeCompare(a.inquiry_no || ""));
+      const sorted = getInquiryStore()
+        .slice()
+        .sort((a, b) => String(b.inquiry?.inquiry_no || "").localeCompare(String(a.inquiry?.inquiry_no || "")));
       const target = sorted[sortedIndex];
       if (!target) return;
 
-      const ok = confirm(`確定刪除 ${target.inquiry_no} 嗎？`);
+      const ok = confirm(`確定刪除 ${target.inquiry?.inquiry_no || ""} 嗎？`);
       if (!ok) return;
 
-      const store = getInquiryStore().filter(x => x.inquiry_no !== target.inquiry_no);
+      const store = getInquiryStore().filter(x => x.inquiry?.inquiry_no !== target.inquiry?.inquiry_no);
       saveInquiryStore(store);
 
-      if (currentEditingInquiryNo === target.inquiry_no) {
+      if (currentEditingInquiryNo === target.inquiry?.inquiry_no) {
         currentEditingInquiryNo = null;
         refreshInquiryNo();
       }
@@ -1087,7 +1344,7 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
         return;
       }
       downloadFile(
-        `fcn_inquiries_${todayStr().replaceAll("-", "")}.json`,
+        `fcn_quote_history_${todayStr().replaceAll("-", "")}.json`,
         JSON.stringify(store, null, 2),
         "application/json;charset=utf-8"
       );
@@ -1100,50 +1357,72 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
         return;
       }
 
-      const rows = [
-        [
-          "inquiry_date",
-          "inquiry_no",
-          "case_name",
-          "symbols",
-          "KI",
-          "Strike",
-          "T",
-          "type",
-          "marketYield",
-          "fair_yield",
-          "basket_vol",
-          "vol_adj",
-          "pricing_view",
-          "pricing_delta",
-          "created_at",
-          "updated_at"
-        ].join(",")
-      ];
+      const rows = [[
+        "schema_version",
+        "inquiry_date",
+        "inquiry_no",
+        "issuer_local",
+        "upstream_bank_code",
+        "upstream_bank_name",
+        "rm",
+        "case_name",
+        "symbols",
+        "basket_key",
+        "KI",
+        "strike",
+        "tenor",
+        "type",
+        "market_yield",
+        "note",
+        "fair_yield",
+        "basket_vol",
+        "vol_adj",
+        "pricing_view",
+        "pricing_delta",
+        "edge",
+        "m2_market_context",
+        "m2_action_priority",
+        "m2_need_active_attention",
+        "m2_suggested_action",
+        "created_at",
+        "updated_at"
+      ].join(",")];
 
       store.forEach(r => {
         rows.push([
-          csvEscape(r.inquiry_date),
-          csvEscape(r.inquiry_no),
-          csvEscape(r.case_name),
-          csvEscape((r.symbols || []).join("|")),
-          csvEscape(r.KI),
-          csvEscape(r.Strike),
-          csvEscape(r.T),
-          csvEscape(r.type),
-          csvEscape(r.marketYield),
-          csvEscape(r.result?.fair_yield ?? ""),
-          csvEscape(r.result?.basket_vol ?? ""),
-          csvEscape(r.result?.vol_adj ?? ""),
-          csvEscape(r.result?.pricing_view ?? ""),
-          csvEscape(r.result?.pricing_delta ?? ""),
+          csvEscape(r.schema_version),
+          csvEscape(r.inquiry?.inquiry_date),
+          csvEscape(r.inquiry?.inquiry_no),
+          csvEscape(r.counterparty?.issuer_local),
+          csvEscape(r.counterparty?.upstream_bank_code),
+          csvEscape(r.counterparty?.upstream_bank_name),
+          csvEscape(r.counterparty?.rm),
+          csvEscape(r.quote?.case_name),
+          csvEscape((r.quote?.symbols || []).join("|")),
+          csvEscape(r.quote?.basket_key),
+          csvEscape(r.quote?.KI),
+          csvEscape(r.quote?.strike),
+          csvEscape(r.quote?.tenor),
+          csvEscape(r.quote?.type),
+          csvEscape(r.quote?.market_yield),
+          csvEscape(r.quote?.note),
+          csvEscape(r.engine?.fair_yield ?? ""),
+          csvEscape(r.engine?.basket_vol ?? ""),
+          csvEscape(r.engine?.vol_adj ?? ""),
+          csvEscape(r.engine?.pricing_view ?? ""),
+          csvEscape(r.engine?.pricing_delta ?? ""),
+          csvEscape(r.engine?.edge ?? ""),
+          csvEscape(r.m2_callback?.market_context ?? ""),
+          csvEscape(r.m2_callback?.action_priority ?? ""),
+          csvEscape(r.m2_callback?.need_active_attention ?? ""),
+          csvEscape(r.m2_callback?.suggested_action ?? ""),
           csvEscape(r.created_at ?? ""),
           csvEscape(r.updated_at ?? "")
         ].join(","));
       });
 
       downloadFile(
-        `fcn_inquiries_${todayStr().replaceAll("-", "")}.csv`,
+        `fcn_quote_history_${todayStr().replaceAll("-", "")}.csv`,
         rows.join("\n"),
         "text/csv;charset=utf-8"
       );
@@ -1159,7 +1438,7 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       const ok = confirm("確定要清空全部歷史詢價單嗎？此動作無法復原。");
       if (!ok) return;
 
-      localStorage.removeItem("fcn_inquiries");
+      localStorage.removeItem(STORAGE_KEY);
       Object.keys(localStorage).forEach(key => {
         if (key.startsWith("fcn_inquiry_seq_")) {
           localStorage.removeItem(key);
@@ -1173,75 +1452,78 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       clearResult();
     }
 
-    async function saveCurrentRun(result, payload) {
+    function collectSinglePayload() {
       const inquiryDate = $("inquiryDate").value || todayStr();
-      const store = getInquiryStore();
 
-      let inquiryNo = currentEditingInquiryNo;
-      let existingIndex = -1;
-
-      if (inquiryNo) {
-        existingIndex = store.findIndex(x => x.inquiry_no === inquiryNo);
-      }
-
-      if (!inquiryNo || existingIndex === -1) {
-        inquiryNo = generateInquiryNo(inquiryDate);
-      }
-
-      const row = {
-        inquiry_date: inquiryDate,
-        inquiry_no: inquiryNo,
-        case_name: payload.caseName,
-        symbols: payload.symbols,
-        KI: payload.KI,
-        Strike: payload.Strike,
-        T: payload.T,
-        type: payload.type,
-        marketYield: payload.marketYield,
-        basket_key: normalizeBasket(payload.symbols),
-        created_at: existingIndex >= 0 ? (store[existingIndex].created_at || new Date().toISOString()) : new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-        result: {
-          fair_yield: result.fair_yield,
-          basket_vol: result.basket_vol,
-          vol_adj: result.vol_adj,
-          pricing_view: result.pricing_view,
-          scores: result.scores,
-          short_swings: result.short_swings,
-          pricing_delta: result.pricing_delta
-        }
+      return {
+        inquiryDate,
+        inquiryNo: currentEditingInquiryNo || generateInquiryNo(inquiryDate),
+        issuer: $("issuer").value || "",
+        upstreamBank: $("upstreamBank").value || "",
+        rm: $("rm").value.trim() || "",
+        caseName: $("caseName").value.trim() || "Case 1",
+        symbols: parseSymbols($("symbols").value),
+        KI: num($("ki").value),
+        Strike: num($("strike").value),
+        T: num($("tenor").value),
+        type: $("type").value,
+        marketYield: num($("marketYield").value),
+        note: $("note").value.trim() || ""
       };
+    }
+
+    async function saveSchemaRecord(schema) {
+      const store = getInquiryStore();
+      const inquiryNo = schema.inquiry?.inquiry_no;
+      const existingIndex = store.findIndex(x => x.inquiry?.inquiry_no === inquiryNo);
 
       if (existingIndex >= 0) {
-        store[existingIndex] = row;
+        schema.created_at = store[existingIndex].created_at || schema.created_at;
+        store[existingIndex] = schema;
       } else {
-        store.push(row);
+        store.push(schema);
       }
 
       saveInquiryStore(store);
-
       currentEditingInquiryNo = null;
-      $("inquiryNo").value = inquiryNo;
       refreshInquiryNo();
       renderHistory();
-      renderBasketCompare(payload.symbols);
+      renderBasketCompare(schema.quote?.symbols || []);
     }
 
     async function runCase() {
       try {
-        const payload = {
-          caseName: $("caseName").value.trim() || "Case 1",
-          symbols: parseSymbols($("symbols").value),
-          KI: num($("ki").value),
-          Strike: num($("strike").value),
-          T: num($("tenor").value),
-          type: $("type").value,
-          marketYield: num($("marketYield").value)
+        const payload = collectSinglePayload();
+
+        const engineInput = {
+          caseName: payload.caseName,
+          symbols: payload.symbols,
+          KI: payload.KI,
+          Strike: payload.Strike,
+          T: payload.T,
+          type: payload.type,
+          marketYield: payload.marketYield,
+          note: payload.note
         };
 
-        const result = await runM8Case(payload);
-        renderResult(result);
-        await saveCurrentRun(result, payload);
+        const result = await runM8Case(engineInput);
+
+        if (!result.market_yield && result.market_yield !== 0) {
+          result.market_yield = payload.marketYield;
+        }
+        if (!result.case_name) {
+          result.case_name = payload.caseName;
+        }
+        if (!result.note) {
+          result.note = payload.note;
+        }
+
+        const store = getInquiryStore();
+        const old = store.find(x => x.inquiry?.inquiry_no === payload.inquiryNo);
+        const schema = buildEngineSchema(payload, result, old?.created_at || null);
+
+        renderResult(result, schema);
+        await saveSchemaRecord(schema);
 
       } catch (err) {
         $("pricingBadge").className = "pill bad";
@@ -1250,7 +1532,7 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       }
     }
 
-    function importBatchInquiry() {
+    async function importBatchInquiry() {
       const inquiryDate = $("inquiryDate").value || todayStr();
       const rows = parseBatchText($("batchInput").value, inquiryDate);
 
@@ -1260,12 +1542,69 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       }
 
       const store = getInquiryStore();
-      store.push(...rows);
-      saveInquiryStore(store);
+      let successCount = 0;
+      let lastSchema = null;
 
+      for (const row of rows) {
+        try {
+          const engineInput = {
+            caseName: row.caseName,
+            symbols: row.symbols,
+            KI: row.KI,
+            Strike: row.Strike,
+            T: row.T,
+            type: row.type,
+            marketYield: row.marketYield,
+            note: row.note
+          };
+
+          const result = await runM8Case(engineInput);
+
+          if (!result.market_yield && result.market_yield !== 0) {
+            result.market_yield = row.marketYield;
+          }
+          if (!result.case_name) {
+            result.case_name = row.caseName;
+          }
+          if (!result.note) {
+            result.note = row.note;
+          }
+
+          const payload = {
+            inquiryDate: row.inquiryDate,
+            inquiryNo: row.inquiryNo,
+            issuer: row.issuer,
+            upstreamBank: row.upstreamBank,
+            rm: row.rm,
+            caseName: row.caseName,
+            symbols: row.symbols,
+            KI: row.KI,
+            Strike: row.Strike,
+            T: row.T,
+            type: row.type,
+            marketYield: row.marketYield,
+            note: row.note
+          };
+
+          const schema = buildEngineSchema(payload, result, null);
+          store.push(schema);
+          lastSchema = schema;
+          successCount += 1;
+        } catch (err) {
+          console.error("batch run failed:", row, err);
+        }
+      }
+
+      saveInquiryStore(store);
       renderHistory();
+
+      if (lastSchema?.raw_engine_result) {
+        renderResult(lastSchema.raw_engine_result, lastSchema);
+        renderBasketCompare(lastSchema.quote?.symbols || []);
+      }
+
       refreshInquiryNo();
-      alert(`已匯入 ${rows.length} 筆詢價單`);
+      alert(`已匯入並完成 M8 計算：${successCount} 筆`);
     }
 
     function setupInputMode() {
@@ -1275,6 +1614,9 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
     }
 
     function loadDemo() {
+      $("issuer").value = "富邦";
+      $("upstreamBank").value = "NATIXIS";
+      $("rm").value = "王小姐";
       $("caseName").value = "Case Demo";
       $("symbols").value = "ARM,GOOG,INTC,TSM";
       $("ki").value = 60;
@@ -1282,6 +1624,7 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       $("tenor").value = 6;
       $("type").value = "EKI";
       $("marketYield").value = 23.35;
+      $("note").value = "示範案例";
       $("inputMode").value = "single";
       currentEditingInquiryNo = null;
       setupInputMode();
@@ -1293,7 +1636,7 @@ Case2,ARM|GOOG|INTC|TSM,60,70,6,EKI,23.62"></textarea>
       currentEditingInquiryNo = null;
       refreshInquiryNo();
 
-      $("pricingBadge").className = "pill ok";
+      $("pricingBadge").className = "pill info";
       $("pricingBadge").textContent = "尚未執行";
       $("resultArea").innerHTML = `<div class="empty">請先輸入案例後，按「執行 M8 並留存」</div>`;
     }
