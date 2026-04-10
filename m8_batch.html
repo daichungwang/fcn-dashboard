@@ -859,16 +859,16 @@
         const d = basketVol - 3.0;
         return {
           bucket: "3 < v ≤ 6",
-          formula: "0.45 + 0.85×(v-3) + 0.22×(v-3)^2",
-          substitution: `0.45 + 0.85×${fmt(d)} + 0.22×${fmt(d)}^2`
+          formula: "0.45 + 0.85×(v-3) + 0.3×(v-3)^2",
+          substitution: `0.45 + 0.85×${fmt(d)} + 0.3×${fmt(d)}^2`
         };
       }
 
       const d = basketVol - 6.0;
       return {
         bucket: "v > 6",
-        formula: "4.03 + 0.45×(v-6) - 0.04×(v-6)^2",
-        substitution: `4.03 + 0.45×${fmt(d)} - 0.04×${fmt(d)}^2`
+        formula: "5.7 + 0.45×(v-6) - 0.04×(v-6)^2",
+        substitution: `5.7 + 0.45×${fmt(d)} - 0.04×${fmt(d)}^2`
       };
     }
 
