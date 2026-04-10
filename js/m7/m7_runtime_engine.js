@@ -1,7 +1,7 @@
 // ==========================================
-// M7 Runtime Engine FINAL + M2 Exposure + Today Highlight
+// M7 Runtime Engine FINAL
 // 讀取：
-//   data/m7/m7_new_stock_pool.json
+//   data/m7/m7_fundamental_data.json
 //   data/m7/m2_stock_exposure.json
 // 輸出：
 //   data/m7/m7_new_stock_today.json
@@ -10,7 +10,7 @@
 import fs from "fs";
 import path from "path";
 
-const INPUT_FILE = path.resolve("./data/m7/m7_new_stock_pool.json");
+const INPUT_FILE = path.resolve("./data/m7/m7_fundamental_data.json");
 const M2_FILE = path.resolve("./data/m7/m2_stock_exposure.json");
 const OUTPUT_FILE = path.resolve("./data/m7/m7_new_stock_today.json");
 
@@ -34,6 +34,10 @@ function round2(v) {
   return Number.isFinite(n) ? Math.round(n * 100) / 100 : null;
 }
 
+function clamp(v, min, max) {
+  return Math.max(min, Math.min(v, max));
+}
+
 // ------------------------------------------
 // 讀取 M2 曝險資料
 // ------------------------------------------
@@ -55,190 +59,383 @@ function loadM2Exposure() {
 }
 
 // ------------------------------------------
-// 估值
+// 類別 / Anchor / 類別加成
 // ------------------------------------------
-function buildValuationData(row) {
-  const model = row.valuation_model || "PEG";
-  const peg = safeNum(row["PEG"], null);
-  const price = safeNum(row["現價"], null);
-  const epsNow = safeNum(row["目前EPS"], null);
-  const epsNext = safeNum(row["明年EPS"], null);
+function inferCategory(row) {
+  const sector = row.sector || "";
+  const subsector = row.subsector || "";
+  const symbol = row.symbol || "";
+
+  // 顯式禁區
+  const speculativeSet = new Set([
+    "COIN", "SOFI", "ALAB", "CRDO", "TSLA", "PLTR"
+  ]);
+  if (speculativeSet.has(symbol)) return "speculative";
+
+  const travelSet = new Set(["AAL", "CCL", "LVS", "MGM"]);
+  if (travelSet.has(symbol)) return "cyclical_high_beta";
+
+  if (sector === "AI_APPLICATION") return "core";
+  if (sector === "AI_SEMI") return "core";
+  if (sector === "PLATFORM") return "core";
+  if (sector === "FINANCIAL") return "income";
+  if (sector === "ETF") return "income";
+  if (sector === "DEFENSIVE") return "defensive";
+  if (sector === "TRAVEL" || subsector === "AIRLINE" || subsector === "CRUISE" || subsector === "CASINO") {
+    return "cyclical_high_beta";
+  }
+
+  return "core";
+}
+
+function getAnchorPE(row, category) {
+  const sector = row.sector || "";
+  const subsector = row.subsector || "";
+  const symbol = row.symbol || "";
+
+  if (category === "speculative") return 18;
+  if (category === "cyclical_high_beta") return 12;
+  if (category === "income") {
+    if (sector === "FINANCIAL") return 10;
+    if (sector === "ETF") return 18;
+    return 14;
+  }
+  if (category === "defensive") return 22;
+
+  if (sector === "AI_APPLICATION") return 30;
+  if (sector === "PLATFORM") return 28;
+
+  if (sector === "AI_SEMI") {
+    if (subsector === "GPU" || subsector === "ASIC" || symbol === "NVDA" || symbol === "AVGO" || symbol === "ARM") {
+      return 25;
+    }
+    if (symbol === "MU") return 16;
+    return 22;
+  }
+
+  return 20;
+}
+
+function calcCategoryAdjust(category) {
+  if (category === "core") return 5;
+  if (category === "defensive") return 3;
+  if (category === "income") return 1;
+  if (category === "speculative") return -10;
+  if (category === "cyclical_high_beta") return -4;
+  return 0;
+}
+
+// ------------------------------------------
+// 品質分數（顯示用）
+// 品質倍率（估值用）
+// ------------------------------------------
+function calcQualityScore(qualityLevel, riskLevel) {
+  let score = 0;
+
+  if (qualityLevel === "高") score += 5;
+  else if (qualityLevel === "中") score += 2;
+  else score -= 5;
+
+  if (riskLevel === "高") score -= 2;
+  else if (riskLevel === "低") score += 1;
+
+  return score;
+}
+
+// qualityMomentum =
+// 0.1 * 1M + 0.15 * 3M + 0.25 * 6M + 0.5 * 12M
+function calcQualityMomentum(r1m, r3m, r6m, r12m) {
+  return (
+    0.1 * (r1m ?? 0) +
+    0.15 * (r3m ?? 0) +
+    0.25 * (r6m ?? 0) +
+    0.5 * (r12m ?? 0)
+  );
+}
+
+// 定稿：std from 80% move to 100%, range 80%~120%
+function calcQualityFactor(q) {
+  if (q >= 30) return 1.20;
+  if (q >= 20) return 1.00 + (q - 20) * 0.02; // 20 → 1.00, 30 → 1.20
+  if (q >= 10) return 0.80 + (q - 10) * 0.02; // 10 → 0.80, 20 → 1.00
+  return 0.80; // <= 10 不再往下削弱
+}
+
+// ------------------------------------------
+// 估值：peScore + growthScore，再乘 qualityFactor
+// ------------------------------------------
+function peScoreFromRatio(peRatio) {
+  if (peRatio === null || peRatio === undefined) return 20;
+
+  if (peRatio <= 0.7) return 34;
+  if (peRatio <= 0.8) return 32 + (0.8 - peRatio) * 20;
+  if (peRatio <= 0.9) return 28 + (0.9 - peRatio) * 40;
+  if (peRatio <= 1.1) return 20 - (peRatio - 1.0) * 80;
+  if (peRatio <= 1.2) return 12 - (peRatio - 1.1) * 40;
+  if (peRatio <= 1.3) return 8 - (peRatio - 1.2) * 20;
+  return 6;
+}
+
+function growthScoreBase(growth) {
+  // growth 用 %，例如 15 = 15%
+  if (growth === null || growth === undefined) return 3;
+
+  if (growth <= -30) return 0;
+
+  if (growth <= -20) {
+    return 1 + (growth + 20) * 0.1;
+  }
+
+  if (growth <= -10) {
+    return 2 + (growth + 10) * 0.1;
+  }
+
+  if (growth <= 0) {
+    return 3 + growth * 0.1;
+  }
+
+  // 0% ~ 10%：慢慢加，3 → 6
+  if (growth <= 10) {
+    return 3 + 0.3 * growth;
+  }
+
+  // 10% ~ 20%：拉開，6 → 14
+  if (growth <= 20) {
+    const x = growth - 10;
+    return 6 + 8 * Math.pow(x / 10, 1.5);
+  }
+
+  // 20% ~ 30%：線性，14 → 18
+  if (growth <= 30) {
+    return 14 + 0.4 * (growth - 20);
+  }
+
+  // 30%以上：鈍化，25封頂
+  return Math.min(25, 18 + 1.6 * Math.sqrt(growth - 30));
+}
+
+// 成長不變；衰退減半（相對 baseline = 3）
+function growthScoreFinal(growth) {
+  const base = 3;
+  const oldScore = growthScoreBase(growth);
+
+  if (growth === null || growth === undefined) return base;
+  if (growth >= 0) return oldScore;
+
+  return base + 0.5 * (oldScore - base);
+}
+
+function inferValuationModel(row) {
+  const sector = row.sector || "";
+  if (sector === "ETF") return "ETF";
+
+  const price = safeNum(row.price, null);
+  const epsNow = safeNum(row.eps_now, null);
+  const epsNext = safeNum(row.eps_next, null);
+
+  if (price !== null && epsNow !== null && epsNext !== null && epsNow > 0 && epsNext > 0) {
+    const growth = ((epsNext / epsNow) - 1) * 100;
+    if (growth > 0) return "PEG";
+    return "PE";
+  }
+
+  return "NON_PEG";
+}
+
+function buildValuationData(row, category) {
+  const model = inferValuationModel(row);
+  const price = safeNum(row.price, null);
+  const epsNow = safeNum(row.eps_now, null);
+  const epsNext = safeNum(row.eps_next, null);
+  const r1m = safeNum(row.ret_1m, 0);
+  const r3m = safeNum(row.ret_3m, 0);
+  const r6m = safeNum(row.ret_6m, 0);
+  const r12m = safeNum(row.ret_12m, 0);
 
   let peForward = null;
   let growth = null;
-  let score = 15;
+  let peg = null;
+  let peRatio = null;
+  let peScore = 20;
+  let growthScore = 3;
+  let qualityMomentum = calcQualityMomentum(r1m, r3m, r6m, r12m);
+  let qualityFactor = calcQualityFactor(qualityMomentum);
+  let rawScore = 23;
+  let finalScore = 18;
   let level = "中性";
   let text = "資料不足";
 
+  const anchorPE = getAnchorPE(row, category);
+
   if (price !== null && epsNext !== null && epsNext > 0) {
     peForward = price / epsNext;
+    peRatio = peForward / anchorPE;
+    peScore = peScoreFromRatio(peRatio);
   }
 
   if (epsNow !== null && epsNext !== null && epsNow > 0 && epsNext > 0) {
     growth = ((epsNext / epsNow) - 1) * 100;
+    growthScore = growthScoreFinal(growth);
+
+    if (growth > 0 && peForward !== null) {
+      peg = peForward / growth;
+    }
   }
 
-  if (model === "PEG") {
-    if (peg === null) {
-      score = 10;
-      level = "資料不足";
-      text = "PEG 資料不足";
-    } else if (peg < 0.8) {
-      score = 40;
-      level = "低估";
-    } else if (peg <= 1.0) {
-      score = 34;
-      level = "合理偏低";
-    } else if (peg <= 1.2) {
-      score = 28;
-      level = "合理";
-    } else if (peg <= 1.5) {
-      score = 20;
-      level = "偏貴";
-    } else if (peg <= 2.0) {
-      score = 10;
-      level = "偏高";
-    } else {
-      score = 0;
-      level = "高估";
-    }
+  rawScore = peScore + growthScore;
+  finalScore = rawScore * qualityFactor;
+  finalScore = clamp(finalScore, 0, 40);
 
-    if (peg !== null) {
-      text =
-        `PEG ${peg.toFixed(2)}（${level}）` +
-        (peForward !== null ? `，Forward PE ${peForward.toFixed(1)}` : "") +
-        (growth !== null ? `，EPS成長 ${growth.toFixed(1)}%` : "");
-    }
-  } else if (model === "NON_PEG") {
-    score = 20;
-    level = "中性估值";
-    text =
-      `非 PEG 類股，採中性估值` +
-      (peForward !== null ? `，Forward PE ${peForward.toFixed(1)}` : "") +
-      (growth !== null ? `，EPS成長 ${growth.toFixed(1)}%` : "");
-  } else if (model === "PE") {
-    score = 18;
-    level = "中性偏保守";
-    text =
-      `PE 類股，採中性偏保守估值` +
-      (peForward !== null ? `，Forward PE ${peForward.toFixed(1)}` : "") +
-      (growth !== null ? `，EPS成長 ${growth.toFixed(1)}%` : "");
-  } else if (model === "ETF") {
-    score = 15;
-    level = "ETF";
-    text = "ETF 不適用 PEG，採中性估值";
-  }
+  if (finalScore >= 30) level = "合理偏低";
+  else if (finalScore >= 24) level = "合理";
+  else if (finalScore >= 18) level = "中性";
+  else if (finalScore >= 10) level = "偏高";
+  else level = "高估";
+
+  text =
+    `AnchorPE ${anchorPE}` +
+    (peForward !== null ? `，Forward PE ${peForward.toFixed(1)}` : "") +
+    (peRatio !== null ? `，PE Ratio ${peRatio.toFixed(2)}` : "") +
+    (growth !== null ? `，EPS成長 ${growth.toFixed(1)}%` : "") +
+    (peg !== null ? `，PEG ${peg.toFixed(2)}` : "") +
+    `，QualityMomentum ${qualityMomentum.toFixed(2)}%` +
+    `，QualityFactor ${qualityFactor.toFixed(2)}` +
+    `，估值判定：${level}`;
 
   return {
     model,
     peg: round2(peg),
     pe_forward: round2(peForward),
+    anchor_pe: round2(anchorPE),
+    pe_ratio: round2(peRatio),
     growth: round2(growth),
+    pe_score: round2(peScore),
+    growth_score: round2(growthScore),
+    quality_momentum: round2(qualityMomentum),
+    quality_factor: round2(qualityFactor),
+    raw_score: round2(rawScore),
+    score: round2(finalScore),
     level,
-    score,
     text
   };
 }
 
 // ------------------------------------------
-// 趨勢 / 結構 / 溫度
+// 趨勢：方向，不是位置
+// trend_raw = 0.15*1M + 0.25*3M + 0.30*6M + 0.30*12M
 // ------------------------------------------
 function getArrow(v) {
   if (v === null || v === undefined) return "未知";
   return v >= 0 ? "↑" : "↓";
 }
 
-function buildStructureAnalysis(r12m, r6m, r3m, r1w) {
-  const yearArrow = getArrow(r12m);
-  const month6Arrow = getArrow(r6m);
-  const month3Arrow = getArrow(r3m);
-  const weekArrow = getArrow(r1w);
+function calcTrendRaw(r1m, r3m, r6m, r12m) {
+  return (
+    0.15 * (r1m ?? 0) +
+    0.25 * (r3m ?? 0) +
+    0.30 * (r6m ?? 0) +
+    0.30 * (r12m ?? 0)
+  );
+}
 
-  let trendState = "unknown";
-  let structureState = "neutral";
-  let timingState = "normal";
+function trendScoreFromRaw(trendRaw) {
+  if (trendRaw >= 30) return 30;
+  if (trendRaw >= 20) return 26 + (trendRaw - 20) * 0.4;
+  if (trendRaw >= 10) return 22 + (trendRaw - 10) * 0.4;
+  if (trendRaw >= 0) return 18 + trendRaw * 0.4;
 
-  if (r12m === null || r12m === undefined) {
-    trendState = "unknown";
-  } else if (r12m < 0) {
-    trendState = "down";
-  } else if (r12m >= 15) {
-    trendState = "up_strong";
-  } else {
-    trendState = "up_mild";
-  }
+  if (trendRaw >= -10) return 18 + trendRaw * 0.4;
+  if (trendRaw >= -20) return 14 + (trendRaw + 10) * 0.4;
+  if (trendRaw >= -30) return 10 + (trendRaw + 20) * 0.4;
 
-  if (trendState === "down") {
-    structureState = "downtrend";
-  } else {
-    if (r6m > 0 && r3m < 0) {
-      structureState = "pullback";
-    } else if (r6m > 0 && r3m > 0) {
-      structureState = "hot";
-    } else if (r6m < 0 && r3m < 0) {
-      structureState = "top";
-    } else if (r6m < 0 && r3m > 0) {
-      structureState = "rebound";
-    } else {
-      structureState = "neutral";
-    }
-  }
+  return 2;
+}
 
-  if (r1w !== null && r1w !== undefined) {
-    if (r1w > 8) timingState = "overheat";
-    else if (r1w < -5) timingState = "dip";
-  }
-
-  let trendScore = 0;
-  if (trendState === "up_strong") trendScore = 30;
-  else if (trendState === "up_mild") trendScore = 22;
-  else if (trendState === "down") trendScore = 0;
-  else trendScore = 10;
-
-  let structureScore = 0;
-  if (structureState === "pullback") structureScore = 20;
-  else if (structureState === "hot") structureScore = 10;
-  else if (structureState === "rebound") structureScore = 4;
-  else if (structureState === "top") structureScore = 0;
-  else if (structureState === "downtrend") structureScore = 0;
-  else structureScore = 6;
-
-  let timingAdjust = 0;
-  if (timingState === "dip") timingAdjust = 5;
-  else if (timingState === "overheat") timingAdjust = -5;
-
-  let structureText = "";
-  if (structureState === "pullback") {
-    structureText = "年線仍向上，中期回檔，屬較理想的 FCN 結構。";
-  } else if (structureState === "hot") {
-    structureText = "長中期結構健康，但位置偏熱，不宜追高。";
-  } else if (structureState === "top") {
-    structureText = "年線仍高位，但 3M / 6M 同步轉弱，屬明顯做頭，宜按兵不動。";
-  } else if (structureState === "downtrend") {
-    structureText = "年線下行，長期趨勢已轉弱，不適合做 FCN。";
-  } else if (structureState === "rebound") {
-    structureText = "中期仍弱，目前偏向弱勢反彈。";
-  } else {
-    structureText = "結構中性，需搭配其他面向判斷。";
-  }
-
-  return {
-    year_arrow: yearArrow,
-    month6_arrow: month6Arrow,
-    month3_arrow: month3Arrow,
-    week_arrow: weekArrow,
-    trend_state: trendState,
-    structure_state: structureState,
-    timing_state: timingState,
-    trend_score: trendScore,
-    structure_score: structureScore,
-    timing_adjust: timingAdjust,
-    structure_text: structureText
-  };
+function inferTrendState(trendRaw) {
+  if (trendRaw >= 20) return "up_strong";
+  if (trendRaw >= 5) return "up_mild";
+  if (trendRaw > -10) return "neutral";
+  if (trendRaw > -25) return "weak";
+  return "down";
 }
 
 // ------------------------------------------
-// 資金 / 類別
+// Structure：沿用 M8 ShortSwing
+// ShortSwing = 0.35*d0 + 0.25*d1 + 0.15*d2 + 0.10*d3 + 0.08*d4 + 0.07*d5
+// score:
+// 0~5% 曲線加速，0~8分
+// 5~10% 緩升，8~10分
+// >=10 封頂10
+// ------------------------------------------
+function calcShortSwing(swingDays, amp1d) {
+  const days = Array.isArray(swingDays) ? swingDays : [];
+  const d0 = safeNum(days[0], safeNum(amp1d, 0));
+  const d1 = safeNum(days[1], 0);
+  const d2 = safeNum(days[2], 0);
+  const d3 = safeNum(days[3], 0);
+  const d4 = safeNum(days[4], 0);
+  const d5 = safeNum(days[5], 0);
+
+  return (
+    0.35 * d0 +
+    0.25 * d1 +
+    0.15 * d2 +
+    0.10 * d3 +
+    0.08 * d4 +
+    0.07 * d5
+  );
+}
+
+function structureScoreFromShortSwing(shortSwing) {
+  if (shortSwing <= 0) return 0;
+
+  if (shortSwing <= 5) {
+    return 8 * Math.pow(shortSwing / 5, 1.6);
+  }
+
+  if (shortSwing <= 10) {
+    return 8 + (shortSwing - 5) * 0.4;
+  }
+
+  return 10;
+}
+
+function inferStructureState(shortSwing) {
+  if (shortSwing >= 10) return "sweet_max";
+  if (shortSwing >= 5) return "sweet";
+  if (shortSwing >= 2) return "building";
+  return "flat";
+}
+
+// ------------------------------------------
+// Timing：Snapshot
+// snapshot = 0.4*r1d + 0.5*r1w + 0.1*r1m
+// 無扣分版，0~10
+// -15% ~ +15% => 7.5 ~ 2.5
+// ------------------------------------------
+function calcSnapshot(r1d, r1w, r1m) {
+  return (
+    0.4 * (r1d ?? 0) +
+    0.5 * (r1w ?? 0) +
+    0.1 * (r1m ?? 0)
+  );
+}
+
+function timingScoreFromSnapshot(snapshot) {
+  let score = 5 - 0.1667 * snapshot;
+  return clamp(score, 0, 10);
+}
+
+function inferTimingState(snapshot) {
+  if (snapshot <= -10) return "very_cold";
+  if (snapshot <= -3) return "cold";
+  if (snapshot < 3) return "neutral";
+  if (snapshot < 10) return "warm";
+  return "hot";
+}
+
+// ------------------------------------------
+// 資金：沿用舊版
 // ------------------------------------------
 function calcMoneyScore(volumeRatio) {
   const v = safeNum(volumeRatio, null);
@@ -247,15 +444,6 @@ function calcMoneyScore(volumeRatio) {
   if (v >= 1.2) return 15;
   if (v >= 0.7) return 10;
   return 5;
-}
-
-function calcCategoryAdjust(category) {
-  let adj = 0;
-  if (category === "core") adj += 5;
-  if (category === "defensive") adj += 3;
-  if (category === "income") adj += 1;
-  if (category === "speculative") adj -= 10;
-  return adj;
 }
 
 // ------------------------------------------
@@ -290,7 +478,7 @@ function buildExposure(m2Node) {
 function getExposureBaseline(category) {
   if (category === "core") return { safe: 40, warning: 50 };
   if (category === "defensive") return { safe: 35, warning: 45 };
-  if (category === "growth") return { safe: 25, warning: 35 };
+  if (category === "income") return { safe: 25, warning: 35 };
   return { safe: 20, warning: 30 };
 }
 
@@ -318,34 +506,32 @@ function buildExposureWarning(exposure, category) {
 }
 
 // ------------------------------------------
-// 今日推薦判斷
-// 只做標示與排序，不做擋單
+// 今日推薦 / 行動
 // ------------------------------------------
 function evaluateTodayHighlight(candidate) {
   const reasons = [];
-
   const trend = candidate["趨勢判讀"] || {};
-  const longUp =
-    trend["趨勢狀態"] === "up_strong" || trend["趨勢狀態"] === "up_mild";
-  const pullback = trend["結構狀態"] === "pullback";
-  const notTop = trend["結構狀態"] !== "top";
-  const notDown = trend["趨勢狀態"] !== "down";
 
-  if (longUp) reasons.push("長期趨勢向上");
-  if (pullback) reasons.push("中期回檔");
-  if (candidate["估值資料"]?.PEG !== null && safeNum(candidate["估值資料"]?.PEG, 999) < 2) {
-    reasons.push("估值可接受");
-  }
-  if ((candidate["曝險警示"]?.level || "normal") !== "high") {
-    reasons.push("曝險可控");
-  }
+  const notDown = trend["趨勢狀態"] !== "down";
+  const structureGood =
+    trend["結構狀態"] === "sweet" ||
+    trend["結構狀態"] === "sweet_max";
+  const timingGood = safeNum(candidate["timing_score"], 0) >= 6;
+  const exposureOk = (candidate["曝險警示"]?.level || "normal") !== "high";
+  const valuationOk = safeNum(candidate["valuation_score"], 0) >= 18;
+
+  if (notDown) reasons.push("趨勢未轉空");
+  if (structureGood) reasons.push("結構夠甜");
+  if (timingGood) reasons.push("時機偏正");
+  if (valuationOk) reasons.push("估值合理");
+  if (exposureOk) reasons.push("曝險可控");
 
   const highlight =
     notDown &&
-    notTop &&
-    longUp &&
-    pullback &&
-    (candidate["曝險警示"]?.level || "normal") !== "high";
+    structureGood &&
+    timingGood &&
+    valuationOk &&
+    exposureOk;
 
   return {
     is_today_highlight: highlight,
@@ -353,14 +539,9 @@ function evaluateTodayHighlight(candidate) {
   };
 }
 
-// ------------------------------------------
-// 分類分桶
-// 不直接擋掉，只分類
-// ------------------------------------------
-function buildAction(row, structure, total) {
+function buildAction(row, trendState, total) {
   if (row.category === "speculative") return "移除";
-  if (structure.trend_state === "down") return "移除";
-  if (structure.structure_state === "top") return "移除";
+  if (trendState === "down") return "移除";
   if (total >= 75) return "加入";
   if (total >= 55) return "觀察";
   return "移除";
@@ -375,38 +556,44 @@ function buildUIBucket(action) {
 // ------------------------------------------
 // 解釋
 // ------------------------------------------
-function buildWhyYes(row, valuation, structure, moneyScore, qScore) {
+function buildWhyYes(row, valuation, trendState, structureState, timingScore, moneyScore, qScore) {
   const arr = [];
-  if (row.category === "core") arr.push("核心股");
-  if (row.category === "defensive") arr.push("防禦型");
-  if (qScore >= 5) arr.push("品質高");
-  if (valuation.score >= 28) arr.push("估值合理");
-  if (structure.trend_state === "up_strong" || structure.trend_state === "up_mild") arr.push("長期趨勢向上");
-  if (structure.structure_state === "pullback") arr.push("中期回檔，價格較合理");
-  if (moneyScore >= 15) arr.push("市場資金支持");
+  if ((row.category || inferCategory(row)) === "core") arr.push("核心股");
+  if ((row.category || inferCategory(row)) === "defensive") arr.push("防禦型");
+  if (qScore >= 5) arr.push("品質佳");
+  if (valuation.score >= 24) arr.push("估值合理");
+  if (trendState === "up_strong" || trendState === "up_mild") arr.push("中期趨勢健康");
+  if (structureState === "sweet" || structureState === "sweet_max") arr.push("價格已有甜度");
+  if (timingScore >= 6) arr.push("短線節奏偏佳");
+  if (moneyScore >= 15) arr.push("資金支持");
   return arr;
 }
 
-function buildWhyNo(row, valuation, structure, moneyScore, exposureWarning) {
+function buildWhyNo(row, valuation, trendState, structureState, timingState, moneyScore, exposureWarning) {
   const arr = [];
-  if (row.valuation_model === "PEG" && valuation.peg !== null && valuation.peg > 1.6) {
-    arr.push(`PEG ${valuation.peg} 偏高`);
-  }
-  if (structure.structure_state === "top") arr.push("3M / 6M 同步轉弱，屬做頭");
-  if (structure.trend_state === "down") arr.push("年線下行，長期趨勢不佳");
-  if (structure.timing_state === "overheat") arr.push("短期過熱，不宜追高");
-  if (moneyScore <= 5) arr.push(`量比 ${row["量比"] ?? "--"} 偏低，資金不足`);
-  if (row.category === "speculative") arr.push("高波動投機股，不適合 FCN");
-  if (exposureWarning.level === "high") arr.push("現有持倉曝險偏高");
+  if (valuation.pe_ratio !== null && valuation.pe_ratio > 1.2) arr.push("PE 相對偏貴");
+  if (valuation.growth !== null && valuation.growth < 0) arr.push("EPS 預估衰退");
+  if (trendState === "down") arr.push("趨勢轉弱");
+  if (trendState === "weak") arr.push("中期偏弱");
+  if (structureState === "flat") arr.push("結構不甜");
+  if (timingState === "hot") arr.push("短期偏熱");
+  if (moneyScore <= 5) arr.push(`量比 ${row.volume_ratio ?? "--"} 偏低`);
+  if ((row.category || inferCategory(row)) === "speculative") arr.push("投機股不適合 FCN");
+  if (exposureWarning.level === "high") arr.push("現有曝險偏高");
   return arr;
 }
 
-function buildFinalComment(action, valuation, structure, moneyScore, exposureWarning) {
+function buildFinalComment(action, valuation, trendRaw, trendState, shortSwing, snapshot, moneyScore, exposureWarning) {
   const parts = [];
-  if (structure.structure_text) parts.push(structure.structure_text);
-  if (valuation.text) parts.push(`估值面：${valuation.text}。`);
+
+  parts.push(`趨勢面：TrendRaw ${round2(trendRaw)}，狀態 ${trendState}。`);
+  parts.push(`結構面：ShortSwing ${round2(shortSwing)}，甜度已反映。`);
+  parts.push(`時機面：Snapshot ${round2(snapshot)}。`);
+  parts.push(`估值面：${valuation.text}。`);
+
   if (moneyScore <= 5) parts.push("資金面偏弱。");
   else if (moneyScore >= 15) parts.push("資金面尚可。");
+
   if (exposureWarning?.text) parts.push(`持倉面：${exposureWarning.text}`);
 
   if (action === "加入") parts.push("整體條件支持，可列入 FCN 候選。");
@@ -421,7 +608,7 @@ function buildFinalComment(action, valuation, structure, moneyScore, exposureWar
 // ------------------------------------------
 function run() {
   if (!fs.existsSync(INPUT_FILE)) {
-    throw new Error("找不到 m7_new_stock_pool.json");
+    throw new Error("找不到 m7_fundamental_data.json");
   }
 
   const raw = JSON.parse(fs.readFileSync(INPUT_FILE, "utf-8"));
@@ -429,50 +616,61 @@ function run() {
   const m2 = loadM2Exposure();
 
   const result = rows.map((row) => {
-    const r1w = safeNum(row["1週漲跌幅"], null);
-    const r1m = safeNum(row["1月漲跌幅"], null);
-    const r3m = safeNum(row["3月漲跌幅"], null);
-    const r6m = safeNum(row["6月漲跌幅"], null);
-    const r12m = safeNum(row["12月漲跌幅"], null);
-    const vol = safeNum(row["量比"], null);
-    const qScore = safeNum(row["品質分數"], 0);
+    const r1d = safeNum(row.ret_1d, safeNum(row.amp_1d, 0));
+    const r1w = safeNum(row.ret_1w, null);
+    const r1m = safeNum(row.ret_1m, null);
+    const r3m = safeNum(row.ret_3m, null);
+    const r6m = safeNum(row.ret_6m, null);
+    const r12m = safeNum(row.ret_12m, null);
+    const vol = safeNum(row.volume_ratio, null);
 
-    const valuation = buildValuationData(row);
-    const structure = buildStructureAnalysis(
-      r12m ?? 0,
-      r6m ?? r3m ?? 0,
-      r3m ?? 0,
-      r1w ?? 0
-    );
+    const category = row.category || inferCategory(row);
+    row.category = category; // 讓後續可直接沿用
+
+    const qScore = calcQualityScore(row.quality_level, row.risk_level);
+    const valuation = buildValuationData(row, category);
+
+    const trendRaw = calcTrendRaw(r1m ?? 0, r3m ?? 0, r6m ?? 0, r12m ?? 0);
+    const trendScore = trendScoreFromRaw(trendRaw);
+    const trendState = inferTrendState(trendRaw);
+
+    const shortSwing = calcShortSwing(row.swing_days, row.amp_1d);
+    const structureScore = structureScoreFromShortSwing(shortSwing);
+    const structureState = inferStructureState(shortSwing);
+
+    const snapshot = calcSnapshot(r1d ?? 0, r1w ?? 0, r1m ?? 0);
+    const timingScore = timingScoreFromSnapshot(snapshot);
+    const timingState = inferTimingState(snapshot);
 
     const moneyScore = calcMoneyScore(vol);
-    const categoryAdjust = calcCategoryAdjust(row.category);
+    const categoryAdjust = calcCategoryAdjust(category);
 
     const total =
       valuation.score +
-      structure.trend_score +
-      structure.structure_score +
-      structure.timing_adjust +
+      trendScore +
+      structureScore +
+      timingScore +
       moneyScore +
       qScore +
       categoryAdjust;
 
-    const action = buildAction(row, structure, total);
+    const action = buildAction(row, trendState, total);
 
     const exposure = buildExposure(m2.stocks?.[row.symbol]);
-    const exposureWarning = buildExposureWarning(exposure, row.category);
+    const exposureWarning = buildExposureWarning(exposure, category);
 
     const candidate = {
       "股號": row.symbol,
-      "股名": row["名稱"],
+      "股名": row.name,
       "產業": row.sector,
       "子產業": row.subsector,
-      "分類": row.category,
-      "估值模型": row.valuation_model,
-      "風險等級": row["波動等級"],
+      "分類": category,
+      "估值模型": valuation.model,
+      "風險等級": row.risk_level,
 
-      "股價": round2(row["現價"]),
-      "PEG": round2(row["PEG"]),
+      "股價": round2(row.price),
+      "PEG": round2(valuation.peg),
+      "1日漲跌幅": round2(r1d),
       "1週漲跌幅": round2(r1w),
       "1月漲跌幅": round2(r1m),
       "3月漲跌幅": round2(r3m),
@@ -480,41 +678,58 @@ function run() {
       "12月漲跌幅": round2(r12m),
       "量比": round2(vol),
 
-      "valuation_score": valuation.score,
-      "trend_score": structure.trend_score,
-      "structure_score": structure.structure_score,
-      "timing_adjust": structure.timing_adjust,
-      "money_score": moneyScore,
-      "quality_score": qScore,
-      "category_adjust": categoryAdjust,
+      "valuation_score": round2(valuation.score),
+      "trend_score": round2(trendScore),
+      "structure_score": round2(structureScore),
+      "timing_score": round2(timingScore),
+      "money_score": round2(moneyScore),
+      "quality_score": round2(qScore),
+      "category_adjust": round2(categoryAdjust),
 
-      "today_score": Math.round(total),
+      "today_score": round2(total),
 
       "趨勢判讀": {
-        "年線": structure.year_arrow,
-        "6月線": structure.month6_arrow,
-        "3月線": structure.month3_arrow,
-        "週線": structure.week_arrow,
-        "趨勢狀態": structure.trend_state,
-        "結構狀態": structure.structure_state,
-        "溫度狀態": structure.timing_state
+        "年線": getArrow(r12m),
+        "6月線": getArrow(r6m),
+        "3月線": getArrow(r3m),
+        "月線": getArrow(r1m),
+        "趨勢狀態": trendState,
+        "結構狀態": structureState,
+        "時機狀態": timingState
       },
 
       "估值資料": {
         "PEG": valuation.peg,
         "ForwardPE": valuation.pe_forward,
-        "EPS成長率": valuation.growth
+        "AnchorPE": valuation.anchor_pe,
+        "PERatio": valuation.pe_ratio,
+        "EPS成長率": valuation.growth,
+        "PEScore": valuation.pe_score,
+        "GrowthScore": valuation.growth_score,
+        "QualityMomentum": valuation.quality_momentum,
+        "QualityFactor": valuation.quality_factor,
+        "ValuationRaw": valuation.raw_score
+      },
+
+      "結構資料": {
+        "swing_days": Array.isArray(row.swing_days) ? row.swing_days : [],
+        "amp_1d": round2(row.amp_1d),
+        "ShortSwing": round2(shortSwing)
+      },
+
+      "時機資料": {
+        "Snapshot": round2(snapshot)
       },
 
       "分數拆解": {
-        "估值分": valuation.score,
-        "趨勢分": structure.trend_score,
-        "結構分": structure.structure_score,
-        "時機調整": structure.timing_adjust,
-        "資金分": moneyScore,
-        "品質分": qScore,
-        "類別調整": categoryAdjust,
-        "總分": Math.round(total)
+        "估值分": round2(valuation.score),
+        "趨勢分": round2(trendScore),
+        "結構分": round2(structureScore),
+        "時機分": round2(timingScore),
+        "資金分": round2(moneyScore),
+        "品質分": round2(qScore),
+        "類別調整": round2(categoryAdjust),
+        "總分": round2(total)
       },
 
       "持倉曝險": {
@@ -538,11 +753,37 @@ function run() {
     candidate.is_today_highlight = highlight.is_today_highlight;
     candidate.today_highlight_reason = highlight.today_highlight_reason;
 
-    candidate.why_yes = buildWhyYes(row, valuation, structure, moneyScore, qScore);
-    candidate.why_no = buildWhyNo(row, valuation, structure, moneyScore, exposureWarning);
+    candidate.why_yes = buildWhyYes(
+      row,
+      valuation,
+      trendState,
+      structureState,
+      timingScore,
+      moneyScore,
+      qScore
+    );
+
+    candidate.why_no = buildWhyNo(
+      row,
+      valuation,
+      trendState,
+      structureState,
+      timingState,
+      moneyScore,
+      exposureWarning
+    );
+
     candidate["估值說明"] = valuation.text;
-    candidate["結構說明"] = structure.structure_text;
-    candidate["最終說明"] = buildFinalComment(action, valuation, structure, moneyScore, exposureWarning);
+    candidate["最終說明"] = buildFinalComment(
+      action,
+      valuation,
+      trendRaw,
+      trendState,
+      shortSwing,
+      snapshot,
+      moneyScore,
+      exposureWarning
+    );
 
     return candidate;
   });
@@ -567,15 +808,27 @@ function run() {
     m2_generated_at: m2.generated_at,
     total_count: sorted.length,
 
-    pullback_count: sorted.filter(x => x["趨勢判讀"]?.["結構狀態"] === "pullback").length,
-    overheat_count: sorted.filter(x => x["趨勢判讀"]?.["溫度狀態"] === "overheat").length,
-    top_count: sorted.filter(x => x["趨勢判讀"]?.["結構狀態"] === "top").length,
-    downtrend_count: sorted.filter(x => x["趨勢判讀"]?.["趨勢狀態"] === "down").length,
+    sweet_count: sorted.filter(x =>
+      x["趨勢判讀"]?.["結構狀態"] === "sweet" ||
+      x["趨勢判讀"]?.["結構狀態"] === "sweet_max"
+    ).length,
+    hot_timing_count: sorted.filter(x => x["趨勢判讀"]?.["時機狀態"] === "hot").length,
+    downtrend_count: sorted.filter(x =>
+      x["趨勢判讀"]?.["趨勢狀態"] === "down"
+    ).length,
 
     high_exposure: sorted.filter(x => x["曝險警示"]?.level === "high").length,
     mid_exposure: sorted.filter(x => x["曝險警示"]?.level === "medium").length,
 
-    market_comment: `回檔結構 ${sorted.filter(x => x["趨勢判讀"]?.["結構狀態"] === "pullback").length} 檔，做頭結構 ${sorted.filter(x => x["趨勢判讀"]?.["結構狀態"] === "top").length} 檔，今日宜重結構、輕追價。`,
+    market_comment:
+      `甜點結構 ${sorted.filter(x =>
+        x["趨勢判讀"]?.["結構狀態"] === "sweet" ||
+        x["趨勢判讀"]?.["結構狀態"] === "sweet_max"
+      ).length} 檔，` +
+      `下行趨勢 ${sorted.filter(x =>
+        x["趨勢判讀"]?.["趨勢狀態"] === "down"
+      ).length} 檔，` +
+      `今日宜重估值、重甜點、輕追價。`,
 
     aggressive_recommend: aggressiveRecommend,
     watch_list: watchBucket,
