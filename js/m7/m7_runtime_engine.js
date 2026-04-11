@@ -69,20 +69,20 @@ function loadM2Exposure() {
 // 類別 / valuation class / anchor
 // ------------------------------------------
 const VALUATION_OVERRIDE = {
-  MSFT: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 32 },
-  META: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 32 },
-  GOOGL: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 30 },
+  MSFT: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 34 },
+  META: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 34 },
+  GOOGL: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 35 },
   AMZN: { valuation_class: "PLATFORM_MIXED", anchor_pe: 28 },
-  AAPL: { valuation_class: "CONSUMER_PLATFORM", anchor_pe: 30 },
+  AAPL: { valuation_class: "CONSUMER_PLATFORM", anchor_pe: 34 },
 
-  NVDA: { valuation_class: "AI_SEMI_LEADER", anchor_pe: 25 },
-  AVGO: { valuation_class: "AI_SEMI_LEADER", anchor_pe: 24 },
-  ARM: { valuation_class: "AI_SEMI_LEADER", anchor_pe: 24 },
+  NVDA: { valuation_class: "AI_SEMI_LEADER", anchor_pe: 27 },
+  AVGO: { valuation_class: "AI_SEMI_LEADER", anchor_pe: 35 },
+  ARM: { valuation_class: "AI_SEMI_LEADER", anchor_pe: 30 },
 
-  TSM: { valuation_class: "AI_SEMI_CYCLICAL", anchor_pe: 22 },
-  AMAT: { valuation_class: "AI_SEMI_CYCLICAL", anchor_pe: 20 },
+  TSM: { valuation_class: "AI_SEMI_CYCLICAL", anchor_pe: 30 },
+  AMAT: { valuation_class: "AI_SEMI_CYCLICAL", anchor_pe: 26 },
   AMD: { valuation_class: "AI_SEMI_CYCLICAL", anchor_pe: 22 },
-  MU: { valuation_class: "AI_SEMI_CYCLICAL", anchor_pe: 22 },
+  MU: { valuation_class: "AI_SEMI_CYCLICAL", anchor_pe: 20 },
   MRVL: { valuation_class: "AI_SEMI_CYCLICAL", anchor_pe: 22 },
 
   BAC: { valuation_class: "FINANCIAL", anchor_pe: 10 },
@@ -91,7 +91,7 @@ const VALUATION_OVERRIDE = {
 
   AAL: { valuation_class: "CYCLICAL", anchor_pe: 12 },
   CCL: { valuation_class: "CYCLICAL", anchor_pe: 12 },
-  LVS: { valuation_class: "CYCLICAL", anchor_pe: 12 },
+  LVS: { valuation_class: "CYCLICAL", anchor_pe: 15 },
 
   COIN: { valuation_class: "SPECULATIVE", anchor_pe: 18 },
   SOFI: { valuation_class: "SPECULATIVE", anchor_pe: 18 },
