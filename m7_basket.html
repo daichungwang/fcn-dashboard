@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M7 Basket Dashboard</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --line:#e6edf5;
+      --text:#0f172a;
+      --muted:#64748b;
+      --navy:#0f172a;
+      --blue:#2563eb;
+      --green:#16a34a;
+      --amber:#d97706;
+      --red:#dc2626;
+      --purple:#7c3aed;
+      --green-soft:#ecfdf5;
+      --amber-soft:#fffbeb;
+      --red-soft:#fef2f2;
+      --blue-soft:#eff6ff;
+      --purple-soft:#f5f3ff;
+      --shadow:0 10px 28px rgba(15,23,42,.08);
+      --shadow-soft:0 4px 14px rgba(15,23,42,.05);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{
+      margin:0;padding:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",Arial,sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(37,99,235,.06), transparent 28%),
+        radial-gradient(circle at top right, rgba(124,58,237,.05), transparent 22%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    .container{
+      max-width:1480px;
+      margin:0 auto;
+      padding:22px 16px 40px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg,#1d4ed8,#2563eb 55%,#4f46e5);
+      color:#fff;
+      border-radius:28px;
+      padding:22px 22px 18px;
+      box-shadow:0 18px 36px rgba(37,99,235,.22);
+      position:relative;
+      overflow:hidden;
+      margin-bottom:18px;
+    }
+    .hero:after{
+      content:"";
+      position:absolute;
+      right:-60px;
+      bottom:-60px;
+      width:220px;height:220px;border-radius:999px;
+      background:rgba(255,255,255,.08);
+      filter:blur(8px);
+    }
+    .hero-top{
+      display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap;
+      position:relative;z-index:1;
+    }
+    .hero-title{
+      margin:0;
+      font-size:34px;
+      font-weight:900;
+      letter-spacing:-.02em;
+    }
+    .hero-sub{
+      margin-top:8px;
+      font-size:14px;line-height:1.75;
+      color:rgba(255,255,255,.9);
+      max-width:860px;
+    }
+    .hero-badges{
+      display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;
+    }
+    .pill{
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.18);
+      color:#fff;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;font-weight:800;
+      backdrop-filter:blur(8px);
+      white-space:nowrap;
+    }
+
+    .section{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(255,255,255,.7);
+      box-shadow:var(--shadow-soft);
+      border-radius:22px;
+      overflow:hidden;
+      margin-bottom:16px;
+    }
+    .section-head{
+      padding:16px 18px 12px;
+      border-bottom:1px solid var(--line);
+      background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(248,250,252,.92));
+      display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;
+    }
+    .section-title{
+      margin:0;
+      font-size:26px;
+      font-weight:900;
+      letter-spacing:-.02em;
+    }
+    .section-desc{
+      margin-top:6px;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.7;
+    }
+    .section-body{padding:16px;}
+
+    .summary-grid{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:14px;
+    }
+    .summary-card{
+      background:linear-gradient(180deg,#fff,#f8fbff);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      box-shadow:var(--shadow-soft);
+    }
+    .summary-label{font-size:13px;color:var(--muted);font-weight:800;margin-bottom:8px}
+    .summary-value{font-size:34px;font-weight:900;line-height:1.05;margin-bottom:8px}
+    .summary-note{font-size:12px;color:var(--muted);line-height:1.6}
+
+    .pool-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:14px;
+    }
+    .pool-card{
+      border:1px solid var(--line);
+      border-radius:20px;
+      overflow:hidden;
+      background:#fff;
+      box-shadow:var(--shadow-soft);
+      display:flex;flex-direction:column;
+      min-height:260px;
+    }
+    .pool-card.highlight{background:linear-gradient(180deg,#fff,#f9fcff)}
+    .pool-card.watch{background:linear-gradient(180deg,#fff,#fffdf7)}
+    .pool-card.sim{background:linear-gradient(180deg,#fff,#fcfbff)}
+    .pool-card.reject{background:linear-gradient(180deg,#fff,#fffafa)}
+
+    .pool-head{
+      padding:14px 14px 10px;
+      border-bottom:1px solid var(--line);
+    }
+    .pool-topline{
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+    }
+    .pool-title{
+      font-size:20px;font-weight:900;letter-spacing:-.01em;
+    }
+    .badge{
+      display:inline-flex;align-items:center;justify-content:center;
+      min-width:42px;padding:6px 10px;
+      border-radius:999px;font-size:12px;font-weight:900;
+      border:1px solid transparent;
+    }
+    .b-green{background:var(--green-soft);color:var(--green);border-color:#bbf7d0}
+    .b-amber{background:var(--amber-soft);color:var(--amber);border-color:#fde68a}
+    .b-blue{background:var(--blue-soft);color:var(--blue);border-color:#bfdbfe}
+    .b-red{background:var(--red-soft);color:var(--red);border-color:#fecaca}
+    .b-purple{background:var(--purple-soft);color:var(--purple);border-color:#ddd6fe}
+    .pool-desc{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.7;
+    }
+    .symbol-list{
+      padding:12px 14px 14px;
+      display:flex;flex-wrap:wrap;gap:8px;
+      align-content:flex-start;
+    }
+    .symbol-chip{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:12px;font-weight:800;
+      box-shadow:0 1px 2px rgba(15,23,42,.04);
+    }
+    .score-chip{
+      color:var(--muted);
+      font-weight:900;
+      font-size:11px;
+    }
+
+    .basket-toolbar{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;
+      margin-bottom:14px;
+    }
+    .segmented{
+      display:flex;gap:8px;flex-wrap:wrap;
+    }
+    .seg-btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      border-radius:999px;
+      padding:9px 12px;
+      font-weight:800;
+      font-size:12px;
+      cursor:pointer;
+      transition:.16s ease;
+    }
+    .seg-btn.active{
+      background:var(--navy);
+      color:#fff;
+      border-color:var(--navy);
+      transform:translateY(-1px);
+      box-shadow:var(--shadow-soft);
+    }
+
+    .basket-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px;
+    }
+    .basket-card{
+      background:linear-gradient(180deg,#fff,#fbfdff);
+      border:1px solid var(--line);
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:var(--shadow-soft);
+    }
+    .basket-head{
+      padding:16px 16px 12px;
+      border-bottom:1px solid var(--line);
+      display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+    }
+    .basket-title{
+      font-size:22px;font-weight:900;letter-spacing:-.02em;margin:0 0 6px;
+    }
+    .basket-sub{
+      color:var(--muted);font-size:13px;line-height:1.7;
+    }
+    .basket-score{
+      text-align:right;min-width:112px;
+    }
+    .basket-score-num{
+      font-size:34px;font-weight:900;line-height:1;
+      color:#0f172a;
+    }
+    .basket-score-label{
+      margin-top:6px;color:var(--muted);font-size:12px;font-weight:800;
+    }
+    .basket-body{padding:14px 16px 16px;}
+    .info-row{
+      display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;
+    }
+    .info-pill{
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;font-weight:800;
+      border:1px solid var(--line);
+      background:#fff;
+    }
+    .basket-stocks{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .stock-mini{
+      border:1px solid var(--line);
+      border-radius:14px;
+      background:#fff;
+      padding:10px;
+    }
+    .stock-mini-top{
+      display:flex;justify-content:space-between;gap:8px;align-items:flex-start;
+    }
+    .stock-mini-title{font-size:16px;font-weight:900}
+    .stock-mini-role{font-size:11px;font-weight:900;margin-top:4px}
+    .stock-mini-meta{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.7;
+    }
+    .basket-reason{
+      padding:12px 14px;
+      background:#f8fafc;
+      border:1px solid var(--line);
+      border-radius:14px;
+      line-height:1.75;
+      font-size:13px;
+    }
+    .formula-box{
+      background:#0f172a;
+      color:#e2e8f0;
+      border-radius:18px;
+      padding:14px 16px;
+      font-size:13px;
+      line-height:1.8;
+      overflow:auto;
+      white-space:pre-wrap;
+    }
+    .tiny{
+      font-size:12px;color:var(--muted);line-height:1.7;
+    }
+
+    .empty{
+      padding:20px;
+      text-align:center;
+      color:var(--muted);
+      border:1px dashed var(--line);
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .fade-in{
+      animation:fadeIn .22s ease;
+    }
+    @keyframes fadeIn{
+      from{opacity:0;transform:translateY(4px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    @media (max-width: 1200px){
+      .summary-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .pool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .basket-grid{grid-template-columns:1fr}
+    }
+    @media (max-width: 760px){
+      .hero-title{font-size:28px}
+      .summary-grid,.pool-grid,.basket-stocks{grid-template-columns:1fr}
+      .container{padding:14px 12px 26px}
+      .section-title{font-size:22px}
+      .basket-score{min-width:auto;text-align:left}
+      .basket-head{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <h1 class="hero-title">🧺 M7 Basket Dashboard</h1>
+          <div class="hero-sub">
+            以 M7 total / valuationRaw 為主軸，將股票分成 4 大池，再自動組出高利率、平衡、保守與進攻型 Basket。
+            這頁的目標不是只看股票，而是快速找出今天最值得丟進 M8 定價的 FCN 組合。
+          </div>
+        </div>
+        <div class="hero-badges">
+          <div class="pill" id="generatedAt">生成時間：--</div>
+          <div class="pill" id="sourceAt">M7來源：--</div>
+          <div class="pill" id="basketCount">Basket：--</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">1. Basket Summary</h2>
+          <div class="section-desc">先看 4 大池數量與 Top Basket 數量，快速判斷今天資料是否可交易。</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="summary-grid" id="summaryGrid"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">2. Four Pools</h2>
+          <div class="section-desc">Today Highlight / Watch / Simulation / Reject 四大池，先看股票池是否乾淨，再看 Basket。</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="pool-grid" id="poolGrid"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">3. Top Basket Candidates</h2>
+          <div class="section-desc">這裡只顯示前段 Basket。你可以依類型切換：高利率、平衡、保守、進攻或全部。</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="basket-toolbar">
+          <div class="segmented" id="filterBar">
+            <button class="seg-btn active" data-type="all">全部</button>
+            <button class="seg-btn" data-type="high_yield">高利率型</button>
+            <button class="seg-btn" data-type="balance">平衡型</button>
+            <button class="seg-btn" data-type="defensive">保守型</button>
+            <button class="seg-btn" data-type="aggressive">進攻型</button>
+          </div>
+          <div class="tiny" id="basketHint">依 basket_score 由高到低排序。</div>
+        </div>
+        <div class="basket-grid fade-in" id="basketGrid"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <div>
+          <h2 class="section-title">4. Blueprint</h2>
+          <div class="section-desc">顯示目前 Basket Engine 的核心原則、4 大池邏輯與組合公式，方便快速 review。</div>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="formula-box" id="blueprintBox">載入中...</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const DATA_URL = "./data/m8/m8_basket_candidates.json?v=" + Date.now();
+    let BASKETS = [];
+
+    function safe(v, fallback="--") {
+      return v === undefined || v === null || v === "" ? fallback : v;
+    }
+
+    function fmtNum(v, digits=2) {
+      const n = Number(v);
+      return Number.isFinite(n) ? n.toFixed(digits) : "--";
+    }
+
+    function badgeClassByPool(key) {
+      if (key === "today_highlight_pool") return "b-green";
+      if (key === "watch_pool") return "b-amber";
+      if (key === "simulation_pool") return "b-blue";
+      return "b-red";
+    }
+
+    function poolTitle(key) {
+      return {
+        today_highlight_pool: "今日推薦池",
+        watch_pool: "觀察池",
+        simulation_pool: "模擬池",
+        reject_pool: "排除池"
+      }[key] || key;
+    }
+
+    function poolDesc(key) {
+      return {
+        today_highlight_pool: "今天優先拿去做 Basket / 定價。",
+        watch_pool: "可以做，但今天不是最漂亮的位置。",
+        simulation_pool: "M8 正式可用股票池，不可以斷料。",
+        reject_pool: "真的不做，避免污染 Basket。"
+      }[key] || "";
+    }
+
+    function basketTypeZh(type) {
+      return {
+        high_yield: "高利率型",
+        balance: "平衡型",
+        defensive: "保守型",
+        aggressive: "進攻型"
+      }[type] || type;
+    }
+
+    function roleClass(role) {
+      if (role === "anchor") return "b-green";
+      if (role === "yield_driver") return "b-amber";
+      if (role === "sweet_spot") return "b-purple";
+      if (role === "defensive_like") return "b-blue";
+      return "b-red";
+    }
+
+    function roleZh(role) {
+      return {
+        anchor: "Anchor",
+        yield_driver: "Yield Driver",
+        sweet_spot: "Sweet Spot",
+        defensive_like: "Defensive",
+        neutral: "Neutral"
+      }[role] || role;
+    }
+
+    function renderSummary(data) {
+      document.getElementById("generatedAt").textContent = `生成時間：${safe(data.generated_at)}`;
+      document.getElementById("sourceAt").textContent = `M7來源：${safe(data.source_generated_at)}`;
+      document.getElementById("basketCount").textContent = `Basket：${(data.top_baskets || []).length} / ${safe(data.basket_candidates_count, 0)}`;
+
+      const pools = data.pools || {};
+      const grid = document.getElementById("summaryGrid");
+      grid.innerHTML = `
+        <div class="summary-card">
+          <div class="summary-label">Today Highlight</div>
+          <div class="summary-value">${(pools.today_highlight_pool || []).length}</div>
+          <div class="summary-note">今日優先做 Basket 的股票池。</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Watch Pool</div>
+          <div class="summary-value">${(pools.watch_pool || []).length}</div>
+          <div class="summary-note">可做、可追蹤，但今天不是最優先。</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Simulation Pool</div>
+          <div class="summary-value">${(pools.simulation_pool || []).length}</div>
+          <div class="summary-note">M8 直接可用，不可斷料。</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Reject Pool</div>
+          <div class="summary-value">${(pools.reject_pool || []).length}</div>
+          <div class="summary-note">明確排除，不應進 Basket。</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">P35 Score</div>
+          <div class="summary-value">${fmtNum(pools.p35_score, 2)}</div>
+          <div class="summary-note">Reject 判斷時參考的後段分位值。</div>
+        </div>
+      `;
+    }
+
+    function renderPools(data) {
+      const pools = data.pools || {};
+      const keys = ["today_highlight_pool", "watch_pool", "simulation_pool", "reject_pool"];
+      const grid = document.getElementById("poolGrid");
+
+      grid.innerHTML = keys.map(key => {
+        const items = pools[key] || [];
+        return `
+          <div class="pool-card ${key.includes("highlight") ? "highlight" : key.includes("watch") ? "watch" : key.includes("simulation") ? "sim" : "reject"}">
+            <div class="pool-head">
+              <div class="pool-topline">
+                <div class="pool-title">${poolTitle(key)}</div>
+                <div class="badge ${badgeClassByPool(key)}">${items.length} 檔</div>
+              </div>
+              <div class="pool-desc">${poolDesc(key)}</div>
+            </div>
+            <div class="symbol-list">
+              ${
+                items.length
+                  ? items.map(item => `
+                    <div class="symbol-chip">
+                      <span>${item.symbol}</span>
+                      <span class="score-chip">${fmtNum(item.today_score, 1)}</span>
+                    </div>
+                  `).join("")
+                  : `<div class="empty">目前無資料</div>`
+              }
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderBaskets(type="all") {
+      const grid = document.getElementById("basketGrid");
+      let list = BASKETS;
+
+      if (type !== "all") {
+        list = BASKETS.filter(x => x.basket_type === type);
+      }
+
+      if (!list.length) {
+        grid.innerHTML = `<div class="empty">這個類型目前沒有 Basket。</div>`;
+        return;
+      }
+
+      grid.innerHTML = list.map((basket, idx) => `
+        <div class="basket-card fade-in">
+          <div class="basket-head">
+            <div>
+              <h3 class="basket-title">#${idx + 1} ${basketTypeZh(basket.basket_type)}</h3>
+              <div class="basket-sub">
+                Basket：${(basket.symbols || []).join(" / ")}<br>
+                預估利率區間：${safe(basket.expected_rate_band)}
+              </div>
+            </div>
+            <div class="basket-score">
+              <div class="basket-score-num">${fmtNum(basket.basket_score, 2)}</div>
+              <div class="basket-score-label">Basket Score</div>
+            </div>
+          </div>
+
+          <div class="basket-body">
+            <div class="info-row">
+              <div class="info-pill">Avg Total：${fmtNum(basket.avg_today_score, 2)}</div>
+              <div class="info-pill">Avg 結構：${fmtNum(basket.avg_structure_score, 2)}</div>
+              <div class="info-pill">Avg 時機：${fmtNum(basket.avg_timing_score, 2)}</div>
+              <div class="info-pill">Avg 資金：${fmtNum(basket.avg_money_score, 2)}</div>
+              <div class="info-pill">Anchor：${safe(basket.anchor_count, 0)}</div>
+              <div class="info-pill">High Beta：${safe(basket.high_beta_count, 0)}</div>
+            </div>
+
+            <div class="basket-stocks">
+              ${(basket.stocks || []).map(stock => `
+                <div class="stock-mini">
+                  <div class="stock-mini-top">
+                    <div>
+                      <div class="stock-mini-title">${stock.symbol}</div>
+                      <div class="stock-mini-role">
+                        <span class="badge ${roleClass(stock.role)}">${roleZh(stock.role)}</span>
+                      </div>
+                    </div>
+                    <div class="badge ${stock.exposure_level === "high" ? "b-red" : stock.exposure_level === "medium" ? "b-amber" : "b-green"}">
+                      ${safe(stock.exposure_level)}
+                    </div>
+                  </div>
+                  <div class="stock-mini-meta">
+                    類別：${safe(stock.category)}<br>
+                    Total：${fmtNum(stock.today_score, 2)}<br>
+                    估值：${fmtNum(stock.valuation_score, 2)} ｜ 結構：${fmtNum(stock.structure_score, 2)}<br>
+                    時機：${fmtNum(stock.timing_score, 2)} ｜ 資金：${fmtNum(stock.money_score, 2)}
+                  </div>
+                </div>
+              `).join("")}
+            </div>
+
+            <div class="basket-reason">
+              <strong>Why：</strong>${safe(basket.reason)}
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderBlueprint(data) {
+      const bp = data.blueprint || {};
+      const poolLogic = bp.pool_logic || {};
+      const basketLogic = bp.basket_logic || {};
+
+      const text = `
+【核心原則】
+1. ${safe(bp.core_principle_1)}
+2. ${safe(bp.core_principle_2)}
+3. ${safe(bp.core_principle_3)}
+
+【4 大池邏輯】
+today_highlight_pool：
+${safe(poolLogic.today_highlight_pool)}
+
+watch_pool：
+${safe(poolLogic.watch_pool)}
+
+simulation_pool：
+${safe(poolLogic.simulation_pool)}
+
+reject_pool：
+${safe(poolLogic.reject_pool)}
+
+【Basket 組合邏輯】
+高利率型：
+${safe(basketLogic.high_yield)}
+
+平衡型：
+${safe(basketLogic.balance)}
+
+保守型：
+${safe(basketLogic.defensive)}
+
+進攻型：
+${safe(basketLogic.aggressive)}
+      `.trim();
+
+      document.getElementById("blueprintBox").textContent = text;
+    }
+
+    function bindFilterButtons() {
+      const bar = document.getElementById("filterBar");
+      bar.addEventListener("click", (e) => {
+        const btn = e.target.closest(".seg-btn");
+        if (!btn) return;
+
+        document.querySelectorAll(".seg-btn").forEach(x => x.classList.remove("active"));
+        btn.classList.add("active");
+
+        const type = btn.dataset.type || "all";
+        renderBaskets(type);
+      });
+    }
+
+    async function loadPage() {
+      try {
+        const res = await fetch(DATA_URL);
+        if (!res.ok) throw new Error("無法讀取 m8_basket_candidates.json");
+        const data = await res.json();
+
+        BASKETS = Array.isArray(data.top_baskets) ? data.top_baskets : [];
+
+        renderSummary(data);
+        renderPools(data);
+        renderBaskets("all");
+        renderBlueprint(data);
+        bindFilterButtons();
+      } catch (err) {
+        document.getElementById("summaryGrid").innerHTML = `<div class="empty">載入失敗：${err.message}</div>`;
+        document.getElementById("poolGrid").innerHTML = `<div class="empty">載入失敗：${err.message}</div>`;
+        document.getElementById("basketGrid").innerHTML = `<div class="empty">載入失敗：${err.message}</div>`;
+        document.getElementById("blueprintBox").textContent = `載入失敗：${err.message}`;
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadPage);
+  </script>
+</body>
+</html>
