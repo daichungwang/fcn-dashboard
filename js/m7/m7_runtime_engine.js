@@ -331,7 +331,7 @@ function buildValuationData(row, category) {
   const qualityFactor = calcQualityFactor(qualityMomentum);
 
   const valuationRaw = 4*( 0.7 * peScore + 0.3 * growthScoreAdj) * qualityFactor;
-  const valuationNorm = clamp(valuationRaw, 0, 60);
+  const valuationNorm = clamp(valuationRaw, 0, 70);
 
   let level = "中性";
   if (valuationNorm >= 8) level = "合理偏低";
@@ -429,7 +429,7 @@ function calcShortSwing(swingDays, amp1d) {
 function structureScoreFromShortSwing(shortSwing) {
   if (shortSwing < -1) return 0;
   if (shortSwing <= 0) return 3;
-  if (shortSwing <= 5) return 8 * Math.pow(shortSwing / 5, 1.2);
+  if (shortSwing <= 5) return 1 + 8 * Math.pow(shortSwing / 5, 1.2);
   if (shortSwing <= 10) return 8 + (shortSwing - 5) * 0.4;
   return 10;
 }
@@ -453,8 +453,8 @@ function calcSnapshot(r1d, r1w, r1m) {
 }
 
 function timingScoreFromSnapshot(snapshot) {
-  let score = snapshot;
-  return clamp(score, 0, 10);
+  let score = snapshot * 2;
+  return clamp(score, 3, 10);
 }
 
 function inferTimingState(snapshot) {
@@ -472,9 +472,14 @@ function calcMoneyScoreNormalized(volumeRatio) {
   const v = safeNum(volumeRatio, 1);
   if (v === null) return 4;
   if (v >= 1.5) return 10;
-  if (v >= 1.2) return 8;
-  if (v >= 0.9) return 6;
-  if (v >= 0.7) return 4;
+  if (v >= 1.3) return 9;
+  if (v >= 1.2) return 8.5;
+  if (v >= 1) return 8;
+  if (v >= 0.9) return 7.5;
+  if (v >= 0.8) return 7;
+  if (v >= 0.6) return 6;
+  if (v >= 0.5) return 5;
+  if (v >= 0.4) return 4;
   return 2;
 }
 
