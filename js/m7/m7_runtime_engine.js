@@ -425,7 +425,7 @@ function calcShortSwing(swingDays, amp1d) {
 
 function structureScoreFromShortSwing(shortSwing) {
   if (shortSwing <= 0) return 0;
-  if (shortSwing <= 5) return 8 * Math.pow(shortSwing / 5, 1.6);
+  if (shortSwing <= 5) return  1 + 4 * Math.pow(shortSwing / 5, 1.2);
   if (shortSwing <= 10) return 8 + (shortSwing - 5) * 0.4;
   return 10;
 }
