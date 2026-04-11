@@ -257,6 +257,15 @@ function peScoreFromRatio(peRatio) {
   return 6;
 }
 
+function calcPEGScore(peg) {
+  if (peg === null || peg === undefined) return 0;
+  if (peg < 0.8) return 4;
+  if (peg <= 1.0) return 2;
+  if (peg <= 1.3) return 0;
+  if (peg <= 1.6) return -2;
+  return -4;
+}
+
 function growthScoreBase(growth) {
   if (growth === null || growth === undefined) return 3;
 
@@ -290,6 +299,19 @@ function growthScoreFinal(growth) {
 
   return base + 0.5 * (oldScore - base);
 }
+
+const peScore = peScoreFromRatio(peRatio);
+const growthScore = growthScoreFinal(growth);
+const growthScoreAdj = growthScore * 0.6;
+const pegScore = calcPEGScore(peg);
+
+const qualityMomentum = calcQualityMomentum(r1m, r3m, r6m, r12m);
+const qualityFactor = calcQualityFactor(qualityMomentum);
+
+const valuationRaw =
+  (0.5 * peScore + 0.3 * growthScoreAdj + 0.2 * pegScore) * qualityFactor;
+
+const valuationNorm = clamp(valuationRaw / 2.5, 0, 10);
 
 function buildValuationData(row, category) {
   const model = inferValuationModel(row);
