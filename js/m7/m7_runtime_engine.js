@@ -73,7 +73,7 @@ const VALUATION_OVERRIDE = {
   META: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 32 },
   GOOGL: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 30 },
   AMZN: { valuation_class: "PLATFORM_MIXED", anchor_pe: 28 },
-  AAPL: { valuation_class: "CONSUMER_PLATFORM", anchor_pe: 26 },
+  AAPL: { valuation_class: "CONSUMER_PLATFORM", anchor_pe: 30 },
 
   NVDA: { valuation_class: "AI_SEMI_LEADER", anchor_pe: 25 },
   AVGO: { valuation_class: "AI_SEMI_LEADER", anchor_pe: 24 },
