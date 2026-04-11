@@ -1,113 +1,165 @@
-// ==========================================
-// M7 Basket Engine - FULL VERSION
-// 振宇專用（穩定可擴充版）
-// ==========================================
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>M7 Basket Dashboard</title>
 
-function n(v, d = 0) {
-  const x = Number(v);
-  return Number.isFinite(x) ? x : d;
+<style>
+body {
+  font-family: Arial;
+  background: #f5f7fb;
+  padding: 20px;
 }
 
-// ---------- 五大類 ----------
-function getCategory(stock) {
-  const c = (stock.category || "").toLowerCase();
+h1 { margin-bottom: 20px; }
 
-  if (c.includes("core")) return "CORE";
-  if (c.includes("semi") || c.includes("growth")) return "GROWTH";
-  if (c.includes("defensive")) return "DEFENSIVE";
-  if (c.includes("etf") || c.includes("income")) return "INCOME";
-  return "EVENT";
+.section {
+  margin-bottom: 30px;
 }
 
-// ---------- 分級 ----------
-function getTier(score) {
-  if (score >= 88) return "優先";
-  if (score >= 80) return "穩健";
-  return "追蹤";
+.card {
+  background: white;
+  padding: 14px;
+  margin: 10px 0;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+  cursor: pointer;
 }
 
-// ---------- Reject ----------
-function isReject(stock) {
-  const trend = n(stock.trend_raw);
-  const snapshot = n(stock.snapshot);
-  const growth = n(stock.growth_score);
-
-  const trendBad = trend <= -15;
-  const snapshotBad = snapshot <= -6;
-  const growthBad = growth <= 2;
-
-  const badCount =
-    Number(trendBad) +
-    Number(snapshotBad) +
-    Number(growthBad);
-
-  const isSpeculative =
-    (stock.category || "").toLowerCase().includes("speculative");
-
-  return isSpeculative || badCount >= 2;
+.header {
+  display: flex;
+  justify-content: space-between;
 }
 
-// ---------- Highlight 條件 ----------
-function isHighlight(stock) {
-  return (
-    n(stock.valuation_raw) <= 70 &&
-    n(stock.structure_score) >= 6 &&
-    (stock.timing_state || "") !== "hot" &&
-    !(stock.category || "").toLowerCase().includes("speculative")
-  );
+.badge {
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-left: 6px;
 }
 
-// ---------- Highlight 分類 ----------
-function highlightType(stock) {
-  const t = n(stock.trend_score);
-  const s = n(stock.structure_score);
-  const snap = n(stock.snapshot_score);
+.green { background:#e6f7ec; color:#1a7f37; }
+.blue { background:#e6f0ff; color:#2455c3; }
+.gray { background:#eee; color:#666; }
 
-  if (t >= 7 && s >= 7 && snap >= 5) return "積極";
-  if (s >= 6 && snap >= 4 && t >= 4) return "理性";
-  return "保守";
+.highlight-aggressive { background:#ffe6e6; color:#c0392b; }
+.highlight-neutral { background:#fff4e6; color:#d68910; }
+.highlight-defensive { background:#eafaf1; color:#1e8449; }
+
+.detail {
+  display:none;
+  margin-top:10px;
+  font-size:13px;
+  color:#555;
+}
+</style>
+</head>
+
+<body>
+
+<h1>M7 Basket Dashboard</h1>
+
+<div class="section">
+  <h2>🔥 Today Highlight</h2>
+  <div id="highlight"></div>
+</div>
+
+<div class="section">
+  <h2>📊 Simulation Pool</h2>
+  <div id="simulation"></div>
+</div>
+
+<div class="section">
+  <h2>👀 Watch Pool</h2>
+  <div id="watch"></div>
+</div>
+
+<script type="module">
+
+// ============================
+// IMPORT ENGINE
+// ============================
+import { runM7Basket } from "./js/m8/basket_engine.js";
+
+// ============================
+// INIT
+// ============================
+async function init() {
+
+  const res = await fetch("./data/m7/m7_new_stock_today.json");
+  const m7 = await res.json();
+
+  const result = runM7Basket(m7);
+
+  render("highlight", result.highlight, true);
+  render("simulation", result.simulation);
+  render("watch", result.watch);
 }
 
-// ==========================================
-// 主流程
-// ==========================================
-export function runM7Basket(m7) {
-  const stocks = m7.stocks || [];
+// ============================
+// RENDER
+// ============================
+function render(id, list, isHighlight=false) {
 
-  // ---------- Reject ----------
-  const reject = stocks.filter(isReject);
+  const el = document.getElementById(id);
 
-  // ---------- Simulation ----------
-  const simulation = stocks
-    .filter(s => !isReject(s))
-    .sort((a, b) => n(b.today_score) - n(a.today_score))
-    .slice(0, 18)
-    .map(s => ({
-      symbol: s.symbol,
-      name: s.name,
-      score: n(s.today_score),
-      category: getCategory(s),
-      tier: getTier(n(s.today_score)),
-      raw: s
-    }));
+  if (!list || list.length === 0) {
+    el.innerHTML = "<p>（無資料）</p>";
+    return;
+  }
 
-  // ---------- Highlight ----------
-  const highlight = simulation
-    .filter(s => isHighlight(s.raw))
-    .map(s => ({
-      ...s,
-      type: highlightType(s.raw)
-    }));
+  el.innerHTML = list.map(s => {
 
-  // ---------- Watch ----------
-  const watch = simulation.filter(
-    s => !highlight.find(h => h.symbol === s.symbol)
-  );
+    const tierColor =
+      s.tier === "優先" ? "green" :
+      s.tier === "穩健" ? "blue" :
+      "gray";
 
-  return {
-    reject,
-    simulation,
-    highlight,
-    watch
-  };
+    const highlightColor =
+      s.type === "積極" ? "highlight-aggressive" :
+      s.type === "理性" ? "highlight-neutral" :
+      "highlight-defensive";
+
+    return `
+    <div class="card" onclick="toggle(this)">
+      
+      <div class="header">
+        <div>
+          <b>${s.symbol}</b> ${s.name || ""}
+          <span class="badge ${tierColor}">${s.tier || ""}</span>
+          ${isHighlight ? `<span class="badge ${highlightColor}">${s.type}</span>` : ""}
+        </div>
+
+        <div>${s.score?.toFixed(2)}</div>
+      </div>
+
+      <div class="detail">
+        類別：${s.category}<br>
+        valuationRaw：${s.raw?.valuation_raw}<br>
+        trend：${s.raw?.trend_score}<br>
+        snapshot：${s.raw?.snapshot_score}<br>
+        growth：${s.raw?.growth_score}
+      </div>
+
+    </div>
+    `;
+
+  }).join("");
 }
+
+// ============================
+// TOGGLE
+// ============================
+window.toggle = function(el) {
+  const d = el.querySelector(".detail");
+  d.style.display = d.style.display === "block" ? "none" : "block";
+}
+
+// ============================
+init();
+// ============================
+
+</script>
+
+</body>
+</html>
