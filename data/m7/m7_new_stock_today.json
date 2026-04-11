@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-11T00:12:27.909Z",
+  "generated_at": "2026-04-11T00:23:39.746Z",
   "m2_generated_at": "2026-04-07T07:00:00Z",
   "total_count": 33,
   "sweet_count": 7,
@@ -1565,7 +1565,7 @@
         "ValuationClass": "ETF_INCOME",
         "PEG": 0,
         "ForwardPE": 0,
-        "AnchorPE": 18,
+        "AnchorPE": 20,
         "PERatio": 0,
         "EPS成長率": 0,
         "PEScore": 20,
@@ -1630,8 +1630,8 @@
       "why_no": [
         "量比 0.62 偏低"
       ],
-      "估值說明": "ValuationClass ETF_INCOME，AnchorPE 18，QualityMomentum 69.17%，QualityFactor 1.20，ValuationRaw 15.26，估值判定：偏高",
-      "最終說明": "趨勢面：TrendRaw 48.28，狀態 up_strong。結構面：ShortSwing 2.32，甜度已反映。時機面：Snapshot 6.48。估值面：ValuationClass ETF_INCOME，AnchorPE 18，QualityMomentum 69.17%，QualityFactor 1.20，ValuationRaw 15.26，估值判定：偏高。資金面偏弱。持倉面：投入比 20.24%（安全）。條件部分符合，但仍需等待更佳位置。"
+      "估值說明": "ValuationClass ETF_INCOME，AnchorPE 20，QualityMomentum 69.17%，QualityFactor 1.20，ValuationRaw 15.26，估值判定：偏高",
+      "最終說明": "趨勢面：TrendRaw 48.28，狀態 up_strong。結構面：ShortSwing 2.32，甜度已反映。時機面：Snapshot 6.48。估值面：ValuationClass ETF_INCOME，AnchorPE 20，QualityMomentum 69.17%，QualityFactor 1.20，ValuationRaw 15.26，估值判定：偏高。資金面偏弱。持倉面：投入比 20.24%（安全）。條件部分符合，但仍需等待更佳位置。"
     },
     {
       "排名": 16,
@@ -2211,7 +2211,7 @@
         "ValuationClass": "ETF_GROWTH",
         "PEG": 0,
         "ForwardPE": 0,
-        "AnchorPE": 22,
+        "AnchorPE": 26,
         "PERatio": 0,
         "EPS成長率": 0,
         "PEScore": 20,
@@ -2277,8 +2277,8 @@
         "結構不甜",
         "量比 0.57 偏低"
       ],
-      "估值說明": "ValuationClass ETF_GROWTH，AnchorPE 22，QualityMomentum 18.32%，QualityFactor 0.97，ValuationRaw 12.29，估值判定：偏高",
-      "最終說明": "趨勢面：TrendRaw 10.81，狀態 up_mild。結構面：ShortSwing 1.41，甜度已反映。時機面：Snapshot 2.75。估值面：ValuationClass ETF_GROWTH，AnchorPE 22，QualityMomentum 18.32%，QualityFactor 0.97，ValuationRaw 12.29，估值判定：偏高。資金面偏弱。持倉面：投入比 0%（安全）。目前不適合做 FCN。"
+      "估值說明": "ValuationClass ETF_GROWTH，AnchorPE 26，QualityMomentum 18.32%，QualityFactor 0.97，ValuationRaw 12.29，估值判定：偏高",
+      "最終說明": "趨勢面：TrendRaw 10.81，狀態 up_mild。結構面：ShortSwing 1.41，甜度已反映。時機面：Snapshot 2.75。估值面：ValuationClass ETF_GROWTH，AnchorPE 26，QualityMomentum 18.32%，QualityFactor 0.97，ValuationRaw 12.29，估值判定：偏高。資金面偏弱。持倉面：投入比 0%（安全）。目前不適合做 FCN。"
     },
     {
       "排名": 22,
@@ -2319,7 +2319,7 @@
         "ValuationClass": "ETF_INCOME",
         "PEG": 0,
         "ForwardPE": 0,
-        "AnchorPE": 18,
+        "AnchorPE": 22,
         "PERatio": 0,
         "EPS成長率": 0,
         "PEScore": 20,
@@ -2383,8 +2383,8 @@
       "why_no": [
         "結構不甜"
       ],
-      "估值說明": "ValuationClass ETF_INCOME，AnchorPE 18，QualityMomentum 1.39%，QualityFactor 0.80，ValuationRaw 10.18，估值判定：高估",
-      "最終說明": "趨勢面：TrendRaw 0.38，狀態 neutral。結構面：ShortSwing 0.62，甜度已反映。時機面：Snapshot 0.56。估值面：ValuationClass ETF_INCOME，AnchorPE 18，QualityMomentum 1.39%，QualityFactor 0.80，ValuationRaw 10.18，估值判定：高估。持倉面：投入比 0%（安全）。目前不適合做 FCN。"
+      "估值說明": "ValuationClass ETF_INCOME，AnchorPE 22，QualityMomentum 1.39%，QualityFactor 0.80，ValuationRaw 10.18，估值判定：高估",
+      "最終說明": "趨勢面：TrendRaw 0.38，狀態 neutral。結構面：ShortSwing 0.62，甜度已反映。時機面：Snapshot 0.56。估值面：ValuationClass ETF_INCOME，AnchorPE 22，QualityMomentum 1.39%，QualityFactor 0.80，ValuationRaw 10.18，估值判定：高估。持倉面：投入比 0%（安全）。目前不適合做 FCN。"
     },
     {
       "排名": 23,
@@ -5120,7 +5120,7 @@
         "ValuationClass": "ETF_INCOME",
         "PEG": 0,
         "ForwardPE": 0,
-        "AnchorPE": 18,
+        "AnchorPE": 20,
         "PERatio": 0,
         "EPS成長率": 0,
         "PEScore": 20,
@@ -5185,8 +5185,8 @@
       "why_no": [
         "量比 0.62 偏低"
       ],
-      "估值說明": "ValuationClass ETF_INCOME，AnchorPE 18，QualityMomentum 69.17%，QualityFactor 1.20，ValuationRaw 15.26，估值判定：偏高",
-      "最終說明": "趨勢面：TrendRaw 48.28，狀態 up_strong。結構面：ShortSwing 2.32，甜度已反映。時機面：Snapshot 6.48。估值面：ValuationClass ETF_INCOME，AnchorPE 18，QualityMomentum 69.17%，QualityFactor 1.20，ValuationRaw 15.26，估值判定：偏高。資金面偏弱。持倉面：投入比 20.24%（安全）。條件部分符合，但仍需等待更佳位置。"
+      "估值說明": "ValuationClass ETF_INCOME，AnchorPE 20，QualityMomentum 69.17%，QualityFactor 1.20，ValuationRaw 15.26，估值判定：偏高",
+      "最終說明": "趨勢面：TrendRaw 48.28，狀態 up_strong。結構面：ShortSwing 2.32，甜度已反映。時機面：Snapshot 6.48。估值面：ValuationClass ETF_INCOME，AnchorPE 20，QualityMomentum 69.17%，QualityFactor 1.20，ValuationRaw 15.26，估值判定：偏高。資金面偏弱。持倉面：投入比 20.24%（安全）。條件部分符合，但仍需等待更佳位置。"
     },
     {
       "排名": 16,
@@ -5764,7 +5764,7 @@
         "ValuationClass": "ETF_GROWTH",
         "PEG": 0,
         "ForwardPE": 0,
-        "AnchorPE": 22,
+        "AnchorPE": 26,
         "PERatio": 0,
         "EPS成長率": 0,
         "PEScore": 20,
@@ -5830,8 +5830,8 @@
         "結構不甜",
         "量比 0.57 偏低"
       ],
-      "估值說明": "ValuationClass ETF_GROWTH，AnchorPE 22，QualityMomentum 18.32%，QualityFactor 0.97，ValuationRaw 12.29，估值判定：偏高",
-      "最終說明": "趨勢面：TrendRaw 10.81，狀態 up_mild。結構面：ShortSwing 1.41，甜度已反映。時機面：Snapshot 2.75。估值面：ValuationClass ETF_GROWTH，AnchorPE 22，QualityMomentum 18.32%，QualityFactor 0.97，ValuationRaw 12.29，估值判定：偏高。資金面偏弱。持倉面：投入比 0%（安全）。目前不適合做 FCN。"
+      "估值說明": "ValuationClass ETF_GROWTH，AnchorPE 26，QualityMomentum 18.32%，QualityFactor 0.97，ValuationRaw 12.29，估值判定：偏高",
+      "最終說明": "趨勢面：TrendRaw 10.81，狀態 up_mild。結構面：ShortSwing 1.41，甜度已反映。時機面：Snapshot 2.75。估值面：ValuationClass ETF_GROWTH，AnchorPE 26，QualityMomentum 18.32%，QualityFactor 0.97，ValuationRaw 12.29，估值判定：偏高。資金面偏弱。持倉面：投入比 0%（安全）。目前不適合做 FCN。"
     },
     {
       "排名": 22,
@@ -5872,7 +5872,7 @@
         "ValuationClass": "ETF_INCOME",
         "PEG": 0,
         "ForwardPE": 0,
-        "AnchorPE": 18,
+        "AnchorPE": 22,
         "PERatio": 0,
         "EPS成長率": 0,
         "PEScore": 20,
@@ -5936,8 +5936,8 @@
       "why_no": [
         "結構不甜"
       ],
-      "估值說明": "ValuationClass ETF_INCOME，AnchorPE 18，QualityMomentum 1.39%，QualityFactor 0.80，ValuationRaw 10.18，估值判定：高估",
-      "最終說明": "趨勢面：TrendRaw 0.38，狀態 neutral。結構面：ShortSwing 0.62，甜度已反映。時機面：Snapshot 0.56。估值面：ValuationClass ETF_INCOME，AnchorPE 18，QualityMomentum 1.39%，QualityFactor 0.80，ValuationRaw 10.18，估值判定：高估。持倉面：投入比 0%（安全）。目前不適合做 FCN。"
+      "估值說明": "ValuationClass ETF_INCOME，AnchorPE 22，QualityMomentum 1.39%，QualityFactor 0.80，ValuationRaw 10.18，估值判定：高估",
+      "最終說明": "趨勢面：TrendRaw 0.38，狀態 neutral。結構面：ShortSwing 0.62，甜度已反映。時機面：Snapshot 0.56。估值面：ValuationClass ETF_INCOME，AnchorPE 22，QualityMomentum 1.39%，QualityFactor 0.80，ValuationRaw 10.18，估值判定：高估。持倉面：投入比 0%（安全）。目前不適合做 FCN。"
     },
     {
       "排名": 23,
