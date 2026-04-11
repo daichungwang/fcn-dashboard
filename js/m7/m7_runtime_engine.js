@@ -86,8 +86,8 @@ const VALUATION_OVERRIDE = {
   MRVL: { valuation_class: "AI_SEMI_CYCLICAL", anchor_pe: 22 },
 
   BAC: { valuation_class: "FINANCIAL", anchor_pe: 10 },
-  LQD: { valuation_class: "ETF_INCOME", anchor_pe: 18 },
-  QQQ: { valuation_class: "ETF_GROWTH", anchor_pe: 22 },
+  LQD: { valuation_class: "ETF_INCOME", anchor_pe: 22 },
+  QQQ: { valuation_class: "ETF_GROWTH", anchor_pe: 26 },
 
   AAL: { valuation_class: "CYCLICAL", anchor_pe: 12 },
   CCL: { valuation_class: "CYCLICAL", anchor_pe: 12 },
@@ -172,8 +172,8 @@ function getAnchorPE(row, category) {
     FINANCIAL: 10,
     CYCLICAL: 12,
     SPECULATIVE: 18,
-    ETF_INCOME: 18,
-    ETF_GROWTH: 22,
+    ETF_INCOME: 20,
+    ETF_GROWTH: 25,
     CORE_GENERIC: 20
   };
 
