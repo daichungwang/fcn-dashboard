@@ -1,246 +1,246 @@
 {
-  "updated_at": "2026-04-10 06:09",
+  "updated_at": "2026-04-11 00:05",
   "summary": {
     "active_fcn_count": 24,
     "top_risk_code": "FCN710H",
     "worst_of": "ORCL",
-    "market_env": "保守做",
-    "main_conclusion": "今天可保守做 FCN，建議以 TSM / MSFT 為主，避免進攻型標的過重。"
+    "market_env": "觀望",
+    "main_conclusion": "今天較適合觀望或只做防守型 FCN，先避開高波動與風險集中的標的。"
   },
   "morning_brief": {
     "international_news": [
       {
-        "title": "The Calgary Flames’ Collapse Was Inevitable",
-        "summary": "The Calgary Flames’ season didn’t fall apart—it unfolded exactly how it was always going to.",
-        "content": "The end finally came into focus Tuesday night for the Calgary Flamesnot with a bang, but with the kind of quiet inevitability that has followed them all season. A 43 overtime loss to the Dallas Star… [+4313 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Chart shows Iran may have put sea mines in Strait of Hormuz",
-        "summary": "Semiofficial news agencies in Iran published a chart on April 9 suggesting the country’s paramilitary Revolut…",
-        "content": "TEHRAN Semiofficial news agencies in Iran published a chart on April 9 suggesting the countrys paramilitary Revolutionary Guard put sea mines into the Strait of Hormuz during the war, in a message t… [+1837 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Why did US-Iran ceasefire talks scramble? #world",
-        "summary": "How the ceasefire turned into a security and diplomacy scramble A two week pause in fighting between the Unit…",
-        "content": "A two-week pause in fighting between the United States and Iran was announced, but it quickly collided with real-world military and shipping pressures. At the center of the disruption was the Strait… [+1693 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Why did Tyson shut its prepared foods plant? #food",
-        "summary": "Tyson closes U.S. prepared foods facility Tyson Foods is ending production at a U.S. prepared foods plant bec…",
-        "content": "Tyson Foods is ending production at a U.S. prepared foods plant because it says the facility is no longer viable. The closure is tied to the companys assessment of overall economics at that site rath… [+1098 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Are US travel plans being reconsidered? #travel",
-        "summary": "Travelers rethinking US trips due to delays and sentiment Several travellers are reassessing whether to visit…",
-        "content": "Travelers rethinking US trips due to delays and sentiment Several travellers are reassessing whether to visit the United States amid a mix of operational and political headwinds. In a snapshot of tr… [+1647 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Earning from idle crypto: A practical guide for long-term holders",
-        "summary": "Crypto investors can now earn from idle assets without constant trading. Flexible savings accounts allow user…",
-        "content": "Holding crypto for the long term is common, but leaving assets idle in a wallet for weeks or months often creates a simple question. Is there a way to earn something from those holdings without turni… [+6514 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "As U.S. and Iran talk truce, Israel digs in for a 'forever war'",
-        "summary": "Even as the U.S. and Iran seek to cement a ceasefire, Israel is seizing more territory from its neighbors in…",
-        "content": "Even as the U.S. and Iran seek to cement a ceasefire, Israel is seizing more territory from its neighbors in preparation for a long, drawn-out conflict across the Middle East. Israel's creation of \"… [+6875 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
+        "title": "Why are EV interests rising amid Iran tensions? #lifestyle",
+        "summary": "Iran related disruption is boosting EV interest, analysts say Consumers’ attention to electric vehicles has b…",
+        "content": "Consumers attention to electric vehicles has been increasing as gas prices rise amid the latest conflict in the Middle East, according to a report summarized in the provided stories. The push isnt fr… [+1534 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
         "affects_fcn": true,
         "impact_score": -1
       },
       {
-        "title": "Stolt-Nielsen Limited Reports Unaudited Results For the First Quarter of 2026",
-        "summary": "Navigating elevated market disruption LONDON, April 9, 2026 – Stolt-Nielsen Limited (Oslo Børs ticker: SNI) t…",
-        "content": "Navigating elevated market disruption LONDON, April 9, 2026 Stolt-Nielsen Limited (Oslo Børs ticker: SNI) today reported unaudited results for the first quarter ending February 28, 2026. The Company… [+3817 chars]｜分類：地緣政治｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Why is Fleur du Mal expanding globally now? #lifestyle",
-        "summary": "Provocation as a growth engine for Fleur du Mal Jennifer Zuccarini, founder of lingerie brand Fleur du Mal, i…",
-        "content": "Jennifer Zuccarini, founder of lingerie brand Fleur du Mal, is leaning into shock-value aesthetics as a deliberate business strategypartly because the cultural moment is moving toward conservatism. R… [+1455 chars]｜分類：全球經濟｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "How is Levi’s CEO reviving the brand? #lifestyle",
-        "summary": "Levi’s revival: a scaling plan aimed at the $10B era Levi Strauss & Co. CEO Michelle Gass is laying out a str…",
-        "content": "Levi Strauss &amp; Co. CEO Michelle Gass is laying out a strategy to keep the denim leader growing amid intense competition in the category. The goal is not just to protect the core Levis identity, b… [+1364 chars]｜分類：全球經濟｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Magna Announces Sale of Its Lighting and Rooftop Systems Businesses",
-        "summary": "Definitive agreements signed to divest Lighting and Rooftop Systems businesses Businesses generated approxima…",
-        "content": "<ul><li>Definitive agreements signed to divest Lighting and Rooftop Systems businesses</li><li>Businesses generated approximately $1.1 billion in combined global sales in 2025</li><li>Transactions ex… [+5173 chars]｜分類：全球經濟｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Gold surges amid fragile ceasefire as markets brace for volatility",
-        "summary": "Gold surged to $4,850/oz (+3.1%) post-ceasefire announcement, while oil briefly plunged below $100/barrel—but…",
-        "content": "<ul><li>Gold surged to $4,850/oz (+3.1%) post-ceasefire announcement, while oil briefly plunged below $100/barrelbut Bank of America warns prices could spike to $130+ if war resumes, and $200+ if Ira… [+6330 chars]｜分類：全球經濟｜解讀：波動升高，FCN 敲入風險增加",
+        "title": "How are airlines raising baggage fees? #travel",
+        "summary": "Why baggage fees are climbing—and what it means for travelers Airlines are increasingly passing rising costs…",
+        "content": "Airlines are increasingly passing rising costs to passengers through higher baggage fees and add-on charges, particularly after fuel prices surged amid the Middle East conflict. Multiple reports in t… [+1677 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
         "affects_fcn": true,
-        "impact_score": -2
+        "impact_score": -1
+      },
+      {
+        "title": "US-Iran ceasefire impact on travel? #travel",
+        "summary": "What the US Iran ceasefire could change for travel After six weeks of conflict, the U.S. and Iran agreed to a…",
+        "content": "After six weeks of conflict, the U.S. and Iran agreed to a two-week ceasefire starting around April 7. The immediate travel relevance is that aviation risk and route disruption tied to the conflict m… [+1783 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "The War in Iran as International Terrorism",
+        "summary": "As someone born in 1944, when Franklin D. Roosevelt was president, who lived through 12 other presidencies be…",
+        "content": "As someone born in 1944, when Franklin D. Roosevelt was president, who lived through 12 other presidencies before Donald Trump took and that word has a different meaning with him office in 2016, the … [+17174 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Saudi Arabia says Iran attacks have affected oil production",
+        "summary": "A Saudi official confirmed that one of the pumping stations on a vital east-west pipeline was hit, resulting…",
+        "content": "RIYADH: Saudi Arabia said on Thursday (Apr 9) that the attacks carried out in recent weeks by Iran against the kingdom's energy infrastructure killed one person and impacted its oil production capaci… [+1965 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "Rustad says 'dirty trick' by B.C. United may have cost Conservatives election victory",
+        "summary": "Elections B.C. says B.C. United was behind a website calling for former B.C. Conservative leader John Rustad…",
+        "content": "Former B.C. Conservative leader John Rustad says he was \"furious\" to learn that B.C. United was behind a website calling for him to be ousted before the 2024 provincial election. Elections B.C. fine… [+4629 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Standard Chartered: Oil Price Correction Is Likely Overdone",
+        "summary": "Oil prices have declined by the biggest margin since the Iran war began in late February, with Brent crude fo…",
+        "content": "Jamie Dimon warns the Middle… Iran sustained oil exports at… Crude oil inventories in the… By Alex Kimani - Apr 09, 2026, 7:00 PM CDTOil prices have declined by the biggest margin since the Iran w… [+4888 chars]｜分類：地緣政治｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "Exposome-wide patterns predict brain health in aging",
+        "summary": "Machine-learning analyses in UK Biobank show that lifetime exposures predict brain health, with cardiovascula…",
+        "content": "<li>Dawson, W. D. et al. The Brain Health Diplomats Toolkit: supporting brain health diplomacy leaders in Latin America and the Caribbean. Lancet Reg. HealthAmericas28, 100627 (2023). </li><li>Livin… [+12564 chars]｜分類：地緣政治｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Beyond Recession: Economic Collapse and the Architecture of Control",
+        "summary": "There is a moment—subtle, almost impossible to locate precisely—when a society begins to feel different. Not…",
+        "content": "There is a momentsubtle, almost impossible to locate preciselywhen a society begins to feel different. Not dramatically. Not in a way that triggers immediate alarm. But in small, almost negligible s… [+11630 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Sun Pharma preps for $12-billion Organon bid in biggest overseas pharma M&A by Indian co",
+        "summary": "Sun Pharma is moving forward with a $12 billion offer for Organon & Co. This acquisition would be the largest…",
+        "content": "Mumbai: Sun Pharmaceutical Industries has decided to proceed with a binding offer of $12 billion for Organon &amp; Co, taking the company to the final stages of its most ambitious overseas acquisitio… [+4437 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Assembling unmapped reads reveals hidden variation in South Asian genomes",
+        "summary": "Conventional genome mapping overlooks genetic variation, especially in regions that substantially differ from…",
+        "content": "<li>Sirugo, G., Williams, S. M. &amp; Tishkoff, S. A. The missing diversity in human genetic studies. Cell177, 2631 (2019). Google Scholar </li><li>Fatumo, S. et al. A roadmap to increase diversit… [+12798 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Translation in proximity to forming autophagosomes during sustained autophagy",
+        "summary": "During stress, cells profoundly reduce translation and simultaneously generate a large number of autophagosom…",
+        "content": "<li>Das, S., Vera, M., Gandin, V., Singer, R. H. &amp; Tutucci, E. Intracellular mRNA transport and localized translation. Nat. Rev. Mol. Cell Biol.22, 483504 (2021). Google Scholar </li><li>Bourk… [+15837 chars]｜分類：全球經濟｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
       }
     ],
     "financial_news": [
       {
-        "title": "Why US bond yields at 4.28% won't unlock a foreign capital wave into India",
-        "summary": "With the 10-year US Treasury yield hovering around 4.28%, the case for a meaningful, sustained influx of over…",
-        "content": "With the 10-year US Treasury yield hovering around 4.28%, the case for a meaningful, sustained influx of overseas capital into India remains dim. But why is that the case? The interest rate differen… [+4237 chars]｜分類：Fed / 利率｜解讀：影響有限",
-        "affects_fcn": true,
-        "impact_score": 0
-      },
-      {
-        "title": "JPMorgan CEO Says Bank Must Build Its Own Blockchain To Counter Crypto Threats",
-        "summary": "JPMorgan CEO, Jamie Dimon, warned investors in his latest annual letter that the bank must accelerate its eff…",
-        "content": "JPMorgan CEO, Jamie Dimon, warned investors in his latest annual letter that the bank must accelerate its efforts in blockchain technology to meet mounting competition from the crypto sector. Dimon… [+3415 chars]｜分類：Fed / 利率｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Silver drops Rs 5,000/kg, gold slides marginally as rising crude prices and rate hike fears dent mood. What should you…",
-        "summary": "Gold and silver prices fell on the MCX on Thursday. This followed minutes from the US Federal Reserve's meeti…",
-        "content": "Gold and silver prices opened lower on the Multi Commodity Exchange (MCX) on Thursday after minutes from the US Federal Reserves March 17-18 meeting showed that a growing number of policymakers favou… [+3025 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
+        "title": "FGN unveils savings bonds",
+        "summary": "Invest securely in the latest FGN Savings Bonds. Earn up to 14.082% per annum on your savings. Subscriptions…",
+        "content": "The Debt Management Office has officially opened subscriptions for the April 2026 Federal Government of Nigeria Savings Bonds, offering retail investors a high-yield opportunity to grow their wealth … [+2339 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
         "affects_fcn": true,
         "impact_score": 1
       },
       {
-        "title": "‘We're coming after you': Dr Oz revokes Medicare access for LA doctor tied to $71M hospice billing",
-        "summary": "A California doctor was linked to nearly 2,800 Medicare patient claims across 126 hospices in 2024, according…",
-        "content": "As allegations of widespread hospice fraud in Los Angeles County continue to intensify, one physician has faced scrutiny after being tied to Medicare claims for thousands of patients across dozens of… [+4217 chars]｜分類：Fed / 利率｜解讀：影響有限",
+        "title": "Cross River unveils plans to tackle flooding, environmental degradation",
+        "summary": "Cross River State announces measures to tackle flooding and environmental issues, urging farmers to adopt pro…",
+        "content": "The Cross River State Government has announced a set of measures to address flooding and environmental degradation, focusing on prevention, enforcement and changing public behaviour, particularly amo… [+3395 chars]｜分類：Fed / 利率｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Global Market Today: Asian stocks turn cautious as reality intrudes in Gulf",
-        "summary": "Asian markets are subdued as a fragile Gulf ceasefire shows signs of breaking. Oil prices are rising again, s…",
-        "content": "SYDNEY: Asian share markets were in a more sober mood on Thursday as cracks quickly began to appear in the fragile Gulf ceasefire, nudging oil prices back up and reminding investors the inflationary … [+2719 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
-        "affects_fcn": true,
-        "impact_score": -1
-      },
-      {
-        "title": "Asia stocks turn cautious as reality intrudes in Gulf",
-        "summary": "SYDNEY, April 9 : Asian share markets were in a more sober mood on Thursday as cracks quickly began to appear…",
-        "content": "SYDNEY, April 9 : Asian share markets were in a more sober mood on Thursday as cracks quickly began to appear in the fragile Gulf ceasefire, nudging oil prices back up and reminding investors the inf… [+2878 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
-        "affects_fcn": true,
-        "impact_score": -1
-      },
-      {
-        "title": "Dow Surges 1,325 Points in Rally After Ceasefire",
-        "summary": "Oil prices plunged below $95 per barrel, and stock markets surged worldwide Wednesday after President Trump p…",
-        "content": "Financial markets have been prone to sharp and sudden reversals because of deep uncertainty about what will happen next in the war. \"Is it just kicking of the can down the road, moving the goalposts,… [+1770 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
-        "affects_fcn": true,
-        "impact_score": -1
-      },
-      {
-        "title": "FEDS Note: Detecting Tariff Effects on Consumer Prices in Real Time – Part II",
-        "summary": "Robert Minton, Madeleine Ray and Mariano SomaleMajor changes in U.S. trade policy last year have led to a sur…",
-        "content": "April 08, 2026 Detecting Tariff Effects on Consumer Prices in Real Time Part II Robert Minton, Madeleine Ray and Mariano Somale Introduction Major changes in U.S. trade policy last year have led … [+35032 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
+        "title": "The U.S. economy almost stalled, but inflation still stayed too hot for an easy Fed rescue",
+        "summary": "The U.S. economy entered 2026 with far less momentum than markets had priced in a few months earlier. Accordi…",
+        "content": "The U.S. economy entered 2026 with far less momentum than markets had priced in a few months earlier. According to the Bureau of Economic Analysis, fourth quarter 2025 GDP growth was revised down to … [+14258 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
         "affects_fcn": true,
         "impact_score": 1
       },
       {
-        "title": "The Morning Report 4/9",
-        "summary": "Drake's Northern Cali looks, building \"mirror muscles\" and hot hatchbacks will stick around.",
-        "content": "Style Drake’s heads to San Francisco, finding inspiration from the city’s beautiful vistas, the buzz of its history and the constantly changing Northern California weather. By｜分類：通膨 / 就業｜解讀：影響有限",
+        "title": "Why South Florida commercial real estate deal flow has chilled",
+        "summary": "Ben Mandell is biding his time. Over the past three or four years, his firm purchased one property, and it wa…",
+        "content": "Ben Mandell is biding his time. Over the past three or four years, his firm purchased one property, and it was a distressed deal. Although the real estate industry expected a more favorable investm… [+11604 chars]｜分類：Fed / 利率｜解讀：影響有限",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Bitcoin steadies near $71K, retail investors accumulate over 4.3 million Bitcoin in one week",
-        "summary": "Bitcoin hovered near $71,000 after failing to break $73,000, with momentum waning. Major altcoins experienced…",
-        "content": "Bitcoin traded near the $71,000 mark on Thursday after facing resistance at $73,000, with momentum easing as buyers showed limited follow-through. The cryptocurrency traded at $70,756, declining near… [+3202 chars]｜分類：通膨 / 就業｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "SECL Recruitment 2026: 1,055 vacancies announced for Mining Sirdar, Foreman and Surveyor posts, apply April 15 onwards",
-        "summary": "South Eastern Coalfields Limited is hiring 1,055 technical staff. Positions include Mining Sirdar, Dy Surveyo…",
-        "content": "<ul><li>News</li> <li>SECL Recruitment 2026: 1,055 vacancies announced for Mining Sirdar, Foreman and Surveyor posts, apply April 15 onwards</li></ul> Follow Us On Social Media｜分類：通膨 / 就業｜解讀：影響有限",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "Asking price inflation at lowest rate in over two years",
-        "summary": "The rate of inflation of asking prices for houses and apartments has dropped to its lowest level in two years.",
-        "content": "The rate of inflation of asking prices for houses and apartments has dropped to its lowest level in two years. A report by website MyHome in association with Bank of Ireland said that asking price i… [+1193 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "title": "Treasuries Steady After Mixed Economic Data as Oil Rebounds",
+        "summary": "US Treasuries held steady after the Federal Reserve’s preferred inflation gauge showed elevated price pressur…",
+        "content": "(Bloomberg) US Treasuries held steady after the Federal Reserves preferred inflation gauge showed elevated price pressures even before the US attack on Iran sent energy costs sharply higher. THIS C… [+4539 chars]｜分類：Fed / 利率｜解讀：利率壓力若下降，FCN 環境通常較有利",
         "affects_fcn": true,
+        "impact_score": 1
+      },
+      {
+        "title": "Oil prices jump back up on skepticism over fragile US-Iran ceasefire",
+        "summary": "Oil prices jump back up on skepticism over fragile US-Iran ceasefirebostonherald.com",
+        "content": "By STAN CHOE, AP Business Writer NEW YORK (AP) Oil prices are climbing back toward $100 per barrel on Thursday, while stock markets worldwide give back some of their big gains from the day before. … [+3007 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "Why are gold and silver prices falling today — are they no longer safe haven assets? Here’s the current gold and silver…",
+        "summary": "Gold and silver prices down today: Gold prices fall to $4,714.53, slipping below key support as inflation fea…",
+        "content": "Gold and silver prices down today: Gold prices fall sharply, slipping to $4,714.53 per ounce, as investors brace for critical U.S. inflation data. The decline comes despite ongoing geopolitical tensi… [+6455 chars]｜分類：Fed / 利率｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "Why did US CDC delay COVID shot effectiveness report? #health",
+        "summary": "CDC COVID shot effectiveness: delay and political controversy A top CDC official delayed a report on the effe…",
+        "content": "A top CDC official delayed a report on the effectiveness of COVID-19 shots. The situation adds to longstanding concern among health experts about political interference and disruption in public-healt… [+1590 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "What does Wingstop’s Citrus Mojo add? #food",
+        "summary": "Wingstop adds Citrus Mojo as a limited time flavor Wingstop is rolling out a new limited time flavor called C…",
+        "content": "Wingstop is rolling out a new limited-time flavor called Citrus Mojo. Its a dry rub designed to deliver a mix of brightness and savory depthdescribed as being bright and savory at the same time. The… [+1331 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Why are EV interests rising amid Iran tensions? #lifestyle",
+        "summary": "Iran related disruption is boosting EV interest, analysts say Consumers’ attention to electric vehicles has b…",
+        "content": "Consumers attention to electric vehicles has been increasing as gas prices rise amid the latest conflict in the Middle East, according to a report summarized in the provided stories. The push isnt fr… [+1534 chars]｜分類：通膨 / 就業｜解讀：地緣風險升高，需留意市場波動擴大",
+        "affects_fcn": true,
+        "impact_score": -1
+      },
+      {
+        "title": "Hunter Biden Says He ‘100%’ Wants Cage Match Against Trump Brothers",
+        "summary": "Hunter Biden, the son of Joe Biden, recently published a video online stating that he wants to take on both E…",
+        "content": "This needs to happen for the culture. Hunter Biden, the son of former President Joe Biden, recently published a video online stating that he wants to take on both Eric and Donald Trump Jr. in a cage… [+1287 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "Why do players need manual dock/undock? #gaming",
+        "summary": "Pokémon Champions resolution bug on Switch 2 Pokémon Champions launched with a Switch 2 specific issue tied t…",
+        "content": "Pokémon Champions launched with a Switch 2-specific issue tied to docked mode visuals. Players report that higher 4K output isnt available when the console is simply docked; instead, the game require… [+1330 chars]｜分類：通膨 / 就業｜解讀：影響有限",
+        "affects_fcn": false,
         "impact_score": 0
       }
     ],
     "ai_trend": [
       {
-        "title": "praisonaiagents 1.5.125",
-        "summary": "Praison AI agents for completing complex tasks with Self Reflection Agents",
+        "title": "Show HN: SmolVM – open-source sandbox for coding and computer-use agents",
+        "summary": "SmolVM is an open-source local sandbox for AI agents on macOS and Linux.I started building it because agent w…",
+        "content": "SmolVM gives AI agents their own disposable computer. Each sandbox is a lightweight virtual machine that boots in seconds, runs any code or command you throw at it, and disappears when you're done no… [+3903 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "carl-studio added to PyPI",
+        "summary": "CARL (Coherence-Aware Reinforcement Learning) — information-theoretic reward signals for LLM training via tok…",
+        "content": "Coherence-Aware Reinforcement Learning Models don't learn gradually -- they crystallize. CARL adds information-theoretic reward signals to RL training that measure how a model generates, not just w… [+7085 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "affects_fcn": false,
+        "impact_score": 0
+      },
+      {
+        "title": "memoryhub 0.3.0",
+        "summary": "Centralized, governed memory for AI agents",
         "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "Process Manager for Autonomous AI Agents",
-        "summary": "Run autonomous AI agent bots from a single CLI. Terminal dashboard, web UI, declarative config, and session m…",
-        "content": "Control your bots Start, stop, message, and resume bots from the CLI or either dashboard. Bots run as background processes. $botctl startmy-bot--detach$botctl startmy-bot--message\"check the error l… [+41 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "lyzr-adk 0.1.9",
-        "summary": "Lyzr Agent Development Kit (ADK) - Production-ready Python ADK for building intelligent AI agents with RAG, m…",
+        "title": "maev-sdk 0.4.5",
+        "summary": "Maev AI Agent Observability SDK — one-liner instrumentation for AI agents",
         "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "orvin added to PyPI",
-        "summary": "Orvin memory platform for voice agents",
-        "content": "Backend for a voice-native memory service for voice AI agents, wired for Neon-backed Postgres, local open-source embeddings, and local Redis. Current rebuild docs for the next architecture step live… [+6124 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
-        "affects_fcn": false,
-        "impact_score": 0
-      },
-      {
-        "title": "moshe 0.1.1",
-        "summary": "Runtime security SDK for AI agents — policy enforcement, approval workflows, taint tracking, and chain-risk d…",
+        "title": "constitutional-agent 0.4.0b1",
+        "summary": "WHY-layer constitutional governance for autonomous AI agents",
         "content": "A required part of this site couldnt load. This may be due to a browser extension, network issues, or browser settings. Please check your connection, disable any ad blockers, or try using a diffe… [+12 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "AI agent intent is a starting point, not a security strategy",
-        "summary": "In this Help Net Security video, Itamar Apelblat, CEO of Token Security, walks through findings from the comp…",
-        "content": "In this Help Net Security video, Itamar Apelblat, CEO of Token Security, walks through findings from the company’s research, which shows that 65% of agentic chatbots have never been used yet still ho… [+9996 chars]｜分類：AI Agent｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "title": "Praise Victor Industrial aims to break Fujibo's soft pad dominance with 2Q26 sample certification",
+        "summary": "As AI and high-performance computing (HPC) demand surges and the semiconductor supply chain undergoes acceler…",
+        "content": "Keep me signed in Some subscribers prefer to save their log-in information so they do not have to enter their User ID and Password each time they visit the site. To activate this function, check the… [+285 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "CEO reveals why hiring a 20-year-old with no experience became his best bet: No fancy resume, just a simple DM changed…",
-        "summary": "At a time when big companies pay attention to professional degrees and fancy resumes, Tanay Kothari, CEO of W…",
-        "content": "Tanay Kothari, CEO of WisprFlow.ai, has sparked a debate on hiring practices after sharing an incident of how he hired a 20-year-old with no experience and it turned out to be one of his best decisio… [+3285 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "title": "What did FDA decide about AI device deregulation? #health",
+        "summary": "FDA rejects proposal to deregulate some AI devices The FDA has rejected an industry proposal that would have…",
+        "content": "The FDA has rejected an industry proposal that would have loosened regulation for certain AI devices. The decision is described as part of the agencys evolving approach to how software and AI systems… [+1402 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       },
       {
-        "title": "How does Medicare’s new Mental Health Check In work? Is this low-intensity CBT likely to help?",
-        "summary": "The idea is to catch mental health problems early, before they get worse. Here’s how it works – and the outco…",
-        "content": "If you’ve been struggling with your mental health lately, a new free service could help. Medicare Mental Health Check In launched earlier this year to give more Australians access to mental health ca… [+5734 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
+        "title": "MetaOptics reshapes consumer electronics with AI-driven optical innovation",
+        "summary": "MetaOptics' pivot from lenses to intelligent processing stands to reshape mobile imaging, security, and weara…",
+        "content": "MetaOptics' pivot from lenses to intelligent processing stands to reshape mobile imaging, security, and wearable devices globally, lowering hardware costs while enabling new contactless authenticatio… [+53 chars]｜分類：AI 基礎設施｜解讀：影響有限｜FCN Pool：未直接命中｜建議：持續觀察",
         "affects_fcn": false,
         "impact_score": 0
       }
     ],
     "macro": [
       {
-        "title": "CPI：327.46（+0.87）",
+        "title": "CPI：330.29（+2.83）",
         "summary": "通膨若放緩，通常有利 FCN 環境。",
         "content": "通膨走勢會影響 Fed 與市場風險偏好。",
         "affects_fcn": true,
@@ -254,14 +254,14 @@
         "impact_score": 1
       },
       {
-        "title": "VIX：21.04（-4.74）",
+        "title": "VIX：19.49（-1.55）",
         "summary": "VIX 上升代表 FCN 敲入風險上升。",
         "content": "VIX 是你每日要看的核心指標。",
         "affects_fcn": true,
         "impact_score": -2
       },
       {
-        "title": "10Y / 20Y：4.29%（-0.04%） / 4.87%（-0.03%）",
+        "title": "10Y / 20Y：4.29%（+0.00%） / 4.88%（+0.01%）",
         "summary": "中長期利率上升會壓抑科技估值。",
         "content": "科技與 AI 核心股會受中長債殖利率影響。",
         "affects_fcn": true,
@@ -275,7 +275,7 @@
         "impact_score": -1
       },
       {
-        "title": "失業率：4.30%（-0.10%）｜S&P500：6824.66（+41.85）",
+        "title": "失業率：4.30%（-0.10%）｜S&P500：6816.89（-7.77）",
         "summary": "就業與股市穩定度共同反映風險偏好。",
         "content": "若就業惡化且股市回落，FCN 需更保守。",
         "affects_fcn": true,
@@ -310,7 +310,7 @@
     },
     {
       "label": "總經環境",
-      "text": "總經環境中性，FCN 可做但需偏保守，優先核心股。"
+      "text": "總經壓力偏高，建議降低進攻型 FCN。"
     },
     {
       "label": "今日推薦",
@@ -330,12 +330,12 @@
     },
     {
       "label": "VIX 壓力",
-      "value": 42,
+      "value": 38,
       "type": "watch"
     },
     {
       "label": "AI 核心股安全度",
-      "value": 62,
+      "value": 45,
       "type": "watch"
     }
   ],
@@ -687,25 +687,14 @@
   },
   "scenario_suggestions": [
     {
-      "name": "穩定收息",
+      "name": "避險觀望",
       "targets": [
-        "TSM",
         "MSFT",
         "UNH"
       ],
       "eki": "80%–85%",
-      "tenor": "6–12個月",
-      "goal": "防守優先"
-    },
-    {
-      "name": "平衡收益",
-      "targets": [
-        "NVDA",
-        "AVGO"
-      ],
-      "eki": "75%–80%",
-      "tenor": "3–6個月",
-      "goal": "只留主力池"
+      "tenor": "短中期",
+      "goal": "只保留低波動核心"
     }
   ]
 }
