@@ -97,6 +97,8 @@ const VALUATION_OVERRIDE = {
   SOFI: { valuation_class: "SPECULATIVE", anchor_pe: 18 },
   ALAB: { valuation_class: "SPECULATIVE", anchor_pe: 18 },
   CRDO: { valuation_class: "SPECULATIVE", anchor_pe: 18 },
+  TGT: { valuation_class: "INCOME", anchor_pe: 13 },
+  COST: { valuation_class: "INCOME", anchor_pe: 18 },
   TSLA: { valuation_class: "SPECULATIVE", anchor_pe: 20 },
   PLTR: { valuation_class: "SPECULATIVE", anchor_pe: 22 }
 };
@@ -184,8 +186,8 @@ function calcCategoryBonus(category) {
   if (category === "core") return 2;
   if (category === "defensive") return 1;
   if (category === "income") return 0.5;
-  if (category === "cyclical_high_beta") return -1;
-  if (category === "speculative") return -2;
+  if (category === "cyclical_high_beta") return -0.2;
+  if (category === "speculative") return -0.5;
   return 0;
 }
 
@@ -325,7 +327,7 @@ function buildValuationData(row, category) {
   const qualityMomentum = calcQualityMomentum(r1m, r3m, r6m, r12m);
   const qualityFactor = calcQualityFactor(qualityMomentum);
 
-  const valuationRaw = (0.6 * peScore + 0.4 * growthScoreAdj) * qualityFactor;
+  const valuationRaw = 10*(0.7 * peScore + 0.3 * growthScoreAdj) * qualityFactor;
   const valuationNorm = clamp(valuationRaw / 3.5, 0, 10);
 
   let level = "中性";
@@ -374,10 +376,10 @@ function buildValuationData(row, category) {
 // ------------------------------------------
 function calcTrendRaw(r1m, r3m, r6m, r12m) {
   return (
-    0.15 * (r1m ?? 0) +
+    0.25 * (r1m ?? 0) +
     0.25 * (r3m ?? 0) +
-    0.30 * (r6m ?? 0) +
-    0.30 * (r12m ?? 0)
+    0.25 * (r6m ?? 0) +
+    0.25 * (r12m ?? 0)
   );
 }
 
@@ -412,12 +414,12 @@ function calcShortSwing(swingDays, amp1d) {
   const d5 = safeNum(days[5], 0);
 
   return (
-    0.35 * d0 +
-    0.25 * d1 +
-    0.15 * d2 +
-    0.10 * d3 +
-    0.08 * d4 +
-    0.07 * d5
+    0.2 * d0 +
+    0.2 * d1 +
+    0.1 * d2 +
+    0.1 * d3 +
+    0.2 * d4 +
+    0.2 * d5
   );
 }
 
@@ -440,14 +442,14 @@ function inferStructureState(shortSwing) {
 // ------------------------------------------
 function calcSnapshot(r1d, r1w, r1m) {
   return (
-    0.4 * (r1d ?? 0) +
-    0.5 * (r1w ?? 0) +
-    0.1 * (r1m ?? 0)
+    0.45 * (r1d ?? 0) +
+    0.35 * (r1w ?? 0) +
+    0.2 * (r1m ?? 0)
   );
 }
 
 function timingScoreFromSnapshot(snapshot) {
-  let score = 5 - 0.1667 * snapshot;
+  let score = snapshot;
   return clamp(score, 0, 10);
 }
 
