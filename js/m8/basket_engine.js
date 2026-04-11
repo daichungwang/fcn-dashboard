@@ -79,7 +79,7 @@ h1 { margin-bottom: 20px; }
 // ============================
 // IMPORT ENGINE
 // ============================
-import { runM7Basket } from "./js/m8/basket_engine.js";
+import { runM7Basket } from "/fcn-dashboard/js/m8/basket_engine.js";
 
 // ============================
 // INIT
