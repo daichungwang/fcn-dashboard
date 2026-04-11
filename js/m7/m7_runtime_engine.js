@@ -448,9 +448,13 @@ function calcSnapshot(r1d, r1w, r1m) {
   );
 }
 
-function timingScoreFromSnapshot(snapshot) {
-  let score = snapshot;
-  return clamp(score, 0, 10);
+function calcTimingScore(snapshot) {
+  if (snapshot === null || snapshot === undefined) return 5;
+
+  const scale = 5;   // 控制靈敏度（很重要）
+  let score = 5 + snapshot * scale;
+
+  return Math.max(0, Math.min(10, score));
 }
 
 function inferTimingState(snapshot) {
