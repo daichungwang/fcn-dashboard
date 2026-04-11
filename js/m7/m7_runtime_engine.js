@@ -257,15 +257,6 @@ function peScoreFromRatio(peRatio) {
   return 6;
 }
 
-function calcPEGScore(peg) {
-  if (peg === null || peg === undefined) return 0;
-  if (peg < 0.8) return 4;
-  if (peg <= 1.0) return 2;
-  if (peg <= 1.3) return 0;
-  if (peg <= 1.6) return -2;
-  return -4;
-}
-
 function growthScoreBase(growth) {
   if (growth === null || growth === undefined) return 3;
 
@@ -299,8 +290,6 @@ function growthScoreFinal(growth) {
 
   return base + 0.5 * (oldScore - base);
 }
-
-
 
 function buildValuationData(row, category) {
   const model = inferValuationModel(row);
@@ -338,7 +327,7 @@ function buildValuationData(row, category) {
   const qualityMomentum = calcQualityMomentum(r1m, r3m, r6m, r12m);
   const qualityFactor = calcQualityFactor(qualityMomentum);
 
-  const valuationRaw = 4*( 0.6 * peScore + 0.3 * growthScoreAdj + 0.5 * pegScore) * qualityFactor;
+  const valuationRaw = 4*(0.7 * peScore + 0.3 * growthScoreAdj) * qualityFactor;
   const valuationNorm = clamp(valuationRaw, 0, 60);
 
   let level = "中性";
@@ -476,12 +465,12 @@ function inferTimingState(snapshot) {
 // Money normalize 0~10
 // ------------------------------------------
 function calcMoneyScoreNormalized(volumeRatio) {
-  const v = safeNum(volumeRatio, 1);
-  if (v === null) return 4;
+  const v = safeNum(volumeRatio, null);
+  if (v === null) return 5;
   if (v >= 1.5) return 10;
-  if (v >= 1.2) return 8;
-  if (v >= 0.9) return 6;
-  if (v >= 0.7) return 4;
+  if (v >= 1.2) return 9;
+  if (v >= 0.9) return 8;
+  if (v >= 0.5) return 7;
   return 2;
 }
 
@@ -566,10 +555,10 @@ function buildFinalScore({
 }) {
   const total =
     valuationNorm +
-    0.8*trendNorm +
+    1.2*trendNorm +
     0.8*structureNorm +
     0.8*timingNorm +
-    moneyNorm +
+    0.9*moneyNorm +
     qualityBonus +
     categoryBonus;
 
