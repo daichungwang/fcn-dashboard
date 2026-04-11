@@ -71,7 +71,7 @@ function loadM2Exposure() {
 const VALUATION_OVERRIDE = {
   MSFT: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 34 },
   META: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 34 },
-  GOOGL: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 35 },
+  GOOG: { valuation_class: "AI_PLATFORM_CORE", anchor_pe: 35 },
   AMZN: { valuation_class: "PLATFORM_MIXED", anchor_pe: 28 },
   AAPL: { valuation_class: "CONSUMER_PLATFORM", anchor_pe: 34 },
 
