@@ -554,11 +554,11 @@ function buildFinalScore({
   categoryBonus
 }) {
   const total =
-    0.30 * valuationNorm +
-    0.20 * trendNorm +
-    0.20 * structureNorm +
-    0.15 * timingNorm +
-    0.15 * moneyNorm +
+    valuationNorm +
+    trendNorm +
+    structureNorm +
+    timingNorm +
+    moneyNorm +
     qualityBonus +
     categoryBonus;
 
