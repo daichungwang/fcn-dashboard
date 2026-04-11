@@ -327,8 +327,8 @@ function buildValuationData(row, category) {
   const qualityMomentum = calcQualityMomentum(r1m, r3m, r6m, r12m);
   const qualityFactor = calcQualityFactor(qualityMomentum);
 
-  const valuationRaw = 10*(0.7 * peScore + 0.3 * growthScoreAdj) * qualityFactor;
-  const valuationNorm = clamp(valuationRaw / 3.5, 0, 10);
+  const valuationRaw = (0.7 * peScore + 0.3 * growthScoreAdj) * qualityFactor;
+  const valuationNorm = clamp(valuationRaw / 3.5, 0, 60);
 
   let level = "中性";
   if (valuationNorm >= 8) level = "合理偏低";
@@ -555,9 +555,9 @@ function buildFinalScore({
 }) {
   const total =
     valuationNorm +
-    trendNorm +
-    structureNorm +
-    timingNorm +
+    0.8*trendNorm +
+    0.8*structureNorm +
+    0.8*timingNorm +
     moneyNorm +
     qualityBonus +
     categoryBonus;
