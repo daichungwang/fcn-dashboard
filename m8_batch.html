@@ -963,7 +963,11 @@
       $("resultArea").innerHTML = `
         <div class="summary-grid">
           <div class="summary-box"><div class="k">Market Yield</div><div class="v">${fmt(r.market_yield)}%</div></div>
-          <div class="summary-box"><div class="k">Fair Yield</div><div class="v">${fmt(r.fair_yield)}%</div></div>
+          <div class="summary-box">
+  <div class="k">Fair Yield</div>
+  <div class="v">${fmt(r.fair_yield)}%</div>
+  <div class="small-note">${r.yield_capped ? "已封頂 10%" : ""}</div>
+</div>
           <div class="summary-box"><div class="k">Pricing Delta</div><div class="v">${fmt(r.pricing_delta)}%</div></div>
           <div class="summary-box"><div class="k">BasketVol / VolAdj</div><div class="v">${fmt(r.basket_vol)} / ${fmt(r.vol_adj)}%</div></div>
         </div>
