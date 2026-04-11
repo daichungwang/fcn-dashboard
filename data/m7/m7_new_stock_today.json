@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-11T00:23:39.746Z",
+  "generated_at": "2026-04-11T01:44:34.435Z",
   "m2_generated_at": "2026-04-07T07:00:00Z",
   "total_count": 33,
   "sweet_count": 7,
@@ -990,6 +990,114 @@
     },
     {
       "排名": 10,
+      "股號": "AAPL",
+      "股名": "Apple",
+      "產業": "TECH_DEF",
+      "子產業": "DEVICE",
+      "分類": "core",
+      "估值模型": "PEG",
+      "風險等級": "低",
+      "股價": 260.49,
+      "PEG": 3.4,
+      "1日漲跌幅": 1.95,
+      "1週漲跌幅": 1.9,
+      "1月漲跌幅": -0.13,
+      "3月漲跌幅": 0.06,
+      "6月漲跌幅": 1.56,
+      "12月漲跌幅": 36.8,
+      "量比": 0.64,
+      "valuation_score": 2.6,
+      "trend_score": 8,
+      "structure_score": 1.97,
+      "timing_score": 4.71,
+      "money_score": 2,
+      "quality_score": 2,
+      "category_adjust": 2,
+      "today_score": 7.78,
+      "趨勢判讀": {
+        "年線": "↑",
+        "6月線": "↑",
+        "3月線": "↑",
+        "月線": "↓",
+        "趨勢狀態": "up_mild",
+        "結構狀態": "building",
+        "時機狀態": "neutral"
+      },
+      "估值資料": {
+        "ValuationClass": "CONSUMER_PLATFORM",
+        "PEG": 3.4,
+        "ForwardPE": 32.56,
+        "AnchorPE": 30,
+        "PERatio": 1.09,
+        "EPS成長率": 9.59,
+        "PEScore": 13.17,
+        "GrowthScore": 5.88,
+        "GrowthScoreAdj": 3.53,
+        "QualityMomentum": 18.79,
+        "QualityFactor": 0.98,
+        "ValuationRaw": 9.09
+      },
+      "結構資料": {
+        "swing_days": [
+          1.95,
+          1.27,
+          4.06,
+          2.23,
+          2.14,
+          1.12
+        ],
+        "amp_1d": 1.95,
+        "ShortSwing": 2.08
+      },
+      "時機資料": {
+        "Snapshot": 1.72
+      },
+      "分數拆解": {
+        "估值原始分": 9.09,
+        "估值分": 2.6,
+        "趨勢分": 8,
+        "結構分": 1.97,
+        "時機分": 4.71,
+        "資金分": 2,
+        "品質分": 2,
+        "類別調整": 2,
+        "總分": 7.78
+      },
+      "持倉曝險": {
+        "FCN數量": 1,
+        "投入金額": 70000,
+        "投入資金比": 8.33,
+        "Danger": 0,
+        "Watch": 0,
+        "Healthy": 1,
+        "Pure平均": 9.8,
+        "Event平均": 9.8
+      },
+      "曝險警示": {
+        "level": "normal",
+        "text": "投入比 8.33%（安全）。",
+        "baseline": {
+          "safe": 40,
+          "warning": 50
+        }
+      },
+      "建議動作": "觀察",
+      "ui_bucket": "觀察名單",
+      "is_today_highlight": false,
+      "today_highlight_reason": "趨勢未轉空 / 曝險可控",
+      "why_yes": [
+        "核心股",
+        "品質佳",
+        "中期趨勢健康"
+      ],
+      "why_no": [
+        "量比 0.64 偏低"
+      ],
+      "估值說明": "ValuationClass CONSUMER_PLATFORM，AnchorPE 30，Forward PE 32.56，PE Ratio 1.09，EPS成長 9.59%，PEG 3.40，QualityMomentum 18.79%，QualityFactor 0.98，ValuationRaw 9.09，估值判定：高估",
+      "最終說明": "趨勢面：TrendRaw 11.5，狀態 up_mild。結構面：ShortSwing 2.08，甜度已反映。時機面：Snapshot 1.72。估值面：ValuationClass CONSUMER_PLATFORM，AnchorPE 30，Forward PE 32.56，PE Ratio 1.09，EPS成長 9.59%，PEG 3.40，QualityMomentum 18.79%，QualityFactor 0.98，ValuationRaw 9.09，估值判定：高估。資金面偏弱。持倉面：投入比 8.33%（安全）。條件部分符合，但仍需等待更佳位置。"
+    },
+    {
+      "排名": 11,
       "股號": "MSFT",
       "股名": "Microsoft",
       "產業": "AI_PLATFORM",
@@ -1096,7 +1204,7 @@
       "最終說明": "趨勢面：TrendRaw -16.21，狀態 weak。結構面：ShortSwing 2.18，甜度已反映。時機面：Snapshot 0.38。估值面：ValuationClass AI_PLATFORM_CORE，AnchorPE 32，Forward PE 29.15，PE Ratio 0.91，EPS成長 14.29%，PEG 2.04，QualityMomentum -12.52%，QualityFactor 0.80，ValuationRaw 14.61，估值判定：偏高。持倉面：投入比 0%（安全）。條件部分符合，但仍需等待更佳位置。"
     },
     {
-      "排名": 11,
+      "排名": 12,
       "股號": "MU",
       "股名": "Micron",
       "產業": "AI_SEMI",
@@ -1205,7 +1313,7 @@
       "最終說明": "趨勢面：TrendRaw 195.34，狀態 up_strong。結構面：ShortSwing 5.63，甜度已反映。時機面：Snapshot 10.26。估值面：ValuationClass AI_SEMI_CYCLICAL，AnchorPE 22，Forward PE 50.18，PE Ratio 2.28，EPS成長 37.70%，PEG 1.33，QualityMomentum 286.69%，QualityFactor 1.20，ValuationRaw 10.78，估值判定：偏高。持倉面：投入比 27.38%（安全）。條件部分符合，但仍需等待更佳位置。"
     },
     {
-      "排名": 12,
+      "排名": 13,
       "股號": "REGN",
       "股名": "Regeneron",
       "產業": "DEFENSIVE",
@@ -1311,7 +1419,7 @@
       "最終說明": "趨勢面：TrendRaw 20.21，狀態 up_strong。結構面：ShortSwing 1.91，甜度已反映。時機面：Snapshot -0.1。估值面：ValuationClass DEFENSIVE，AnchorPE 22，Forward PE 19.69，PE Ratio 0.89，EPS成長 6.85%，PEG 2.87，QualityMomentum 27.30%，QualityFactor 1.15，ValuationRaw 20.78，估值判定：中性。持倉面：投入比 0%（安全）。條件部分符合，但仍需等待更佳位置。"
     },
     {
-      "排名": 13,
+      "排名": 14,
       "股號": "TGT",
       "股名": "Target",
       "產業": "DEFENSIVE",
@@ -1416,115 +1524,6 @@
       ],
       "估值說明": "ValuationClass DEFENSIVE，AnchorPE 22，Forward PE 14.09，PE Ratio 0.64，EPS成長 8.64%，PEG 1.63，QualityMomentum 29.84%，QualityFactor 1.20，ValuationRaw 26.02，估值判定：合理",
       "最終說明": "趨勢面：TrendRaw 27.13，狀態 up_strong。結構面：ShortSwing 2.42，甜度已反映。時機面：Snapshot 2.64。估值面：ValuationClass DEFENSIVE，AnchorPE 22，Forward PE 14.09，PE Ratio 0.64，EPS成長 8.64%，PEG 1.63，QualityMomentum 29.84%，QualityFactor 1.20，ValuationRaw 26.02，估值判定：合理。資金面偏弱。持倉面：投入比 11.9%（安全）。條件部分符合，但仍需等待更佳位置。"
-    },
-    {
-      "排名": 14,
-      "股號": "AAPL",
-      "股名": "Apple",
-      "產業": "TECH_DEF",
-      "子產業": "DEVICE",
-      "分類": "core",
-      "估值模型": "PEG",
-      "風險等級": "低",
-      "股價": 260.49,
-      "PEG": 3.4,
-      "1日漲跌幅": 1.95,
-      "1週漲跌幅": 1.9,
-      "1月漲跌幅": -0.13,
-      "3月漲跌幅": 0.06,
-      "6月漲跌幅": 1.56,
-      "12月漲跌幅": 36.8,
-      "量比": 0.64,
-      "valuation_score": 1.56,
-      "trend_score": 8,
-      "structure_score": 1.97,
-      "timing_score": 4.71,
-      "money_score": 2,
-      "quality_score": 2,
-      "category_adjust": 2,
-      "today_score": 7.47,
-      "趨勢判讀": {
-        "年線": "↑",
-        "6月線": "↑",
-        "3月線": "↑",
-        "月線": "↓",
-        "趨勢狀態": "up_mild",
-        "結構狀態": "building",
-        "時機狀態": "neutral"
-      },
-      "估值資料": {
-        "ValuationClass": "CONSUMER_PLATFORM",
-        "PEG": 3.4,
-        "ForwardPE": 32.56,
-        "AnchorPE": 26,
-        "PERatio": 1.25,
-        "EPS成長率": 9.59,
-        "PEScore": 6.95,
-        "GrowthScore": 5.88,
-        "GrowthScoreAdj": 3.53,
-        "QualityMomentum": 18.79,
-        "QualityFactor": 0.98,
-        "ValuationRaw": 5.45
-      },
-      "結構資料": {
-        "swing_days": [
-          1.95,
-          1.27,
-          4.06,
-          2.23,
-          2.14,
-          1.12
-        ],
-        "amp_1d": 1.95,
-        "ShortSwing": 2.08
-      },
-      "時機資料": {
-        "Snapshot": 1.72
-      },
-      "分數拆解": {
-        "估值原始分": 5.45,
-        "估值分": 1.56,
-        "趨勢分": 8,
-        "結構分": 1.97,
-        "時機分": 4.71,
-        "資金分": 2,
-        "品質分": 2,
-        "類別調整": 2,
-        "總分": 7.47
-      },
-      "持倉曝險": {
-        "FCN數量": 1,
-        "投入金額": 70000,
-        "投入資金比": 8.33,
-        "Danger": 0,
-        "Watch": 0,
-        "Healthy": 1,
-        "Pure平均": 9.8,
-        "Event平均": 9.8
-      },
-      "曝險警示": {
-        "level": "normal",
-        "text": "投入比 8.33%（安全）。",
-        "baseline": {
-          "safe": 40,
-          "warning": 50
-        }
-      },
-      "建議動作": "觀察",
-      "ui_bucket": "觀察名單",
-      "is_today_highlight": false,
-      "today_highlight_reason": "趨勢未轉空 / 曝險可控",
-      "why_yes": [
-        "核心股",
-        "品質佳",
-        "中期趨勢健康"
-      ],
-      "why_no": [
-        "PE 相對偏貴",
-        "量比 0.64 偏低"
-      ],
-      "估值說明": "ValuationClass CONSUMER_PLATFORM，AnchorPE 26，Forward PE 32.56，PE Ratio 1.25，EPS成長 9.59%，PEG 3.40，QualityMomentum 18.79%，QualityFactor 0.98，ValuationRaw 5.45，估值判定：高估",
-      "最終說明": "趨勢面：TrendRaw 11.5，狀態 up_mild。結構面：ShortSwing 2.08，甜度已反映。時機面：Snapshot 1.72。估值面：ValuationClass CONSUMER_PLATFORM，AnchorPE 26，Forward PE 32.56，PE Ratio 1.25，EPS成長 9.59%，PEG 3.40，QualityMomentum 18.79%，QualityFactor 0.98，ValuationRaw 5.45，估值判定：高估。資金面偏弱。持倉面：投入比 8.33%（安全）。條件部分符合，但仍需等待更佳位置。"
     },
     {
       "排名": 15,
@@ -4545,6 +4544,114 @@
     },
     {
       "排名": 10,
+      "股號": "AAPL",
+      "股名": "Apple",
+      "產業": "TECH_DEF",
+      "子產業": "DEVICE",
+      "分類": "core",
+      "估值模型": "PEG",
+      "風險等級": "低",
+      "股價": 260.49,
+      "PEG": 3.4,
+      "1日漲跌幅": 1.95,
+      "1週漲跌幅": 1.9,
+      "1月漲跌幅": -0.13,
+      "3月漲跌幅": 0.06,
+      "6月漲跌幅": 1.56,
+      "12月漲跌幅": 36.8,
+      "量比": 0.64,
+      "valuation_score": 2.6,
+      "trend_score": 8,
+      "structure_score": 1.97,
+      "timing_score": 4.71,
+      "money_score": 2,
+      "quality_score": 2,
+      "category_adjust": 2,
+      "today_score": 7.78,
+      "趨勢判讀": {
+        "年線": "↑",
+        "6月線": "↑",
+        "3月線": "↑",
+        "月線": "↓",
+        "趨勢狀態": "up_mild",
+        "結構狀態": "building",
+        "時機狀態": "neutral"
+      },
+      "估值資料": {
+        "ValuationClass": "CONSUMER_PLATFORM",
+        "PEG": 3.4,
+        "ForwardPE": 32.56,
+        "AnchorPE": 30,
+        "PERatio": 1.09,
+        "EPS成長率": 9.59,
+        "PEScore": 13.17,
+        "GrowthScore": 5.88,
+        "GrowthScoreAdj": 3.53,
+        "QualityMomentum": 18.79,
+        "QualityFactor": 0.98,
+        "ValuationRaw": 9.09
+      },
+      "結構資料": {
+        "swing_days": [
+          1.95,
+          1.27,
+          4.06,
+          2.23,
+          2.14,
+          1.12
+        ],
+        "amp_1d": 1.95,
+        "ShortSwing": 2.08
+      },
+      "時機資料": {
+        "Snapshot": 1.72
+      },
+      "分數拆解": {
+        "估值原始分": 9.09,
+        "估值分": 2.6,
+        "趨勢分": 8,
+        "結構分": 1.97,
+        "時機分": 4.71,
+        "資金分": 2,
+        "品質分": 2,
+        "類別調整": 2,
+        "總分": 7.78
+      },
+      "持倉曝險": {
+        "FCN數量": 1,
+        "投入金額": 70000,
+        "投入資金比": 8.33,
+        "Danger": 0,
+        "Watch": 0,
+        "Healthy": 1,
+        "Pure平均": 9.8,
+        "Event平均": 9.8
+      },
+      "曝險警示": {
+        "level": "normal",
+        "text": "投入比 8.33%（安全）。",
+        "baseline": {
+          "safe": 40,
+          "warning": 50
+        }
+      },
+      "建議動作": "觀察",
+      "ui_bucket": "觀察名單",
+      "is_today_highlight": false,
+      "today_highlight_reason": "趨勢未轉空 / 曝險可控",
+      "why_yes": [
+        "核心股",
+        "品質佳",
+        "中期趨勢健康"
+      ],
+      "why_no": [
+        "量比 0.64 偏低"
+      ],
+      "估值說明": "ValuationClass CONSUMER_PLATFORM，AnchorPE 30，Forward PE 32.56，PE Ratio 1.09，EPS成長 9.59%，PEG 3.40，QualityMomentum 18.79%，QualityFactor 0.98，ValuationRaw 9.09，估值判定：高估",
+      "最終說明": "趨勢面：TrendRaw 11.5，狀態 up_mild。結構面：ShortSwing 2.08，甜度已反映。時機面：Snapshot 1.72。估值面：ValuationClass CONSUMER_PLATFORM，AnchorPE 30，Forward PE 32.56，PE Ratio 1.09，EPS成長 9.59%，PEG 3.40，QualityMomentum 18.79%，QualityFactor 0.98，ValuationRaw 9.09，估值判定：高估。資金面偏弱。持倉面：投入比 8.33%（安全）。條件部分符合，但仍需等待更佳位置。"
+    },
+    {
+      "排名": 11,
       "股號": "MSFT",
       "股名": "Microsoft",
       "產業": "AI_PLATFORM",
@@ -4651,7 +4758,7 @@
       "最終說明": "趨勢面：TrendRaw -16.21，狀態 weak。結構面：ShortSwing 2.18，甜度已反映。時機面：Snapshot 0.38。估值面：ValuationClass AI_PLATFORM_CORE，AnchorPE 32，Forward PE 29.15，PE Ratio 0.91，EPS成長 14.29%，PEG 2.04，QualityMomentum -12.52%，QualityFactor 0.80，ValuationRaw 14.61，估值判定：偏高。持倉面：投入比 0%（安全）。條件部分符合，但仍需等待更佳位置。"
     },
     {
-      "排名": 11,
+      "排名": 12,
       "股號": "MU",
       "股名": "Micron",
       "產業": "AI_SEMI",
@@ -4760,7 +4867,7 @@
       "最終說明": "趨勢面：TrendRaw 195.34，狀態 up_strong。結構面：ShortSwing 5.63，甜度已反映。時機面：Snapshot 10.26。估值面：ValuationClass AI_SEMI_CYCLICAL，AnchorPE 22，Forward PE 50.18，PE Ratio 2.28，EPS成長 37.70%，PEG 1.33，QualityMomentum 286.69%，QualityFactor 1.20，ValuationRaw 10.78，估值判定：偏高。持倉面：投入比 27.38%（安全）。條件部分符合，但仍需等待更佳位置。"
     },
     {
-      "排名": 12,
+      "排名": 13,
       "股號": "REGN",
       "股名": "Regeneron",
       "產業": "DEFENSIVE",
@@ -4866,7 +4973,7 @@
       "最終說明": "趨勢面：TrendRaw 20.21，狀態 up_strong。結構面：ShortSwing 1.91，甜度已反映。時機面：Snapshot -0.1。估值面：ValuationClass DEFENSIVE，AnchorPE 22，Forward PE 19.69，PE Ratio 0.89，EPS成長 6.85%，PEG 2.87，QualityMomentum 27.30%，QualityFactor 1.15，ValuationRaw 20.78，估值判定：中性。持倉面：投入比 0%（安全）。條件部分符合，但仍需等待更佳位置。"
     },
     {
-      "排名": 13,
+      "排名": 14,
       "股號": "TGT",
       "股名": "Target",
       "產業": "DEFENSIVE",
@@ -4971,115 +5078,6 @@
       ],
       "估值說明": "ValuationClass DEFENSIVE，AnchorPE 22，Forward PE 14.09，PE Ratio 0.64，EPS成長 8.64%，PEG 1.63，QualityMomentum 29.84%，QualityFactor 1.20，ValuationRaw 26.02，估值判定：合理",
       "最終說明": "趨勢面：TrendRaw 27.13，狀態 up_strong。結構面：ShortSwing 2.42，甜度已反映。時機面：Snapshot 2.64。估值面：ValuationClass DEFENSIVE，AnchorPE 22，Forward PE 14.09，PE Ratio 0.64，EPS成長 8.64%，PEG 1.63，QualityMomentum 29.84%，QualityFactor 1.20，ValuationRaw 26.02，估值判定：合理。資金面偏弱。持倉面：投入比 11.9%（安全）。條件部分符合，但仍需等待更佳位置。"
-    },
-    {
-      "排名": 14,
-      "股號": "AAPL",
-      "股名": "Apple",
-      "產業": "TECH_DEF",
-      "子產業": "DEVICE",
-      "分類": "core",
-      "估值模型": "PEG",
-      "風險等級": "低",
-      "股價": 260.49,
-      "PEG": 3.4,
-      "1日漲跌幅": 1.95,
-      "1週漲跌幅": 1.9,
-      "1月漲跌幅": -0.13,
-      "3月漲跌幅": 0.06,
-      "6月漲跌幅": 1.56,
-      "12月漲跌幅": 36.8,
-      "量比": 0.64,
-      "valuation_score": 1.56,
-      "trend_score": 8,
-      "structure_score": 1.97,
-      "timing_score": 4.71,
-      "money_score": 2,
-      "quality_score": 2,
-      "category_adjust": 2,
-      "today_score": 7.47,
-      "趨勢判讀": {
-        "年線": "↑",
-        "6月線": "↑",
-        "3月線": "↑",
-        "月線": "↓",
-        "趨勢狀態": "up_mild",
-        "結構狀態": "building",
-        "時機狀態": "neutral"
-      },
-      "估值資料": {
-        "ValuationClass": "CONSUMER_PLATFORM",
-        "PEG": 3.4,
-        "ForwardPE": 32.56,
-        "AnchorPE": 26,
-        "PERatio": 1.25,
-        "EPS成長率": 9.59,
-        "PEScore": 6.95,
-        "GrowthScore": 5.88,
-        "GrowthScoreAdj": 3.53,
-        "QualityMomentum": 18.79,
-        "QualityFactor": 0.98,
-        "ValuationRaw": 5.45
-      },
-      "結構資料": {
-        "swing_days": [
-          1.95,
-          1.27,
-          4.06,
-          2.23,
-          2.14,
-          1.12
-        ],
-        "amp_1d": 1.95,
-        "ShortSwing": 2.08
-      },
-      "時機資料": {
-        "Snapshot": 1.72
-      },
-      "分數拆解": {
-        "估值原始分": 5.45,
-        "估值分": 1.56,
-        "趨勢分": 8,
-        "結構分": 1.97,
-        "時機分": 4.71,
-        "資金分": 2,
-        "品質分": 2,
-        "類別調整": 2,
-        "總分": 7.47
-      },
-      "持倉曝險": {
-        "FCN數量": 1,
-        "投入金額": 70000,
-        "投入資金比": 8.33,
-        "Danger": 0,
-        "Watch": 0,
-        "Healthy": 1,
-        "Pure平均": 9.8,
-        "Event平均": 9.8
-      },
-      "曝險警示": {
-        "level": "normal",
-        "text": "投入比 8.33%（安全）。",
-        "baseline": {
-          "safe": 40,
-          "warning": 50
-        }
-      },
-      "建議動作": "觀察",
-      "ui_bucket": "觀察名單",
-      "is_today_highlight": false,
-      "today_highlight_reason": "趨勢未轉空 / 曝險可控",
-      "why_yes": [
-        "核心股",
-        "品質佳",
-        "中期趨勢健康"
-      ],
-      "why_no": [
-        "PE 相對偏貴",
-        "量比 0.64 偏低"
-      ],
-      "估值說明": "ValuationClass CONSUMER_PLATFORM，AnchorPE 26，Forward PE 32.56，PE Ratio 1.25，EPS成長 9.59%，PEG 3.40，QualityMomentum 18.79%，QualityFactor 0.98，ValuationRaw 5.45，估值判定：高估",
-      "最終說明": "趨勢面：TrendRaw 11.5，狀態 up_mild。結構面：ShortSwing 2.08，甜度已反映。時機面：Snapshot 1.72。估值面：ValuationClass CONSUMER_PLATFORM，AnchorPE 26，Forward PE 32.56，PE Ratio 1.25，EPS成長 9.59%，PEG 3.40，QualityMomentum 18.79%，QualityFactor 0.98，ValuationRaw 5.45，估值判定：高估。資金面偏弱。持倉面：投入比 8.33%（安全）。條件部分符合，但仍需等待更佳位置。"
     },
     {
       "排名": 15,
