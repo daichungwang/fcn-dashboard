@@ -332,7 +332,7 @@ function buildValuationData(row, category) {
   const qualityFactor = calcQualityFactor(qualityMomentum);
 
   const valuationRaw = 4*( 0.7 * peScore + 0.3 * growthScoreAdj) * qualityFactor;
-  const valuationNorm = clamp(valuationRaw, 0, 70);
+  const valuationNorm = clamp(valuationRaw, 0, 65);
 
   let level = "中性";
   if (valuationNorm >= 8) level = "合理偏低";
