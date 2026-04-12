@@ -5,6 +5,7 @@ import { runM8Case } from "../core/m8_batch_engine.js";
 // 1. 不自分類，吃 M7 pool + M7 today
 // 2. 用 simulation_pool 當今日 universe
 // 3. L4 直接呼叫 M8 runM8Case 跑 Pair Fair Yield
+// 4. 預建議 Basket 再整組丟 M8，直接顯示 Basket Fair Yield
 // ==========================================
 
 const PATH_POOL = "./data/m7/m7_new_stock_pool.json";
@@ -151,6 +152,8 @@ function buildUniverse(poolMap, todayRaw) {
 
         pairFairYield: null,
         normalizedProxy: null,
+        pairBasketVol: null,
+        pairVolAdj: null,
         isAnchor: false,
 
         rawToday: item,
@@ -229,11 +232,10 @@ async function buildPairFairYieldMap(universe) {
     return {
       anchor: null,
       rows: [],
-      baseYield: null
+      baseYield: null,
+      universe
     };
   }
-
-  anchor.isAnchor = true;
 
   const rows = [];
 
@@ -266,12 +268,14 @@ async function buildPairFairYieldMap(universe) {
 
   const baseYield = validYields.length ? Math.min(...validYields) : null;
 
-  rows.forEach(r => {
-    r.normalizedProxy = baseYield ? round2(r.pairFairYield / baseYield) : null;
-  });
-
   const proxyMap = new Map();
-  rows.forEach(r => proxyMap.set(r.symbol, r));
+  rows.forEach(r => {
+    const normalizedProxy = baseYield ? round2(r.pairFairYield / baseYield) : null;
+    proxyMap.set(r.symbol, {
+      ...r,
+      normalizedProxy
+    });
+  });
 
   const enrichedUniverse = universe.map(s => {
     if (s.symbol === anchor.symbol) {
@@ -279,7 +283,9 @@ async function buildPairFairYieldMap(universe) {
         ...s,
         isAnchor: true,
         pairFairYield: null,
-        normalizedProxy: null
+        normalizedProxy: null,
+        pairBasketVol: null,
+        pairVolAdj: null
       };
     }
 
@@ -294,8 +300,8 @@ async function buildPairFairYieldMap(universe) {
   });
 
   return {
-    anchor,
-    rows: rows.sort((a, b) => b.pairFairYield - a.pairFairYield),
+    anchor: { ...anchor, isAnchor: true },
+    rows: [...proxyMap.values()].sort((a, b) => b.pairFairYield - a.pairFairYield),
     baseYield,
     universe: enrichedUniverse
   };
@@ -475,6 +481,42 @@ function buildBasketFromSlots(styleSpec) {
   };
 }
 
+async function enrichBasketWithM8(styleBasket) {
+  const symbols = Array.isArray(styleBasket.symbols) ? styleBasket.symbols : [];
+
+  if (symbols.length < 2) {
+    return {
+      ...styleBasket,
+      m8_fair_yield: null,
+      m8_basket_vol: null,
+      m8_vol_adj: null,
+      m8_pricing_view: null,
+      m8_pre_rate: null,
+      m8_note: ""
+    };
+  }
+
+  const result = await runM8Case({
+    caseName: `M7_${styleBasket.style_name}`,
+    symbols,
+    KI: M8_PROXY_CONFIG.KI,
+    Strike: M8_PROXY_CONFIG.Strike,
+    T: M8_PROXY_CONFIG.T,
+    type: M8_PROXY_CONFIG.type,
+    marketYield: 0
+  });
+
+  return {
+    ...styleBasket,
+    m8_fair_yield: round2(result.fair_yield),
+    m8_basket_vol: round2(result.basket_vol),
+    m8_vol_adj: round2(result.vol_adj),
+    m8_pricing_view: result.pricing_view || "",
+    m8_pre_rate: round2(result.pre_rate),
+    m8_note: result.note || ""
+  };
+}
+
 // ------------------------------------------
 // render
 // ------------------------------------------
@@ -614,7 +656,14 @@ function renderBasketRecommendation(targetId, basket) {
       <div class="basket-top">
         <div>
           <div class="basket-title">${basket.style_name}</div>
-          <div class="basket-sub">目標利率：${basket.target_rate}</div>
+          <div class="basket-sub">策略目標：${basket.target_rate}</div>
+          <div class="basket-sub">
+            Basket Fair Yield：${basket.m8_fair_yield != null ? basket.m8_fair_yield + "%" : "--"}
+          </div>
+          <div class="basket-sub">
+            BasketVol：${basket.m8_basket_vol != null ? basket.m8_basket_vol : "--"}
+            ｜ VolAdj：${basket.m8_vol_adj != null ? basket.m8_vol_adj : "--"}
+          </div>
         </div>
         <div class="basket-score">${basket.basket_count} 檔</div>
       </div>
@@ -630,7 +679,10 @@ function renderBasketRecommendation(targetId, basket) {
               ${p.stock.isAnchor ? `<span class="pill">ANCHOR</span>` : ""}
             </div>
             <div class="stock-score">
-              來源：${p.slot} ｜ score ${round2(p.stock.total)} ｜ Pair Fair Yield ${p.stock.pairFairYield != null ? round2(p.stock.pairFairYield) : "-"} ｜ Proxy ${p.stock.normalizedProxy != null ? round2(p.stock.normalizedProxy) : "-"}
+              來源：${p.slot}
+              ｜ score ${round2(p.stock.total)}
+              ｜ Pair Fair Yield ${p.stock.pairFairYield != null ? round2(p.stock.pairFairYield) : "-"}
+              ｜ Proxy ${p.stock.normalizedProxy != null ? round2(p.stock.normalizedProxy) : "-"}
             </div>
           </div>
         `).join("") : `<div class="empty-line">目前無法形成 basket</div>`}
@@ -639,6 +691,13 @@ function renderBasketRecommendation(targetId, basket) {
       <div class="basket-block">
         <div class="block-title">平均值</div>
         <div class="stats-line">Avg Total ${basket.avg_total}</div>
+        <div class="stats-line">
+          Basket Fair Yield ${basket.m8_fair_yield != null ? basket.m8_fair_yield : "--"}
+        </div>
+        <div class="stats-line">
+          BasketVol ${basket.m8_basket_vol != null ? basket.m8_basket_vol : "--"}
+          ｜ VolAdj ${basket.m8_vol_adj != null ? basket.m8_vol_adj : "--"}
+        </div>
         <div class="stats-line">Avg Pair Fair Yield ${basket.avg_pair_fair_yield}</div>
         <div class="stats-line">Avg Proxy ${basket.avg_normalized_proxy}</div>
       </div>
@@ -669,9 +728,13 @@ async function initBasketEngine() {
     const rational = buildSlotCandidates("rational", grouped, universe);
     const conservative = buildSlotCandidates("conservative", grouped, universe);
 
-    const aggressiveBasket = buildBasketFromSlots(aggressive);
-    const rationalBasket = buildBasketFromSlots(rational);
-    const conservativeBasket = buildBasketFromSlots(conservative);
+    const aggressiveBasketRaw = buildBasketFromSlots(aggressive);
+    const rationalBasketRaw = buildBasketFromSlots(rational);
+    const conservativeBasketRaw = buildBasketFromSlots(conservative);
+
+    const aggressiveBasket = await enrichBasketWithM8(aggressiveBasketRaw);
+    const rationalBasket = await enrichBasketWithM8(rationalBasketRaw);
+    const conservativeBasket = await enrichBasketWithM8(conservativeBasketRaw);
 
     renderMeta(todayRaw, universe, pairContext);
     renderTodayStructure(structure);
