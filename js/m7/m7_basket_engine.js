@@ -7,8 +7,8 @@ import { runM8Case } from "../core/m8_batch_engine.js";
 // 3. L4 直接呼叫 M8 runM8Case 跑 Pair Fair Yield
 // ==========================================
 
-const PATH_POOL = "../../data/m7/m7_new_stock_pool.json";
-const PATH_TODAY = "../../data/m7/m7_new_stock_today.json";
+const PATH_POOL = "./data/m7/m7_new_stock_pool.json";
+const PATH_TODAY = "./data/m7/m7_new_stock_today.json";
 
 // 固定 M8 測試條件
 const M8_PROXY_CONFIG = {
