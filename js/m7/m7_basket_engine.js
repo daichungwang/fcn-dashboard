@@ -161,8 +161,12 @@ function buildUniverse(poolMap, todayRaw) {
       };
     })
     .filter(Boolean)
-    .filter(x => x.allow_fcn)
-    .filter(x => !x.rejectType);
+     // ❌ 不刪股票
+.map(x => ({
+  ...x,
+  isRejected: !!x.rejectType,
+  isBlocked: x.allow_fcn === false
+}));
 
   return uniqBy(universe, "symbol");
 }
