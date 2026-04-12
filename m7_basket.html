@@ -1,143 +1,309 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8" />
-<title>M7 Basket Dashboard</title>
+  <meta charset="UTF-8" />
+  <title>📊 M7 Basket Manual Review</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #f4f7fb;
+      --card: #ffffff;
+      --line: #e5e7eb;
+      --text: #0f172a;
+      --muted: #64748b;
+      --blue: #2563eb;
+      --green: #059669;
+      --amber: #d97706;
+      --red: #dc2626;
+      --shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    }
 
-<style>
-body {
-  font-family: Arial;
-  background: #f5f7fb;
-  margin: 20px;
-}
+    * { box-sizing: border-box; }
 
-.section {
-  margin-bottom: 30px;
-}
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
 
-.card {
-  background: white;
-  border-radius: 10px;
-  padding: 10px;
-  margin: 6px 0;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  cursor: pointer;
-}
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
 
-.detail {
-  display: none;
-  margin-top: 8px;
-  font-size: 13px;
-  color: #555;
-}
+    .hero {
+      background: linear-gradient(135deg, rgba(37,99,235,0.96), rgba(29,78,216,0.92));
+      color: #fff;
+      border-radius: 22px;
+      padding: 22px 20px;
+      box-shadow: 0 18px 36px rgba(37,99,235,0.18);
+      margin-bottom: 18px;
+    }
 
-.tier-優先 { color: green; font-weight: bold; }
-.tier-穩健 { color: goldenrod; font-weight: bold; }
-.tier-追蹤 { color: orange; }
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      font-weight: 800;
+    }
 
-.積極 { border-left: 6px solid red; }
-.理性 { border-left: 6px solid gold; }
-.保守 { border-left: 6px solid blue; }
-</style>
+    .hero p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.92);
+      max-width: 920px;
+    }
+
+    .section {
+      background: var(--card);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      margin-bottom: 18px;
+      overflow: hidden;
+    }
+
+    .section-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.94));
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin: 0 0 4px;
+    }
+
+    .section-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .section-body {
+      padding: 16px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .summary-item {
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .summary-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 6px;
+    }
+
+    .summary-item strong {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .structure-comment {
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      color: #1d4ed8;
+      border-radius: 14px;
+      padding: 12px 14px;
+      line-height: 1.8;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .basket-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .basket-card {
+      background: #fff;
+      border: 1px solid #e9edf3;
+      border-radius: 18px;
+      padding: 16px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+    }
+
+    .basket-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .basket-title {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .basket-sub {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .basket-score {
+      font-size: 13px;
+      background: #0f172a;
+      color: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .basket-condition {
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+      margin-bottom: 12px;
+      line-height: 1.7;
+    }
+
+    .basket-block {
+      margin-top: 12px;
+      background: #fbfcfe;
+      border: 1px solid #ebeff5;
+      border-radius: 14px;
+      padding: 12px;
+      line-height: 1.8;
+      font-size: 13px;
+    }
+
+    .block-title {
+      font-weight: 800;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+
+    .muted {
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .ok {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .warn {
+      color: var(--amber);
+      font-weight: 700;
+    }
+
+    .stats-line {
+      margin-bottom: 4px;
+    }
+
+    .stock-line {
+      padding: 10px 0;
+      border-bottom: 1px dashed #e5e7eb;
+    }
+
+    .stock-line:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .stock-main {
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .stock-score {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .pill {
+      display: inline-block;
+      margin-left: 8px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #dbeafe;
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      vertical-align: middle;
+    }
+
+    #basket-error {
+      color: var(--red);
+      font-weight: 700;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .basket-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .basket-top {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="container">
+    <section class="hero">
+      <h1>📊 M7 Basket Manual Review</h1>
+      <p>
+        這一頁不是正式報價引擎，而是 M7 最後考驗：先用 M7 已挑出的股票，人工檢視積極 / 理性 / 保守各一組 basket，
+        驗證系統的品質判斷、推估能力與 FCN 可做性。通過後，再交由 M8 rate engine 自動化。
+      </p>
+    </section>
 
-<h1>M7 Basket Dashboard</h1>
-
-<div id="highlight" class="section"></div>
-<div id="simulation" class="section"></div>
-<div id="watch" class="section"></div>
-
-<script type="module">
-import { runM7Basket } from "./js/m8/basket_engine.js";
-
-async function init() {
-  const res = await fetch("./data/m7/m7_new_stock_today.json");
-  const data = await res.json();
-
-  const result = runM7Basket(data);
-
-  renderHighlight(result.highlight);
-  renderSimulation(result.simulation);
-  renderWatch(result.watch);
-}
-
-function toggle(el) {
-  const d = el.querySelector(".detail");
-  d.style.display = d.style.display === "block" ? "none" : "block";
-}
-
-// ---------- Highlight ----------
-function renderHighlight(list) {
-  const div = document.getElementById("highlight");
-  div.innerHTML = "<h2>🔥 Today Highlight</h2>";
-
-  list.forEach(s => {
-    div.innerHTML += `
-      <div class="card ${s.type}" onclick="toggle(this)">
-        ${s.symbol} ｜ ${s.score.toFixed(1)} ｜ ${s.type}
-        <div class="detail">
-          Valuation: ${s.raw.valuation_raw}<br>
-          Structure: ${s.raw.structure_score}<br>
-          Timing: ${s.raw.timing_state}
-        </div>
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">今日股票結構</div>
+        <div class="section-desc">先看今天可做股票的五大分類分布，再決定積極 / 理性 / 保守應該偏向哪種 basket 結構。</div>
       </div>
-    `;
-  });
-}
-
-// ---------- Simulation ----------
-function renderSimulation(list) {
-  const div = document.getElementById("simulation");
-  div.innerHTML = "<h2>📊 Simulation Pool</h2>";
-
-  const group = {};
-
-  list.forEach(s => {
-    if (!group[s.category]) group[s.category] = [];
-    group[s.category].push(s);
-  });
-
-  for (const g in group) {
-    div.innerHTML += `<h3>${g}</h3>`;
-
-    group[g].forEach(s => {
-      div.innerHTML += `
-        <div class="card tier-${s.tier}" onclick="toggle(this)">
-          ${s.symbol} ｜ ${s.score.toFixed(1)} ｜ ${s.tier}
-          <div class="detail">
-            Trend: ${s.raw.trend_score}<br>
-            Snapshot: ${s.raw.snapshot}<br>
-            Growth: ${s.raw.growth_score}
-          </div>
-        </div>
-      `;
-    });
-  }
-}
-
-// ---------- Watch ----------
-function renderWatch(list) {
-  const div = document.getElementById("watch");
-  div.innerHTML = "<h2>👀 Watch Pool</h2>";
-
-  list.forEach(s => {
-    div.innerHTML += `
-      <div class="card" onclick="toggle(this)">
-        ${s.symbol} ｜ ${s.score.toFixed(1)}
-        <div class="detail">
-          等待更好時機
-        </div>
+      <div class="section-body">
+        <div id="today-structure"></div>
       </div>
-    `;
-  });
-}
+    </section>
 
-window.toggle = toggle;
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">三種 Basket 建議</div>
+        <div class="section-desc">固定 FCN 條件：55 / 65 / 6m / AKI / 3~5檔。先人工檢視，再決定是否導入 M8 rate engine。</div>
+      </div>
+      <div class="section-body">
+        <div class="basket-grid">
+          <div class="basket-card" id="aggressive-card"></div>
+          <div class="basket-card" id="rational-card"></div>
+          <div class="basket-card" id="conservative-card"></div>
+        </div>
+        <div id="basket-error"></div>
+      </div>
+    </section>
+  </div>
 
-init();
-</script>
-
+  <script src="./js/m7/m7_basket_engine.js"></script>
 </body>
 </html>
