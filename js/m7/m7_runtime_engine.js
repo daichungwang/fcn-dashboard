@@ -1,12 +1,13 @@
 // ==========================================
-// M7 Runtime Engine FINAL NORMALIZED
-// 分類規則升級版（不動 UI / u8）
-// 讀取：
-//   data/m7/m7_fundamental_data.json
-//   data/m7/m2_stock_exposure.json
-// 輸出：
-//   data/m7/m7_new_stock_today.json
-//   data/m7/m7_scoreboard.json
+// M7 Runtime Engine FINAL NORMALIZED + U7 PRO
+// 保留原本評分 / 估值 / 曝險 / scoreboard
+// 新增：
+// 1. 四池 today_highlight_pool / watch_pool / simulation_pool / reject_pool
+// 2. pool_rules
+// 3. pool_summary
+// 4. reject_type / reject_reasons / pool_reason
+// 5. trendRaw / snapshot / growth / growthScore 透明欄位
+// 6. 不動原本 aggressive_recommend / watch_list / remove_list / all
 // ==========================================
 
 import fs from "fs";
@@ -231,8 +232,6 @@ function calcQualityFactor(q) {
 
 // ------------------------------------------
 // 估值
-// Valuation = (0.6 * peScore + 0.4 * growthScore_adj) * qualityFactor
-// valuation_norm = clamp(raw / 3.5, 0, 10) 取消
 // ------------------------------------------
 function inferValuationModel(row) {
   const sector = row.sector || "";
@@ -287,7 +286,6 @@ function growthScoreBase(growth) {
   return Math.min(25, 19.4 + 0.8 * Math.sqrt(growth - 27));
 }
 
-// 成長不變；衰退減半（相對 baseline = 3）
 function growthScoreFinal(growth) {
   const base = 3;
   const oldScore = growthScoreBase(growth);
@@ -379,7 +377,7 @@ function buildValuationData(row, category) {
 }
 
 // ------------------------------------------
-// 趨勢 normalize 0~10
+// 趨勢 / 結構 / Timing / Money
 // ------------------------------------------
 function calcTrendRaw(r1m, r3m, r6m, r12m) {
   return (
@@ -408,9 +406,6 @@ function inferTrendState(trendRaw) {
   return "down";
 }
 
-// ------------------------------------------
-// Structure：沿用 M8 ShortSwing，0~10
-// ------------------------------------------
 function calcShortSwing(swingDays, amp1d) {
   const days = Array.isArray(swingDays) ? swingDays : [];
   const d0 = safeNum(days[0], safeNum(amp1d, 0));
@@ -445,9 +440,6 @@ function inferStructureState(shortSwing) {
   return "flat";
 }
 
-// ------------------------------------------
-// Timing：snapshot，0~10
-// ------------------------------------------
 function calcSnapshot(r1d, r1w, r1m) {
   return (
     0.45 * (r1d ?? 0) +
@@ -469,9 +461,6 @@ function inferTimingState(snapshot) {
   return "hot";
 }
 
-// ------------------------------------------
-// Money normalize 0~10
-// ------------------------------------------
 function calcMoneyScoreNormalized(volumeRatio) {
   const v = safeNum(volumeRatio, 1);
   if (v === null) return 4;
@@ -572,8 +561,6 @@ function buildFinalScore({
 
 // ------------------------------------------
 // 動作 / highlight / 說明
-// 分類規則升級版：數值門檻 + 風控
-// 不動 UI bucket 結構
 // ------------------------------------------
 function buildAction(row, metrics) {
   const category = row.category || inferCategory(row);
@@ -593,24 +580,14 @@ function buildAction(row, metrics) {
   const dangerCount = safeNum(exposure.danger, 0);
   const exposureLevel = exposureWarning.level || "normal";
 
-  // Step 1：直接排除
   if (category === "speculative") return "移除";
   if (trendState === "down") return "移除";
-
-  // 高曝險且已有 danger，先風控
   if (exposureLevel === "high" && dangerCount > 0) return "移除";
-
-  // 結構不甜又過熱，不適合 FCN
   if (structureScore < 5 && timingState === "hot") return "移除";
-
-  // 分項過差，直接移除
   if (valuationScore < 4.5) return "移除";
   if (structureScore < 4.5) return "移除";
-
-  // 總分太低，直接移除
   if (total < 6.2) return "移除";
 
-  // Step 2：積極推薦（主池）
   const passAggressive =
     total >= 8.5 &&
     valuationScore >= 6 &&
@@ -622,14 +599,12 @@ function buildAction(row, metrics) {
 
   if (passAggressive) return "加入";
 
-  // Step 3：觀察名單（備選池）
   const passWatch =
     total >= 6.2 &&
     trendState !== "down";
 
   if (passWatch) return "觀察";
 
-  // Step 4：其餘移除
   return "移除";
 }
 
@@ -717,6 +692,163 @@ function buildFinalComment(action, valuation, trendRaw, trendState, shortSwing, 
 }
 
 // ------------------------------------------
+// U7：四池規則
+// ------------------------------------------
+function buildPoolRules() {
+  return {
+    reject_pool: {
+      purpose: "真的不做，不進 FCN simulation",
+      formula: {
+        attributeReject: 'category === "speculative"',
+        badCount: "Number(trendTerrible) + Number(snapshotTerrible) + Number(growthTerrible)",
+        quantReject: "badCount >= 2"
+      },
+      params: {
+        trendTerrible: "trendRaw <= -15 OR trendScore <= 2",
+        snapshotTerrible: "snapshot <= -3",
+        growthTerrible: "growthScore <= 2"
+      }
+    },
+    simulation_pool: {
+      purpose: "M8 / U8 原料池",
+      formula: {
+        simulationPool: "非 reject 股票，依 today_score 排序"
+      },
+      params: {
+        floor: 12,
+        cap: 18,
+        currentCap: 15
+      }
+    },
+    today_highlight_pool: {
+      purpose: "今日優先看、優先配 basket",
+      formula: {
+        todayHighlight:
+          'inSimulationPool && structureState !== "flat" && timingState !== "hot" && exposureLevel !== "high"'
+      },
+      params: {
+        topN: 5
+      }
+    },
+    watch_pool: {
+      purpose: "可做、可追蹤，但今天不優先",
+      formula: {
+        watchPool: "simulationPool - todayHighlightPool"
+      },
+      params: {}
+    }
+  };
+}
+
+function evaluateRejectMeta(candidate) {
+  const category = candidate["分類"];
+  const trendRaw = safeNum(candidate["trendRaw"], 0);
+  const trendScore = safeNum(candidate["trend_score"], 0);
+  const snapshot = safeNum(candidate["snapshot"], 0);
+  const growthScore = safeNum(candidate["growthScore"], 0);
+
+  const trendTerrible = trendRaw <= -15 || trendScore <= 2;
+  const snapshotTerrible = snapshot <= -3;
+  const growthTerrible = growthScore <= 2;
+  const badCount =
+    Number(trendTerrible) +
+    Number(snapshotTerrible) +
+    Number(growthTerrible);
+
+  const attributeReject = category === "speculative";
+  const quantReject = badCount >= 2;
+
+  if (attributeReject) {
+    return {
+      reject_type: "attribute",
+      reject_reasons: ["speculative，不符合 FCN 可接原則"],
+      badCount,
+      trendTerrible,
+      snapshotTerrible,
+      growthTerrible,
+      attributeReject,
+      quantReject
+    };
+  }
+
+  if (quantReject) {
+    const reasons = [];
+    if (trendTerrible) reasons.push("Trend terrible");
+    if (snapshotTerrible) reasons.push("Snapshot terrible");
+    if (growthTerrible) reasons.push("GrowthScore terrible");
+
+    return {
+      reject_type: "quant",
+      reject_reasons: reasons,
+      badCount,
+      trendTerrible,
+      snapshotTerrible,
+      growthTerrible,
+      attributeReject,
+      quantReject
+    };
+  }
+
+  return {
+    reject_type: null,
+    reject_reasons: [],
+    badCount,
+    trendTerrible,
+    snapshotTerrible,
+    growthTerrible,
+    attributeReject,
+    quantReject
+  };
+}
+
+function buildPoolReason(candidate, simulationSymbols, highlightSymbols) {
+  const symbol = candidate["股號"];
+  const rejectType = candidate["reject_type"];
+  const rejectReasons = candidate["reject_reasons"] || [];
+
+  if (rejectType) {
+    return {
+      pool: "reject_pool",
+      reason_summary:
+        rejectType === "attribute"
+          ? "屬性型 Reject：本質不適合 FCN"
+          : "數值型 Reject：中期 / 短線 / 成長風險過多",
+      detail: rejectReasons
+    };
+  }
+
+  if (highlightSymbols.has(symbol)) {
+    return {
+      pool: "today_highlight_pool",
+      reason_summary: "Simulation 前段 + 結構非 flat + timing 非 hot + 曝險非高",
+      detail: [
+        'structureState !== "flat"',
+        'timingState !== "hot"',
+        'exposureLevel !== "high"',
+        "today_score 排名前段"
+      ]
+    };
+  }
+
+  if (simulationSymbols.has(symbol)) {
+    return {
+      pool: "watch_pool",
+      reason_summary: "已進 simulation，但今日不是最優先",
+      detail: [
+        "可做但今天不一定最甜",
+        "或結構 / timing / 曝險條件未達 highlight"
+      ]
+    };
+  }
+
+  return {
+    pool: "other",
+    reason_summary: "未進 simulation 前段",
+    detail: ["today_score 未進 simulation 排名前段"]
+  };
+}
+
+// ------------------------------------------
 // score board
 // ------------------------------------------
 function buildScoreboard(sortedRows) {
@@ -734,15 +866,15 @@ function buildScoreboard(sortedRows) {
     generated_at: new Date().toISOString(),
     formula: {
       valuation: "Valuation = (0.6 * peScore + 0.4 * growthScore_adj) * qualityFactor ",
-      trend: "trendRaw = 0.15*1M + 0.25*3M + 0.30*6M + 0.30*12M ; bucket normalize to 0~10",
-      structure: "ShortSwing = 0.35*d0 + 0.25*d1 + 0.15*d2 + 0.10*d3 + 0.08*d4 + 0.07*d5 ; map to 0~10",
-      timing: "snapshot = 0.4*r1d + 0.5*r1w + 0.1*r1m ; timing = clamp(5 - 0.1667*snapshot, 0, 10)",
+      trend: "trendRaw = 0.25*1M + 0.25*3M + 0.25*6M + 0.25*12M ; bucket normalize to 0~10",
+      structure: "ShortSwing = 0.2*d0 + 0.2*d1 + 0.1*d2 + 0.1*d3 + 0.2*d4 + 0.2*d5 ; map to 0~10",
+      timing: "snapshot = 0.45*r1d + 0.35*r1w + 0.2*r1m",
       money: "volume_ratio -> 0~10",
-      final: "0.30*valuation + 0.20*trend + 0.20*structure + 0.15*timing + 0.15*money + quality_bonus + category_bonus"
+      final: "valuation + 0.8*trend + 0.8*structure + timing + money + quality_bonus + category_bonus"
     },
     examples: {
-      valuation_demo_1: "AAPL 31.2 = (0.6*30 + 0.4*20) * 1.2  // 示意公式，不代表實際輸出",
-      valuation_demo_2: "MSFT 28.2 = (0.6*28 + 0.4*18) * 1.17 // 示意公式，不代表實際輸出"
+      valuation_demo_1: "AAPL 31.2 = (0.6*30 + 0.4*20) * 1.2 // 示意",
+      valuation_demo_2: "MSFT 28.2 = (0.6*28 + 0.4*18) * 1.17 // 示意"
     },
     tables: {
       valuation: makeTable("估值分"),
@@ -853,6 +985,11 @@ function run() {
 
       "today_score": round2(total),
 
+      "trendRaw": round2(trendRaw),
+      "snapshot": round2(snapshot),
+      "growth": round2(valuation.growth),
+      "growthScore": round2(valuation.growth_score),
+
       "趨勢判讀": {
         "年線": getArrow(r12m),
         "6月線": getArrow(r6m),
@@ -917,6 +1054,16 @@ function run() {
       "ui_bucket": buildUIBucket(action)
     };
 
+    const rejectMeta = evaluateRejectMeta(candidate);
+    candidate.reject_type = rejectMeta.reject_type;
+    candidate.reject_reasons = rejectMeta.reject_reasons;
+    candidate.badCount = rejectMeta.badCount;
+    candidate.trendTerrible = rejectMeta.trendTerrible;
+    candidate.snapshotTerrible = rejectMeta.snapshotTerrible;
+    candidate.growthTerrible = rejectMeta.growthTerrible;
+    candidate.attributeReject = rejectMeta.attributeReject;
+    candidate.quantReject = rejectMeta.quantReject;
+
     const highlight = evaluateTodayHighlight(candidate);
     candidate.is_today_highlight = highlight.is_today_highlight;
     candidate.today_highlight_reason = highlight.today_highlight_reason;
@@ -971,45 +1118,101 @@ function run() {
   const watchBucket = sorted.filter(x => x.ui_bucket === "觀察名單");
   const removeBucket = sorted.filter(x => x.ui_bucket === "建議剔除");
 
+  const rejectPool = sorted.filter(x => !!x.reject_type);
+
+  const simulationPool = sorted
+    .filter(x => !x.reject_type)
+    .sort((a, b) => b.today_score - a.today_score)
+    .slice(0, 15);
+
+  const todayHighlightPool = simulationPool
+    .filter(x =>
+      x["趨勢判讀"]?.["結構狀態"] !== "flat" &&
+      x["趨勢判讀"]?.["時機狀態"] !== "hot" &&
+      (x["曝險警示"]?.level || "normal") !== "high"
+    )
+    .sort((a, b) => b.today_score - a.today_score)
+    .slice(0, 5);
+
+  const highlightSymbols = new Set(todayHighlightPool.map(x => x["股號"]));
+  const simulationSymbols = new Set(simulationPool.map(x => x["股號"]));
+
+  const watchPool = simulationPool.filter(x => !highlightSymbols.has(x["股號"]));
+
+  const decoratedAll = sorted.map((x) => {
+    return {
+      ...x,
+      pool_reason: buildPoolReason(x, simulationSymbols, highlightSymbols)
+    };
+  });
+
+  const poolRules = buildPoolRules();
+
   const output = {
     generated_at: new Date().toISOString(),
     m2_generated_at: m2.generated_at,
-    total_count: sorted.length,
+    total_count: decoratedAll.length,
 
-    sweet_count: sorted.filter(x =>
+    sweet_count: decoratedAll.filter(x =>
       x["趨勢判讀"]?.["結構狀態"] === "sweet" ||
       x["趨勢判讀"]?.["結構狀態"] === "sweet_max"
     ).length,
-    hot_timing_count: sorted.filter(x => x["趨勢判讀"]?.["時機狀態"] === "hot").length,
-    downtrend_count: sorted.filter(x => x["趨勢判讀"]?.["趨勢狀態"] === "down").length,
+    hot_timing_count: decoratedAll.filter(x => x["趨勢判讀"]?.["時機狀態"] === "hot").length,
+    downtrend_count: decoratedAll.filter(x => x["趨勢判讀"]?.["趨勢狀態"] === "down").length,
 
-    high_exposure: sorted.filter(x => x["曝險警示"]?.level === "high").length,
-    mid_exposure: sorted.filter(x => x["曝險警示"]?.level === "medium").length,
+    high_exposure: decoratedAll.filter(x => x["曝險警示"]?.level === "high").length,
+    mid_exposure: decoratedAll.filter(x => x["曝險警示"]?.level === "medium").length,
 
     market_comment:
-      `甜點結構 ${sorted.filter(x =>
+      `甜點結構 ${decoratedAll.filter(x =>
         x["趨勢判讀"]?.["結構狀態"] === "sweet" ||
         x["趨勢判讀"]?.["結構狀態"] === "sweet_max"
       ).length} 檔，` +
-      `下行趨勢 ${sorted.filter(x =>
+      `下行趨勢 ${decoratedAll.filter(x =>
         x["趨勢判讀"]?.["趨勢狀態"] === "down"
       ).length} 檔，` +
       `今日宜重估值、重甜點、輕追價。`,
+
+    pool_rules: poolRules,
+    pool_summary: {
+      today_highlight_count: todayHighlightPool.length,
+      watch_count: watchPool.length,
+      simulation_count: simulationPool.length,
+      reject_count: rejectPool.length
+    },
+
+    today_highlight_pool: todayHighlightPool.map(x => ({
+      ...x,
+      pool_reason: buildPoolReason(x, simulationSymbols, highlightSymbols)
+    })),
+    watch_pool: watchPool.map(x => ({
+      ...x,
+      pool_reason: buildPoolReason(x, simulationSymbols, highlightSymbols)
+    })),
+    simulation_pool: simulationPool.map(x => ({
+      ...x,
+      pool_reason: buildPoolReason(x, simulationSymbols, highlightSymbols)
+    })),
+    reject_pool: rejectPool.map(x => ({
+      ...x,
+      pool_reason: buildPoolReason(x, simulationSymbols, highlightSymbols)
+    })),
 
     aggressive_recommend: aggressiveRecommend,
     watch_list: watchBucket,
     remove_list: removeBucket,
 
-    all: sorted
+    all: decoratedAll
   };
 
-  const scoreboard = buildScoreboard(sorted);
+  const scoreboard = buildScoreboard(decoratedAll);
 
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2), "utf-8");
   fs.writeFileSync(SCOREBOARD_FILE, JSON.stringify(scoreboard, null, 2), "utf-8");
 
-  console.log(`✅ m7_new_stock_today.json 已產出，共 ${sorted.length} 檔`);
+  console.log(`✅ m7_new_stock_today.json 已產出，共 ${decoratedAll.length} 檔`);
   console.log(`✅ m7_scoreboard.json 已產出`);
+  console.log(`✅ U7 四池已加入：highlight ${todayHighlightPool.length} / watch ${watchPool.length} / sim ${simulationPool.length} / reject ${rejectPool.length}`);
 }
 
 run();
