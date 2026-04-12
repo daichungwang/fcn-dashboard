@@ -1,10 +1,11 @@
 // ==========================================
-// M8 Engine VNext FINAL
+// M8 Engine VNext FINAL + Anchor-based Yield Proxy
 // 振宇 FCN 系統｜M8 定價模型（正式接回 M7 today_score 版）
 // 說明：
 // 1. 主讀 data/m7/m7_fundamental_data.json 取得 price / ret / swing_days
 // 2. 再讀 data/m7/m7_new_stock_today.json 取得 M7 真正的 today_score
 // 3. 只有在 M7 today_score 找不到時，才 fallback 用現有欄位推估
+// 4. 新增 anchor-based yield proxy：自動找輸入 basket 中 today_score 最高者當 anchor
 // ==========================================
 
 async function loadM7Fundamental() {
@@ -67,7 +68,11 @@ function allM7Stocks(m7json) {
     ...(m7json?.aggressive_recommend || []),
     ...(m7json?.watch_list || []),
     ...(m7json?.remove_list || []),
-    ...(m7json?.all || [])
+    ...(m7json?.all || []),
+    ...(m7json?.today_highlight_pool || []),
+    ...(m7json?.watch_pool || []),
+    ...(m7json?.simulation_pool || []),
+    ...(m7json?.reject_pool || [])
   ];
 }
 
@@ -161,7 +166,6 @@ function trendScore(stock) {
   const r3m = toNum(stock?.ret_3m, 0);
 
   let score = 0;
-
   score += Math.max(-8, Math.min(8, r1w * 1.2));
   score += Math.max(-8, Math.min(8, r1m * 0.8));
   score += Math.max(-8, Math.min(8, r3m * 0.5));
@@ -174,10 +178,7 @@ function getSwingDays(stock) {
   if (Array.isArray(stock?.recent_swings)) return stock.recent_swings;
   if (Array.isArray(stock?.daily_amplitudes)) return stock.daily_amplitudes;
 
-  const alt = [
-    stock?.d0, stock?.d1, stock?.d2, stock?.d3, stock?.d4, stock?.d5
-  ];
-
+  const alt = [stock?.d0, stock?.d1, stock?.d2, stock?.d3, stock?.d4, stock?.d5];
   if (alt.some(v => v !== undefined && v !== null && v !== "")) return alt;
 
   return [0, 0, 0, 0, 0, 0];
@@ -204,17 +205,14 @@ function deriveTodayScore(stock) {
 }
 
 function getTodayScore(stock) {
-  // 優先用 M7 真正算好的 today_score
   if (stock?.today_score !== undefined && stock?.today_score !== null && stock?.today_score !== "") {
     return toNum(stock.today_score, 0);
   }
 
-  // 次要相容其他可能欄位
   if (stock?.score_today !== undefined && stock?.score_today !== null && stock?.score_today !== "") {
     return toNum(stock.score_today, 0);
   }
 
-  // 最後才 fallback 推估
   return deriveTodayScore(stock);
 }
 
@@ -232,7 +230,6 @@ function calcBW(weaknesses) {
   const sorted = [...weaknesses].sort((a, b) => b - a);
   const worst = sorted[0] || 0;
   const avgWeak = avg(weaknesses);
-
   return 0.5 * worst + 0.5 * avgWeak;
 }
 
@@ -243,7 +240,6 @@ function calcTailAdj(weaknesses) {
   const sorted = [...weaknesses].sort((a, b) => b - a);
   const worst = sorted[0] || 0;
   const avgWeak = avg(weaknesses);
-
   return 0.05 * (worst - avgWeak);
 }
 
@@ -279,11 +275,7 @@ function calcTenorAdj(T) {
 
 function calcStrikeAdj(strike) {
   strike = toNum(strike);
-  return (
-    0.5 +
-    0.08 * (strike - 55) +
-    0.001 * Math.pow(strike - 55, 2)
-  );
+  return 0.5 + 0.08 * (strike - 55) + 0.001 * Math.pow(strike - 55, 2);
 }
 
 function calcTypeAdj(type) {
@@ -341,7 +333,6 @@ function calcVolAdj(basketVol) {
     x = 6.4 + 0.45 * d - 0.04 * d * d;
   }
 
-  // 如需限制 VolAdj 本身上限，可保留；若不要限制可直接 return x
   return Math.max(-0.5, Math.min(10.0, x));
 }
 
@@ -366,11 +357,7 @@ function calcStructure(KI, T, strike, type) {
   const strikeAdj = calcStrikeAdj(strike);
   const typeAdj = calcTypeAdj(type);
 
-  const raw =
-    kiAdj +
-    tenorAdj +
-    strikeAdj +
-    typeAdj;
+  const raw = kiAdj + tenorAdj + strikeAdj + typeAdj;
 
   return {
     ki_adj: round2(kiAdj),
@@ -414,12 +401,12 @@ export function getM8Blueprint() {
       "Tenor：1–3慢、3–10加速、10–12放緩（max=2）",
       "BasketVol = 0.5×s1 + 0.3×s2 + 0.2×avgSwing",
       "VolAdj 採平滑函數",
-      "HighRateBrake 用來抑制極端高利率失真"
+      "HighRateBrake 用來抑制極端高利率失真",
+      "Anchor-based Yield Proxy：以當次輸入最高 today_score 股票當 anchor"
     ],
     formulas: {
       today_score: "優先使用 m7_new_stock_today.json 的 today_score；缺值才 fallback 推估",
-      derived_today_score:
-        "today_score(推估) = quality_score + risk_penalty + trend_score + volatility_penalty",
+      derived_today_score: "today_score(推估) = quality_score + risk_penalty + trend_score + volatility_penalty",
       weaknesses: "weakness = 100 - today_score",
       BW: "BW = 0.5 × worst + 0.5 × avg",
       basket_premium: "BasketPremium = 0.15×BW + 0.0008×BW²",
@@ -430,17 +417,14 @@ export function getM8Blueprint() {
       type_adj: "EKI=0, DACN=0.5, AKI=1",
       short_swing: "ShortSwing = 0.35*d0 + 0.25*d1 + 0.15*d2 + 0.10*d3 + 0.08*d4 + 0.07*d5",
       basket_vol: "BasketVol = 0.5×s1 + 0.3×s2 + 0.2×avgSwing",
-      vol_adj: "VolAdj: if v<=3 => -0.6+0.35v; if 3<v<=6 => 0.45+0.85(v-3)+0.22(v-3)^2; if v>6 => 4.03+0.45(v-6)-0.04(v-6)^2",
+      vol_adj: "分段平滑函數",
       brake: "HighRateBrake: 18以下不煞，18~22輕煞，22~26加強，26以上強煞",
-      final_yield: "FairYield = Base + BasketPremium + TailAdj + StructureTotal + VolAdj - HighRateBrake(PreRate)"
+      final_yield: "FairYield = Base + BasketPremium + TailAdj + StructureTotal + VolAdj - HighRateBrake(PreRate)",
+      anchor_proxy: "anchor + target 的 pair_fair_yield 與 normalized_proxy"
     },
     parameters: {
       base: 6,
-      type_map: {
-        EKI: 0,
-        DACN: 0.5,
-        AKI: 1
-      },
+      type_map: { EKI: 0, DACN: 0.5, AKI: 1 },
       tenor: {
         short: "1–3 月慢速",
         mid: "3–10 月加速",
@@ -482,7 +466,6 @@ export async function runM8Case({
   });
 
   const scores = stocks.map(getTodayScore);
-
   const weaknesses = calcWeaknesses(scores);
   const BW = calcBW(weaknesses);
   const basketPremium = calcBasketPremium(BW);
@@ -497,17 +480,16 @@ export async function runM8Case({
 
   const base = 6;
 
-const preRate =
-  base +
-  basketPremium +
-  structure.structure_total +
-  tailAdj +
-  volAdj;
+  const preRate =
+    base +
+    basketPremium +
+    structure.structure_total +
+    tailAdj +
+    volAdj;
 
-const highRateBrake = calcHighRateBrake(preRate);
-
-const fairYield = preRate - highRateBrake;
-const delta = toNum(marketYield) - fairYield;
+  const highRateBrake = calcHighRateBrake(preRate);
+  const fairYield = preRate - highRateBrake;
+  const delta = toNum(marketYield) - fairYield;
 
   let note = "";
   if (basketPremium < 7 && delta > 4) {
@@ -561,5 +543,109 @@ const delta = toNum(marketYield) - fairYield;
     pricing_delta: round2(delta),
     pricing_view: pricingView(delta),
     note
+  };
+}
+
+// ------------------------------------------
+// Anchor-based Yield Proxy
+// 規則：
+// 1. 在輸入 symbols 中，找 today_score 最高者當 anchor
+// 2. 用 anchor + target 跑 M8
+// 3. 產出 pair fair_yield 與 normalized proxy
+// ------------------------------------------
+export async function runM8AnchorProxy({
+  symbols,
+  KI,
+  Strike,
+  T,
+  type
+}) {
+  if (!Array.isArray(symbols) || symbols.length < 2) {
+    throw new Error("Anchor Proxy 至少需要 2 檔股票");
+  }
+
+  const [m7Fundamental, m7Today] = await Promise.all([
+    loadM7Fundamental(),
+    loadM7Today()
+  ]);
+
+  const cleanedSymbols = [...new Set(symbols.map(safeUpper).filter(Boolean))];
+
+  if (cleanedSymbols.length < 2) {
+    throw new Error("有效股票數不足，至少需要 2 檔");
+  }
+
+  const enriched = cleanedSymbols.map(symbol => {
+    const fundamentalStock = findFundamentalStock(m7Fundamental, symbol);
+    const todayStock = findTodayStock(m7Today, symbol);
+    const merged = mergeStockData(fundamentalStock, todayStock, symbol);
+
+    return {
+      symbol,
+      name: getName(merged),
+      today_score: round2(getTodayScore(merged)),
+      source: merged._source || "m7"
+    };
+  });
+
+  const sortedByScore = [...enriched].sort((a, b) => b.today_score - a.today_score);
+  const anchor = sortedByScore[0];
+
+  if (!anchor) {
+    throw new Error("找不到可用 anchor");
+  }
+
+  const pairResults = [];
+
+  for (const item of sortedByScore) {
+    if (item.symbol === anchor.symbol) continue;
+
+    const pairCase = await runM8Case({
+      caseName: `ANCHOR_${anchor.symbol}_${item.symbol}`,
+      symbols: [anchor.symbol, item.symbol],
+      KI,
+      Strike,
+      T,
+      type,
+      marketYield: 0
+    });
+
+    pairResults.push({
+      anchor_symbol: anchor.symbol,
+      target_symbol: item.symbol,
+      target_name: item.name,
+      target_today_score: item.today_score,
+      pair_fair_yield: round2(pairCase.fair_yield),
+      pair_basket_vol: round2(pairCase.basket_vol),
+      pair_vol_adj: round2(pairCase.vol_adj),
+      pair_pricing_view: pairCase.pricing_view || "",
+      pair_note: pairCase.note || ""
+    });
+  }
+
+  const fairYields = pairResults
+    .map(x => x.pair_fair_yield)
+    .filter(v => Number.isFinite(v) && v > 0);
+
+  const baseYield = fairYields.length ? Math.min(...fairYields) : 1;
+
+  const normalized = pairResults.map(x => ({
+    ...x,
+    proxy_value: round2(x.pair_fair_yield),
+    normalized_proxy: round2(x.pair_fair_yield / baseYield)
+  }));
+
+  return {
+    mode: "anchor_based_yield_proxy",
+    anchor_symbol: anchor.symbol,
+    anchor_name: anchor.name,
+    anchor_today_score: anchor.today_score,
+    KI: toNum(KI),
+    strike: toNum(Strike),
+    tenor: toNum(T),
+    type,
+    universe: sortedByScore,
+    base_yield_for_normalization: round2(baseYield),
+    proxies: normalized.sort((a, b) => b.proxy_value - a.proxy_value)
   };
 }
