@@ -6,7 +6,7 @@
 
     "clean_min_pure": 6,
     "clean_min_event": 6,
-    "clean_min_delta": 1,
+    "clean_min_delta": 0.2,
     "clean_use_delta_gate": true,
 
     "watch_min_pure": 5,
