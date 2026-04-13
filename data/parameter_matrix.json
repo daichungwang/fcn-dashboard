@@ -1,8 +1,6 @@
 {
   "說明": "M3 系統主參數表（股票篩選 + FCN 模擬 + 排名邏輯）",
 
-  "M3_股票篩選情境參數": {
-  {
   "STOCK_CATEGORY_BASELINE": {
     "core": {
       "label": "核心",
@@ -34,30 +32,30 @@
     },
     "score_bands": [
       { "max": 0.05, "score": 0 },
-      { "max": 0.10, "score": -0.18 },
+      { "max": 0.1, "score": -0.18 },
       { "max": 0.15, "score": -0.36 },
-      { "max": 0.20, "score": -0.55 },
+      { "max": 0.2, "score": -0.55 },
       { "max": 0.25, "score": -0.73 },
-      { "max": 0.30, "score": -0.91 },
+      { "max": 0.3, "score": -0.91 },
       { "max": 0.35, "score": -1.09 },
-      { "max": 0.40, "score": -1.27 },
+      { "max": 0.4, "score": -1.27 },
       { "max": 0.45, "score": -1.45 },
-      { "max": 0.50, "score": -1.64 },
+      { "max": 0.5, "score": -1.64 },
       { "max": 0.55, "score": -1.82 },
-      { "max": 0.60, "score": -2.00 },
+      { "max": 0.6, "score": -2.0 },
       { "max": 0.65, "score": -2.13 },
-      { "max": 0.70, "score": -2.25 },
+      { "max": 0.7, "score": -2.25 },
       { "max": 0.75, "score": -2.38 },
-      { "max": 0.80, "score": -2.50 }
+      { "max": 0.8, "score": -2.5 }
     ],
     "floor_score": -3,
     "labels": [
       { "max": 0.05, "label": "極穩定" },
-      { "max": 0.10, "label": "穩定" },
-      { "max": 0.20, "label": "偏穩" },
-      { "max": 0.40, "label": "中等波動" },
-      { "max": 0.60, "label": "偏高波動" },
-      { "max": 0.80, "label": "高波動" },
+      { "max": 0.1, "label": "穩定" },
+      { "max": 0.2, "label": "偏穩" },
+      { "max": 0.4, "label": "中等波動" },
+      { "max": 0.6, "label": "偏高波動" },
+      { "max": 0.8, "label": "高波動" },
       { "max": 999, "label": "極高波動" }
     ]
   },
@@ -91,7 +89,7 @@
   },
 
   "STOCK_EVENT": {
-    "short_swing_weights": [0.35, 0.25, 0.15, 0.10, 0.08, 0.07],
+    "short_swing_weights": [0.35, 0.25, 0.15, 0.1, 0.08, 0.07],
     "score_curve": {
       "center_left_x": -2,
       "center_right_x": 2,
@@ -128,28 +126,26 @@
   "TREND_ENGINE": {
     "enabled": true,
     "use_negative_only_for_trend_rate": true,
-
     "trend_rate_weights": {
-      "r1m": 0.10,
-      "r3m": 0.20,
+      "r1m": 0.1,
+      "r3m": 0.2,
       "r6m": 0.25,
       "r12m": 0.45,
-      "r3y": 0.00,
-      "r5y": 0.00,
-      "r10y": 0.00
+      "r3y": 0.0,
+      "r5y": 0.0,
+      "r10y": 0.0
     },
-
     "long_trend_rules": {
       "secular_growth": {
-        "r12m_gte": 0.20,
+        "r12m_gte": 0.2,
         "r6m_gte": 0.08,
         "label": "長期成長",
         "note": "長期結構向上，可作長期觀察與持有核心"
       },
       "stable_compounder": {
         "r12m_gte": 0.08,
-        "r6m_gte": 0.00,
-        "r12m_lte": 0.20,
+        "r6m_gte": 0.0,
+        "r12m_lte": 0.2,
         "label": "穩定複利",
         "note": "長期偏正但不暴衝，適合保守核心"
       },
@@ -160,13 +156,13 @@
         "note": "長期方向不明，偏中性"
       },
       "structural_decline": {
-        "r12m_lte": -0.20,
+        "r12m_lte": -0.2,
         "r6m_lte": -0.08,
         "label": "結構轉弱",
         "note": "不是短期修正，長期結構偏弱"
       },
       "cyclical_uptrend": {
-        "r12m_gte": 0.10,
+        "r12m_gte": 0.1,
         "r6m_lt": 0.08,
         "label": "循環向上",
         "note": "長期仍偏上，但波動較高，需搭配產業循環判讀"
@@ -176,18 +172,17 @@
         "note": "長期結構尚不明確"
       }
     },
-
     "mid_trend_rules": {
       "accelerating_uptrend": {
         "r1m_gte": 0.05,
-        "r3m_gte": 0.10,
+        "r3m_gte": 0.1,
         "r6m_gte": 0.12,
         "label": "加速上行",
         "note": "短中期同步走強，位置可能偏熱"
       },
       "healthy_pullback": {
         "r1m_lte": -0.03,
-        "r3m_gte": 0.00,
+        "r3m_gte": 0.0,
         "r6m_gte": 0.05,
         "label": "健康回檔",
         "note": "長線未壞，短線修正，常是較好的 FCN 觀察點"
@@ -202,7 +197,7 @@
       },
       "weak_rebound": {
         "r1m_gte": 0.03,
-        "r6m_lte": -0.10,
+        "r6m_lte": -0.1,
         "label": "弱勢反彈",
         "note": "短期反彈，但中期仍弱，需保守看待"
       },
@@ -214,7 +209,7 @@
         "note": "跌勢延續中，不宜當成普通修正"
       },
       "overheated": {
-        "r1m_gte": 0.10,
+        "r1m_gte": 0.1,
         "r3m_gte": 0.18,
         "label": "高位過熱",
         "note": "公司可能很好，但目前時點偏熱"
@@ -224,7 +219,6 @@
         "note": "沒有明顯中期位置優勢"
       }
     },
-
     "profile_map": {
       "secular_growth|healthy_pullback": {
         "profile": "long_growth_pullback",
@@ -252,7 +246,6 @@
         "note": "高風險型態，未來可直接接 reject"
       }
     },
-
     "default_profile": {
       "profile": "mixed",
       "label": "混合型態",
@@ -265,16 +258,15 @@
     "clean_min_event": 6,
     "clean_min_delta": 1,
     "clean_use_delta_gate": true,
-
     "watch_min_pure": 5,
     "watch_min_event": 5,
     "watch_use_or_logic": true,
-
     "reject_if_suggestion_avoid": true
   },
 
   "M3_模擬控制參數": {
-    "max_combinations": 200
+    "max_combinations": 50,
+    "top_n_output": 20
   },
 
   "M3_排名評分參數": {
@@ -314,8 +306,8 @@
         "tenor": [6],
         "rate": [14, 16, 18],
         "eki": [false]
-      }
-        {
+      },
+      {
         "名稱": "正常組A",
         "basket_size": [4],
         "ki": [55],
@@ -342,7 +334,6 @@
         "rate": [18],
         "eki": [true]
       },
-
       {
         "名稱": "積極組A",
         "basket_size": [5],
@@ -361,7 +352,6 @@
         "rate": [24],
         "eki": [false]
       },
-
       {
         "名稱": "夢幻組A",
         "basket_size": [3],
@@ -380,7 +370,6 @@
         "rate": [22],
         "eki": [true]
       },
-
       {
         "名稱": "接股組A",
         "basket_size": [3],
@@ -391,22 +380,6 @@
         "eki": [true]
       }
     ]
-  }
-}
-  
-    
-
-    
-
-  "M3_排名評分參數": {
-    "strong_buy_min_event_fcn": 12,
-    "buy_min_event_fcn": 9,
-    "watch_min_event_fcn": 6
-  },
-
-  "M3_模擬控制參數": {
-    "max_combinations": 50,
-    "top_n_output": 20
   },
 
   "系統參數": {
