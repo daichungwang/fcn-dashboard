@@ -1,11 +1,13 @@
 /* ==========================================
-   stock_engine.js V6
+   stock_engine.js V7
    振宇 FCN 系統｜Stock Engine
+
    定義：
-   1. Pure Stock = 公司品質 / 我願不願意接
-   2. Snapshot   = 現在是不是甜甜價
-   3. Event Stock = Pure Stock + Snapshot
-   4. 本檔案只處理個股，不處理 FCN 結構
+   1. Pure Stock  = 公司品質 / 我願不願意接
+   2. Snapshot    = 現在是不是甜甜價
+   3. Event Score = ShortSwing Score
+   4. Event Stock = Pure Stock + Snapshot + Event Score
+   5. 本檔案只處理個股，不處理 FCN 結構
 ========================================== */
 
 // ------------------------------------------
@@ -48,6 +50,15 @@ function round(value, digits = 2) {
 
 function abs(value) {
   return Math.abs(toNumber(value, 0));
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, toNumber(value, 0)));
+}
+
+function smoothstep(t) {
+  const x = clamp(t, 0, 1);
+  return x * x * (3 - 2 * x);
 }
 
 // ------------------------------------------
@@ -167,27 +178,8 @@ export function calcMomentum(stock = {}) {
 }
 
 // ------------------------------------------
-// Snapshot 分數表（定稿）
+// Snapshot 分數表
 // momentum 以百分比 movePct 判斷
-//
-// <= -28%      +10
-// -28% ~ -26%  +9
-// -26% ~ -22%  +8
-// -22% ~ -18%  +7
-// -18% ~ -14%  +6
-// -14% ~ -11%  +5
-// -11% ~ -8%   +4
-// -8%  ~ -5%   +3
-// -5%  ~ -3%   +2
-// -3%  ~ -1%   +1
-// -1%  ~ +1%    0
-// +1%  ~ +5%   -1
-// +5%  ~ +8%   -2
-// +8%  ~ +13%  -3
-// +13% ~ +18%  -4
-// +18% ~ +25%  -5
-// +25% ~ +30%  -6
-// > +30%       -8
 // ------------------------------------------
 export function calcSnapshotScore(movePct = 0) {
   if (movePct <= -28) return 10;
@@ -340,14 +332,128 @@ export function classifyTrend(stock = {}) {
 }
 
 // ------------------------------------------
+// ShortSwing
+// 優先使用 delta_days，若尚未完成資料切換，fallback 到 swing_days
+//
+// ShortSwing = 0.35×d0 + 0.25×d1 + 0.15×d2 + 0.10×d3 + 0.08×d4 + 0.07×d5
+// ------------------------------------------
+export function getShortSwingDays(stock = {}) {
+  const source = Array.isArray(stock.delta_days) && stock.delta_days.length
+    ? stock.delta_days
+    : (Array.isArray(stock.swing_days) ? stock.swing_days : []);
+
+  const days = [];
+  for (let i = 0; i < 6; i++) {
+    days.push(toNumber(source[i], 0));
+  }
+  return days;
+}
+
+export function calcShortSwing(stock = {}) {
+  const d = getShortSwingDays(stock);
+  const w = [0.35, 0.25, 0.15, 0.10, 0.08, 0.07];
+
+  let total = 0;
+  for (let i = 0; i < 6; i++) {
+    total += w[i] * d[i];
+  }
+
+  return round(total, 2);
+}
+
+// ------------------------------------------
+// ShortSwing Score（非線性曲線版）
+//
+// 方向：
+// ShortSwing 越負 → 分數越負
+// ShortSwing 越正 → 分數越正
+//
+// 錨點：
+// x = -2 → -3
+// x =  0 →  0
+// x = +2 → +5
+// x = -10 → -5，最終封頂 -6
+// x = +10 → +9，最終封頂 +10
+// ------------------------------------------
+export function calcShortSwingScore(shortSwing = 0) {
+  const v = toNumber(shortSwing, 0);
+
+  // 中心左：-2 ~ 0 → 0 到 -3（曲線）
+  if (v >= -2 && v <= 0) {
+    const t = (-v) / 2;
+    return round(-3 * Math.sin((Math.PI / 2) * t), 2);
+  }
+
+  // 中心右：0 ~ +2 → 0 到 +5（曲線）
+  if (v > 0 && v <= 2) {
+    const t = v / 2;
+    return round(5 * Math.sin((Math.PI / 2) * t), 2);
+  }
+
+  // 左外圍：-2 ~ -10 → -3 到 -5（緩跌）
+  if (v < -2 && v >= -10) {
+    const t = ((-v) - 2) / 8;
+    return round(-3 - 2 * smoothstep(t), 2);
+  }
+
+  // 右外圍：+2 ~ +10 → +5 到 +9（緩漲）
+  if (v > 2 && v <= 10) {
+    const t = (v - 2) / 8;
+    return round(5 + 4 * smoothstep(t), 2);
+  }
+
+  // 左封頂區：-10 以下 → -6
+  if (v < -10) {
+    const t = Math.min(((-v) - 10) / 4, 1);
+    return round(-5 - 1 * smoothstep(t), 2);
+  }
+
+  // 右封頂區：+10 以上 → +10
+  if (v > 10) {
+    const t = Math.min((v - 10) / 4, 1);
+    return round(9 + 1 * smoothstep(t), 2);
+  }
+
+  return 0;
+}
+
+export function getShortSwingReason(shortSwing = 0, score = 0) {
+  const x = toNumber(shortSwing, 0);
+  const s = toNumber(score, 0);
+
+  if (x >= 10) return `ShortSwing=${x}%：極強正動能，EventScore=${s}`;
+  if (x >= 2) return `ShortSwing=${x}%：偏強正動能，EventScore=${s}`;
+  if (x > 0) return `ShortSwing=${x}%：溫和轉強，EventScore=${s}`;
+
+  if (x <= -10) return `ShortSwing=${x}%：極弱負動能，EventScore=${s}`;
+  if (x <= -2) return `ShortSwing=${x}%：偏弱負動能，EventScore=${s}`;
+  if (x < 0) return `ShortSwing=${x}%：溫和轉弱，EventScore=${s}`;
+
+  return `ShortSwing=${x}%：中性，EventScore=${s}`;
+}
+
+export function calcEventScore(stock = {}) {
+  const shortSwing = calcShortSwing(stock);
+  const eventScore = calcShortSwingScore(shortSwing);
+
+  return {
+    short_swing: shortSwing,
+    event_score: eventScore,
+    event_reason: getShortSwingReason(shortSwing, eventScore),
+    delta_days: getShortSwingDays(stock)
+  };
+}
+
+// ------------------------------------------
 // Event Stock
-// Event Stock = Pure Stock + Snapshot
+// Event Stock = Pure Stock + Snapshot + Event Score
 // ------------------------------------------
 export function calcEventStockScore(stock = {}) {
   const pure = calcPureStockScore(stock);
   const snapshot = calcSnapshot(stock).snapshot_score;
+  const eventScore = calcEventScore(stock).event_score;
 
-  return round(pure + snapshot, 2);
+  return round(pure + snapshot + eventScore, 2);
 }
 
 // ------------------------------------------
@@ -356,13 +462,14 @@ export function calcEventStockScore(stock = {}) {
 export function getStockBias(stock = {}) {
   const pure = calcPureStockScore(stock);
   const snapshot = calcSnapshot(stock).snapshot_score;
+  const eventScore = calcEventScore(stock).event_score;
   const eventStock = calcEventStockScore(stock);
 
   if (pure < 3) return "negative";
-  if (eventStock >= 14) return "very_positive";
-  if (eventStock >= 10) return "positive";
-  if (eventStock >= 6) return "neutral";
-  if (snapshot < 0) return "cautious";
+  if (eventStock >= 16) return "very_positive";
+  if (eventStock >= 12) return "positive";
+  if (eventStock >= 7) return "neutral";
+  if (snapshot < 0 || eventScore < 0) return "cautious";
   return "neutral";
 }
 
@@ -370,14 +477,16 @@ export function getSuggestion(stock = {}) {
   const pure = calcPureStockScore(stock);
   const eventStock = calcEventStockScore(stock);
   const trend = classifyTrend(stock).trend;
+  const eventScore = calcEventScore(stock).event_score;
 
   if (pure < 3) return "避免納入 FCN";
   if (trend === "downtrend") return "避免納入 FCN";
   if (trend === "dead_cat_bounce") return "避免納入 FCN";
 
-  if (eventStock >= 14) return "優先列入 FCN 候選";
-  if (eventStock >= 10) return "可列入 FCN 候選";
-  if (eventStock >= 6) return "中性觀察";
+  if (eventStock >= 16) return "優先列入 FCN 候選";
+  if (eventStock >= 12) return "可列入 FCN 候選";
+  if (eventStock >= 7) return "中性觀察";
+  if (eventScore <= -4) return "保守觀察";
   return "保守觀察";
 }
 
@@ -398,6 +507,7 @@ export function evaluateStock(stock = {}, context = {}) {
   const trendInfo = classifyTrend(stock);
 
   const snapshot = calcSnapshot(stock);
+  const eventInfo = calcEventScore(stock);
   const event_stock_score = calcEventStockScore(stock);
 
   const stock_bias = getStockBias(stock);
@@ -438,6 +548,11 @@ export function evaluateStock(stock = {}, context = {}) {
     snapshot_bucket: snapshot.snapshot_bucket,
     snapshot_score: snapshot.snapshot_score,
     snapshot_reason: snapshot.snapshot_reason,
+
+    delta_days: eventInfo.delta_days,
+    short_swing: eventInfo.short_swing,
+    event_score: eventInfo.event_score,
+    event_reason: eventInfo.event_reason,
 
     event_stock_score,
 
