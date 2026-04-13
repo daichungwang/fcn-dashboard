@@ -755,6 +755,12 @@
     const M2_HEALTH_CACHE_KEY = "m2_health_cache_v1";
     const M2_POOL_EDITOR_KEY = "m2_pool_editor_v1";
 
+    let searchKeyword = "";
+
+window.searchFCN = function() {
+  searchKeyword = document.getElementById("searchInput").value.toUpperCase();
+  renderFCNManager();
+};
     let showAllHealthy = false;
 
     let zoneSectionCollapsed = false;
