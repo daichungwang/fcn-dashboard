@@ -597,6 +597,17 @@
             <button class="light" onclick="setManagerFilter('active')">只看 Active</button>
             <button class="light" onclick="setManagerFilter('closed')">只看 Closed</button>
             <button class="light" onclick="setManagerFilter('deleted')">只看 Deleted</button>
+            <div class="sub-toolbar">
+  <input id="searchInput" placeholder="搜尋 fcn_id / 股票 / bank"
+    style="padding:8px; border-radius:8px; border:1px solid #ccc; width:220px;">
+
+  <button class="light" onclick="searchFCN()">搜尋</button>
+
+  <input id="loadIdInput" placeholder="輸入 fcn_id"
+    style="padding:8px; border-radius:8px; border:1px solid #ccc; width:160px;">
+
+  <button class="light" onclick="loadFCNById()">載入 FCN</button>
+</div>
           </div>
           <div id="managerListMeta" class="muted" style="margin-bottom:10px;">尚未載入 FCN Pool</div>
           <div id="managerList" class="manager-list"></div>
