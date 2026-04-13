@@ -1115,7 +1115,7 @@ M3 Dashboard
     async function runM3() {
       try {
         const result = await runM3Engine();
-        writeCache(result);
+        // writeCache(result);
         renderM3();
         alert("M3 執行成功");
       } catch (err) {
