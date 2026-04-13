@@ -1438,39 +1438,39 @@
       "TSLA": 425.3438
     }
   },
-  {
-    "date": "2025-09-30",
-    "fcn_id": "FCN321K 富邦",
-    "basket": [
-      "NVDA",
-      "TSLA",
-      "PLTR",
-      "ALAB"
-    ],
-    "tenor": 6,
-    "rate": 23.0,
-    "autocall": 100,
-    "strike": 63.44,
-    "ki": 50.0,
-    "eki": true,
-    "bank": "摩根士丹利",
-    "has_position": true,
-    "amt": 20000.0,
-    "currency": "USD",
-    "status": "active",
-    "created_time": "2025-09-30T09:00",
-    "entry_time": "2025-09-30T09:00",
-    "exit_time": null,
-    "decision_flag": "manual",
-    "is_portfolio": true,
-    "note": "標的價格=開盤價",
-    "entry_prices": {
-      "NVDA": 182.03,
-      "TSLA": 441.81,
-      "PLTR": 179.13,
-      "ALAB": 200.69
-    }
-  },
+ {
+  "date": "2025-09-30",
+  "fcn_id": "FCN321K 富邦",
+  "basket": [
+    "NVDA",
+    "TSLA",
+    "PLTR",
+    "ALAB"
+  ],
+  "tenor": 6,
+  "rate": 23,
+  "autocall": 100,
+  "strike": 63.44,
+  "ki": 50,
+  "eki": true,
+  "bank": "摩根士丹利",
+  "has_position": true,
+  "amt": 20000,
+  "currency": "USD",
+  "status": "closed",
+  "created_time": "2025-09-30T09:00",
+  "entry_time": "2025-09-30T09:00",
+  "exit_time": "2026-04-08T09:20",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "標的價格=開盤價",
+  "entry_prices": {
+    "NVDA": 182.03,
+    "TSLA": 441.81,
+    "PLTR": 179.13,
+    "ALAB": 200.69
+  }
+ },
   {
     "date": "2025-10-03",
     "fcn_id": "FCN465K 富邦",
