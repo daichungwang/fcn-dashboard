@@ -761,6 +761,28 @@ window.searchFCN = function() {
   searchKeyword = document.getElementById("searchInput").value.toUpperCase();
   renderFCNManager();
 };
+
+// 👇👇👇 就加在這裡 👇👇👇
+window.loadFCNById = function() {
+  const id = document.getElementById("loadIdInput").value.trim();
+
+  if (!id) {
+    alert("請輸入 fcn_id");
+    return;
+  }
+
+  const found = editableFCNPool.find(x => x.fcn_id === id);
+
+  if (!found) {
+    alert("找不到這筆 FCN");
+    return;
+  }
+
+  fillForm(found);
+  currentEditingFCNId = id;
+
+  alert(`已載入 ${id}`);
+};
     let showAllHealthy = false;
 
     let zoneSectionCollapsed = false;
