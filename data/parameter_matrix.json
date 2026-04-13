@@ -105,24 +105,6 @@
     }
   },
 
-  "STOCK_SUGGESTION": {
-    "reject_if_pure_lt": 3,
-    "reject_trends": ["downtrend", "dead_cat_bounce"],
-    "event_stock_thresholds": {
-      "priority": 16,
-      "include": 12,
-      "neutral": 7
-    },
-    "conservative_if_event_score_lte": -4,
-    "texts": {
-      "reject": "避免納入 FCN",
-      "priority": "優先列入 FCN 候選",
-      "include": "可列入 FCN 候選",
-      "neutral": "中性觀察",
-      "conservative": "保守觀察"
-    }
-  },
-
  "TREND_FILTER": {
   "reject_trend_rate_lte": -0.12,
   "watch_trend_rate_lte": -0.05,
@@ -130,6 +112,23 @@
     "decline_downtrend",
     "decline_rebound"
   ]
+},
+"STOCK_SUGGESTION": {
+  "reject_if_pure_lt": 3,
+  "reject_trends": ["downtrend", "dead_cat_bounce"],
+  "event_stock_thresholds": {
+    "priority": 16,
+    "include": 12,
+    "neutral": 7
+  },
+  "conservative_if_event_score_lte": -4,
+  "texts": {
+    "reject": "避免納入 FCN",
+    "priority": "優先列入 FCN 候選",
+    "include": "可列入 FCN 候選",
+    "neutral": "中性觀察",
+    "conservative": "保守觀察"
+  }
 },
  
   
