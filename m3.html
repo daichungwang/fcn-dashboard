@@ -929,6 +929,7 @@ M3 Dashboard
             <div class="item-line"><b>Reason</b>：${safeText(sim.reason)}</div>
             <div class="item-line"><b>Score breakdown</b>：Avg Pure ${fmt(sim.avgPureStock)} / Avg Event ${fmt(sim.avgEventStock)} / Rate ${fmt(sim.rateScore)} / Period ${fmt(sim.periodScore)} / P-risk ${fmt(sim.priskScore)} / SRI ${fmt(sim.sri)} / EKI Bonus ${fmt(sim.ekiBonus)}</div>
             <div class="item-line"><b>Preference</b>：${safeText(sim.preference_level)} ｜ <b>Market</b>：${safeText(sim.market_level)}</div>
+            <div class="item-line"><b>Fair Reason</b>：${safeText(sim.fair_reason, "-")}</div>
             <div class="item-line"><b>R1</b>：${safeText(sim.r1?.symbol)} ｜ ${safeText(sim.r1?.trend_label)} ｜ ${safeText(sim.r1?.trend_note)}</div>
             <div class="item-line"><b>R2</b>：${safeText(sim.r2?.symbol)} ｜ ${safeText(sim.r2?.trend_label)} ｜ ${safeText(sim.r2?.trend_note)}</div>
             <div class="item-line"><b>R3</b>：${safeText(sim.r3?.symbol)} ｜ ${safeText(sim.r3?.trend_label)} ｜ ${safeText(sim.r3?.trend_note)}</div>
