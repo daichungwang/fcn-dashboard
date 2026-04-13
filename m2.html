@@ -2050,7 +2050,26 @@ window.loadFCNById = function() {
       a.remove();
       URL.revokeObjectURL(url);
     }
+     function exportActivePool() {
+  const filtered = editableFCNPool.filter(x => x.status !== "deleted");
 
+  const blob = new Blob(
+    [JSON.stringify(filtered, null, 2)],
+    { type: "application/json;charset=utf-8" }
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "fcn_pool_active.json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  URL.revokeObjectURL(url);
+}
+    
     document.getElementById("backMilestone2Btn").addEventListener("click", () => {
       window.location.href = "./milestone2_index.html";
     });
