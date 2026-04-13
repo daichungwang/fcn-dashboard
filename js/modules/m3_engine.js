@@ -155,17 +155,6 @@ function getScenarioArrays(scenario) {
   };
 }
 
-// ------------------------------------------
-// M8 預留：Fair Rate
-// 目前若你尚未接正式 M8，引擎不會炸
-// 之後可把這段換成真正 import 的 fair rate engine
-// ------------------------------------------
-function calcFairRateFallback(fcn) {
-  // 先保留欄位，不做主觀估算
-  // 之後接 M8 正式模型時，直接替換這個函式即可
-  return null;
-}
-
 function getFairFlag(gap) {
   const g = Number(gap);
   if (!Number.isFinite(g)) return "待接 M8";
@@ -180,12 +169,10 @@ function getFairFlag(gap) {
 // ------------------------------------------
 function calcHealthPct(fcn) {
   const worst = toNumber(fcn?.r1?.event_stock_score, 0);
-  const avg = toNumber(fcn.avgEventStock, 0);
+  const avg = toNumber(fcn?.avgEventStock, 0);
 
-  // 先用簡化版：Worst-of 60% + Avg 40%
   const score = 0.6 * worst + 0.4 * avg;
 
-  // 以 12 分滿分映射到 100
   return Math.max(0, Math.min(100, round((score / 12) * 100, 1)));
 }
 
@@ -208,10 +195,6 @@ function getMarketLevel(gap) {
 
 // ------------------------------------------
 // 達標條件
-// M3.5 Final Decision = 達標組 Top 5
-// 1. event_fcn >= 9
-// 2. fair_gap >= 0
-// 3. health_pct >= 70
 // ------------------------------------------
 export function isQualified(f) {
   return (
@@ -224,28 +207,7 @@ export function isQualified(f) {
 // ------------------------------------------
 // M3 Simulation
 // ------------------------------------------
-function runSimulation(cleanPool, config) {
-  const results = [];
-  const scenarioGroup = config["M3_FCN情境組合參數"] || {};
-  const scenarios = scenarioGroup.scenarios || [];
-  const rankingCfg = config["M3_排名評分參數"] || {};
-  const simCfg = config["M3_模擬控制參數"] || {};
-
-  const maxCombinations = toNumber(simCfg.max_combinations, 50);
-
-  scenarios.forEach((scenario) => {
-    const arrays = getScenarioArrays(scenario);
-
-    arrays.basket_sizes.forEach((basketSize) => {
-      const combos = generateCombinations(cleanPool, toNumber(basketSize, 0)).slice(0, maxCombinations);
-
-      combos.forEach((combo, idx) => {
-        arrays.kis.forEach((ki) => {
-          arrays.strikes.forEach((strike) => {
-            arrays.tenors.forEach((tenor) => {
-              arrays.rates.forEach((rate) => {
-                arrays.ekis.forEach((eki) => {
-  async function runSimulation(cleanPool, config) {
+async function runSimulation(cleanPool, config) {
   const results = [];
   const scenarioGroup = config["M3_FCN情境組合參數"] || {};
   const scenarios = scenarioGroup.scenarios || [];
@@ -271,13 +233,13 @@ function runSimulation(cleanPool, config) {
                   const type = eki ? "AKI" : "EKI";
 
                   const fcn = evaluateFCN({
-                  id: `${safeText(scenario["名稱"], "SC")}_${idx + 1}`,
-                  basket: combo.map(s => s.symbol),
-                  ki: toNumber(ki, 0),
-                  strike: toNumber(strike, 0),
-                  yield: toNumber(rate, 0),
-                  period: toNumber(tenor, 0),
-                  eki: !!eki
+                    id: `${safeText(scenario["名稱"], "SC")}_${idx + 1}`,
+                    basket: combo.map(s => s.symbol),
+                    ki: toNumber(ki, 0),
+                    strike: toNumber(strike, 0),
+                    yield: toNumber(rate, 0),
+                    period: toNumber(tenor, 0),
+                    eki: !!eki
                   }, combo);
 
                   if (!fcn) continue;
@@ -298,16 +260,17 @@ function runSimulation(cleanPool, config) {
                       marketYield: toNumber(rate, 0)
                     });
 
-                    fairRate = toNumber(m8.fair_yield, null);
+                    fairRate = toNumber(m8?.fair_yield, null);
                     fairGap = Number.isFinite(fairRate)
                       ? round(toNumber(rate, 0) - fairRate, 2)
                       : null;
-                    fairFlag = safeText(m8.pricing_view, "待接 M8");
-                    fairReason = safeText(m8.note, "");
+                    fairFlag = safeText(m8?.pricing_view, getFairFlag(fairGap));
+                    fairReason = safeText(m8?.note, "");
                   } catch (err) {
                     console.warn("M8 pricing failed:", err);
                   }
 
+                  const eventFcn = toNumber(fcn.event_fcn, 0);
                   const healthPct = calcHealthPct(fcn);
 
                   results.push({
@@ -321,7 +284,7 @@ function runSimulation(cleanPool, config) {
                     simulation_rate: toNumber(rate, 0),
                     tenor: toNumber(tenor, 0),
 
-                    m3_score: toNumber(fcn.event_fcn, 0),
+                    m3_score: eventFcn,
 
                     fair_rate: fairRate,
                     fair_gap: fairGap,
@@ -329,15 +292,14 @@ function runSimulation(cleanPool, config) {
                     fair_reason: fairReason,
 
                     health_pct: healthPct,
-                    preference_level: getPreferenceLevel(fcn.event_fcn),
+                    preference_level: getPreferenceLevel(eventFcn),
                     market_level: getMarketLevel(fairGap),
 
-                    suggestion_rank: (
-                      toNumber(fcn.event_fcn, 0) >= toNumber(rankingCfg.strong_buy_min_event_fcn, 12) ? "strong" :
-                      toNumber(fcn.event_fcn, 0) >= toNumber(rankingCfg.buy_min_event_fcn, 9) ? "buy" :
-                      toNumber(fcn.event_fcn, 0) >= toNumber(rankingCfg.watch_min_event_fcn, 6) ? "watch" :
+                    suggestion_rank:
+                      eventFcn >= toNumber(rankingCfg.strong_buy_min_event_fcn, 12) ? "strong" :
+                      eventFcn >= toNumber(rankingCfg.buy_min_event_fcn, 9) ? "buy" :
+                      eventFcn >= toNumber(rankingCfg.watch_min_event_fcn, 6) ? "watch" :
                       "avoid"
-                    )
                   });
                 }
               }
@@ -347,55 +309,6 @@ function runSimulation(cleanPool, config) {
       }
     }
   }
-
-  results.sort((a, b) => toNumber(b.event_fcn, -999) - toNumber(a.event_fcn, -999));
-  return results;
-}
-
-                  // M8 預留
-                  const fairRate = calcFairRateFallback(fcn);
-                  const fairGap = Number.isFinite(fairRate)
-                    ? round(toNumber(rate, 0) - fairRate, 2)
-                    : null;
-
-                  const healthPct = calcHealthPct(fcn);
-
-                  results.push({
-                    ...fcn,
-                    scenario_name: safeText(scenario["名稱"], "未命名情境"),
-                    scenario_comment: safeText(scenario["說明"], ""),
-                    scenario_type: safeText(scenario["類型"], ""),
-                    scenario_goal: scenario["目標"] || null,
-
-                    basket_size: toNumber(basketSize, 0),
-                    simulation_rate: toNumber(rate, 0),
-                    tenor: toNumber(tenor, 0),
-
-                    m3_score: toNumber(fcn.event_fcn, 0),
-
-                    fair_rate: fairRate,
-                    fair_gap: fairGap,
-                    fair_flag: getFairFlag(fairGap),
-
-                    health_pct: healthPct,
-                    preference_level: getPreferenceLevel(fcn.event_fcn),
-                    market_level: getMarketLevel(fairGap),
-
-                    suggestion_rank: (
-                      toNumber(fcn.event_fcn, 0) >= toNumber(rankingCfg.strong_buy_min_event_fcn, 12) ? "strong" :
-                      toNumber(fcn.event_fcn, 0) >= toNumber(rankingCfg.buy_min_event_fcn, 9) ? "buy" :
-                      toNumber(fcn.event_fcn, 0) >= toNumber(rankingCfg.watch_min_event_fcn, 6) ? "watch" :
-                      "avoid"
-                    )
-                  });
-                });
-              });
-            });
-          });
-        });
-      });
-    });
-  });
 
   results.sort((a, b) => toNumber(b.event_fcn, -999) - toNumber(a.event_fcn, -999));
   return results;
@@ -520,7 +433,6 @@ function buildFinalDecision(sims, topN = 5) {
   return sims
     .filter(isQualified)
     .sort((a, b) => {
-      // 先看 M3 主觀偏好，再看 gap，再看健康度
       const scoreA =
         toNumber(a.event_fcn, 0) * 1.0 +
         toNumber(a.fair_gap, 0) * 0.6 +
@@ -595,7 +507,7 @@ export async function runM3Engine() {
     .sort((a, b) => toNumber(b.event_stock_score, 0) - toNumber(a.event_stock_score, 0));
 
   const selection = splitByBucket(stockResults);
-  const simulationResults = runSimulation(selection.clean_pool, config);
+  const simulationResults = await runSimulation(selection.clean_pool, config);
 
   const summary = buildSummary(selection, simulationResults);
   const scenarioSummary = buildScenarioSummary(simulationResults);
