@@ -5,7 +5,7 @@
    定義：
    1. Pure Stock  = 公司品質 / 我願不願意接
    2. Snapshot    = 現在是不是甜甜價
-   3. Event Score = ShortSwing Score
+   3. Event Score = news impact (ShortSwing Score)
    4. Event Stock = Pure Stock + Snapshot + Event Score
    5. 本檔案只處理個股，不處理 FCN 結構
 ========================================== */
