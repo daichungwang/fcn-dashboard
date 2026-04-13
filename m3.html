@@ -537,7 +537,7 @@ M3.6 Blueprint
 
       return {
         ...stock,
-        m1_event_score: 0,
+         m1_event_score: toNumber(stock.event_score, 0),
         delta_stock_score: delta,
         bucket,
         why,
