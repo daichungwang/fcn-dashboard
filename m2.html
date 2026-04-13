@@ -3,20 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M2｜FCN 持倉健檢 V2.0</title>
+  <title>M2｜FCN 持倉健檢 + FCN Pool 管理</title>
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
       font-family: Arial, "Microsoft JhengHei", sans-serif;
       background: #f5f6f8;
       color: #111;
     }
+
     .page {
-      max-width: 1280px;
+      max-width: 1380px;
       margin: 0 auto;
-      padding: 20px 14px 50px;
+      padding: 20px 14px 60px;
     }
+
     h1 { margin: 0 0 10px; font-size: 32px; }
     h2 { margin: 0 0 12px; font-size: 24px; }
     h3 { margin: 0 0 10px; font-size: 18px; }
@@ -34,6 +37,7 @@
       border-radius: 16px;
       padding: 16px;
       margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
 
     .toolbar {
@@ -44,6 +48,14 @@
       margin-bottom: 14px;
     }
 
+    .sub-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin: 8px 0 12px;
+    }
+
     button {
       border: 0;
       border-radius: 10px;
@@ -52,12 +64,27 @@
       cursor: pointer;
       background: #111;
       color: #fff;
+      transition: .15s ease;
     }
+
+    button:hover { opacity: 0.92; }
+
     button.secondary { background: #666; }
+
     button.light {
       background: #e9ecef;
       color: #111;
       border: 1px solid #d8dde6;
+    }
+
+    button.warn {
+      background: #b26a00;
+      color: #fff;
+    }
+
+    button.danger {
+      background: #b71c1c;
+      color: #fff;
     }
 
     .note {
@@ -69,6 +96,7 @@
       line-height: 1.6;
       margin-top: 8px;
     }
+
     .muted { color: #666; }
 
     .summary-grid {
@@ -76,21 +104,25 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
     }
+
     .summary-box {
       border: 1px solid #e5e5e5;
       border-radius: 14px;
       padding: 14px;
       background: #fff;
     }
+
     .summary-label {
       color: #666;
       font-size: 13px;
       margin-bottom: 6px;
     }
+
     .summary-value {
       font-size: 28px;
       font-weight: 700;
     }
+
     .summary-sub {
       margin-top: 4px;
       color: #666;
@@ -102,6 +134,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 14px;
     }
+
     .zone-card {
       border-radius: 14px;
       padding: 14px;
@@ -109,6 +142,7 @@
       background: #fff;
       min-height: 220px;
     }
+
     .zone-danger { background: #fff5f5; border-color: #efb0b0; }
     .zone-watch { background: #fffaf0; border-color: #ecd7a3; }
     .zone-healthy { background: #f5fff7; border-color: #b9e2c0; }
@@ -118,6 +152,7 @@
       font-weight: 700;
       margin-bottom: 6px;
     }
+
     .zone-meta {
       font-size: 13px;
       color: #555;
@@ -131,6 +166,7 @@
       background: #fff;
       margin-top: 10px;
     }
+
     .fcn-head {
       display: flex;
       justify-content: space-between;
@@ -138,10 +174,12 @@
       align-items: flex-start;
       margin-bottom: 6px;
     }
+
     .fcn-id {
       font-size: 16px;
       font-weight: 700;
     }
+
     .fcn-line {
       margin: 3px 0;
       font-size: 14px;
@@ -166,14 +204,17 @@
       line-height: 1.6;
       border: 1px solid #ddd;
     }
+
     .decision-red {
       background: #fff1f1;
       border-color: #efb0b0;
     }
+
     .decision-yellow {
       background: #fffaf0;
       border-color: #ecd7a3;
     }
+
     .decision-green {
       background: #f3fff5;
       border-color: #b9e2c0;
@@ -188,17 +229,26 @@
       border: 1px solid #ddd;
       background: #fafafa;
     }
+
     .pill-danger {
       background: #fff0f0;
       border-color: #f1b5b5;
     }
+
     .pill-watch {
       background: #fff7e8;
       border-color: #f0d298;
     }
+
     .pill-healthy {
       background: #ecfff1;
       border-color: #a9e2b4;
+    }
+
+    .pill-deleted {
+      background: #f3f3f3;
+      border-color: #ccc;
+      color: #666;
     }
 
     .expand-btn {
@@ -214,19 +264,20 @@
       border-top: 1px dashed #ddd;
       padding-top: 10px;
     }
-    .detail-box.show {
-      display: block;
-    }
+
+    .detail-box.show { display: block; }
 
     .table-wrap {
       width: 100%;
       overflow-x: auto;
     }
+
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 14px;
     }
+
     th, td {
       text-align: left;
       padding: 10px 8px;
@@ -234,11 +285,15 @@
       vertical-align: top;
       white-space: nowrap;
     }
+
     th {
       font-size: 13px;
       color: #666;
       font-weight: 700;
       background: #fafafa;
+      position: sticky;
+      top: 0;
+      z-index: 1;
     }
 
     .stock-danger-row { background: #fff7f7; }
@@ -278,9 +333,8 @@
       padding-top: 8px;
       border-top: 1px dashed #ddd;
     }
-    .sub-detail.show {
-      display: block;
-    }
+
+    .sub-detail.show { display: block; }
 
     .mini-title {
       font-size: 14px;
@@ -314,11 +368,128 @@
     .risk-watch { color: #b26a00; font-weight: 700; }
     .risk-safe { color: #2e7d32; font-weight: 700; }
 
+    .manager-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1.35fr;
+      gap: 14px;
+    }
+
+    .manager-panel {
+      border: 1px solid #e5e5e5;
+      border-radius: 14px;
+      padding: 14px;
+      background: #fff;
+      min-height: 300px;
+    }
+
+    .manager-list {
+      max-height: 900px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .manager-item {
+      border: 1px solid #e9e9e9;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: #fafafa;
+    }
+
+    .manager-item.active-item {
+      border-color: #111;
+      background: #f3f7ff;
+    }
+
+    .manager-item-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .manager-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 12px;
+    }
+
+    .form-full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 13px;
+      color: #444;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      border: 1px solid #d9dde5;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      background: #fff;
+      color: #111;
+      font-family: inherit;
+    }
+
+    .field textarea {
+      min-height: 88px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    .hint {
+      margin-top: 4px;
+      color: #777;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .section-title-inline {
+      margin: 14px 0 8px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .json-preview {
+      background: #0d1117;
+      color: #d6e2f0;
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.55;
+      overflow: auto;
+      max-height: 260px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    @media (max-width: 1100px) {
+      .manager-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 980px) {
       .summary-grid { grid-template-columns: 1fr 1fr; }
       .zone-grid { grid-template-columns: 1fr; }
       .stock-analysis-grid { grid-template-columns: 1fr; }
       .deep-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 680px) {
@@ -326,29 +497,38 @@
       h2 { font-size: 20px; }
       .summary-grid { grid-template-columns: 1fr; }
       .toolbar { flex-direction: column; align-items: stretch; }
+      .sub-toolbar { flex-direction: column; align-items: stretch; }
       button { width: 100%; }
-      .list-box button, .zone-card button, .fcn-card button { width: auto; }
+      .manager-actions button,
+      .list-box button,
+      .zone-card button,
+      .fcn-card button {
+        width: auto;
+      }
     }
   </style>
 </head>
 <body>
   <div class="page">
-    <h1>M2｜FCN 持倉健檢 V2.0</h1>
+    <h1>M2｜FCN 持倉健檢 + FCN Pool 管理</h1>
     <div class="subtitle">
       只看 <b>active</b> 持倉。<br>
-      重點強化：<b>積極處理 / 持續追蹤</b> 區的深度決策資訊。
+      今日重點：<b>一鍵展開收合</b>、<b>FCN Pool 新增 / 修改 / 刪除</b>。
     </div>
 
     <div class="card">
       <div class="toolbar">
+        <button id="backMilestone2Btn" class="light">← 回 Milestone 2</button>
         <button id="runHealthBtn">執行 M2 Health Engine</button>
         <button class="secondary" id="refreshBtn">刷新 M2 畫面</button>
+        <button class="light" id="loadPoolBtn">載入 FCN Pool</button>
+        <button class="secondary" id="exportPoolBtn">匯出 fcn_pool.json</button>
       </div>
       <div id="runtimeMeta" class="muted">尚未執行 M2 Health Engine</div>
       <div class="note">
-        M2 會讀：
-        <b>fcn_pool.json</b>、<b>market_runtime.json</b>、<b>pool30.json</b>，
-        並只取 <b>status = active</b> 的 FCN。
+        M2 會讀：<b>data/fcn_pool.json</b>、<b>data/market_runtime.json</b>、<b>data/pool30.json</b>，
+        並只取 <b>status = active</b> 的 FCN。<br>
+        FCN Pool 管理區支援你目前的欄位格式，匯出後可直接覆蓋 <b>data/fcn_pool.json</b>。
       </div>
     </div>
 
@@ -359,12 +539,183 @@
 
     <div class="card">
       <h2>2. 持倉分區</h2>
+      <div class="sub-toolbar">
+        <button class="light" onclick="expandAllZoneFCNs()">全部展開</button>
+        <button class="light" onclick="collapseAllZoneFCNs()">全部收合</button>
+        <button class="light" onclick="expandDangerWatchOnly()">只展開 Danger / Watch</button>
+        <button class="light" onclick="toggleHealthyZoneGlobal()">健康區展開 / 收合</button>
+      </div>
       <div id="zoneBlock"></div>
     </div>
 
     <div class="card">
       <h2>5. 股票風險分析</h2>
+      <div class="sub-toolbar">
+        <button class="light" onclick="expandAllStockBlocks()">全部展開</button>
+        <button class="light" onclick="collapseAllStockBlocks()">全部收合</button>
+        <button class="light" onclick="expandDangerStocksOnly()">只展開跌破 KI</button>
+        <button class="light" onclick="expandWatchStocksOnly()">只展開跌破 Strike</button>
+        <button class="light" onclick="collapseAllStockFCNDetails()">收合所有 FCN 明細</button>
+      </div>
       <div id="stockAnalysisBlock"></div>
+    </div>
+
+    <div class="card">
+      <h2>6. FCN Pool 管理</h2>
+      <div class="toolbar">
+        <button id="newFCNBtn" class="light">新增 FCN</button>
+        <button id="saveFCNBtn">儲存 FCN</button>
+        <button id="duplicateFCNBtn" class="secondary">複製目前 FCN</button>
+        <button id="softDeleteFCNBtn" class="warn">刪除 FCN（Soft Delete）</button>
+        <button id="resetFormBtn" class="light">清空表單</button>
+      </div>
+
+      <div class="manager-grid">
+        <div class="manager-panel">
+          <h3>6.1 FCN 清單</h3>
+          <div class="sub-toolbar">
+            <button class="light" onclick="setManagerFilter('all')">全部</button>
+            <button class="light" onclick="setManagerFilter('active')">只看 Active</button>
+            <button class="light" onclick="setManagerFilter('closed')">只看 Closed</button>
+            <button class="light" onclick="setManagerFilter('deleted')">只看 Deleted</button>
+          </div>
+          <div id="managerListMeta" class="muted" style="margin-bottom:10px;">尚未載入 FCN Pool</div>
+          <div id="managerList" class="manager-list"></div>
+        </div>
+
+        <div class="manager-panel">
+          <h3>6.2 FCN 編輯表單</h3>
+          <div id="managerFormMeta" class="muted" style="margin-bottom:10px;">
+            尚未選擇 FCN，按「新增 FCN」可建立新資料
+          </div>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="fcn_date">date</label>
+              <input id="fcn_date" type="date" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_id">fcn_id</label>
+              <input id="fcn_id" type="text" placeholder="例如：FCN581G" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_status">status</label>
+              <select id="fcn_status">
+                <option value="active">active</option>
+                <option value="closed">closed</option>
+                <option value="deleted">deleted</option>
+                <option value="draft">draft</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="fcn_currency">currency</label>
+              <input id="fcn_currency" type="text" value="USD" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_amt">amt</label>
+              <input id="fcn_amt" type="number" step="0.01" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_bank">bank</label>
+              <input id="fcn_bank" type="text" placeholder="例如：法國外貿銀行" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_tenor">tenor（月）</label>
+              <input id="fcn_tenor" type="number" step="1" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_rate">rate (%)</label>
+              <input id="fcn_rate" type="number" step="0.01" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_autocall">autocall (%)</label>
+              <input id="fcn_autocall" type="number" step="0.01" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_strike">strike (%)</label>
+              <input id="fcn_strike" type="number" step="0.01" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_ki">ki (%)</label>
+              <input id="fcn_ki" type="number" step="0.01" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_eki">eki</label>
+              <select id="fcn_eki">
+                <option value="false">false (AKI)</option>
+                <option value="true">true (EKI)</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="fcn_has_position">has_position</label>
+              <select id="fcn_has_position">
+                <option value="true">true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="fcn_is_portfolio">is_portfolio</label>
+              <select id="fcn_is_portfolio">
+                <option value="true">true</option>
+                <option value="false">false</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="fcn_decision_flag">decision_flag</label>
+              <input id="fcn_decision_flag" type="text" placeholder="例如：manual" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_created_time">created_time</label>
+              <input id="fcn_created_time" type="datetime-local" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_entry_time">entry_time</label>
+              <input id="fcn_entry_time" type="datetime-local" />
+            </div>
+
+            <div class="field">
+              <label for="fcn_exit_time">exit_time</label>
+              <input id="fcn_exit_time" type="datetime-local" />
+            </div>
+
+            <div class="field form-full">
+              <label for="fcn_basket">basket</label>
+              <textarea id="fcn_basket" placeholder="例如：AVGO,NVDA,TSLA,TSM"></textarea>
+              <div class="hint">請用逗號分隔，輸入後會轉成陣列。</div>
+            </div>
+
+            <div class="field form-full">
+              <label for="fcn_entry_prices">entry_prices</label>
+              <textarea id="fcn_entry_prices" placeholder="AVGO=167.5561&#10;NVDA=109.1913&#10;TSLA=269.6951&#10;TSM=167.7856"></textarea>
+              <div class="hint">每行一檔：股票代號=價格</div>
+            </div>
+
+            <div class="field form-full">
+              <label for="fcn_note">note</label>
+              <textarea id="fcn_note" placeholder="例如：標的價格=VWAP"></textarea>
+            </div>
+          </div>
+
+          <div class="section-title-inline">6.3 即時 JSON 預覽</div>
+          <div id="jsonPreview" class="json-preview">{}</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -372,10 +723,17 @@
     import { runM2HealthEngine, buildFCNMeta, limitDisplay } from "./js/core/m2_health_engine_v1.js";
 
     const M2_HEALTH_CACHE_KEY = "m2_health_cache_v1";
+    const M2_POOL_EDITOR_KEY = "m2_pool_editor_v1";
+
     let showAllHealthy = false;
+
     const expandedFCNIds = new Set();
     const expandedStockIds = new Set();
     const expandedStockFCNIds = new Set();
+
+    let editableFCNPool = [];
+    let currentEditingFCNId = null;
+    let managerFilter = "all";
 
     function toNumber(v, fallback = 0) {
       const n = Number(v);
@@ -412,6 +770,23 @@
       localStorage.setItem(M2_HEALTH_CACHE_KEY, JSON.stringify(data));
     }
 
+    function writePoolEditorCache() {
+      localStorage.setItem(M2_POOL_EDITOR_KEY, JSON.stringify({
+        editableFCNPool,
+        currentEditingFCNId,
+        managerFilter
+      }));
+    }
+
+    function readPoolEditorCache() {
+      try {
+        const raw = localStorage.getItem(M2_POOL_EDITOR_KEY);
+        return raw ? JSON.parse(raw) : null;
+      } catch {
+        return null;
+      }
+    }
+
     function healthLabel(v) {
       if (v === "danger") return "積極處理";
       if (v === "watch") return "持續追蹤";
@@ -422,6 +797,13 @@
       if (v === "danger") return "pill pill-danger";
       if (v === "watch") return "pill pill-watch";
       return "pill pill-healthy";
+    }
+
+    function getStatusPill(status) {
+      if (status === "active") return `<span class="pill pill-healthy">active</span>`;
+      if (status === "closed") return `<span class="pill pill-watch">closed</span>`;
+      if (status === "deleted") return `<span class="pill pill-deleted">deleted</span>`;
+      return `<span class="pill">${status || "-"}</span>`;
     }
 
     function stockRowClass(v) {
@@ -510,6 +892,167 @@
       renderM2();
     };
 
+    window.expandAllZoneFCNs = function() {
+      const cache = readCache();
+      if (!cache || !cache.fcns) return;
+
+      expandedFCNIds.clear();
+
+      ["danger", "watch", "healthy"].forEach(code => {
+        const rows = cache[code] || [];
+        rows.forEach((f, idx) => {
+          expandedFCNIds.add(`${code}_${idx}_${f.fcn_id}`);
+        });
+      });
+
+      showAllHealthy = true;
+      renderM2();
+    };
+
+    window.collapseAllZoneFCNs = function() {
+      expandedFCNIds.clear();
+      showAllHealthy = false;
+      renderM2();
+    };
+
+    window.expandDangerWatchOnly = function() {
+      const cache = readCache();
+      if (!cache || !cache.fcns) return;
+
+      expandedFCNIds.clear();
+
+      ["danger", "watch"].forEach(code => {
+        const rows = cache[code] || [];
+        rows.forEach((f, idx) => {
+          expandedFCNIds.add(`${code}_${idx}_${f.fcn_id}`);
+        });
+      });
+
+      showAllHealthy = false;
+      renderM2();
+    };
+
+    window.toggleHealthyZoneGlobal = function() {
+      showAllHealthy = !showAllHealthy;
+      renderM2();
+    };
+
+    window.expandAllStockBlocks = function() {
+      const cache = readCache();
+      if (!cache || !cache.stockMap) return;
+
+      expandedStockIds.clear();
+      expandedStockFCNIds.clear();
+
+      const dangerRows = (cache.stockMap || []).filter(x => x.danger > 0);
+      const watchRows = (cache.stockMap || []).filter(x => x.watch > 0);
+      const exposureRows = cache.stockMap || [];
+
+      dangerRows.forEach((info, idx) => {
+        const stockId = `danger_stock_${idx}_${info.symbol}`;
+        expandedStockIds.add(stockId);
+        (info.details || []).forEach((d, subIdx) => {
+          expandedStockFCNIds.add(`${stockId}_fcn_${subIdx}_${d.fcn_id}`);
+        });
+      });
+
+      watchRows.forEach((info, idx) => {
+        const stockId = `watch_stock_${idx}_${info.symbol}`;
+        expandedStockIds.add(stockId);
+        (info.details || []).forEach((d, subIdx) => {
+          expandedStockFCNIds.add(`${stockId}_fcn_${subIdx}_${d.fcn_id}`);
+        });
+      });
+
+      exposureRows.forEach((info, idx) => {
+        const blockId = `stock_attr_${idx}_${info.symbol}`;
+        expandedStockIds.add(blockId);
+        (info.details || []).forEach((d, subIdx) => {
+          expandedStockFCNIds.add(`${blockId}_fcn_${subIdx}_${d.fcn_id}`);
+        });
+      });
+
+      renderM2();
+    };
+
+    window.collapseAllStockBlocks = function() {
+      expandedStockIds.clear();
+      expandedStockFCNIds.clear();
+      renderM2();
+    };
+
+    window.expandDangerStocksOnly = function() {
+      const cache = readCache();
+      if (!cache || !cache.stockMap) return;
+
+      expandedStockIds.clear();
+      expandedStockFCNIds.clear();
+
+      const dangerRows = (cache.stockMap || []).filter(x => x.danger > 0);
+
+      dangerRows.forEach((info, idx) => {
+        const stockId = `danger_stock_${idx}_${info.symbol}`;
+        expandedStockIds.add(stockId);
+        (info.details || []).forEach((d, subIdx) => {
+          expandedStockFCNIds.add(`${stockId}_fcn_${subIdx}_${d.fcn_id}`);
+        });
+      });
+
+      renderM2();
+    };
+
+    window.expandWatchStocksOnly = function() {
+      const cache = readCache();
+      if (!cache || !cache.stockMap) return;
+
+      expandedStockIds.clear();
+      expandedStockFCNIds.clear();
+
+      const watchRows = (cache.stockMap || []).filter(x => x.watch > 0);
+
+      watchRows.forEach((info, idx) => {
+        const stockId = `watch_stock_${idx}_${info.symbol}`;
+        expandedStockIds.add(stockId);
+        (info.details || []).forEach((d, subIdx) => {
+          expandedStockFCNIds.add(`${stockId}_fcn_${subIdx}_${d.fcn_id}`);
+        });
+      });
+
+      renderM2();
+    };
+
+    window.collapseAllStockFCNDetails = function() {
+      expandedStockFCNIds.clear();
+      renderM2();
+    };
+
+    window.setManagerFilter = function(filter) {
+      managerFilter = filter;
+      writePoolEditorCache();
+      renderFCNManager();
+    };
+
+    window.editFCN = function(fcnId) {
+      const found = editableFCNPool.find(x => x.fcn_id === fcnId);
+      if (!found) return;
+      currentEditingFCNId = fcnId;
+      fillForm(found);
+      writePoolEditorCache();
+      renderFCNManager();
+    };
+
+    window.softDeleteFCNById = function(fcnId) {
+      const found = editableFCNPool.find(x => x.fcn_id === fcnId);
+      if (!found) return;
+      found.status = "deleted";
+      if (currentEditingFCNId === fcnId) {
+        fillForm(found);
+      }
+      writePoolEditorCache();
+      renderFCNManager();
+      alert(`FCN ${fcnId} 已標記為 deleted`);
+    };
+
     function fmtTrend(v) {
       if (v == null || !Number.isFinite(Number(v))) return "-";
       const n = Number(v);
@@ -551,44 +1094,6 @@
       }
 
       return { trendLabel, trendNote };
-    }
-
-    function buildStockDetailTable(stocks = []) {
-      return `
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>股票</th>
-                <th>類型</th>
-                <th>狀態</th>
-                <th>現價</th>
-                <th>KI距離</th>
-                <th>Pure</th>
-                <th>Event</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${stocks.map(s => `
-                <tr class="${stockRowClass(s.stock_health)}">
-                  <td><b>${s.symbol}</b></td>
-                  <td>${getCategoryLabel(s.category)}</td>
-                  <td><span class="${healthPillClass(s.stock_health)}">${healthLabel(s.stock_health)}</span></td>
-                  <td>${fmt(s.price_now)}</td>
-                  <td>${fmtPct(s.dist_to_ki_pct)}</td>
-                  <td>${s.pure_stock ?? "-"}</td>
-                  <td>${s.event_stock ?? "-"}</td>
-                </tr>
-                <tr>
-                  <td colspan="7" style="white-space: normal; color:#666;">
-                    ${s.trend_note || ""}
-                  </td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
-        </div>
-      `;
     }
 
     function renderStockDetailCard(s, fcn) {
@@ -830,7 +1335,7 @@
         <div class="zone-card ${zoneClass}">
           <div class="zone-title">${title}</div>
           <div class="zone-meta">
-            ${rows.length} 檔${code === "healthy" && !showAllHealthy && allRows.length > rows.length ? `（顯示前 ${rows.length} 檔）` : ""} ｜ 
+            ${rows.length} 檔${code === "healthy" && !showAllHealthy && allRows.length > rows.length ? `（顯示前 ${rows.length} 檔）` : ""} ｜
             USD ${fmt(code === "healthy" && !showAllHealthy ? zoneAmt : allAmt, 0)}
           </div>
 
@@ -859,13 +1364,13 @@
     }
 
     function renderStockFCNDetailCard(d, subId, subOpen) {
-      const worst = d.worst_of || "UNKNOWN";
-      const worstStock = (d.components || []).find(s => s.symbol === worst) || {};
+      const worst = d.fcn?.worst_of || d.stock?.symbol || "UNKNOWN";
+      const stock = d.stock || {};
 
-      const now = toNumber(worstStock.price, 0);
-      const entry = toNumber(worstStock.entry_price ?? d.strike_price, 0);
-      const strike = toNumber(d.strike_price, 0);
-      const ki = toNumber(d.ki_price, 0);
+      const now = toNumber(stock.price_now, 0);
+      const entry = toNumber(stock.entry_price, 0);
+      const strike = toNumber(stock.strike_price, 0);
+      const ki = toNumber(stock.ki_price, 0);
 
       const distKI = ki ? ((now - ki) / ki * 100).toFixed(2) : "-";
       const distStrike = strike ? ((now - strike) / strike * 100).toFixed(2) : "-";
@@ -892,46 +1397,46 @@
           <div class="mini-title">${d.fcn_id}</div>
 
           <div class="item-line">Snapshot Loss：
-            <span style="color:${getPLColor(d.stock.snapshot_loss_amt)}">
-              ${fmtAmt(d.stock.snapshot_loss_amt)}
+            <span style="color:${getPLColor(stock.snapshot_loss_amt)}">
+              ${fmtAmt(stock.snapshot_loss_amt)}
             </span>
           </div>
 
           <div class="item-line">Snapshot Interest：
             <span style="color:#2e7d32">
-              ${fmtAmt(d.stock.snapshot_interest_amt)}
+              ${fmtAmt(stock.snapshot_interest_amt)}
             </span>
           </div>
 
           <div class="item-line"><b>Snapshot Balance：</b>
-            <span style="color:${getPLColor(d.stock.snapshot_balance_amt)}">
-              ${fmtAmt(d.stock.snapshot_balance_amt)}
+            <span style="color:${getPLColor(stock.snapshot_balance_amt)}">
+              ${fmtAmt(stock.snapshot_balance_amt)}
             </span>
           </div>
 
           <div class="item-line">End Loss：
-            <span style="color:${getPLColor(d.stock.end_loss_amt)}">
-              ${fmtAmt(d.stock.end_loss_amt)}
+            <span style="color:${getPLColor(stock.end_loss_amt)}">
+              ${fmtAmt(stock.end_loss_amt)}
             </span>
           </div>
 
           <div class="item-line">End Interest：
             <span style="color:#2e7d32">
-              ${fmtAmt(d.stock.end_interest_amt)}
+              ${fmtAmt(stock.end_interest_amt)}
             </span>
           </div>
 
           <div class="item-line"><b>End Net：</b>
-            <span style="color:${getPLColor(d.stock.end_balance_amt)}">
-              ${fmtAmt(d.stock.end_balance_amt)}
+            <span style="color:${getPLColor(stock.end_balance_amt)}">
+              ${fmtAmt(stock.end_balance_amt)}
             </span>
           </div>
 
-          <div class="item-line"><b>決策：</b>${d.stock.decision_label}</div>
+          <div class="item-line"><b>決策：</b>${stock.decision_label || "-"}</div>
 
           <hr/>
 
-          <div class="item-line"><b>📌 Worst-of：${worst}</b></div>
+          <div class="item-line"><b>📌 股票：${stock.symbol || worst}</b></div>
           <div class="item-line">現價：${now ? fmt(now, 2) : "-"}</div>
           <div class="item-line">進場價：${entry ? fmt(entry, 2) : "-"}</div>
           <div class="item-line">Strike：${strike ? fmt(strike, 2) : "-"}</div>
@@ -972,7 +1477,7 @@
                   <div class="item-line">Pure：${info.pure_stock ?? "-"} ｜ Event：${info.event_stock ?? "-"}</div>
                   <button class="light" onclick="toggleStockDetail('${stockId}')">${isOpen ? "收合" : "展開"}</button>
                   <div class="sub-detail ${isOpen ? "show" : ""}">
-                    ${info.details.map((d, subIdx) => {
+                    ${(info.details || []).map((d, subIdx) => {
                       const subId = `${stockId}_fcn_${subIdx}_${d.fcn_id}`;
                       const subOpen = expandedStockFCNIds.has(subId);
                       return renderStockFCNDetailCard(d, subId, subOpen);
@@ -996,7 +1501,7 @@
                   <div class="item-line">Pure：${info.pure_stock ?? "-"} ｜ Event：${info.event_stock ?? "-"}</div>
                   <button class="light" onclick="toggleStockDetail('${stockId}')">${isOpen ? "收合" : "展開"}</button>
                   <div class="sub-detail ${isOpen ? "show" : ""}">
-                    ${info.details.map((d, subIdx) => {
+                    ${(info.details || []).map((d, subIdx) => {
                       const subId = `${stockId}_fcn_${subIdx}_${d.fcn_id}`;
                       const subOpen = expandedStockFCNIds.has(subId);
                       return renderStockFCNDetailCard(d, subId, subOpen);
@@ -1044,7 +1549,7 @@
                       <td colspan="8" style="padding:0; border-bottom:1px solid #eee;">
                         <div class="sub-detail ${stockOpen ? "show" : ""}">
                           <div style="padding:10px;">
-                            ${info.details.map((d, subIdx) => {
+                            ${(info.details || []).map((d, subIdx) => {
                               const subId = `${blockId}_fcn_${subIdx}_${d.fcn_id}`;
                               const subOpen = expandedStockFCNIds.has(subId);
                               return renderStockFCNDetailCard(d, subId, subOpen);
@@ -1062,6 +1567,13 @@
       `;
     }
 
+    async function loadFCNPoolFromFile() {
+      const fcnPool = await fetch("./data/fcn_pool.json").then(r => r.json());
+      editableFCNPool = JSON.parse(JSON.stringify(fcnPool || []));
+      writePoolEditorCache();
+      renderFCNManager();
+    }
+
     async function runM2() {
       try {
         const [fcnPool, marketRuntime, pool30, runtimeCache] = await Promise.all([
@@ -1076,6 +1588,10 @@
             }
           })()
         ]);
+
+        editableFCNPool = JSON.parse(JSON.stringify(fcnPool || []));
+        writePoolEditorCache();
+        renderFCNManager();
 
         const marketMerged = {};
         Object.keys(marketRuntime || {}).forEach(sym => {
@@ -1125,10 +1641,345 @@
       document.getElementById("stockAnalysisBlock").innerHTML = buildStockAnalysis(cache);
     }
 
+    function createEmptyFCN() {
+      const now = new Date();
+      const localISODate = now.toISOString().slice(0, 10);
+      const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+        .toISOString()
+        .slice(0, 16);
+
+      return {
+        date: localISODate,
+        fcn_id: "",
+        basket: [],
+        tenor: 6,
+        rate: 0,
+        autocall: 100,
+        strike: 0,
+        ki: 0,
+        eki: false,
+        bank: "",
+        has_position: true,
+        amt: 0,
+        currency: "USD",
+        status: "active",
+        created_time: localDateTime,
+        entry_time: localDateTime,
+        exit_time: "",
+        decision_flag: "manual",
+        is_portfolio: true,
+        note: "",
+        entry_prices: {}
+      };
+    }
+
+    function fillForm(fcn) {
+      document.getElementById("fcn_date").value = fcn.date || "";
+      document.getElementById("fcn_id").value = fcn.fcn_id || "";
+      document.getElementById("fcn_status").value = fcn.status || "active";
+      document.getElementById("fcn_currency").value = fcn.currency || "USD";
+      document.getElementById("fcn_amt").value = fcn.amt ?? "";
+      document.getElementById("fcn_bank").value = fcn.bank || "";
+      document.getElementById("fcn_tenor").value = fcn.tenor ?? "";
+      document.getElementById("fcn_rate").value = fcn.rate ?? "";
+      document.getElementById("fcn_autocall").value = fcn.autocall ?? "";
+      document.getElementById("fcn_strike").value = fcn.strike ?? "";
+      document.getElementById("fcn_ki").value = fcn.ki ?? "";
+      document.getElementById("fcn_eki").value = String(Boolean(fcn.eki));
+      document.getElementById("fcn_has_position").value = String(Boolean(fcn.has_position));
+      document.getElementById("fcn_is_portfolio").value = String(Boolean(fcn.is_portfolio));
+      document.getElementById("fcn_decision_flag").value = fcn.decision_flag || "";
+      document.getElementById("fcn_created_time").value = normalizeDateTimeLocalValue(fcn.created_time);
+      document.getElementById("fcn_entry_time").value = normalizeDateTimeLocalValue(fcn.entry_time);
+      document.getElementById("fcn_exit_time").value = normalizeDateTimeLocalValue(fcn.exit_time);
+      document.getElementById("fcn_basket").value = Array.isArray(fcn.basket) ? fcn.basket.join(",") : "";
+      document.getElementById("fcn_entry_prices").value = objectToEntryPriceLines(fcn.entry_prices || {});
+      document.getElementById("fcn_note").value = fcn.note || "";
+
+      currentEditingFCNId = fcn.fcn_id || null;
+      document.getElementById("managerFormMeta").innerHTML =
+        currentEditingFCNId
+          ? `目前編輯：<b>${currentEditingFCNId}</b>`
+          : `目前為新增模式`;
+
+      updateJsonPreview();
+    }
+
+    function clearForm() {
+      fillForm(createEmptyFCN());
+      currentEditingFCNId = null;
+      document.getElementById("managerFormMeta").innerHTML = "目前為新增模式";
+      updateJsonPreview();
+    }
+
+    function normalizeDateTimeLocalValue(v) {
+      if (!v) return "";
+      return String(v).slice(0, 16);
+    }
+
+    function parseBoolean(v) {
+      return String(v) === "true";
+    }
+
+    function parseBasketText(text) {
+      return String(text || "")
+        .split(",")
+        .map(x => x.trim().toUpperCase())
+        .filter(Boolean);
+    }
+
+    function parseEntryPriceLines(text) {
+      const lines = String(text || "")
+        .split("\n")
+        .map(x => x.trim())
+        .filter(Boolean);
+
+      const obj = {};
+      for (const line of lines) {
+        const [symbolRaw, valueRaw] = line.split("=");
+        const symbol = String(symbolRaw || "").trim().toUpperCase();
+        const value = Number(String(valueRaw || "").trim());
+        if (!symbol) continue;
+        obj[symbol] = Number.isFinite(value) ? value : 0;
+      }
+      return obj;
+    }
+
+    function objectToEntryPriceLines(obj) {
+      return Object.entries(obj || {})
+        .map(([k, v]) => `${k}=${v}`)
+        .join("\n");
+    }
+
+    function getFormData() {
+      const basket = parseBasketText(document.getElementById("fcn_basket").value);
+      const entry_prices = parseEntryPriceLines(document.getElementById("fcn_entry_prices").value);
+
+      return {
+        date: document.getElementById("fcn_date").value || "",
+        fcn_id: document.getElementById("fcn_id").value.trim(),
+        basket,
+        tenor: toNumber(document.getElementById("fcn_tenor").value, 0),
+        rate: toNumber(document.getElementById("fcn_rate").value, 0),
+        autocall: toNumber(document.getElementById("fcn_autocall").value, 0),
+        strike: toNumber(document.getElementById("fcn_strike").value, 0),
+        ki: toNumber(document.getElementById("fcn_ki").value, 0),
+        eki: parseBoolean(document.getElementById("fcn_eki").value),
+        bank: document.getElementById("fcn_bank").value.trim(),
+        has_position: parseBoolean(document.getElementById("fcn_has_position").value),
+        amt: toNumber(document.getElementById("fcn_amt").value, 0),
+        currency: document.getElementById("fcn_currency").value.trim() || "USD",
+        status: document.getElementById("fcn_status").value,
+        created_time: document.getElementById("fcn_created_time").value || "",
+        entry_time: document.getElementById("fcn_entry_time").value || "",
+        exit_time: document.getElementById("fcn_exit_time").value || "",
+        decision_flag: document.getElementById("fcn_decision_flag").value.trim() || "manual",
+        is_portfolio: parseBoolean(document.getElementById("fcn_is_portfolio").value),
+        note: document.getElementById("fcn_note").value,
+        entry_prices
+      };
+    }
+
+    function validateFCN(obj) {
+      if (!obj.fcn_id) {
+        alert("fcn_id 不可空白");
+        return false;
+      }
+      if (!obj.basket.length) {
+        alert("basket 不可空白");
+        return false;
+      }
+      return true;
+    }
+
+    function saveFCN() {
+      const data = getFormData();
+      if (!validateFCN(data)) return;
+
+      const existsIndex = editableFCNPool.findIndex(x => x.fcn_id === data.fcn_id);
+
+      if (currentEditingFCNId && currentEditingFCNId !== data.fcn_id) {
+        const duplicated = editableFCNPool.find(x => x.fcn_id === data.fcn_id);
+        if (duplicated) {
+          alert("新的 fcn_id 已存在，請換一個");
+          return;
+        }
+      }
+
+      if (existsIndex >= 0) {
+        editableFCNPool[existsIndex] = data;
+      } else {
+        editableFCNPool.unshift(data);
+      }
+
+      currentEditingFCNId = data.fcn_id;
+      writePoolEditorCache();
+      renderFCNManager();
+      fillForm(data);
+      alert(`FCN ${data.fcn_id} 已儲存`);
+    }
+
+    function duplicateCurrentFCN() {
+      const data = getFormData();
+      if (!validateFCN(data)) return;
+
+      const dup = {
+        ...data,
+        fcn_id: `${data.fcn_id}_COPY`,
+        status: "draft"
+      };
+
+      editableFCNPool.unshift(dup);
+      currentEditingFCNId = dup.fcn_id;
+      writePoolEditorCache();
+      renderFCNManager();
+      fillForm(dup);
+      alert(`已複製成 ${dup.fcn_id}`);
+    }
+
+    function softDeleteCurrentFCN() {
+      const currentId = document.getElementById("fcn_id").value.trim();
+      if (!currentId) {
+        alert("目前表單沒有 fcn_id");
+        return;
+      }
+      const found = editableFCNPool.find(x => x.fcn_id === currentId);
+      if (!found) {
+        alert("FCN Pool 中找不到這筆資料");
+        return;
+      }
+      found.status = "deleted";
+      writePoolEditorCache();
+      renderFCNManager();
+      fillForm(found);
+      alert(`FCN ${currentId} 已標記為 deleted`);
+    }
+
+    function updateJsonPreview() {
+      const data = getFormData();
+      document.getElementById("jsonPreview").textContent = JSON.stringify(data, null, 2);
+    }
+
+    function getFilteredManagerList() {
+      if (managerFilter === "all") return editableFCNPool;
+      return editableFCNPool.filter(x => (x.status || "") === managerFilter);
+    }
+
+    function renderFCNManager() {
+      const list = getFilteredManagerList();
+      const managerList = document.getElementById("managerList");
+      const managerListMeta = document.getElementById("managerListMeta");
+
+      managerListMeta.innerHTML = `目前共 <b>${editableFCNPool.length}</b> 筆，篩選後 <b>${list.length}</b> 筆`;
+
+      if (!editableFCNPool.length) {
+        managerList.innerHTML = `<div class="muted">尚未載入 FCN Pool，請按上方「載入 FCN Pool」或「執行 M2 Health Engine」</div>`;
+        return;
+      }
+
+      managerList.innerHTML = list.map(item => {
+        const isActiveItem = currentEditingFCNId === item.fcn_id;
+        return `
+          <div class="manager-item ${isActiveItem ? "active-item" : ""}">
+            <div class="manager-item-title">${item.fcn_id || "(未命名)"}</div>
+            <div class="item-line">Basket：${(item.basket || []).join(" / ") || "-"}</div>
+            <div class="item-line">Amt：${item.currency || "USD"} ${fmt(item.amt, 0)}</div>
+            <div class="item-line">Tenor：${item.tenor ?? "-"}M ｜ Rate：${item.rate ?? "-"}% ｜ KI：${item.ki ?? "-"}% ｜ Strike：${item.strike ?? "-"}%</div>
+            <div class="item-line">Status：${getStatusPill(item.status)}</div>
+            <div class="manager-actions">
+              <button class="light" onclick="editFCN('${item.fcn_id}')">編輯</button>
+              <button class="warn" onclick="softDeleteFCNById('${item.fcn_id}')">刪除</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function exportPoolJson() {
+      if (!editableFCNPool.length) {
+        alert("目前沒有可匯出的 FCN Pool");
+        return;
+      }
+
+      const sorted = [...editableFCNPool].sort((a, b) => {
+        const da = String(a.date || "");
+        const db = String(b.date || "");
+        return db.localeCompare(da);
+      });
+
+      const blob = new Blob([JSON.stringify(sorted, null, 2)], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "fcn_pool.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    document.getElementById("backMilestone2Btn").addEventListener("click", () => {
+      window.location.href = "./milestone2_index.html";
+    });
+
     document.getElementById("runHealthBtn").addEventListener("click", runM2);
     document.getElementById("refreshBtn").addEventListener("click", renderM2);
 
-    renderM2();
+    document.getElementById("loadPoolBtn").addEventListener("click", async () => {
+      try {
+        await loadFCNPoolFromFile();
+        alert("FCN Pool 載入完成");
+      } catch (err) {
+        console.error(err);
+        alert("載入 FCN Pool 失敗：" + err.message);
+      }
+    });
+
+    document.getElementById("newFCNBtn").addEventListener("click", () => {
+      clearForm();
+    });
+
+    document.getElementById("saveFCNBtn").addEventListener("click", saveFCN);
+    document.getElementById("duplicateFCNBtn").addEventListener("click", duplicateCurrentFCN);
+    document.getElementById("softDeleteFCNBtn").addEventListener("click", softDeleteCurrentFCN);
+    document.getElementById("resetFormBtn").addEventListener("click", clearForm);
+    document.getElementById("exportPoolBtn").addEventListener("click", exportPoolJson);
+
+    [
+      "fcn_date","fcn_id","fcn_status","fcn_currency","fcn_amt","fcn_bank",
+      "fcn_tenor","fcn_rate","fcn_autocall","fcn_strike","fcn_ki","fcn_eki",
+      "fcn_has_position","fcn_is_portfolio","fcn_decision_flag",
+      "fcn_created_time","fcn_entry_time","fcn_exit_time",
+      "fcn_basket","fcn_entry_prices","fcn_note"
+    ].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener("input", updateJsonPreview);
+      el.addEventListener("change", updateJsonPreview);
+    });
+
+    (function init() {
+      const editorCache = readPoolEditorCache();
+      if (editorCache?.editableFCNPool?.length) {
+        editableFCNPool = editorCache.editableFCNPool;
+        currentEditingFCNId = editorCache.currentEditingFCNId || null;
+        managerFilter = editorCache.managerFilter || "all";
+        renderFCNManager();
+
+        if (currentEditingFCNId) {
+          const found = editableFCNPool.find(x => x.fcn_id === currentEditingFCNId);
+          if (found) fillForm(found);
+          else clearForm();
+        } else {
+          clearForm();
+        }
+      } else {
+        clearForm();
+        renderFCNManager();
+      }
+
+      renderM2();
+    })();
   </script>
 </body>
 </html>
