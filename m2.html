@@ -1673,13 +1673,7 @@ window.loadFCNById = function() {
         writePoolEditorCache();
         renderFCNManager();
 
-        const marketMerged = {};
-        Object.keys(marketRuntime || {}).forEach(sym => {
-          marketMerged[sym] = {
-            ...(marketRuntime[sym] || {}),
-            ...((runtimeCache.stocks || {})[sym] || {})
-          };
-        });
+       const marketMerged = marketRuntime || {};
 
         const data = runM2HealthEngine({
           fcnPool,
