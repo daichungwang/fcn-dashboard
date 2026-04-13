@@ -6,11 +6,11 @@
 
     "clean_min_pure": 6,
     "clean_min_event": 6,
-    "clean_min_delta": 0,
+    "clean_min_delta": 1,
     "clean_use_delta_gate": false,
 
-    "watch_min_pure": 4,
-    "watch_min_event": 4,
+    "watch_min_pure": 5,
+    "watch_min_event": 5,
     "watch_use_or_logic": true
   },
 
