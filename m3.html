@@ -539,12 +539,12 @@ M3.6 Blueprint
 
       return {
         ...stock,
-         m1_event_score: toNumber(stock.event_score, 0),
-        delta_stock_score: delta,
-        bucket,
-        why,
-        whyNot
-      };
+         m1_event_score: m1EventScore,
+         delta_stock_score: delta,
+         bucket,
+         why,
+         whyNot
+     };
     }
 
     function generateCombinations(arr, size) {
