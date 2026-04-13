@@ -1947,9 +1947,30 @@ window.searchFCN = function() {
     }
 
     function getFilteredManagerList() {
-      if (managerFilter === "all") return editableFCNPool;
-      return editableFCNPool.filter(x => (x.status || "") === managerFilter);
-    }
+  let list = editableFCNPool;
+
+  // 原本 filter
+  if (managerFilter !== "all") {
+    list = list.filter(x => (x.status || "") === managerFilter);
+  }
+
+  // 🔥 新增搜尋
+  if (searchKeyword) {
+    list = list.filter(x => {
+      const id = (x.fcn_id || "").toUpperCase();
+      const bank = (x.bank || "").toUpperCase();
+      const basket = (x.basket || []).join(" ").toUpperCase();
+
+      return (
+        id.includes(searchKeyword) ||
+        bank.includes(searchKeyword) ||
+        basket.includes(searchKeyword)
+      );
+    });
+  }
+
+  return list;
+}
 
     function renderFCNManager() {
       const list = getFilteredManagerList();
