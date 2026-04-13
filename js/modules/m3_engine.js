@@ -245,7 +245,7 @@ function runSimulation(cleanPool, config) {
             arrays.tenors.forEach((tenor) => {
               arrays.rates.forEach((rate) => {
                 arrays.ekis.forEach((eki) => {
-                  async function runSimulation(cleanPool, config) {
+  async function runSimulation(cleanPool, config) {
   const results = [];
   const scenarioGroup = config["M3_FCN情境組合參數"] || {};
   const scenarios = scenarioGroup.scenarios || [];
