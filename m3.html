@@ -515,35 +515,35 @@ M3.6 Blueprint
       return { why, whyNot };
     }
 
-    function reviewStockForM3(stock) {
-      const pure = toNumber(stock.pure_stock_score, 0);
-      const eventScore = toNumber(stock.event_stock_score, 0);
-      const delta = round(eventScore - pure, 2);
+   function reviewStockForM3(stock) {
+  const pure = toNumber(stock.pure_stock_score, 0);
+  const eventScore = toNumber(stock.event_stock_score, 0);
+  const delta = round(eventScore - pure, 2);
 
-      let bucket = "clean";
+  let bucket = "clean";
 
-      if (pure < 4 || stock.suggestion === "避免納入 FCN") {
-        bucket = "reject";
-      } else if (pure < 5 || eventScore < 6 || delta <= 0) {
-        bucket = "watch";
-      } else {
-        bucket = "clean";
-      }
+  if (pure < 4 || stock.suggestion === "避免納入 FCN") {
+    bucket = "reject";
+  } else if (pure < 5 || eventScore < 6 || delta <= 0) {
+    bucket = "watch";
+  } else {
+    bucket = "clean";
+  }
 
-      const { why, whyNot } = buildWhyWhyNot({
-        ...stock,
-        delta_stock_score: delta
-      });
+  const { why, whyNot } = buildWhyWhyNot({
+    ...stock,
+    delta_stock_score: delta
+  });
 
-      return {
-        ...stock,
-        m1_event_score: toNumber(stock.event_score, 0),
-        delta_stock_score: delta,
-        bucket,
-        why,
-        whyNot
-      };
-    }
+  return {
+    ...stock,
+    m1_event_score: toNumber(stock.event_score, 0),
+    delta_stock_score: delta,
+    bucket,
+    why,
+    whyNot
+  };
+}
 
     function generateCombinations(arr, size) {
       const result = [];
