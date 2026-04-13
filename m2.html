@@ -2050,8 +2050,15 @@ window.loadFCNById = function() {
       a.remove();
       URL.revokeObjectURL(url);
     }
-     function exportActivePool() {
-  const filtered = editableFCNPool.filter(x => x.status !== "deleted");
+window.exportActivePool = function() {
+  if (!editableFCNPool.length) {
+    alert("目前沒有可匯出的 FCN Pool");
+    return;
+  }
+
+  const filtered = editableFCNPool
+    .filter(x => x.status !== "deleted")
+    .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
 
   const blob = new Blob(
     [JSON.stringify(filtered, null, 2)],
@@ -2068,7 +2075,7 @@ window.loadFCNById = function() {
   a.remove();
 
   URL.revokeObjectURL(url);
-}
+};
     
     document.getElementById("backMilestone2Btn").addEventListener("click", () => {
       window.location.href = "./milestone2_index.html";
