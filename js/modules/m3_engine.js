@@ -3,6 +3,7 @@
 // 振宇 FCN 系統｜M3 主觀偏好模擬引擎
 // ==========================================
 
+import { runM8Case } from "../core/m8_fair_yield_engine.js";
 import { mergeStockData, evaluateStock } from "../core/stock_engine.js";
 import { evaluateFCN } from "../core/fcn_engine.js";
 
