@@ -245,6 +245,31 @@ function runSimulation(cleanPool, config) {
             arrays.tenors.forEach((tenor) => {
               arrays.rates.forEach((rate) => {
                 arrays.ekis.forEach((eki) => {
+                  async function runSimulation(cleanPool, config) {
+  const results = [];
+  const scenarioGroup = config["M3_FCN情境組合參數"] || {};
+  const scenarios = scenarioGroup.scenarios || [];
+  const rankingCfg = config["M3_排名評分參數"] || {};
+  const simCfg = config["M3_模擬控制參數"] || {};
+
+  const maxCombinations = toNumber(simCfg.max_combinations, 50);
+
+  for (const scenario of scenarios) {
+    const arrays = getScenarioArrays(scenario);
+
+    for (const basketSize of arrays.basket_sizes) {
+      const combos = generateCombinations(cleanPool, toNumber(basketSize, 0)).slice(0, maxCombinations);
+
+      for (let idx = 0; idx < combos.length; idx++) {
+        const combo = combos[idx];
+
+        for (const ki of arrays.kis) {
+          for (const strike of arrays.strikes) {
+            for (const tenor of arrays.tenors) {
+              for (const rate of arrays.rates) {
+                for (const eki of arrays.ekis) {
+                  const type = eki ? "AKI" : "EKI";
+
                   const fcn = evaluateFCN({
                     id: `${safeText(scenario["名稱"], "SC")}_${idx + 1}`,
                     basket: combo.map(s => s.symbol),
@@ -255,7 +280,77 @@ function runSimulation(cleanPool, config) {
                     eki: !!eki
                   }, combo);
 
-                  if (!fcn) return;
+                  if (!fcn) continue;
+
+                  let fairRate = null;
+                  let fairGap = null;
+                  let fairFlag = "待接 M8";
+                  let fairReason = "";
+
+                  try {
+                    const m8 = await runM8Case({
+                      caseName: `${safeText(scenario["名稱"], "SC")}_${idx + 1}`,
+                      symbols: combo.map(s => s.symbol),
+                      KI: toNumber(ki, 0),
+                      Strike: toNumber(strike, 0),
+                      T: toNumber(tenor, 0),
+                      type,
+                      marketYield: toNumber(rate, 0)
+                    });
+
+                    fairRate = toNumber(m8.fair_yield, null);
+                    fairGap = Number.isFinite(fairRate)
+                      ? round(toNumber(rate, 0) - fairRate, 2)
+                      : null;
+                    fairFlag = safeText(m8.pricing_view, "待接 M8");
+                    fairReason = safeText(m8.note, "");
+                  } catch (err) {
+                    console.warn("M8 pricing failed:", err);
+                  }
+
+                  const healthPct = calcHealthPct(fcn);
+
+                  results.push({
+                    ...fcn,
+                    scenario_name: safeText(scenario["名稱"], "未命名情境"),
+                    scenario_comment: safeText(scenario["說明"], ""),
+                    scenario_type: safeText(scenario["類型"], ""),
+                    scenario_goal: scenario["目標"] || null,
+
+                    basket_size: toNumber(basketSize, 0),
+                    simulation_rate: toNumber(rate, 0),
+                    tenor: toNumber(tenor, 0),
+
+                    m3_score: toNumber(fcn.event_fcn, 0),
+
+                    fair_rate: fairRate,
+                    fair_gap: fairGap,
+                    fair_flag: fairFlag,
+                    fair_reason: fairReason,
+
+                    health_pct: healthPct,
+                    preference_level: getPreferenceLevel(fcn.event_fcn),
+                    market_level: getMarketLevel(fairGap),
+
+                    suggestion_rank: (
+                      toNumber(fcn.event_fcn, 0) >= toNumber(rankingCfg.strong_buy_min_event_fcn, 12) ? "strong" :
+                      toNumber(fcn.event_fcn, 0) >= toNumber(rankingCfg.buy_min_event_fcn, 9) ? "buy" :
+                      toNumber(fcn.event_fcn, 0) >= toNumber(rankingCfg.watch_min_event_fcn, 6) ? "watch" :
+                      "avoid"
+                    )
+                  });
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  results.sort((a, b) => toNumber(b.event_fcn, -999) - toNumber(a.event_fcn, -999));
+  return results;
+}
 
                   // M8 預留
                   const fairRate = calcFairRateFallback(fcn);
