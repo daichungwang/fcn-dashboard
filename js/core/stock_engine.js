@@ -1,14 +1,14 @@
 /* ==========================================
    stock_engine.js V8
    振宇 FCN 系統｜Stock Engine
-   全部控制改由 parameter_matrix.json 注入
 
    定義：
    1. Pure Stock  = 公司品質 / 我願不願意接
    2. Snapshot    = 現在是不是甜甜價
-   3. Event Score = news impact (ShortSwing Score)
+   3. Event Score = ShortSwing Score
    4. Event Stock = Pure Stock + Snapshot + Event Score
-   5. 本檔案只處理個股，不處理 FCN 結構
+   5. Trend Rate / Trend Profile 先建立骨架，未來可擴充到 3Y / 5Y / 10Y
+   6. 本檔案只處理個股，不處理 FCN 結構
 ========================================== */
 
 // ------------------------------------------
@@ -36,17 +36,20 @@ function smoothstep(t) {
   return x * x * (3 - 2 * x);
 }
 
-function getCfg(context = {}, key, fallback = {}) {
-  const cfg = context?.[key];
-  return cfg && typeof cfg === "object" ? cfg : fallback;
+function getObject(value, fallback = {}) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : fallback;
 }
 
-function getArray(v, fallback = []) {
-  return Array.isArray(v) ? v : fallback;
+function getArray(value, fallback = []) {
+  return Array.isArray(value) ? value : fallback;
+}
+
+function minZero(v) {
+  return Math.min(toNumber(v, 0), 0);
 }
 
 // ------------------------------------------
-// 預設參數（當 parameter_matrix.json 缺值時 fallback）
+// 預設值（parameter_matrix.json 沒給時 fallback）
 // ------------------------------------------
 const DEFAULTS = {
   STOCK_CATEGORY_BASELINE: {
@@ -113,65 +116,6 @@ const DEFAULTS = {
     ]
   },
 
-  STOCK_TREND: {
-    pullback_in_uptrend: {
-      enabled: true,
-      r12m_gt: 0.2,
-      r6m_gt: 0,
-      r1m_lt: 0,
-      trend: "pullback_in_uptrend",
-      trend_label: "長多回檔",
-      trend_note: "長期趨勢仍強，短期回檔，較符合 FCN 觀察時點"
-    },
-    strong_uptrend: {
-      enabled: true,
-      r12m_gt: 0.2,
-      r1m_gt: 0.05,
-      trend: "strong_uptrend",
-      trend_label: "高位強勢",
-      trend_note: "中長期很強，但位置偏高，FCN 不宜追價"
-    },
-    breakout: {
-      enabled: true,
-      r12m_gt: 0,
-      r6m_gt: 0,
-      r1m_gt: 0,
-      trend: "breakout",
-      trend_label: "突破轉強",
-      trend_note: "近期轉強，但 FCN 時點不一定最好"
-    },
-    downtrend: {
-      enabled: true,
-      r12m_lt: -0.2,
-      r6m_lt: -0.1,
-      r1m_lt: -0.05,
-      trend: "downtrend",
-      trend_label: "弱勢下跌",
-      trend_note: "中長期偏弱，需避免當成 FCN 核心標的"
-    },
-    dead_cat_bounce: {
-      enabled: true,
-      r12m_lt: -0.15,
-      r1m_gt: 0.03,
-      trend: "dead_cat_bounce",
-      trend_label: "弱勢反彈",
-      trend_note: "長期仍弱，短期反彈不代表安全"
-    },
-    sharp_pullback: {
-      enabled: true,
-      r1m_lt: -0.12,
-      r12m_gt: 0,
-      trend: "sharp_pullback",
-      trend_label: "急跌修正",
-      trend_note: "跌得夠深，利率可能轉甜，但要小心不是壞掉"
-    },
-    neutral: {
-      trend: "neutral",
-      trend_label: "中性",
-      trend_note: "沒有明確趨勢優勢，需要搭配 Snapshot 判斷"
-    }
-  },
-
   STOCK_EVENT: {
     short_swing_weights: [0.35, 0.25, 0.15, 0.10, 0.08, 0.07],
     score_curve: {
@@ -205,8 +149,151 @@ const DEFAULTS = {
       neutral: "中性觀察",
       conservative: "保守觀察"
     }
+  },
+
+  TREND_ENGINE: {
+    enabled: true,
+    use_negative_only_for_trend_rate: true,
+
+    trend_rate_weights: {
+      r1m: 0.10,
+      r3m: 0.20,
+      r6m: 0.25,
+      r12m: 0.45,
+      r3y: 0.00,
+      r5y: 0.00,
+      r10y: 0.00
+    },
+
+    long_trend_rules: {
+      secular_growth: {
+        r12m_gte: 0.20,
+        r6m_gte: 0.08,
+        label: "長期成長",
+        note: "長期結構向上，可作長期觀察與持有核心"
+      },
+      stable_compounder: {
+        r12m_gte: 0.08,
+        r6m_gte: 0.00,
+        r12m_lte: 0.20,
+        label: "穩定複利",
+        note: "長期偏正但不暴衝，適合保守核心"
+      },
+      sideways: {
+        r12m_gt: -0.08,
+        r12m_lt: 0.08,
+        label: "長期盤整",
+        note: "長期方向不明，偏中性"
+      },
+      structural_decline: {
+        r12m_lte: -0.20,
+        r6m_lte: -0.08,
+        label: "結構轉弱",
+        note: "不是短期修正，長期結構偏弱"
+      },
+      cyclical_uptrend: {
+        r12m_gte: 0.10,
+        r6m_lt: 0.08,
+        label: "循環向上",
+        note: "長期仍偏上，但波動較高，需搭配產業循環判讀"
+      },
+      default: {
+        label: "長期中性",
+        note: "長期結構尚不明確"
+      }
+    },
+
+    mid_trend_rules: {
+      accelerating_uptrend: {
+        r1m_gte: 0.05,
+        r3m_gte: 0.10,
+        r6m_gte: 0.12,
+        label: "加速上行",
+        note: "短中期同步走強，位置可能偏熱"
+      },
+      healthy_pullback: {
+        r1m_lte: -0.03,
+        r3m_gte: 0.00,
+        r6m_gte: 0.05,
+        label: "健康回檔",
+        note: "長線未壞，短線修正，常是較好的 FCN 觀察點"
+      },
+      basing: {
+        r1m_gt: -0.03,
+        r1m_lt: 0.03,
+        r3m_gt: -0.05,
+        r3m_lt: 0.05,
+        label: "築底整理",
+        note: "趨勢暫時止穩，但尚未明確轉強"
+      },
+      weak_rebound: {
+        r1m_gte: 0.03,
+        r6m_lte: -0.10,
+        label: "弱勢反彈",
+        note: "短期反彈，但中期仍弱，需保守看待"
+      },
+      persistent_downtrend: {
+        r1m_lte: -0.05,
+        r3m_lte: -0.08,
+        r6m_lte: -0.12,
+        label: "持續下跌",
+        note: "跌勢延續中，不宜當成普通修正"
+      },
+      overheated: {
+        r1m_gte: 0.10,
+        r3m_gte: 0.18,
+        label: "高位過熱",
+        note: "公司可能很好，但目前時點偏熱"
+      },
+      default: {
+        label: "中期中性",
+        note: "沒有明顯中期位置優勢"
+      }
+    },
+
+    profile_map: {
+      "secular_growth|healthy_pullback": {
+        profile: "long_growth_pullback",
+        label: "長期成長＋健康回檔",
+        note: "最值得優先觀察的一類"
+      },
+      "secular_growth|accelerating_uptrend": {
+        profile: "long_growth_hot",
+        label: "長期成長＋加速上行",
+        note: "公司很好，但現在可能偏熱"
+      },
+      "stable_compounder|healthy_pullback": {
+        profile: "stable_pullback",
+        label: "穩定複利＋健康回檔",
+        note: "適合保守型 FCN 與中長期持有"
+      },
+      "structural_decline|weak_rebound": {
+        profile: "decline_rebound",
+        label: "結構轉弱＋弱勢反彈",
+        note: "容易誤判，不宜太早樂觀"
+      },
+      "structural_decline|persistent_downtrend": {
+        profile: "decline_downtrend",
+        label: "結構轉弱＋持續下跌",
+        note: "高風險型態，未來可直接接 reject"
+      }
+    },
+
+    default_profile: {
+      profile: "mixed",
+      label: "混合型態",
+      note: "長中期訊號不一致，需搭配其他分數判斷"
+    }
   }
 };
+
+// ------------------------------------------
+// 取 config
+// ------------------------------------------
+function getCfg(context = {}, key, fallback = {}) {
+  const cfg = context?.[key];
+  return getObject(cfg, fallback);
+}
 
 // ------------------------------------------
 // 合併 market runtime
@@ -226,8 +313,7 @@ export function mergeStockData(stock = {}, marketRuntime = {}) {
 // 分類 / baseline
 // ------------------------------------------
 function getCategoryMap(context = {}) {
-  const cfg = getCfg(context, "STOCK_CATEGORY_BASELINE", {});
-  return Object.keys(cfg).length ? cfg : DEFAULTS.STOCK_CATEGORY_BASELINE;
+  return getCfg(context, "STOCK_CATEGORY_BASELINE", DEFAULTS.STOCK_CATEGORY_BASELINE);
 }
 
 export function getCategory(stock = {}) {
@@ -249,7 +335,7 @@ export function calcBaselineScore(stock = {}, context = {}) {
 // ------------------------------------------
 export function calcMidTermVolatility(stock = {}, context = {}) {
   const cfg = getCfg(context, "STOCK_VOLATILITY", DEFAULTS.STOCK_VOLATILITY);
-  const weights = cfg.weights || DEFAULTS.STOCK_VOLATILITY.weights;
+  const weights = getObject(cfg.weights, DEFAULTS.STOCK_VOLATILITY.weights);
 
   const r1m = abs(stock.ret_1m);
   const r6m = abs(stock.ret_6m);
@@ -266,7 +352,6 @@ export function calcMidTermVolatility(stock = {}, context = {}) {
 export function calcVolScore(volatility = 0, context = {}) {
   const cfg = getCfg(context, "STOCK_VOLATILITY", DEFAULTS.STOCK_VOLATILITY);
   const bands = getArray(cfg.score_bands, DEFAULTS.STOCK_VOLATILITY.score_bands);
-  const floorScore = toNumber(cfg.floor_score, -3);
   const v = abs(volatility);
 
   for (const band of bands) {
@@ -275,7 +360,7 @@ export function calcVolScore(volatility = 0, context = {}) {
     }
   }
 
-  return round(floorScore, 3);
+  return round(toNumber(cfg.floor_score, -3), 3);
 }
 
 export function calcVolLabel(volatility = 0, context = {}) {
@@ -318,7 +403,7 @@ export function getPureReason(stock = {}, context = {}) {
 // ------------------------------------------
 export function calcMomentum(stock = {}, context = {}) {
   const cfg = getCfg(context, "STOCK_SNAPSHOT", DEFAULTS.STOCK_SNAPSHOT);
-  const w = cfg.momentum_weights || DEFAULTS.STOCK_SNAPSHOT.momentum_weights;
+  const w = getObject(cfg.momentum_weights, DEFAULTS.STOCK_SNAPSHOT.momentum_weights);
 
   const r1d = toNumber(stock.ret_1d, 0);
   const r1w = toNumber(stock.ret_1w, 0);
@@ -342,92 +427,94 @@ function getSnapshotBand(movePct = 0, context = {}) {
     }
   }
 
-  return bands[bands.length - 1];
+  return bands[bands.length - 1] || {};
 }
 
 export function calcSnapshotScore(movePct = 0, context = {}) {
-  return toNumber(getSnapshotBand(movePct, context)?.score, 0);
+  return toNumber(getSnapshotBand(movePct, context).score, 0);
 }
 
 export function getSnapshotBucket(movePct = 0, context = {}) {
-  return getSnapshotBand(movePct, context)?.bucket || "-";
+  return getSnapshotBand(movePct, context).bucket || "-";
 }
 
 export function getSnapshotReason(movePct = 0, context = {}) {
-  return getSnapshotBand(movePct, context)?.reason || "-";
+  return getSnapshotBand(movePct, context).reason || "-";
 }
 
 export function calcSnapshot(stock = {}, context = {}) {
   const momentum = calcMomentum(stock, context);
   const movePct = round(momentum * 100, 2);
-  const score = calcSnapshotScore(movePct, context);
 
   return {
     snapshot_momentum: momentum,
     snapshot_move_pct: movePct,
     snapshot_bucket: getSnapshotBucket(movePct, context),
-    snapshot_score: score,
+    snapshot_score: calcSnapshotScore(movePct, context),
     snapshot_reason: getSnapshotReason(movePct, context)
   };
 }
 
 // ------------------------------------------
-// Trend
+// 舊版 Trend（保留給 suggestion 使用）
 // ------------------------------------------
-function matchTrendRule(rule = {}, r1m = 0, r6m = 0, r12m = 0) {
-  if (rule.enabled === false) return false;
-
-  if (rule.r1m_gt !== undefined && !(r1m > toNumber(rule.r1m_gt))) return false;
-  if (rule.r1m_gte !== undefined && !(r1m >= toNumber(rule.r1m_gte))) return false;
-  if (rule.r1m_lt !== undefined && !(r1m < toNumber(rule.r1m_lt))) return false;
-  if (rule.r1m_lte !== undefined && !(r1m <= toNumber(rule.r1m_lte))) return false;
-
-  if (rule.r6m_gt !== undefined && !(r6m > toNumber(rule.r6m_gt))) return false;
-  if (rule.r6m_gte !== undefined && !(r6m >= toNumber(rule.r6m_gte))) return false;
-  if (rule.r6m_lt !== undefined && !(r6m < toNumber(rule.r6m_lt))) return false;
-  if (rule.r6m_lte !== undefined && !(r6m <= toNumber(rule.r6m_lte))) return false;
-
-  if (rule.r12m_gt !== undefined && !(r12m > toNumber(rule.r12m_gt))) return false;
-  if (rule.r12m_gte !== undefined && !(r12m >= toNumber(rule.r12m_gte))) return false;
-  if (rule.r12m_lt !== undefined && !(r12m < toNumber(rule.r12m_lt))) return false;
-  if (rule.r12m_lte !== undefined && !(r12m <= toNumber(rule.r12m_lte))) return false;
-
-  return true;
-}
-
-export function classifyTrend(stock = {}, context = {}) {
-  const cfg = getCfg(context, "STOCK_TREND", DEFAULTS.STOCK_TREND);
-  const merged = { ...DEFAULTS.STOCK_TREND, ...cfg };
-
+export function classifyTrend(stock = {}) {
   const r1m = toNumber(stock.ret_1m, 0);
   const r6m = toNumber(stock.ret_6m, 0);
   const r12m = toNumber(stock.ret_12m, 0);
 
-  const order = [
-    "pullback_in_uptrend",
-    "strong_uptrend",
-    "breakout",
-    "downtrend",
-    "dead_cat_bounce",
-    "sharp_pullback"
-  ];
-
-  for (const key of order) {
-    const rule = merged[key];
-    if (matchTrendRule(rule, r1m, r6m, r12m)) {
-      return {
-        trend: rule.trend || key,
-        trend_label: rule.trend_label || key,
-        trend_note: rule.trend_note || ""
-      };
-    }
+  if (r12m > 0.2 && r6m > 0 && r1m < 0) {
+    return {
+      trend: "pullback_in_uptrend",
+      trend_label: "長多回檔",
+      trend_note: "長期趨勢仍強，短期回檔，較符合 FCN 觀察時點"
+    };
   }
 
-  const neutral = merged.neutral || DEFAULTS.STOCK_TREND.neutral;
+  if (r12m > 0.2 && r1m > 0.05) {
+    return {
+      trend: "strong_uptrend",
+      trend_label: "高位強勢",
+      trend_note: "中長期很強，但位置偏高，FCN 不宜追價"
+    };
+  }
+
+  if (r12m > 0 && r6m > 0 && r1m > 0) {
+    return {
+      trend: "breakout",
+      trend_label: "突破轉強",
+      trend_note: "近期轉強，但 FCN 時點不一定最好"
+    };
+  }
+
+  if (r12m < -0.2 && r6m < -0.1 && r1m < -0.05) {
+    return {
+      trend: "downtrend",
+      trend_label: "弱勢下跌",
+      trend_note: "中長期偏弱，需避免當成 FCN 核心標的"
+    };
+  }
+
+  if (r12m < -0.15 && r1m > 0.03) {
+    return {
+      trend: "dead_cat_bounce",
+      trend_label: "弱勢反彈",
+      trend_note: "長期仍弱，短期反彈不代表安全"
+    };
+  }
+
+  if (r1m < -0.12 && r12m > 0) {
+    return {
+      trend: "sharp_pullback",
+      trend_label: "急跌修正",
+      trend_note: "跌得夠深，利率可能轉甜，但要小心不是壞掉"
+    };
+  }
+
   return {
-    trend: neutral.trend || "neutral",
-    trend_label: neutral.trend_label || "中性",
-    trend_note: neutral.trend_note || ""
+    trend: "neutral",
+    trend_label: "中性",
+    trend_note: "沒有明確趨勢優勢，需要搭配 Snapshot 判斷"
   };
 }
 
@@ -461,7 +548,7 @@ export function calcShortSwing(stock = {}, context = {}) {
 
 export function calcShortSwingScore(shortSwing = 0, context = {}) {
   const cfg = getCfg(context, "STOCK_EVENT", DEFAULTS.STOCK_EVENT);
-  const curve = cfg.score_curve || DEFAULTS.STOCK_EVENT.score_curve;
+  const curve = getObject(cfg.score_curve, DEFAULTS.STOCK_EVENT.score_curve);
   const v = toNumber(shortSwing, 0);
 
   const centerLeftX = toNumber(curve.center_left_x, -2);
@@ -537,6 +624,118 @@ export function calcEventScore(stock = {}, context = {}) {
 }
 
 // ------------------------------------------
+// Trend Rate / Trend Profile 骨架
+// ------------------------------------------
+function matchRule(rule = {}, data = {}) {
+  const checks = [
+    ["r1m_gt", data.r1m, (a, b) => a > b],
+    ["r1m_gte", data.r1m, (a, b) => a >= b],
+    ["r1m_lt", data.r1m, (a, b) => a < b],
+    ["r1m_lte", data.r1m, (a, b) => a <= b],
+
+    ["r3m_gt", data.r3m, (a, b) => a > b],
+    ["r3m_gte", data.r3m, (a, b) => a >= b],
+    ["r3m_lt", data.r3m, (a, b) => a < b],
+    ["r3m_lte", data.r3m, (a, b) => a <= b],
+
+    ["r6m_gt", data.r6m, (a, b) => a > b],
+    ["r6m_gte", data.r6m, (a, b) => a >= b],
+    ["r6m_lt", data.r6m, (a, b) => a < b],
+    ["r6m_lte", data.r6m, (a, b) => a <= b],
+
+    ["r12m_gt", data.r12m, (a, b) => a > b],
+    ["r12m_gte", data.r12m, (a, b) => a >= b],
+    ["r12m_lt", data.r12m, (a, b) => a < b],
+    ["r12m_lte", data.r12m, (a, b) => a <= b]
+  ];
+
+  for (const [key, value, fn] of checks) {
+    if (rule[key] !== undefined && !fn(toNumber(value, 0), toNumber(rule[key], 0))) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function findFirstMatchedRule(rules = {}, data = {}) {
+  for (const [key, rule] of Object.entries(rules)) {
+    if (key === "default") continue;
+    if (matchRule(rule, data)) {
+      return {
+        key,
+        label: rule.label || key,
+        note: rule.note || ""
+      };
+    }
+  }
+
+  const fallback = getObject(rules.default, {});
+  return {
+    key: "default",
+    label: fallback.label || "未分類",
+    note: fallback.note || ""
+  };
+}
+
+export function calcTrendRate(stock = {}, context = {}) {
+  const cfg = getCfg(context, "TREND_ENGINE", DEFAULTS.TREND_ENGINE);
+  const weights = getObject(cfg.trend_rate_weights, DEFAULTS.TREND_ENGINE.trend_rate_weights);
+  const negativeOnly = cfg.use_negative_only_for_trend_rate !== false;
+
+  const r1m = negativeOnly ? minZero(stock.ret_1m) : toNumber(stock.ret_1m, 0);
+  const r3m = negativeOnly ? minZero(stock.ret_3m) : toNumber(stock.ret_3m, 0);
+  const r6m = negativeOnly ? minZero(stock.ret_6m) : toNumber(stock.ret_6m, 0);
+  const r12m = negativeOnly ? minZero(stock.ret_12m) : toNumber(stock.ret_12m, 0);
+
+  const rate =
+    toNumber(weights.r1m, 0) * r1m +
+    toNumber(weights.r3m, 0) * r3m +
+    toNumber(weights.r6m, 0) * r6m +
+    toNumber(weights.r12m, 0) * r12m;
+
+  return round(rate, 4);
+}
+
+export function classifyTrendProfile(stock = {}, context = {}) {
+  const cfg = getCfg(context, "TREND_ENGINE", DEFAULTS.TREND_ENGINE);
+
+  const data = {
+    r1m: toNumber(stock.ret_1m, 0),
+    r3m: toNumber(stock.ret_3m, 0),
+    r6m: toNumber(stock.ret_6m, 0),
+    r12m: toNumber(stock.ret_12m, 0)
+  };
+
+  const longRules = getObject(cfg.long_trend_rules, DEFAULTS.TREND_ENGINE.long_trend_rules);
+  const midRules = getObject(cfg.mid_trend_rules, DEFAULTS.TREND_ENGINE.mid_trend_rules);
+  const profileMap = getObject(cfg.profile_map, DEFAULTS.TREND_ENGINE.profile_map);
+  const defaultProfile = getObject(cfg.default_profile, DEFAULTS.TREND_ENGINE.default_profile);
+
+  const longTrend = findFirstMatchedRule(longRules, data);
+  const midTrend = findFirstMatchedRule(midRules, data);
+
+  const profileKey = `${longTrend.key}|${midTrend.key}`;
+  const mapped = getObject(profileMap[profileKey], defaultProfile);
+
+  return {
+    long_trend: longTrend.key,
+    long_trend_label: longTrend.label,
+    long_trend_note: longTrend.note,
+
+    mid_trend: midTrend.key,
+    mid_trend_label: midTrend.label,
+    mid_trend_note: midTrend.note,
+
+    trend_profile: mapped.profile || "mixed",
+    trend_profile_label: mapped.label || "混合型態",
+    trend_profile_note: mapped.note || "",
+
+    trend_rate: calcTrendRate(stock, context)
+  };
+}
+
+// ------------------------------------------
 // Event Stock
 // ------------------------------------------
 export function calcEventStockScore(stock = {}, context = {}) {
@@ -566,12 +765,12 @@ export function getStockBias(stock = {}, context = {}) {
 
 export function getSuggestion(stock = {}, context = {}) {
   const cfg = getCfg(context, "STOCK_SUGGESTION", DEFAULTS.STOCK_SUGGESTION);
-  const texts = cfg.texts || DEFAULTS.STOCK_SUGGESTION.texts;
-  const thresholds = cfg.event_stock_thresholds || DEFAULTS.STOCK_SUGGESTION.event_stock_thresholds;
+  const texts = getObject(cfg.texts, DEFAULTS.STOCK_SUGGESTION.texts);
+  const thresholds = getObject(cfg.event_stock_thresholds, DEFAULTS.STOCK_SUGGESTION.event_stock_thresholds);
 
   const pure = calcPureStockScore(stock, context);
   const eventStock = calcEventStockScore(stock, context);
-  const trend = classifyTrend(stock, context).trend;
+  const trend = classifyTrend(stock).trend;
   const eventScore = calcEventScore(stock, context).event_score;
 
   if (pure < toNumber(cfg.reject_if_pure_lt, DEFAULTS.STOCK_SUGGESTION.reject_if_pure_lt)) {
@@ -616,7 +815,8 @@ export function evaluateStock(stock = {}, context = {}) {
   const pure_stock_score = calcPureStockScore(stock, context);
   const pure_reason = getPureReason(stock, context);
 
-  const trendInfo = classifyTrend(stock, context);
+  const trendInfo = classifyTrend(stock);
+  const trendProfile = classifyTrendProfile(stock, context);
 
   const snapshot = calcSnapshot(stock, context);
   const eventInfo = calcEventScore(stock, context);
@@ -636,6 +836,7 @@ export function evaluateStock(stock = {}, context = {}) {
     ret_1d: toNumber(stock.ret_1d, 0),
     ret_1w: toNumber(stock.ret_1w, 0),
     ret_1m: toNumber(stock.ret_1m, 0),
+    ret_3m: toNumber(stock.ret_3m, 0),
     ret_6m: toNumber(stock.ret_6m, 0),
     ret_12m: toNumber(stock.ret_12m, 0),
     volume: stock.volume ?? null,
@@ -654,6 +855,20 @@ export function evaluateStock(stock = {}, context = {}) {
     trend: trendInfo.trend,
     trend_label: trendInfo.trend_label,
     trend_note: trendInfo.trend_note,
+
+    trend_rate: trendProfile.trend_rate,
+
+    long_trend: trendProfile.long_trend,
+    long_trend_label: trendProfile.long_trend_label,
+    long_trend_note: trendProfile.long_trend_note,
+
+    mid_trend: trendProfile.mid_trend,
+    mid_trend_label: trendProfile.mid_trend_label,
+    mid_trend_note: trendProfile.mid_trend_note,
+
+    trend_profile: trendProfile.trend_profile,
+    trend_profile_label: trendProfile.trend_profile_label,
+    trend_profile_note: trendProfile.trend_profile_note,
 
     snapshot_momentum: snapshot.snapshot_momentum,
     snapshot_move_pct: snapshot.snapshot_move_pct,
