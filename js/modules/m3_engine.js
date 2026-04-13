@@ -271,15 +271,15 @@ function runSimulation(cleanPool, config) {
                   const type = eki ? "AKI" : "EKI";
 
                   const fcn = evaluateFCN({
-                    id: `${safeText(scenario["名稱"], "SC")}_${idx + 1}`,
-                    basket: combo.map(s => s.symbol),
-                    ki: toNumber(ki, 0),
-                    strike: toNumber(strike, 0),
-                    yield: toNumber(rate, 0),
-                    period: toNumber(tenor, 0),
-                    eki: !!eki
+                  id: `${safeText(scenario["名稱"], "SC")}_${idx + 1}`,
+                  basket: combo.map(s => s.symbol),
+                  ki: toNumber(ki, 0),
+                  strike: toNumber(strike, 0),
+                  yield: toNumber(rate, 0),
+                  period: toNumber(tenor, 0),
+                  eki: !!eki
                   }, combo);
-                  const fcn = evaluateFCN(...);
+
                   if (!fcn) continue;
 
                   let fairRate = null;
