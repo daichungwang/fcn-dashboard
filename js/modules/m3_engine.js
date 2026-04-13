@@ -279,7 +279,7 @@ function runSimulation(cleanPool, config) {
                     period: toNumber(tenor, 0),
                     eki: !!eki
                   }, combo);
-
+                  const fcn = evaluateFCN(...);
                   if (!fcn) continue;
 
                   let fairRate = null;
