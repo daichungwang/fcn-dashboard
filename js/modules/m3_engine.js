@@ -307,9 +307,10 @@ async function runSimulation(cleanPool, config) {
                     fair_flag: fairFlag,
                     fair_reason: fairReason,
 
-                    health_pct: healthPct,
-                    preference_level: getPreferenceLevel(eventFcn),
-                    market_level: getMarketLevel(fairGap),
+                      health_pct: healthPct,
+                      preference_level: getPreferenceLevel(eventFcn),
+                      market_level: getMarketLevel(fairGap),
+                      market_score: getMarketScore(fairGap),
 
                     suggestion_rank:
                       eventFcn >= toNumber(rankingCfg.strong_buy_min_event_fcn, 12) ? "strong" :
