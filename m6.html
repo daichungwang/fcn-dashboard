@@ -764,5 +764,81 @@ document.getElementById("sortMode").addEventListener("change", rerender);
 
 rerender();
 </script>
+  <script type="module">
+import {
+  loadM6Data,
+  buildM6ViewModel,
+  sortAggregates,
+  buildPositionDetails
+} from "./js/m6/m6_engine.js";
+
+// ========================
+// 初始化
+// ========================
+async function init() {
+  try {
+    const raw = await loadM6Data({
+      positionsUrl: "./data/positions.json",
+      marketUrl: "./data/market_runtime.json",
+      m7TodayUrl: "./data/m7/m7_new_stock_today.json"
+    });
+
+    const vm = buildM6ViewModel(raw);
+
+    // ========================
+    // 左邊：總覽（合併後）
+    // ========================
+    const list = sortAggregates(vm.aggregates, "risk");
+
+    console.log("=== 左邊總覽 ===");
+    console.table(list);
+
+    // 測試：印出第一檔
+    if (list.length > 0) {
+      const s = list[0];
+
+      console.log("第一檔：", s.symbol);
+      console.log("股數：", s.quantity);
+      console.log("成本：", s.cost);
+      console.log("現價：", s.current);
+      console.log("損益：", s.pnl_amount, s.pnl_pct + "%");
+      console.log("狀態：", s.status_eval, s.strength);
+      console.log("建議動作：", s.action_today);
+      console.log("曝險：", s.exposure_alert?.text);
+    }
+
+    // ========================
+    // 右邊：單一股票（多部位）
+    // ========================
+    const symbol = "ORCL";
+
+    const details = buildPositionDetails(
+      symbol,
+      vm.positions,
+      vm.marketRuntime,
+      vm.m7TodayMap
+    );
+
+    console.log("=== 右邊詳情（ORCL） ===");
+    console.table(details);
+
+    details.forEach(d => {
+      console.log(
+        d.role,
+        "股數:", d.quantity,
+        "成本:", d.cost,
+        "現價:", d.current,
+        "損益:", d.pnl_amount,
+        "狀態:", d.status_eval
+      );
+    });
+
+  } catch (err) {
+    console.error("M6 初始化失敗", err);
+  }
+}
+
+init();
+</script>
 </body>
 </html>
