@@ -1,1 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ORCL 持倉管理</title>
 
+<style>
+body {
+  font-family: -apple-system, BlinkMacSystemFont;
+  margin: 0;
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.container {
+  padding: 16px;
+}
+
+.card {
+  background: #1e293b;
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.sub {
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.green { color: #22c55e; }
+.red { color: #ef4444; }
+.yellow { color: #facc15; }
+
+.line {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.badge-yellow { background: #facc15; color: black; }
+.badge-red { background: #ef4444; }
+.badge-green { background: #22c55e; color: black; }
+
+.chart {
+  height: 200px;
+  background: linear-gradient(to top, #1e293b, #334155);
+  border-radius: 12px;
+  position: relative;
+}
+
+.line-mark {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  border-top: 1px dashed;
+  font-size: 10px;
+}
+
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- 🧠 股票標題 -->
+<div class="card">
+  <div class="title">ORCL ｜ Oracle</div>
+  <div class="sub">來源：FCN710H（法國外貿銀行）</div>
+</div>
+
+<!-- 📊 持倉 -->
+<div class="card">
+  <div class="title">📊 持倉狀態</div>
+
+  <div class="line"><span>持股</span><span>55 股</span></div>
+  <div class="line"><span>成本</span><span>178</span></div>
+  <div class="line"><span>現價</span><span>156</span></div>
+
+  <div class="line">
+    <span>損益</span>
+    <span class="red">-22 (-12%)</span>
+  </div>
+
+  <div class="line">
+    <span>狀態</span>
+    <span class="badge badge-red">接股虧損</span>
+  </div>
+</div>
+
+<!-- 🔗 FCN來源 -->
+<div class="card">
+  <div class="title">🔗 FCN來源</div>
+
+  <div class="line"><span>FCN ID</span><span>FCN710H</span></div>
+  <div class="line"><span>Basket</span><span>5檔</span></div>
+  <div class="line"><span>KI</span><span>65%</span></div>
+  <div class="line"><span>Strike</span><span>75.84%</span></div>
+  <div class="line"><span>Rate</span><span class="yellow">25%</span></div>
+
+  <div class="sub">⚠️ Worst-of 接股機制</div>
+</div>
+
+<!-- 📈 圖表 -->
+<div class="card">
+  <div class="title">📈 價格區間</div>
+
+  <div class="chart">
+
+    <!-- 成本 -->
+    <div class="line-mark" style="top:40%; border-color:#22c55e;">
+      成本 178
+    </div>
+
+    <!-- 現價 -->
+    <div class="line-mark" style="top:60%; border-color:#ef4444;">
+      現價 156
+    </div>
+
+    <!-- 停損 -->
+    <div class="line-mark" style="top:75%; border-color:#facc15;">
+      停損 140
+    </div>
+
+    <!-- 壓力 -->
+    <div class="line-mark" style="top:30%; border-color:#94a3b8;">
+      壓力 159
+    </div>
+
+  </div>
+</div>
+
+<!-- 📊 技術分析 -->
+<div class="card">
+  <div class="title">📊 技術分析</div>
+
+  <div class="line"><span>趨勢</span><span>反彈中</span></div>
+  <div class="line"><span>RSI</span><span class="red">74（過熱）</span></div>
+  <div class="line"><span>MA50</span><span>150</span></div>
+  <div class="line"><span>MA200</span><span>200</span></div>
+
+</div>
+
+<!-- 🧠 策略 -->
+<div class="card">
+  <div class="title">🧠 策略建議</div>
+
+  <div class="sub">📌 結論：反彈偏減碼</div>
+
+  <br>
+
+  <div class="sub">🟢 保守</div>
+  <div>158~160 賣50%</div>
+  <div>跌破140 全出</div>
+
+  <br>
+
+  <div class="sub">🟡 中性</div>
+  <div>159 賣30%</div>
+  <div>170 再賣30%</div>
+
+  <br>
+
+  <div class="sub">🔴 積極</div>
+  <div>突破170續抱</div>
+  <div>追蹤停損</div>
+
+</div>
+
+</div>
+</body>
+</html>
