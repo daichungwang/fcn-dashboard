@@ -6,60 +6,68 @@
   <title>M6 Stocks Dashboard</title>
   <style>
     :root{
-      --bg:#0f172a;
-      --panel:#1e293b;
-      --panel-2:#243447;
-      --text:#e2e8f0;
-      --muted:#94a3b8;
-      --green:#22c55e;
-      --red:#ef4444;
-      --yellow:#facc15;
-      --blue:#38bdf8;
-      --purple:#a78bfa;
-      --border:rgba(255,255,255,.08);
+      --bg:#eef6fb;
+      --bg-2:#f7fbfe;
+      --panel:#ffffff;
+      --panel-2:#f8fbfd;
+      --text:#0f172a;
+      --text-2:#1e293b;
+      --muted:#475569;
+      --muted-2:#64748b;
+      --green:#15803d;
+      --red:#dc2626;
+      --yellow:#b45309;
+      --blue:#0ea5e9;
+      --purple:#7c3aed;
+      --border:#dbe7f0;
+      --shadow:0 10px 28px rgba(15, 23, 42, .08);
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",sans-serif;
-      background:linear-gradient(180deg,#e0f2fe 0%,#f0f9ff 100%);
-      color:#0f172a;
+      background:linear-gradient(180deg,var(--bg) 0%, var(--bg-2) 100%);
+      color:var(--text);
     }
     .wrap{
-      max-width:1200px;
+      max-width:1440px;
       margin:0 auto;
       padding:16px;
     }
     .hero{
-      background:linear-gradient(135deg,#1d4ed8 0%,#0f172a 70%);
-      border:1px solid var(--border);
+      background:linear-gradient(135deg,#173b8f 0%, #0b1220 100%);
+      color:#fff;
+      border:1px solid #173b8f;
       border-radius:20px;
       padding:18px;
       margin-bottom:16px;
-      box-shadow:0 10px 30px rgba(0,0,0,.25);
+      box-shadow:var(--shadow);
     }
     .hero h1{
       margin:0 0 6px;
-      font-size:26px;
+      font-size:24px;
+      font-weight:800;
     }
     .hero .sub{
-      color:#cbd5e1;
+      color:#dbeafe;
       font-size:14px;
+      margin-bottom:14px;
     }
     .toolbar{
       display:grid;
-      grid-template-columns:1fr 140px 140px;
-      gap:10px;
-      margin-top:14px;
+      grid-template-columns:1.2fr 1fr 1fr 1fr;
+      gap:12px;
     }
     .input,.select{
       width:100%;
       border-radius:12px;
       border:1px solid var(--border);
-      background:#f0f9ff;
-      color:#0f172a;
+      background:#ffffff;
+      color:var(--text);
       padding:12px 14px;
       font-size:14px;
+      box-shadow:0 1px 2px rgba(15,23,42,.03);
     }
     .grid{
       display:grid;
@@ -67,65 +75,104 @@
       gap:16px;
     }
     .card{
-      background:#e0f2fe;
+      background:var(--panel);
       border:1px solid var(--border);
       border-radius:18px;
       padding:16px;
-      box-shadow:0 8px 24px rgba(0,0,0,.2);
+      box-shadow:var(--shadow);
     }
     .summary-card{grid-column:span 2}
     .full{grid-column:1/-1}
-    .list-panel{grid-column:span 5}
-    .detail-panel{grid-column:span 7}
+    .list-panel{grid-column:span 4}
+    .detail-panel{grid-column:span 8}
     .label{
       font-size:12px;
       color:var(--muted);
       margin-bottom:4px;
+      font-weight:700;
+      letter-spacing:.2px;
     }
     .metric{
       font-size:22px;
       font-weight:800;
       line-height:1.1;
+      color:var(--text);
     }
     .small{
       font-size:13px;
-      color:var(--muted);
+      color:var(--muted-2);
     }
     .green{color:var(--green)}
     .red{color:var(--red)}
     .yellow{color:var(--yellow)}
     .blue{color:var(--blue)}
+    .section-title{
+      font-size:16px;
+      font-weight:800;
+      margin:0 0 10px;
+    }
+
     .stock-list{
       display:flex;
       flex-direction:column;
       gap:10px;
-      max-height:640px;
+      max-height:760px;
       overflow:auto;
       padding-right:4px;
     }
     .stock-item{
-      background:#bae6fd;
-      border:1px solid transparent;
+      background:var(--panel-2);
+      border:1px solid var(--border);
       border-radius:14px;
       padding:12px;
       cursor:pointer;
       transition:.15s ease;
+      box-shadow:0 4px 14px rgba(15,23,42,.04);
     }
-    .stock-item:hover{border-color:rgba(56,189,248,.45)}
+    .stock-item:hover{
+      border-color:rgba(14,165,233,.55);
+      transform:translateY(-1px);
+    }
     .stock-item.active{
-      border-color:rgba(56,189,248,.9);
-      box-shadow:inset 0 0 0 1px rgba(56,189,248,.35);
+      border-color:rgba(14,165,233,.95);
+      box-shadow:inset 0 0 0 1px rgba(14,165,233,.25), 0 8px 18px rgba(14,165,233,.12);
     }
+    .stock-item.healthy{background:linear-gradient(180deg,#f0fdf4,#ffffff);}
+    .stock-item.watch{background:linear-gradient(180deg,#fffbeb,#ffffff);}
+    .stock-item.danger{background:linear-gradient(180deg,#fef2f2,#ffffff);}
 
-    .stock-item.healthy{
-      background:linear-gradient(180deg, rgba(34,197,94,.10), rgba(36,52,71,.95));
+    .row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
     }
-    .stock-item.watch{
-      background:linear-gradient(180deg, rgba(250,204,21,.10), rgba(36,52,71,.95));
+    .name{
+      font-size:17px;
+      font-weight:800;
+      color:var(--text);
     }
-    .stock-item.danger{
-      background:linear-gradient(180deg, rgba(239,68,68,.12), rgba(36,52,71,.95));
+    .ticker{
+      font-size:12px;
+      color:var(--muted-2);
+      font-weight:600;
     }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border-radius:999px;
+      padding:5px 10px;
+      font-size:12px;
+      font-weight:800;
+      background:#ffffff;
+      border:1px solid var(--border);
+      color:var(--text-2);
+    }
+    .badge.red{background:#fee2e2;color:#b91c1c;border-color:#fecaca}
+    .badge.yellow{background:#fef3c7;color:#92400e;border-color:#fde68a}
+    .badge.green{background:#dcfce7;color:#166534;border-color:#bbf7d0}
+
     .strength-badge{
       display:inline-flex;
       align-items:center;
@@ -133,22 +180,14 @@
       border-radius:999px;
       padding:4px 10px;
       font-size:12px;
-      font-weight:700;
+      font-weight:800;
       border:1px solid var(--border);
-      background:#f0f9ff;
+      background:#ffffff;
     }
-    .strength-strong{
-      color:#86efac;
-      background:rgba(34,197,94,.2);
-    }
-    .strength-neutral{
-      color:#fde68a;
-      background:rgba(250,204,21,.25);
-    }
-    .strength-weak{
-      color:#fca5a5;
-      background:rgba(239,68,68,.2);
-    }
+    .strength-strong{color:#166534;background:#dcfce7;border-color:#bbf7d0}
+    .strength-neutral{color:#92400e;background:#fef3c7;border-color:#fde68a}
+    .strength-weak{color:#b91c1c;background:#fee2e2;border-color:#fecaca}
+
     .rank-no{
       display:inline-flex;
       width:24px;
@@ -158,30 +197,10 @@
       justify-content:center;
       font-size:12px;
       font-weight:800;
-      background:#f0f9ff;
-      border:1px solid var(--border);
-      color:#cbd5e1;
+      background:#e0f2fe;
+      border:1px solid #bae6fd;
+      color:#075985;
       margin-right:8px;
-    }
-    .detail-tags{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top:8px;
-    }
-    .row{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:10px;
-    }
-    .name{
-      font-size:16px;
-      font-weight:700;
-    }
-    .ticker{
-      font-size:12px;
-      color:var(--muted);
     }
 
     .stock-stats{
@@ -195,25 +214,10 @@
       display:flex;
       justify-content:space-between;
       gap:8px;
-      color:#cbd5e1;
+      color:var(--text-2);
     }
-    .stat-line .k{
-      color:var(--muted);
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      border-radius:999px;
-      padding:5px 10px;
-      font-size:12px;
-      font-weight:700;
-      background:#f0f9ff;
-      border:1px solid var(--border);
-    }
-    .badge.red{background:rgba(239,68,68,.12)}
-    .badge.yellow{background:rgba(250,204,21,.25); color:#fde68a}
-    .badge.green{background:rgba(34,197,94,.12)}
+    .stat-line .k{color:var(--muted)}
+
     .detail-head{
       display:flex;
       justify-content:space-between;
@@ -227,31 +231,39 @@
       margin:0;
     }
     .detail-sub{
-      color:var(--muted);
+      color:var(--muted-2);
       font-size:13px;
       margin-top:4px;
     }
+    .detail-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:8px;
+    }
+
     .detail-grid{
       display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
+      grid-template-columns:repeat(2,minmax(0,1fr));
       gap:12px;
       margin-bottom:16px;
     }
     .mini{
-      background:#f0f9ff;
+      background:#fbfdff;
       border:1px solid var(--border);
       border-radius:14px;
       padding:12px;
     }
     .kv{
       display:grid;
-      grid-template-columns:110px 1fr;
+      grid-template-columns:120px 1fr;
       gap:8px;
       font-size:14px;
       margin:6px 0;
     }
+
     .chart-box{
-      background:#f0f9ff;
+      background:#fbfdff;
       border:1px solid var(--border);
       border-radius:16px;
       padding:12px;
@@ -263,9 +275,9 @@
       border-radius:12px;
       overflow:hidden;
       background:
-        linear-gradient(to top, rgba(56,189,248,.06), rgba(56,189,248,0)),
-        linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,0));
-      border:1px solid rgba(255,255,255,.05);
+        linear-gradient(to top, rgba(14,165,233,.07), rgba(14,165,233,0)),
+        linear-gradient(to bottom, rgba(15,23,42,.03), rgba(255,255,255,0));
+      border:1px solid var(--border);
     }
     .price-chart svg{
       width:100%;
@@ -279,25 +291,49 @@
       border-top:1px dashed;
       font-size:11px;
       padding-left:8px;
-      color:#cbd5e1;
+      color:#64748b;
       pointer-events:none;
-    }
-    .section-title{
-      font-size:16px;
-      font-weight:800;
-      margin:0 0 10px;
     }
     .strategy{
       line-height:1.65;
       font-size:14px;
     }
-    .strategy b{color:#fff}
-    @media (max-width: 900px){
-      .summary-card,.list-panel,.detail-panel{grid-column:1/-1}
+    .strategy b{color:#0f172a}
+
+    .position-card{
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px;
+      background:#ffffff;
+      margin-bottom:10px;
+    }
+    .warn-card{
+      background:#fff7ed;
+      color:#9a3412;
+      border:1px solid #fed7aa;
+    }
+    .good-card{
+      background:#f0fdf4;
+      color:#166534;
+      border:1px solid #bbf7d0;
+    }
+    .chip-row{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+    .empty{
+      padding:24px;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    @media (max-width: 980px){
       .toolbar{grid-template-columns:1fr}
+      .summary-card,.list-panel,.detail-panel{grid-column:1/-1}
       .detail-grid{grid-template-columns:1fr}
       .detail-title{font-size:24px}
-      .hero h1{font-size:22px}
     }
   </style>
 </head>
@@ -305,12 +341,12 @@
   <div class="wrap">
     <div class="hero">
       <h1>M6 Stocks Dashboard</h1>
-      <div class="sub">振宇持股管理沙盒｜多檔 Dashboard 強化版（排序 / 強弱 / 顏色）</div>
-      <div class="toolbar" style="grid-template-columns:1.3fr 1fr 1fr 1fr;">
+      <div class="sub">振宇持股管理沙盒｜專業版 UI（高對比、清晰決策）｜M6 真資料版</div>
+      <div class="toolbar">
         <input id="searchInput" class="input" placeholder="搜尋股票代號或名稱，例如 ORCL / COIN" />
         <select id="sourceFilter" class="select">
           <option value="all">全部來源</option>
-          <option value="FCN 接股">FCN 接股</option>
+          <option value="FCN接股">FCN接股</option>
           <option value="主動買進">主動買進</option>
         </select>
         <select id="statusFilter" class="select">
@@ -324,523 +360,423 @@
           <option value="strength">依強弱排序</option>
           <option value="pnl">依損益金額排序</option>
           <option value="return">依損益率排序</option>
+          <option value="score">依 today score 排序</option>
           <option value="symbol">依代號排序</option>
         </select>
       </div>
     </div>
 
-    <div class="grid" id="summaryGrid" style="align-items:stretch;"></div>
+    <div class="grid" id="summaryGrid"></div>
+
+    <div class="card full" style="padding:12px 16px; margin-top:12px;">
+      <div class="row" style="flex-wrap:wrap; gap:10px;">
+        <div class="small"><b style="color:var(--text)">閱讀原則：</b>白卡看數字、色塊看風險、徽章看強弱；目前已接真價格，1M 代 MA50、6M 代 MA200、12M 作年線。</div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <span class="badge green">健康</span>
+          <span class="badge yellow">觀察</span>
+          <span class="badge red">危險</span>
+          <span class="strength-badge strength-strong">強</span>
+          <span class="strength-badge strength-neutral">中</span>
+          <span class="strength-badge strength-weak">弱</span>
+        </div>
+      </div>
+    </div>
 
     <div class="grid" style="margin-top:16px;">
       <div class="card list-panel">
         <div class="section-title">多檔持股總覽</div>
-        <div class="small" style="margin-bottom:12px;">點選左側個股，右側會顯示詳情、價格區間與策略。</div>
+        <div class="small" style="margin-bottom:12px;">左邊顯示合併後的持股，右邊展開單一股票的多筆部位與今日評估。</div>
         <div id="stockList" class="stock-list"></div>
       </div>
 
       <div class="card detail-panel">
-        <div id="detailPanel"></div>
+        <div id="detailPanel" class="empty">載入中...</div>
       </div>
     </div>
   </div>
 
-<script>
-const MARKET_RUNTIME = {
-  ORCL: {
-    price_now: 155.6199951171875,
-    volume: 49480800,
-    volume_ratio: 2.13,
-    last_update: "2026-04-14T07:53:04.650165+00:00",
-    price_ref_1d: 138.08999633789062,
-    price_ref_1w: 145.5399932861328,
-    price_ref_1m: 159.16000366210938,
-    price_ref_3m: 198.52000427246094,
-    price_ref_6m: 296.9599914550781,
-    price_ref_12m: 134.63999938964844,
-    ret_1d: 0.126946,
-    ret_1w: 0.069259,
-    ret_1m: -0.022242,
-    ret_3m: -0.216099,
-    ret_6m: -0.475956,
-    ret_12m: 0.155823,
-    swing_days: [12.69, 0.17, -4.04, 0.34, -1.63, -0.57],
-    delta_1d: 12.69
-  }
-};
-
-const stocks = [
-  {
-    symbol: "ORCL",
-    name: "Oracle",
-    category: "AI/科技",
-    source: "FCN 接股",
-    fcn_id: "FCN710H 富邦",
-    bank: "法國外貿銀行",
-    quantity: 55,
-    cost: 178.82,
-    current: 156.00,
-    status: "危險",
-    trend: "反彈中，未回長期壓力",
-    support: [140, 134],
-    resistance: [159, 170, 200],
-    rsi: 74,
-    strength: "弱",
-    switch_to: ["NVDA", "AVGO"],
-    strategy: {
-      summary: "接股後仍低於成本，現階段以反彈減碼與風險控制為主。",
-      conservative: "158~160 減碼 50%，跌破 140 全出。",
-      neutral: "159 賣 30%，170 再賣 30%，若轉強再保留。",
-      aggressive: "突破 170 後續抱，但必須啟用追蹤停損。"
-    },
-    series: [150,148,146,144,142,141,143,145,147,149,151,154,158,160,157,155,156]
-  },
-  {
-    symbol: "COIN",
-    name: "Coinbase",
-    category: "高波動/金融科技",
-    source: "主動買進",
-    fcn_id: "-",
-    bank: "-",
-    quantity: 20,
-    cost: 168.00,
-    current: 174.53,
-    status: "觀察",
-    trend: "高波動反彈，仍受均線壓力",
-    support: [160, 158.5],
-    resistance: [182, 200, 248],
-    rsi: 55.3,
-    strength: "中",
-    switch_to: ["NVDA", "MSFT"],
-    strategy: {
-      summary: "高 Beta 標的，適合反彈分批賣，不宜太樂觀。",
-      conservative: "179~182 先賣 50%，跌破 160 全出。",
-      neutral: "182 賣 40%，200 再賣 30%，其餘看量價。",
-      aggressive: "有效站上 50MA 後轉追蹤停利。"
-    },
-    series: [162,165,169,172,176,180,178,175,172,170,167,164,168,171,173,175,174.53]
-  },
-  {
-    symbol: "TSLA",
-    name: "Tesla",
-    category: "AI/高波動",
-    source: "FCN 接股",
-    fcn_id: "FCN710H 富邦",
-    bank: "法國外貿銀行",
-    quantity: 18,
-    cost: 239.50,
-    current: 228.40,
-    status: "觀察",
-    trend: "弱勢整理，等待方向",
-    support: [220, 205],
-    resistance: [235, 248, 270],
-    rsi: 49,
-    strength: "中",
-    switch_to: ["NVDA", "AVGO"],
-    strategy: {
-      summary: "若無法站回 235 上方，仍偏整理格局。",
-      conservative: "反彈到 235 先減碼，跌破 220 嚴控風險。",
-      neutral: "235 賣 30%，248 賣 30%。",
-      aggressive: "站穩 248 再談續抱。"
-    },
-    series: [245,242,240,238,236,233,231,229,226,223,221,224,227,230,232,229,228.4]
-  },
-  {
-    symbol: "NVDA",
-    name: "NVIDIA",
-    category: "AI/核心",
-    source: "主動買進",
-    fcn_id: "-",
-    bank: "-",
-    quantity: 12,
-    cost: 170.20,
-    current: 183.22,
-    status: "健康",
-    trend: "強勢整理，仍在成本上方",
-    support: [176, 170],
-    resistance: [186, 192, 200],
-    rsi: 63,
-    strength: "強",
-    switch_to: [],
-    strategy: {
-      summary: "核心股可續抱，但接近短線壓力時可局部調節。",
-      conservative: "186 附近先調節 20%。",
-      neutral: "186~192 分批賣出，170 設防守。",
-      aggressive: "突破 192 後續抱。"
-    },
-    series: [168,170,171,173,174,176,178,177,179,181,183,184,182,181,182,183,183.22]
-  }
-];
-
-let selectedSymbol = "ORCL";
-
-function pnl(stock){
-  const diff = stock.current - stock.cost;
-  const pct = stock.cost ? (diff / stock.cost) * 100 : 0;
-  return { diff, pct };
-}
-
-function statusClass(status){
-  if (status === "健康") return "green";
-  if (status === "觀察") return "yellow";
-  return "red";
-}
-
-
-function strengthClass(strength){
-  if (strength === "強") return "strength-strong";
-  if (strength === "中") return "strength-neutral";
-  return "strength-weak";
-}
-
-function statusWeight(status){
-  if (status === "危險") return 0;
-  if (status === "觀察") return 1;
-  return 2;
-}
-
-function strengthWeight(strength){
-  if (strength === "強") return 2;
-  if (strength === "中") return 1;
-  return 0;
-}
-
-function sortStocks(data){
-  const mode = document.getElementById("sortMode")?.value || "risk";
-  const arr = [...data];
-  arr.sort((a,b) => {
-    const pa = pnl(a), pb = pnl(b);
-    const paAmt = pa.diff * a.quantity;
-    const pbAmt = pb.diff * b.quantity;
-    if (mode === "risk") {
-      return statusWeight(a.status) - statusWeight(b.status) || strengthWeight(a.strength) - strengthWeight(b.strength) || a.symbol.localeCompare(b.symbol);
-    }
-    if (mode === "strength") {
-      return strengthWeight(b.strength) - strengthWeight(a.strength) || statusWeight(a.status) - statusWeight(b.status) || a.symbol.localeCompare(b.symbol);
-    }
-    if (mode === "pnl") {
-      return pbAmt - paAmt;
-    }
-    if (mode === "return") {
-      return pb.pct - pa.pct;
-    }
-    return a.symbol.localeCompare(b.symbol);
-  });
-  return arr;
-}
-
-function calcSummary(data){
-  const totalCost = data.reduce((s, x) => s + x.cost * x.quantity, 0);
-  const totalValue = data.reduce((s, x) => s + x.current * x.quantity, 0);
-  const totalPnl = totalValue - totalCost;
-  return {
-    count: data.length,
-    totalCost,
-    totalValue,
-    totalPnl,
-    healthy: data.filter(x => x.status === "健康").length,
-    watch: data.filter(x => x.status === "觀察").length,
-    danger: data.filter(x => x.status === "危險").length
-  };
-}
-
-function renderSummary(data){
-  const s = calcSummary(data);
-  const pnlClass = s.totalPnl >= 0 ? "green" : "red";
-  document.getElementById("summaryGrid").innerHTML = `
-    <div class="card summary-card">
-      <div class="label">檔數</div>
-      <div class="metric">${s.count}</div>
-    </div>
-    <div class="card summary-card">
-      <div class="label">總成本</div>
-      <div class="metric">$${s.totalCost.toFixed(0)}</div>
-    </div>
-    <div class="card summary-card">
-      <div class="label">總市值</div>
-      <div class="metric">$${s.totalValue.toFixed(0)}</div>
-    </div>
-    <div class="card summary-card">
-      <div class="label">總損益</div>
-      <div class="metric ${pnlClass}">${s.totalPnl >= 0 ? "+" : ""}$${s.totalPnl.toFixed(0)}</div>
-    </div>
-    <div class="card summary-card">
-      <div class="label">健康/觀察/危險</div>
-      <div class="metric"><span class="green">${s.healthy}</span>/<span class="yellow">${s.watch}</span>/<span class="red">${s.danger}</span></div>
-    </div>
-  `;
-}
-
-function getFilteredStocks(){
-  const search = document.getElementById("searchInput").value.trim().toLowerCase();
-  const source = document.getElementById("sourceFilter").value;
-  const status = document.getElementById("statusFilter").value;
-
-  let result = stocks.filter(s => {
-    const hitSearch = !search || s.symbol.toLowerCase().includes(search) || s.name.toLowerCase().includes(search);
-    const hitSource = source === "all" || s.source === source;
-    const hitStatus = status === "all" || s.status === status;
-    return hitSearch && hitSource && hitStatus;
-  });
-
-  result = sortStocks(result);
-
-  if (!result.find(x => x.symbol === selectedSymbol) && result.length) {
-    selectedSymbol = result[0].symbol;
-  }
-  return result;
-}
-
-function renderList(data){
-  const el = document.getElementById("stockList");
-  el.innerHTML = data.map((stock, idx) => {
-    const p = pnl(stock);
-    const cls = p.diff >= 0 ? "green" : "red";
-    const active = stock.symbol === selectedSymbol ? "active" : "";
-    const pnlAmt = p.diff * stock.quantity;
-    const statusTone = stock.status === "健康" ? "healthy" : stock.status === "觀察" ? "watch" : "danger";
-    return `
-      <div class="stock-item ${active} ${statusTone}" onclick="selectStock('${stock.symbol}')">
-        <div class="row">
-          <div>
-            <div class="name"><span class="rank-no">${idx + 1}</span>${stock.symbol} <span class="ticker">｜${stock.name}</span></div>
-            <div class="small">${stock.source} ・ ${stock.category}</div>
-          </div>
-          <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
-            <div class="strength-badge ${strengthClass(stock.strength)}">強弱：${stock.strength}</div>
-            <div class="badge ${statusClass(stock.status)}">${stock.status}</div>
-          </div>
-        </div>
-
-        <div class="stock-stats">
-          <div class="stat-line"><span class="k">股數</span><span>${stock.quantity}</span></div>
-          <div class="stat-line"><span class="k">成本</span><span>$${stock.cost.toFixed(2)}</span></div>
-          <div class="stat-line"><span class="k">現價</span><span>$${stock.current.toFixed(2)}</span></div>
-          <div class="stat-line"><span class="k">價差</span><span class="${cls}">${p.diff >= 0 ? "+" : ""}${p.diff.toFixed(2)}</span></div>
-          <div class="stat-line"><span class="k">損益金額</span><span class="${cls}">${pnlAmt >= 0 ? "+" : ""}$${pnlAmt.toFixed(0)}</span></div>
-          <div class="stat-line"><span class="k">損益率</span><span class="${cls}">${p.pct >= 0 ? "+" : ""}${p.pct.toFixed(1)}%</span></div>
-          <div class="stat-line"><span class="k">單日變化</span><span class="${(stock.delta_1d ?? 0) >= 0 ? 'green' : 'red'}">${(stock.delta_1d ?? 0) >= 0 ? "+" : ""}${(stock.delta_1d ?? 0).toFixed ? (stock.delta_1d ?? 0).toFixed(2) : stock.delta_1d}%</span></div>
-        </div>
-      </div>
-    `;
-  }).join("") || `<div class="small">目前沒有符合條件的股票。</div>`;
-}
-
-function priceToY(value, min, max, h){
-  if (max === min) return h / 2;
-  return ((max - value) / (max - min)) * h;
-}
-
-function renderLineChart(stock){
-  const data = stock.series && stock.series.length ? stock.series : [
-    stock.line_12m, stock.line_6m, stock.line_1m, stock.line_1w, stock.current
-  ].filter(v => Number.isFinite(v));
-  const allRef = [
-    ...data,
-    stock.cost,
-    stock.current,
-    ...stock.support,
-    ...stock.resistance,
-    stock.ma50,
-    stock.ma200
-  ].filter(v => Number.isFinite(v));
-  const min = Math.min(...allRef) * 0.97;
-  const max = Math.max(...allRef) * 1.03;
-  const w = 880;
-  const h = 240;
-  const pts = data.map((v, i) => {
-    const x = (i / (data.length - 1 || 1)) * w;
-    const y = priceToY(v, min, max, h);
-    return `${x},${y}`;
-  }).join(" ");
-  const fillPts = `0,${h} ${pts} ${w},${h}`;
-
-  const marks = [
-    { label:`成本 ${stock.cost.toFixed(2)}`, value:stock.cost, color:"#22c55e" },
-    { label:`現價 ${stock.current.toFixed(2)}`, value:stock.current, color:"#ef4444" },
-    { label:`1M代MA50 ${stock.line_1m?.toFixed ? stock.line_1m.toFixed(2) : stock.line_1m}`, value:stock.line_1m, color:"#38bdf8" },
-    { label:`6M代MA200 ${stock.line_6m?.toFixed ? stock.line_6m.toFixed(2) : stock.line_6m}`, value:stock.line_6m, color:"#7c3aed" },
-    { label:`年線 ${stock.line_12m?.toFixed ? stock.line_12m.toFixed(2) : stock.line_12m}`, value:stock.line_12m, color:"#f59e0b" },
-    { label:`支撐 ${stock.support[0]}`, value:stock.support[0], color:"#94a3b8" },
-    { label:`壓力 ${stock.resistance[0]}`, value:stock.resistance[0], color:"#64748b" }
-  ];
-
-  return `
-    <div class="price-chart">
-      ${marks.map(m => {
-        const top = priceToY(m.value, min, max, h);
-        return `<div class="line-mark" style="top:${top}px;border-color:${m.color};">${m.label}</div>`;
-      }).join("")}
-      <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-label="price chart">
-        <polyline points="${fillPts}" fill="rgba(56,189,248,.10)" stroke="none"></polyline>
-        <polyline points="${pts}" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
-      </svg>
-    </div>
-  `;
-}
-
-function renderDetail(stock){
-  const p = pnl(stock);
-  const cls = p.diff >= 0 ? "green" : "red";
-  document.getElementById("detailPanel").innerHTML = `
-    <div class="detail-head">
-      <div>
-        <h2 class="detail-title">${stock.symbol} ｜ ${stock.name}</h2>
-        <div class="detail-sub">${stock.source} ・ ${stock.category} ・ FCN來源：${stock.fcn_id} ・ 更新：${stock.last_update || "-"}</div><div class="detail-tags"><div class="strength-badge ${strengthClass(stock.strength)}">強弱：${stock.strength}</div><div class="badge ${statusClass(stock.status)}">${stock.status}</div></div>
-      </div>
-      <div class="badge ${statusClass(stock.status)}">${stock.status}</div>
-    </div>
-
-    <div class="detail-grid">
-      <div class="mini">
-        <div class="label">持倉概況</div>
-        <div class="kv"><div class="small">數量</div><div>${stock.quantity} 股</div></div>
-        <div class="kv"><div class="small">成本</div><div>$${stock.cost.toFixed(2)}</div></div>
-        <div class="kv"><div class="small">現價</div><div>$${stock.current.toFixed(2)}</div></div>
-        <div class="kv"><div class="small">損益</div><div class="${cls}">${p.diff >= 0 ? "+" : ""}$${p.diff.toFixed(2)} / ${p.pct.toFixed(1)}%</div></div>
-      </div>
-      <div class="mini">
-        <div class="label">技術概況</div>
-        <div class="kv"><div class="small">趨勢</div><div>${stock.trend}</div></div>
-        <div class="kv"><div class="small">RSI</div><div class="${stock.rsi >= 70 ? 'red' : stock.rsi >= 55 ? 'yellow' : 'green'}">${stock.rsi}</div></div>
-        <div class="kv"><div class="small">MA50 / MA200</div><div>${stock.ma50} / ${stock.ma200}</div></div>
-        <div class="kv"><div class="small">銀行</div><div>${stock.bank}</div></div>
-      </div>
-    </div>
-
-    <div class="chart-box">
-      <div class="section-title">價格區間圖</div>
-      ${renderLineChart(stock)}
-      <div class="small" style="margin-top:8px;">目前先接真價格與代理線：1M 代 MA50、6M 代 MA200、12M 作年線。真 K 線後面再補。</div>
-    </div>
-
-    <div class="detail-grid">
-      <div class="mini">
-        <div class="section-title">支撐 / 壓力</div>
-        <div class="kv"><div class="small">支撐</div><div>${stock.support.join(" / ")}</div></div>
-        <div class="kv"><div class="small">壓力</div><div>${stock.resistance.join(" / ")}</div></div>
-      </div>
-      <div class="mini">
-        <div class="section-title">策略摘要</div>
-        <div class="strategy">${stock.strategy.summary}</div>
-        <div class="kv"><div class="small">目前損益金額</div><div class="${cls}">${(p.diff * stock.quantity) >= 0 ? "+" : ""}$${(p.diff * stock.quantity).toFixed(0)}</div></div>
-        <div class="kv"><div class="small">目前損益率</div><div class="${cls}">${p.pct >= 0 ? "+" : ""}${p.pct.toFixed(1)}%</div></div>
-        <div class="kv"><div class="small">換股觀察</div><div>${stock.switch_to && stock.switch_to.length ? stock.switch_to.join(" / ") : "目前不需換股"}</div></div>
-      </div>
-    </div>
-
-    <div class="mini">
-      <div class="section-title">三段策略</div>
-      <div class="strategy">
-        <div><b>保守：</b>${stock.strategy.conservative}</div>
-        <div class="small">若現在執行，預估損益金額：<span class="${cls}">${(p.diff * stock.quantity) >= 0 ? "+" : ""}$${(p.diff * stock.quantity).toFixed(0)}</span></div>
-        <div style="margin-top:8px;"><b>中性：</b>${stock.strategy.neutral}</div>
-        <div class="small">適合先收回部分資金，再保留延伸空間。</div>
-        <div style="margin-top:8px;"><b>積極：</b>${stock.strategy.aggressive}</div>
-        <div class="small">需接受較大波動，策略意義建立在後續價差擴大。</div>
-      </div>
-    </div>
-  `;
-}
-
-function selectStock(symbol){
-  selectedSymbol = symbol;
-  rerender();
-}
-window.selectStock = selectStock;
-
-function rerender(){
-  const filtered = sortAggregates(vm.aggregates, "risk");
-  renderSummary(filtered);
-  renderList(filtered);
-  const stock = filtered.find(s => s.symbol === selectedSymbol) || filtered[0];
-  if (stock) renderDetail(stock);
-  else document.getElementById("detailPanel").innerHTML = `<div class="small">沒有可顯示的股票。</div>`;
-}
-
-document.getElementById("searchInput").addEventListener("input", rerender);
-document.getElementById("sourceFilter").addEventListener("change", rerender);
-document.getElementById("statusFilter").addEventListener("change", rerender);
-document.getElementById("sortMode").addEventListener("change", rerender);
-
-rerender();
-</script>
   <script type="module">
-import {
-  loadM6Data,
-  buildM6ViewModel,
-  sortAggregates,
-  buildPositionDetails
-} from "./js/m6/m6_engine.js";
+    import {
+      loadM6Data,
+      buildM6ViewModel,
+      sortAggregates,
+      buildPositionDetails
+    } from "./js/m6/m6_engine.js";
 
-// ========================
-// 初始化
-// ========================
-async function init() {
-  try {
-    const raw = await loadM6Data({
-      positionsUrl: "./data/positions.json",
-      marketUrl: "./data/market_runtime.json",
-      m7TodayUrl: "./data/m7/m7_new_stock_today.json"
-    });
+    let vm = null;
+    let selectedSymbol = "";
+    let currentAggregates = [];
 
-    const vm = buildM6ViewModel(raw);
-    window.vm = vm;
-    window.stocks = vm.aggregates;
-    
-    // ========================
-    // 左邊：總覽（合併後）
-    // ========================
-    const list = sortAggregates(vm.aggregates, "risk");
-
-    console.log("=== 左邊總覽 ===");
-    console.table(list);
-
-    // 測試：印出第一檔
-    if (list.length > 0) {
-      const s = list[0];
-
-      console.log("第一檔：", s.symbol);
-      console.log("股數：", s.quantity);
-      console.log("成本：", s.cost);
-      console.log("現價：", s.current);
-      console.log("損益：", s.pnl_amount, s.pnl_pct + "%");
-      console.log("狀態：", s.status_eval, s.strength);
-      console.log("建議動作：", s.action_today);
-      console.log("曝險：", s.exposure_alert?.text);
+    function statusClass(status){
+      if (status === "健康") return "green";
+      if (status === "觀察") return "yellow";
+      return "red";
     }
 
-    // ========================
-    // 右邊：單一股票（多部位）
-    // ========================
-    const symbol = "ORCL";
+    function statusTone(status){
+      if (status === "健康") return "healthy";
+      if (status === "觀察") return "watch";
+      return "danger";
+    }
 
-    const details = buildPositionDetails(
-      symbol,
-      vm.positions,
-      vm.marketRuntime,
-      vm.m7TodayMap
-    );
+    function strengthClass(strength){
+      if (strength === "強") return "strength-strong";
+      if (strength === "中") return "strength-neutral";
+      return "strength-weak";
+    }
 
-    console.log("=== 右邊詳情（ORCL） ===");
-    console.table(details);
+    function moneyClass(value){
+      return Number(value) >= 0 ? "green" : "red";
+    }
 
-    details.forEach(d => {
-      console.log(
-        d.role,
-        "股數:", d.quantity,
-        "成本:", d.cost,
-        "現價:", d.current,
-        "損益:", d.pnl_amount,
-        "狀態:", d.status_eval
+    function fmtNum(value, digits = 2){
+      const n = Number(value);
+      if (!Number.isFinite(n)) return "-";
+      return n.toFixed(digits);
+    }
+
+    function fmtInt(value){
+      const n = Number(value);
+      if (!Number.isFinite(n)) return "-";
+      return Math.round(n).toString();
+    }
+
+    function renderSummary(items){
+      const totalCost = items.reduce((s, x) => s + (Number(x.total_cost) || 0), 0);
+      const totalValue = items.reduce((s, x) => s + (Number(x.market_value) || 0), 0);
+      const totalPnl = totalValue - totalCost;
+      const healthy = items.filter(x => x.status_eval === "健康").length;
+      const watch = items.filter(x => x.status_eval === "觀察").length;
+      const danger = items.filter(x => x.status_eval === "危險").length;
+
+      document.getElementById("summaryGrid").innerHTML = `
+        <div class="card summary-card">
+          <div class="label">檔數</div>
+          <div class="metric">${items.length}</div>
+        </div>
+        <div class="card summary-card">
+          <div class="label">總成本</div>
+          <div class="metric">$${fmtInt(totalCost)}</div>
+        </div>
+        <div class="card summary-card">
+          <div class="label">總市值</div>
+          <div class="metric">$${fmtInt(totalValue)}</div>
+        </div>
+        <div class="card summary-card">
+          <div class="label">總損益</div>
+          <div class="metric ${moneyClass(totalPnl)}">${totalPnl >= 0 ? "+" : ""}$${fmtInt(totalPnl)}</div>
+        </div>
+        <div class="card summary-card">
+          <div class="label">健康 / 觀察 / 危險</div>
+          <div class="metric">
+            <span class="green">${healthy}</span> /
+            <span class="yellow">${watch}</span> /
+            <span class="red">${danger}</span>
+          </div>
+        </div>
+        <div class="card summary-card">
+          <div class="label">引擎</div>
+          <div class="metric blue">AUTO</div>
+        </div>
+      `;
+    }
+
+    function getFilteredAggregates(){
+      if (!vm) return [];
+
+      const q = document.getElementById("searchInput").value.trim().toLowerCase();
+      const source = document.getElementById("sourceFilter").value;
+      const status = document.getElementById("statusFilter").value;
+      const sortMode = document.getElementById("sortMode").value;
+
+      let items = [...vm.aggregates].filter(item => {
+        const hitSearch =
+          !q ||
+          (item.symbol || "").toLowerCase().includes(q) ||
+          (item.name || "").toLowerCase().includes(q);
+
+        const hitSource =
+          source === "all" ||
+          (item.source_type || "").includes(source);
+
+        const hitStatus =
+          status === "all" ||
+          item.status_eval === status;
+
+        return hitSearch && hitSource && hitStatus;
+      });
+
+      items = sortAggregates(items, sortMode);
+
+      if (!selectedSymbol && items.length) selectedSymbol = items[0].symbol;
+      if (selectedSymbol && !items.find(x => x.symbol === selectedSymbol) && items.length) {
+        selectedSymbol = items[0].symbol;
+      }
+
+      return items;
+    }
+
+    function renderList(items){
+      const el = document.getElementById("stockList");
+
+      if (!items.length) {
+        el.innerHTML = `<div class="empty">目前沒有符合條件的股票。</div>`;
+        return;
+      }
+
+      el.innerHTML = items.map((stock, idx) => `
+        <div class="stock-item ${statusTone(stock.status_eval)} ${stock.symbol === selectedSymbol ? "active" : ""}"
+             onclick="window.selectStock('${stock.symbol}')">
+          <div class="row">
+            <div>
+              <div class="name"><span class="rank-no">${idx + 1}</span>${stock.symbol} <span class="ticker">｜${stock.name || stock.symbol}</span></div>
+              <div class="small">${stock.source_type || "-"} ・ ${stock.category || "-"} ・ ${stock.sector || "-"}</div>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+              <div class="strength-badge ${strengthClass(stock.strength)}">強弱：${stock.strength}</div>
+              <div class="badge ${statusClass(stock.status_eval)}">${stock.status_eval}</div>
+            </div>
+          </div>
+
+          <div class="stock-stats">
+            <div class="stat-line"><span class="k">股數</span><span>${fmtInt(stock.quantity)}</span></div>
+            <div class="stat-line"><span class="k">成本</span><span>$${fmtNum(stock.cost)}</span></div>
+            <div class="stat-line"><span class="k">現價</span><span>$${fmtNum(stock.current)}</span></div>
+            <div class="stat-line"><span class="k">價差</span><span class="${moneyClass(stock.price_gap)}">${stock.price_gap >= 0 ? "+" : ""}${fmtNum(stock.price_gap)}</span></div>
+            <div class="stat-line"><span class="k">損益金額</span><span class="${moneyClass(stock.pnl_amount)}">${stock.pnl_amount >= 0 ? "+" : ""}$${fmtInt(stock.pnl_amount)}</span></div>
+            <div class="stat-line"><span class="k">損益率</span><span class="${moneyClass(stock.pnl_pct)}">${stock.pnl_pct >= 0 ? "+" : ""}${fmtNum(stock.pnl_pct)}%</span></div>
+            <div class="stat-line"><span class="k">單日變化</span><span class="${moneyClass(stock.delta_1d)}">${stock.delta_1d >= 0 ? "+" : ""}${fmtNum(stock.delta_1d)}%</span></div>
+            <div class="stat-line"><span class="k">today score</span><span>${stock.today_score ?? "-"}</span></div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function priceToY(value, min, max, h){
+      if (!Number.isFinite(value)) return h / 2;
+      if (max === min) return h / 2;
+      return ((max - value) / (max - min)) * h;
+    }
+
+    function renderLineChart(stock){
+      const series = [
+        stock.line_12m,
+        stock.line_6m,
+        stock.line_1m,
+        stock.line_1w,
+        stock.current
+      ].filter(v => Number.isFinite(Number(v))).map(Number);
+
+      const allRef = [
+        ...series,
+        Number(stock.cost),
+        Number(stock.current),
+        Number(stock.line_1m),
+        Number(stock.line_6m),
+        Number(stock.line_12m)
+      ].filter(v => Number.isFinite(v));
+
+      const min = Math.min(...allRef) * 0.95;
+      const max = Math.max(...allRef) * 1.05;
+      const w = 880;
+      const h = 240;
+
+      const pts = series.map((v, i) => {
+        const x = (i / Math.max(series.length - 1, 1)) * w;
+        const y = priceToY(v, min, max, h);
+        return `${x},${y}`;
+      }).join(" ");
+
+      const fillPts = `0,${h} ${pts} ${w},${h}`;
+
+      const marks = [
+        { label:`成本 ${fmtNum(stock.cost)}`, value:Number(stock.cost), color:"#22c55e" },
+        { label:`現價 ${fmtNum(stock.current)}`, value:Number(stock.current), color:"#ef4444" },
+        { label:`1M代MA50 ${fmtNum(stock.line_1m)}`, value:Number(stock.line_1m), color:"#38bdf8" },
+        { label:`6M代MA200 ${fmtNum(stock.line_6m)}`, value:Number(stock.line_6m), color:"#7c3aed" },
+        { label:`年線 ${fmtNum(stock.line_12m)}`, value:Number(stock.line_12m), color:"#f59e0b" }
+      ].filter(x => Number.isFinite(x.value));
+
+      return `
+        <div class="price-chart">
+          ${marks.map(m => {
+            const top = priceToY(m.value, min, max, h);
+            return `<div class="line-mark" style="top:${top}px;border-color:${m.color};">${m.label}</div>`;
+          }).join("")}
+          <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+            <polyline points="${fillPts}" fill="rgba(56,189,248,.10)" stroke="none"></polyline>
+            <polyline points="${pts}" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+          </svg>
+        </div>
+      `;
+    }
+
+    function renderDetail(stock){
+      const panel = document.getElementById("detailPanel");
+
+      if (!stock) {
+        panel.innerHTML = `<div class="empty">沒有可顯示的股票。</div>`;
+        return;
+      }
+
+      const details = buildPositionDetails(
+        stock.symbol,
+        vm.positions,
+        vm.marketRuntime,
+        vm.m7TodayMap
       );
-    });
 
-  } catch (err) {
-    console.error("M6 初始化失敗", err);
-  }
-}
+      panel.innerHTML = `
+        <div class="detail-head">
+          <div>
+            <h2 class="detail-title">${stock.symbol} ｜ ${stock.name || ""}</h2>
+            <div class="detail-sub">
+              ${stock.source_type || "-"} ・ ${stock.category || "-"} ・ ${stock.sector || "-"} ・ FCN來源：${stock.source_id || "-"} ・ 更新：${stock.last_update || "-"}
+            </div>
+            <div class="detail-tags">
+              <div class="strength-badge ${strengthClass(stock.strength)}">強弱：${stock.strength}</div>
+              <div class="badge ${statusClass(stock.status_eval)}">${stock.status_eval}</div>
+              ${stock.action_today ? `<div class="badge">${stock.action_today}</div>` : ""}
+              ${stock.ui_bucket ? `<div class="badge">${stock.ui_bucket}</div>` : ""}
+            </div>
+          </div>
+          <div class="badge ${statusClass(stock.status_eval)}">${stock.status_eval}</div>
+        </div>
 
-init();
-</script>
+        <div class="detail-grid">
+          <div class="mini">
+            <div class="label">合併持倉概況</div>
+            <div class="kv"><div class="small">數量</div><div>${fmtInt(stock.quantity)} 股</div></div>
+            <div class="kv"><div class="small">成本</div><div>$${fmtNum(stock.cost)}</div></div>
+            <div class="kv"><div class="small">現價</div><div>$${fmtNum(stock.current)}</div></div>
+            <div class="kv"><div class="small">損益</div><div class="${moneyClass(stock.pnl_amount)}">${stock.pnl_amount >= 0 ? "+" : ""}$${fmtInt(stock.pnl_amount)} / ${fmtNum(stock.pnl_pct)}%</div></div>
+            <div class="kv"><div class="small">來源</div><div>${stock.source_id || "-"}</div></div>
+          </div>
+
+          <div class="mini">
+            <div class="label">技術 / 今日評估</div>
+            <div class="kv"><div class="small">1W / 1M線</div><div>${fmtNum(stock.line_1w)} / ${fmtNum(stock.line_1m)}</div></div>
+            <div class="kv"><div class="small">6M線 / 年線</div><div>${fmtNum(stock.line_6m)} / ${fmtNum(stock.line_12m)}</div></div>
+            <div class="kv"><div class="small">量比</div><div>${fmtNum(stock.volume_ratio)}</div></div>
+            <div class="kv"><div class="small">today score</div><div>${stock.today_score ?? "-"}</div></div>
+            <div class="kv"><div class="small">趨勢 / 結構 / 時機</div><div>${stock.trend_state || "-"} / ${stock.structure_state || "-"} / ${stock.timing_state || "-"}</div></div>
+            <div class="kv"><div class="small">自動判讀</div><div>${stock.health_note || "-"}</div></div>
+          </div>
+        </div>
+
+        <div class="chart-box">
+          <div class="section-title">價格區間圖</div>
+          ${renderLineChart(stock)}
+          <div class="small" style="margin-top:8px;">目前先接真價格與代理線：1M 代 MA50、6M 代 MA200、12M 作年線。真 K 線後面再補。</div>
+        </div>
+
+        <div class="mini" style="margin-bottom:14px;">
+          <div class="section-title">多部位展開</div>
+          ${details.length ? details.map(d => `
+            <div class="position-card">
+              <div class="row">
+                <div><b>${d.role || "部位"}</b></div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                  <div class="strength-badge ${strengthClass(d.strength)}">${d.strength}</div>
+                  <div class="badge ${statusClass(d.status_eval)}">${d.status_eval}</div>
+                </div>
+              </div>
+              <div class="kv"><div class="small">股數</div><div>${fmtInt(d.quantity)} 股</div></div>
+              <div class="kv"><div class="small">成本</div><div>$${fmtNum(d.cost)}</div></div>
+              <div class="kv"><div class="small">現價</div><div>$${fmtNum(d.current)}</div></div>
+              <div class="kv"><div class="small">損益</div><div class="${moneyClass(d.pnl_amount)}">${d.pnl_amount >= 0 ? "+" : ""}$${fmtInt(d.pnl_amount)} / ${fmtNum(d.pnl_pct)}%</div></div>
+              <div class="kv"><div class="small">來源</div><div>${d.source_id || "-"} / ${d.bank || "-"}</div></div>
+            </div>
+          `).join("") : `<div class="small">無部位明細</div>`}
+        </div>
+
+        ${(stock.exposure_alert && stock.exposure_alert.text) ? `
+          <div class="mini warn-card" style="margin-bottom:14px;">
+            <div class="section-title">曝險警示</div>
+            <div class="strategy">⚠️ ${stock.exposure_alert.text}</div>
+          </div>
+        ` : ""}
+
+        <div class="detail-grid">
+          <div class="mini">
+            <div class="section-title">Why Yes</div>
+            <div class="chip-row">
+              ${(stock.why_yes && stock.why_yes.length)
+                ? stock.why_yes.map(x => `<span class="badge green">${x}</span>`).join("")
+                : `<span class="small">無</span>`
+              }
+            </div>
+          </div>
+
+          <div class="mini">
+            <div class="section-title">Why No</div>
+            <div class="chip-row">
+              ${(stock.why_no && stock.why_no.length)
+                ? stock.why_no.map(x => `<span class="badge red">${x}</span>`).join("")
+                : `<span class="small">無</span>`
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="mini" style="margin-bottom:14px;">
+          <div class="section-title">估值 / 最終說明</div>
+          <div class="strategy">
+            <div><b>估值說明：</b>${stock.valuation_note || "-"}</div>
+            <div style="margin-top:8px;"><b>最終說明：</b>${stock.final_note || "-"}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function rerender(){
+      const filtered = getFilteredAggregates();
+      currentAggregates = filtered;
+      renderSummary(filtered);
+      renderList(filtered);
+
+      const stock = filtered.find(x => x.symbol === selectedSymbol) || filtered[0];
+      renderDetail(stock);
+    }
+
+    async function init(){
+      try {
+        const raw = await loadM6Data({
+          positionsUrl: "./data/positions.json",
+          marketUrl: "./data/market_runtime.json",
+          m7TodayUrl: "./data/m7/m7_new_stock_today.json"
+        });
+
+        vm = buildM6ViewModel(raw);
+
+        window.vm = vm;
+        window.stocks = vm.aggregates;
+        window.selectStock = function(symbol){
+          selectedSymbol = symbol;
+          rerender();
+        };
+
+        const items = sortAggregates(vm.aggregates, "risk");
+        if (items.length) selectedSymbol = items[0].symbol;
+
+        document.getElementById("searchInput").addEventListener("input", rerender);
+        document.getElementById("sourceFilter").addEventListener("change", rerender);
+        document.getElementById("statusFilter").addEventListener("change", rerender);
+        document.getElementById("sortMode").addEventListener("change", rerender);
+
+        rerender();
+      } catch (err) {
+        console.error("M6 初始化失敗", err);
+        document.getElementById("detailPanel").innerHTML = `
+          <div class="mini warn-card">
+            <div class="section-title">初始化失敗</div>
+            <div class="strategy">${String(err)}</div>
+          </div>
+        `;
+      }
+    }
+
+    init();
+  </script>
 </body>
 </html>
