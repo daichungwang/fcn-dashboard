@@ -17,13 +17,13 @@
     .page {
       max-width: 1360px;
       margin: 0 auto;
-      padding: 20px 14px 50px;
+      padding: 20px 14px 60px;
     }
 
     h1 { margin: 0 0 10px; font-size: 32px; }
     h2 { margin: 0 0 12px; font-size: 24px; }
     h3 { margin: 0 0 10px; font-size: 18px; }
-    h4 { margin: 12px 0 8px; font-size: 15px; color: #444; }
+    h4 { margin: 10px 0 8px; font-size: 15px; color: #444; }
 
     .subtitle {
       color: #555;
@@ -78,86 +78,47 @@
       margin-top: 8px;
     }
 
-    .summary-grid {
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+
+    .grid-4 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
     }
 
-    .summary-box {
+    .kpi-box, .summary-box, .info-box {
       border: 1px solid #e5e5e5;
       border-radius: 14px;
       padding: 14px;
       background: #fff;
     }
 
-    .summary-label {
+    .summary-label, .kpi-title {
       color: #666;
       font-size: 13px;
       margin-bottom: 6px;
     }
 
-    .summary-value {
+    .summary-value, .kpi-value {
       font-size: 28px;
       font-weight: 700;
     }
 
-    .summary-sub {
+    .summary-sub, .kpi-note {
       margin-top: 4px;
       color: #666;
       font-size: 13px;
-    }
-
-    .three-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 14px;
-    }
-
-    .two-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-    }
-
-    .list-box {
-      border: 1px solid #e5e5e5;
-      border-radius: 14px;
-      padding: 14px;
-      background: #fff;
-      min-height: 220px;
-    }
-
-    .item-card {
-      border: 1px solid #eee;
-      border-radius: 12px;
-      padding: 12px;
-      margin-top: 10px;
-      background: #fafafa;
-    }
-
-    .item-title {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .item-line {
-      margin: 3px 0;
-      line-height: 1.6;
-      font-size: 14px;
-      white-space: normal;
-    }
-
-    .detail-box {
-      display: none;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed #ddd;
-    }
-
-    .detail-box.show {
-      display: block;
+      line-height: 1.5;
     }
 
     .section-body {
@@ -176,6 +137,43 @@
       margin-bottom: 10px;
     }
 
+    .detail-box {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #ddd;
+    }
+
+    .detail-box.show {
+      display: block;
+    }
+
+    .item-card, .scenario-card {
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 12px;
+      margin-top: 10px;
+      background: #fafafa;
+    }
+
+    .scenario-card {
+      background: #fbfcff;
+      border-color: #dfe7f5;
+    }
+
+    .item-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .item-line {
+      margin: 4px 0;
+      line-height: 1.6;
+      font-size: 14px;
+      white-space: normal;
+    }
+
     .mini-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -192,6 +190,8 @@
       font-weight: 700;
       border: 1px solid #ddd;
       background: #fafafa;
+      margin-right: 6px;
+      margin-top: 4px;
     }
 
     .pill-clean {
@@ -212,58 +212,27 @@
       color: #b71c1c;
     }
 
-    .pill-do {
+    .pill-pass {
       background: #ecfff1;
       border-color: #a9e2b4;
       color: #1b5e20;
     }
 
-    .pill-observe {
-      background: #fff7e8;
-      border-color: #f0d298;
-      color: #8d5d00;
-    }
-
-    .pill-no {
+    .pill-fail {
       background: #fff0f0;
       border-color: #f1b5b5;
       color: #b71c1c;
     }
 
+    .pill-neutral {
+      background: #eef3ff;
+      border-color: #c8d8ff;
+      color: #294a9b;
+    }
+
     .green { color: #2e7d32; }
     .red { color: #c62828; }
     .orange { color: #ef6c00; }
-
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-
-    .kpi-card {
-      background: #fff;
-      border: 1px solid #e5e5e5;
-      border-radius: 14px;
-      padding: 14px;
-    }
-
-    .kpi-title {
-      font-size: 13px;
-      color: #666;
-      margin-bottom: 6px;
-    }
-
-    .kpi-value {
-      font-size: 26px;
-      font-weight: 700;
-    }
-
-    .kpi-note {
-      margin-top: 4px;
-      font-size: 12px;
-      color: #666;
-    }
 
     .table-wrap {
       width: 100%;
@@ -314,21 +283,73 @@
       line-height: 1.6;
     }
 
+    .scenario-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .scenario-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .metric-chip {
+      border: 1px solid #e6e6e6;
+      border-radius: 10px;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .metric-chip .label {
+      color: #666;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .metric-chip .value {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .scenario-qualification {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #f7f9ff;
+      border: 1px solid #dfe7f5;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .highlight-card {
+      border: 2px solid #d6e7c4;
+      background: #f9fff4;
+    }
+
+    .subtle {
+      font-size: 12px;
+      color: #777;
+    }
+
     @media (max-width: 980px) {
-      .summary-grid { grid-template-columns: 1fr 1fr; }
-      .three-grid { grid-template-columns: 1fr; }
-      .two-grid { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: 1fr 1fr; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; }
       .mini-grid { grid-template-columns: 1fr; }
-      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .scenario-metrics { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 680px) {
       h1 { font-size: 26px; }
       h2 { font-size: 20px; }
-      .summary-grid { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: 1fr; }
       .toolbar { flex-direction: column; align-items: stretch; }
       button { width: 100%; }
-      .kpi-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -336,7 +357,7 @@
   <div class="page">
     <h1>📊 M3｜FCN 承做決策系統</h1>
     <div class="subtitle">
-      M3.1 股票評分 → M3.2 股票篩選 → M3.3 FCN Simulation → M3.4 Ranking → M3.5 Final Decision → M3.6 Blueprint
+      M3 = 專家邏輯系統（偏主觀）｜核心判斷：<b>Profit + Satisfy + Safety</b>
     </div>
 
     <div class="card">
@@ -353,52 +374,55 @@
         <b>pool30.json</b>、
         <b>market_runtime.json</b>、
         <b>parameter_matrix.json</b>，
-        再透過 <b>stock_engine.js</b> 與 <b>fcn_engine.js</b> 產生今日承做建議。
+        先經過 <b>Stock Engine</b> 做主觀判讀，再進入情境模擬，最後透過 <b>M8</b> 驗證 Profit。
       </div>
     </div>
 
     <div class="card">
-      <h2>1. M3 Summary</h2>
-      <div id="summaryBlock"></div>
-    </div>
-
-    <div class="card">
-      <h2>2. M3.6 Blueprint</h2>
+      <h2>1. M3 Blueprint</h2>
       <div id="blueprintBlock" class="detail-box"></div>
     </div>
 
     <div class="card">
+      <h2>2. M3 Summary</h2>
+      <div id="summaryBlock"></div>
+    </div>
+
+    <div class="card">
       <div class="section-toolbar">
-        <h2 style="margin:0;">3. M3.2 Stock Selection</h2>
+        <h2 style="margin:0;">3. 股票分析（Stock Layer）</h2>
+        <button class="light" data-section="stockLayerSection">展開 / 收合</button>
+      </div>
+      <div id="stockLayerSection" class="section-body"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-toolbar">
+        <h2 style="margin:0;">4. 情境分析（Scenario Layer）</h2>
+        <button class="light" data-section="scenarioLayerSection">展開 / 收合</button>
+      </div>
+      <div id="scenarioLayerSection" class="section-body"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-toolbar">
+        <h2 style="margin:0;">5. 達標分析（Qualified Layer）</h2>
+        <button class="light" data-section="qualifiedLayerSection">展開 / 收合</button>
+      </div>
+      <div id="qualifiedLayerSection" class="section-body"></div>
+    </div>
+
+    <div class="card">
+      <div class="section-toolbar">
+        <h2 style="margin:0;">6. 股票明細（Clean / Watch / Reject）</h2>
         <button class="light" data-section="selectionSection">展開 / 收合</button>
       </div>
       <div id="selectionSection" class="section-body"></div>
     </div>
 
     <div class="card">
-      <h2>4. M3 Simulation Dashboard</h2>
-      <div id="dashboardBlock"></div>
-    </div>
-
-    <div class="card">
       <div class="section-toolbar">
-        <h2 style="margin:0;">5. M3.5 Final Decision（達標組 Top 5）</h2>
-        <button class="light" data-section="finalDecisionSection">展開 / 收合</button>
-      </div>
-      <div id="finalDecisionSection" class="section-body"></div>
-    </div>
-
-    <div class="card">
-      <div class="section-toolbar">
-        <h2 style="margin:0;">6. M3.4 FCN Ranking</h2>
-        <button class="light" data-section="rankingSection">展開 / 收合</button>
-      </div>
-      <div id="rankingSection" class="section-body"></div>
-    </div>
-
-    <div class="card">
-      <div class="section-toolbar">
-        <h2 style="margin:0;">7. M3.3 Simulation Detail</h2>
+        <h2 style="margin:0;">7. Simulation Detail</h2>
         <button class="light" data-section="simulationSection">展開 / 收合</button>
       </div>
       <div id="simulationSection" class="section-body"></div>
@@ -408,15 +432,16 @@
   <script type="module">
     import { runM3Engine, buildDashboardConclusion, isQualified } from "./js/modules/m3_engine.js";
 
-    const M3_CACHE_KEY = "m3_full_cache_final_v2";
+    const M3_CACHE_KEY = "m3_full_cache_profit_satisfy_safety_v1";
     const expandedStockIds = new Set();
     const expandedSimIds = new Set();
     let blueprintOpen = false;
 
     const sectionState = {
+      stockLayerSection: true,
+      scenarioLayerSection: true,
+      qualifiedLayerSection: true,
       selectionSection: false,
-      finalDecisionSection: false,
-      rankingSection: false,
       simulationSection: false
     };
 
@@ -448,7 +473,7 @@
       return `${sign}${n.toFixed(digits)}%`;
     }
 
-    function formatMarketScore(v, digits = 1) {
+    function formatGap(v, digits = 1) {
       const n = Number(v);
       if (!Number.isFinite(n)) return "-";
       const sign = n > 0 ? "+" : "";
@@ -474,7 +499,7 @@
         finalDecision: (data.finalDecision || []).slice(0, 5),
         m5_payload: data.m5_payload || {},
 
-        stockResults: (data.stockResults || []).slice(0, 40).map(x => ({
+        stockResults: (data.stockResults || []).slice(0, 60).map(x => ({
           symbol: x.symbol,
           bucket: x.bucket,
           baseline_label: x.baseline_label,
@@ -491,6 +516,7 @@
           ret_6m: x.ret_6m,
           ret_12m: x.ret_12m,
           event_stock_score: x.event_stock_score,
+          event_score: x.event_score,
           m1_event_score: x.m1_event_score,
           delta_stock_score: x.delta_stock_score,
           trend: x.trend,
@@ -501,20 +527,22 @@
           long_trend_note: x.long_trend_note,
           mid_trend_label: x.mid_trend_label,
           mid_trend_note: x.mid_trend_note,
+          trend_profile: x.trend_profile,
           trend_profile_label: x.trend_profile_label,
           trend_profile_note: x.trend_profile_note,
+          short_swing: x.short_swing,
           suggestion: x.suggestion,
           why: x.why || [],
           whyNot: x.whyNot || []
         })),
 
         selection: {
-          clean_pool: (data.selection?.clean_pool || []).slice(0, 20),
-          watch_list: (data.selection?.watch_list || []).slice(0, 20),
-          reject_list: (data.selection?.reject_list || []).slice(0, 20)
+          clean_pool: (data.selection?.clean_pool || []).slice(0, 30),
+          watch_list: (data.selection?.watch_list || []).slice(0, 30),
+          reject_list: (data.selection?.reject_list || []).slice(0, 30)
         },
 
-        simulationResults: (data.simulationResults || []).slice(0, 50).map(x => ({
+        simulationResults: (data.simulationResults || []).slice(0, 80).map(x => ({
           id: x.id,
           scenario_name: x.scenario_name,
           scenario_comment: x.scenario_comment,
@@ -527,18 +555,21 @@
           tenor: x.tenor,
           eki: x.eki,
           worst_of: x.worst_of,
-          pure_fcn: x.pure_fcn,
+
+          profit: x.profit || {},
+          satisfy: x.satisfy || {},
+          safety: x.safety || {},
+          qualification: x.qualification || {},
+
           event_fcn: x.event_fcn,
-          delta_fcn_pct: x.delta_fcn_pct,
-          simulation_rate: x.simulation_rate,
-          fair_rate: x.fair_rate,
           fair_gap: x.fair_gap,
+          fair_rate: x.fair_rate,
           fair_flag: x.fair_flag,
           fair_reason: x.fair_reason,
           health_pct: x.health_pct,
-          preference_level: x.preference_level,
           market_level: x.market_level,
           market_score: x.market_score,
+
           reason: x.reason,
           avgPureStock: x.avgPureStock,
           avgEventStock: x.avgEventStock,
@@ -547,7 +578,9 @@
           priskScore: x.priskScore,
           sri: x.sri,
           ekiBonus: x.ekiBonus,
-          suggestion: x.suggestion,
+          suggestion_rank: x.suggestion_rank,
+          qualified: x.qualified,
+
           r1: x.r1 ? {
             symbol: x.r1.symbol,
             trend_label: x.r1.trend_label,
@@ -578,7 +611,7 @@
       try {
         localStorage.setItem(M3_CACHE_KEY, JSON.stringify(lite));
       } catch (err) {
-        console.warn("M3 cache 寫入失敗，改用 runtime memory：", err);
+        console.warn("M3 cache 寫入失敗：", err);
       }
     }
 
@@ -590,58 +623,36 @@
     }
 
     function bucketPill(bucket) {
-      if (bucket === "clean") return `<span class="pill pill-clean">Clean Pool</span>`;
+      if (bucket === "clean") return `<span class="pill pill-clean">Clean</span>`;
       if (bucket === "watch") return `<span class="pill pill-watch">Watch</span>`;
       return `<span class="pill pill-reject">Reject</span>`;
     }
 
-    function renderTopStatsTable(title, rows, type = "symbol") {
-      return `
-        <div class="list-box">
-          <h3>${title}</h3>
-          ${
-            rows.length ? `
-              <div class="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      ${type === "symbol"
-                        ? `<th>Symbol</th><th>出現次數</th><th>Avg Event</th><th>Avg Pure</th><th>Avg Snapshot</th>`
-                        : `<th>Scenario</th><th>次數</th><th>Avg M3</th><th>Avg Gap</th><th>Avg Health</th>`
-                      }
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${
-                      rows.slice(0, 10).map(r => `
-                        <tr>
-                          ${
-                            type === "symbol"
-                              ? `
-                                <td>${safeText(r.symbol)}</td>
-                                <td>${toNumber(r.count, 0)}</td>
-                                <td>${fmt(r.avg_event_score, 2)}</td>
-                                <td>${fmt(r.avg_pure_score, 2)}</td>
-                                <td>${fmt(r.avg_snapshot_score, 2)}</td>
-                              `
-                              : `
-                                <td>${safeText(r.scenario_name)}</td>
-                                <td>${toNumber(r.count, 0)}</td>
-                                <td>${fmt(r.avg_m3_score, 2)}</td>
-                                <td>${fmt(r.avg_gap, 2)}</td>
-                                <td>${fmt(r.avg_health, 2)}%</td>
-                              `
-                          }
-                        </tr>
-                      `).join("")
-                    }
-                  </tbody>
-                </table>
-              </div>
-            ` : `<div class="empty">尚無資料</div>`
-          }
-        </div>
-      `;
+    function passPill(pass, label) {
+      return `<span class="pill ${pass ? "pill-pass" : "pill-fail"}">${label} ${pass ? "✅" : "❌"}</span>`;
+    }
+
+    function getQualification(row) {
+      return row.qualification || {
+        profit: { min_gap: -1 },
+        satisfy: { min_m3_score: 8 },
+        safety: { min_health_score: 30 }
+      };
+    }
+
+    function checkProfit(row) {
+      const q = getQualification(row);
+      return toNumber(row.profit?.fair_gap, -999) >= toNumber(q.profit?.min_gap, -1);
+    }
+
+    function checkSatisfy(row) {
+      const q = getQualification(row);
+      return toNumber(row.satisfy?.m3_score, 0) >= toNumber(q.satisfy?.min_m3_score, 8);
+    }
+
+    function checkSafety(row) {
+      const q = getQualification(row);
+      return toNumber(row.safety?.health_score, 0) >= toNumber(q.safety?.min_health_score, 30);
     }
 
     function buildBlueprintText() {
@@ -649,46 +660,41 @@
 【M3 系統正式藍圖】
 
 M3 定位：
-- M3 = 主觀偏好模擬器
-- 股票來源 = Clean Pool
-- 不要求每天一定要有推薦
-- 重點是：在主觀偏好的 FCN 情境中，找出你真正想做的單
+- M3 = 專家邏輯系統（偏主觀）
+- 核心判斷：Profit + Satisfy + Safety
+- Profit = M8 Fair Rate 驗證後的 fair_gap
+- Satisfy = M3 Score（主觀滿意度）
+- Safety = Health Score（結構安全度）
 
-M3.1 Stock Scoring
-- 輸入：pool30 + market_runtime + stock_engine
-- 輸出：pure_stock_score / snapshot_score / event_stock_score / trend / suggestion
+流程：
+1. Stock Engine
+   - Baseline：主觀偏好
+   - Pure：主觀建立邏輯
+   - Snapshot：甜不甜
+   - Event：事件衝擊是機會還是被拋棄
+   - Trend：長中期風控
+   - Suggestion：最終允許 / 拒絕
 
-M3.2 Stock Selection
-- 判斷：
-  Pure stock score = 我願不願意接
-  Event stock score = 現在這個股價划不划算
-  Delta stock score = Event - Pure
-- 輸出：
-  clean_pool / watch_list / reject_list
+2. Stock Selection
+   - clean_pool / watch_list / reject_list
 
-M3.3 FCN Simulation
-- 輸入：
-  clean_pool + parameter_matrix.json
-- Simulation：
-  股票組合 × 情境參數
-- 情境由 parameter_matrix.json 控制：
-  basket_size / ki / strike / tenor / rate / eki
+3. Scenario Simulation
+   - scenario 由 parameter_matrix.json 控制
+   - basket_size / ki / strike / tenor / rate / eki
 
-M3.4 Ranking
-- 全部模擬結果排序
-- 先看主觀偏好，再看市場 fair rate（接 M8 後）
+4. M8 驗證 Profit
+   - fair_rate / fair_gap / market_level
 
-M3.5 Final Decision
-- 本次模擬中，符合達標條件的 FCN 組合前 5 名
-- 達標條件：
-  1. event_fcn >= 8
-  2. fair_gap >= -1
-  3. health_pct >= 30%
+5. Qualification
+   - Profit：min_gap
+   - Satisfy：min_m3_score
+   - Safety：min_health_score
 
-M3 Dashboard
-- 顯示模擬條件、達標條件
-- 顯示模擬標的 / 達標標的 / 模擬情境 / 達標情境 統計分析
-- 顯示未來可直接投入 M5 的 payload
+M3 合格單定義：
+- Profit 成立
+- Satisfy 成立
+- Safety 成立
+- 三者同時成立，才算 Qualified
 `;
     }
 
@@ -700,9 +706,11 @@ M3 Dashboard
         <div class="item-card">
           <div class="item-title">${safeText(stock.symbol)} ｜ ${bucketPill(stock.bucket)}</div>
           <div class="item-line">
-            Baseline ${fmt(stock.baseline_score || 0)} ｜ Pure ${fmt(stock.pure_stock_score)} ｜ Snapshot ${fmt(stock.snapshot_score)} ｜ Event ${fmt(stock.event_stock_score)} ｜ Delta <span class="${deltaClass(stock.delta_stock_score)}">${toNumber(stock.delta_stock_score) >= 0 ? "+" : ""}${fmt(stock.delta_stock_score)}</span>
+            Baseline ${fmt(stock.baseline_score || 0)} ｜ Pure ${fmt(stock.pure_stock_score)} ｜ Snapshot ${fmt(stock.snapshot_score)} ｜ Event ${fmt(stock.event_score)} ｜ Event Stock ${fmt(stock.event_stock_score)}
           </div>
-          <div class="item-line">Suggestion：${safeText(stock.suggestion)}</div>
+          <div class="item-line">
+            Trend：${safeText(stock.trend_profile_label, stock.trend_label)} ｜ Suggestion：${safeText(stock.suggestion)}
+          </div>
 
           <button class="light" onclick="window.toggleM3StockDetail('${id}')">
             ${open ? "收合" : "展開"}
@@ -713,7 +721,6 @@ M3 Dashboard
             <div class="item-line"><b>Pure</b>：${fmt(stock.pure_stock_score)} ｜ ${safeText(stock.pure_reason)}</div>
             <div class="item-line"><b>Snapshot</b>：${fmt(stock.snapshot_score)} ｜ ${safeText(stock.snapshot_bucket)} ｜ ${safeText(stock.snapshot_reason)}</div>
 
-            <div class="item-line"><b>Snapshot detailed information</b></div>
             <div class="mini-grid">
               <div class="item-line">1D：${formatPctMaybe(stock.ret_1d)}</div>
               <div class="item-line">1W：${formatPctMaybe(stock.ret_1w)}</div>
@@ -723,8 +730,7 @@ M3 Dashboard
               <div class="item-line">12M：${formatPctMaybe(stock.ret_12m)}</div>
             </div>
 
-            <div class="item-line"><b>Event</b>：${fmt(stock.event_stock_score)} ｜ M1 event score：${fmt(stock.m1_event_score)}</div>
-            <div class="item-line"><b>Trend explain</b>：${safeText(stock.trend_label)} ｜ ${safeText(stock.trend_note)}</div>
+            <div class="item-line"><b>Event</b>：${fmt(stock.event_score)} ｜ ShortSwing：${fmt(stock.short_swing)}</div>
             <div class="item-line"><b>Trend Rate</b>：${fmt(stock.trend_rate, 4)}</div>
             <div class="item-line"><b>Long Trend</b>：${safeText(stock.long_trend_label)} ｜ ${safeText(stock.long_trend_note)}</div>
             <div class="item-line"><b>Mid Trend</b>：${safeText(stock.mid_trend_label)} ｜ ${safeText(stock.mid_trend_note)}</div>
@@ -736,175 +742,200 @@ M3 Dashboard
       `;
     }
 
-    function buildSelectionBlock(cache) {
-      const { clean_pool = [], watch_list = [], reject_list = [] } = cache.selection || {};
-
-      const renderCol = (title, list) => `
-        <div class="list-box">
-          <h3>${title}</h3>
-          ${list.length ? list.map(renderStockCard).join("") : `<div class="empty">尚無資料</div>`}
-        </div>
-      `;
-
-      return `
-        <div class="three-grid">
-          ${renderCol("✅ Clean Pool", clean_pool)}
-          ${renderCol("⚠️ Watch", watch_list)}
-          ${renderCol("❌ Reject", reject_list)}
-        </div>
-      `;
-    }
-
     function buildSummaryBlock(cache) {
       const s = cache.summary || {};
       return `
-        <div class="summary-grid">
+        <div class="grid-4">
           <div class="summary-box">
-            <div class="summary-label">Review 股票數</div>
+            <div class="summary-label">全部股票數</div>
             <div class="summary-value">${toNumber(s.reviewed_count, 0)}</div>
-            <div class="summary-sub">M3.1 評分完成</div>
+            <div class="summary-sub">Stock Engine 完成評估</div>
           </div>
           <div class="summary-box">
             <div class="summary-label">Clean / Watch / Reject</div>
             <div class="summary-value">${toNumber(s.clean_count, 0)} / ${toNumber(s.watch_count, 0)} / ${toNumber(s.reject_count, 0)}</div>
-            <div class="summary-sub">M3.2 輸出</div>
+            <div class="summary-sub">股票篩選結果</div>
           </div>
           <div class="summary-box">
             <div class="summary-label">Simulation 組數</div>
             <div class="summary-value">${toNumber(s.simulation_count, 0)}</div>
-            <div class="summary-sub">M3.3 股票 × 情境</div>
+            <div class="summary-sub">Scenario 展開後總組數</div>
           </div>
           <div class="summary-box">
-            <div class="summary-label">最佳 Event FCN</div>
-            <div class="summary-value">${s.best_event_fcn !== null ? fmt(s.best_event_fcn, 2) : "-"}</div>
-            <div class="summary-sub">${safeText(s.best_basket, "尚無結果")}</div>
+            <div class="summary-label">達標組數 / 達成率</div>
+            <div class="summary-value">${toNumber(s.qualified_count, 0)}</div>
+            <div class="summary-sub">${fmt(s.qualified_rate, 1)}%</div>
           </div>
         </div>
       `;
     }
 
-    function buildDashboardBlock(cache) {
+    function buildStockLayerBlock(cache) {
       const d = cache.dashboard || {};
-      const bestScenario = d.best_scenario || null;
       const meta = d.simulation_meta || {};
       const qmeta = d.qualified_meta || {};
       const compare = d.compare_stats || {};
-      const scenarioRows = cache.scenarioSummary || [];
-      const rateRows = cache.rateDistribution || [];
-      const bestExample = d.best_qualified_example || null;
+      const summary = cache.summary || {};
 
-      const simulatedStocksText = (meta.simulated_stocks || [])
-        .map(x => `${safeText(x.symbol)}(${fmt(x.score, 2)})`)
-        .join("，");
+      const topSim = (meta.symbol_stats || []).slice(0, 3);
+      const topQual = (qmeta.symbol_stats || []).slice(0, 3);
+
+      const simStockCount = toNumber(meta.simulated_stock_count, 0);
+      const totalStockCount = toNumber(summary.reviewed_count, 0);
+      const qualStockCount = toNumber(qmeta.qualified_stock_count, 0);
 
       return `
-        <div class="kpi-grid">
-          <div class="kpi-card">
-            <div class="kpi-title">總模擬組數</div>
-            <div class="kpi-value">${toNumber(d.total_simulations, 0)}</div>
-            <div class="kpi-note">Clean Pool 展開後的 FCN 模擬總數</div>
+        <div class="grid-3">
+          <div class="info-box">
+            <h3>Universe 對比</h3>
+            <div class="item-line">全部股票數：${totalStockCount}</div>
+            <div class="item-line">模擬股票數：${simStockCount}</div>
+            <div class="item-line">達標股票數：${qualStockCount}</div>
+            <div class="item-line">模擬參與率：${totalStockCount ? fmt((simStockCount / totalStockCount) * 100, 1) : "0.0"}%</div>
+            <div class="item-line">達標涵蓋率：${toNumber(compare.stock_capture_rate, 0).toFixed(1)}%</div>
           </div>
-          <div class="kpi-card">
-            <div class="kpi-title">達標組數</div>
-            <div class="kpi-value">${toNumber(d.total_qualified, 0)}</div>
-            <div class="kpi-note">符合 M3 / Gap / Health 三條件</div>
+
+          <div class="info-box">
+            <h3>模擬股票統計</h3>
+            <div class="item-line">Avg Event Stock：${meta.stock_stats?.mean !== null ? fmt(meta.stock_stats.mean, 2) : "-"}</div>
+            <div class="item-line">標準差：${meta.stock_stats?.std !== null ? fmt(meta.stock_stats.std, 2) : "-"}</div>
+            <div class="item-line">區間：${
+              meta.stock_stats?.min !== null && meta.stock_stats?.max !== null
+                ? `${fmt(meta.stock_stats.min, 2)} ~ ${fmt(meta.stock_stats.max, 2)}`
+                : "-"
+            }</div>
           </div>
-          <div class="kpi-card">
-            <div class="kpi-title">總達標率</div>
-            <div class="kpi-value">${fmt(d.overall_success_rate, 1)}%</div>
-            <div class="kpi-note">本次模擬有效度</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-title">最有效策略</div>
-            <div class="kpi-value" style="font-size:18px;">${safeText(bestScenario?.scenario_name, "-")}</div>
-            <div class="kpi-note">${bestScenario ? `達標率 ${fmt(bestScenario.success_rate, 1)}%` : "尚無結果"}</div>
+
+          <div class="info-box">
+            <h3>達標股票統計</h3>
+            <div class="item-line">Avg M3：${qmeta.m3_stats?.mean !== null ? fmt(qmeta.m3_stats.mean, 2) : "-"}</div>
+            <div class="item-line">Avg Gap：${qmeta.gap_stats?.mean !== null ? fmt(qmeta.gap_stats.mean, 2) : "-"}</div>
+            <div class="item-line">Avg Health：${qmeta.health_stats?.mean !== null ? fmt(qmeta.health_stats.mean, 2) : "-"}</div>
           </div>
         </div>
 
-        <div class="three-grid">
-          <div class="list-box">
-            <h3>模擬數量與標的</h3>
-            <div class="item-line">數量：${toNumber(meta.simulated_stock_count, 0)}</div>
-            <div class="item-line">標的：${simulatedStocksText || "-"}</div>
-            <div class="item-line muted">來源：M3.2 Clean Pool</div>
-          </div>
-
-          <div class="list-box">
-            <h3>模擬情境</h3>
-            <div class="item-line">情境數量：${toNumber(meta.scenario_count, 0)}</div>
+        <div class="grid-2" style="margin-top:12px;">
+          <div class="info-box">
+            <h3>模擬參與 Top 3</h3>
             ${
-              (meta.scenarios || []).length
-                ? meta.scenarios.map(s => `
-                    <div class="item-card">
-                      <div class="item-line"><b>${safeText(s.scenario_name)}</b></div>
-                      <div class="item-line">模擬種類：${safeText(s.scenario_type)}</div>
-                      <div class="item-line">Simulation target：${safeText(s.scenario_goal)}</div>
-                      <div class="item-line muted">資訊來源：${safeText(s.source)}</div>
-                    </div>
-                  `).join("")
-                : `<div class="empty">尚無情境資料</div>`
+              topSim.length
+                ? topSim.map(x => `
+                  <div class="item-card">
+                    <div class="item-line"><b>${safeText(x.symbol)}</b></div>
+                    <div class="item-line">出現次數：${toNumber(x.count, 0)}</div>
+                    <div class="item-line">Avg Event Stock：${fmt(x.avg_event_score, 2)}</div>
+                    <div class="item-line">Avg Pure：${fmt(x.avg_pure_score, 2)} ｜ Avg Snapshot：${fmt(x.avg_snapshot_score, 2)}</div>
+                  </div>
+                `).join("")
+                : `<div class="empty">尚無資料</div>`
             }
           </div>
 
-          <div class="list-box">
-            <h3>達標條件</h3>
-            <div class="item-line">M3 Score 條件：≥ ${safeText(meta.qualification_rules?.m3_score_min, "-")}</div>
-            <div class="item-line">市場溢價條件：Gap ≥ ${safeText(meta.qualification_rules?.fair_gap_min, "-")}%</div>
-            <div class="item-line">健康度條件：≥ ${safeText(meta.qualification_rules?.health_min, "-")}%</div>
-            <div class="item-line muted">資訊來源：${safeText(meta.qualification_rules?.source, "-")}</div>
+          <div class="info-box">
+            <h3>達標參與 Top 3</h3>
+            ${
+              topQual.length
+                ? topQual.map(x => `
+                  <div class="item-card">
+                    <div class="item-line"><b>${safeText(x.symbol)}</b></div>
+                    <div class="item-line">達標次數：${toNumber(x.count, 0)}</div>
+                    <div class="item-line">Avg Event Stock：${fmt(x.avg_event_score, 2)}</div>
+                    <div class="item-line">Avg Pure：${fmt(x.avg_pure_score, 2)} ｜ Avg Snapshot：${fmt(x.avg_snapshot_score, 2)}</div>
+                  </div>
+                `).join("")
+                : `<div class="empty">尚無資料</div>`
+            }
           </div>
         </div>
+      `;
+    }
 
-        <h3 style="margin-top:16px;">📊 模擬代表性統計</h3>
-        <div class="summary-grid">
-          <div class="summary-box">
-            <div class="summary-label">模擬標的 Event Score 平均值</div>
-            <div class="summary-value">${meta.stock_stats?.mean !== null ? fmt(meta.stock_stats.mean, 2) : "-"}</div>
-            <div class="summary-sub">標準差：${meta.stock_stats?.std !== null ? fmt(meta.stock_stats.std, 2) : "-"}</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-label">模擬 M3 Score 平均值</div>
-            <div class="summary-value">${meta.m3_stats?.mean !== null ? fmt(meta.m3_stats.mean, 2) : "-"}</div>
-            <div class="summary-sub">標準差：${meta.m3_stats?.std !== null ? fmt(meta.m3_stats.std, 2) : "-"}</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-label">模擬 Gap 平均值</div>
-            <div class="summary-value">${meta.gap_stats?.mean !== null ? fmt(meta.gap_stats.mean, 2) : "-"}</div>
-            <div class="summary-sub">標準差：${meta.gap_stats?.std !== null ? fmt(meta.gap_stats.std, 2) : "-"}</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-label">模擬 Health 平均值</div>
-            <div class="summary-value">${meta.health_stats?.mean !== null ? fmt(meta.health_stats.mean, 2) : "-"}</div>
-            <div class="summary-sub">標準差：${meta.health_stats?.std !== null ? fmt(meta.health_stats.std, 2) : "-"}</div>
-          </div>
-        </div>
+    function buildScenarioLayerBlock(cache) {
+      const scenarios = cache.dashboard?.simulation_meta?.scenarios || [];
+      const summaryRows = cache.scenarioSummary || [];
 
-        <h3 style="margin-top:16px;">✅ 達標統計分析</h3>
-        <div class="summary-grid">
-          <div class="summary-box">
-            <div class="summary-label">達標組數</div>
-            <div class="summary-value">${toNumber(qmeta.qualified_count, 0)}</div>
-            <div class="summary-sub">有效通過條件的 FCN 組合</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-label">達標標的數</div>
-            <div class="summary-value">${toNumber(qmeta.qualified_stock_count, 0)}</div>
-            <div class="summary-sub">出現在達標單中的 unique symbols</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-label">達標情境數</div>
-            <div class="summary-value">${toNumber(qmeta.qualified_scenario_count, 0)}</div>
-            <div class="summary-sub">成功被市場與偏好接受的情境</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-label">達標 Gap 平均值</div>
-            <div class="summary-value">${qmeta.gap_stats?.mean !== null ? fmt(qmeta.gap_stats.mean, 2) : "-"}</div>
-            <div class="summary-sub">標準差：${qmeta.gap_stats?.std !== null ? fmt(qmeta.gap_stats.std, 2) : "-"}</div>
-          </div>
-        </div>
+      const merged = scenarios.map(sc => {
+        const matched = summaryRows.find(x => x.scenario_name === sc.scenario_name) || {};
+        return {
+          ...sc,
+          ...matched
+        };
+      });
 
-        <h3 style="margin-top:16px;">🔍 達標 vs 模擬 統計比較</h3>
-        <div class="summary-grid">
+      if (!merged.length) return `<div class="empty">尚無情境資料</div>`;
+
+      return merged.map(sc => {
+        const q = sc.qualification || {
+          profit: { min_gap: -1 },
+          satisfy: { min_m3_score: 8 },
+          safety: { min_health_score: 30 }
+        };
+
+        return `
+          <div class="scenario-card">
+            <div class="scenario-title-row">
+              <div>
+                <div class="item-title">${safeText(sc.scenario_name)}</div>
+                <div class="subtle">${safeText(sc.scenario_type)} ｜ ${safeText(sc.source)}</div>
+              </div>
+              <div>${passPill(toNumber(sc.success_rate, 0) >= 1, `達標率 ${fmt(sc.success_rate, 1)}%`)}</div>
+            </div>
+
+            <div class="item-line" style="margin-top:8px;">
+              <b>Scenario Goal / Target：</b>${safeText(sc.scenario_goal, "-")}
+            </div>
+
+            <div class="scenario-qualification">
+              <b>達標條件（Qualification）</b><br>
+              Profit：Gap ≥ ${fmt(q.profit?.min_gap, 1)}%<br>
+              Satisfy：M3 Score ≥ ${fmt(q.satisfy?.min_m3_score, 1)}<br>
+              Safety：Health Score ≥ ${fmt(q.safety?.min_health_score, 1)}%
+            </div>
+
+            <div class="scenario-metrics">
+              <div class="metric-chip">
+                <div class="label">模擬組數</div>
+                <div class="value">${toNumber(sc.total, 0)}</div>
+              </div>
+              <div class="metric-chip">
+                <div class="label">達標組數</div>
+                <div class="value">${toNumber(sc.qualified, 0)}</div>
+              </div>
+              <div class="metric-chip">
+                <div class="label">達標率</div>
+                <div class="value">${fmt(sc.success_rate, 1)}%</div>
+              </div>
+              <div class="metric-chip">
+                <div class="label">Avg M3</div>
+                <div class="value">${fmt(sc.avg_event_fcn, 2)}</div>
+              </div>
+              <div class="metric-chip">
+                <div class="label">Avg Gap</div>
+                <div class="value">${fmt(sc.avg_gap, 2)}</div>
+              </div>
+              <div class="metric-chip">
+                <div class="label">Avg Health</div>
+                <div class="value">${fmt(sc.avg_health, 2)}%</div>
+              </div>
+            </div>
+
+            <div class="item-line" style="margin-top:10px;">
+              <b>最佳 Basket：</b>${safeText(sc.best_basket)}
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function buildQualifiedLayerBlock(cache) {
+      const d = cache.dashboard || {};
+      const qmeta = d.qualified_meta || {};
+      const compare = d.compare_stats || {};
+      const best = d.best_qualified_example || null;
+      const rateRows = cache.rateDistribution || [];
+
+      return `
+        <div class="grid-4">
           <div class="summary-box">
             <div class="summary-label">達標標的涵蓋率</div>
             <div class="summary-value">${fmt(compare.stock_capture_rate, 1)}%</div>
@@ -916,183 +947,94 @@ M3 Dashboard
             <div class="summary-sub">達標情境數 / 模擬情境數</div>
           </div>
           <div class="summary-box">
-            <div class="summary-label">達標 vs 模擬 M3 平均差</div>
+            <div class="summary-label">M3 平均差</div>
             <div class="summary-value">${compare.m3_mean_delta !== null ? fmt(compare.m3_mean_delta, 2) : "-"}</div>
             <div class="summary-sub">達標 M3 mean - 模擬 M3 mean</div>
           </div>
           <div class="summary-box">
-            <div class="summary-label">達標 vs 模擬 Gap 平均差</div>
+            <div class="summary-label">Gap 平均差</div>
             <div class="summary-value">${compare.gap_mean_delta !== null ? fmt(compare.gap_mean_delta, 2) : "-"}</div>
             <div class="summary-sub">達標 Gap mean - 模擬 Gap mean</div>
           </div>
         </div>
 
-        <div class="two-grid" style="margin-top:16px;">
-          ${renderTopStatsTable("模擬標的統計 Top 10", meta.symbol_stats || [], "symbol")}
-          ${renderTopStatsTable("達標標的統計 Top 10", qmeta.symbol_stats || [], "symbol")}
+        <div class="card" style="margin-top:12px; padding:0; border:none; box-shadow:none;">
+          <h3>Rate 分布 × 達標率</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Rate 區間</th>
+                  <th>組數</th>
+                  <th>達標</th>
+                  <th>達標率</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${
+                  rateRows.length ? rateRows.map(row => `
+                    <tr>
+                      <td>${safeText(row.bucket)}</td>
+                      <td>${toNumber(row.total, 0)}</td>
+                      <td>${toNumber(row.qualified, 0)}</td>
+                      <td>${fmt(row.success_rate, 1)}%</td>
+                    </tr>
+                  `).join("") : `
+                    <tr><td colspan="4" class="empty">尚無資料</td></tr>
+                  `
+                }
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <div class="two-grid" style="margin-top:16px;">
-          ${renderTopStatsTable("模擬情境統計 Top 10", meta.scenario_stats || [], "scenario")}
-          ${renderTopStatsTable("達標情境統計 Top 10", qmeta.scenario_stats || [], "scenario")}
-        </div>
-
-        <h3 style="margin-top:16px;">📈 策略達標分析</h3>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Scenario</th>
-                <th>組數</th>
-                <th>達標</th>
-                <th>達標率</th>
-                <th>Best Event</th>
-                <th>Avg Event</th>
-                <th>最佳 Basket</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${
-                scenarioRows.length ? scenarioRows.map(row => `
-                  <tr>
-                    <td>${safeText(row.scenario_name)}</td>
-                    <td>${toNumber(row.total, 0)}</td>
-                    <td>${toNumber(row.qualified, 0)}</td>
-                    <td>${fmt(row.success_rate, 1)}%</td>
-                    <td>${fmt(row.best_event_fcn, 2)}</td>
-                    <td>${fmt(row.avg_event_fcn, 2)}</td>
-                    <td>${safeText(row.best_basket)}</td>
-                  </tr>
-                `).join("") : `
-                  <tr><td colspan="7" class="empty">尚無資料</td></tr>
-                `
-              }
-            </tbody>
-          </table>
-        </div>
-
-        <div class="item-card" style="margin-top:12px;">
+        <div class="item-card highlight-card" style="margin-top:12px;">
           <div class="item-title">例子勝過千言萬語｜最佳達標案例</div>
           ${
-            bestExample ? `
-              <div class="item-line">Basket：${safeText(bestExample.basket)}</div>
-              <div class="item-line">結構：${bestExample.basket_size}檔 / KI ${bestExample.ki} / Strike ${bestExample.strike} / Tenor ${bestExample.tenor}M / EKI ${bestExample.eki ? "YES" : "NO"}</div>
-              <div class="item-line">Worst-of：${safeText(bestExample.worst_of)}</div>
-              <div class="item-line">M3 Score：${fmt(bestExample.event_fcn)}</div>
-              <div class="item-line">Simulation Rate：${fmt(bestExample.simulation_rate, 1)}%</div>
-              <div class="item-line">M8 Fair Rate：${bestExample.fair_rate === null ? "待接 M8" : `${fmt(bestExample.fair_rate, 1)}%`}</div>
-              <div class="item-line">市場溢價 Gap：${bestExample.fair_gap === null ? "待接 M8" : `<span class="${deltaClass(bestExample.fair_gap)}">${bestExample.fair_gap >= 0 ? "+" : ""}${fmt(bestExample.fair_gap, 1)}%</span>`}</div>
-              <div class="item-line">Market Score：${formatMarketScore(bestExample.market_score)}</div>
-              <div class="item-line">健康度：${fmt(bestExample.health_pct, 1)}%</div>
+            best ? `
+              <div class="item-line"><b>Scenario：</b>${safeText(best.scenario_name)}</div>
+              <div class="item-line"><b>Basket：</b>${safeText(best.basket)}</div>
+              <div class="item-line"><b>結構：</b>${best.basket_size}檔 / KI ${best.ki} / Strike ${best.strike} / Tenor ${best.tenor}M / EKI ${best.eki ? "YES" : "NO"}</div>
+              <div class="item-line"><b>Worst-of：</b>${safeText(best.worst_of)}</div>
+
+              <div class="item-line" style="margin-top:8px;">
+                ${passPill(checkProfit(best), `Profit ${formatGap(best.profit?.fair_gap)}`)}
+                ${passPill(checkSatisfy(best), `Satisfy ${fmt(best.satisfy?.m3_score, 2)}`)}
+                ${passPill(checkSafety(best), `Safety ${fmt(best.safety?.health_score, 1)}%`)}
+              </div>
+
+              <div class="item-line"><b>Simulation Rate：</b>${fmt(best.profit?.simulation_rate, 1)}%</div>
+              <div class="item-line"><b>Fair Rate：</b>${best.profit?.fair_rate == null ? "待接 M8" : `${fmt(best.profit?.fair_rate, 1)}%`}</div>
+              <div class="item-line"><b>Gap：</b><span class="${deltaClass(best.profit?.fair_gap)}">${formatGap(best.profit?.fair_gap)}</span></div>
+              <div class="item-line"><b>Fair Reason：</b>${safeText(best.profit?.fair_reason, "-")}</div>
             ` : `
               <div class="item-line">本次無達標案例。</div>
             `
           }
         </div>
 
-        <h3>📊 Rate 分布 × 達標率</h3>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Rate 區間</th>
-                <th>組數</th>
-                <th>達標</th>
-                <th>達標率</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${
-                rateRows.length ? rateRows.map(row => `
-                  <tr>
-                    <td>${safeText(row.bucket)}</td>
-                    <td>${toNumber(row.total, 0)}</td>
-                    <td>${toNumber(row.qualified, 0)}</td>
-                    <td>${fmt(row.success_rate, 1)}%</td>
-                  </tr>
-                `).join("") : `
-                  <tr><td colspan="4" class="empty">尚無資料</td></tr>
-                `
-              }
-            </tbody>
-          </table>
-        </div>
-
-        <h3>🧠 本次模擬結論</h3>
-        <div class="item-card">
+        <div class="item-card" style="margin-top:12px;">
+          <div class="item-title">本次模擬結論</div>
           <div class="item-line">${safeText(buildDashboardConclusion(cache), "尚無結論")}</div>
         </div>
       `;
     }
 
-    function buildFinalDecisionBlock(cache) {
-      const top = cache.finalDecision || [];
+    function buildSelectionBlock(cache) {
+      const { clean_pool = [], watch_list = [], reject_list = [] } = cache.selection || {};
 
-      if (!top.length) {
-        return `
-          <div class="item-card">
-            <div class="item-title">本次無達標組</div>
-            <div class="item-line">原因可能為：市場溢價 Gap 未達標、偏好分數不足，或結構健康度不足。</div>
-          </div>
-        `;
-      }
-
-      return top.map((x, idx) => `
-        <div class="item-card">
-          <div class="item-title">#${idx + 1} ${safeText(x.scenario_name)}</div>
-          <div class="item-line">Basket：${safeText(x.basket)}</div>
-          <div class="item-line">結構：${x.basket_size}檔 / KI ${x.ki} / Strike ${x.strike} / Tenor ${x.tenor}M / EKI ${x.eki ? "YES" : "NO"}</div>
-          <div class="item-line">Worst-of：${safeText(x.worst_of)}</div>
-          <div class="item-line">M3 Preference Score：${fmt(x.event_fcn)}</div>
-          <div class="item-line">Simulation Rate：${fmt(x.simulation_rate, 1)}%</div>
-          <div class="item-line">M8 Fair Rate：${x.fair_rate === null ? "待接 M8" : `${fmt(x.fair_rate, 1)}%`}</div>
-          <div class="item-line">市場溢價 Gap：${x.fair_gap === null ? "待接 M8" : `<span class="${deltaClass(x.fair_gap)}">${x.fair_gap >= 0 ? "+" : ""}${fmt(x.fair_gap, 1)}%</span>`}</div>
-          <div class="item-line">市場評價：${safeText(x.market_level)} ｜ Market Score：${formatMarketScore(x.market_score)} ｜ 健康度：${fmt(x.health_pct, 1)}%</div>
-          <div class="item-line">Fair Reason：${safeText(x.fair_reason, "-")}</div>
+      const renderCol = (title, list) => `
+        <div class="info-box">
+          <h3>${title}</h3>
+          ${list.length ? list.map(renderStockCard).join("") : `<div class="empty">尚無資料</div>`}
         </div>
-      `).join("");
-    }
-
-    function buildRankingBlock(cache) {
-      const list = cache.simulationResults || [];
-      if (!list.length) return `<div class="empty">尚無 FCN Ranking</div>`;
+      `;
 
       return `
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Scenario</th>
-                <th>Basket</th>
-                <th>Worst</th>
-                <th>M3 Score</th>
-                <th>Simulation Rate</th>
-                <th>Fair Rate</th>
-                <th>市場溢價 Gap</th>
-                <th>Market Score</th>
-                <th>Health</th>
-                <th>Qualified</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${list.map((x, idx) => `
-                <tr>
-                  <td>${idx + 1}</td>
-                  <td>${safeText(x.scenario_name)}</td>
-                  <td>${safeText(x.basket)}</td>
-                  <td>${safeText(x.worst_of)}</td>
-                  <td>${fmt(x.event_fcn)}</td>
-                  <td>${fmt(x.simulation_rate, 1)}%</td>
-                  <td>${x.fair_rate === null ? "待接 M8" : `${fmt(x.fair_rate, 1)}%`}</td>
-                  <td class="${x.fair_gap === null ? "" : deltaClass(x.fair_gap)}">${x.fair_gap === null ? "待接 M8" : `${x.fair_gap >= 0 ? "+" : ""}${fmt(x.fair_gap, 1)}%`}</td>
-                  <td>${formatMarketScore(x.market_score)}</td>
-                  <td>${fmt(x.health_pct, 1)}%</td>
-                  <td>${isQualified(x) ? '<span class="pill pill-do">達標</span>' : '<span class="pill pill-no">未達標</span>'}</td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
+        <div class="grid-3">
+          ${renderCol("✅ Clean Pool", clean_pool)}
+          ${renderCol("⚠️ Watch", watch_list)}
+          ${renderCol("❌ Reject", reject_list)}
         </div>
       `;
     }
@@ -1101,35 +1043,43 @@ M3 Dashboard
       const id = `sim_${idx}_${sim.id}`;
       const open = expandedSimIds.has(id);
 
+      const profitPass = checkProfit(sim);
+      const satisfyPass = checkSatisfy(sim);
+      const safetyPass = checkSafety(sim);
+
       return `
         <div class="item-card">
           <div class="item-title">${safeText(sim.scenario_name)}</div>
           <div class="item-line">Basket：${safeText(sim.basket)}</div>
-          <div class="item-line">Scenario comment：${safeText(sim.scenario_comment)}</div>
           <div class="item-line">結構：${sim.basket_size}檔 / KI ${sim.ki} / Strike ${sim.strike} / Tenor ${sim.tenor}M / EKI ${sim.eki ? "YES" : "NO"}</div>
-          <div class="item-line">M3 Score ${fmt(sim.event_fcn)} ｜ Simulation Rate ${fmt(sim.simulation_rate, 1)}% ｜ Health ${fmt(sim.health_pct, 1)}%</div>
-          <div class="item-line">Fair Rate：${sim.fair_rate === null ? "待接 M8" : `${fmt(sim.fair_rate, 1)}%`} ｜ 市場溢價 Gap：${sim.fair_gap === null ? "待接 M8" : `${sim.fair_gap >= 0 ? "+" : ""}${fmt(sim.fair_gap, 1)}%`}</div>
-          <div class="item-line">市場評價：${safeText(sim.market_level)} ｜ Market Score：${formatMarketScore(sim.market_score)}</div>
-          <div class="item-line">達標狀態：${isQualified(sim) ? "✅ 達標" : "❌ 未達標"}</div>
+          <div class="item-line">${passPill(profitPass, `Profit ${formatGap(sim.profit?.fair_gap)}`)} ${passPill(satisfyPass, `Satisfy ${fmt(sim.satisfy?.m3_score, 2)}`)} ${passPill(safetyPass, `Safety ${fmt(sim.safety?.health_score, 1)}%`)}</div>
+          <div class="item-line">達標狀態：${isQualified(sim, { qualification_resolved: sim.qualification }) ? "✅ Qualified" : "❌ Not Qualified"}</div>
 
           <button class="light" onclick="window.toggleM3SimDetail('${id}')">
             ${open ? "收合" : "展開"}
           </button>
 
           <div class="detail-box ${open ? "show" : ""}">
-            <div class="item-line"><b>Reason</b>：${safeText(sim.reason)}</div>
-            <div class="item-line"><b>Score breakdown</b>：Avg Pure ${fmt(sim.avgPureStock)} / Avg Event ${fmt(sim.avgEventStock)} / Rate ${fmt(sim.rateScore)} / Period ${fmt(sim.periodScore)} / P-risk ${fmt(sim.priskScore)} / SRI ${fmt(sim.sri)} / EKI Bonus ${fmt(sim.ekiBonus)}</div>
-            <div class="item-line"><b>Preference</b>：${safeText(sim.preference_level)} ｜ <b>Market</b>：${safeText(sim.market_level)}</div>
-            <div class="item-line"><b>Fair Reason</b>：${safeText(sim.fair_reason, "-")}</div>
-            <div class="item-line"><b>R1</b>：${safeText(sim.r1?.symbol)} ｜ ${safeText(sim.r1?.trend_label)} ｜ ${safeText(sim.r1?.trend_note)}</div>
-            <div class="item-line"><b>R2</b>：${safeText(sim.r2?.symbol)} ｜ ${safeText(sim.r2?.trend_label)} ｜ ${safeText(sim.r2?.trend_note)}</div>
-            <div class="item-line"><b>R3</b>：${safeText(sim.r3?.symbol)} ｜ ${safeText(sim.r3?.trend_label)} ｜ ${safeText(sim.r3?.trend_note)}</div>
+            <div class="item-line"><b>Profit</b>：Simulation ${fmt(sim.profit?.simulation_rate, 1)}% ｜ Fair ${sim.profit?.fair_rate == null ? "-" : `${fmt(sim.profit?.fair_rate, 1)}%`} ｜ Gap ${formatGap(sim.profit?.fair_gap)}</div>
+            <div class="item-line"><b>Satisfy</b>：M3 Score ${fmt(sim.satisfy?.m3_score, 2)}</div>
+            <div class="item-line"><b>Safety</b>：Health ${fmt(sim.safety?.health_score, 1)}%</div>
+
+            <div class="item-line" style="margin-top:8px;"><b>Qualification</b></div>
+            <div class="item-line">Profit：Gap ≥ ${fmt(sim.qualification?.profit?.min_gap, 1)}%</div>
+            <div class="item-line">Satisfy：M3 ≥ ${fmt(sim.qualification?.satisfy?.min_m3_score, 1)}</div>
+            <div class="item-line">Safety：Health ≥ ${fmt(sim.qualification?.safety?.min_health_score, 1)}%</div>
+
+            <div class="item-line" style="margin-top:8px;"><b>Reason</b>：${safeText(sim.reason)}</div>
+            <div class="item-line"><b>Fair Reason</b>：${safeText(sim.profit?.fair_reason, "-")}</div>
+            <div class="item-line"><b>Worst 1</b>：${safeText(sim.r1?.symbol)} ｜ ${safeText(sim.r1?.trend_label)} ｜ ${safeText(sim.r1?.trend_note)}</div>
+            <div class="item-line"><b>Worst 2</b>：${safeText(sim.r2?.symbol)} ｜ ${safeText(sim.r2?.trend_label)} ｜ ${safeText(sim.r2?.trend_note)}</div>
+            <div class="item-line"><b>Worst 3</b>：${safeText(sim.r3?.symbol)} ｜ ${safeText(sim.r3?.trend_label)} ｜ ${safeText(sim.r3?.trend_note)}</div>
 
             <div class="item-line" style="margin-top:8px;"><b>Components</b></div>
             ${(sim.components || []).map(c => `
               <div class="item-card" style="margin-top:8px;">
                 <div class="item-line"><b>${safeText(c.symbol)}</b></div>
-                <div class="item-line">Pure ${fmt(c.pure_stock_score)} ｜ Snapshot ${fmt(c.snapshot_score)} ｜ Event ${fmt(c.event_stock_score)}</div>
+                <div class="item-line">Pure ${fmt(c.pure_stock_score)} ｜ Snapshot ${fmt(c.snapshot_score)} ｜ Event Stock ${fmt(c.event_stock_score)}</div>
                 <div class="item-line">Snapshot reason：${safeText(c.snapshot_reason)}</div>
                 <div class="item-line">Trend：${safeText(c.trend_label)} ｜ ${safeText(c.trend_note)}</div>
               </div>
@@ -1142,20 +1092,20 @@ M3 Dashboard
     function buildSimulationBlock(cache) {
       const list = cache.simulationResults || [];
       if (!list.length) return `<div class="empty">尚無 Simulation Detail</div>`;
-      return list.slice(0, 30).map(renderSimulationCard).join("");
+      return list.slice(0, 40).map(renderSimulationCard).join("");
     }
 
     function renderM3(runtimeData = null) {
       const cache = runtimeData || window.__M3_RUNTIME__ || readCache();
 
       const runtimeMeta = document.getElementById("runtimeMeta");
-      const summaryBlock = document.getElementById("summaryBlock");
       const blueprintBlock = document.getElementById("blueprintBlock");
-      const selectionBlock = document.getElementById("selectionSection");
-      const dashboardBlock = document.getElementById("dashboardBlock");
-      const finalDecisionBlock = document.getElementById("finalDecisionSection");
-      const rankingBlock = document.getElementById("rankingSection");
-      const simulationBlock = document.getElementById("simulationSection");
+      const summaryBlock = document.getElementById("summaryBlock");
+      const stockLayerSection = document.getElementById("stockLayerSection");
+      const scenarioLayerSection = document.getElementById("scenarioLayerSection");
+      const qualifiedLayerSection = document.getElementById("qualifiedLayerSection");
+      const selectionSection = document.getElementById("selectionSection");
+      const simulationSection = document.getElementById("simulationSection");
 
       blueprintBlock.innerHTML = `<div class="blueprint-box">${buildBlueprintText()}</div>`;
       blueprintBlock.className = blueprintOpen ? "detail-box show" : "detail-box";
@@ -1168,23 +1118,23 @@ M3 Dashboard
       if (!cache) {
         runtimeMeta.innerHTML = "尚未找到 M3 cache，請先按「執行 M3」";
         summaryBlock.innerHTML = `<div class="empty">尚無資料</div>`;
-        selectionBlock.innerHTML = `<div class="empty">尚無資料</div>`;
-        dashboardBlock.innerHTML = `<div class="empty">尚無資料</div>`;
-        finalDecisionBlock.innerHTML = `<div class="empty">尚無資料</div>`;
-        rankingBlock.innerHTML = `<div class="empty">尚無資料</div>`;
-        simulationBlock.innerHTML = `<div class="empty">尚無資料</div>`;
+        stockLayerSection.innerHTML = `<div class="empty">尚無資料</div>`;
+        scenarioLayerSection.innerHTML = `<div class="empty">尚無資料</div>`;
+        qualifiedLayerSection.innerHTML = `<div class="empty">尚無資料</div>`;
+        selectionSection.innerHTML = `<div class="empty">尚無資料</div>`;
+        simulationSection.innerHTML = `<div class="empty">尚無資料</div>`;
         return;
       }
 
       runtimeMeta.innerHTML =
-        `最新 M3 執行時間：<b>${safeText(cache.generated_at)}</b> ｜ Stock：<b>${cache.stockResults?.length || 0}</b> ｜ Clean：<b>${cache.selection?.clean_pool?.length || 0}</b> ｜ FCN：<b>${cache.simulationResults?.length || 0}</b>`;
+        `最新 M3 執行時間：<b>${safeText(cache.generated_at)}</b> ｜ Stock：<b>${cache.stockResults?.length || 0}</b> ｜ Clean：<b>${cache.selection?.clean_pool?.length || 0}</b> ｜ Simulation：<b>${cache.simulationResults?.length || 0}</b>`;
 
       summaryBlock.innerHTML = buildSummaryBlock(cache);
-      selectionBlock.innerHTML = buildSelectionBlock(cache);
-      dashboardBlock.innerHTML = buildDashboardBlock(cache);
-      finalDecisionBlock.innerHTML = buildFinalDecisionBlock(cache);
-      rankingBlock.innerHTML = buildRankingBlock(cache);
-      simulationBlock.innerHTML = buildSimulationBlock(cache);
+      stockLayerSection.innerHTML = buildStockLayerBlock(cache);
+      scenarioLayerSection.innerHTML = buildScenarioLayerBlock(cache);
+      qualifiedLayerSection.innerHTML = buildQualifiedLayerBlock(cache);
+      selectionSection.innerHTML = buildSelectionBlock(cache);
+      simulationSection.innerHTML = buildSimulationBlock(cache);
     }
 
     window.toggleM3StockDetail = function(id) {
