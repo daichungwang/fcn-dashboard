@@ -5,29 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>M6 Stocks Dashboard</title>
   <style>
-     :root{
-      --bg:#eef6fb;
-      --bg-2:#f7fbfe;
-      --panel:#ffffff;
-      --panel-2:#f8fbfd;
-      --text:#0f172a;
-      --text-2:#1e293b;
-      --muted:#475569;
-      --muted-2:#64748b;
-      --green:#15803d;
-      --red:#dc2626;
-      --yellow:#b45309;
-      --blue:#0ea5e9;
-      --purple:#7c3aed;
-      --border:#dbe7f0;
-      --shadow:0 10px 28px rgba(15, 23, 42, .08);
+    :root{
+      --bg:#0f172a;
+      --panel:#1e293b;
+      --panel-2:#243447;
+      --text:#e2e8f0;
+      --muted:#94a3b8;
+      --green:#22c55e;
+      --red:#ef4444;
+      --yellow:#facc15;
+      --blue:#38bdf8;
+      --purple:#a78bfa;
+      --border:rgba(255,255,255,.08);
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",sans-serif;
-      background:linear-gradient(180deg,var(--bg) 0%, var(--bg-2) 100%);
-      color:var(--text);
+      background:linear-gradient(180deg,#e0f2fe 0%,#f0f9ff 100%);
+      color:#0f172a;
     }
     .wrap{
       max-width:1200px;
@@ -35,19 +31,19 @@
       padding:16px;
     }
     .hero{
-      background:linear-gradient(135deg,#ffffff 0%, #f4faff 100%);
+      background:linear-gradient(135deg,#1d4ed8 0%,#0f172a 70%);
       border:1px solid var(--border);
       border-radius:20px;
       padding:18px;
       margin-bottom:16px;
-      box-shadow:var(--shadow);
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
     }
     .hero h1{
       margin:0 0 6px;
       font-size:26px;
     }
     .hero .sub{
-      color:var(--text-2);
+      color:#cbd5e1;
       font-size:14px;
     }
     .toolbar{
@@ -60,11 +56,10 @@
       width:100%;
       border-radius:12px;
       border:1px solid var(--border);
-      background:#ffffff;
-      color:var(--text);
+      background:#f0f9ff;
+      color:#0f172a;
       padding:12px 14px;
       font-size:14px;
-      box-shadow:0 1px 2px rgba(15,23,42,.03);
     }
     .grid{
       display:grid;
@@ -72,11 +67,11 @@
       gap:16px;
     }
     .card{
-      background:var(--panel);
+      background:#e0f2fe;
       border:1px solid var(--border);
       border-radius:18px;
       padding:16px;
-      box-shadow:var(--shadow);
+      box-shadow:0 8px 24px rgba(0,0,0,.2);
     }
     .summary-card{grid-column:span 2}
     .full{grid-column:1/-1}
@@ -86,18 +81,15 @@
       font-size:12px;
       color:var(--muted);
       margin-bottom:4px;
-      font-weight:700;
-      letter-spacing:.2px;
     }
     .metric{
       font-size:22px;
       font-weight:800;
       line-height:1.1;
-      color:var(--text);
     }
     .small{
       font-size:13px;
-      color:var(--muted-2);
+      color:var(--muted);
     }
     .green{color:var(--green)}
     .red{color:var(--red)}
@@ -112,23 +104,28 @@
       padding-right:4px;
     }
     .stock-item{
-      background:var(--panel-2);
-      border:1px solid var(--border);
+      background:#bae6fd;
+      border:1px solid transparent;
       border-radius:14px;
       padding:12px;
       cursor:pointer;
       transition:.15s ease;
-      box-shadow:0 4px 14px rgba(15,23,42,.04);
     }
-    .stock-item:hover{border-color:rgba(14,165,233,.55); transform:translateY(-1px)}
+    .stock-item:hover{border-color:rgba(56,189,248,.45)}
     .stock-item.active{
-      border-color:rgba(14,165,233,.95);
-      box-shadow:inset 0 0 0 1px rgba(14,165,233,.25), 0 8px 18px rgba(14,165,233,.12);
+      border-color:rgba(56,189,248,.9);
+      box-shadow:inset 0 0 0 1px rgba(56,189,248,.35);
     }
 
-    .stock-item.healthy{background:linear-gradient(180deg, #f0fdf4, #ffffff);}
-    .stock-item.watch{background:linear-gradient(180deg, #fffbeb, #ffffff);}
-    .stock-item.danger{background:linear-gradient(180deg, #fef2f2, #ffffff);}
+    .stock-item.healthy{
+      background:linear-gradient(180deg, rgba(34,197,94,.10), rgba(36,52,71,.95));
+    }
+    .stock-item.watch{
+      background:linear-gradient(180deg, rgba(250,204,21,.10), rgba(36,52,71,.95));
+    }
+    .stock-item.danger{
+      background:linear-gradient(180deg, rgba(239,68,68,.12), rgba(36,52,71,.95));
+    }
     .strength-badge{
       display:inline-flex;
       align-items:center;
@@ -136,13 +133,22 @@
       border-radius:999px;
       padding:4px 10px;
       font-size:12px;
-      font-weight:800;
+      font-weight:700;
       border:1px solid var(--border);
-      background:#ffffff;
+      background:#f0f9ff;
     }
-    .strength-strong{color:#166534; background:#dcfce7; border-color:#bbf7d0}
-    .strength-neutral{color:#92400e; background:#fef3c7; border-color:#fde68a}
-    .strength-weak{color:#b91c1c; background:#fee2e2; border-color:#fecaca}
+    .strength-strong{
+      color:#86efac;
+      background:rgba(34,197,94,.2);
+    }
+    .strength-neutral{
+      color:#fde68a;
+      background:rgba(250,204,21,.25);
+    }
+    .strength-weak{
+      color:#fca5a5;
+      background:rgba(239,68,68,.2);
+    }
     .rank-no{
       display:inline-flex;
       width:24px;
@@ -152,9 +158,9 @@
       justify-content:center;
       font-size:12px;
       font-weight:800;
-      background:#e0f2fe;
-      border:1px solid #bae6fd;
-      color:#075985;
+      background:#f0f9ff;
+      border:1px solid var(--border);
+      color:#cbd5e1;
       margin-right:8px;
     }
     .detail-tags{
@@ -170,14 +176,12 @@
       gap:10px;
     }
     .name{
-      font-size:17px;
-      font-weight:800;
-      color:var(--text);
+      font-size:16px;
+      font-weight:700;
     }
     .ticker{
       font-size:12px;
-      color:var(--muted-2);
-      font-weight:600;
+      color:var(--muted);
     }
 
     .stock-stats{
@@ -191,7 +195,7 @@
       display:flex;
       justify-content:space-between;
       gap:8px;
-      color:var(--text-2);
+      color:#cbd5e1;
     }
     .stat-line .k{
       color:var(--muted);
@@ -203,14 +207,13 @@
       border-radius:999px;
       padding:5px 10px;
       font-size:12px;
-      font-weight:800;
-      background:#ffffff;
+      font-weight:700;
+      background:#f0f9ff;
       border:1px solid var(--border);
-      color:var(--text-2);
     }
-    .badge.red{background:#fee2e2; color:#b91c1c; border-color:#fecaca}
-    .badge.yellow{background:#fef3c7; color:#92400e; border-color:#fde68a}
-    .badge.green{background:#dcfce7; color:#166534; border-color:#bbf7d0}
+    .badge.red{background:rgba(239,68,68,.12)}
+    .badge.yellow{background:rgba(250,204,21,.25); color:#fde68a}
+    .badge.green{background:rgba(34,197,94,.12)}
     .detail-head{
       display:flex;
       justify-content:space-between;
@@ -235,7 +238,7 @@
       margin-bottom:16px;
     }
     .mini{
-      background:#fbfdff;
+      background:#f0f9ff;
       border:1px solid var(--border);
       border-radius:14px;
       padding:12px;
@@ -248,7 +251,7 @@
       margin:6px 0;
     }
     .chart-box{
-      background:#fbfdff;
+      background:#f0f9ff;
       border:1px solid var(--border);
       border-radius:16px;
       padding:12px;
@@ -260,9 +263,9 @@
       border-radius:12px;
       overflow:hidden;
       background:
-        linear-gradient(to top, rgba(14,165,233,.07), rgba(14,165,233,0)),
-        linear-gradient(to bottom, rgba(15,23,42,.03), rgba(255,255,255,0));
-      border:1px solid var(--border);
+        linear-gradient(to top, rgba(56,189,248,.06), rgba(56,189,248,0)),
+        linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,0));
+      border:1px solid rgba(255,255,255,.05);
     }
     .price-chart svg{
       width:100%;
@@ -276,7 +279,7 @@
       border-top:1px dashed;
       font-size:11px;
       padding-left:8px;
-      color:var(--text-2);
+      color:#cbd5e1;
       pointer-events:none;
     }
     .section-title{
@@ -302,7 +305,7 @@
   <div class="wrap">
     <div class="hero">
       <h1>M6 Stocks Dashboard</h1>
-      <div class="sub">振宇持股管理沙盒｜專業版 UI（高對比、清晰決策）｜M6 自動強弱 / 狀態引擎</div>
+      <div class="sub">振宇持股管理沙盒｜多檔 Dashboard 強化版（排序 / 強弱 / 顏色）</div>
       <div class="toolbar" style="grid-template-columns:1.3fr 1fr 1fr 1fr;">
         <input id="searchInput" class="input" placeholder="搜尋股票代號或名稱，例如 ORCL / COIN" />
         <select id="sourceFilter" class="select">
@@ -326,7 +329,7 @@
       </div>
     </div>
 
-    <div class="grid" id="summaryGrid" style="align-items:stretch;"></div><div class="card full" style="padding:12px 16px; margin-top:12px;"><div class="row" style="flex-wrap:wrap; gap:10px;"><div class="small"><b style="color:var(--text)">閱讀原則：</b>白卡看數字、色塊看風險、徽章看強弱；健康/觀察/危險與強/中/弱已改為自動計算。</div><div style="display:flex; gap:8px; flex-wrap:wrap;"><span class="badge green">健康</span><span class="badge yellow">觀察</span><span class="badge red">危險</span><span class="strength-badge strength-strong">強</span><span class="strength-badge strength-neutral">中</span><span class="strength-badge strength-weak">弱</span></div></div></div>
+    <div class="grid" id="summaryGrid" style="align-items:stretch;"></div>
 
     <div class="grid" style="margin-top:16px;">
       <div class="card list-panel">
@@ -342,6 +345,29 @@
   </div>
 
 <script>
+const MARKET_RUNTIME = {
+  ORCL: {
+    price_now: 155.6199951171875,
+    volume: 49480800,
+    volume_ratio: 2.13,
+    last_update: "2026-04-14T07:53:04.650165+00:00",
+    price_ref_1d: 138.08999633789062,
+    price_ref_1w: 145.5399932861328,
+    price_ref_1m: 159.16000366210938,
+    price_ref_3m: 198.52000427246094,
+    price_ref_6m: 296.9599914550781,
+    price_ref_12m: 134.63999938964844,
+    ret_1d: 0.126946,
+    ret_1w: 0.069259,
+    ret_1m: -0.022242,
+    ret_3m: -0.216099,
+    ret_6m: -0.475956,
+    ret_12m: 0.155823,
+    swing_days: [12.69, 0.17, -4.04, 0.34, -1.63, -0.57],
+    delta_1d: 12.69
+  }
+};
+
 const stocks = [
   {
     symbol: "ORCL",
@@ -353,13 +379,12 @@ const stocks = [
     quantity: 55,
     cost: 178.82,
     current: 156.00,
-    ma20: 154,
-    ma50: 150,
-    ma200: 200,
+    status: "危險",
     trend: "反彈中，未回長期壓力",
     support: [140, 134],
     resistance: [159, 170, 200],
     rsi: 74,
+    strength: "弱",
     switch_to: ["NVDA", "AVGO"],
     strategy: {
       summary: "接股後仍低於成本，現階段以反彈減碼與風險控制為主。",
@@ -379,13 +404,12 @@ const stocks = [
     quantity: 20,
     cost: 168.00,
     current: 174.53,
-    ma20: 171,
-    ma50: 179.55,
-    ma200: 248.40,
+    status: "觀察",
     trend: "高波動反彈，仍受均線壓力",
     support: [160, 158.5],
     resistance: [182, 200, 248],
     rsi: 55.3,
+    strength: "中",
     switch_to: ["NVDA", "MSFT"],
     strategy: {
       summary: "高 Beta 標的，適合反彈分批賣，不宜太樂觀。",
@@ -405,13 +429,12 @@ const stocks = [
     quantity: 18,
     cost: 239.50,
     current: 228.40,
-    ma20: 230,
-    ma50: 233,
-    ma200: 262,
+    status: "觀察",
     trend: "弱勢整理，等待方向",
     support: [220, 205],
     resistance: [235, 248, 270],
     rsi: 49,
+    strength: "中",
     switch_to: ["NVDA", "AVGO"],
     strategy: {
       summary: "若無法站回 235 上方，仍偏整理格局。",
@@ -431,13 +454,12 @@ const stocks = [
     quantity: 12,
     cost: 170.20,
     current: 183.22,
-    ma20: 181,
-    ma50: 174,
-    ma200: 160,
+    status: "健康",
     trend: "強勢整理，仍在成本上方",
     support: [176, 170],
     resistance: [186, 192, 200],
     rsi: 63,
+    strength: "強",
     switch_to: [],
     strategy: {
       summary: "核心股可續抱，但接近短線壓力時可局部調節。",
@@ -450,49 +472,6 @@ const stocks = [
 ];
 
 let selectedSymbol = "ORCL";
-
-
-function calcStrength(stock){
-  let score = 0;
-  if (stock.current >= stock.ma20) score += 1;
-  if (stock.current >= stock.ma50) score += 2;
-  if (stock.current >= stock.ma200) score += 2;
-  if (stock.rsi >= 50 && stock.rsi <= 70) score += 1;
-  if (stock.current > stock.cost) score += 2;
-  if (score >= 6) return "強";
-  if (score >= 3) return "中";
-  return "弱";
-}
-
-function calcStatus(stock){
-  const lossPct = stock.cost ? ((stock.current - stock.cost) / stock.cost) * 100 : 0;
-  const nearSupport = stock.support?.length ? stock.current <= stock.support[0] * 1.03 : false;
-  const belowMa50 = stock.current < stock.ma50;
-
-  if (lossPct <= -8 || (nearSupport && belowMa50)) return "危險";
-  if (lossPct < 0 || stock.current < stock.ma20 || stock.current < stock.resistance?.[0]) return "觀察";
-  return "健康";
-}
-
-function calcHealthNote(stock){
-  const s = calcStatus(stock);
-  const st = calcStrength(stock);
-  if (s === "危險") return `跌近支撐 / 弱於均線，列為優先處理`;
-  if (s === "觀察" && st === "弱") return `尚未轉強，先觀察反彈與壓力`;
-  if (s === "觀察") return `接近關鍵區，等待方向確認`;
-  return `結構尚可，可續抱追蹤`;
-}
-
-function enrichStock(stock){
-  const strength = calcStrength(stock);
-  const status = calcStatus(stock);
-  return {
-    ...stock,
-    strength,
-    status,
-    health_note: calcHealthNote(stock)
-  };
-}
 
 function pnl(stock){
   const diff = stock.current - stock.cost;
@@ -588,10 +567,6 @@ function renderSummary(data){
       <div class="label">健康/觀察/危險</div>
       <div class="metric"><span class="green">${s.healthy}</span>/<span class="yellow">${s.watch}</span>/<span class="red">${s.danger}</span></div>
     </div>
-    <div class="card summary-card">
-      <div class="label">引擎</div>
-      <div class="metric blue">AUTO</div>
-    </div>
   `;
 }
 
@@ -600,7 +575,7 @@ function getFilteredStocks(){
   const source = document.getElementById("sourceFilter").value;
   const status = document.getElementById("statusFilter").value;
 
-  let result = stocks.map(enrichStock).filter(s => {
+  let result = stocks.filter(s => {
     const hitSearch = !search || s.symbol.toLowerCase().includes(search) || s.name.toLowerCase().includes(search);
     const hitSource = source === "all" || s.source === source;
     const hitStatus = status === "all" || s.status === status;
@@ -643,6 +618,7 @@ function renderList(data){
           <div class="stat-line"><span class="k">價差</span><span class="${cls}">${p.diff >= 0 ? "+" : ""}${p.diff.toFixed(2)}</span></div>
           <div class="stat-line"><span class="k">損益金額</span><span class="${cls}">${pnlAmt >= 0 ? "+" : ""}$${pnlAmt.toFixed(0)}</span></div>
           <div class="stat-line"><span class="k">損益率</span><span class="${cls}">${p.pct >= 0 ? "+" : ""}${p.pct.toFixed(1)}%</span></div>
+          <div class="stat-line"><span class="k">單日變化</span><span class="${(stock.delta_1d ?? 0) >= 0 ? 'green' : 'red'}">${(stock.delta_1d ?? 0) >= 0 ? "+" : ""}${(stock.delta_1d ?? 0).toFixed ? (stock.delta_1d ?? 0).toFixed(2) : stock.delta_1d}%</span></div>
         </div>
       </div>
     `;
@@ -655,7 +631,9 @@ function priceToY(value, min, max, h){
 }
 
 function renderLineChart(stock){
-  const data = stock.series;
+  const data = stock.series && stock.series.length ? stock.series : [
+    stock.line_12m, stock.line_6m, stock.line_1m, stock.line_1w, stock.current
+  ].filter(v => Number.isFinite(v));
   const allRef = [
     ...data,
     stock.cost,
@@ -679,10 +657,11 @@ function renderLineChart(stock){
   const marks = [
     { label:`成本 ${stock.cost.toFixed(2)}`, value:stock.cost, color:"#22c55e" },
     { label:`現價 ${stock.current.toFixed(2)}`, value:stock.current, color:"#ef4444" },
-    { label:`MA50 ${stock.ma50}`, value:stock.ma50, color:"#38bdf8" },
-    { label:`MA200 ${stock.ma200}`, value:stock.ma200, color:"#a78bfa" },
-    { label:`支撐 ${stock.support[0]}`, value:stock.support[0], color:"#facc15" },
-    { label:`壓力 ${stock.resistance[0]}`, value:stock.resistance[0], color:"#94a3b8" }
+    { label:`1M代MA50 ${stock.line_1m?.toFixed ? stock.line_1m.toFixed(2) : stock.line_1m}`, value:stock.line_1m, color:"#38bdf8" },
+    { label:`6M代MA200 ${stock.line_6m?.toFixed ? stock.line_6m.toFixed(2) : stock.line_6m}`, value:stock.line_6m, color:"#7c3aed" },
+    { label:`年線 ${stock.line_12m?.toFixed ? stock.line_12m.toFixed(2) : stock.line_12m}`, value:stock.line_12m, color:"#f59e0b" },
+    { label:`支撐 ${stock.support[0]}`, value:stock.support[0], color:"#94a3b8" },
+    { label:`壓力 ${stock.resistance[0]}`, value:stock.resistance[0], color:"#64748b" }
   ];
 
   return `
@@ -706,7 +685,7 @@ function renderDetail(stock){
     <div class="detail-head">
       <div>
         <h2 class="detail-title">${stock.symbol} ｜ ${stock.name}</h2>
-        <div class="detail-sub">${stock.source} ・ ${stock.category} ・ FCN來源：${stock.fcn_id}</div><div class="detail-tags"><div class="strength-badge ${strengthClass(stock.strength)}">強弱：${stock.strength}</div><div class="badge ${statusClass(stock.status)}">${stock.status}</div></div>
+        <div class="detail-sub">${stock.source} ・ ${stock.category} ・ FCN來源：${stock.fcn_id} ・ 更新：${stock.last_update || "-"}</div><div class="detail-tags"><div class="strength-badge ${strengthClass(stock.strength)}">強弱：${stock.strength}</div><div class="badge ${statusClass(stock.status)}">${stock.status}</div></div>
       </div>
       <div class="badge ${statusClass(stock.status)}">${stock.status}</div>
     </div>
@@ -723,16 +702,15 @@ function renderDetail(stock){
         <div class="label">技術概況</div>
         <div class="kv"><div class="small">趨勢</div><div>${stock.trend}</div></div>
         <div class="kv"><div class="small">RSI</div><div class="${stock.rsi >= 70 ? 'red' : stock.rsi >= 55 ? 'yellow' : 'green'}">${stock.rsi}</div></div>
-        <div class="kv"><div class="small">MA20 / MA50</div><div>${stock.ma20} / ${stock.ma50}</div></div>
-        <div class="kv"><div class="small">MA200</div><div>${stock.ma200}</div></div>
-        <div class="kv"><div class="small">自動判讀</div><div>${stock.health_note}</div></div>
+        <div class="kv"><div class="small">MA50 / MA200</div><div>${stock.ma50} / ${stock.ma200}</div></div>
+        <div class="kv"><div class="small">銀行</div><div>${stock.bank}</div></div>
       </div>
     </div>
 
     <div class="chart-box">
       <div class="section-title">價格區間圖</div>
       ${renderLineChart(stock)}
-      <div class="small" style="margin-top:8px;">這是沙盒版輕量圖。下一版可升級成真 K 線、1M/3M/6M 切換、成交量、MACD、RSI。</div>
+      <div class="small" style="margin-top:8px;">目前先接真價格與代理線：1M 代 MA50、6M 代 MA200、12M 作年線。真 K 線後面再補。</div>
     </div>
 
     <div class="detail-grid">
@@ -744,7 +722,6 @@ function renderDetail(stock){
       <div class="mini">
         <div class="section-title">策略摘要</div>
         <div class="strategy">${stock.strategy.summary}</div>
-        <div class="small" style="margin-top:6px;">M6引擎判定：${stock.status} ／ ${stock.strength}</div>
         <div class="kv"><div class="small">目前損益金額</div><div class="${cls}">${(p.diff * stock.quantity) >= 0 ? "+" : ""}$${(p.diff * stock.quantity).toFixed(0)}</div></div>
         <div class="kv"><div class="small">目前損益率</div><div class="${cls}">${p.pct >= 0 ? "+" : ""}${p.pct.toFixed(1)}%</div></div>
         <div class="kv"><div class="small">換股觀察</div><div>${stock.switch_to && stock.switch_to.length ? stock.switch_to.join(" / ") : "目前不需換股"}</div></div>
@@ -789,4 +766,3 @@ rerender();
 </script>
 </body>
 </html>
-
