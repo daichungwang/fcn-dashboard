@@ -784,7 +784,9 @@ async function init() {
     });
 
     const vm = buildM6ViewModel(raw);
-
+    window.vm = vm;
+    window.stocks = vm.aggregates;
+    
     // ========================
     // 左邊：總覽（合併後）
     // ========================
