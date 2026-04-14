@@ -984,82 +984,32 @@ M3 定位：
       `;
     }
 
-     function buildAnalyticsBlock(cache) {
+        function buildAnalyticsBlock(cache) {
   const list = cache.scenarioAnalytics || [];
 
   if (!list.length) return `<div class="empty">尚無資料</div>`;
 
-  return list.map(sc => {
+  return list.map(sc => `
+    <div class="scenario-card">
+      <div class="item-title">${sc.scenario}</div>
 
-    const deltas = sc.factor_stats?.delta || {};
-    const sorted = Object.entries(deltas)
-      .sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]));
-
-    const topFactors = sorted.slice(0, 3)
-      .map(x => x[0].replaceAll("_", " "))
-      .join(" / ");
-
-    const bestRate = sc.factor_stats?.qualified?.simulation_rate?.mean;
-
-    return `
-      <div class="scenario-card">
-
-        <div class="item-title">${sc.scenario}</div>
-
-        <div class="item-line">
-          達標率：<b>${sc.counts.success_rate.toFixed(1)}%</b>
-        </div>
-
-        <div class="item-line">
-          最佳 Target：約 ${bestRate ? bestRate.toFixed(0) + "%" : "-"}
-        </div>
-
-        <div class="item-line">
-          關鍵因子：<b>${topFactors}</b>
-        </div>
-
-        <div class="item-line">
-          代表股票：
-          ${(sc.stock_stats?.qualified || [])
-            .slice(0, 3)
-            .map(x => x.symbol)
-            .join(" / ") || "-"}
-        </div>
-
-        <div class="item-line subtle">
-          ${sc.m3_summary?.pattern || ""} ｜ ${sc.m3_summary?.conclusion || ""}
-        </div>
-
-        <details style="margin-top:10px;">
-          <summary style="cursor:pointer;">展開統計細節</summary>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Factor</th>
-                  <th>Delta</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${
-                  Object.entries(deltas)
-                    .map(([k, v]) => `
-                      <tr>
-                        <td>${k}</td>
-                        <td>${v.toFixed(3)}</td>
-                      </tr>
-                    `).join("")
-                }
-              </tbody>
-            </table>
-          </div>
-
-        </details>
-
+      <div class="item-line">
+        達標率：<b>${(sc.counts?.success_rate || 0).toFixed(1)}%</b>
       </div>
-    `;
-  }).join("");
+
+      <div class="item-line">
+        代表股票：
+        ${(sc.stock_stats?.qualified || [])
+          .slice(0, 3)
+          .map(x => x.symbol)
+          .join(" / ") || "-"}
+      </div>
+
+      <div class="item-line subtle">
+        ${sc.m3_summary?.pattern || ""}
+      </div>
+    </div>
+  `).join("");
 }
 
     function buildQualifiedLayerBlock(cache) {
