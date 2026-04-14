@@ -1,6 +1,7 @@
 // ==========================================
 // m3_engine.js
 // 振宇 FCN 系統｜M3 主觀偏好模擬引擎
+// 完整版：Dashboard / Simulation Meta / Qualified Meta / M5 Payload
 // ==========================================
 
 import { runM8Case } from "../core/m8_batch_engine.js";
@@ -42,6 +43,40 @@ async function loadJSON(path) {
   const res = await fetch(path);
   if (!res.ok) throw new Error(`${path} 載入失敗：${res.status}`);
   return await res.json();
+}
+
+// ------------------------------------------
+// 統計工具
+// ------------------------------------------
+function calcStats(values) {
+  const arr = (values || []).map(Number).filter(Number.isFinite);
+
+  if (!arr.length) {
+    return {
+      count: 0,
+      mean: null,
+      std: null,
+      min: null,
+      max: null
+    };
+  }
+
+  const mean = arr.reduce((a, b) => a + b, 0) / arr.length;
+  const variance =
+    arr.reduce((sum, v) => sum + Math.pow(v - mean, 2), 0) / arr.length;
+  const std = Math.sqrt(variance);
+
+  return {
+    count: arr.length,
+    mean: round(mean, 2),
+    std: round(std, 2),
+    min: round(Math.min(...arr), 2),
+    max: round(Math.max(...arr), 2)
+  };
+}
+
+function uniqueArray(arr) {
+  return [...new Set((arr || []).filter(Boolean))];
 }
 
 // ------------------------------------------
@@ -165,14 +200,13 @@ function getFairFlag(gap) {
 }
 
 // ------------------------------------------
-// 健康度
+// 健康度 / 市場評價
 // ------------------------------------------
 function calcHealthPct(fcn) {
   const worst = toNumber(fcn?.r1?.event_stock_score, 0);
   const avg = toNumber(fcn?.avgEventStock, 0);
 
   const score = 0.6 * worst + 0.4 * avg;
-
   return Math.max(0, Math.min(100, round((score / 12) * 100, 1)));
 }
 
@@ -184,20 +218,14 @@ function getPreferenceLevel(eventFcn) {
   return "低偏好";
 }
 
-function getMarketScore(gap) {
+function getMarketScore(gap, fairRate) {
   const g = Number(gap);
-  if (!Number.isFinite(g)) return 0;
-  if (g >= 2.0) return 5;
-  if (g >= 1.5) return 4;
-  if (g >= 1.0) return 3;
-  if (g >= 0.5) return 2;
-  if (g >= 0.0) return 1;
-  if (g >= -0.5) return -1;
-  if (g >= -1.0) return -2;
-  if (g >= -1.5) return -3;
-  if (g >= -2.0) return -4;
-  return -5;
+  const f = Number(fairRate);
+
+  if (!Number.isFinite(g) || !Number.isFinite(f) || f === 0) return null;
+  return round((g / f) * 100, 1);
 }
+
 function getMarketLevel(gap) {
   const g = Number(gap);
   if (!Number.isFinite(g)) return "待接 M8";
@@ -229,7 +257,6 @@ async function runSimulation(cleanPool, config) {
   const scenarios = scenarioGroup.scenarios || [];
   const rankingCfg = config["M3_排名評分參數"] || {};
   const simCfg = config["M3_模擬控制參數"] || {};
-
   const maxCombinations = toNumber(simCfg.max_combinations, 50);
 
   for (const scenario of scenarios) {
@@ -277,9 +304,9 @@ async function runSimulation(cleanPool, config) {
                     });
 
                     fairRate = toNumber(m8?.fair_yield, null);
-                   fairGap = Number.isFinite(fairRate)
-                    ? round(fairRate - toNumber(rate, 0), 2)
-                    : null;
+                    fairGap = Number.isFinite(fairRate)
+                      ? round(fairRate - toNumber(rate, 0), 2)
+                      : null;
                     fairFlag = safeText(m8?.pricing_view, getFairFlag(fairGap));
                     fairReason = safeText(m8?.note, "");
                   } catch (err) {
@@ -294,7 +321,7 @@ async function runSimulation(cleanPool, config) {
                     scenario_name: safeText(scenario["名稱"], "未命名情境"),
                     scenario_comment: safeText(scenario["說明"], ""),
                     scenario_type: safeText(scenario["類型"], ""),
-                    scenario_goal: scenario["目標"] || null,
+                    scenario_goal: safeText(scenario["目標"], ""),
 
                     basket_size: toNumber(basketSize, 0),
                     simulation_rate: toNumber(rate, 0),
@@ -307,10 +334,10 @@ async function runSimulation(cleanPool, config) {
                     fair_flag: fairFlag,
                     fair_reason: fairReason,
 
-                      health_pct: healthPct,
-                      preference_level: getPreferenceLevel(eventFcn),
-                      market_level: getMarketLevel(fairGap),
-                      market_score: getMarketScore(fairGap),
+                    health_pct: healthPct,
+                    preference_level: getPreferenceLevel(eventFcn),
+                    market_level: getMarketLevel(fairGap),
+                    market_score: getMarketScore(fairGap, fairRate),
 
                     suggestion_rank:
                       eventFcn >= toNumber(rankingCfg.strong_buy_min_event_fcn, 12) ? "strong" :
@@ -332,7 +359,7 @@ async function runSimulation(cleanPool, config) {
 }
 
 // ------------------------------------------
-// Summary / Dashboard
+// Summary / Scenario / Rate
 // ------------------------------------------
 function buildSummary(selection, sims) {
   const reviewed = selection.reviewed || [];
@@ -399,8 +426,7 @@ function buildRateDistribution(sims) {
     { key: "<15", min: -Infinity, max: 15 },
     { key: "15-18", min: 15, max: 18 },
     { key: "18-20", min: 18, max: 20 },
-    { key: "20-24", min: 20, max: 24 },
-    { key: "24+", min: 24, max: Infinity }
+    { key: "20以上", min: 20, max: Infinity }
   ];
 
   return buckets.map(b => {
@@ -420,25 +446,213 @@ function buildRateDistribution(sims) {
   });
 }
 
-function buildDashboard(summary, scenarioSummary, rateDistribution, sims) {
+// ------------------------------------------
+// Simulation Meta / Qualified Meta / Compare
+// ------------------------------------------
+function buildSymbolStatsFromRows(rows) {
+  const map = {};
+
+  rows.forEach(row => {
+    const components = Array.isArray(row.components) ? row.components : [];
+
+    components.forEach(c => {
+      const symbol = safeText(c.symbol, "");
+      if (!symbol) return;
+
+      if (!map[symbol]) {
+        map[symbol] = {
+          symbol,
+          count: 0,
+          event_scores: [],
+          pure_scores: [],
+          snapshot_scores: []
+        };
+      }
+
+      map[symbol].count += 1;
+      map[symbol].event_scores.push(toNumber(c.event_stock_score, null));
+      map[symbol].pure_scores.push(toNumber(c.pure_stock_score, null));
+      map[symbol].snapshot_scores.push(toNumber(c.snapshot_score, null));
+    });
+  });
+
+  return Object.values(map)
+    .map(x => ({
+      symbol: x.symbol,
+      count: x.count,
+      avg_event_score: calcStats(x.event_scores).mean,
+      avg_pure_score: calcStats(x.pure_scores).mean,
+      avg_snapshot_score: calcStats(x.snapshot_scores).mean
+    }))
+    .sort((a, b) => b.count - a.count || toNumber(b.avg_event_score, 0) - toNumber(a.avg_event_score, 0));
+}
+
+function buildScenarioStatsFromRows(rows) {
+  const map = {};
+
+  rows.forEach(row => {
+    const name = row.scenario_name || "未知情境";
+
+    if (!map[name]) {
+      map[name] = {
+        scenario_name: name,
+        scenario_type: safeText(row.scenario_type, "-"),
+        scenario_goal: safeText(row.scenario_goal, "-"),
+        count: 0,
+        m3_scores: [],
+        gaps: [],
+        healths: [],
+        rates: []
+      };
+    }
+
+    map[name].count += 1;
+    map[name].m3_scores.push(toNumber(row.event_fcn, null));
+    map[name].gaps.push(toNumber(row.fair_gap, null));
+    map[name].healths.push(toNumber(row.health_pct, null));
+    map[name].rates.push(toNumber(row.simulation_rate, null));
+  });
+
+  return Object.values(map)
+    .map(x => ({
+      scenario_name: x.scenario_name,
+      scenario_type: x.scenario_type,
+      scenario_goal: x.scenario_goal,
+      count: x.count,
+      avg_m3_score: calcStats(x.m3_scores).mean,
+      avg_gap: calcStats(x.gaps).mean,
+      avg_health: calcStats(x.healths).mean,
+      avg_rate: calcStats(x.rates).mean
+    }))
+    .sort((a, b) => b.count - a.count || toNumber(b.avg_m3_score, 0) - toNumber(a.avg_m3_score, 0));
+}
+
+function buildSimulationMeta(selection, sims) {
+  const cleanPool = selection?.clean_pool || [];
+  const scenarioMap = new Map();
+
+  sims.forEach(row => {
+    const key = row.scenario_name || "未知情境";
+    if (!scenarioMap.has(key)) {
+      scenarioMap.set(key, {
+        scenario_name: key,
+        scenario_type: safeText(row.scenario_type, "-"),
+        scenario_goal: safeText(row.scenario_goal, "-"),
+        source: "parameter_matrix.json / M3_FCN情境組合參數"
+      });
+    }
+  });
+
+  return {
+    simulated_stock_count: cleanPool.length,
+    simulated_stocks: cleanPool.map(s => ({
+      symbol: s.symbol,
+      score: round(toNumber(s.event_stock_score, 0), 2)
+    })),
+    scenario_count: scenarioMap.size,
+    scenarios: [...scenarioMap.values()],
+    stock_stats: calcStats(cleanPool.map(s => toNumber(s.event_stock_score, null))),
+    gap_stats: calcStats(sims.map(s => toNumber(s.fair_gap, null))),
+    m3_stats: calcStats(sims.map(s => toNumber(s.event_fcn, null))),
+    health_stats: calcStats(sims.map(s => toNumber(s.health_pct, null))),
+    symbol_stats: buildSymbolStatsFromRows(sims),
+    scenario_stats: buildScenarioStatsFromRows(sims),
+    qualification_rules: {
+      m3_score_min: 8,
+      fair_gap_min: -1,
+      health_min: 30,
+      source: "m3_engine.js / isQualified()"
+    }
+  };
+}
+
+function buildQualifiedMeta(sims) {
+  const qualified = sims.filter(isQualified);
+  const qualifiedScenarioNames = uniqueArray(qualified.map(x => x.scenario_name));
+
+  return {
+    qualified_count: qualified.length,
+    qualified_stock_count: uniqueArray(
+      qualified.flatMap(x => Array.isArray(x.basket) ? x.basket : String(x.basket || "").split(",").map(s => s.trim()))
+    ).filter(Boolean).length,
+    qualified_scenario_count: qualifiedScenarioNames.length,
+    gap_stats: calcStats(qualified.map(s => toNumber(s.fair_gap, null))),
+    m3_stats: calcStats(qualified.map(s => toNumber(s.event_fcn, null))),
+    health_stats: calcStats(qualified.map(s => toNumber(s.health_pct, null))),
+    rate_stats: calcStats(qualified.map(s => toNumber(s.simulation_rate, null))),
+    symbol_stats: buildSymbolStatsFromRows(qualified),
+    scenario_stats: buildScenarioStatsFromRows(qualified)
+  };
+}
+
+function buildCompareStats(simMeta, qualifiedMeta) {
+  const simCount = toNumber(simMeta?.symbol_stats?.length, 0);
+  const qualCount = toNumber(qualifiedMeta?.symbol_stats?.length, 0);
+  const simScenarioCount = toNumber(simMeta?.scenario_stats?.length, 0);
+  const qualScenarioCount = toNumber(qualifiedMeta?.scenario_stats?.length, 0);
+
+  return {
+    stock_capture_rate: simCount ? round((qualCount / simCount) * 100, 1) : 0,
+    scenario_capture_rate: simScenarioCount ? round((qualScenarioCount / simScenarioCount) * 100, 1) : 0,
+    gap_mean_delta:
+      Number.isFinite(simMeta?.gap_stats?.mean) && Number.isFinite(qualifiedMeta?.gap_stats?.mean)
+        ? round(qualifiedMeta.gap_stats.mean - simMeta.gap_stats.mean, 2)
+        : null,
+    m3_mean_delta:
+      Number.isFinite(simMeta?.m3_stats?.mean) && Number.isFinite(qualifiedMeta?.m3_stats?.mean)
+        ? round(qualifiedMeta.m3_stats.mean - simMeta.m3_stats.mean, 2)
+        : null,
+    health_mean_delta:
+      Number.isFinite(simMeta?.health_stats?.mean) && Number.isFinite(qualifiedMeta?.health_stats?.mean)
+        ? round(qualifiedMeta.health_stats.mean - simMeta.health_stats.mean, 2)
+        : null
+  };
+}
+
+// ------------------------------------------
+// Best example / Dashboard / Decision
+// ------------------------------------------
+function pickBestQualifiedExample(sims) {
+  const qualified = sims.filter(isQualified);
+  if (!qualified.length) return null;
+
+  return [...qualified].sort((a, b) => {
+    const scoreA =
+      toNumber(a.event_fcn, 0) * 1.0 +
+      toNumber(a.fair_gap, 0) * 0.6 +
+      toNumber(a.health_pct, 0) * 0.03;
+
+    const scoreB =
+      toNumber(b.event_fcn, 0) * 1.0 +
+      toNumber(b.fair_gap, 0) * 0.6 +
+      toNumber(b.health_pct, 0) * 0.03;
+
+    return scoreB - scoreA;
+  })[0];
+}
+
+function buildDashboard(summary, scenarioSummary, rateDistribution, sims, selection) {
   const qualified = sims.filter(isQualified);
   const overallSuccessRate = sims.length
     ? round((qualified.length / sims.length) * 100, 1)
     : 0;
 
-  const bestQualified = qualified.length
-    ? [...qualified].sort((a, b) => toNumber(b.event_fcn, 0) - toNumber(a.event_fcn, 0))[0]
-    : null;
-
   const bestScenario = scenarioSummary.length ? scenarioSummary[0] : null;
+  const simulationMeta = buildSimulationMeta(selection, sims);
+  const qualifiedMeta = buildQualifiedMeta(sims);
+  const compareStats = buildCompareStats(simulationMeta, qualifiedMeta);
+  const bestQualifiedExample = pickBestQualifiedExample(sims);
 
   return {
     total_simulations: sims.length,
     total_qualified: qualified.length,
     overall_success_rate: overallSuccessRate,
 
-    best_qualified: bestQualified,
     best_scenario: bestScenario,
+    simulation_meta: simulationMeta,
+    qualified_meta: qualifiedMeta,
+    compare_stats: compareStats,
+    best_qualified_example: bestQualifiedExample,
 
     summary,
     scenario_summary: scenarioSummary,
@@ -463,6 +677,37 @@ function buildFinalDecision(sims, topN = 5) {
       return scoreB - scoreA;
     })
     .slice(0, topN);
+}
+
+function buildM5Payload(selection, sims, dashboard, finalDecision) {
+  return {
+    generated_at: new Date().toISOString(),
+    source: "M3 Engine",
+    qualification_rules: dashboard?.simulation_meta?.qualification_rules || {},
+    simulated_universe: {
+      clean_pool_symbols: (selection?.clean_pool || []).map(x => x.symbol),
+      simulated_stock_count: dashboard?.simulation_meta?.simulated_stock_count || 0,
+      simulated_scenario_count: dashboard?.simulation_meta?.scenario_count || 0,
+      stock_stats: dashboard?.simulation_meta?.stock_stats || {},
+      gap_stats: dashboard?.simulation_meta?.gap_stats || {},
+      m3_stats: dashboard?.simulation_meta?.m3_stats || {},
+      health_stats: dashboard?.simulation_meta?.health_stats || {}
+    },
+    qualified_universe: {
+      qualified_count: dashboard?.qualified_meta?.qualified_count || 0,
+      qualified_stock_count: dashboard?.qualified_meta?.qualified_stock_count || 0,
+      qualified_scenario_count: dashboard?.qualified_meta?.qualified_scenario_count || 0,
+      gap_stats: dashboard?.qualified_meta?.gap_stats || {},
+      m3_stats: dashboard?.qualified_meta?.m3_stats || {},
+      health_stats: dashboard?.qualified_meta?.health_stats || {},
+      rate_stats: dashboard?.qualified_meta?.rate_stats || {}
+    },
+    compare_stats: dashboard?.compare_stats || {},
+    qualified_symbol_stats: dashboard?.qualified_meta?.symbol_stats || [],
+    qualified_scenario_stats: dashboard?.qualified_meta?.scenario_stats || [],
+    top_qualified_examples: finalDecision || [],
+    total_simulations: sims.length
+  };
 }
 
 // ------------------------------------------
@@ -529,11 +774,18 @@ export async function runM3Engine() {
   const summary = buildSummary(selection, simulationResults);
   const scenarioSummary = buildScenarioSummary(simulationResults);
   const rateDistribution = buildRateDistribution(simulationResults);
-  const dashboard = buildDashboard(summary, scenarioSummary, rateDistribution, simulationResults);
+  const dashboard = buildDashboard(
+    summary,
+    scenarioSummary,
+    rateDistribution,
+    simulationResults,
+    selection
+  );
 
   const simCfg = config["M3_模擬控制參數"] || {};
   const topNOutput = toNumber(simCfg.top_n_output, 5);
   const finalDecision = buildFinalDecision(simulationResults, Math.min(topNOutput, 5));
+  const m5_payload = buildM5Payload(selection, simulationResults, dashboard, finalDecision);
 
   return {
     generated_at: new Date().toISOString(),
@@ -545,12 +797,13 @@ export async function runM3Engine() {
     scenarioSummary,
     rateDistribution,
     dashboard,
-    finalDecision
+    finalDecision,
+    m5_payload
   };
 }
 
 // ------------------------------------------
-// 可選：給外部 UI 用的輕量文字摘要
+// 給外部 UI 用的輕量文字摘要
 // ------------------------------------------
 export function buildDashboardConclusion(cache) {
   const dashboard = cache.dashboard || {};
@@ -566,5 +819,8 @@ export function buildDashboardConclusion(cache) {
   }
 
   const bestScenario = dashboard.best_scenario?.scenario_name || "未知";
-  return `本次模擬共 ${total} 組，達標 ${qualified} 組，最有效策略為「${bestScenario}」。`;
+  const stockCaptureRate = toNumber(dashboard.compare_stats?.stock_capture_rate, 0);
+  const scenarioCaptureRate = toNumber(dashboard.compare_stats?.scenario_capture_rate, 0);
+
+  return `本次模擬共 ${total} 組，達標 ${qualified} 組，最有效策略為「${bestScenario}」。達標標的涵蓋率 ${stockCaptureRate}%；達標情境涵蓋率 ${scenarioCaptureRate}%。`;
 }
