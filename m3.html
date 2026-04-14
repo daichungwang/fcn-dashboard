@@ -896,6 +896,7 @@ M3 Dashboard
                   <td>${fmt(x.event_fcn)}</td>
                   <td>${fmt(x.simulation_rate, 1)}%</td>
                   <td>${x.fair_rate === null ? "待接 M8" : `${fmt(x.fair_rate, 1)}%`}</td>
+                  <td>${safeText(x.market_score, "-")}</td>
                   <td class="${x.fair_gap === null ? "" : deltaClass(x.fair_gap)}">${x.fair_gap === null ? "待接 M8" : `${x.fair_gap >= 0 ? "+" : ""}${fmt(x.fair_gap, 1)}%`}</td>
                   <td>${fmt(x.health_pct, 1)}%</td>
                   <td>${isQualified(x) ? '<span class="pill pill-do">達標</span>' : '<span class="pill pill-no">未達標</span>'}</td>
