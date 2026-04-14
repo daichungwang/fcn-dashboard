@@ -838,32 +838,33 @@ M3 Dashboard
       `;
     }
 
-    function buildFinalDecisionBlock(cache) {
-      const top = cache.finalDecision || [];
-      if (!top.length) {
-        return `
-          <div class="item-card">
-            <div class="item-title">本次無達標組</div>
-            <div class="item-line">原因可能為：fair gap 未達標、偏好分數不足，或結構健康度不足。</div>
-          </div>
-        `;
-      }
+  function buildFinalDecisionBlock(cache) {
+  const top = cache.finalDecision || [];
 
-      return top.map((x, idx) => `
-  <div class="item-card">
-    <div class="item-title">#${idx + 1} ${safeText(x.scenario_name)}</div>
-    <div class="item-line">Basket：${safeText(x.basket)}</div>
-    <div class="item-line">結構：${x.basket_size}檔 / KI ${x.ki} / Strike ${x.strike} / Tenor ${x.tenor}M / EKI ${x.eki ? "YES" : "NO"}</div>
-    <div class="item-line">Worst-of：${safeText(x.worst_of)}</div>
-    <div class="item-line">M3 Preference Score：${fmt(x.event_fcn)}</div>
-    <div class="item-line">Simulation Rate：${fmt(x.simulation_rate, 1)}%</div>
-    <div class="item-line">M8 Fair Rate：${x.fair_rate === null ? "待接 M8" : `${fmt(x.fair_rate, 1)}%`}</div>
-    <div class="item-line">市場溢價 Gap：${x.fair_gap === null ? "待接 M8" : `<span class="${deltaClass(x.fair_gap)}">${x.fair_gap >= 0 ? "+" : ""}${fmt(x.fair_gap, 1)}%</span>`}</div>
-    <div class="item-line">市場評價：${safeText(x.market_level)} ｜ Market Score：${safeText(x.market_score, "-")} ｜ 健康度：${fmt(x.health_pct, 1)}%</div>
-    <div class="item-line">判讀：高偏好 + 結構健康${x.fair_gap === null ? "，等待 M8 市場 fair rate 接入" : "，且市場買單"}。</div>
-  </div>
-`).join("");
+  if (!top.length) {
+    return `
+      <div class="item-card">
+        <div class="item-title">本次無達標組</div>
+        <div class="item-line">原因可能為：市場溢價 Gap 未達標、偏好分數不足，或結構健康度不足。</div>
+      </div>
+    `;
+  }
 
+  return top.map((x, idx) => `
+    <div class="item-card">
+      <div class="item-title">#${idx + 1} ${safeText(x.scenario_name)}</div>
+      <div class="item-line">Basket：${safeText(x.basket)}</div>
+      <div class="item-line">結構：${x.basket_size}檔 / KI ${x.ki} / Strike ${x.strike} / Tenor ${x.tenor}M / EKI ${x.eki ? "YES" : "NO"}</div>
+      <div class="item-line">Worst-of：${safeText(x.worst_of)}</div>
+      <div class="item-line">M3 Preference Score：${fmt(x.event_fcn)}</div>
+      <div class="item-line">Simulation Rate：${fmt(x.simulation_rate, 1)}%</div>
+      <div class="item-line">M8 Fair Rate：${x.fair_rate === null ? "待接 M8" : `${fmt(x.fair_rate, 1)}%`}</div>
+      <div class="item-line">市場溢價 Gap：${x.fair_gap === null ? "待接 M8" : `<span class="${deltaClass(x.fair_gap)}">${x.fair_gap >= 0 ? "+" : ""}${fmt(x.fair_gap, 1)}%</span>`}</div>
+      <div class="item-line">市場評價：${safeText(x.market_level)} ｜ Market Score：${safeText(x.market_score, "-")} ｜ 健康度：${fmt(x.health_pct, 1)}%</div>
+      <div class="item-line">判讀：高偏好 + 結構健康${x.fair_gap === null ? "，等待 M8 市場 fair rate 接入" : "，且市場買單"}。</div>
+    </div>
+  `).join("");
+}
     function buildRankingBlock(cache) {
       const list = cache.simulationResults || [];
       if (!list.length) return `<div class="empty">尚無 FCN Ranking</div>`;
