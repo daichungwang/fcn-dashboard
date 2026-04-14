@@ -889,7 +889,18 @@ M3 定位：
             </div>
 
             <div class="item-line" style="margin-top:8px;">
-              <b>Target / 目標：</b>${safeText(sc.scenario_goal, "-")}
+              function formatScenarioTarget(sc) {
+  const rates =
+    sc?.scenario_raw?.rate ||
+    sc?.scenario_goal?.rate ||
+    [];
+
+  if (!Array.isArray(rates) || !rates.length) return "-";
+
+  return rates
+    .map(r => `${Number(r).toFixed(0)}%`)
+    .join(" / ");
+}
             </div>
 
             <div class="scenario-qualification">
