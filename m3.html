@@ -230,12 +230,6 @@
       color: #b71c1c;
     }
 
-    .pill-neutral {
-      background: #eef3ff;
-      border-color: #c8d8ff;
-      color: #294a9b;
-    }
-
     .green { color: #2e7d32; }
     .red { color: #c62828; }
     .orange { color: #ef6c00; }
@@ -429,7 +423,7 @@
   <script type="module">
     import { runM3Engine, buildDashboardConclusion, isQualified } from "./js/modules/m3_engine.js";
 
-    const M3_CACHE_KEY = "m3_full_cache_final_complete_v1";
+    const M3_CACHE_KEY = "m3_full_cache_stable_20260414";
     const expandedStockIds = new Set();
     const expandedSimIds = new Set();
     let blueprintOpen = false;
@@ -458,17 +452,6 @@
       return String(v);
     }
 
-      function formatScenarioTarget(sc) {
-        const rates =
-         sc?.scenario_raw?.rate ||
-         sc?.scenario_goal?.rate ||
-        [];
-
-  if (!Array.isArray(rates) || !rates.length) return "-";
-
-  return rates.map(r => `${Number(r).toFixed(0)}%`).join(" / ");
-}
-    
     function normalizePctMaybe(v) {
       const n = Number(v);
       if (!Number.isFinite(n)) return 0;
@@ -499,136 +482,8 @@
     }
 
     function writeCache(data) {
-      const lite = {
-        generated_at: data.generated_at,
-        summary: data.summary || {},
-        dashboard: data.dashboard || {},
-        scenarioSummary: data.scenarioSummary || [],
-        rateDistribution: data.rateDistribution || [],
-        finalDecision: (data.finalDecision || []).slice(0, 5),
-        scenarioAnalytics: data.scenarioAnalytics || [],
-        m5_payload: data.m5_payload || {},
-
-        stockResults: (data.stockResults || []).slice(0, 60).map(x => ({
-          symbol: x.symbol,
-          bucket: x.bucket,
-          baseline_label: x.baseline_label,
-          baseline_score: x.baseline_score,
-          pure_stock_score: x.pure_stock_score,
-          pure_reason: x.pure_reason,
-          snapshot_score: x.snapshot_score,
-          snapshot_bucket: x.snapshot_bucket,
-          snapshot_reason: x.snapshot_reason,
-          ret_1d: x.ret_1d,
-          ret_1w: x.ret_1w,
-          ret_1m: x.ret_1m,
-          ret_3m: x.ret_3m,
-          ret_6m: x.ret_6m,
-          ret_12m: x.ret_12m,
-          event_stock_score: x.event_stock_score,
-          event_score: x.event_score,
-          m1_event_score: x.m1_event_score,
-          delta_stock_score: x.delta_stock_score,
-          trend: x.trend,
-          trend_label: x.trend_label,
-          trend_note: x.trend_note,
-          trend_rate: x.trend_rate,
-          long_trend_label: x.long_trend_label,
-          long_trend_note: x.long_trend_note,
-          mid_trend_label: x.mid_trend_label,
-          mid_trend_note: x.mid_trend_note,
-          trend_profile: x.trend_profile,
-          trend_profile_label: x.trend_profile_label,
-          trend_profile_note: x.trend_profile_note,
-          short_swing: x.short_swing,
-          mid_term_volatility: x.mid_term_volatility,
-          suggestion: x.suggestion,
-          why: x.why || [],
-          whyNot: x.whyNot || []
-        })),
-
-        selection: {
-          clean_pool: (data.selection?.clean_pool || []).slice(0, 30),
-          watch_list: (data.selection?.watch_list || []).slice(0, 30),
-          reject_list: (data.selection?.reject_list || []).slice(0, 30)
-        },
-
-        simulationResults: (data.simulationResults || []).slice(0, 100).map(x => ({
-          id: x.id,
-          scenario_name: x.scenario_name,
-          scenario_comment: x.scenario_comment,
-          scenario_type: x.scenario_type,
-          scenario_goal: x.scenario_goal,
-          basket: x.basket,
-          basket_size: x.basket_size,
-          ki: x.ki,
-          strike: x.strike,
-          tenor: x.tenor,
-          eki: x.eki,
-          worst_of: x.worst_of,
-
-          profit: x.profit || {},
-          satisfy: x.satisfy || {},
-          safety: x.safety || {},
-          qualification: x.qualification || {},
-
-          event_fcn: x.event_fcn,
-          fair_gap: x.fair_gap,
-          fair_rate: x.fair_rate,
-          fair_flag: x.fair_flag,
-          fair_reason: x.fair_reason,
-          health_pct: x.health_pct,
-          market_level: x.market_level,
-          market_score: x.market_score,
-
-          pure_stock_score: x.pure_stock_score,
-          snapshot_score: x.snapshot_score,
-          event_score: x.event_score,
-          event_stock_score: x.event_stock_score,
-          short_swing: x.short_swing,
-          trend_rate: x.trend_rate,
-          mid_term_volatility: x.mid_term_volatility,
-
-          reason: x.reason,
-          avgPureStock: x.avgPureStock,
-          avgEventStock: x.avgEventStock,
-          rateScore: x.rateScore,
-          periodScore: x.periodScore,
-          priskScore: x.priskScore,
-          sri: x.sri,
-          ekiBonus: x.ekiBonus,
-          suggestion_rank: x.suggestion_rank,
-          qualified: x.qualified,
-
-          r1: x.r1 ? {
-            symbol: x.r1.symbol,
-            trend_label: x.r1.trend_label,
-            trend_note: x.r1.trend_note
-          } : null,
-          r2: x.r2 ? {
-            symbol: x.r2.symbol,
-            trend_label: x.r2.trend_label,
-            trend_note: x.r2.trend_note
-          } : null,
-          r3: x.r3 ? {
-            symbol: x.r3.symbol,
-            trend_label: x.r3.trend_label,
-            trend_note: x.r3.trend_note
-          } : null,
-          components: (x.components || []).map(c => ({
-            symbol: c.symbol,
-            pure_stock_score: c.pure_stock_score,
-            snapshot_score: c.snapshot_score,
-            event_stock_score: c.event_stock_score,
-            snapshot_reason: c.snapshot_reason,
-            trend_label: c.trend_label,
-            trend_note: c.trend_note
-          }))
-        }))
-      };
-
       try {
-        localStorage.setItem(M3_CACHE_KEY, JSON.stringify(lite));
+        localStorage.setItem(M3_CACHE_KEY, JSON.stringify(data));
       } catch (err) {
         console.warn("M3 cache 寫入失敗：", err);
       }
@@ -672,6 +527,15 @@
     function checkSafety(row) {
       const q = getQualification(row);
       return toNumber(row.safety?.health_score, 0) >= toNumber(q.safety?.min_health_score, 30);
+    }
+
+    function formatScenarioTarget(sc) {
+      const rates =
+        sc?.scenario_raw?.rate ||
+        sc?.scenario_goal?.rate ||
+        [];
+      if (!Array.isArray(rates) || !rates.length) return "-";
+      return rates.map(r => `${Number(r).toFixed(0)}%`).join(" / ");
     }
 
     function buildBlueprintText() {
@@ -868,149 +732,86 @@ M3 定位：
       `;
     }
 
-              function buildScenarioLayerBlock(cache) {
-  const scenarios = cache.dashboard?.simulation_meta?.scenarios || [];
-  const summaryRows = cache.scenarioSummary || [];
+    function buildScenarioLayerBlock(cache) {
+      const scenarios = cache.dashboard?.simulation_meta?.scenarios || [];
+      const summaryRows = cache.scenarioSummary || [];
 
-  return scenarios.map(sc => {
-    const sum = summaryRows.find(x => x.scenario_name === sc.scenario_name) || {};
+      if (!scenarios.length) return `<div class="empty">尚無情境資料</div>`;
 
-    const q = sc.qualification || {
-      profit: { min_gap: -1 },
-      satisfy: { min_m3_score: 8 },
-      safety: { min_health_score: 30 }
-    };
+      return scenarios.map(sc => {
+        const sum = summaryRows.find(x => x.scenario_name === sc.scenario_name) || {};
+        const q = sc.qualification || {
+          profit: { min_gap: -1 },
+          satisfy: { min_m3_score: 8 },
+          safety: { min_health_score: 30 }
+        };
 
-    return `
-      <div class="scenario-card">
+        return `
+          <div class="scenario-card">
+            <div class="item-title">${safeText(sc.scenario_name)}</div>
+            <div class="subtle">${safeText(sc.scenario_type)} ｜ ${safeText(sc.source)}</div>
 
-        <div class="item-title">${sc.scenario_name}</div>
-        <div class="subtle">${sc.scenario_type} ｜ ${sc.source}</div>
-
-        <div class="item-line">
-          <b>Target：</b>${formatScenarioTarget(sc)}
-        </div>
-
-        <div class="item-line">
-          <b>Qualification：</b>
-          Gap ≥ ${q.profit.min_gap}% ｜ 
-          M3 ≥ ${q.satisfy.min_m3_score} ｜ 
-          Health ≥ ${q.safety.min_health_score}%
-        </div>
-
-        <div class="item-line">
-          模擬 ${sum.total || 0} ｜ 達標 ${sum.qualified || 0} ｜ 
-          達標率 <b>${(sum.success_rate || 0).toFixed(1)}%</b>
-        </div>
-
-        <div class="item-line subtle">
-          Avg M3：${(sum.avg_event_fcn || 0).toFixed(2)} ｜ 
-          Gap：${(sum.avg_gap || 0).toFixed(2)} ｜ 
-          Health：${(sum.avg_health || 0).toFixed(1)}
-        </div>
-
-      </div>
-    `;
-  }).join("");
-}
+            <div class="item-line">
+              <b>Target：</b>${formatScenarioTarget(sc)}
             </div>
 
-            <div class="scenario-qualification">
-              <b>達標條件（Qualification）</b><br>
-              Profit：Gap ≥ ${fmt(q.profit?.min_gap, 1)}%<br>
-              Satisfy：M3 Score ≥ ${fmt(q.satisfy?.min_m3_score, 1)}<br>
-              Safety：Health Score ≥ ${fmt(q.safety?.min_health_score, 1)}%
+            <div class="item-line">
+              <b>Qualification：</b>
+              Gap ≥ ${q.profit.min_gap}% ｜ 
+              M3 ≥ ${q.satisfy.min_m3_score} ｜ 
+              Health ≥ ${q.safety.min_health_score}%
             </div>
 
-            <div class="scenario-metrics">
-              <div class="metric-chip">
-                <div class="label">模擬組數</div>
-                <div class="value">${toNumber(sc.total, 0)}</div>
-              </div>
-              <div class="metric-chip">
-                <div class="label">達標組數</div>
-                <div class="value">${toNumber(sc.qualified, 0)}</div>
-              </div>
-              <div class="metric-chip">
-                <div class="label">達標率</div>
-                <div class="value">${fmt(sc.success_rate, 1)}%</div>
-              </div>
-              <div class="metric-chip">
-                <div class="label">Avg M3</div>
-                <div class="value">${fmt(sc.avg_event_fcn, 2)}</div>
-              </div>
-              <div class="metric-chip">
-                <div class="label">Avg Gap</div>
-                <div class="value">${fmt(sc.avg_gap, 2)}</div>
-              </div>
-              <div class="metric-chip">
-                <div class="label">Avg Health</div>
-                <div class="value">${fmt(sc.avg_health, 2)}%</div>
-              </div>
+            <div class="item-line">
+              模擬 ${sum.total || 0} ｜ 達標 ${sum.qualified || 0} ｜ 
+              達標率 <b>${Number(sum.success_rate || 0).toFixed(1)}%</b>
             </div>
 
-            <div class="item-line" style="margin-top:10px;">
-              <b>最佳 Basket：</b>${safeText(sc.best_basket)}
+            <div class="item-line subtle">
+              Avg M3：${Number(sum.avg_event_fcn || 0).toFixed(2)} ｜ 
+              Gap：${Number(sum.avg_gap || 0).toFixed(2)} ｜ 
+              Health：${Number(sum.avg_health || 0).toFixed(1)}
             </div>
           </div>
         `;
       }).join("");
     }
 
-    function renderFactorCompareTable(title, obj, fields) {
-      return `
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>${title}</th>
-                <th>Mean</th>
-                <th>Std</th>
-                <th>Count</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${fields.map(f => `
-                <tr>
-                  <td>${f.label}</td>
-                  <td>${obj?.[f.key]?.mean != null ? fmt(obj[f.key].mean, 3) : "-"}</td>
-                  <td>${obj?.[f.key]?.std != null ? fmt(obj[f.key].std, 3) : "-"}</td>
-                  <td>${obj?.[f.key]?.count != null ? toNumber(obj[f.key].count, 0) : "-"}</td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
-        </div>
-      `;
+    function buildAnalyticsBlock(cache) {
+      const list = cache.scenarioAnalytics || cache.m5_payload?.scenario_analytics || [];
+      if (!list.length) return `<div class="empty">尚無資料</div>`;
+
+      return list.map(sc => {
+        const qualifiedStocks = ((sc.stock_stats?.qualified || []).slice(0, 3).map(x => x.symbol).join(" / ")) || "-";
+        const successRate = Number(sc.counts?.success_rate || 0).toFixed(1);
+        const bestRate = sc.factor_stats?.qualified?.simulation_rate?.mean;
+        const bestRateText = Number.isFinite(bestRate) ? `${Number(bestRate).toFixed(0)}%` : "-";
+        const pattern = safeText(sc.m3_summary?.pattern || "", "-");
+        const conclusion = safeText(sc.m3_summary?.conclusion || "", "-");
+
+        return `
+          <div class="scenario-card">
+            <div class="item-title">${safeText(sc.scenario)}</div>
+
+            <div class="item-line">
+              達標率：<b>${successRate}%</b>
+            </div>
+
+            <div class="item-line">
+              最佳 Target：約 ${bestRateText}
+            </div>
+
+            <div class="item-line">
+              代表股票：${qualifiedStocks}
+            </div>
+
+            <div class="item-line subtle">
+              ${pattern} ｜ ${conclusion}
+            </div>
+          </div>
+        `;
+      }).join("");
     }
-
-        function buildAnalyticsBlock(cache) {
-  const list = cache.scenarioAnalytics || [];
-
-  if (!list.length) return `<div class="empty">尚無資料</div>`;
-
-  return list.map(sc => `
-    <div class="scenario-card">
-      <div class="item-title">${sc.scenario}</div>
-
-      <div class="item-line">
-        達標率：<b>${(sc.counts?.success_rate || 0).toFixed(1)}%</b>
-      </div>
-
-      <div class="item-line">
-        代表股票：
-        ${(sc.stock_stats?.qualified || [])
-          .slice(0, 3)
-          .map(x => x.symbol)
-          .join(" / ") || "-"}
-      </div>
-
-      <div class="item-line subtle">
-        ${sc.m3_summary?.pattern || ""}
-      </div>
-    </div>
-  `).join("");
-}
 
     function buildQualifiedLayerBlock(cache) {
       const d = cache.dashboard || {};
