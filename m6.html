@@ -1,185 +1,750 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ORCL 持倉管理</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M6 Stocks Dashboard</title>
+  <style>
+    :root{
+      --bg:#0f172a;
+      --panel:#1e293b;
+      --panel-2:#243447;
+      --text:#e2e8f0;
+      --muted:#94a3b8;
+      --green:#22c55e;
+      --red:#ef4444;
+      --yellow:#facc15;
+      --blue:#38bdf8;
+      --purple:#a78bfa;
+      --border:rgba(255,255,255,.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",sans-serif;
+      background:linear-gradient(180deg,#0b1220 0%,#0f172a 100%);
+      color:var(--text);
+    }
+    .wrap{
+      max-width:1200px;
+      margin:0 auto;
+      padding:16px;
+    }
+    .hero{
+      background:linear-gradient(135deg,#1d4ed8 0%,#0f172a 70%);
+      border:1px solid var(--border);
+      border-radius:20px;
+      padding:18px;
+      margin-bottom:16px;
+      box-shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    .hero h1{
+      margin:0 0 6px;
+      font-size:26px;
+    }
+    .hero .sub{
+      color:#cbd5e1;
+      font-size:14px;
+    }
+    .toolbar{
+      display:grid;
+      grid-template-columns:1fr 140px 140px;
+      gap:10px;
+      margin-top:14px;
+    }
+    .input,.select{
+      width:100%;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:#0b1220;
+      color:var(--text);
+      padding:12px 14px;
+      font-size:14px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12,1fr);
+      gap:16px;
+    }
+    .card{
+      background:rgba(30,41,59,.92);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding:16px;
+      box-shadow:0 8px 24px rgba(0,0,0,.2);
+    }
+    .summary-card{grid-column:span 2}
+    .full{grid-column:1/-1}
+    .list-panel{grid-column:span 5}
+    .detail-panel{grid-column:span 7}
+    .label{
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:4px;
+    }
+    .metric{
+      font-size:22px;
+      font-weight:800;
+      line-height:1.1;
+    }
+    .small{
+      font-size:13px;
+      color:var(--muted);
+    }
+    .green{color:var(--green)}
+    .red{color:var(--red)}
+    .yellow{color:var(--yellow)}
+    .blue{color:var(--blue)}
+    .stock-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-height:640px;
+      overflow:auto;
+      padding-right:4px;
+    }
+    .stock-item{
+      background:var(--panel-2);
+      border:1px solid transparent;
+      border-radius:14px;
+      padding:12px;
+      cursor:pointer;
+      transition:.15s ease;
+    }
+    .stock-item:hover{border-color:rgba(56,189,248,.45)}
+    .stock-item.active{
+      border-color:rgba(56,189,248,.9);
+      box-shadow:inset 0 0 0 1px rgba(56,189,248,.35);
+    }
 
-<style>
-body {
-  font-family: -apple-system, BlinkMacSystemFont;
-  margin: 0;
-  background: #0f172a;
-  color: #e2e8f0;
-}
+    .stock-item.healthy{
+      background:linear-gradient(180deg, rgba(34,197,94,.10), rgba(36,52,71,.95));
+    }
+    .stock-item.watch{
+      background:linear-gradient(180deg, rgba(250,204,21,.10), rgba(36,52,71,.95));
+    }
+    .stock-item.danger{
+      background:linear-gradient(180deg, rgba(239,68,68,.12), rgba(36,52,71,.95));
+    }
+    .strength-badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border-radius:999px;
+      padding:4px 10px;
+      font-size:12px;
+      font-weight:700;
+      border:1px solid var(--border);
+      background:#0b1220;
+    }
+    .strength-strong{
+      color:#86efac;
+      background:rgba(34,197,94,.12);
+    }
+    .strength-neutral{
+      color:#fde68a;
+      background:rgba(250,204,21,.12);
+    }
+    .strength-weak{
+      color:#fca5a5;
+      background:rgba(239,68,68,.12);
+    }
+    .rank-no{
+      display:inline-flex;
+      width:24px;
+      height:24px;
+      border-radius:999px;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      font-weight:800;
+      background:#0b1220;
+      border:1px solid var(--border);
+      color:#cbd5e1;
+      margin-right:8px;
+    }
+    .detail-tags{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:8px;
+    }
+    .row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .name{
+      font-size:16px;
+      font-weight:700;
+    }
+    .ticker{
+      font-size:12px;
+      color:var(--muted);
+    }
 
-.container {
-  padding: 16px;
-}
-
-.card {
-  background: #1e293b;
-  border-radius: 16px;
-  padding: 16px;
-  margin-bottom: 16px;
-}
-
-.title {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.sub {
-  color: #94a3b8;
-  font-size: 14px;
-}
-
-.green { color: #22c55e; }
-.red { color: #ef4444; }
-.yellow { color: #facc15; }
-
-.line {
-  display: flex;
-  justify-content: space-between;
-  margin: 6px 0;
-}
-
-.badge {
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 12px;
-}
-
-.badge-yellow { background: #facc15; color: black; }
-.badge-red { background: #ef4444; }
-.badge-green { background: #22c55e; color: black; }
-
-.chart {
-  height: 200px;
-  background: linear-gradient(to top, #1e293b, #334155);
-  border-radius: 12px;
-  position: relative;
-}
-
-.line-mark {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 1px;
-  border-top: 1px dashed;
-  font-size: 10px;
-}
-
-</style>
+    .stock-stats{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:6px 12px;
+      margin-top:10px;
+      font-size:13px;
+    }
+    .stat-line{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      color:#cbd5e1;
+    }
+    .stat-line .k{
+      color:var(--muted);
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border-radius:999px;
+      padding:5px 10px;
+      font-size:12px;
+      font-weight:700;
+      background:#0b1220;
+      border:1px solid var(--border);
+    }
+    .badge.red{background:rgba(239,68,68,.12)}
+    .badge.yellow{background:rgba(250,204,21,.12); color:#fde68a}
+    .badge.green{background:rgba(34,197,94,.12)}
+    .detail-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    .detail-title{
+      font-size:28px;
+      font-weight:800;
+      margin:0;
+    }
+    .detail-sub{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:4px;
+    }
+    .detail-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;
+      margin-bottom:16px;
+    }
+    .mini{
+      background:#0b1220;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px;
+    }
+    .kv{
+      display:grid;
+      grid-template-columns:110px 1fr;
+      gap:8px;
+      font-size:14px;
+      margin:6px 0;
+    }
+    .chart-box{
+      background:#0b1220;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px;
+      margin-bottom:14px;
+    }
+    .price-chart{
+      position:relative;
+      height:240px;
+      border-radius:12px;
+      overflow:hidden;
+      background:
+        linear-gradient(to top, rgba(56,189,248,.06), rgba(56,189,248,0)),
+        linear-gradient(to bottom, rgba(255,255,255,.04), rgba(255,255,255,0));
+      border:1px solid rgba(255,255,255,.05);
+    }
+    .price-chart svg{
+      width:100%;
+      height:100%;
+      display:block;
+    }
+    .line-mark{
+      position:absolute;
+      left:0;
+      right:0;
+      border-top:1px dashed;
+      font-size:11px;
+      padding-left:8px;
+      color:#cbd5e1;
+      pointer-events:none;
+    }
+    .section-title{
+      font-size:16px;
+      font-weight:800;
+      margin:0 0 10px;
+    }
+    .strategy{
+      line-height:1.65;
+      font-size:14px;
+    }
+    .strategy b{color:#fff}
+    @media (max-width: 900px){
+      .summary-card,.list-panel,.detail-panel{grid-column:1/-1}
+      .toolbar{grid-template-columns:1fr}
+      .detail-grid{grid-template-columns:1fr}
+      .detail-title{font-size:24px}
+      .hero h1{font-size:22px}
+    }
+  </style>
 </head>
-
 <body>
-<div class="container">
+  <div class="wrap">
+    <div class="hero">
+      <h1>M6 Stocks Dashboard</h1>
+      <div class="sub">振宇持股管理沙盒｜多檔 Dashboard 強化版（排序 / 強弱 / 顏色）</div>
+      <div class="toolbar" style="grid-template-columns:1.3fr 1fr 1fr 1fr;">
+        <input id="searchInput" class="input" placeholder="搜尋股票代號或名稱，例如 ORCL / COIN" />
+        <select id="sourceFilter" class="select">
+          <option value="all">全部來源</option>
+          <option value="FCN 接股">FCN 接股</option>
+          <option value="主動買進">主動買進</option>
+        </select>
+        <select id="statusFilter" class="select">
+          <option value="all">全部狀態</option>
+          <option value="健康">健康</option>
+          <option value="觀察">觀察</option>
+          <option value="危險">危險</option>
+        </select>
+        <select id="sortMode" class="select">
+          <option value="risk">依風險排序</option>
+          <option value="strength">依強弱排序</option>
+          <option value="pnl">依損益金額排序</option>
+          <option value="return">依損益率排序</option>
+          <option value="symbol">依代號排序</option>
+        </select>
+      </div>
+    </div>
 
-<!-- 🧠 股票標題 -->
-<div class="card">
-  <div class="title">ORCL ｜ Oracle</div>
-  <div class="sub">來源：FCN710H（法國外貿銀行）</div>
-</div>
+    <div class="grid" id="summaryGrid" style="align-items:stretch;"></div>
 
-<!-- 📊 持倉 -->
-<div class="card">
-  <div class="title">📊 持倉狀態</div>
+    <div class="grid" style="margin-top:16px;">
+      <div class="card list-panel">
+        <div class="section-title">多檔持股總覽</div>
+        <div class="small" style="margin-bottom:12px;">點選左側個股，右側會顯示詳情、價格區間與策略。</div>
+        <div id="stockList" class="stock-list"></div>
+      </div>
 
-  <div class="line"><span>持股</span><span>55 股</span></div>
-  <div class="line"><span>成本</span><span>178</span></div>
-  <div class="line"><span>現價</span><span>156</span></div>
-
-  <div class="line">
-    <span>損益</span>
-    <span class="red">-22 (-12%)</span>
+      <div class="card detail-panel">
+        <div id="detailPanel"></div>
+      </div>
+    </div>
   </div>
 
-  <div class="line">
-    <span>狀態</span>
-    <span class="badge badge-red">接股虧損</span>
-  </div>
-</div>
+<script>
+const stocks = [
+  {
+    symbol: "ORCL",
+    name: "Oracle",
+    category: "AI/科技",
+    source: "FCN 接股",
+    fcn_id: "FCN710H 富邦",
+    bank: "法國外貿銀行",
+    quantity: 55,
+    cost: 178.82,
+    current: 156.00,
+    status: "危險",
+    trend: "反彈中，未回長期壓力",
+    support: [140, 134],
+    resistance: [159, 170, 200],
+    ma50: 150,
+    ma200: 200,
+    rsi: 74,
+    strength: "弱",
+    switch_to: ["NVDA", "AVGO"],
+    strategy: {
+      summary: "接股後仍低於成本，現階段以反彈減碼與風險控制為主。",
+      conservative: "158~160 減碼 50%，跌破 140 全出。",
+      neutral: "159 賣 30%，170 再賣 30%，若轉強再保留。",
+      aggressive: "突破 170 後續抱，但必須啟用追蹤停損。"
+    },
+    series: [150,148,146,144,142,141,143,145,147,149,151,154,158,160,157,155,156]
+  },
+  {
+    symbol: "COIN",
+    name: "Coinbase",
+    category: "高波動/金融科技",
+    source: "主動買進",
+    fcn_id: "-",
+    bank: "-",
+    quantity: 20,
+    cost: 168.00,
+    current: 174.53,
+    status: "觀察",
+    trend: "高波動反彈，仍受均線壓力",
+    support: [160, 158.5],
+    resistance: [182, 200, 248],
+    ma50: 179.55,
+    ma200: 248.40,
+    rsi: 55.3,
+    strength: "中",
+    switch_to: ["NVDA", "MSFT"],
+    strategy: {
+      summary: "高 Beta 標的，適合反彈分批賣，不宜太樂觀。",
+      conservative: "179~182 先賣 50%，跌破 160 全出。",
+      neutral: "182 賣 40%，200 再賣 30%，其餘看量價。",
+      aggressive: "有效站上 50MA 後轉追蹤停利。"
+    },
+    series: [162,165,169,172,176,180,178,175,172,170,167,164,168,171,173,175,174.53]
+  },
+  {
+    symbol: "TSLA",
+    name: "Tesla",
+    category: "AI/高波動",
+    source: "FCN 接股",
+    fcn_id: "FCN710H 富邦",
+    bank: "法國外貿銀行",
+    quantity: 18,
+    cost: 239.50,
+    current: 228.40,
+    status: "觀察",
+    trend: "弱勢整理，等待方向",
+    support: [220, 205],
+    resistance: [235, 248, 270],
+    ma50: 233,
+    ma200: 262,
+    rsi: 49,
+    strength: "中",
+    switch_to: ["NVDA", "AVGO"],
+    strategy: {
+      summary: "若無法站回 235 上方，仍偏整理格局。",
+      conservative: "反彈到 235 先減碼，跌破 220 嚴控風險。",
+      neutral: "235 賣 30%，248 賣 30%。",
+      aggressive: "站穩 248 再談續抱。"
+    },
+    series: [245,242,240,238,236,233,231,229,226,223,221,224,227,230,232,229,228.4]
+  },
+  {
+    symbol: "NVDA",
+    name: "NVIDIA",
+    category: "AI/核心",
+    source: "主動買進",
+    fcn_id: "-",
+    bank: "-",
+    quantity: 12,
+    cost: 170.20,
+    current: 183.22,
+    status: "健康",
+    trend: "強勢整理，仍在成本上方",
+    support: [176, 170],
+    resistance: [186, 192, 200],
+    ma50: 174,
+    ma200: 160,
+    rsi: 63,
+    strength: "強",
+    switch_to: [],
+    strategy: {
+      summary: "核心股可續抱，但接近短線壓力時可局部調節。",
+      conservative: "186 附近先調節 20%。",
+      neutral: "186~192 分批賣出，170 設防守。",
+      aggressive: "突破 192 後續抱。"
+    },
+    series: [168,170,171,173,174,176,178,177,179,181,183,184,182,181,182,183,183.22]
+  }
+];
 
-<!-- 🔗 FCN來源 -->
-<div class="card">
-  <div class="title">🔗 FCN來源</div>
+let selectedSymbol = "ORCL";
 
-  <div class="line"><span>FCN ID</span><span>FCN710H</span></div>
-  <div class="line"><span>Basket</span><span>5檔</span></div>
-  <div class="line"><span>KI</span><span>65%</span></div>
-  <div class="line"><span>Strike</span><span>75.84%</span></div>
-  <div class="line"><span>Rate</span><span class="yellow">25%</span></div>
+function pnl(stock){
+  const diff = stock.current - stock.cost;
+  const pct = stock.cost ? (diff / stock.cost) * 100 : 0;
+  return { diff, pct };
+}
 
-  <div class="sub">⚠️ Worst-of 接股機制</div>
-</div>
+function statusClass(status){
+  if (status === "健康") return "green";
+  if (status === "觀察") return "yellow";
+  return "red";
+}
 
-<!-- 📈 圖表 -->
-<div class="card">
-  <div class="title">📈 價格區間</div>
 
-  <div class="chart">
+function strengthClass(strength){
+  if (strength === "強") return "strength-strong";
+  if (strength === "中") return "strength-neutral";
+  return "strength-weak";
+}
 
-    <!-- 成本 -->
-    <div class="line-mark" style="top:40%; border-color:#22c55e;">
-      成本 178
+function statusWeight(status){
+  if (status === "危險") return 0;
+  if (status === "觀察") return 1;
+  return 2;
+}
+
+function strengthWeight(strength){
+  if (strength === "強") return 2;
+  if (strength === "中") return 1;
+  return 0;
+}
+
+function sortStocks(data){
+  const mode = document.getElementById("sortMode")?.value || "risk";
+  const arr = [...data];
+  arr.sort((a,b) => {
+    const pa = pnl(a), pb = pnl(b);
+    const paAmt = pa.diff * a.quantity;
+    const pbAmt = pb.diff * b.quantity;
+    if (mode === "risk") {
+      return statusWeight(a.status) - statusWeight(b.status) || strengthWeight(a.strength) - strengthWeight(b.strength) || a.symbol.localeCompare(b.symbol);
+    }
+    if (mode === "strength") {
+      return strengthWeight(b.strength) - strengthWeight(a.strength) || statusWeight(a.status) - statusWeight(b.status) || a.symbol.localeCompare(b.symbol);
+    }
+    if (mode === "pnl") {
+      return pbAmt - paAmt;
+    }
+    if (mode === "return") {
+      return pb.pct - pa.pct;
+    }
+    return a.symbol.localeCompare(b.symbol);
+  });
+  return arr;
+}
+
+function calcSummary(data){
+  const totalCost = data.reduce((s, x) => s + x.cost * x.quantity, 0);
+  const totalValue = data.reduce((s, x) => s + x.current * x.quantity, 0);
+  const totalPnl = totalValue - totalCost;
+  return {
+    count: data.length,
+    totalCost,
+    totalValue,
+    totalPnl,
+    healthy: data.filter(x => x.status === "健康").length,
+    watch: data.filter(x => x.status === "觀察").length,
+    danger: data.filter(x => x.status === "危險").length
+  };
+}
+
+function renderSummary(data){
+  const s = calcSummary(data);
+  const pnlClass = s.totalPnl >= 0 ? "green" : "red";
+  document.getElementById("summaryGrid").innerHTML = `
+    <div class="card summary-card">
+      <div class="label">檔數</div>
+      <div class="metric">${s.count}</div>
+    </div>
+    <div class="card summary-card">
+      <div class="label">總成本</div>
+      <div class="metric">$${s.totalCost.toFixed(0)}</div>
+    </div>
+    <div class="card summary-card">
+      <div class="label">總市值</div>
+      <div class="metric">$${s.totalValue.toFixed(0)}</div>
+    </div>
+    <div class="card summary-card">
+      <div class="label">總損益</div>
+      <div class="metric ${pnlClass}">${s.totalPnl >= 0 ? "+" : ""}$${s.totalPnl.toFixed(0)}</div>
+    </div>
+    <div class="card summary-card">
+      <div class="label">健康/觀察/危險</div>
+      <div class="metric"><span class="green">${s.healthy}</span>/<span class="yellow">${s.watch}</span>/<span class="red">${s.danger}</span></div>
+    </div>
+  `;
+}
+
+function getFilteredStocks(){
+  const search = document.getElementById("searchInput").value.trim().toLowerCase();
+  const source = document.getElementById("sourceFilter").value;
+  const status = document.getElementById("statusFilter").value;
+
+  let result = stocks.filter(s => {
+    const hitSearch = !search || s.symbol.toLowerCase().includes(search) || s.name.toLowerCase().includes(search);
+    const hitSource = source === "all" || s.source === source;
+    const hitStatus = status === "all" || s.status === status;
+    return hitSearch && hitSource && hitStatus;
+  });
+
+  result = sortStocks(result);
+
+  if (!result.find(x => x.symbol === selectedSymbol) && result.length) {
+    selectedSymbol = result[0].symbol;
+  }
+  return result;
+}
+
+function renderList(data){
+  const el = document.getElementById("stockList");
+  el.innerHTML = data.map((stock, idx) => {
+    const p = pnl(stock);
+    const cls = p.diff >= 0 ? "green" : "red";
+    const active = stock.symbol === selectedSymbol ? "active" : "";
+    const pnlAmt = p.diff * stock.quantity;
+    const statusTone = stock.status === "健康" ? "healthy" : stock.status === "觀察" ? "watch" : "danger";
+    return `
+      <div class="stock-item ${active} ${statusTone}" onclick="selectStock('${stock.symbol}')">
+        <div class="row">
+          <div>
+            <div class="name"><span class="rank-no">${idx + 1}</span>${stock.symbol} <span class="ticker">｜${stock.name}</span></div>
+            <div class="small">${stock.source} ・ ${stock.category}</div>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+            <div class="strength-badge ${strengthClass(stock.strength)}">強弱：${stock.strength}</div>
+            <div class="badge ${statusClass(stock.status)}">${stock.status}</div>
+          </div>
+        </div>
+
+        <div class="stock-stats">
+          <div class="stat-line"><span class="k">股數</span><span>${stock.quantity}</span></div>
+          <div class="stat-line"><span class="k">成本</span><span>$${stock.cost.toFixed(2)}</span></div>
+          <div class="stat-line"><span class="k">現價</span><span>$${stock.current.toFixed(2)}</span></div>
+          <div class="stat-line"><span class="k">價差</span><span class="${cls}">${p.diff >= 0 ? "+" : ""}${p.diff.toFixed(2)}</span></div>
+          <div class="stat-line"><span class="k">損益金額</span><span class="${cls}">${pnlAmt >= 0 ? "+" : ""}$${pnlAmt.toFixed(0)}</span></div>
+          <div class="stat-line"><span class="k">損益率</span><span class="${cls}">${p.pct >= 0 ? "+" : ""}${p.pct.toFixed(1)}%</span></div>
+        </div>
+      </div>
+    `;
+  }).join("") || `<div class="small">目前沒有符合條件的股票。</div>`;
+}
+
+function priceToY(value, min, max, h){
+  if (max === min) return h / 2;
+  return ((max - value) / (max - min)) * h;
+}
+
+function renderLineChart(stock){
+  const data = stock.series;
+  const allRef = [
+    ...data,
+    stock.cost,
+    stock.current,
+    ...stock.support,
+    ...stock.resistance,
+    stock.ma50,
+    stock.ma200
+  ].filter(v => Number.isFinite(v));
+  const min = Math.min(...allRef) * 0.97;
+  const max = Math.max(...allRef) * 1.03;
+  const w = 880;
+  const h = 240;
+  const pts = data.map((v, i) => {
+    const x = (i / (data.length - 1 || 1)) * w;
+    const y = priceToY(v, min, max, h);
+    return `${x},${y}`;
+  }).join(" ");
+  const fillPts = `0,${h} ${pts} ${w},${h}`;
+
+  const marks = [
+    { label:`成本 ${stock.cost.toFixed(2)}`, value:stock.cost, color:"#22c55e" },
+    { label:`現價 ${stock.current.toFixed(2)}`, value:stock.current, color:"#ef4444" },
+    { label:`MA50 ${stock.ma50}`, value:stock.ma50, color:"#38bdf8" },
+    { label:`MA200 ${stock.ma200}`, value:stock.ma200, color:"#a78bfa" },
+    { label:`支撐 ${stock.support[0]}`, value:stock.support[0], color:"#facc15" },
+    { label:`壓力 ${stock.resistance[0]}`, value:stock.resistance[0], color:"#94a3b8" }
+  ];
+
+  return `
+    <div class="price-chart">
+      ${marks.map(m => {
+        const top = priceToY(m.value, min, max, h);
+        return `<div class="line-mark" style="top:${top}px;border-color:${m.color};">${m.label}</div>`;
+      }).join("")}
+      <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-label="price chart">
+        <polyline points="${fillPts}" fill="rgba(56,189,248,.10)" stroke="none"></polyline>
+        <polyline points="${pts}" fill="none" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+      </svg>
+    </div>
+  `;
+}
+
+function renderDetail(stock){
+  const p = pnl(stock);
+  const cls = p.diff >= 0 ? "green" : "red";
+  document.getElementById("detailPanel").innerHTML = `
+    <div class="detail-head">
+      <div>
+        <h2 class="detail-title">${stock.symbol} ｜ ${stock.name}</h2>
+        <div class="detail-sub">${stock.source} ・ ${stock.category} ・ FCN來源：${stock.fcn_id}</div><div class="detail-tags"><div class="strength-badge ${strengthClass(stock.strength)}">強弱：${stock.strength}</div><div class="badge ${statusClass(stock.status)}">${stock.status}</div></div>
+      </div>
+      <div class="badge ${statusClass(stock.status)}">${stock.status}</div>
     </div>
 
-    <!-- 現價 -->
-    <div class="line-mark" style="top:60%; border-color:#ef4444;">
-      現價 156
+    <div class="detail-grid">
+      <div class="mini">
+        <div class="label">持倉概況</div>
+        <div class="kv"><div class="small">數量</div><div>${stock.quantity} 股</div></div>
+        <div class="kv"><div class="small">成本</div><div>$${stock.cost.toFixed(2)}</div></div>
+        <div class="kv"><div class="small">現價</div><div>$${stock.current.toFixed(2)}</div></div>
+        <div class="kv"><div class="small">損益</div><div class="${cls}">${p.diff >= 0 ? "+" : ""}$${p.diff.toFixed(2)} / ${p.pct.toFixed(1)}%</div></div>
+      </div>
+      <div class="mini">
+        <div class="label">技術概況</div>
+        <div class="kv"><div class="small">趨勢</div><div>${stock.trend}</div></div>
+        <div class="kv"><div class="small">RSI</div><div class="${stock.rsi >= 70 ? 'red' : stock.rsi >= 55 ? 'yellow' : 'green'}">${stock.rsi}</div></div>
+        <div class="kv"><div class="small">MA50 / MA200</div><div>${stock.ma50} / ${stock.ma200}</div></div>
+        <div class="kv"><div class="small">銀行</div><div>${stock.bank}</div></div>
+      </div>
     </div>
 
-    <!-- 停損 -->
-    <div class="line-mark" style="top:75%; border-color:#facc15;">
-      停損 140
+    <div class="chart-box">
+      <div class="section-title">價格區間圖</div>
+      ${renderLineChart(stock)}
+      <div class="small" style="margin-top:8px;">這是沙盒版輕量圖。下一版可升級成真 K 線、1M/3M/6M 切換、成交量、MACD、RSI。</div>
     </div>
 
-    <!-- 壓力 -->
-    <div class="line-mark" style="top:30%; border-color:#94a3b8;">
-      壓力 159
+    <div class="detail-grid">
+      <div class="mini">
+        <div class="section-title">支撐 / 壓力</div>
+        <div class="kv"><div class="small">支撐</div><div>${stock.support.join(" / ")}</div></div>
+        <div class="kv"><div class="small">壓力</div><div>${stock.resistance.join(" / ")}</div></div>
+      </div>
+      <div class="mini">
+        <div class="section-title">策略摘要</div>
+        <div class="strategy">${stock.strategy.summary}</div>
+        <div class="kv"><div class="small">目前損益金額</div><div class="${cls}">${(p.diff * stock.quantity) >= 0 ? "+" : ""}$${(p.diff * stock.quantity).toFixed(0)}</div></div>
+        <div class="kv"><div class="small">目前損益率</div><div class="${cls}">${p.pct >= 0 ? "+" : ""}${p.pct.toFixed(1)}%</div></div>
+        <div class="kv"><div class="small">換股觀察</div><div>${stock.switch_to && stock.switch_to.length ? stock.switch_to.join(" / ") : "目前不需換股"}</div></div>
+      </div>
     </div>
 
-  </div>
-</div>
+    <div class="mini">
+      <div class="section-title">三段策略</div>
+      <div class="strategy">
+        <div><b>保守：</b>${stock.strategy.conservative}</div>
+        <div class="small">若現在執行，預估損益金額：<span class="${cls}">${(p.diff * stock.quantity) >= 0 ? "+" : ""}$${(p.diff * stock.quantity).toFixed(0)}</span></div>
+        <div style="margin-top:8px;"><b>中性：</b>${stock.strategy.neutral}</div>
+        <div class="small">適合先收回部分資金，再保留延伸空間。</div>
+        <div style="margin-top:8px;"><b>積極：</b>${stock.strategy.aggressive}</div>
+        <div class="small">需接受較大波動，策略意義建立在後續價差擴大。</div>
+      </div>
+    </div>
+  `;
+}
 
-<!-- 📊 技術分析 -->
-<div class="card">
-  <div class="title">📊 技術分析</div>
+function selectStock(symbol){
+  selectedSymbol = symbol;
+  rerender();
+}
+window.selectStock = selectStock;
 
-  <div class="line"><span>趨勢</span><span>反彈中</span></div>
-  <div class="line"><span>RSI</span><span class="red">74（過熱）</span></div>
-  <div class="line"><span>MA50</span><span>150</span></div>
-  <div class="line"><span>MA200</span><span>200</span></div>
+function rerender(){
+  const filtered = getFilteredStocks();
+  renderSummary(filtered);
+  renderList(filtered);
+  const stock = filtered.find(s => s.symbol === selectedSymbol) || filtered[0];
+  if (stock) renderDetail(stock);
+  else document.getElementById("detailPanel").innerHTML = `<div class="small">沒有可顯示的股票。</div>`;
+}
 
-</div>
+document.getElementById("searchInput").addEventListener("input", rerender);
+document.getElementById("sourceFilter").addEventListener("change", rerender);
+document.getElementById("statusFilter").addEventListener("change", rerender);
+document.getElementById("sortMode").addEventListener("change", rerender);
 
-<!-- 🧠 策略 -->
-<div class="card">
-  <div class="title">🧠 策略建議</div>
-
-  <div class="sub">📌 結論：反彈偏減碼</div>
-
-  <br>
-
-  <div class="sub">🟢 保守</div>
-  <div>158~160 賣50%</div>
-  <div>跌破140 全出</div>
-
-  <br>
-
-  <div class="sub">🟡 中性</div>
-  <div>159 賣30%</div>
-  <div>170 再賣30%</div>
-
-  <br>
-
-  <div class="sub">🔴 積極</div>
-  <div>突破170續抱</div>
-  <div>追蹤停損</div>
-
-</div>
-
-</div>
+rerender();
+</script>
 </body>
 </html>
+
