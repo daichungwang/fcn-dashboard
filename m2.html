@@ -112,7 +112,7 @@
 
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 12px;
     }
 
@@ -121,6 +121,11 @@
       border-radius: 14px;
       padding: 14px;
       background: #fff;
+    }
+
+    .summary-box-exit {
+      background: #f0fdfa;
+      border-color: #99f6e4;
     }
 
     .summary-label {
@@ -142,7 +147,7 @@
 
     .zone-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 14px;
     }
 
@@ -154,6 +159,7 @@
       min-height: 220px;
     }
 
+    .zone-exit { background: #f0fdfa; border-color: #99f6e4; }
     .zone-danger { background: #fff5f5; border-color: #efb0b0; }
     .zone-watch { background: #fffaf0; border-color: #ecd7a3; }
     .zone-healthy { background: #f5fff7; border-color: #b9e2c0; }
@@ -176,6 +182,11 @@
       padding: 12px;
       background: #fff;
       margin-top: 10px;
+    }
+
+    .fcn-card-exit {
+      border: 2px solid #2dd4bf;
+      background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 100%);
     }
 
     .fcn-head {
@@ -231,6 +242,11 @@
       border-color: #b9e2c0;
     }
 
+    .decision-exit {
+      background: #ecfeff;
+      border-color: #67e8f9;
+    }
+
     .pill {
       display: inline-block;
       border-radius: 999px;
@@ -260,6 +276,12 @@
       background: #f3f3f3;
       border-color: #ccc;
       color: #666;
+    }
+
+    .pill-exit {
+      background: #ccfbf1;
+      border-color: #5eead4;
+      color: #115e59;
     }
 
     .expand-btn {
@@ -524,7 +546,7 @@
     <h1>M2｜FCN 持倉健檢 + FCN Pool 管理</h1>
     <div class="subtitle">
       只看 <b>active</b> 持倉。<br>
-      今日重點：<b>區塊級收合</b>、<b>一鍵展開收合</b>、<b>FCN Pool 新增 / 修改 / 刪除</b>。
+      今日重點：<b>區塊級收合</b>、<b>一鍵展開收合</b>、<b>FCN Pool 新增 / 修改 / 刪除</b>、<b>提早出場提醒</b>。
     </div>
 
     <div class="card">
@@ -534,15 +556,12 @@
         <button class="secondary" id="refreshBtn">刷新 M2 畫面</button>
         <button class="light" id="loadPoolBtn">載入 FCN Pool</button>
         <button class="secondary" id="exportPoolBtn">匯出 fcn_pool.json</button>
-        <button class="secondary" onclick="exportActivePool()">
-  匯出正式版（不含 deleted）
-</button>
+        <button class="secondary" onclick="exportActivePool()">匯出正式版（不含 deleted）</button>
       </div>
       <div id="runtimeMeta" class="muted">尚未執行 M2 Health Engine</div>
       <div class="note">
-        M2 會讀：<b>data/fcn_pool.json</b>、<b>data/market_runtime.json</b>、<b>data/pool30.json</b>，
-        並只取 <b>status = active</b> 的 FCN。<br>
-        FCN Pool 管理區支援你目前的欄位格式，匯出後可直接覆蓋 <b>data/fcn_pool.json</b>。
+        M2 會讀：<b>data/fcn_pool.json</b>、<b>data/market_runtime.json</b>、<b>data/pool30.json</b>，並只取 <b>status = active</b> 的 FCN。<br>
+        提早出場規則：<b>entry_time + 37 天</b> 開始檢查；任一標的 <b>現價 > 進場價</b> 即永久 remark；全部 basket 都 remark 後列入 <b>提早出場</b>。
       </div>
     </div>
 
@@ -554,24 +573,20 @@
     <div class="card">
       <h2>2. 持倉分區</h2>
       <div class="sub-toolbar">
-        <button class="light" onclick="toggleZoneSection()">
-          展開 / 收合區塊
-        </button>
+        <button class="light" onclick="toggleZoneSection()">展開 / 收合區塊</button>
         <button class="light" onclick="expandAllZoneFCNs()">全部展開卡片</button>
         <button class="light" onclick="collapseAllZoneFCNs()">全部收合卡片</button>
-        <button class="light" onclick="expandDangerWatchOnly()">只展開 Danger / Watch</button>
+        <button class="light" onclick="expandDangerWatchOnly()">只展開 Early Exit / Danger / Watch</button>
         <button class="light" onclick="toggleHealthyZoneGlobal()">健康區展開 / 收合</button>
       </div>
       <div id="zoneSummaryMini" class="mini-summary" style="display:none;"></div>
       <div id="zoneBlock"></div>
-      </div>
+    </div>
 
     <div class="card">
       <h2>5. 股票風險分析</h2>
       <div class="sub-toolbar">
-        <button class="light" onclick="toggleStockSection()">
-          展開 / 收合區塊
-        </button>
+        <button class="light" onclick="toggleStockSection()">展開 / 收合區塊</button>
         <button class="light" onclick="expandAllStockBlocks()">全部展開</button>
         <button class="light" onclick="collapseAllStockBlocks()">全部收合</button>
         <button class="light" onclick="expandDangerStocksOnly()">只展開跌破 KI</button>
@@ -600,18 +615,18 @@
             <button class="light" onclick="setManagerFilter('active')">只看 Active</button>
             <button class="light" onclick="setManagerFilter('closed')">只看 Closed</button>
             <button class="light" onclick="setManagerFilter('deleted')">只看 Deleted</button>
+
             <div class="sub-toolbar">
-  <input id="searchInput" placeholder="搜尋 fcn_id / 股票 / bank"
-    style="padding:8px; border-radius:8px; border:1px solid #ccc; width:220px;">
+              <input id="searchInput" placeholder="搜尋 fcn_id / 股票 / bank"
+                style="padding:8px; border-radius:8px; border:1px solid #ccc; width:220px;">
+              <button class="light" onclick="searchFCN()">搜尋</button>
 
-  <button class="light" onclick="searchFCN()">搜尋</button>
-
-  <input id="loadIdInput" placeholder="輸入 fcn_id"
-    style="padding:8px; border-radius:8px; border:1px solid #ccc; width:160px;">
-
-  <button class="light" onclick="loadFCNById()">載入 FCN</button>
-</div>
+              <input id="loadIdInput" placeholder="輸入 fcn_id"
+                style="padding:8px; border-radius:8px; border:1px solid #ccc; width:160px;">
+              <button class="light" onclick="loadFCNById()">載入 FCN</button>
+            </div>
           </div>
+
           <div id="managerListMeta" class="muted" style="margin-bottom:10px;">尚未載入 FCN Pool</div>
           <div id="managerList" class="manager-list"></div>
         </div>
@@ -760,32 +775,32 @@
 
     let searchKeyword = "";
 
-window.searchFCN = function() {
-  searchKeyword = document.getElementById("searchInput").value.toUpperCase();
-  renderFCNManager();
-};
+    window.searchFCN = function() {
+      searchKeyword = document.getElementById("searchInput").value.toUpperCase();
+      renderFCNManager();
+    };
 
-// 👇👇👇 就加在這裡 👇👇👇
-window.loadFCNById = function() {
-  const id = document.getElementById("loadIdInput").value.trim();
+    window.loadFCNById = function() {
+      const id = document.getElementById("loadIdInput").value.trim();
 
-  if (!id) {
-    alert("請輸入 fcn_id");
-    return;
-  }
+      if (!id) {
+        alert("請輸入 fcn_id");
+        return;
+      }
 
-  const found = editableFCNPool.find(x => x.fcn_id === id);
+      const found = editableFCNPool.find(x => x.fcn_id === id);
 
-  if (!found) {
-    alert("找不到這筆 FCN");
-    return;
-  }
+      if (!found) {
+        alert("找不到這筆 FCN");
+        return;
+      }
 
-  fillForm(found);
-  currentEditingFCNId = id;
+      fillForm(found);
+      currentEditingFCNId = id;
 
-  alert(`已載入 ${id}`);
-};
+      alert(`已載入 ${id}`);
+    };
+
     let showAllHealthy = false;
 
     let zoneSectionCollapsed = false;
@@ -898,30 +913,36 @@ window.loadFCNById = function() {
     }
 
     function buildSummary(data) {
-      const dangerAmt = data.danger.reduce((s, x) => s + toNumber(x.amt), 0);
-      const watchAmt = data.watch.reduce((s, x) => s + toNumber(x.amt), 0);
-      const healthyAmt = data.healthy.reduce((s, x) => s + toNumber(x.amt), 0);
+      const earlyExitAmt = (data.early_exit || []).reduce((s, x) => s + toNumber(x.amt), 0);
+      const dangerAmt = (data.danger || []).reduce((s, x) => s + toNumber(x.amt), 0);
+      const watchAmt = (data.watch || []).reduce((s, x) => s + toNumber(x.amt), 0);
+      const healthyAmt = (data.healthy || []).reduce((s, x) => s + toNumber(x.amt), 0);
 
       return `
         <div class="summary-grid">
           <div class="summary-box">
-            <div class="summary-label">持倉總擋數</div>
+            <div class="summary-label">持倉總檔數</div>
             <div class="summary-value">${data.total}</div>
             <div class="summary-sub">總金額：USD ${fmt(data.total_amt, 0)}</div>
           </div>
+          <div class="summary-box summary-box-exit">
+            <div class="summary-label">積極處理｜提早出場</div>
+            <div class="summary-value" style="color:#0f766e;">${(data.early_exit || []).length}</div>
+            <div class="summary-sub">USD ${fmt(earlyExitAmt, 0)}</div>
+          </div>
           <div class="summary-box">
-            <div class="summary-label">積極處理</div>
-            <div class="summary-value">${data.danger.length}</div>
+            <div class="summary-label">積極處理｜破下限價</div>
+            <div class="summary-value" style="color:#c62828;">${(data.danger || []).length}</div>
             <div class="summary-sub">USD ${fmt(dangerAmt, 0)}</div>
           </div>
           <div class="summary-box">
             <div class="summary-label">持續追蹤</div>
-            <div class="summary-value">${data.watch.length}</div>
+            <div class="summary-value" style="color:#b26a00;">${(data.watch || []).length}</div>
             <div class="summary-sub">USD ${fmt(watchAmt, 0)}</div>
           </div>
           <div class="summary-box">
             <div class="summary-label">健康</div>
-            <div class="summary-value">${data.healthy.length}</div>
+            <div class="summary-value" style="color:#2e7d32;">${(data.healthy || []).length}</div>
             <div class="summary-sub">USD ${fmt(healthyAmt, 0)}</div>
           </div>
         </div>
@@ -972,7 +993,7 @@ window.loadFCNById = function() {
 
       expandedFCNIds.clear();
 
-      ["danger", "watch", "healthy"].forEach(code => {
+      ["early_exit", "danger", "watch", "healthy"].forEach(code => {
         const rows = cache[code] || [];
         rows.forEach((f, idx) => {
           expandedFCNIds.add(`${code}_${idx}_${f.fcn_id}`);
@@ -996,7 +1017,7 @@ window.loadFCNById = function() {
 
       expandedFCNIds.clear();
 
-      ["danger", "watch"].forEach(code => {
+      ["early_exit", "danger", "watch"].forEach(code => {
         const rows = cache[code] || [];
         rows.forEach((f, idx) => {
           expandedFCNIds.add(`${code}_${idx}_${f.fcn_id}`);
@@ -1211,6 +1232,12 @@ window.loadFCNById = function() {
           <div class="item-line">vs Strike：${fmtPct(vsStrike)}</div>
           <div class="item-line">vs KI：${fmtPct(vsKI)}</div>
 
+          <div class="item-line" style="margin-top:6px;"><b>提早出場狀態</b></div>
+          <div class="item-line">
+            ${s.early_exit_met ? `<span style="color:#0f766e;font-weight:700;">滿足出場條件</span>` : `未滿足`}
+            ${s.early_exit_remark_date ? `（${s.early_exit_remark_date}）` : ""}
+          </div>
+
           <div class="item-line" style="margin-top:6px;"><b>趨勢</b></div>
           <div class="item-line">1W：${fmtTrend(ret1w)} ｜ 1M：${fmtTrend(ret1m)}</div>
           <div class="item-line">3M：${fmtTrend(ret3m)} ｜ 6M：${fmtTrend(ret6m)}</div>
@@ -1294,9 +1321,10 @@ window.loadFCNById = function() {
       }
 
       const snapshot = worst.snapshot_score ?? worst.snapshot ?? "-";
+      const isEarlyExit = !!fcn.early_exit_ready;
 
       return `
-        <div class="fcn-card">
+        <div class="fcn-card ${isEarlyExit ? "fcn-card-exit" : ""}">
           <div class="fcn-head">
             <div>
               <div class="fcn-id">${fcn.fcn_id}</div>
@@ -1304,10 +1332,28 @@ window.loadFCNById = function() {
               <div class="fcn-line">Worst-of：<b>${fcn.worst_of}</b></div>
               <div class="fcn-line">金額：USD ${fmt(fcn.amt, 0)}</div>
             </div>
-            <span class="${healthPillClass(fcn.fcn_health)}">${healthLabel(fcn.fcn_health)}</span>
+            <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
+              ${isEarlyExit ? `<span class="pill pill-exit">快了｜可提早出場</span>` : `<span class="${healthPillClass(fcn.fcn_health)}">${healthLabel(fcn.fcn_health)}</span>`}
+              ${!isEarlyExit && fcn.early_exit_eligible ? `<span class="pill pill-exit">${fcn.early_exit_remark_count}/${fcn.early_exit_total_count}</span>` : ``}
+            </div>
           </div>
 
           ${buildFCNMeta(fcn)}
+
+          ${fcn.early_exit_eligible ? `
+            <div class="decision-box decision-exit">
+              <div><b>⏩ 提早出場：</b>${fcn.early_exit_label}</div>
+              <div>開始判斷日：${fcn.early_exit_check_start_date || "-"}</div>
+              <div>進度：${fcn.early_exit_remark_count}/${fcn.early_exit_total_count}</div>
+              ${fcn.early_exit_last_remark_date ? `<div>最後達標日：${fcn.early_exit_last_remark_date}</div>` : ``}
+              <div>利息累計至目前條件日：<b>${fmtAmt(fcn.early_exit_interest_amt, fcn.currency || "USD")}</b>（${fmtPct(fcn.early_exit_interest_pct)}）</div>
+            </div>
+          ` : `
+            <div class="decision-box decision-exit">
+              <div><b>⏳ 提早出場：</b>尚未進入觀察期</div>
+              <div>開始判斷日：${fcn.early_exit_check_start_date || "-"}</div>
+            </div>
+          `}
 
           <div class="pl-block">
             <div><b>📍 Snapshot（現在）</b></div>
@@ -1436,9 +1482,10 @@ window.loadFCNById = function() {
     function buildZoneBlock(data) {
       return `
         <div class="zone-grid">
-          ${renderZoneColumn("🚨 積極處理", "zone-danger", data.danger, "danger", false)}
-          ${renderZoneColumn("⚠️ 持續追蹤", "zone-watch", data.watch, "watch", false)}
-          ${renderZoneColumn("✅ 健康", "zone-healthy", data.healthy, "healthy", true)}
+          ${renderZoneColumn("⏩ 提早出場", "zone-exit", data.early_exit || [], "early_exit", false)}
+          ${renderZoneColumn("🚨 積極處理｜破下限價", "zone-danger", data.danger || [], "danger", false)}
+          ${renderZoneColumn("⚠️ 持續追蹤", "zone-watch", data.watch || [], "watch", false)}
+          ${renderZoneColumn("✅ 健康", "zone-healthy", data.healthy || [], "healthy", true)}
         </div>
       `;
     }
@@ -1524,6 +1571,13 @@ window.loadFCNById = function() {
 
           <div class="item-line">距 KI：${distKI}%</div>
           <div class="item-line">距 Strike：${distStrike}%</div>
+
+          <div class="item-line">提早出場：
+            ${stock.early_exit_met
+              ? `<span style="color:#0f766e;font-weight:700;">滿足出場條件</span>${stock.early_exit_remark_date ? `（${stock.early_exit_remark_date}）` : ""}`
+              : `未滿足`
+            }
+          </div>
 
           <hr/>
 
@@ -1656,24 +1710,17 @@ window.loadFCNById = function() {
 
     async function runM2() {
       try {
-        const [fcnPool, marketRuntime, pool30, runtimeCache] = await Promise.all([
+        const [fcnPool, marketRuntime, pool30] = await Promise.all([
           fetch("./data/fcn_pool.json").then(r => r.json()),
           fetch("./data/market_runtime.json").then(r => r.json()),
-          fetch("./data/pool30.json").then(r => r.json()),
-          (async () => {
-            try {
-              return JSON.parse(localStorage.getItem("runtime_cache_v1")) || {};
-            } catch {
-              return {};
-            }
-          })()
+          fetch("./data/pool30.json").then(r => r.json())
         ]);
 
         editableFCNPool = JSON.parse(JSON.stringify(fcnPool || []));
         writePoolEditorCache();
         renderFCNManager();
 
-       const marketMerged = marketRuntime || {};
+        const marketMerged = marketRuntime || {};
 
         const data = runM2HealthEngine({
           fcnPool,
@@ -1720,7 +1767,7 @@ window.loadFCNById = function() {
       if (zoneSectionCollapsed) {
         zoneSummaryMini.style.display = "block";
         zoneSummaryMini.innerHTML =
-          `Danger <b>${cache.danger.length}</b> ｜ Watch <b>${cache.watch.length}</b> ｜ Healthy <b>${cache.healthy.length}</b> ｜ Total USD <b>${fmt(cache.total_amt, 0)}</b>`;
+          `Early Exit <b>${(cache.early_exit || []).length}</b> ｜ Danger <b>${(cache.danger || []).length}</b> ｜ Watch <b>${(cache.watch || []).length}</b> ｜ Healthy <b>${(cache.healthy || []).length}</b> ｜ Total USD <b>${fmt(cache.total_amt, 0)}</b>`;
         zoneBlock.innerHTML = "";
       } else {
         zoneSummaryMini.style.display = "none";
@@ -1966,30 +2013,28 @@ window.loadFCNById = function() {
     }
 
     function getFilteredManagerList() {
-  let list = editableFCNPool;
+      let list = editableFCNPool;
 
-  // 原本 filter
-  if (managerFilter !== "all") {
-    list = list.filter(x => (x.status || "") === managerFilter);
-  }
+      if (managerFilter !== "all") {
+        list = list.filter(x => (x.status || "") === managerFilter);
+      }
 
-  // 🔥 新增搜尋
-  if (searchKeyword) {
-    list = list.filter(x => {
-      const id = (x.fcn_id || "").toUpperCase();
-      const bank = (x.bank || "").toUpperCase();
-      const basket = (x.basket || []).join(" ").toUpperCase();
+      if (searchKeyword) {
+        list = list.filter(x => {
+          const id = (x.fcn_id || "").toUpperCase();
+          const bank = (x.bank || "").toUpperCase();
+          const basket = (x.basket || []).join(" ").toUpperCase();
 
-      return (
-        id.includes(searchKeyword) ||
-        bank.includes(searchKeyword) ||
-        basket.includes(searchKeyword)
-      );
-    });
-  }
+          return (
+            id.includes(searchKeyword) ||
+            bank.includes(searchKeyword) ||
+            basket.includes(searchKeyword)
+          );
+        });
+      }
 
-  return list;
-}
+      return list;
+    }
 
     function renderFCNManager() {
       const list = getFilteredManagerList();
@@ -2044,33 +2089,34 @@ window.loadFCNById = function() {
       a.remove();
       URL.revokeObjectURL(url);
     }
-window.exportActivePool = function() {
-  if (!editableFCNPool.length) {
-    alert("目前沒有可匯出的 FCN Pool");
-    return;
-  }
 
-  const filtered = editableFCNPool
-    .filter(x => x.status !== "deleted")
-    .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+    window.exportActivePool = function() {
+      if (!editableFCNPool.length) {
+        alert("目前沒有可匯出的 FCN Pool");
+        return;
+      }
 
-  const blob = new Blob(
-    [JSON.stringify(filtered, null, 2)],
-    { type: "application/json;charset=utf-8" }
-  );
+      const filtered = editableFCNPool
+        .filter(x => x.status !== "deleted")
+        .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
 
-  const url = URL.createObjectURL(blob);
+      const blob = new Blob(
+        [JSON.stringify(filtered, null, 2)],
+        { type: "application/json;charset=utf-8" }
+      );
 
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "fcn_pool_active.json";
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
+      const url = URL.createObjectURL(blob);
 
-  URL.revokeObjectURL(url);
-};
-    
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "fcn_pool_active.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      URL.revokeObjectURL(url);
+    };
+
     document.getElementById("backMilestone2Btn").addEventListener("click", () => {
       window.location.href = "./milestone2_index.html";
     });
