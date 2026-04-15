@@ -1,9 +1,11 @@
 // ==========================================
-// M2 Health Engine V1.5 FINAL
-// 振宇 FCN 系統｜持倉健檢引擎（Snapshot / End / 決策燈號 / 趨勢 / 提早出場）
+// M2 Health Engine V1.6 FINAL
+// 振宇 FCN 系統｜持倉健檢引擎
+// Snapshot / End / 決策燈號 / 趨勢 / 提早出場 / 到期專區 / KI記憶
 // ==========================================
 
 const M2_EARLY_EXIT_STATE_KEY = "m2_early_exit_state_v1";
+const M2_KNOCKIN_STATE_KEY = "m2_knockin_state_v1";
 
 function toNumber(v, fallback = 0) {
   const n = Number(v);
@@ -95,27 +97,6 @@ function daysBetween(a, b) {
   return Math.max(0, Math.floor((db - da) / (1000 * 60 * 60 * 24)));
 }
 
-// ------------------------------
-// Early Exit state
-// remark once keep forever
-// ------------------------------
-function readEarlyExitState() {
-  try {
-    const raw = localStorage.getItem(M2_EARLY_EXIT_STATE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
-}
-
-function writeEarlyExitState(state) {
-  try {
-    localStorage.setItem(M2_EARLY_EXIT_STATE_KEY, JSON.stringify(state));
-  } catch {
-    // ignore
-  }
-}
-
 function getFCNId(fcn) {
   return String(fcn.fcn_id || "").trim();
 }
@@ -137,6 +118,48 @@ function getMaturityDate(fcn) {
   return addMonthsSafe(entry, tenor);
 }
 
+// ------------------------------
+// localStorage state
+// ------------------------------
+function readLocalJson(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeLocalJson(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // ignore
+  }
+}
+
+function readEarlyExitState() {
+  return readLocalJson(M2_EARLY_EXIT_STATE_KEY);
+}
+
+function writeEarlyExitState(state) {
+  writeLocalJson(M2_EARLY_EXIT_STATE_KEY, state);
+}
+
+function readKnockInState() {
+  return readLocalJson(M2_KNOCKIN_STATE_KEY);
+}
+
+function writeKnockInState(state) {
+  writeLocalJson(M2_KNOCKIN_STATE_KEY, state);
+}
+
+// ------------------------------
+// 提早出場
+// entry + 37天後開始
+// 任一檔現價 > 進場價 即永久 remark
+// 全 basket 都 remark → early exit ready
+// ------------------------------
 function calcEarlyExitInterest(fcn, endDateStr) {
   const investAmt = toNumber(fcn.amt, 0);
   const annualRatePct = toNumber(fcn.rate, 0);
@@ -225,7 +248,9 @@ function calcEarlyExit(fcn, marketRuntime = {}, state = {}) {
     .sort();
 
   const lastRemarkDate = remarkDates.length ? remarkDates[remarkDates.length - 1] : "";
-  const interestInfo = ready ? calcEarlyExitInterest(fcn, lastRemarkDate) : calcEarlyExitInterest(fcn, formatDate(now));
+  const interestInfo = ready
+    ? calcEarlyExitInterest(fcn, lastRemarkDate)
+    : calcEarlyExitInterest(fcn, formatDate(now));
 
   return {
     early_exit_eligible: eligible,
@@ -279,11 +304,9 @@ function calcInterestAndPL(fcn, stock) {
   const strikePrice = entryPrice * strikePct;
   const lossPctRaw = strikePrice ? ((priceNow - strikePrice) / strikePrice) * 100 : 0;
 
-  // Loss 最大 = 0；只有跌破 Strike 才計算負損失
   const lossPct = Math.min(lossPctRaw, 0);
   const lossAmt = investAmt * (lossPct / 100);
 
-  // Snapshot 利息：只算滿月
   const monthsHeld = fullMonthsHeld(fcn.entry_time || fcn.created_time);
   const monthlyRate = annualRate / 12;
   const snapshotInterestAmt = investAmt * monthlyRate * monthsHeld;
@@ -292,7 +315,6 @@ function calcInterestAndPL(fcn, stock) {
   const snapshotBalanceAmt = lossAmt + snapshotInterestAmt;
   const snapshotBalancePct = investAmt ? (snapshotBalanceAmt / investAmt) * 100 : 0;
 
-  // End 利息：算整段 tenor
   const endInterestAmt = investAmt * annualRate * (tenorMonths / 12);
   const endInterestPct = investAmt ? (endInterestAmt / investAmt) * 100 : 0;
 
@@ -367,19 +389,16 @@ function calcStockHealth(symbol, fcn, market, poolMap = {}) {
     dist_to_strike_pct: round(dist_to_strike_pct),
     stock_health,
 
-    // baseline / pool info
     category: poolMap[symbol]?.category ?? "",
     sector: poolMap[symbol]?.sector ?? "",
     subsector: poolMap[symbol]?.subsector ?? "",
 
-    // runtime / 分數
     pure_stock: runtime.pure_stock ?? null,
     snapshot_score: runtime.snapshot_score ?? null,
     event_stock: runtime.event_stock ?? null,
     trend: runtime.trend ?? "",
     trend_note: runtime.trend_note ?? "",
 
-    // 趨勢欄位
     ret_1w: runtime.ret_1w ?? runtime.chg_1w ?? null,
     ret_1m: runtime.ret_1m ?? runtime.chg_1m ?? null,
     ret_3m: runtime.ret_3m ?? runtime.chg_3m ?? null,
@@ -409,9 +428,123 @@ function sortStocks(stocks) {
 }
 
 // ------------------------------
+// AKI / DACN：KI 記憶
+// EKI：不記憶
+// ------------------------------
+function updateKnockInState(fcn, stocks, knockInState) {
+  const fcnId = getFCNId(fcn);
+  if (!fcnId) return { has_knock_in: false, knock_in_date: "" };
+
+  const isEKI = !!fcn.eki;
+
+  if (isEKI) {
+    return {
+      has_knock_in: false,
+      knock_in_date: ""
+    };
+  }
+
+  if (!knockInState[fcnId]) {
+    knockInState[fcnId] = {
+      has_knock_in: false,
+      knock_in_date: ""
+    };
+  }
+
+  const bucket = knockInState[fcnId];
+  const today = formatDate(new Date());
+
+  const knockedToday = (stocks || []).some(s => toNumber(s.price_now) < toNumber(s.ki_price));
+
+  if (knockedToday) {
+    bucket.has_knock_in = true;
+    bucket.knock_in_date = bucket.knock_in_date || today;
+  }
+
+  return {
+    has_knock_in: !!bucket.has_knock_in,
+    knock_in_date: bucket.knock_in_date || ""
+  };
+}
+
+// ------------------------------
+// 到期專區
+// 提早出場 / 滿期安全 / 接股可能
+// 到期前10天不管什麼狀態都進專區
+// AKI/DACN：到期看 strike，且曾破 KI 不可回健康
+// EKI：到期看 KI，不記憶 KI
+// ------------------------------
+function calcMaturityZone(fcn, stocks, earlyExit) {
+  const now = new Date();
+  const maturityDate = getMaturityDate(fcn);
+  const days_to_maturity = maturityDate ? daysBetween(now, maturityDate) : 9999;
+  const in_maturity_window = days_to_maturity <= 10;
+
+  const isEKI = !!fcn.eki;
+
+  const all_above_strike = (stocks || []).length > 0 && stocks.every(s => toNumber(s.price_now) >= toNumber(s.strike_price));
+  const any_below_strike = (stocks || []).some(s => toNumber(s.price_now) < toNumber(s.strike_price));
+
+  const all_above_ki = (stocks || []).length > 0 && stocks.every(s => toNumber(s.price_now) >= toNumber(s.ki_price));
+  const any_below_ki = (stocks || []).some(s => toNumber(s.price_now) < toNumber(s.ki_price));
+
+  let maturity_safe = false;
+  let maturity_risk = false;
+  let maturity_label = "";
+  let maturity_color = "";
+  let maturity_note = "";
+
+  if (earlyExit.early_exit_ready) {
+    maturity_label = "提早出場";
+    maturity_color = "blue";
+    maturity_note = "已滿足提早出場條件";
+  } else if (in_maturity_window) {
+    if (isEKI) {
+      if (all_above_ki) {
+        maturity_safe = true;
+        maturity_label = "滿期安全";
+        maturity_color = "green";
+        maturity_note = "EKI 到期判斷：全部標的已回到 KI 以上";
+      } else if (any_below_ki) {
+        maturity_risk = true;
+        maturity_label = "接股可能";
+        maturity_color = "red";
+        maturity_note = "EKI 到期判斷：仍有標的低於 KI，存在接股風險";
+      }
+    } else {
+      if (all_above_strike) {
+        maturity_safe = true;
+        maturity_label = "滿期安全";
+        maturity_color = "green";
+        maturity_note = "AKI / DACN 到期判斷：全部標的已回到 Strike 以上";
+      } else if (any_below_strike) {
+        maturity_risk = true;
+        maturity_label = "接股可能";
+        maturity_color = "red";
+        maturity_note = "AKI / DACN 到期判斷：仍有標的低於 Strike，存在接股風險";
+      }
+    }
+  }
+
+  return {
+    days_to_maturity,
+    in_maturity_window,
+    all_above_strike,
+    any_below_strike,
+    all_above_ki,
+    any_below_ki,
+    maturity_safe,
+    maturity_risk,
+    maturity_label,
+    maturity_color,
+    maturity_note
+  };
+}
+
+// ------------------------------
 // FCN 層級計算
 // ------------------------------
-function calcFCN(fcn, market, poolMap = {}, earlyExitState = {}) {
+function calcFCN(fcn, market, poolMap = {}, earlyExitState = {}, knockInState = {}) {
   const stocks = (fcn.basket || [])
     .map(symbol => calcStockHealth(symbol, fcn, market, poolMap))
     .filter(Boolean);
@@ -424,18 +557,32 @@ function calcFCN(fcn, market, poolMap = {}, earlyExitState = {}) {
   const watch_count = sorted.filter(s => s.stock_health === "watch").length;
   const healthy_count = sorted.filter(s => s.stock_health === "healthy").length;
 
+  const earlyExit = calcEarlyExit(fcn, market, earlyExitState);
+  const knockInInfo = updateKnockInState(fcn, sorted, knockInState);
+  const maturity = calcMaturityZone(fcn, sorted, earlyExit);
+
   let fcn_health = "healthy";
-  if (danger_count > 0) fcn_health = "danger";
-  else if (watch_count > 0) fcn_health = "watch";
+
+  // AKI / DACN：曾破 KI 之後，不可回健康
+  if (!fcn.eki && knockInInfo.has_knock_in) {
+    const anyBelowStrike = sorted.some(s => toNumber(s.price_now) < toNumber(s.strike_price));
+    if (anyBelowStrike) {
+      fcn_health = "danger";
+    } else {
+      fcn_health = "watch";
+    }
+  } else {
+    if (danger_count > 0) fcn_health = "danger";
+    else if (watch_count > 0) fcn_health = "watch";
+    else fcn_health = "healthy";
+  }
 
   const worst = sorted[0];
   const decision = getDecisionSignal(
     worst.snapshot_balance_pct,
     worst.end_balance_pct,
-    worst.stock_health
+    fcn_health
   );
-
-  const earlyExit = calcEarlyExit(fcn, market, earlyExitState);
 
   const earlyExitStockMap = {};
   (earlyExit.early_exit_stocks || []).forEach(s => {
@@ -464,7 +611,6 @@ function calcFCN(fcn, market, poolMap = {}, earlyExitState = {}) {
     worst_dist_to_ki_pct: worst.dist_to_ki_pct,
     worst_dist_to_strike_pct: worst.dist_to_strike_pct,
 
-    // Level 1 card - Snapshot / End
     snapshot_loss_amt: worst.snapshot_loss_amt,
     snapshot_loss_pct: worst.snapshot_loss_pct,
     snapshot_interest_amt: worst.snapshot_interest_amt,
@@ -481,21 +627,22 @@ function calcFCN(fcn, market, poolMap = {}, earlyExitState = {}) {
 
     months_held_full: worst.months_held_full,
 
-    // decision
     decision_signal: decision.signal,
     decision_label: decision.label,
     decision_note: decision.note,
 
-    // early exit
     ...earlyExit,
     early_exit_label: earlyExitLabel,
+
+    ...knockInInfo,
+    maturity,
 
     stocks: mergedStocks
   };
 }
 
 // ------------------------------
-// 股票聚合（5.1 / 5.2 / 5.3）
+// 股票聚合
 // ------------------------------
 function buildStockAggregation(fcns) {
   const map = {};
@@ -549,32 +696,49 @@ export function runM2HealthEngine({ fcnPool = [], marketRuntime = {}, pool30 = [
   });
 
   const earlyExitState = readEarlyExitState();
+  const knockInState = readKnockInState();
+
   const active = (fcnPool || []).filter(f => f.status === "active");
 
   const fcns = active
-    .map(f => calcFCN(f, marketRuntime, poolMap, earlyExitState))
+    .map(f => calcFCN(f, marketRuntime, poolMap, earlyExitState, knockInState))
     .filter(Boolean);
 
   writeEarlyExitState(earlyExitState);
+  writeKnockInState(knockInState);
 
-  const early_exit = fcns
+  // 到期專區：提早出場 or 到期前10天
+  const maturity_zone = fcns.filter(f =>
+    f.early_exit_ready || f.maturity?.in_maturity_window
+  );
+
+  const maturity_exit = maturity_zone
     .filter(f => f.early_exit_ready)
-    .sort((a, b) => String(a.early_exit_last_remark_date || "").localeCompare(String(b.early_exit_last_remark_date || "")) * -1);
+    .sort((a, b) => String(b.early_exit_last_remark_date || "").localeCompare(String(a.early_exit_last_remark_date || "")));
 
-  const danger = fcns
-    .filter(f => f.fcn_health === "danger" && !f.early_exit_ready);
+  const maturity_safe = maturity_zone
+    .filter(f => !f.early_exit_ready && f.maturity?.maturity_safe)
+    .sort((a, b) => toNumber(a.maturity?.days_to_maturity, 9999) - toNumber(b.maturity?.days_to_maturity, 9999));
 
-  const watch = fcns
-    .filter(f => f.fcn_health === "watch" && !f.early_exit_ready);
+  const maturity_risk = maturity_zone
+    .filter(f => !f.early_exit_ready && f.maturity?.maturity_risk)
+    .sort((a, b) => toNumber(a.maturity?.days_to_maturity, 9999) - toNumber(b.maturity?.days_to_maturity, 9999));
 
-  const healthy = fcns
-    .filter(f => f.fcn_health === "healthy" && !f.early_exit_ready);
+  // 一般分區：已進到期專區的，不重複放入
+  const nonMaturityFCNs = fcns.filter(f => !(f.early_exit_ready || f.maturity?.in_maturity_window));
+
+  const danger = nonMaturityFCNs.filter(f => f.fcn_health === "danger");
+  const watch = nonMaturityFCNs.filter(f => f.fcn_health === "watch");
+  const healthy = nonMaturityFCNs.filter(f => f.fcn_health === "healthy");
 
   const stockMap = buildStockAggregation(fcns);
 
   return {
     fcns,
-    early_exit,
+    maturity_zone,
+    maturity_exit,
+    maturity_safe,
+    maturity_risk,
     danger,
     watch,
     healthy,
@@ -596,7 +760,7 @@ export function buildFCNMeta(f) {
       KI ${f.ki ?? "-"}%｜
       Strike ${f.strike ?? "-"}%｜
       Autocall ${f.autocall ?? "-"}%｜
-      ${f.eki ? "🟢 EKI" : "⚪ AKI"}<br>
+      ${f.eki ? "🟢 EKI" : "⚪ AKI / DACN"}<br>
       建立：${f.created_time || "-"}｜
       進場：${f.entry_time || "-"}
     </div>
