@@ -1011,12 +1011,12 @@
 
       expandedFCNIds.clear();
 
-      ["early_exit", "danger", "watch", "healthy"].forEach(code => {
-        const rows = cache[code] || [];
-        rows.forEach((f, idx) => {
-          expandedFCNIds.add(`${code}_${idx}_${f.fcn_id}`);
-        });
-      });
+     ["maturity_exit", "maturity_safe", "maturity_risk", "danger", "watch", "healthy"].forEach(code => {
+  const rows = cache[code] || [];
+  rows.forEach((f, idx) => {
+    expandedFCNIds.add(`${code}_${idx}_${f.fcn_id}`);
+  });
+});
 
       showAllHealthy = true;
       zoneSectionCollapsed = false;
