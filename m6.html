@@ -640,27 +640,71 @@
       `;
     }
 
-    function renderMarketCommentBlock(marketComment){
-      if (!marketComment) return "";
+     function renderMarketCommentBlock(marketComment){
+  if (!marketComment) return "";
 
-      const title = marketComment.title || "Market Comment";
-      const body = marketComment.comment || marketComment.text || marketComment.summary || "";
-      const tags = Array.isArray(marketComment.tags) ? marketComment.tags : [];
-      const updated = marketComment.last_update || marketComment.updated_at || marketComment.date || "";
+  const title = marketComment.title || "Market Comment";
+  const updated = marketComment.last_update || marketComment.updated_at || marketComment.date || "";
+  const summary = marketComment.summary || marketComment.comment || marketComment.text || "";
+  const bullets = Array.isArray(marketComment.bullets) ? marketComment.bullets : [];
+  const defense = Array.isArray(marketComment.defense) ? marketComment.defense : [];
+  const trim = Array.isArray(marketComment.trim) ? marketComment.trim : [];
+  const reminder = marketComment.reminder || "";
+  const tags = Array.isArray(marketComment.tags) ? marketComment.tags : [];
 
-      return `
-        <div class="mini" style="margin-bottom:14px;">
-          <div class="section-title">${safeText(title)}</div>
-          ${updated ? `<div class="small" style="margin-bottom:8px;">更新：${safeText(updated)}</div>` : ""}
-          <div class="comment-box">${safeText(body || "無市場評論")}</div>
-          ${tags.length ? `
-            <div class="chip-row">
-              ${tags.map(tag => `<span class="badge">${safeText(tag)}</span>`).join("")}
-            </div>
-          ` : ""}
+  return `
+    <div class="mini" style="margin-bottom:14px;">
+      <div class="section-title">${safeText(title)}</div>
+      ${updated ? `<div class="small" style="margin-bottom:8px;">更新：${safeText(updated)}</div>` : ""}
+
+      ${summary ? `
+        <div class="comment-box" style="margin-bottom:10px;">
+          ${safeText(summary)}
         </div>
-      `;
-    }
+      ` : ""}
+
+      ${bullets.length ? `
+        <div style="margin-top:10px;">
+          <div class="label">近期盤勢特徵與結構位置</div>
+          <div class="comment-box">
+            ${bullets.map(x => `• ${safeText(x)}`).join("<br>")}
+          </div>
+        </div>
+      ` : ""}
+
+      ${defense.length ? `
+        <div style="margin-top:12px;">
+          <div class="label">防守區 / 停損提醒</div>
+          <div class="comment-box">
+            ${defense.map(x => `• ${safeText(x)}`).join("<br>")}
+          </div>
+        </div>
+      ` : ""}
+
+      ${trim.length ? `
+        <div style="margin-top:12px;">
+          <div class="label">減碼 / 壓力區提醒</div>
+          <div class="comment-box">
+            ${trim.map(x => `• ${safeText(x)}`).join("<br>")}
+          </div>
+        </div>
+      ` : ""}
+
+      ${reminder ? `
+        <div style="margin-top:12px;">
+          <div class="label">交易思維提醒</div>
+          <div class="comment-box">${safeText(reminder)}</div>
+        </div>
+      ` : ""}
+
+      ${tags.length ? `
+        <div class="chip-row" style="margin-top:12px;">
+          ${tags.map(tag => `<span class="badge">${safeText(tag)}</span>`).join("")}
+        </div>
+      ` : ""}
+    </div>
+  `;
+}
 
     function renderDetail(stock){
       const panel = document.getElementById("detailPanel");
