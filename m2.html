@@ -912,42 +912,42 @@
       return "decision-box decision-green";
     }
 
-    function buildSummary(data) {
-      const earlyExitAmt = (data.early_exit || []).reduce((s, x) => s + toNumber(x.amt), 0);
-      const dangerAmt = (data.danger || []).reduce((s, x) => s + toNumber(x.amt), 0);
-      const watchAmt = (data.watch || []).reduce((s, x) => s + toNumber(x.amt), 0);
-      const healthyAmt = (data.healthy || []).reduce((s, x) => s + toNumber(x.amt), 0);
+  function buildSummary(data) {
+  const maturityZoneAmt = (data.maturity_zone || []).reduce((s, x) => s + toNumber(x.amt), 0);
+  const dangerAmt = (data.danger || []).reduce((s, x) => s + toNumber(x.amt), 0);
+  const watchAmt = (data.watch || []).reduce((s, x) => s + toNumber(x.amt), 0);
+  const healthyAmt = (data.healthy || []).reduce((s, x) => s + toNumber(x.amt), 0);
 
-      return `
-        <div class="summary-grid">
-          <div class="summary-box">
-            <div class="summary-label">持倉總檔數</div>
-            <div class="summary-value">${data.total}</div>
-            <div class="summary-sub">總金額：USD ${fmt(data.total_amt, 0)}</div>
-          </div>
-          <div class="summary-box summary-box-exit">
-            <div class="summary-label">積極處理｜提早出場</div>
-            <div class="summary-value" style="color:#0f766e;">${(data.early_exit || []).length}</div>
-            <div class="summary-sub">USD ${fmt(earlyExitAmt, 0)}</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-label">積極處理｜破下限價</div>
-            <div class="summary-value" style="color:#c62828;">${(data.danger || []).length}</div>
-            <div class="summary-sub">USD ${fmt(dangerAmt, 0)}</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-label">持續追蹤</div>
-            <div class="summary-value" style="color:#b26a00;">${(data.watch || []).length}</div>
-            <div class="summary-sub">USD ${fmt(watchAmt, 0)}</div>
-          </div>
-          <div class="summary-box">
-            <div class="summary-label">健康</div>
-            <div class="summary-value" style="color:#2e7d32;">${(data.healthy || []).length}</div>
-            <div class="summary-sub">USD ${fmt(healthyAmt, 0)}</div>
-          </div>
-        </div>
-      `;
-    }
+  return `
+    <div class="summary-grid">
+      <div class="summary-box">
+        <div class="summary-label">持倉總檔數</div>
+        <div class="summary-value">${data.total}</div>
+        <div class="summary-sub">總金額：USD ${fmt(data.total_amt, 0)}</div>
+      </div>
+      <div class="summary-box summary-box-exit">
+        <div class="summary-label">到期專區</div>
+        <div class="summary-value" style="color:#0f766e;">${(data.maturity_zone || []).length}</div>
+        <div class="summary-sub">USD ${fmt(maturityZoneAmt, 0)}</div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-label">積極處理｜破下限價</div>
+        <div class="summary-value" style="color:#c62828;">${(data.danger || []).length}</div>
+        <div class="summary-sub">USD ${fmt(dangerAmt, 0)}</div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-label">持續追蹤</div>
+        <div class="summary-value" style="color:#b26a00;">${(data.watch || []).length}</div>
+        <div class="summary-sub">USD ${fmt(watchAmt, 0)}</div>
+      </div>
+      <div class="summary-box">
+        <div class="summary-label">健康</div>
+        <div class="summary-value" style="color:#2e7d32;">${(data.healthy || []).length}</div>
+        <div class="summary-sub">USD ${fmt(healthyAmt, 0)}</div>
+      </div>
+    </div>
+  `;
+}
 
     window.toggleDetail = function(id) {
       if (expandedFCNIds.has(id)) expandedFCNIds.delete(id);
