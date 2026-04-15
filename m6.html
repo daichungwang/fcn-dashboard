@@ -233,7 +233,14 @@
       padding:16px;
       box-shadow:var(--shadow);
     }
-    .summary-card{grid-column:span 2}
+    .summary-card{
+  grid-column:span 2;
+  padding:10px 12px;
+  min-height:68px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
     .full{grid-column:1/-1}
     .list-panel{grid-column:span 4}
     .detail-panel{grid-column:span 8}
@@ -245,7 +252,7 @@
       letter-spacing:.2px;
     }
     .metric{
-      font-size:22px;
+      font-size:18px;
       font-weight:800;
       line-height:1.1;
       color:var(--text);
