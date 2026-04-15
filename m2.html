@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -653,6 +652,7 @@
             尚未選擇 FCN，按「新增 FCN」可建立新資料
           </div>
 
+
           <div class="form-grid">
             <div class="field">
               <label for="fcn_date">date</label>
@@ -661,7 +661,7 @@
 
             <div class="field">
               <label for="fcn_id">fcn_id</label>
-              <input id="fcn_id" type="text" placeholder="例如：FCN581G" />
+              <input id="fcn_id" type="text" placeholder="例如：FCN581G 富邦" />
             </div>
 
             <div class="field">
@@ -672,6 +672,11 @@
                 <option value="deleted">deleted</option>
                 <option value="draft">draft</option>
               </select>
+            </div>
+
+            <div class="field">
+              <label for="fcn_tw_bank">tw_bank</label>
+              <input id="fcn_tw_bank" type="text" placeholder="例如：富邦 / 永豐" />
             </div>
 
             <div class="field">
@@ -738,9 +743,43 @@
               </select>
             </div>
 
-            <div class="field">
-              <label for="fcn_decision_flag">decision_flag</label>
-              <input id="fcn_decision_flag" type="text" placeholder="例如：manual" />
+            <div class="field form-full">
+              <label>Basket</label>
+              <div class="hint" style="margin-bottom:6px;">股票1 ｜ 股票2 ｜ 股票3 ｜ 股票4 ｜ 股票5</div>
+              <div class="form-grid" style="grid-template-columns: repeat(5, 1fr); gap:8px;">
+                <input id="fcn_basket_1" type="text" placeholder="股票1" />
+                <input id="fcn_basket_2" type="text" placeholder="股票2" />
+                <input id="fcn_basket_3" type="text" placeholder="股票3" />
+                <input id="fcn_basket_4" type="text" placeholder="股票4" />
+                <input id="fcn_basket_5" type="text" placeholder="股票5" />
+              </div>
+            </div>
+
+            <div class="field form-full">
+              <label>Entry Prices</label>
+              <div class="hint" style="margin-bottom:6px;">價格1 ｜ 價格2 ｜ 價格3 ｜ 價格4 ｜ 價格5</div>
+              <div class="form-grid" style="grid-template-columns: repeat(5, 1fr); gap:8px;">
+                <div>
+                  <label id="price_label_1" style="margin-bottom:4px;">價格1</label>
+                  <input id="fcn_price_1" type="number" step="0.0001" placeholder="價格1" />
+                </div>
+                <div>
+                  <label id="price_label_2" style="margin-bottom:4px;">價格2</label>
+                  <input id="fcn_price_2" type="number" step="0.0001" placeholder="價格2" />
+                </div>
+                <div>
+                  <label id="price_label_3" style="margin-bottom:4px;">價格3</label>
+                  <input id="fcn_price_3" type="number" step="0.0001" placeholder="價格3" />
+                </div>
+                <div>
+                  <label id="price_label_4" style="margin-bottom:4px;">價格4</label>
+                  <input id="fcn_price_4" type="number" step="0.0001" placeholder="價格4" />
+                </div>
+                <div>
+                  <label id="price_label_5" style="margin-bottom:4px;">價格5</label>
+                  <input id="fcn_price_5" type="number" step="0.0001" placeholder="價格5" />
+                </div>
+              </div>
             </div>
 
             <div class="field">
@@ -764,6 +803,11 @@
             </div>
 
             <div class="field">
+              <label for="fcn_decision_flag">decision_flag</label>
+              <input id="fcn_decision_flag" type="text" placeholder="例如：manual" />
+            </div>
+
+            <div class="field">
               <label for="fcn_has_ki_breach">has_ki_breach</label>
               <select id="fcn_has_ki_breach">
                 <option value="false">false</option>
@@ -777,32 +821,16 @@
             </div>
 
             <div class="field form-full">
-              <label for="fcn_early_exit_record">early_exit_record</label>
-              <textarea id="fcn_early_exit_record" placeholder='{
-  "NVDA": { "hit": true, "first_hit_time": "2026-04-15T09:00" },
-  "TSM": { "hit": false, "first_hit_time": "" }
-}'></textarea>
-              <div class="hint">請輸入 JSON。每檔股票一筆：{ "股票": { "hit": true/false, "first_hit_time": "YYYY-MM-DDTHH:mm" } }</div>
-            </div>
-
-            <div class="field form-full">
-              <label for="fcn_basket">basket</label>
-              <textarea id="fcn_basket" placeholder="例如：AVGO,NVDA,TSLA,TSM"></textarea>
-              <div class="hint">請用逗號分隔，輸入後會轉成陣列。</div>
-            </div>
-
-            <div class="field form-full">
-              <label for="fcn_entry_prices">entry_prices</label>
-              <textarea id="fcn_entry_prices" placeholder="AVGO=167.5561&#10;NVDA=109.1913&#10;TSLA=269.6951&#10;TSM=167.7856"></textarea>
-              <div class="hint">每行一檔：股票代號=價格</div>
-            </div>
-
-            <div class="field form-full">
               <label for="fcn_note">note</label>
               <textarea id="fcn_note" placeholder="例如：標的價格=VWAP"></textarea>
             </div>
-          </div>
 
+            <div class="field form-full">
+              <label for="fcn_early_exit_record">early_exit_record</label>
+              <textarea id="fcn_early_exit_record" placeholder='{"NVDA":{"hit":true,"first_hit_time":"2026-04-15T09:00"}}'></textarea>
+              <div class="hint">請輸入合法 JSON。若留空，系統會自動視為 {}。</div>
+            </div>
+          </div>
           <div class="section-title-inline">6.3 即時 JSON 預覽</div>
           <div id="jsonPreview" class="json-preview">{}</div>
         </div>
@@ -1903,17 +1931,89 @@
         amt: 0,
         currency: "USD",
         status: "active",
+        tw_bank: "富邦",
         created_time: localDateTime,
         entry_time: localDateTime,
         exit_time: "",
-        maturity_time: "",
-        has_ki_breach: false,
-        first_ki_breach_time: "",
-        early_exit_record: {},
         decision_flag: "manual",
         is_portfolio: true,
         note: "",
-        entry_prices: {}
+        entry_prices: {},
+        maturity_time: "",
+        has_ki_breach: false,
+        first_ki_breach_time: "",
+        early_exit_record: {}
+      };
+    }
+
+    function setBasketEntryFields(basket = [], entryPrices = {}) {
+      for (let i = 1; i <= 5; i++) {
+        const symbol = (basket[i - 1] || "").toUpperCase();
+        const price = symbol ? (entryPrices?.[symbol] ?? "") : "";
+        document.getElementById(`fcn_basket_${i}`).value = symbol;
+        document.getElementById(`fcn_price_${i}`).value = price === null ? "" : price;
+      }
+      syncBasketPriceLabels();
+    }
+
+    function getBasketEntryData() {
+      const basket = [];
+      const entry_prices = {};
+      for (let i = 1; i <= 5; i++) {
+        const symbol = document.getElementById(`fcn_basket_${i}`).value.trim().toUpperCase();
+        const priceRaw = document.getElementById(`fcn_price_${i}`).value;
+        if (!symbol) continue;
+        basket.push(symbol);
+        const num = Number(priceRaw);
+        entry_prices[symbol] = Number.isFinite(num) ? num : 0;
+      }
+      return { basket, entry_prices };
+    }
+
+    function syncBasketPriceLabels() {
+      for (let i = 1; i <= 5; i++) {
+        const symbol = document.getElementById(`fcn_basket_${i}`).value.trim().toUpperCase();
+        const label = document.getElementById(`price_label_${i}`);
+        const input = document.getElementById(`fcn_price_${i}`);
+        label.textContent = symbol ? `${symbol} 價格` : `價格${i}`;
+        input.placeholder = symbol ? `${symbol} 價格` : `價格${i}`;
+      }
+    }
+
+    function parseEarlyExitRecordText(text) {
+      const raw = String(text || "").trim();
+      if (!raw) return {};
+      return JSON.parse(raw);
+    }
+
+    function buildOrderedFCNObject(data) {
+      return {
+        date: data.date || "",
+        fcn_id: data.fcn_id || "",
+        basket: data.basket || [],
+        tenor: data.tenor ?? 0,
+        rate: data.rate ?? 0,
+        autocall: data.autocall ?? 0,
+        strike: data.strike ?? 0,
+        ki: data.ki ?? 0,
+        eki: !!data.eki,
+        bank: data.bank || "",
+        has_position: !!data.has_position,
+        amt: data.amt ?? 0,
+        currency: data.currency || "USD",
+        status: data.status || "active",
+        tw_bank: data.tw_bank || "",
+        created_time: data.created_time || "",
+        entry_time: data.entry_time || "",
+        exit_time: data.exit_time || "",
+        decision_flag: data.decision_flag || "manual",
+        is_portfolio: !!data.is_portfolio,
+        note: data.note || "",
+        entry_prices: data.entry_prices || {},
+        maturity_time: data.maturity_time || "",
+        has_ki_breach: !!data.has_ki_breach,
+        first_ki_breach_time: data.first_ki_breach_time || "",
+        early_exit_record: data.early_exit_record || {}
       };
     }
 
@@ -1921,6 +2021,7 @@
       document.getElementById("fcn_date").value = fcn.date || "";
       document.getElementById("fcn_id").value = fcn.fcn_id || "";
       document.getElementById("fcn_status").value = fcn.status || "active";
+      document.getElementById("fcn_tw_bank").value = fcn.tw_bank || "";
       document.getElementById("fcn_currency").value = fcn.currency || "USD";
       document.getElementById("fcn_amt").value = fcn.amt ?? "";
       document.getElementById("fcn_bank").value = fcn.bank || "";
@@ -1935,14 +2036,13 @@
       document.getElementById("fcn_decision_flag").value = fcn.decision_flag || "";
       document.getElementById("fcn_created_time").value = normalizeDateTimeLocalValue(fcn.created_time);
       document.getElementById("fcn_entry_time").value = normalizeDateTimeLocalValue(fcn.entry_time);
+      setBasketEntryFields(Array.isArray(fcn.basket) ? fcn.basket : [], fcn.entry_prices || {});
       document.getElementById("fcn_exit_time").value = normalizeDateTimeLocalValue(fcn.exit_time);
       document.getElementById("fcn_maturity_time").value = normalizeDateTimeLocalValue(fcn.maturity_time);
       document.getElementById("fcn_has_ki_breach").value = String(Boolean(fcn.has_ki_breach));
       document.getElementById("fcn_first_ki_breach_time").value = normalizeDateTimeLocalValue(fcn.first_ki_breach_time);
-      document.getElementById("fcn_basket").value = Array.isArray(fcn.basket) ? fcn.basket.join(",") : "";
-      document.getElementById("fcn_entry_prices").value = objectToEntryPriceLines(fcn.entry_prices || {});
-      document.getElementById("fcn_early_exit_record").value = JSON.stringify(fcn.early_exit_record || {}, null, 2);
       document.getElementById("fcn_note").value = fcn.note || "";
+      document.getElementById("fcn_early_exit_record").value = JSON.stringify(fcn.early_exit_record || {}, null, 2);
 
       currentEditingFCNId = fcn.fcn_id || null;
       document.getElementById("managerFormMeta").innerHTML =
@@ -1999,34 +2099,11 @@
         .join("\n");
     }
 
-    function parseEarlyExitRecord(text) {
-      const raw = String(text || "").trim();
-      if (!raw) return {};
-      try {
-        const parsed = JSON.parse(raw);
-        if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
-          throw new Error("early_exit_record 必須是 object");
-        }
-        const clean = {};
-        Object.entries(parsed).forEach(([symbol, value]) => {
-          const key = String(symbol || "").trim().toUpperCase();
-          if (!key) return;
-          const hit = !!value?.hit;
-          const first_hit_time = value?.first_hit_time ? String(value.first_hit_time) : "";
-          clean[key] = { hit, first_hit_time };
-        });
-        return clean;
-      } catch (err) {
-        throw new Error("early_exit_record JSON 格式錯誤");
-      }
-    }
-
     function getFormData() {
-      const basket = parseBasketText(document.getElementById("fcn_basket").value);
-      const entry_prices = parseEntryPriceLines(document.getElementById("fcn_entry_prices").value);
-      const early_exit_record = parseEarlyExitRecord(document.getElementById("fcn_early_exit_record").value);
+      const { basket, entry_prices } = getBasketEntryData();
+      const early_exit_record = parseEarlyExitRecordText(document.getElementById("fcn_early_exit_record").value);
 
-      return {
+      return buildOrderedFCNObject({
         date: document.getElementById("fcn_date").value || "",
         fcn_id: document.getElementById("fcn_id").value.trim(),
         basket,
@@ -2041,18 +2118,19 @@
         amt: toNumber(document.getElementById("fcn_amt").value, 0),
         currency: document.getElementById("fcn_currency").value.trim() || "USD",
         status: document.getElementById("fcn_status").value,
+        tw_bank: document.getElementById("fcn_tw_bank").value.trim(),
         created_time: document.getElementById("fcn_created_time").value || "",
         entry_time: document.getElementById("fcn_entry_time").value || "",
         exit_time: document.getElementById("fcn_exit_time").value || "",
-        maturity_time: document.getElementById("fcn_maturity_time").value || "",
-        has_ki_breach: parseBoolean(document.getElementById("fcn_has_ki_breach").value),
-        first_ki_breach_time: document.getElementById("fcn_first_ki_breach_time").value || "",
         decision_flag: document.getElementById("fcn_decision_flag").value.trim() || "manual",
         is_portfolio: parseBoolean(document.getElementById("fcn_is_portfolio").value),
         note: document.getElementById("fcn_note").value,
         entry_prices,
+        maturity_time: document.getElementById("fcn_maturity_time").value || "",
+        has_ki_breach: parseBoolean(document.getElementById("fcn_has_ki_breach").value),
+        first_ki_breach_time: document.getElementById("fcn_first_ki_breach_time").value || "",
         early_exit_record
-      };
+      });
     }
 
     function validateFCN(obj) {
@@ -2072,7 +2150,7 @@
       try {
         data = getFormData();
       } catch (err) {
-        alert(err.message || "表單資料格式錯誤");
+        alert("early_exit_record JSON 格式錯誤：" + err.message);
         return;
       }
       if (!validateFCN(data)) return;
@@ -2105,7 +2183,7 @@
       try {
         data = getFormData();
       } catch (err) {
-        alert(err.message || "表單資料格式錯誤");
+        alert("early_exit_record JSON 格式錯誤：" + err.message);
         return;
       }
       if (!validateFCN(data)) return;
@@ -2147,7 +2225,7 @@
         const data = getFormData();
         document.getElementById("jsonPreview").textContent = JSON.stringify(data, null, 2);
       } catch (err) {
-        document.getElementById("jsonPreview").textContent = `JSON 預覽失敗：${err.message || err}`;
+        document.getElementById("jsonPreview").textContent = `early_exit_record JSON 格式錯誤：${err.message}`;
       }
     }
 
@@ -2284,15 +2362,26 @@
     document.getElementById("exportPoolBtn").addEventListener("click", exportPoolJson);
 
     [
-      "fcn_date","fcn_id","fcn_status","fcn_currency","fcn_amt","fcn_bank",
+      "fcn_date","fcn_id","fcn_status","fcn_tw_bank","fcn_currency","fcn_amt","fcn_bank",
       "fcn_tenor","fcn_rate","fcn_autocall","fcn_strike","fcn_ki","fcn_eki",
-      "fcn_has_position","fcn_is_portfolio","fcn_decision_flag",
-      "fcn_created_time","fcn_entry_time","fcn_exit_time","fcn_maturity_time","fcn_has_ki_breach","fcn_first_ki_breach_time",
-      "fcn_basket","fcn_entry_prices","fcn_early_exit_record","fcn_note"
+      "fcn_has_position","fcn_is_portfolio","fcn_created_time","fcn_entry_time","fcn_exit_time",
+      "fcn_maturity_time","fcn_decision_flag","fcn_has_ki_breach","fcn_first_ki_breach_time",
+      "fcn_note","fcn_early_exit_record",
+      "fcn_basket_1","fcn_basket_2","fcn_basket_3","fcn_basket_4","fcn_basket_5",
+      "fcn_price_1","fcn_price_2","fcn_price_3","fcn_price_4","fcn_price_5"
     ].forEach(id => {
       const el = document.getElementById(id);
       el.addEventListener("input", updateJsonPreview);
       el.addEventListener("change", updateJsonPreview);
+    });
+
+
+    ["fcn_basket_1","fcn_basket_2","fcn_basket_3","fcn_basket_4","fcn_basket_5"].forEach(id => {
+      const el = document.getElementById(id);
+      el.addEventListener("input", () => {
+        syncBasketPriceLabels();
+        updateJsonPreview();
+      });
     });
 
     (function init() {
