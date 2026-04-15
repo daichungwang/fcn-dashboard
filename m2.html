@@ -1850,8 +1850,8 @@
       if (zoneSectionCollapsed) {
         zoneSummaryMini.style.display = "block";
         zoneSummaryMini.innerHTML =
-          `Early Exit <b>${(cache.early_exit || []).length}</b> ｜ Danger <b>${(cache.danger || []).length}</b> ｜ Watch <b>${(cache.watch || []).length}</b> ｜ Healthy <b>${(cache.healthy || []).length}</b> ｜ Total USD <b>${fmt(cache.total_amt, 0)}</b>`;
-        zoneBlock.innerHTML = "";
+         zoneSummaryMini.innerHTML =
+  `到期專區 <b>${(cache.maturity_zone || []).length}</b> ｜ Danger <b>${(cache.danger || []).length}</b> ｜ Watch <b>${(cache.watch || []).length}</b> ｜ Healthy <b>${(cache.healthy || []).length}</b> ｜ Total USD <b>${fmt(cache.total_amt, 0)}</b>`;
       } else {
         zoneSummaryMini.style.display = "none";
         zoneSummaryMini.innerHTML = "";
