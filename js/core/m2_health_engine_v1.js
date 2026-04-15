@@ -1,7 +1,9 @@
 // ==========================================
-// M2 Health Engine V1.4 FINAL
-// 振宇 FCN 系統｜持倉健檢引擎（Snapshot / End / 決策燈號 / 趨勢）
+// M2 Health Engine V1.5 FINAL
+// 振宇 FCN 系統｜持倉健檢引擎（Snapshot / End / 決策燈號 / 趨勢 / 提早出場）
 // ==========================================
+
+const M2_EARLY_EXIT_STATE_KEY = "m2_early_exit_state_v1";
 
 function toNumber(v, fallback = 0) {
   const n = Number(v);
@@ -47,6 +49,195 @@ function getDecisionSignal(snapshotBalancePct, endNetPct, stockHealth) {
     signal: "green",
     label: "🟢 可續抱",
     note: "結構與目前狀態仍可接受"
+  };
+}
+
+// ------------------------------
+// 日期工具
+// ------------------------------
+function toDate(value) {
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function formatDate(value) {
+  const d = toDate(value);
+  if (!d) return "";
+  return d.toISOString().slice(0, 10);
+}
+
+function addDays(dateValue, days) {
+  const d = toDate(dateValue);
+  if (!d) return null;
+  const x = new Date(d);
+  x.setDate(x.getDate() + days);
+  return x;
+}
+
+function addMonthsSafe(dateValue, months) {
+  const d = toDate(dateValue);
+  if (!d) return null;
+
+  const x = new Date(d);
+  const originalDay = x.getDate();
+  x.setMonth(x.getMonth() + months);
+
+  if (x.getDate() < originalDay) {
+    x.setDate(0);
+  }
+  return x;
+}
+
+function daysBetween(a, b) {
+  const da = toDate(a);
+  const db = toDate(b);
+  if (!da || !db) return 0;
+  return Math.max(0, Math.floor((db - da) / (1000 * 60 * 60 * 24)));
+}
+
+// ------------------------------
+// Early Exit state
+// remark once keep forever
+// ------------------------------
+function readEarlyExitState() {
+  try {
+    const raw = localStorage.getItem(M2_EARLY_EXIT_STATE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+}
+
+function writeEarlyExitState(state) {
+  try {
+    localStorage.setItem(M2_EARLY_EXIT_STATE_KEY, JSON.stringify(state));
+  } catch {
+    // ignore
+  }
+}
+
+function getFCNId(fcn) {
+  return String(fcn.fcn_id || "").trim();
+}
+
+function getEntryTime(fcn) {
+  return fcn.entry_time || fcn.created_time || fcn.date || "";
+}
+
+function getMaturityDate(fcn) {
+  if (fcn.exit_time) {
+    const d = toDate(fcn.exit_time);
+    if (d) return d;
+  }
+
+  const entry = getEntryTime(fcn);
+  const tenor = toNumber(fcn.tenor, 0);
+  if (!entry || !tenor) return null;
+
+  return addMonthsSafe(entry, tenor);
+}
+
+function calcEarlyExitInterest(fcn, endDateStr) {
+  const investAmt = toNumber(fcn.amt, 0);
+  const annualRatePct = toNumber(fcn.rate, 0);
+  const entryTime = getEntryTime(fcn);
+
+  if (!investAmt || !annualRatePct || !entryTime || !endDateStr) {
+    return {
+      early_exit_days_held: 0,
+      early_exit_interest_amt: 0,
+      early_exit_interest_pct: 0
+    };
+  }
+
+  const heldDays = daysBetween(entryTime, endDateStr);
+  const interestAmt = investAmt * (annualRatePct / 100) * (heldDays / 365);
+  const interestPct = investAmt ? (interestAmt / investAmt) * 100 : 0;
+
+  return {
+    early_exit_days_held: heldDays,
+    early_exit_interest_amt: round(interestAmt),
+    early_exit_interest_pct: round(interestPct)
+  };
+}
+
+function calcEarlyExit(fcn, marketRuntime = {}, state = {}) {
+  const fcnId = getFCNId(fcn);
+  const basket = Array.isArray(fcn.basket) ? fcn.basket : [];
+  const entryTime = getEntryTime(fcn);
+  const checkStartDate = addDays(entryTime, 37);
+  const maturityDate = getMaturityDate(fcn);
+  const now = new Date();
+
+  const eligible = !!checkStartDate && now >= checkStartDate;
+  const beforeMaturity = maturityDate ? now < maturityDate : true;
+
+  if (!state[fcnId]) state[fcnId] = {};
+  const bucket = state[fcnId];
+
+  const stocks = basket.map(symbol => {
+    if (!bucket[symbol]) {
+      bucket[symbol] = {
+        met: false,
+        remark_date: ""
+      };
+    }
+
+    const entryPrice = toNumber(fcn.entry_prices?.[symbol], 0);
+    const runtime = marketRuntime?.[symbol] || {};
+    const priceNow = toNumber(runtime.price_now, 0);
+
+    const prevMet = !!bucket[symbol].met;
+    const prevDate = bucket[symbol].remark_date || "";
+
+    const canRemarkToday =
+      eligible &&
+      entryPrice > 0 &&
+      priceNow > 0 &&
+      priceNow > entryPrice;
+
+    const met = prevMet || canRemarkToday;
+    const remarkDate = prevDate || (canRemarkToday ? formatDate(now) : "");
+
+    if (met) {
+      bucket[symbol].met = true;
+      bucket[symbol].remark_date = remarkDate;
+    }
+
+    return {
+      symbol,
+      entry_price: round(entryPrice),
+      price_now: round(priceNow),
+      met,
+      remark_date: remarkDate,
+      remark_label: met ? "滿足出場條件" : "未滿足"
+    };
+  });
+
+  const remarkCount = stocks.filter(s => s.met).length;
+  const totalCount = stocks.length;
+  const allMet = totalCount > 0 && remarkCount === totalCount;
+  const ready = eligible && beforeMaturity && allMet;
+
+  const remarkDates = stocks
+    .map(s => s.remark_date)
+    .filter(Boolean)
+    .sort();
+
+  const lastRemarkDate = remarkDates.length ? remarkDates[remarkDates.length - 1] : "";
+  const interestInfo = ready ? calcEarlyExitInterest(fcn, lastRemarkDate) : calcEarlyExitInterest(fcn, formatDate(now));
+
+  return {
+    early_exit_eligible: eligible,
+    early_exit_before_maturity: beforeMaturity,
+    early_exit_ready: ready,
+    early_exit_check_start_date: formatDate(checkStartDate),
+    early_exit_maturity_date: formatDate(maturityDate),
+    early_exit_remark_count: remarkCount,
+    early_exit_total_count: totalCount,
+    early_exit_last_remark_date: lastRemarkDate,
+    early_exit_stocks: stocks,
+    ...interestInfo
   };
 }
 
@@ -188,7 +379,7 @@ function calcStockHealth(symbol, fcn, market, poolMap = {}) {
     trend: runtime.trend ?? "",
     trend_note: runtime.trend_note ?? "",
 
-    // 趨勢欄位（這次補齊）
+    // 趨勢欄位
     ret_1w: runtime.ret_1w ?? runtime.chg_1w ?? null,
     ret_1m: runtime.ret_1m ?? runtime.chg_1m ?? null,
     ret_3m: runtime.ret_3m ?? runtime.chg_3m ?? null,
@@ -220,7 +411,7 @@ function sortStocks(stocks) {
 // ------------------------------
 // FCN 層級計算
 // ------------------------------
-function calcFCN(fcn, market, poolMap = {}) {
+function calcFCN(fcn, market, poolMap = {}, earlyExitState = {}) {
   const stocks = (fcn.basket || [])
     .map(symbol => calcStockHealth(symbol, fcn, market, poolMap))
     .filter(Boolean);
@@ -243,6 +434,25 @@ function calcFCN(fcn, market, poolMap = {}) {
     worst.end_balance_pct,
     worst.stock_health
   );
+
+  const earlyExit = calcEarlyExit(fcn, market, earlyExitState);
+
+  const earlyExitStockMap = {};
+  (earlyExit.early_exit_stocks || []).forEach(s => {
+    earlyExitStockMap[s.symbol] = s;
+  });
+
+  const mergedStocks = sorted.map(s => ({
+    ...s,
+    early_exit_met: !!earlyExitStockMap[s.symbol]?.met,
+    early_exit_remark_date: earlyExitStockMap[s.symbol]?.remark_date || ""
+  }));
+
+  const earlyExitLabel = earlyExit.early_exit_ready
+    ? "⏩ 可提早出場"
+    : earlyExit.early_exit_eligible
+      ? `⏳ 提早出場追蹤中 ${earlyExit.early_exit_remark_count}/${earlyExit.early_exit_total_count}`
+      : "尚未進入提早出場觀察期";
 
   return {
     ...fcn,
@@ -276,7 +486,11 @@ function calcFCN(fcn, market, poolMap = {}) {
     decision_label: decision.label,
     decision_note: decision.note,
 
-    stocks: sorted
+    // early exit
+    ...earlyExit,
+    early_exit_label: earlyExitLabel,
+
+    stocks: mergedStocks
   };
 }
 
@@ -334,20 +548,33 @@ export function runM2HealthEngine({ fcnPool = [], marketRuntime = {}, pool30 = [
     poolMap[p.symbol] = p;
   });
 
+  const earlyExitState = readEarlyExitState();
   const active = (fcnPool || []).filter(f => f.status === "active");
 
   const fcns = active
-    .map(f => calcFCN(f, marketRuntime, poolMap))
+    .map(f => calcFCN(f, marketRuntime, poolMap, earlyExitState))
     .filter(Boolean);
 
-  const danger = fcns.filter(f => f.fcn_health === "danger");
-  const watch = fcns.filter(f => f.fcn_health === "watch");
-  const healthy = fcns.filter(f => f.fcn_health === "healthy");
+  writeEarlyExitState(earlyExitState);
+
+  const early_exit = fcns
+    .filter(f => f.early_exit_ready)
+    .sort((a, b) => String(a.early_exit_last_remark_date || "").localeCompare(String(b.early_exit_last_remark_date || "")) * -1);
+
+  const danger = fcns
+    .filter(f => f.fcn_health === "danger" && !f.early_exit_ready);
+
+  const watch = fcns
+    .filter(f => f.fcn_health === "watch" && !f.early_exit_ready);
+
+  const healthy = fcns
+    .filter(f => f.fcn_health === "healthy" && !f.early_exit_ready);
 
   const stockMap = buildStockAggregation(fcns);
 
   return {
     fcns,
+    early_exit,
     danger,
     watch,
     healthy,
