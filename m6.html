@@ -293,6 +293,7 @@
       padding-left:8px;
       color:#64748b;
       pointer-events:none;
+      background:linear-gradient(to right, rgba(255,255,255,.9), rgba(255,255,255,0));
     }
     .strategy{
       line-height:1.65;
@@ -327,6 +328,12 @@
       padding:24px;
       text-align:center;
       color:var(--muted);
+    }
+    .comment-box{
+      white-space:pre-wrap;
+      line-height:1.75;
+      font-size:14px;
+      color:var(--text-2);
     }
 
     @media (max-width: 980px){
@@ -407,6 +414,14 @@
     let selectedSymbol = "";
     let currentAggregates = [];
 
+    async function loadJson(url){
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) {
+        throw new Error(`載入失敗：${url} (${res.status})`);
+      }
+      return res.json();
+    }
+
     function statusClass(status){
       if (status === "健康") return "green";
       if (status === "觀察") return "yellow";
@@ -439,6 +454,16 @@
       const n = Number(value);
       if (!Number.isFinite(n)) return "-";
       return Math.round(n).toString();
+    }
+
+    function safeText(value){
+      if (value === null || value === undefined || value === "") return "-";
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
     }
 
     function renderSummary(items){
@@ -526,15 +551,15 @@
 
       el.innerHTML = items.map((stock, idx) => `
         <div class="stock-item ${statusTone(stock.status_eval)} ${stock.symbol === selectedSymbol ? "active" : ""}"
-             onclick="window.selectStock('${stock.symbol}')">
+             onclick="window.selectStock('${safeText(stock.symbol)}')">
           <div class="row">
             <div>
-              <div class="name"><span class="rank-no">${idx + 1}</span>${stock.symbol} <span class="ticker">｜${stock.name || stock.symbol}</span></div>
-              <div class="small">${stock.source_type || "-"} ・ ${stock.category || "-"} ・ ${stock.sector || "-"}</div>
+              <div class="name"><span class="rank-no">${idx + 1}</span>${safeText(stock.symbol)} <span class="ticker">｜${safeText(stock.name || stock.symbol)}</span></div>
+              <div class="small">${safeText(stock.source_type || "-")} ・ ${safeText(stock.category || "-")} ・ ${safeText(stock.sector || "-")}</div>
             </div>
             <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
-              <div class="strength-badge ${strengthClass(stock.strength)}">強弱：${stock.strength}</div>
-              <div class="badge ${statusClass(stock.status_eval)}">${stock.status_eval}</div>
+              <div class="strength-badge ${strengthClass(stock.strength)}">強弱：${safeText(stock.strength || "-")}</div>
+              <div class="badge ${statusClass(stock.status_eval)}">${safeText(stock.status_eval || "-")}</div>
             </div>
           </div>
 
@@ -542,10 +567,10 @@
             <div class="stat-line"><span class="k">股數</span><span>${fmtInt(stock.quantity)}</span></div>
             <div class="stat-line"><span class="k">成本</span><span>$${fmtNum(stock.cost)}</span></div>
             <div class="stat-line"><span class="k">現價</span><span>$${fmtNum(stock.current)}</span></div>
-            <div class="stat-line"><span class="k">價差</span><span class="${moneyClass(stock.price_gap)}">${stock.price_gap >= 0 ? "+" : ""}${fmtNum(stock.price_gap)}</span></div>
-            <div class="stat-line"><span class="k">損益金額</span><span class="${moneyClass(stock.pnl_amount)}">${stock.pnl_amount >= 0 ? "+" : ""}$${fmtInt(stock.pnl_amount)}</span></div>
-            <div class="stat-line"><span class="k">損益率</span><span class="${moneyClass(stock.pnl_pct)}">${stock.pnl_pct >= 0 ? "+" : ""}${fmtNum(stock.pnl_pct)}%</span></div>
-            <div class="stat-line"><span class="k">單日變化</span><span class="${moneyClass(stock.delta_1d)}">${stock.delta_1d >= 0 ? "+" : ""}${fmtNum(stock.delta_1d)}%</span></div>
+            <div class="stat-line"><span class="k">價差</span><span class="${moneyClass(stock.price_gap)}">${Number(stock.price_gap) >= 0 ? "+" : ""}${fmtNum(stock.price_gap)}</span></div>
+            <div class="stat-line"><span class="k">損益金額</span><span class="${moneyClass(stock.pnl_amount)}">${Number(stock.pnl_amount) >= 0 ? "+" : ""}$${fmtInt(stock.pnl_amount)}</span></div>
+            <div class="stat-line"><span class="k">損益率</span><span class="${moneyClass(stock.pnl_pct)}">${Number(stock.pnl_pct) >= 0 ? "+" : ""}${fmtNum(stock.pnl_pct)}%</span></div>
+            <div class="stat-line"><span class="k">單日變化</span><span class="${moneyClass(stock.delta_1d)}">${Number(stock.delta_1d) >= 0 ? "+" : ""}${fmtNum(stock.delta_1d)}%</span></div>
             <div class="stat-line"><span class="k">today score</span><span>${stock.today_score ?? "-"}</span></div>
           </div>
         </div>
@@ -576,6 +601,10 @@
         Number(stock.line_12m)
       ].filter(v => Number.isFinite(v));
 
+      if (!allRef.length) {
+        return `<div class="empty">沒有可畫圖的價格資料。</div>`;
+      }
+
       const min = Math.min(...allRef) * 0.95;
       const max = Math.max(...allRef) * 1.05;
       const w = 880;
@@ -601,7 +630,7 @@
         <div class="price-chart">
           ${marks.map(m => {
             const top = priceToY(m.value, min, max, h);
-            return `<div class="line-mark" style="top:${top}px;border-color:${m.color};">${m.label}</div>`;
+            return `<div class="line-mark" style="top:${top}px;border-color:${m.color};">${safeText(m.label)}</div>`;
           }).join("")}
           <svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
             <polyline points="${fillPts}" fill="rgba(56,189,248,.10)" stroke="none"></polyline>
@@ -611,43 +640,60 @@
       `;
     }
 
+    function renderMarketCommentBlock(marketComment){
+      if (!marketComment) return "";
+
+      const title = marketComment.title || "Market Comment";
+      const body = marketComment.comment || marketComment.text || marketComment.summary || "";
+      const tags = Array.isArray(marketComment.tags) ? marketComment.tags : [];
+      const updated = marketComment.last_update || marketComment.updated_at || marketComment.date || "";
+
+      return `
+        <div class="mini" style="margin-bottom:14px;">
+          <div class="section-title">${safeText(title)}</div>
+          ${updated ? `<div class="small" style="margin-bottom:8px;">更新：${safeText(updated)}</div>` : ""}
+          <div class="comment-box">${safeText(body || "無市場評論")}</div>
+          ${tags.length ? `
+            <div class="chip-row">
+              ${tags.map(tag => `<span class="badge">${safeText(tag)}</span>`).join("")}
+            </div>
+          ` : ""}
+        </div>
+      `;
+    }
+
     function renderDetail(stock){
-  const panel = document.getElementById("detailPanel");
+      const panel = document.getElementById("detailPanel");
 
-  if (!stock) {
-    panel.innerHTML = `<div class="empty">沒有可顯示的股票。</div>`;
-    return;
-  }
+      if (!stock) {
+        panel.innerHTML = `<div class="empty">沒有可顯示的股票。</div>`;
+        return;
+      }
 
-  const details = buildPositionDetails(
-    stock.symbol,
-    vm.positions,
-    vm.marketRuntime,
-    vm.m7TodayMap
-  );
+      const details = buildPositionDetails(
+        stock.symbol,
+        vm.positions,
+        vm.marketRuntime,
+        vm.m7TodayMap
+      );
 
-  const marketComment = window.marketComments?.[stock.symbol] || null;
-
-  panel.innerHTML = `
-    ...
-  `;
-}
+      const marketComment = window.marketComments?.[stock.symbol] || null;
 
       panel.innerHTML = `
         <div class="detail-head">
           <div>
-            <h2 class="detail-title">${stock.symbol} ｜ ${stock.name || ""}</h2>
+            <h2 class="detail-title">${safeText(stock.symbol)} ｜ ${safeText(stock.name || "")}</h2>
             <div class="detail-sub">
-              ${stock.source_type || "-"} ・ ${stock.category || "-"} ・ ${stock.sector || "-"} ・ FCN來源：${stock.source_id || "-"} ・ 更新：${stock.last_update || "-"}
+              ${safeText(stock.source_type || "-")} ・ ${safeText(stock.category || "-")} ・ ${safeText(stock.sector || "-")} ・ FCN來源：${safeText(stock.source_id || "-")} ・ 更新：${safeText(stock.last_update || "-")}
             </div>
             <div class="detail-tags">
-              <div class="strength-badge ${strengthClass(stock.strength)}">強弱：${stock.strength}</div>
-              <div class="badge ${statusClass(stock.status_eval)}">${stock.status_eval}</div>
-              ${stock.action_today ? `<div class="badge">${stock.action_today}</div>` : ""}
-              ${stock.ui_bucket ? `<div class="badge">${stock.ui_bucket}</div>` : ""}
+              <div class="strength-badge ${strengthClass(stock.strength)}">強弱：${safeText(stock.strength || "-")}</div>
+              <div class="badge ${statusClass(stock.status_eval)}">${safeText(stock.status_eval || "-")}</div>
+              ${stock.action_today ? `<div class="badge">${safeText(stock.action_today)}</div>` : ""}
+              ${stock.ui_bucket ? `<div class="badge">${safeText(stock.ui_bucket)}</div>` : ""}
             </div>
           </div>
-          <div class="badge ${statusClass(stock.status_eval)}">${stock.status_eval}</div>
+          <div class="badge ${statusClass(stock.status_eval)}">${safeText(stock.status_eval || "-")}</div>
         </div>
 
         <div class="detail-grid">
@@ -656,8 +702,8 @@
             <div class="kv"><div class="small">數量</div><div>${fmtInt(stock.quantity)} 股</div></div>
             <div class="kv"><div class="small">成本</div><div>$${fmtNum(stock.cost)}</div></div>
             <div class="kv"><div class="small">現價</div><div>$${fmtNum(stock.current)}</div></div>
-            <div class="kv"><div class="small">損益</div><div class="${moneyClass(stock.pnl_amount)}">${stock.pnl_amount >= 0 ? "+" : ""}$${fmtInt(stock.pnl_amount)} / ${fmtNum(stock.pnl_pct)}%</div></div>
-            <div class="kv"><div class="small">來源</div><div>${stock.source_id || "-"}</div></div>
+            <div class="kv"><div class="small">損益</div><div class="${moneyClass(stock.pnl_amount)}">${Number(stock.pnl_amount) >= 0 ? "+" : ""}$${fmtInt(stock.pnl_amount)} / ${fmtNum(stock.pnl_pct)}%</div></div>
+            <div class="kv"><div class="small">來源</div><div>${safeText(stock.source_id || "-")}</div></div>
           </div>
 
           <div class="mini">
@@ -666,10 +712,12 @@
             <div class="kv"><div class="small">6M線 / 年線</div><div>${fmtNum(stock.line_6m)} / ${fmtNum(stock.line_12m)}</div></div>
             <div class="kv"><div class="small">量比</div><div>${fmtNum(stock.volume_ratio)}</div></div>
             <div class="kv"><div class="small">today score</div><div>${stock.today_score ?? "-"}</div></div>
-            <div class="kv"><div class="small">趨勢 / 結構 / 時機</div><div>${stock.trend_state || "-"} / ${stock.structure_state || "-"} / ${stock.timing_state || "-"}</div></div>
-            <div class="kv"><div class="small">自動判讀</div><div>${stock.health_note || "-"}</div></div>
+            <div class="kv"><div class="small">趨勢 / 結構 / 時機</div><div>${safeText(stock.trend_state || "-")} / ${safeText(stock.structure_state || "-")} / ${safeText(stock.timing_state || "-")}</div></div>
+            <div class="kv"><div class="small">自動判讀</div><div>${safeText(stock.health_note || "-")}</div></div>
           </div>
         </div>
+
+        ${renderMarketCommentBlock(marketComment)}
 
         <div class="chart-box">
           <div class="section-title">價格區間圖</div>
@@ -682,17 +730,17 @@
           ${details.length ? details.map(d => `
             <div class="position-card">
               <div class="row">
-                <div><b>${d.role || "部位"}</b></div>
+                <div><b>${safeText(d.role || "部位")}</b></div>
                 <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                  <div class="strength-badge ${strengthClass(d.strength)}">${d.strength}</div>
-                  <div class="badge ${statusClass(d.status_eval)}">${d.status_eval}</div>
+                  <div class="strength-badge ${strengthClass(d.strength)}">${safeText(d.strength || "-")}</div>
+                  <div class="badge ${statusClass(d.status_eval)}">${safeText(d.status_eval || "-")}</div>
                 </div>
               </div>
               <div class="kv"><div class="small">股數</div><div>${fmtInt(d.quantity)} 股</div></div>
               <div class="kv"><div class="small">成本</div><div>$${fmtNum(d.cost)}</div></div>
               <div class="kv"><div class="small">現價</div><div>$${fmtNum(d.current)}</div></div>
-              <div class="kv"><div class="small">損益</div><div class="${moneyClass(d.pnl_amount)}">${d.pnl_amount >= 0 ? "+" : ""}$${fmtInt(d.pnl_amount)} / ${fmtNum(d.pnl_pct)}%</div></div>
-              <div class="kv"><div class="small">來源</div><div>${d.source_id || "-"} / ${d.bank || "-"}</div></div>
+              <div class="kv"><div class="small">損益</div><div class="${moneyClass(d.pnl_amount)}">${Number(d.pnl_amount) >= 0 ? "+" : ""}$${fmtInt(d.pnl_amount)} / ${fmtNum(d.pnl_pct)}%</div></div>
+              <div class="kv"><div class="small">來源</div><div>${safeText(d.source_id || "-")} / ${safeText(d.bank || "-")}</div></div>
             </div>
           `).join("") : `<div class="small">無部位明細</div>`}
         </div>
@@ -700,7 +748,7 @@
         ${(stock.exposure_alert && stock.exposure_alert.text) ? `
           <div class="mini warn-card" style="margin-bottom:14px;">
             <div class="section-title">曝險警示</div>
-            <div class="strategy">⚠️ ${stock.exposure_alert.text}</div>
+            <div class="strategy">⚠️ ${safeText(stock.exposure_alert.text)}</div>
           </div>
         ` : ""}
 
@@ -709,7 +757,7 @@
             <div class="section-title">Why Yes</div>
             <div class="chip-row">
               ${(stock.why_yes && stock.why_yes.length)
-                ? stock.why_yes.map(x => `<span class="badge green">${x}</span>`).join("")
+                ? stock.why_yes.map(x => `<span class="badge green">${safeText(x)}</span>`).join("")
                 : `<span class="small">無</span>`
               }
             </div>
@@ -719,7 +767,7 @@
             <div class="section-title">Why No</div>
             <div class="chip-row">
               ${(stock.why_no && stock.why_no.length)
-                ? stock.why_no.map(x => `<span class="badge red">${x}</span>`).join("")
+                ? stock.why_no.map(x => `<span class="badge red">${safeText(x)}</span>`).join("")
                 : `<span class="small">無</span>`
               }
             </div>
@@ -729,8 +777,8 @@
         <div class="mini" style="margin-bottom:14px;">
           <div class="section-title">估值 / 最終說明</div>
           <div class="strategy">
-            <div><b>估值說明：</b>${stock.valuation_note || "-"}</div>
-            <div style="margin-top:8px;"><b>最終說明：</b>${stock.final_note || "-"}</div>
+            <div><b>估值說明：</b>${safeText(stock.valuation_note || "-")}</div>
+            <div style="margin-top:8px;"><b>最終說明：</b>${safeText(stock.final_note || "-")}</div>
           </div>
         </div>
       `;
@@ -758,7 +806,7 @@
 
         const marketComments = await loadJson("./data/m6/market_comments.json").catch(() => ({}));
         window.marketComments = marketComments;
-        
+
         window.vm = vm;
         window.stocks = vm.aggregates;
         window.selectStock = function(symbol){
@@ -780,7 +828,7 @@
         document.getElementById("detailPanel").innerHTML = `
           <div class="mini warn-card">
             <div class="section-title">初始化失敗</div>
-            <div class="strategy">${String(err)}</div>
+            <div class="strategy">${safeText(String(err))}</div>
           </div>
         `;
       }
