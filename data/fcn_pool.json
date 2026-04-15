@@ -2069,10 +2069,10 @@
     "is_portfolio": true,
     "note": "標的價格=VWAP",
     "entry_prices": {
-      "GOOG": 314.8463,
-      "MU": 285.6191,
-      "PLTR": 194.0174,
-      "TSLA": 481.9776
+      "GOOG": 100,
+      "MU": 100,
+      "PLTR": 100,
+      "TSLA": 100
     }
   },
   {
@@ -2513,7 +2513,7 @@
     }
   },
   {
-    "date": "2025-03-26",
+    "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
       "NVDA",
@@ -2531,8 +2531,8 @@
     "amt": 20000.0,
     "currency": "USD",
     "status": "active",
-    "created_time": "2025-03-26T09:00",
-    "entry_time": "2025-03-26T09:00",
+    "created_time": "2026-03-26T09:00",
+    "entry_time": "2026-03-26T09:00",
     "exit_time": null,
     "decision_flag": "manual",
     "is_portfolio": true,
