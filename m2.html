@@ -159,29 +159,15 @@
       min-height: 220px;
     }
 
-    .zone-exit { background: #f0fdfa; border-color: #99f6e4; }
     .zone-danger { background: #fff5f5; border-color: #efb0b0; }
     .zone-watch { background: #fffaf0; border-color: #ecd7a3; }
     .zone-healthy { background: #f5fff7; border-color: #b9e2c0; }
 
-     .zone-maturity { background: #f8fafc; border-color: #cbd5e1; }
-.zone-exit-blue { background: #f0fdfa; border-color: #99f6e4; }
-.zone-exit-green { background: #f0fdf4; border-color: #bbf7d0; }
-.zone-exit-red { background: #fef2f2; border-color: #fecaca; }
+    .zone-maturity { background: #f8fafc; border-color: #cbd5e1; }
+    .zone-exit-blue { background: #f0fdfa; border-color: #99f6e4; }
+    .zone-exit-green { background: #f0fdf4; border-color: #bbf7d0; }
+    .zone-exit-red { background: #fef2f2; border-color: #fecaca; }
 
-.fcn-card-exit-blue {
-  border: 2px solid #2dd4bf;
-  background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 100%);
-}
-.fcn-card-exit-green {
-  border: 2px solid #86efac;
-  background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
-}
-.fcn-card-exit-red {
-  border: 2px solid #fca5a5;
-  background: linear-gradient(180deg, #fef2f2 0%, #ffffff 100%);
-}
-    
     .zone-title {
       font-size: 18px;
       font-weight: 700;
@@ -202,9 +188,19 @@
       margin-top: 10px;
     }
 
-    .fcn-card-exit {
+    .fcn-card-exit-blue {
       border: 2px solid #2dd4bf;
       background: linear-gradient(180deg, #f0fdfa 0%, #ffffff 100%);
+    }
+
+    .fcn-card-exit-green {
+      border: 2px solid #86efac;
+      background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+    }
+
+    .fcn-card-exit-red {
+      border: 2px solid #fca5a5;
+      background: linear-gradient(180deg, #fef2f2 0%, #ffffff 100%);
     }
 
     .fcn-head {
@@ -564,7 +560,7 @@
     <h1>M2｜FCN 持倉健檢 + FCN Pool 管理</h1>
     <div class="subtitle">
       只看 <b>active</b> 持倉。<br>
-      今日重點：<b>區塊級收合</b>、<b>一鍵展開收合</b>、<b>FCN Pool 新增 / 修改 / 刪除</b>、<b>提早出場提醒</b>。
+      今日重點：<b>區塊級收合</b>、<b>一鍵展開收合</b>、<b>FCN Pool 新增 / 修改 / 刪除</b>、<b>提早出場提醒</b>、<b>到期專區</b>。
     </div>
 
     <div class="card">
@@ -579,7 +575,8 @@
       <div id="runtimeMeta" class="muted">尚未執行 M2 Health Engine</div>
       <div class="note">
         M2 會讀：<b>data/fcn_pool.json</b>、<b>data/market_runtime.json</b>、<b>data/pool30.json</b>，並只取 <b>status = active</b> 的 FCN。<br>
-        提早出場規則：<b>entry_time + 37 天</b> 開始檢查；任一標的 <b>現價 > 進場價</b> 即永久 remark；全部 basket 都 remark 後列入 <b>提早出場</b>。
+        提早出場規則：<b>entry_time + 37 天</b> 開始檢查；任一標的 <b>現價 > 進場價</b> 即永久 remark；全部 basket 都 remark 後列入 <b>提早出場</b>。<br>
+        到期專區規則：提早出場 / 到期前 10 天皆進入到期專區；AKI / DACN 破 KI 要記憶，EKI 不記憶。
       </div>
     </div>
 
@@ -594,7 +591,7 @@
         <button class="light" onclick="toggleZoneSection()">展開 / 收合區塊</button>
         <button class="light" onclick="expandAllZoneFCNs()">全部展開卡片</button>
         <button class="light" onclick="collapseAllZoneFCNs()">全部收合卡片</button>
-        <button class="light" onclick="expandDangerWatchOnly()">只展開 Early Exit / Danger / Watch</button>
+        <button class="light" onclick="expandDangerWatchOnly()">只展開 到期專區 / Danger / Watch</button>
         <button class="light" onclick="toggleHealthyZoneGlobal()">健康區展開 / 收合</button>
       </div>
       <div id="zoneSummaryMini" class="mini-summary" style="display:none;"></div>
@@ -903,12 +900,6 @@
       return `<span class="pill">${status || "-"}</span>`;
     }
 
-    function stockRowClass(v) {
-      if (v === "danger") return "stock-danger-row";
-      if (v === "watch") return "stock-watch-row";
-      return "stock-healthy-row";
-    }
-
     function getCategoryLabel(cat) {
       const map = {
         core: "🟢 core",
@@ -930,42 +921,42 @@
       return "decision-box decision-green";
     }
 
-  function buildSummary(data) {
-  const maturityZoneAmt = (data.maturity_zone || []).reduce((s, x) => s + toNumber(x.amt), 0);
-  const dangerAmt = (data.danger || []).reduce((s, x) => s + toNumber(x.amt), 0);
-  const watchAmt = (data.watch || []).reduce((s, x) => s + toNumber(x.amt), 0);
-  const healthyAmt = (data.healthy || []).reduce((s, x) => s + toNumber(x.amt), 0);
+    function buildSummary(data) {
+      const maturityZoneAmt = (data.maturity_zone || []).reduce((s, x) => s + toNumber(x.amt), 0);
+      const dangerAmt = (data.danger || []).reduce((s, x) => s + toNumber(x.amt), 0);
+      const watchAmt = (data.watch || []).reduce((s, x) => s + toNumber(x.amt), 0);
+      const healthyAmt = (data.healthy || []).reduce((s, x) => s + toNumber(x.amt), 0);
 
-  return `
-    <div class="summary-grid">
-      <div class="summary-box">
-        <div class="summary-label">持倉總檔數</div>
-        <div class="summary-value">${data.total}</div>
-        <div class="summary-sub">總金額：USD ${fmt(data.total_amt, 0)}</div>
-      </div>
-      <div class="summary-box summary-box-exit">
-        <div class="summary-label">到期專區</div>
-        <div class="summary-value" style="color:#0f766e;">${(data.maturity_zone || []).length}</div>
-        <div class="summary-sub">USD ${fmt(maturityZoneAmt, 0)}</div>
-      </div>
-      <div class="summary-box">
-        <div class="summary-label">積極處理｜破下限價</div>
-        <div class="summary-value" style="color:#c62828;">${(data.danger || []).length}</div>
-        <div class="summary-sub">USD ${fmt(dangerAmt, 0)}</div>
-      </div>
-      <div class="summary-box">
-        <div class="summary-label">持續追蹤</div>
-        <div class="summary-value" style="color:#b26a00;">${(data.watch || []).length}</div>
-        <div class="summary-sub">USD ${fmt(watchAmt, 0)}</div>
-      </div>
-      <div class="summary-box">
-        <div class="summary-label">健康</div>
-        <div class="summary-value" style="color:#2e7d32;">${(data.healthy || []).length}</div>
-        <div class="summary-sub">USD ${fmt(healthyAmt, 0)}</div>
-      </div>
-    </div>
-  `;
-}
+      return `
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="summary-label">持倉總檔數</div>
+            <div class="summary-value">${data.total}</div>
+            <div class="summary-sub">總金額：USD ${fmt(data.total_amt, 0)}</div>
+          </div>
+          <div class="summary-box summary-box-exit">
+            <div class="summary-label">到期專區</div>
+            <div class="summary-value" style="color:#0f766e;">${(data.maturity_zone || []).length}</div>
+            <div class="summary-sub">USD ${fmt(maturityZoneAmt, 0)}</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">積極處理｜破下限價</div>
+            <div class="summary-value" style="color:#c62828;">${(data.danger || []).length}</div>
+            <div class="summary-sub">USD ${fmt(dangerAmt, 0)}</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">持續追蹤</div>
+            <div class="summary-value" style="color:#b26a00;">${(data.watch || []).length}</div>
+            <div class="summary-sub">USD ${fmt(watchAmt, 0)}</div>
+          </div>
+          <div class="summary-box">
+            <div class="summary-label">健康</div>
+            <div class="summary-value" style="color:#2e7d32;">${(data.healthy || []).length}</div>
+            <div class="summary-sub">USD ${fmt(healthyAmt, 0)}</div>
+          </div>
+        </div>
+      `;
+    }
 
     window.toggleDetail = function(id) {
       if (expandedFCNIds.has(id)) expandedFCNIds.delete(id);
@@ -1011,12 +1002,12 @@
 
       expandedFCNIds.clear();
 
-     ["maturity_exit", "maturity_safe", "maturity_risk", "danger", "watch", "healthy"].forEach(code => {
-  const rows = cache[code] || [];
-  rows.forEach((f, idx) => {
-    expandedFCNIds.add(`${code}_${idx}_${f.fcn_id}`);
-  });
-});
+      ["maturity_exit", "maturity_safe", "maturity_risk", "danger", "watch", "healthy"].forEach(code => {
+        const rows = cache[code] || [];
+        rows.forEach((f, idx) => {
+          expandedFCNIds.add(`${code}_${idx}_${f.fcn_id}`);
+        });
+      });
 
       showAllHealthy = true;
       zoneSectionCollapsed = false;
@@ -1035,12 +1026,12 @@
 
       expandedFCNIds.clear();
 
-    ["maturity_exit", "maturity_safe", "maturity_risk", "danger", "watch"].forEach(code => {
-     const rows = cache[code] || [];
-     rows.forEach((f, idx) => {
-      expandedFCNIds.add(`${code}_${idx}_${f.fcn_id}`);
+      ["maturity_exit", "maturity_safe", "maturity_risk", "danger", "watch"].forEach(code => {
+        const rows = cache[code] || [];
+        rows.forEach((f, idx) => {
+          expandedFCNIds.add(`${code}_${idx}_${f.fcn_id}`);
+        });
       });
-     });
 
       showAllHealthy = false;
       zoneSectionCollapsed = false;
@@ -1293,21 +1284,19 @@
       let mainBadge = `<span class="${healthPillClass(fcn.fcn_health)}">${healthLabel(fcn.fcn_health)}</span>`;
 
       if (isEarlyExit) {
-         cardClass = "fcn-card-exit-blue";
-         mainBadge = `<span class="pill pill-exit">⏩ 提早出場</span>`;
+        cardClass = "fcn-card-exit-blue";
+        mainBadge = `<span class="pill pill-exit">⏩ 提早出場</span>`;
       } else if (isMaturitySafe) {
-       cardClass = "fcn-card-exit-green";
-       mainBadge = `<span class="pill pill-healthy">✅ 滿期安全</span>`;
+        cardClass = "fcn-card-exit-green";
+        mainBadge = `<span class="pill pill-healthy">✅ 滿期安全</span>`;
       } else if (isMaturityRisk) {
-       cardClass = "fcn-card-exit-red";
+        cardClass = "fcn-card-exit-red";
         mainBadge = `<span class="pill pill-danger">🚨 接股可能</span>`;
-     }
+      }
 
-     const vsEntry = entry ? ((now - entry) / entry) * 100 : 0;
-     const vsStrike = strikePrice ? ((now - strikePrice) / strikePrice) * 100 : 0;
-     const vsKI = kiPrice ? ((now - kiPrice) / kiPrice) * 100 : 0;
-      
-     const snapshot = worst.snapshot_score ?? worst.snapshot ?? "-";
+      const vsEntry = entry ? ((now - entry) / entry) * 100 : 0;
+      const vsStrike = strikePrice ? ((now - strikePrice) / strikePrice) * 100 : 0;
+      const vsKI = kiPrice ? ((now - kiPrice) / kiPrice) * 100 : 0;
 
       const ret1w = worst.ret_1w ?? worst.chg_1w ?? null;
       const ret1m = worst.ret_1m ?? worst.chg_1m ?? null;
@@ -1358,7 +1347,8 @@
         holdToEndNote = "若 Worst-of 再走弱，持有到期的風險會明顯上升。";
       }
 
-     
+      const snapshot = worst.snapshot_score ?? worst.snapshot ?? "-";
+
       return `
         <div class="fcn-card ${cardClass}">
           <div class="fcn-head">
@@ -1369,42 +1359,28 @@
               <div class="fcn-line">金額：USD ${fmt(fcn.amt, 0)}</div>
             </div>
             <div style="display:flex; flex-direction:column; gap:6px; align-items:flex-end;">
-            ${mainBadge}
+              ${mainBadge}
               ${!isEarlyExit && fcn.early_exit_eligible ? `<span class="pill pill-exit">${fcn.early_exit_remark_count}/${fcn.early_exit_total_count}</span>` : ``}
             </div>
           </div>
 
           ${buildFCNMeta(fcn)}
 
-           ${(isEarlyExit || fcn.maturity?.in_maturity_window) ? `
-  <div class="decision-box decision-exit">
-    <div><b>📌 到期專區：</b>${isEarlyExit ? "提早出場" : (fcn.maturity?.maturity_label || "到期前追蹤")}</div>
-    ${isEarlyExit ? `
-      <div>開始判斷日：${fcn.early_exit_check_start_date || "-"}</div>
-      <div>提早出場進度：${fcn.early_exit_remark_count}/${fcn.early_exit_total_count}</div>
-      <div>最後達標日：${fcn.early_exit_last_remark_date || "-"}</div>
-      <div>提早出場利息：<b>${fmtAmt(fcn.early_exit_interest_amt, fcn.currency || "USD")}</b>（${fmtPct(fcn.early_exit_interest_pct)}）</div>
-    ` : `
-      <div>距到期：${fcn.maturity?.days_to_maturity ?? "-"} 天</div>
-      <div>${fcn.maturity?.maturity_note || "-"}</div>
-      ${!fcn.eki && fcn.has_knock_in ? `<div>KI 記憶：<b>已敲入</b>（${fcn.knock_in_date || "-" }）</div>` : ``}
-    `}
-  </div>
-` : ``}
-          ${fcn.early_exit_eligible ? `
+          ${(isEarlyExit || fcn.maturity?.in_maturity_window) ? `
             <div class="decision-box decision-exit">
-              <div><b>⏩ 提早出場：</b>${fcn.early_exit_label}</div>
-              <div>開始判斷日：${fcn.early_exit_check_start_date || "-"}</div>
-              <div>進度：${fcn.early_exit_remark_count}/${fcn.early_exit_total_count}</div>
-              ${fcn.early_exit_last_remark_date ? `<div>最後達標日：${fcn.early_exit_last_remark_date}</div>` : ``}
-              <div>利息累計至目前條件日：<b>${fmtAmt(fcn.early_exit_interest_amt, fcn.currency || "USD")}</b>（${fmtPct(fcn.early_exit_interest_pct)}）</div>
+              <div><b>📌 到期專區：</b>${isEarlyExit ? "提早出場" : (fcn.maturity?.maturity_label || "到期前追蹤")}</div>
+              ${isEarlyExit ? `
+                <div>開始判斷日：${fcn.early_exit_check_start_date || "-"}</div>
+                <div>提早出場進度：${fcn.early_exit_remark_count}/${fcn.early_exit_total_count}</div>
+                <div>最後達標日：${fcn.early_exit_last_remark_date || "-"}</div>
+                <div>提早出場利息：<b>${fmtAmt(fcn.early_exit_interest_amt, fcn.currency || "USD")}</b>（${fmtPct(fcn.early_exit_interest_pct)}）</div>
+              ` : `
+                <div>距到期：${fcn.maturity?.days_to_maturity ?? "-"} 天</div>
+                <div>${fcn.maturity?.maturity_note || "-"}</div>
+                ${!fcn.eki && fcn.has_knock_in ? `<div>KI 記憶：<b>已敲入</b>（${fcn.knock_in_date || "-" }）</div>` : ``}
+              `}
             </div>
-          ` : `
-            <div class="decision-box decision-exit">
-              <div><b>⏳ 提早出場：</b>尚未進入觀察期</div>
-              <div>開始判斷日：${fcn.early_exit_check_start_date || "-"}</div>
-            </div>
-          `}
+          ` : ``}
 
           <div class="pl-block">
             <div><b>📍 Snapshot（現在）</b></div>
@@ -1531,48 +1507,48 @@
     }
 
     function buildZoneBlock(data) {
-  return `
-    <div class="zone-grid">
-      <div class="zone-card zone-maturity">
-        <div class="zone-title">📌 到期專區</div>
-        <div class="zone-meta">
-          ${(data.maturity_zone || []).length} 檔 ｜ USD ${fmt((data.maturity_zone || []).reduce((s, x) => s + toNumber(x.amt), 0), 0)}
-        </div>
+      return `
+        <div class="zone-grid">
+          <div class="zone-card zone-maturity">
+            <div class="zone-title">📌 到期專區</div>
+            <div class="zone-meta">
+              ${(data.maturity_zone || []).length} 檔 ｜ USD ${fmt((data.maturity_zone || []).reduce((s, x) => s + toNumber(x.amt), 0), 0)}
+            </div>
 
-        <div class="zone-card zone-exit-blue" style="min-height:auto; margin-bottom:10px;">
-          <div class="zone-title" style="font-size:16px;">⏩ 提早出場</div>
-          <div class="zone-meta">${(data.maturity_exit || []).length} 檔</div>
-          ${(data.maturity_exit || []).length
-            ? (data.maturity_exit || []).map((f, idx) => renderFCNCard(f, "maturity_exit", idx)).join("")
-            : `<div class="muted">目前沒有資料</div>`
-          }
-        </div>
+            <div class="zone-card zone-exit-blue" style="min-height:auto; margin-bottom:10px;">
+              <div class="zone-title" style="font-size:16px;">⏩ 提早出場</div>
+              <div class="zone-meta">${(data.maturity_exit || []).length} 檔</div>
+              ${(data.maturity_exit || []).length
+                ? (data.maturity_exit || []).map((f, idx) => renderFCNCard(f, "maturity_exit", idx)).join("")
+                : `<div class="muted">目前沒有資料</div>`
+              }
+            </div>
 
-        <div class="zone-card zone-exit-green" style="min-height:auto; margin-bottom:10px;">
-          <div class="zone-title" style="font-size:16px;">✅ 滿期安全</div>
-          <div class="zone-meta">${(data.maturity_safe || []).length} 檔</div>
-          ${(data.maturity_safe || []).length
-            ? (data.maturity_safe || []).map((f, idx) => renderFCNCard(f, "maturity_safe", idx)).join("")
-            : `<div class="muted">目前沒有資料</div>`
-          }
-        </div>
+            <div class="zone-card zone-exit-green" style="min-height:auto; margin-bottom:10px;">
+              <div class="zone-title" style="font-size:16px;">✅ 滿期安全</div>
+              <div class="zone-meta">${(data.maturity_safe || []).length} 檔</div>
+              ${(data.maturity_safe || []).length
+                ? (data.maturity_safe || []).map((f, idx) => renderFCNCard(f, "maturity_safe", idx)).join("")
+                : `<div class="muted">目前沒有資料</div>`
+              }
+            </div>
 
-        <div class="zone-card zone-exit-red" style="min-height:auto;">
-          <div class="zone-title" style="font-size:16px;">🚨 接股可能</div>
-          <div class="zone-meta">${(data.maturity_risk || []).length} 檔</div>
-          ${(data.maturity_risk || []).length
-            ? (data.maturity_risk || []).map((f, idx) => renderFCNCard(f, "maturity_risk", idx)).join("")
-            : `<div class="muted">目前沒有資料</div>`
-          }
-        </div>
-      </div>
+            <div class="zone-card zone-exit-red" style="min-height:auto;">
+              <div class="zone-title" style="font-size:16px;">🚨 接股可能</div>
+              <div class="zone-meta">${(data.maturity_risk || []).length} 檔</div>
+              ${(data.maturity_risk || []).length
+                ? (data.maturity_risk || []).map((f, idx) => renderFCNCard(f, "maturity_risk", idx)).join("")
+                : `<div class="muted">目前沒有資料</div>`
+              }
+            </div>
+          </div>
 
-      ${renderZoneColumn("🚨 積極處理｜破下限價", "zone-danger", data.danger || [], "danger", false)}
-      ${renderZoneColumn("⚠️ 持續追蹤", "zone-watch", data.watch || [], "watch", false)}
-      ${renderZoneColumn("✅ 健康", "zone-healthy", data.healthy || [], "healthy", true)}
-    </div>
-  `;
-}
+          ${renderZoneColumn("🚨 積極處理｜破下限價", "zone-danger", data.danger || [], "danger", false)}
+          ${renderZoneColumn("⚠️ 持續追蹤", "zone-watch", data.watch || [], "watch", false)}
+          ${renderZoneColumn("✅ 健康", "zone-healthy", data.healthy || [], "healthy", true)}
+        </div>
+      `;
+    }
 
     function renderStockFCNDetailCard(d, subId, subOpen) {
       const worst = d.fcn?.worst_of || d.stock?.symbol || "UNKNOWN";
@@ -1851,8 +1827,8 @@
       if (zoneSectionCollapsed) {
         zoneSummaryMini.style.display = "block";
         zoneSummaryMini.innerHTML =
-         zoneSummaryMini.innerHTML =
-  `到期專區 <b>${(cache.maturity_zone || []).length}</b> ｜ Danger <b>${(cache.danger || []).length}</b> ｜ Watch <b>${(cache.watch || []).length}</b> ｜ Healthy <b>${(cache.healthy || []).length}</b> ｜ Total USD <b>${fmt(cache.total_amt, 0)}</b>`;
+          `到期專區 <b>${(cache.maturity_zone || []).length}</b> ｜ Danger <b>${(cache.danger || []).length}</b> ｜ Watch <b>${(cache.watch || []).length}</b> ｜ Healthy <b>${(cache.healthy || []).length}</b> ｜ Total USD <b>${fmt(cache.total_amt, 0)}</b>`;
+        zoneBlock.innerHTML = "";
       } else {
         zoneSummaryMini.style.display = "none";
         zoneSummaryMini.innerHTML = "";
