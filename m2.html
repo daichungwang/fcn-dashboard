@@ -1375,6 +1375,21 @@
 
           ${buildFCNMeta(fcn)}
 
+           ${(isEarlyExit || fcn.maturity?.in_maturity_window) ? `
+  <div class="decision-box decision-exit">
+    <div><b>📌 到期專區：</b>${isEarlyExit ? "提早出場" : (fcn.maturity?.maturity_label || "到期前追蹤")}</div>
+    ${isEarlyExit ? `
+      <div>開始判斷日：${fcn.early_exit_check_start_date || "-"}</div>
+      <div>提早出場進度：${fcn.early_exit_remark_count}/${fcn.early_exit_total_count}</div>
+      <div>最後達標日：${fcn.early_exit_last_remark_date || "-"}</div>
+      <div>提早出場利息：<b>${fmtAmt(fcn.early_exit_interest_amt, fcn.currency || "USD")}</b>（${fmtPct(fcn.early_exit_interest_pct)}）</div>
+    ` : `
+      <div>距到期：${fcn.maturity?.days_to_maturity ?? "-"} 天</div>
+      <div>${fcn.maturity?.maturity_note || "-"}</div>
+      ${!fcn.eki && fcn.has_knock_in ? `<div>KI 記憶：<b>已敲入</b>（${fcn.knock_in_date || "-" }）</div>` : ``}
+    `}
+  </div>
+` : ``}
           ${fcn.early_exit_eligible ? `
             <div class="decision-box decision-exit">
               <div><b>⏩ 提早出場：</b>${fcn.early_exit_label}</div>
