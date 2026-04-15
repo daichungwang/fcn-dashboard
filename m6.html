@@ -749,6 +749,9 @@
 
         vm = buildM6ViewModel(raw);
 
+        const marketComments = await loadJson("./data/m6/market_comments.json").catch(() => ({}));
+        window.marketComments = marketComments;
+        
         window.vm = vm;
         window.stocks = vm.aggregates;
         window.selectStock = function(symbol){
