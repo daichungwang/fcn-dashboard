@@ -1293,18 +1293,21 @@
       let mainBadge = `<span class="${healthPillClass(fcn.fcn_health)}">${healthLabel(fcn.fcn_health)}</span>`;
 
       if (isEarlyExit) {
-      cardClass = "fcn-card-exit-blue";
-      mainBadge = `<span class="pill pill-exit">提早出場</span>`;
+         cardClass = "fcn-card-exit-blue";
+         mainBadge = `<span class="pill pill-exit">⏩ 提早出場</span>`;
       } else if (isMaturitySafe) {
-      cardClass = "fcn-card-exit-green";
-      mainBadge = `<span class="pill pill-healthy">滿期安全</span>`;
+       cardClass = "fcn-card-exit-green";
+       mainBadge = `<span class="pill pill-healthy">✅ 滿期安全</span>`;
       } else if (isMaturityRisk) {
-      cardClass = "fcn-card-exit-red";
-      mainBadge = `<span class="pill pill-danger">接股可能</span>`;
-      }
-      const vsEntry = entry ? ((now - entry) / entry) * 100 : 0;
-      const vsStrike = strikePrice ? ((now - strikePrice) / strikePrice) * 100 : 0;
-      const vsKI = kiPrice ? ((now - kiPrice) / kiPrice) * 100 : 0;
+       cardClass = "fcn-card-exit-red";
+        mainBadge = `<span class="pill pill-danger">🚨 接股可能</span>`;
+     }
+
+     const vsEntry = entry ? ((now - entry) / entry) * 100 : 0;
+     const vsStrike = strikePrice ? ((now - strikePrice) / strikePrice) * 100 : 0;
+     const vsKI = kiPrice ? ((now - kiPrice) / kiPrice) * 100 : 0;
+      
+     const snapshot = worst.snapshot_score ?? worst.snapshot ?? "-";
 
       const ret1w = worst.ret_1w ?? worst.chg_1w ?? null;
       const ret1m = worst.ret_1m ?? worst.chg_1m ?? null;
