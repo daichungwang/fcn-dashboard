@@ -582,6 +582,49 @@
       font-weight: 700;
     }
 
+    .manager-detail-box {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px dashed #ddd;
+    }
+
+    .manager-stock-row {
+      margin: 6px 0;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #f8fafc;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .manager-worst {
+      background: #fff7ed;
+      border-color: #fdba74;
+    }
+
+
+    .manager-item {
+      overflow: visible;
+    }
+
+    .manager-list {
+      overflow-x: hidden;
+    }
+
+    .manager-detail-box {
+      overflow: visible;
+    }
+
+    .manager-stock-row {
+      white-space: normal;
+      word-break: break-all;
+    }
+
+    .manager-stock-row div {
+      margin-bottom: 2px;
+    }
+
     @media (max-width: 1100px) {
       .manager-grid {
         grid-template-columns: 1fr;
@@ -1015,6 +1058,7 @@
     let managerFilter = "all";
     let advancedFilter = null;
     let advancedSortBy = "avg_desc";
+    const expandedManagerViewIds = new Set();
 
     function toNumber(v, fallback = 0) {
       const n = Number(v);
@@ -1376,19 +1420,68 @@
       return entryPrice * (toNumber(kiPct) / 100);
     }
 
+    function getEnrichedFCNForMetrics(fcn) {
+      const cache = readCache();
+      const cacheFCNs = Array.isArray(cache?.fcns) ? cache.fcns : [];
+      const match = cacheFCNs.find(x => (x.fcn_id || "") === (fcn?.fcn_id || ""));
+      return match || fcn;
+    }
+
+    function getFallbackEntryPrice(fcn, symbol, idx) {
+      const ep = fcn?.entry_prices?.[symbol];
+      if (Number.isFinite(Number(ep))) return Number(ep);
+
+      const alt = fcn?.[`entry_price_${idx + 1}`];
+      if (Number.isFinite(Number(alt))) return Number(alt);
+
+      return 0;
+    }
+
+    function getFallbackMarketPrice(symbol) {
+      const cache = readCache();
+      const market = cache?.marketRuntime || cache?.market || {};
+      return toNumber(market?.[symbol]?.price_now ?? market?.[symbol]?.price, 0);
+    }
+
     function buildFCNMetrics(fcn) {
-      const stocks = Array.isArray(fcn?.stocks) ? fcn.stocks : [];
-      const stockMetrics = stocks.map(stock => {
-        const entry = getStockEntryPrice(stock);
-        const now = getStockCurrentPrice(stock);
+      const enriched = getEnrichedFCNForMetrics(fcn);
+      let stocks = Array.isArray(enriched?.stocks) ? enriched.stocks : [];
+
+      if (!stocks.length) {
+        const basket = Array.isArray(fcn?.basket) ? fcn.basket : [];
+        stocks = basket.map((symbol, idx) => ({
+          symbol,
+          entry_price: getFallbackEntryPrice(fcn, symbol, idx),
+          price_now: getFallbackMarketPrice(symbol)
+        }));
+      }
+
+      const strikePct = toNumber(enriched?.strike ?? fcn?.strike, 0);
+      const kiPct = toNumber(enriched?.ki ?? fcn?.ki, 0);
+
+      const stockMetrics = stocks.map((stock, idx) => {
+        const symbol = stock?.symbol || (fcn?.basket || [])[idx] || "-";
+        const entry = toNumber(
+          stock?.entry_price ??
+          stock?.entry ??
+          stock?.price_entry ??
+          getFallbackEntryPrice(fcn, symbol, idx),
+          0
+        );
+        const now = toNumber(
+          stock?.price_now ??
+          stock?.price ??
+          getFallbackMarketPrice(symbol),
+          0
+        );
         const rawRatio = entry ? now / entry : 0;
         const cappedRatio = Math.min(Math.max(rawRatio, 0), 1);
 
-        const strikePrice = getStrikePrice(entry, fcn?.strike);
-        const kiPrice = getKIPrice(entry, fcn?.ki);
+        const strikePrice = getStrikePrice(entry, strikePct);
+        const kiPrice = getKIPrice(entry, kiPct);
 
         return {
-          symbol: stock?.symbol || "-",
+          symbol,
           entry,
           now,
           raw_ratio: rawRatio,
@@ -1415,7 +1508,7 @@
 
       const minDistToStrikePct = strikeDistances.length ? Math.min(...strikeDistances) : null;
       const minDistToKIPct = kiDistances.length ? Math.min(...kiDistances) : null;
-      const daysSinceEntry = calcDaysSince(fcn?.entry_time);
+      const daysSinceEntry = calcDaysSince(enriched?.entry_time || fcn?.entry_time);
 
       const allAboveEntry = stockMetrics.length
         ? stockMetrics.every(x => x.entry > 0 && x.now >= x.entry)
@@ -1435,7 +1528,7 @@
         min_dist_to_ki_pct: minDistToKIPct,
         days_since_entry: daysSinceEntry,
         all_above_entry: allAboveEntry,
-        worst_of_calc: worstStock?.symbol || "-",
+        worst_of_calc: enriched?.worst_of || worstStock?.symbol || "-",
         stock_metrics: stockMetrics
       };
     }
@@ -1621,6 +1714,13 @@
       renderFCNManager();
     };
 
+
+
+    window.toggleManagerView = function(fcnId) {
+      if (expandedManagerViewIds.has(fcnId)) expandedManagerViewIds.delete(fcnId);
+      else expandedManagerViewIds.add(fcnId);
+      renderFCNManager();
+    };
 
     function fmtTrend(v) {
       if (v == null || !Number.isFinite(Number(v))) return "-";
@@ -2271,6 +2371,8 @@
 
         const cache = {
           generated_at: new Date().toISOString(),
+          marketRuntime: marketMerged,
+          pool30,
           ...data
         };
 
@@ -2692,7 +2794,8 @@
       const managerList = document.getElementById("managerList");
       const managerListMeta = document.getElementById("managerListMeta");
 
-      managerListMeta.innerHTML = `目前共 <b>${editableFCNPool.length}</b> 筆，篩選後 <b>${list.length}</b> 筆${advancedFilter ? " ｜ 已啟用透視篩選" : ""}`;
+      const hasRuntimeCache = !!(readCache()?.fcns?.length);
+      managerListMeta.innerHTML = `目前共 <b>${editableFCNPool.length}</b> 筆，篩選後 <b>${list.length}</b> 筆${advancedFilter ? " ｜ 已啟用透視篩選" : ""}${hasRuntimeCache ? "" : " ｜ 尚未執行 Health Engine，透視數值可能不完整"}`;
 
       if (!editableFCNPool.length) {
         managerList.innerHTML = `<div class="muted">尚未載入 FCN Pool，請按上方「載入 FCN Pool」或「執行 M2 Health Engine」</div>`;
@@ -2702,12 +2805,7 @@
       managerList.innerHTML = list.map(item => {
         const isActiveItem = currentEditingFCNId === item.fcn_id;
         const metrics = buildFCNMetrics(item);
-
-        const avgClass = metrics.avg_basket_pct >= 100
-          ? "metric-tag"
-          : metrics.avg_basket_pct >= 90
-            ? "metric-tag"
-            : "metric-tag";
+        const isOpen = expandedManagerViewIds.has(item.fcn_id);
 
         return `
           <div class="manager-item ${isActiveItem ? "active-item" : ""}">
@@ -2718,7 +2816,7 @@
             <div class="item-line">Status：${getStatusPill(item.status)}</div>
 
             <div class="metric-tags">
-              <span class="${avgClass}">Avg ${fmt(metrics.avg_basket_pct, 2)}%</span>
+              <span class="metric-tag">Avg ${fmt(metrics.avg_basket_pct, 2)}%</span>
               <span class="metric-tag">Worst ${fmt(metrics.worst_basket_pct, 2)}%</span>
               <span class="metric-tag">距 Strike ${metrics.min_dist_to_strike_pct == null ? "-" : fmt(metrics.min_dist_to_strike_pct, 2) + "%"}</span>
               <span class="metric-tag">距 KI ${metrics.min_dist_to_ki_pct == null ? "-" : fmt(metrics.min_dist_to_ki_pct, 2) + "%"}</span>
@@ -2729,6 +2827,26 @@
             <div class="manager-actions">
               <button class="light" onclick="editFCN('${item.fcn_id}')">編輯</button>
               <button class="warn" onclick="softDeleteFCNById('${item.fcn_id}')">刪除</button>
+              <button class="secondary" onclick="toggleManagerView('${item.fcn_id}')">${isOpen ? "收合" : "檢視"}</button>
+            </div>
+
+            <div class="manager-detail-box ${isOpen ? "" : ""}" style="display:${isOpen ? "block" : "none"};">
+              <div class="item-line"><b>Entry Date：</b>${item.entry_time || "-"}</div>
+              <div class="item-line"><b>持有天數：</b>${metrics.days_since_entry ?? "-"}</div>
+              <div class="item-line"><b>Worst-of：</b>${item.worst_of || metrics.worst_of_calc || "-"}</div>
+
+              ${(metrics.stock_metrics || []).map(s => {
+                const isWorst = (s.symbol || "-") === (item.worst_of || metrics.worst_of_calc || "-");
+                return `
+                  <div class="manager-stock-row ${isWorst ? "manager-worst" : ""}">
+                    <div><b>${s.symbol}</b>${isWorst ? " ｜ Worst-of" : ""}</div>
+                    <div>進場價：${fmt(s.entry, 2)} ｜ 現價：${fmt(s.now, 2)} ｜ 相對進場：${s.pct_vs_entry == null ? "-" : fmt(s.pct_vs_entry, 2) + "%"}</div>
+                    <div>Strike：${fmt(s.strike_price, 2)} ｜ 距 Strike：${s.dist_to_strike_pct == null ? "-" : fmt(s.dist_to_strike_pct, 2) + "%"}</div>
+                    <div>KI：${fmt(s.ki_price, 2)} ｜ 距 KI：${s.dist_to_ki_pct == null ? "-" : fmt(s.dist_to_ki_pct, 2) + "%"}</div>
+                    <div>Basket Ratio：${fmt(Math.min(Math.max(s.raw_ratio * 100, 0), 100), 2)}%</div>
+                  </div>
+                `;
+              }).join("")}
             </div>
           </div>
         `;
@@ -2861,4 +2979,3 @@
   </script>
 </body>
 </html>
-
