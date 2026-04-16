@@ -880,6 +880,40 @@
   `;
 }
 
+     function renderMarketCommentBlock(item) {
+  const comment = item?.display_comment || item?.market_comment || "暫無市場評論";
+  const why = Array.isArray(item?.why) ? item.why : [];
+  const whyNot = Array.isArray(item?.whyNot) ? item.whyNot : [];
+
+  return `
+    <div class="m6-market-comment">
+      <div class="m6-market-comment-title">Market Comment</div>
+      <div class="m6-market-comment-text">${comment}</div>
+
+      ${
+        why.length
+          ? `
+          <div class="m6-comment-subtitle">Why</div>
+          <ul class="m6-comment-list">
+            ${why.map(x => `<li>${x}</li>`).join("")}
+          </ul>
+        `
+          : ""
+      }
+
+      ${
+        whyNot.length
+          ? `
+          <div class="m6-comment-subtitle">Why Not</div>
+          <ul class="m6-comment-list warning">
+            ${whyNot.map(x => `<li>${x}</li>`).join("")}
+          </ul>
+        `
+          : ""
+      }
+    </div>
+  `;
+}
     function renderDetail(stock){
       const panel = document.getElementById("detailPanel");
 
