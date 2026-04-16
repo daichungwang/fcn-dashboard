@@ -1297,6 +1297,7 @@ M3 定位：
         window.__M3_RUNTIME__ = result;
         writeCache(result);
         renderM3(result);
+        return result;
         alert("M3 執行成功");
       } catch (err) {
         console.error("M3 run error", err);
