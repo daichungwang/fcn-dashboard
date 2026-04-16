@@ -1,6 +1,9 @@
 // ==========================================
 // 振宇 FCN Engine V6.1 FINAL
 // Pure FCN / Event FCN / Delta FCN
+// Proprietary System - All Rights Reserved
+// Unauthorized copying or commercial use is prohibited
+// All rights reserved by Gaya.Wang
 // ==========================================
 
 // ------------------------------------------
