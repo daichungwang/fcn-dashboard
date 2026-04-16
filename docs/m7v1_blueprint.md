@@ -513,3 +513,13 @@ Category（保留原框架）
 其中最重要的重構
 Quality 不再獨立平行加分
 Quality 改為 Valuation 的可信度倍率
+## License / 使用限制
+
+This project is proprietary and for personal use only.
+
+You may NOT:
+- Copy or redistribute this project
+- Use for commercial purposes
+- Reproduce the system logic
+
+All rights reserved by Gaya.Wang
