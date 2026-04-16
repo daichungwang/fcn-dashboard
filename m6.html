@@ -1184,12 +1184,12 @@
 
     async function init(){
       try {
-        const raw = await loadM6Data({
-          positionsUrl: "./data/positions.json",
-          marketUrl: "./data/market_runtime.json",
-          m7TodayUrl: "./data/m7/m7_new_stock_today.json"
-        });
-
+       const raw = await loadM6Data({
+  positionsUrl: "./data/positions.json",
+  marketUrl: "./data/market_runtime.json",
+  m7TodayUrl: "./data/m7/m7_new_stock_today.json",
+  m3OutputUrl: "./data/m3/m3_output.json"
+});
         vm = buildM6ViewModel(raw);
 
         const marketComments = await loadJson("./data/m6/market_comments.json").catch(() => ({}));
