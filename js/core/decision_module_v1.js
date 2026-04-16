@@ -3,6 +3,9 @@
 // 振宇 FCN 系統｜Decision Module V1
 // 讀取：pool30 / fcn_pool / market_runtime
 // 輸出：runtime_cache / history（先存 localStorage）
+// Proprietary System - All Rights Reserved
+// Unauthorized copying or commercial use is prohibited
+// All rights reserved by Gaya.Wang
 // ==========================================
 
 const RUNTIME_CACHE_KEY = "runtime_cache_v1";
