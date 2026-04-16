@@ -1,6 +1,12 @@
 // ==========================================
 // FCN Recommendation Engine（STABLE）
 // ==========================================
+// 振宇 FCN 系統
+// Proprietary System - All Rights Reserved
+// Unauthorized copying or commercial use is prohibited
+// All rights reserved by Gaya.Wang
+// ==========================================
+// ==========================================
 
 function toNumber(v, d = 0) {
   const n = Number(v);
