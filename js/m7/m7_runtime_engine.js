@@ -9,6 +9,12 @@
 // 5. trendRaw / snapshot / growth / growthScore 透明欄位
 // 6. 不動原本 aggressive_recommend / watch_list / remove_list / all
 // ==========================================
+// 振宇 FCN 系統
+// Proprietary System - All Rights Reserved
+// Unauthorized copying or commercial use is prohibited
+// All rights reserved by Gaya.Wang
+// ==========================================
+// ==========================================
 
 import fs from "fs";
 import path from "path";
