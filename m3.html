@@ -1342,7 +1342,19 @@ M3 定位：
       try {
         const result = await runM3Engine();
         window.__M3_RUNTIME__ = result;
-        writeCache(result);
+        try {
+  writeCache({
+    generated_at: result.generated_at,
+    summary: result.summary,
+    selection: {
+      clean_pool: result.selection?.clean_pool?.map(x => ({ symbol: x.symbol })) || [],
+      watch_list: result.selection?.watch_list?.map(x => ({ symbol: x.symbol })) || [],
+      reject_list: result.selection?.reject_list?.map(x => ({ symbol: x.symbol })) || []
+    }
+  });
+} catch (err) {
+  console.warn("M3 cache skipped", err);
+}
         renderM3(result);
         alert("M3 執行成功");
         return result;
