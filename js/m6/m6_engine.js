@@ -199,7 +199,7 @@ export function applyDataSources(positionLike, marketRuntime = {}, m7TodayMap = 
 
   const line1W = toNumber(rt.price_ref_1w, current);
   const line1M = toNumber(rt.price_ref_1m, current);   // 代 MA50
-  const line6M = toNumber(rt.price_ref_6m, current);   // 代 MA200
+  const line6M = toNumber(rt.price_ref_3m, current);   // 代 MA200
   const line12M = toNumber(rt.price_ref_12m, current); // 年線
 
   return {
