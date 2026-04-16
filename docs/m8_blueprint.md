@@ -21,6 +21,16 @@ M8 = Fair Yield Engine
 6
 +
 𝐵
+## License / 使用限制
+
+This project is proprietary and for personal use only.
+
+You may NOT:
+- Copy or redistribute this project
+- Use for commercial purposes
+- Reproduce the system logic
+
+All rights reserved by Gaya.Wang
 𝑎
 𝑠
 𝑘
