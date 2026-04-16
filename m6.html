@@ -1054,12 +1054,13 @@
         return;
       }
 
-      const details = buildPositionDetails(
-        stock.symbol,
-        vm.positions,
-        vm.marketRuntime,
-        vm.m7TodayMap
-      );
+     const details = buildPositionDetails(
+  stock.symbol,
+  vm.positions,
+  vm.marketRuntime,
+  vm.m7TodayMap,
+  vm.m3Map
+);
 
       const marketComment =
         window.marketComments?.[stock.symbol] ||
