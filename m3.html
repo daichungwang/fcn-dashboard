@@ -539,30 +539,48 @@
       }
     }
 
-    async function exportM3() {
-      try {
-        const result = window.__M3_RUNTIME__ || await runM3();
+  async function exportM3() {
+  try {
+    const runtime = window.__M3_RUNTIME__ || await runM3();
 
-        if (!result) {
-          alert("❌ 匯出失敗：目前沒有可輸出的 M3 結果");
-          return;
-        }
-
-        const json = JSON.stringify(result, null, 2);
-        const blob = new Blob([json], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "m3_output.json";
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        URL.revokeObjectURL(url);
-      } catch (err) {
-        console.error(err);
-        alert(`❌ 匯出失敗：${err?.message || err}`);
-      }
+    if (!runtime || !Array.isArray(runtime.stockResults)) {
+      alert("❌ 找不到 M3 結果");
+      return;
     }
+
+    const slim = {
+      generated_at: runtime.generated_at || new Date().toISOString(),
+      stockResults: runtime.stockResults.map(s => ({
+        symbol: s.symbol || "",
+        why: Array.isArray(s.why) ? s.why : [],
+        whyNot: Array.isArray(s.whyNot) ? s.whyNot : [],
+        market_comment:
+          s.market_comment ||
+          `${(s.why || []).length ? "✔ " + s.why.join(" ｜ ") : "✔ 無明顯優勢"}； ${(s.whyNot || []).length ? "⚠ " + s.whyNot.join(" ｜ ") : "⚠ 無明顯風險"}`,
+        display_comment:
+          s.display_comment ||
+          s.market_comment ||
+          `${(s.why || []).length ? "✔ " + s.why.join(" ｜ ") : "✔ 無明顯優勢"}； ${(s.whyNot || []).length ? "⚠ " + s.whyNot.join(" ｜ ") : "⚠ 無明顯風險"}`
+      }))
+    };
+
+    const blob = new Blob([JSON.stringify(slim, null, 2)], {
+      type: "application/json"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "m3_output.json";
+    a.click();
+    URL.revokeObjectURL(url);
+
+    alert("✅ 已下載精簡版 m3_output.json");
+  } catch (err) {
+    console.error(err);
+    alert("❌ 匯出失敗");
+  }
+}
 
     function deltaClass(v) {
       const n = toNumber(v, 0);
