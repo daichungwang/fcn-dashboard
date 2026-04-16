@@ -1,5 +1,5 @@
 // ==========================================
-// M6 Engine v3
+// M6 Engine v4
 // 振宇專用｜Positions + Market Runtime + M7 Today + M3 Commentary 聚合引擎
 // 路徑：/js/m6/m6_engine.js
 // ==========================================
@@ -9,8 +9,6 @@
 // Unauthorized copying or commercial use is prohibited
 // All rights reserved by Gaya.Wang
 // ==========================================
-// ==========================================
-
 
 function toNumber(value, fallback = 0) {
   const n = Number(value);
@@ -34,10 +32,6 @@ function sum(arr, selector) {
 
 function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
-}
-
-function uniqueArray(arr = []) {
-  return [...new Set((arr || []).filter(Boolean))];
 }
 
 function safeArray(v) {
@@ -75,6 +69,7 @@ function normalizeM7TodayMap(m7TodayRaw = []) {
       subsector: item["子產業"] || item.subsector || "",
       category: item["分類"] || item.category || "",
       risk_level: item["風險等級"] || item.risk_level || "",
+
       today_score: toNumber(item["today_score"], null),
       rank_today: toNumber(item["排名"], null),
 
@@ -106,7 +101,6 @@ function normalizeM7TodayMap(m7TodayRaw = []) {
 // ==========================================
 // M3 正規化
 // 來源預設：./data/m3/m3_output.json
-// 目標：把 stockResults 內的 why / whyNot / market_comment 依 symbol 對成 map
 // ==========================================
 
 function buildM3CommentText(stock = {}) {
@@ -142,7 +136,6 @@ function normalizeM3Map(m3Raw = {}) {
       bucket: item.bucket || "",
       suggestion: item.suggestion || "",
       trend: item.trend || "",
-
       why,
       whyNot,
       market_comment: item.market_comment || buildM3CommentText({ why, whyNot }),
@@ -180,9 +173,8 @@ export async function loadM6Data(options = {}) {
 
 // ==========================================
 // Runtime + M7 Today + M3 對接
-// 先用：
 // 1M -> 代 MA50
-// 6M -> 代 MA200
+// 3M -> 代 MA200
 // 12M -> 年線
 // ==========================================
 
@@ -192,15 +184,12 @@ export function applyDataSources(positionLike, marketRuntime = {}, m7TodayMap = 
   const m7 = m7TodayMap[symbol] || {};
   const m3 = m3Map[symbol] || {};
 
-  const current = toNumber(
-    rt.price_now,
-    toNumber(positionLike.current, 0)
-  );
+  const current = toNumber(rt.price_now, toNumber(positionLike.current, 0));
 
   const line1W = toNumber(rt.price_ref_1w, current);
-  const line1M = toNumber(rt.price_ref_1m, current);   // 代 MA50
-  const line6M = toNumber(rt.price_ref_3m, current);   // 代 MA200
-  const line12M = toNumber(rt.price_ref_12m, current); // 年線
+  const line1M = toNumber(rt.price_ref_1m, current);
+  const line3M = toNumber(rt.price_ref_3m, current);
+  const line12M = toNumber(rt.price_ref_12m, current);
 
   return {
     ...positionLike,
@@ -213,25 +202,27 @@ export function applyDataSources(positionLike, marketRuntime = {}, m7TodayMap = 
     category: m7.category || positionLike.category || "",
     risk_level: m7.risk_level || positionLike.risk_level || "",
 
-    today_score: m7.today_score,
-    rank_today: m7.rank_today,
-    trend_state: m7.trend_state || "",
-    structure_state: m7.structure_state || "",
-    timing_state: m7.timing_state || "",
-    valuation_score: m7.valuation_score,
-    trend_score: m7.trend_score,
-    structure_score: m7.structure_score,
-    timing_score: m7.timing_score,
-    money_score: m7.money_score,
-    quality_score: m7.quality_score,
-    ui_bucket: m7.ui_bucket || "",
-    action_today: m7.action_today || "",
-    exposure: m7.exposure || {},
-    exposure_alert: m7.exposure_alert || {},
-    why_yes: Array.isArray(m7.why_yes) ? clone(m7.why_yes) : [],
-    why_no: Array.isArray(m7.why_no) ? clone(m7.why_no) : [],
-    valuation_note: m7.valuation_note || "",
-    final_note: m7.final_note || "",
+    today_score: m7.today_score ?? positionLike.today_score,
+    rank_today: m7.rank_today ?? positionLike.rank_today,
+    trend_state: m7.trend_state || positionLike.trend_state || "",
+    structure_state: m7.structure_state || positionLike.structure_state || "",
+    timing_state: m7.timing_state || positionLike.timing_state || "",
+
+    valuation_score: m7.valuation_score ?? positionLike.valuation_score,
+    trend_score: m7.trend_score ?? positionLike.trend_score,
+    structure_score: m7.structure_score ?? positionLike.structure_score,
+    timing_score: m7.timing_score ?? positionLike.timing_score,
+    money_score: m7.money_score ?? positionLike.money_score,
+    quality_score: m7.quality_score ?? positionLike.quality_score,
+
+    ui_bucket: m7.ui_bucket || positionLike.ui_bucket || "",
+    action_today: m7.action_today || positionLike.action_today || "",
+    exposure: m7.exposure || positionLike.exposure || {},
+    exposure_alert: m7.exposure_alert || positionLike.exposure_alert || {},
+    why_yes: Array.isArray(m7.why_yes) ? clone(m7.why_yes) : safeArray(positionLike.why_yes),
+    why_no: Array.isArray(m7.why_no) ? clone(m7.why_no) : safeArray(positionLike.why_no),
+    valuation_note: m7.valuation_note || positionLike.valuation_note || "",
+    final_note: m7.final_note || positionLike.final_note || "",
 
     // M3 Commentary
     pure_stock_score: m3.pure_stock_score,
@@ -250,7 +241,8 @@ export function applyDataSources(positionLike, marketRuntime = {}, m7TodayMap = 
     current,
     line_1w: line1W,
     line_1m: line1M,
-    line_6m: line6M,
+    line_3m: line3M,
+    line_6m: line3M,   // 相容舊 UI 命名
     line_12m: line12M,
     volume: toNumber(rt.volume, 0),
     volume_ratio: toNumber(rt.volume_ratio, 0),
@@ -304,17 +296,17 @@ export function calcStrength(item) {
   const cost = toNumber(item.cost, 0);
   const line1W = toNumber(item.line_1w, current);
   const line1M = toNumber(item.line_1m, current);
-  const line6M = toNumber(item.line_6m, current);
+  const line3M = toNumber(item.line_3m ?? item.line_6m, current);
   const line12M = toNumber(item.line_12m, current);
 
   if (current >= line1W) score += 1;
   if (current >= line1M) score += 2;
-  if (current >= line6M) score += 2;
+  if (current >= line3M) score += 2;
   if (current >= line12M) score += 1;
   if (current > cost) score += 2;
 
-  if (item.trend_state === "strong") score += 1;
-  if (item.timing_state === "good") score += 1;
+  if (item.trend_state === "strong" || item.trend_state === "up_strong") score += 1;
+  if (item.timing_state === "good" || item.timing_state === "warm") score += 1;
   if (item.risk_level === "低") score += 1;
   if (item.risk_level === "高") score -= 1;
 
@@ -327,7 +319,7 @@ export function calcStatus(item) {
   const current = toNumber(item.current, 0);
   const cost = toNumber(item.cost, 0);
   const line1M = toNumber(item.line_1m, current);
-  const line6M = toNumber(item.line_6m, current);
+  const line3M = toNumber(item.line_3m ?? item.line_6m, current);
   const pnlPct = round2(safeDivide(current - cost, cost, 0) * 100);
 
   const support1 = Array.isArray(item.support) && item.support.length
@@ -336,14 +328,14 @@ export function calcStatus(item) {
 
   const nearSupport = support1 > 0 ? current <= support1 * 1.03 : false;
   const below1M = current < line1M;
-  const below6M = current < line6M;
+  const below3M = current < line3M;
   const exposureLevel = String(item.exposure_alert?.level || "").toLowerCase();
   const actionToday = String(item.action_today || "");
 
   if (
     pnlPct <= -8 ||
     (nearSupport && below1M) ||
-    (below1M && below6M && current < cost) ||
+    (below1M && below3M && current < cost) ||
     exposureLevel === "high" ||
     actionToday === "移除"
   ) {
@@ -372,7 +364,7 @@ export function calcHealthNote(item) {
   }
 
   if (status === "觀察" && strength === "弱") {
-    return "仍弱於 1M / 6M 代理線，先看反彈";
+    return "仍弱於 1M / 3M 代理線，先看反彈";
   }
 
   if (status === "觀察") {
@@ -414,48 +406,50 @@ export function aggregatePositions(positions = [], marketRuntime = {}, m7TodayMa
 
   for (const p of enriched) {
     const symbol = p.symbol;
+    const m7 = m7TodayMap[symbol] || {};
+    const m3 = m3Map[symbol] || {};
 
     if (!map.has(symbol)) {
       map.set(symbol, {
         symbol,
-        name: p.name || symbol,
-        sector: p.sector || "",
-        subsector: p.subsector || "",
-        category: p.category || "",
-        risk_level: p.risk_level || "",
+        name: p.name || m7.name || symbol,
+        sector: p.sector || m7.sector || "",
+        subsector: p.subsector || m7.subsector || "",
+        category: p.category || m7.category || "",
+        risk_level: p.risk_level || m7.risk_level || "",
 
-        today_score: p.today_score,
-        rank_today: p.rank_today,
-        trend_state: p.trend_state,
-        structure_state: p.structure_state,
-        timing_state: p.timing_state,
-        valuation_score: p.valuation_score,
-        trend_score: p.trend_score,
-        structure_score: p.structure_score,
-        timing_score: p.timing_score,
-        money_score: p.money_score,
-        quality_score: p.quality_score,
-        ui_bucket: p.ui_bucket || "",
-        action_today: p.action_today || "",
-        exposure: clone(p.exposure || {}),
-        exposure_alert: clone(p.exposure_alert || {}),
-        why_yes: clone(p.why_yes || []),
-        why_no: clone(p.why_no || []),
-        valuation_note: p.valuation_note || "",
-        final_note: p.final_note || "",
+        today_score: p.today_score ?? m7.today_score,
+        rank_today: p.rank_today ?? m7.rank_today,
+        trend_state: p.trend_state || m7.trend_state || "",
+        structure_state: p.structure_state || m7.structure_state || "",
+        timing_state: p.timing_state || m7.timing_state || "",
+        valuation_score: p.valuation_score ?? m7.valuation_score,
+        trend_score: p.trend_score ?? m7.trend_score,
+        structure_score: p.structure_score ?? m7.structure_score,
+        timing_score: p.timing_score ?? m7.timing_score,
+        money_score: p.money_score ?? m7.money_score,
+        quality_score: p.quality_score ?? m7.quality_score,
+        ui_bucket: p.ui_bucket || m7.ui_bucket || "",
+        action_today: p.action_today || m7.action_today || "",
+        exposure: clone(p.exposure || m7.exposure || {}),
+        exposure_alert: clone(p.exposure_alert || m7.exposure_alert || {}),
+        why_yes: clone(p.why_yes || m7.why_yes || []),
+        why_no: clone(p.why_no || m7.why_no || []),
+        valuation_note: p.valuation_note || m7.valuation_note || "",
+        final_note: p.final_note || m7.final_note || "",
 
         // M3
-        pure_stock_score: p.pure_stock_score,
-        snapshot_score: p.snapshot_score,
-        event_stock_score: p.event_stock_score,
-        delta_stock_score: p.delta_stock_score,
-        why: clone(p.why || []),
-        whyNot: clone(p.whyNot || []),
-        market_comment: p.market_comment || "",
-        display_comment: p.display_comment || "",
-        m3_bucket: p.m3_bucket || "",
-        m3_suggestion: p.m3_suggestion || "",
-        m3_trend: p.m3_trend || "",
+        pure_stock_score: Number.isFinite(p.pure_stock_score) ? p.pure_stock_score : m3.pure_stock_score,
+        snapshot_score: Number.isFinite(p.snapshot_score) ? p.snapshot_score : m3.snapshot_score,
+        event_stock_score: Number.isFinite(p.event_stock_score) ? p.event_stock_score : m3.event_stock_score,
+        delta_stock_score: Number.isFinite(p.delta_stock_score) ? p.delta_stock_score : m3.delta_stock_score,
+        why: clone(p.why || m3.why || []),
+        whyNot: clone(p.whyNot || m3.whyNot || []),
+        market_comment: p.market_comment || m3.market_comment || "",
+        display_comment: p.display_comment || m3.display_comment || m3.market_comment || "",
+        m3_bucket: p.m3_bucket || m3.bucket || "",
+        m3_suggestion: p.m3_suggestion || m3.suggestion || "",
+        m3_trend: p.m3_trend || m3.trend || "",
 
         quantity: 0,
         total_cost_amount: 0,
@@ -464,6 +458,7 @@ export function aggregatePositions(positions = [], marketRuntime = {}, m7TodayMa
         current: p.current,
         line_1w: p.line_1w,
         line_1m: p.line_1m,
+        line_3m: p.line_3m ?? p.line_6m,
         line_6m: p.line_6m,
         line_12m: p.line_12m,
 
@@ -501,18 +496,59 @@ export function aggregatePositions(positions = [], marketRuntime = {}, m7TodayMa
 
     row.details.push(p);
 
-    // 若前面沒有 M3，後面某筆有，補進去
+    // M7 fallback 補值
+    if (!row.name && m7.name) row.name = m7.name;
+    if (!row.sector && m7.sector) row.sector = m7.sector;
+    if (!row.subsector && m7.subsector) row.subsector = m7.subsector;
+    if (!row.category && m7.category) row.category = m7.category;
+    if (!row.risk_level && m7.risk_level) row.risk_level = m7.risk_level;
+
+    if ((row.today_score === undefined || row.today_score === null) && m7.today_score != null) row.today_score = m7.today_score;
+    if ((row.rank_today === undefined || row.rank_today === null) && m7.rank_today != null) row.rank_today = m7.rank_today;
+    if (!row.trend_state && m7.trend_state) row.trend_state = m7.trend_state;
+    if (!row.structure_state && m7.structure_state) row.structure_state = m7.structure_state;
+    if (!row.timing_state && m7.timing_state) row.timing_state = m7.timing_state;
+
+    if ((row.valuation_score === undefined || row.valuation_score === null) && m7.valuation_score != null) row.valuation_score = m7.valuation_score;
+    if ((row.trend_score === undefined || row.trend_score === null) && m7.trend_score != null) row.trend_score = m7.trend_score;
+    if ((row.structure_score === undefined || row.structure_score === null) && m7.structure_score != null) row.structure_score = m7.structure_score;
+    if ((row.timing_score === undefined || row.timing_score === null) && m7.timing_score != null) row.timing_score = m7.timing_score;
+    if ((row.money_score === undefined || row.money_score === null) && m7.money_score != null) row.money_score = m7.money_score;
+    if ((row.quality_score === undefined || row.quality_score === null) && m7.quality_score != null) row.quality_score = m7.quality_score;
+
+    if (!row.ui_bucket && m7.ui_bucket) row.ui_bucket = m7.ui_bucket;
+    if (!row.action_today && m7.action_today) row.action_today = m7.action_today;
+    if ((!row.exposure || !Object.keys(row.exposure).length) && m7.exposure) row.exposure = clone(m7.exposure);
+    if ((!row.exposure_alert || !Object.keys(row.exposure_alert).length) && m7.exposure_alert) row.exposure_alert = clone(m7.exposure_alert);
+    if ((!row.why_yes || !row.why_yes.length) && Array.isArray(m7.why_yes) && m7.why_yes.length) row.why_yes = clone(m7.why_yes);
+    if ((!row.why_no || !row.why_no.length) && Array.isArray(m7.why_no) && m7.why_no.length) row.why_no = clone(m7.why_no);
+    if (!row.valuation_note && m7.valuation_note) row.valuation_note = m7.valuation_note;
+    if (!row.final_note && m7.final_note) row.final_note = m7.final_note;
+
+    // M3 fallback 補值
     if (!row.market_comment && p.market_comment) row.market_comment = p.market_comment;
     if (!row.display_comment && p.display_comment) row.display_comment = p.display_comment;
     if ((!row.why || !row.why.length) && Array.isArray(p.why) && p.why.length) row.why = clone(p.why);
     if ((!row.whyNot || !row.whyNot.length) && Array.isArray(p.whyNot) && p.whyNot.length) row.whyNot = clone(p.whyNot);
-    if (!row.pure_stock_score && Number.isFinite(p.pure_stock_score)) row.pure_stock_score = p.pure_stock_score;
-    if (!row.snapshot_score && Number.isFinite(p.snapshot_score)) row.snapshot_score = p.snapshot_score;
-    if (!row.event_stock_score && Number.isFinite(p.event_stock_score)) row.event_stock_score = p.event_stock_score;
-    if (!row.delta_stock_score && Number.isFinite(p.delta_stock_score)) row.delta_stock_score = p.delta_stock_score;
-    if (!row.m3_bucket && p.m3_bucket) row.m3_bucket = p.m3_bucket;
-    if (!row.m3_suggestion && p.m3_suggestion) row.m3_suggestion = p.m3_suggestion;
-    if (!row.m3_trend && p.m3_trend) row.m3_trend = p.m3_trend;
+
+    if (!row.market_comment && m3.market_comment) row.market_comment = m3.market_comment;
+    if (!row.display_comment && (m3.display_comment || m3.market_comment)) row.display_comment = m3.display_comment || m3.market_comment;
+    if ((!row.why || !row.why.length) && Array.isArray(m3.why) && m3.why.length) row.why = clone(m3.why);
+    if ((!row.whyNot || !row.whyNot.length) && Array.isArray(m3.whyNot) && m3.whyNot.length) row.whyNot = clone(m3.whyNot);
+
+    if (!Number.isFinite(row.pure_stock_score) && Number.isFinite(p.pure_stock_score)) row.pure_stock_score = p.pure_stock_score;
+    if (!Number.isFinite(row.snapshot_score) && Number.isFinite(p.snapshot_score)) row.snapshot_score = p.snapshot_score;
+    if (!Number.isFinite(row.event_stock_score) && Number.isFinite(p.event_stock_score)) row.event_stock_score = p.event_stock_score;
+    if (!Number.isFinite(row.delta_stock_score) && Number.isFinite(p.delta_stock_score)) row.delta_stock_score = p.delta_stock_score;
+
+    if (!Number.isFinite(row.pure_stock_score) && Number.isFinite(m3.pure_stock_score)) row.pure_stock_score = m3.pure_stock_score;
+    if (!Number.isFinite(row.snapshot_score) && Number.isFinite(m3.snapshot_score)) row.snapshot_score = m3.snapshot_score;
+    if (!Number.isFinite(row.event_stock_score) && Number.isFinite(m3.event_stock_score)) row.event_stock_score = m3.event_stock_score;
+    if (!Number.isFinite(row.delta_stock_score) && Number.isFinite(m3.delta_stock_score)) row.delta_stock_score = m3.delta_stock_score;
+
+    if (!row.m3_bucket && (p.m3_bucket || m3.bucket)) row.m3_bucket = p.m3_bucket || m3.bucket || "";
+    if (!row.m3_suggestion && (p.m3_suggestion || m3.suggestion)) row.m3_suggestion = p.m3_suggestion || m3.suggestion || "";
+    if (!row.m3_trend && (p.m3_trend || m3.trend)) row.m3_trend = p.m3_trend || m3.trend || "";
   }
 
   const result = [];
@@ -577,6 +613,7 @@ export function aggregatePositions(positions = [], marketRuntime = {}, m7TodayMa
 
       line_1w: row.line_1w,
       line_1m: row.line_1m,
+      line_3m: row.line_3m,
       line_6m: row.line_6m,
       line_12m: row.line_12m,
 
