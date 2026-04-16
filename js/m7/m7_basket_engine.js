@@ -8,6 +8,12 @@ import { runM8Case } from "../core/m8_batch_engine.js";
 // 4. 預建議 Basket 再整組送 M8，顯示真實 Basket Fair Yield
 // 5. 新增達成率 Dashboard
 // ==========================================
+// 振宇 FCN 系統
+// Proprietary System - All Rights Reserved
+// Unauthorized copying or commercial use is prohibited
+// All rights reserved by Gaya.Wang
+// ==========================================
+// ==========================================
 
 const PATH_POOL = "./data/m7/m7_new_stock_pool.json";
 const PATH_TODAY = "./data/m7/m7_new_stock_today.json";
