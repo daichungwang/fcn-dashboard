@@ -9,6 +9,12 @@
    4. Event Stock = Pure Stock + Snapshot + Event Score
    5. Trend Rate / Trend Profile 先建立骨架，未來可擴充到 3Y / 5Y / 10Y
    6. 本檔案只處理個股，不處理 FCN 結構
+// ==========================================
+// 振宇 FCN 系統
+// Proprietary System - All Rights Reserved
+// Unauthorized copying or commercial use is prohibited
+// All rights reserved by Gaya.Wang
+// ==========================================
 ========================================== */
 
 // ------------------------------------------
