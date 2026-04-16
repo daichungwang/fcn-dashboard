@@ -495,7 +495,49 @@
       font-size:14px;
       color:var(--text-2);
     }
+    .m6-market-comment{
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:14px;
+  background:#0f172a;
+  border:1px solid rgba(148,163,184,.22);
+}
 
+.m6-market-comment-title{
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#93c5fd;
+  margin-bottom:8px;
+}
+
+.m6-market-comment-text{
+  font-size:13px;
+  line-height:1.7;
+  color:#e5e7eb;
+  margin-bottom:10px;
+}
+
+.m6-comment-subtitle{
+  margin-top:8px;
+  margin-bottom:6px;
+  font-size:12px;
+  font-weight:700;
+  color:#cbd5e1;
+}
+
+.m6-comment-list{
+  margin:0;
+  padding-left:18px;
+  color:#d1fae5;
+  font-size:12px;
+  line-height:1.6;
+}
+
+.m6-comment-list.warning{
+  color:#fecaca;
+}
     @media (max-width: 980px){
       .toolbar{grid-template-columns:1fr}
       .summary-card,.list-panel,.detail-panel{grid-column:1/-1}
@@ -1014,6 +1056,7 @@
                 : `<span class="small">無</span>`
               }
             </div>
+            ${renderMarketCommentBlock(item)}
           </div>
 
           <div class="mini">
