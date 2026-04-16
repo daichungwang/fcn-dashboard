@@ -2,6 +2,9 @@
 // M2 Health Engine V1.6 FINAL
 // 振宇 FCN 系統｜持倉健檢引擎
 // Snapshot / End / 決策燈號 / 趨勢 / 提早出場 / 到期專區 / KI記憶
+// Proprietary System - All Rights Reserved
+// Unauthorized copying or commercial use is prohibited
+// All rights reserved by Gaya.Wang
 // ==========================================
 
 const M2_EARLY_EXIT_STATE_KEY = "m2_early_exit_state_v1";
