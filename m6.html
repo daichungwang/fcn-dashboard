@@ -1208,6 +1208,13 @@ ${safeText(stock.final_note || "-")}
         return;
       }
 
+       const sellSummaryHtml = `
+        <div class="mini">
+          <div class="section-title">Sell Record Summary</div>
+          ${renderSellSummaryTable(sellSummaryRows)}
+        </div>
+      `;
+      
       const details = buildPositionDetails(
         stock.symbol,
         vm.positions,
@@ -1277,12 +1284,7 @@ ${safeText(stock.final_note || "-")}
         </div>
       `;
 
-      const sellSummaryHtml = `
-        <div class="mini">
-          <div class="section-title">Sell Record Summary</div>
-          ${renderSellSummaryTable(sellSummaryRows)}
-        </div>
-      `;
+     
 
       const whyValuationHtml = `
         ${renderWhyBlock(stock)}
