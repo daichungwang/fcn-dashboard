@@ -1225,27 +1225,26 @@
       }));
     }
 
-    function fillTableBody(tableId, rows){
-      const tbody = document.querySelector(`#${tableId} tbody`);
-      tbody.innerHTML = "";
-      rows.forEach(cells => {
-        const tr = document.createElement("tr");
-        cells.forEach(cell => {
-          const td = document.createElement("td");
-          td.textContent = cell;
-          tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-      });
-      if (!rows.length) {
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
-        td.colSpan = document.querySelectorAll(`#${tableId} thead th`).length;
-        td.textContent = "尚未輸入資料";
-        tr.appendChild(td);
-        tbody.appendChild(tr);
-      }
-    }
+ function renderFcnTable(rows){
+  const tbody = document.getElementById("fcnTableBody");
+  if(!tbody) return;
+
+  tbody.innerHTML = "";
+
+  rows.forEach((r, idx) => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${idx + 1}</td>
+      <td>${r.id}</td>
+      <td>${r.bank}</td>
+      <td>${format(r.thisMonth)}</td>
+      <td>${format(r.nextMonth)}</td>
+      <td>${format(r.thirdMonth)}</td>
+      <td>${r.earlyExit ? "🟢 即將出場" : "持有中"}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
 
     function renderPieChart(data){
       const total = data.reduce((s,x)=>s+x.value,0);
