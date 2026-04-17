@@ -1,5 +1,5 @@
 // ==========================================
-// M6 Engine v5
+// M6 Engine v6
 // 振宇專用｜Positions + Market Runtime + M7 Today + M3 Commentary 聚合引擎
 // 路徑：/js/m6/m6_engine.js
 // ==========================================
@@ -45,7 +45,6 @@ function safeObject(v) {
 // ==========================================
 // 讀取 JSON
 // ==========================================
-
 export async function loadJson(url) {
   const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) {
@@ -56,9 +55,11 @@ export async function loadJson(url) {
 
 // ==========================================
 // M7 Today 正規化
-// 來源：./data/m7/m7_new_stock_today.json
+// 支援：
+// 1. 直接 array
+// 2. { today_highlight_pool, watch_pool, simulation_pool, reject_pool, aggressive_recommend }
+// 3. { data: [...] } / { items: [...] } / { stocks: [...] }
 // ==========================================
-
 function normalizeM7TodayMap(m7TodayRaw = []) {
   let arr = [];
 
@@ -85,15 +86,10 @@ function normalizeM7TodayMap(m7TodayRaw = []) {
       else if (Array.isArray(m7TodayRaw.stocks)) arr = m7TodayRaw.stocks;
       else {
         const nestedArrays = Object.values(m7TodayRaw).filter(v => Array.isArray(v));
-        if (nestedArrays.length) {
-          arr = nestedArrays.flat();
-        }
+        if (nestedArrays.length) arr = nestedArrays.flat();
       }
     }
   }
-
-  console.log("M7 normalize input =", m7TodayRaw);
-  console.log("M7 normalize array length =", arr.length);
 
   const map = {};
 
@@ -154,17 +150,12 @@ function normalizeM7TodayMap(m7TodayRaw = []) {
     };
   }
 
-  console.log("M7 normalize map keys =", Object.keys(map).slice(0, 20));
-  console.log("M7 normalize COIN =", map["COIN"]);
-
   return map;
 }
 
 // ==========================================
 // M3 正規化
-// 來源：./data/m3/m3_output.json
 // ==========================================
-
 function buildFallbackM3CommentText(stock = {}) {
   const why = safeArray(stock.why);
   const whyNot = safeArray(stock.whyNot);
@@ -193,35 +184,14 @@ function buildEnhancedM3Comment(item = {}) {
     toNumber(item.trend_rate, null) ??
     toNumber(item["Trend Rate"], null);
 
-  const longTrend =
-    item.long_trend ||
-    item["Long Trend"] ||
-    "";
+  const longTrend = item.long_trend || item["Long Trend"] || "";
+  const longTrendNote = item.long_trend_note || item["Long Trend Note"] || "";
 
-  const longTrendNote =
-    item.long_trend_note ||
-    item["Long Trend Note"] ||
-    "";
+  const midTrend = item.mid_trend || item["Mid Trend"] || "";
+  const midTrendNote = item.mid_trend_note || item["Mid Trend Note"] || "";
 
-  const midTrend =
-    item.mid_trend ||
-    item["Mid Trend"] ||
-    "";
-
-  const midTrendNote =
-    item.mid_trend_note ||
-    item["Mid Trend Note"] ||
-    "";
-
-  const trendProfile =
-    item.trend_profile ||
-    item["Trend Profile"] ||
-    "";
-
-  const trendProfileNote =
-    item.trend_profile_note ||
-    item["Trend Profile Note"] ||
-    "";
+  const trendProfile = item.trend_profile || item["Trend Profile"] || "";
+  const trendProfileNote = item.trend_profile_note || item["Trend Profile Note"] || "";
 
   const why = safeArray(item.why);
   const whyNot = safeArray(item.whyNot);
@@ -273,7 +243,6 @@ function buildEnhancedM3Comment(item = {}) {
 
 function normalizeM3Map(m3Raw = {}) {
   const map = {};
-
   if (!m3Raw || typeof m3Raw !== "object") return map;
 
   const stockResults = Array.isArray(m3Raw.stockResults) ? m3Raw.stockResults : [];
@@ -333,7 +302,6 @@ function normalizeM3Map(m3Raw = {}) {
 // ==========================================
 // 讀取主資料
 // ==========================================
-
 export async function loadM6Data(options = {}) {
   const positionsUrl = options.positionsUrl || "./data/positions.json";
   const marketUrl = options.marketUrl || "./data/market_runtime.json";
@@ -361,7 +329,6 @@ export async function loadM6Data(options = {}) {
 // 3M -> 代 MA200
 // 12M -> 年線
 // ==========================================
-
 export function applyDataSources(positionLike, marketRuntime = {}, m7TodayMap = {}, m3Map = {}) {
   const symbol = String(positionLike.symbol || "").toUpperCase();
   const rt = marketRuntime[symbol] || {};
@@ -379,7 +346,7 @@ export function applyDataSources(positionLike, marketRuntime = {}, m7TodayMap = 
     ...positionLike,
     symbol,
 
-    // M7 Today
+    // M7
     name: m7.name || positionLike.name || symbol,
     sector: m7.sector || positionLike.sector || "",
     subsector: m7.subsector || positionLike.subsector || "",
@@ -409,7 +376,7 @@ export function applyDataSources(positionLike, marketRuntime = {}, m7TodayMap = 
     final_note: m7.final_note || positionLike.final_note || "",
     valuation_data: clone(m7.valuation_data || positionLike.valuation_data || {}),
 
-    // M3 Commentary
+    // M3
     pure_stock_score: m3.pure_stock_score,
     snapshot_score: m3.snapshot_score,
     event_stock_score: m3.event_stock_score,
@@ -432,7 +399,7 @@ export function applyDataSources(positionLike, marketRuntime = {}, m7TodayMap = 
     display_comment: m3.display_comment || m3.market_comment || "",
     raw_market_comment: m3.raw_market_comment || "",
 
-    // Market runtime
+    // Runtime
     current,
     line_1w: line1W,
     line_1m: line1M,
@@ -454,9 +421,8 @@ export function applyDataSources(positionLike, marketRuntime = {}, m7TodayMap = 
 }
 
 // ==========================================
-// 單筆部位損益
+// 損益
 // ==========================================
-
 export function calcPositionPnl(position) {
   const quantity = toNumber(position.quantity, 0);
   const cost = toNumber(position.cost, 0);
@@ -481,9 +447,8 @@ export function calcPositionPnl(position) {
 }
 
 // ==========================================
-// 強弱 / 狀態 引擎
+// 強弱 / 狀態
 // ==========================================
-
 export function calcStrength(item) {
   let score = 0;
 
@@ -570,9 +535,8 @@ export function calcHealthNote(item) {
 }
 
 // ==========================================
-// 單筆部位 enrich
+// enrich
 // ==========================================
-
 export function enrichPosition(position, marketRuntime = {}, m7TodayMap = {}, m3Map = {}) {
   const base = applyDataSources(position, marketRuntime, m7TodayMap, m3Map);
   const pnl = calcPositionPnl(base);
@@ -591,10 +555,8 @@ export function enrichPosition(position, marketRuntime = {}, m7TodayMap = {}, m3
 }
 
 // ==========================================
-// 同股票多筆部位聚合
-// 左側總覽卡使用
+// 聚合
 // ==========================================
-
 export function aggregatePositions(positions = [], marketRuntime = {}, m7TodayMap = {}, m3Map = {}) {
   const enriched = positions.map((p) => enrichPosition(p, marketRuntime, m7TodayMap, m3Map));
   const map = new Map();
@@ -634,7 +596,6 @@ export function aggregatePositions(positions = [], marketRuntime = {}, m7TodayMa
         final_note: p.final_note || m7.final_note || "",
         valuation_data: clone(p.valuation_data || m7.valuation_data || {}),
 
-        // M3
         pure_stock_score: Number.isFinite(p.pure_stock_score) ? p.pure_stock_score : m3.pure_stock_score,
         snapshot_score: Number.isFinite(p.snapshot_score) ? p.snapshot_score : m3.snapshot_score,
         event_stock_score: Number.isFinite(p.event_stock_score) ? p.event_stock_score : m3.event_stock_score,
@@ -701,74 +662,6 @@ export function aggregatePositions(positions = [], marketRuntime = {}, m7TodayMa
     row.roles.add(p.role || "");
 
     row.details.push(p);
-
-    // M7 fallback
-    if (!row.name && m7.name) row.name = m7.name;
-    if (!row.sector && m7.sector) row.sector = m7.sector;
-    if (!row.subsector && m7.subsector) row.subsector = m7.subsector;
-    if (!row.category && m7.category) row.category = m7.category;
-    if (!row.risk_level && m7.risk_level) row.risk_level = m7.risk_level;
-
-    if ((row.today_score === undefined || row.today_score === null) && m7.today_score != null) row.today_score = m7.today_score;
-    if ((row.rank_today === undefined || row.rank_today === null) && m7.rank_today != null) row.rank_today = m7.rank_today;
-    if (!row.trend_state && m7.trend_state) row.trend_state = m7.trend_state;
-    if (!row.structure_state && m7.structure_state) row.structure_state = m7.structure_state;
-    if (!row.timing_state && m7.timing_state) row.timing_state = m7.timing_state;
-
-    if ((row.valuation_score === undefined || row.valuation_score === null) && m7.valuation_score != null) row.valuation_score = m7.valuation_score;
-    if ((row.trend_score === undefined || row.trend_score === null) && m7.trend_score != null) row.trend_score = m7.trend_score;
-    if ((row.structure_score === undefined || row.structure_score === null) && m7.structure_score != null) row.structure_score = m7.structure_score;
-    if ((row.timing_score === undefined || row.timing_score === null) && m7.timing_score != null) row.timing_score = m7.timing_score;
-    if ((row.money_score === undefined || row.money_score === null) && m7.money_score != null) row.money_score = m7.money_score;
-    if ((row.quality_score === undefined || row.quality_score === null) && m7.quality_score != null) row.quality_score = m7.quality_score;
-
-    if (!row.ui_bucket && m7.ui_bucket) row.ui_bucket = m7.ui_bucket;
-    if (!row.action_today && m7.action_today) row.action_today = m7.action_today;
-    if ((!row.exposure || !Object.keys(row.exposure).length) && m7.exposure) row.exposure = clone(m7.exposure);
-    if ((!row.exposure_alert || !Object.keys(row.exposure_alert).length) && m7.exposure_alert) row.exposure_alert = clone(m7.exposure_alert);
-    if ((!row.why_yes || !row.why_yes.length) && Array.isArray(m7.why_yes) && m7.why_yes.length) row.why_yes = clone(m7.why_yes);
-    if ((!row.why_no || !row.why_no.length) && Array.isArray(m7.why_no) && m7.why_no.length) row.why_no = clone(m7.why_no);
-    if (!row.valuation_note && m7.valuation_note) row.valuation_note = m7.valuation_note;
-    if (!row.final_note && m7.final_note) row.final_note = m7.final_note;
-    if ((!row.valuation_data || !Object.keys(row.valuation_data).length) && m7.valuation_data) row.valuation_data = clone(m7.valuation_data);
-
-    // M3 fallback
-    if (!row.market_comment && p.market_comment) row.market_comment = p.market_comment;
-    if (!row.display_comment && p.display_comment) row.display_comment = p.display_comment;
-    if ((!row.why || !row.why.length) && Array.isArray(p.why) && p.why.length) row.why = clone(p.why);
-    if ((!row.whyNot || !row.whyNot.length) && Array.isArray(p.whyNot) && p.whyNot.length) row.whyNot = clone(p.whyNot);
-
-    if (!row.market_comment && m3.market_comment) row.market_comment = m3.market_comment;
-    if (!row.display_comment && (m3.display_comment || m3.market_comment)) row.display_comment = m3.display_comment || m3.market_comment;
-    if ((!row.why || !row.why.length) && Array.isArray(m3.why) && m3.why.length) row.why = clone(m3.why);
-    if ((!row.whyNot || !row.whyNot.length) && Array.isArray(m3.whyNot) && m3.whyNot.length) row.whyNot = clone(m3.whyNot);
-
-    if (!Number.isFinite(row.pure_stock_score) && Number.isFinite(p.pure_stock_score)) row.pure_stock_score = p.pure_stock_score;
-    if (!Number.isFinite(row.snapshot_score) && Number.isFinite(p.snapshot_score)) row.snapshot_score = p.snapshot_score;
-    if (!Number.isFinite(row.event_stock_score) && Number.isFinite(p.event_stock_score)) row.event_stock_score = p.event_stock_score;
-    if (!Number.isFinite(row.delta_stock_score) && Number.isFinite(p.delta_stock_score)) row.delta_stock_score = p.delta_stock_score;
-    if (!Number.isFinite(row.short_swing_score) && Number.isFinite(p.short_swing_score)) row.short_swing_score = p.short_swing_score;
-    if (!Number.isFinite(row.mid_volatility) && Number.isFinite(p.mid_volatility)) row.mid_volatility = p.mid_volatility;
-    if (!Number.isFinite(row.trend_rate) && Number.isFinite(p.trend_rate)) row.trend_rate = p.trend_rate;
-
-    if (!Number.isFinite(row.pure_stock_score) && Number.isFinite(m3.pure_stock_score)) row.pure_stock_score = m3.pure_stock_score;
-    if (!Number.isFinite(row.snapshot_score) && Number.isFinite(m3.snapshot_score)) row.snapshot_score = m3.snapshot_score;
-    if (!Number.isFinite(row.event_stock_score) && Number.isFinite(m3.event_stock_score)) row.event_stock_score = m3.event_stock_score;
-    if (!Number.isFinite(row.delta_stock_score) && Number.isFinite(m3.delta_stock_score)) row.delta_stock_score = m3.delta_stock_score;
-    if (!Number.isFinite(row.short_swing_score) && Number.isFinite(m3.short_swing_score)) row.short_swing_score = m3.short_swing_score;
-    if (!Number.isFinite(row.mid_volatility) && Number.isFinite(m3.mid_volatility)) row.mid_volatility = m3.mid_volatility;
-    if (!Number.isFinite(row.trend_rate) && Number.isFinite(m3.trend_rate)) row.trend_rate = m3.trend_rate;
-
-    if (!row.long_trend && m3.long_trend) row.long_trend = m3.long_trend;
-    if (!row.long_trend_note && m3.long_trend_note) row.long_trend_note = m3.long_trend_note;
-    if (!row.mid_trend && m3.mid_trend) row.mid_trend = m3.mid_trend;
-    if (!row.mid_trend_note && m3.mid_trend_note) row.mid_trend_note = m3.mid_trend_note;
-    if (!row.trend_profile && m3.trend_profile) row.trend_profile = m3.trend_profile;
-    if (!row.trend_profile_note && m3.trend_profile_note) row.trend_profile_note = m3.trend_profile_note;
-
-    if (!row.m3_bucket && (p.m3_bucket || m3.bucket)) row.m3_bucket = p.m3_bucket || m3.bucket || "";
-    if (!row.m3_suggestion && (p.m3_suggestion || m3.suggestion)) row.m3_suggestion = p.m3_suggestion || m3.suggestion || "";
-    if (!row.m3_trend && (p.m3_trend || m3.trend)) row.m3_trend = p.m3_trend || m3.trend || "";
   }
 
   const result = [];
@@ -810,7 +703,6 @@ export function aggregatePositions(positions = [], marketRuntime = {}, m7TodayMa
       final_note: row.final_note,
       valuation_data: row.valuation_data,
 
-      // M3
       pure_stock_score: row.pure_stock_score,
       snapshot_score: row.snapshot_score,
       event_stock_score: row.event_stock_score,
@@ -880,9 +772,8 @@ export function aggregatePositions(positions = [], marketRuntime = {}, m7TodayMa
 }
 
 // ==========================================
-// 右側詳情卡：某股票所有原始部位
+// 明細
 // ==========================================
-
 export function buildPositionDetails(symbol, positions = [], marketRuntime = {}, m7TodayMap = {}, m3Map = {}) {
   const target = String(symbol || "").toUpperCase();
 
@@ -899,7 +790,6 @@ export function buildPositionDetails(symbol, positions = [], marketRuntime = {},
 // ==========================================
 // 排序
 // ==========================================
-
 export function sortAggregates(items = [], mode = "risk") {
   const arr = [...items];
 
@@ -952,9 +842,8 @@ export function sortAggregates(items = [], mode = "risk") {
 }
 
 // ==========================================
-// 總覽統計
+// Summary
 // ==========================================
-
 export function buildSummary(aggregateItems = []) {
   const count = aggregateItems.length;
   const totalCost = round2(sum(aggregateItems, (x) => x.total_cost));
@@ -977,9 +866,8 @@ export function buildSummary(aggregateItems = []) {
 }
 
 // ==========================================
-// 策略模擬（基礎版）
+// 模擬
 // ==========================================
-
 export function simulateSell(positionOrAggregate, sellPrice, sellQty) {
   const quantity = toNumber(positionOrAggregate.quantity, 0);
   const cost = toNumber(positionOrAggregate.cost, 0);
@@ -1006,9 +894,8 @@ export function simulateSellByRatio(positionOrAggregate, sellPrice, ratio) {
 }
 
 // ==========================================
-// M6 主流程
+// 主流程
 // ==========================================
-
 export function buildM6ViewModel(raw = {}) {
   const positions = Array.isArray(raw.positions) ? raw.positions : [];
   const marketRuntime = raw.marketRuntime || {};
