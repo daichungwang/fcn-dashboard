@@ -946,7 +946,9 @@
   const action = Array.isArray(marketComment.action) ? marketComment.action : [];
   const summary = marketComment.summary || marketComment.comment || marketComment.text || "";
   const reason = marketComment.reason || "";
+  const cost = marketComment.cost || "";
 
+    
   // 舊版 schema 相容
   const bullets = Array.isArray(marketComment.bullets) ? marketComment.bullets : [];
   const defense = Array.isArray(marketComment.defense) ? marketComment.defense : [];
@@ -991,6 +993,13 @@
             <div class="m6-reason-box">${safeText(reason)}</div>
           </div>
         ` : ""}
+
+         ${cost ? `
+  <div class="trade-card" style="margin-top:12px; background:linear-gradient(180deg,#fff1f2 0%, #ffffff 100%); border-color:#fecdd3;">
+    <div class="trade-block-title">不這樣做的代價</div>
+    <div class="m6-reason-box">${safeText(cost)}</div>
+  </div>
+` : ""}
 
         ${reminder ? `
           <div class="trade-reminder" style="margin-top:12px;">
