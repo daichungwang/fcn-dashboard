@@ -1312,6 +1312,7 @@ ${safeText(stock.final_note || "-")}
         </div>
 
         ${renderSectionBox("sec_overview", "持倉概況 / 技術評估", overviewHtml, true)}
+        ${renderSectionBox("sec_sellsummary", "Sell Record Summary", sellSummaryHtml, true)}
         ${renderSectionBox("sec_trading", "市場評論 / 技術提醒", renderTradingPanel(marketComment), true)}
         ${renderSectionBox("sec_m3", "M3 Market Comment", renderM3MarketCommentBlock(stock), true)}
         ${renderSectionBox("sec_chart", "價格區間圖", chartHtml, true)}
@@ -1321,7 +1322,7 @@ ${safeText(stock.final_note || "-")}
             <div class="comment-box">⚠️ ${safeText(stock.exposure_alert.text)}</div>
           </div>
         `, true) : ""}
-        ${renderSectionBox("sec_sellsummary", "Sell Record Summary", sellSummaryHtml, true)}
+       
         ${renderSectionBox("sec_valuation", "Why / Valuation / Final Note", whyValuationHtml, true)}
       `;
     }
