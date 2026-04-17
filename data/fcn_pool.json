@@ -182,61 +182,7 @@
       }
     }
   },
-  {
-    "date": "2025-10-08",
-    "fcn_id": "FCN593K 富邦",
-    "basket": [
-      "NVDA",
-      "TSLA",
-      "PLTR",
-      "ALAB"
-    ],
-    "tenor": 6,
-    "rate": 23.0,
-    "autocall": 100,
-    "strike": 65.25,
-    "ki": 50.0,
-    "eki": true,
-    "bank": "摩根士丹利",
-    "has_position":  true,
-    "amt": 10000.0,
-    "currency": "USD",
-    "status": "closed",
-    "tw_bank": "富邦",
-    "created_time": "2025-10-08T09:00",
-    "entry_time": "2025-10-08T09:00",
-    "exit_time": "2026-04-15T09:00",
-    "decision_flag": "manual",
-    "is_portfolio": true,
-    "note": "標的價格=開盤價",
-    "entry_prices": {
-      "NVDA": 186.66,
-      "TSLA": 437.07,
-      "PLTR": 182.68,
-      "ALAB": 214.74
-    },
-    "maturity_time": "2026-04-08T09:00",
-    "has_ki_breach": false,
-    "first_ki_breach_time": "",
-    "early_exit_record": {
-      "NVDA": {
-        "hit": true,
-        "first_hit_time": "2026-04-15T09:00"
-      },
-      "TSLA": {
-        "hit": false,
-        "first_hit_time": ""
-      },
-      "PLTR": {
-        "hit": false,
-        "first_hit_time": ""
-      },
-      "ALAB": {
-        "hit": false,
-        "first_hit_time": ""
-      }
-    }
-  },
+ 
   {
     "date": "2025-10-15",
     "fcn_id": "FCN757K 富邦",
