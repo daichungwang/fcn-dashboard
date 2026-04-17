@@ -1,0 +1,133 @@
+{
+  "usdRate": "33",
+  "noteBox": "",
+  "fcnAssets": [
+    {
+      "name": "FCN 資產總值",
+      "category": "FCN Pool",
+      "amount": 4000000,
+      "note": "可先填估值"
+    }
+  ],
+  "stockAssets": [
+    {
+      "name": "股票資產總值",
+      "category": "接股 / 股票",
+      "amount": 1500000,
+      "note": ""
+    }
+  ],
+  "otherAssets": [
+    {
+      "name": "其他資產",
+      "category": "保單 / 其他",
+      "amount": 0,
+      "note": ""
+    }
+  ],
+  "liabilities": [
+    {
+      "name": "房貸 1｜新竹竹北 哈洛德",
+      "principal": 8000000,
+      "rate": 2.5,
+      "monthlyPrincipal": 16667,
+      "monthlyInterest": 8333
+    },
+    {
+      "name": "房貸 2｜桃園青埔 帝璽",
+      "principal": 0,
+      "rate": 2.3,
+      "monthlyPrincipal": 0,
+      "monthlyInterest": 0
+    },
+    {
+      "name": "信貸 3｜Bank XX",
+      "principal": 2000000,
+      "rate": 2.6,
+      "monthlyPrincipal": 66667,
+      "monthlyInterest": 4333
+    },
+    {
+      "name": "股票質押｜券商 B",
+      "principal": 28000000,
+      "rate": 3,
+      "monthlyPrincipal": 0,
+      "monthlyInterest": 70000
+    }
+  ],
+  "expenses": [
+    {
+      "name": "小孩補習費",
+      "freq": "monthly",
+      "amount": 15000,
+      "note": ""
+    },
+    {
+      "name": "生活食材",
+      "freq": "monthly",
+      "amount": 20000,
+      "note": ""
+    },
+    {
+      "name": "三節禮金",
+      "freq": "yearly",
+      "amount": 50000,
+      "note": ""
+    },
+    {
+      "name": "水電瓦斯電信",
+      "freq": "monthly",
+      "amount": 5000,
+      "note": ""
+    },
+    {
+      "name": "社區管理費",
+      "freq": "quarterly",
+      "amount": 18000,
+      "note": ""
+    }
+  ],
+  "incomes": [
+    {
+      "name": "收入 A",
+      "freq": "monthly",
+      "amount": 120000,
+      "note": ""
+    },
+    {
+      "name": "收入 B",
+      "freq": "monthly",
+      "amount": 30000,
+      "note": ""
+    }
+  ],
+  "deposits": [
+    {
+      "currency": "NTD",
+      "account": "NTD A",
+      "balance": 800000
+    },
+    {
+      "currency": "NTD",
+      "account": "NTD B",
+      "balance": 360000
+    },
+    {
+      "currency": "USD",
+      "account": "USD A",
+      "balance": 25000
+    },
+    {
+      "currency": "USD",
+      "account": "USD B",
+      "balance": 10000
+    }
+  ],
+  "collapsed": [
+    true,
+    true,
+    true,
+    true
+  ],
+  "exported_at": "2026-04-17T10:50:38.813Z"
+}
