@@ -65,23 +65,29 @@ function normalizeM7TodayMap(m7TodayRaw = []) {
   if (Array.isArray(m7TodayRaw)) {
     arr = m7TodayRaw;
   } else if (m7TodayRaw && typeof m7TodayRaw === "object") {
-    // 常見包法 1：{ data:[...] }
-    if (Array.isArray(m7TodayRaw.data)) {
-      arr = m7TodayRaw.data;
+    const candidateKeys = [
+      "today_highlight_pool",
+      "watch_pool",
+      "simulation_pool",
+      "reject_pool",
+      "aggressive_recommend"
+    ];
+
+    for (const key of candidateKeys) {
+      if (Array.isArray(m7TodayRaw[key])) {
+        arr.push(...m7TodayRaw[key]);
+      }
     }
-    // 常見包法 2：{ items:[...] }
-    else if (Array.isArray(m7TodayRaw.items)) {
-      arr = m7TodayRaw.items;
-    }
-    // 常見包法 3：{ stocks:[...] }
-    else if (Array.isArray(m7TodayRaw.stocks)) {
-      arr = m7TodayRaw.stocks;
-    }
-    // 常見包法 4：物件裡只有一個陣列欄位
-    else {
-      const firstArray = Object.values(m7TodayRaw).find(v => Array.isArray(v));
-      if (Array.isArray(firstArray)) {
-        arr = firstArray;
+
+    if (!arr.length) {
+      if (Array.isArray(m7TodayRaw.data)) arr = m7TodayRaw.data;
+      else if (Array.isArray(m7TodayRaw.items)) arr = m7TodayRaw.items;
+      else if (Array.isArray(m7TodayRaw.stocks)) arr = m7TodayRaw.stocks;
+      else {
+        const nestedArrays = Object.values(m7TodayRaw).filter(v => Array.isArray(v));
+        if (nestedArrays.length) {
+          arr = nestedArrays.flat();
+        }
       }
     }
   }
@@ -148,7 +154,7 @@ function normalizeM7TodayMap(m7TodayRaw = []) {
     };
   }
 
-  console.log("M7 normalize map keys =", Object.keys(map).slice(0, 10));
+  console.log("M7 normalize map keys =", Object.keys(map).slice(0, 20));
   console.log("M7 normalize COIN =", map["COIN"]);
 
   return map;
