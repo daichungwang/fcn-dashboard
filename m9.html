@@ -1323,11 +1323,8 @@
   return Number(v || 0).toLocaleString();
 }
 
-function format(v){
-  return Number(v || 0).toLocaleString(undefined, { maximumFractionDigits: 2 });
-}
-
 function renderFcnSummary(s){
+
   let el = document.getElementById("fcnSummaryBox");
 
   if(!el){
@@ -1359,41 +1356,6 @@ function renderFcnSummary(s){
     document.querySelector(".footer-tip").before(card);
     el = document.getElementById("fcnSummaryBox");
   }
-
-  const totalCount = Object.values(s.byBank || {}).reduce((sum, b) => sum + (b.count || 0), 0);
-
-  const totalThisMonth = s.total?.thisMonth || 0;
-  const totalNextMonth = s.total?.nextMonth || 0;
-  const totalThirdMonth = s.total?.thirdMonth || 0;
-
-  const bankNames = ["富邦", "永豐"];
-  const extraBanks = Object.keys(s.byBank || {}).filter(b => !bankNames.includes(b));
-  const finalBanks = [...bankNames, ...extraBanks];
-
-  let bankHtml = "";
-  finalBanks.forEach(bank => {
-    const b = s.byBank?.[bank] || { thisMonth: 0, nextMonth: 0, thirdMonth: 0, count: 0 };
-    bankHtml += `
-      <div style="margin-bottom:6px;">
-        ${bank}：
-        本月（${format(b.thisMonth)}）　
-        次月（${format(b.nextMonth)}）　
-        次次月（${format(b.thirdMonth)}）
-      </div>
-    `;
-  });
-
-  el.innerHTML = `
-    <div style="line-height:1.9;">
-      <div><b>FCN 檔數：</b> ${totalCount}</div>
-      <div><b>本月：</b> ${format(totalThisMonth)}</div>
-      <div><b>次月：</b> ${format(totalNextMonth)}</div>
-      <div><b>次次月：</b> ${format(totalThirdMonth)}</div>
-      <div style="margin-top:8px;"><b>銀行分布：</b></div>
-      ${bankHtml}
-    </div>
-  `;
-}
 
   // ===== FCN 檔數 =====
   const totalCount = Object.values(s.byBank)
