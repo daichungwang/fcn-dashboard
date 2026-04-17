@@ -104,9 +104,10 @@ export function buildFcnSummary(pool, usdToTwd = 33) {
     nextMonth += c2;
     thirdMonth += c3;
 
-    if (!bankMap[bank]) {
-      bankMap[bank] = { thisMonth: 0, nextMonth: 0, thirdMonth: 0 };
-    }
+if (!bankMap[bank]) {
+  bankMap[bank] = { thisMonth: 0, nextMonth: 0, thirdMonth: 0, count: 0 };
+}
+    bankMap[bank].count += 1;
 
     bankMap[bank].thisMonth += c1;
     bankMap[bank].nextMonth += c2;
