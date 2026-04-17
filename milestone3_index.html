@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>振宇 FCN 系統｜Milestone 3</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f6f8;
+      color: #111;
+    }
+
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 14px 50px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      color: #555;
+      font-size: 15px;
+      margin-bottom: 18px;
+      line-height: 1.7;
+    }
+
+    .banner {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+
+    .module-card {
+      grid-column: span 6;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.03);
+    }
+
+    .module-card.hold {
+      opacity: 0.88;
+      background: #fafafa;
+    }
+
+    .module-card.focus {
+      border: 1px solid #9ec5ff;
+      background: linear-gradient(180deg, #f8fbff 0%, #eef6ff 100%);
+      box-shadow: 0 8px 24px rgba(39, 96, 183, 0.08);
+    }
+
+    .module-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .module-title h2 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid #ddd;
+      background: #f8f8f8;
+      white-space: nowrap;
+    }
+
+    .done { background: #ecfff1; border-color: #a9e2b4; }
+    .concept { background: #fff7e8; border-color: #f0d298; }
+    .simple { background: #eef6ff; border-color: #b8d8ff; }
+    .draft { background: #f5f5f5; border-color: #d6d6d6; }
+    .hold-badge { background: #fff0f0; border-color: #f1b5b5; }
+    .focus-badge { background: #eaf3ff; border-color: #9ec5ff; color: #184ea6; }
+
+    .module-desc {
+      line-height: 1.68;
+      margin-bottom: 12px;
+      color: #222;
+    }
+
+    .module-list {
+      margin: 0 0 14px 0;
+      padding-left: 18px;
+      line-height: 1.75;
+      color: #333;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    a.btn {
+      text-decoration: none;
+      border: 0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      background: #111;
+      color: #fff;
+      display: inline-block;
+    }
+
+    a.btn.secondary {
+      background: #666;
+    }
+
+    a.btn.blue {
+      background: #175cd3;
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      background: #fffbe6;
+      border: 1px solid #f1df9a;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .mini-card {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .mini-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .mini-card ul {
+      margin: 0;
+      padding-left: 18px;
+      line-height: 1.75;
+    }
+
+    .top-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .top-link {
+      display: inline-block;
+      padding: 10px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      background: #fff;
+      color: #111;
+      border: 1px solid #d8d8d8;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 900px) {
+      .module-card { grid-column: span 12; }
+      .two-col { grid-template-columns: 1fr; }
+      h1 { font-size: 28px; }
+      .module-title h2 { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="top-actions">
+      <a class="top-link" href="./index.html">← 回首頁</a>
+      <a class="top-link" href="./milestone2_index.html">查看 Milestone 2</a>
+    </div>
+
+    <h1>振宇 FCN 系統｜Milestone 3</h1>
+    <div class="subtitle">
+      Milestone 3 聚焦在 <b>M6 股票庫存與操作策略</b>。<br />
+      目標是把「接股後的觀察 / 評估 / 策略提醒」獨立成一個可操作頁面，方便你從 FCN 風險管理延伸到持股後續處理。
+    </div>
+
+    <div class="banner">
+      <div class="two-col">
+        <div class="mini-card">
+          <h3>本次里程碑目標</h3>
+          <ul>
+            <li>M6 正式納入入口頁面</li>
+            <li>接股後可快速看到持股總覽</li>
+            <li>補強技術評估與市場評論</li>
+            <li>建立技術提醒與 Market Comment 閱讀區塊</li>
+            <li>讓 M2 → M6 的操作路徑更明確</li>
+          </ul>
+        </div>
+        <div class="mini-card">
+          <h3>目前 Milestone 3 主線</h3>
+          <ul>
+            <li>M2：FCN 持倉健康 / 提早出場 / 到期專區</li>
+            <li>M6：接股後股票追蹤與操作策略</li>
+            <li>M7：股票遴選評定</li>
+            <li>M8：詢價 / 定價模型</li>
+            <li>逐步形成「選股 → 做單 → 持倉 → 接股後管理」完整流程</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <section class="module-card">
+        <div class="module-title">
+          <h2>M1｜市場資訊</h2>
+          <span class="status done">完整版</span>
+        </div>
+        <div class="module-desc">
+          市場與新聞入口。每天快速掃描國際新聞、財經新聞、AI 趨勢、總經指標與股市核心資訊。
+        </div>
+        <ul class="module-list">
+          <li>國際新聞 / 財經新聞</li>
+          <li>AI 趨勢與重大事件</li>
+          <li>總經與市場指標</li>
+          <li>美股核心公司與 FCN Pool 觀察名單</li>
+        </ul>
+        <div class="row">
+          <a class="btn" href="./m1.html">打開 M1 畫面</a>
+        </div>
+      </section>
+
+      <section class="module-card">
+        <div class="module-title">
+          <h2>M2｜FCN 庫存監控</h2>
+          <span class="status concept">概念版</span>
+        </div>
+        <div class="module-desc">
+          只看真正持有的 FCN。抓 <b>status = active</b> 的單，做持倉健康監控、Worst-of 追蹤、提早出場與到期專區管理。
+        </div>
+        <ul class="module-list">
+          <li>active 持倉清單</li>
+          <li>Worst-of / 健康 / 觀察 / 危險</li>
+          <li>進場時間 / 到期時間 / 提早出場提醒</li>
+          <li>接股前風險摘要與處理優先順序</li>
+        </ul>
+        <div class="row">
+          <a class="btn" href="./m2.html">打開 M2 概念版</a>
+        </div>
+      </section>
+
+      <section class="module-card focus">
+        <div class="module-title">
+          <h2>M6｜股票庫存與操作策略</h2>
+          <span class="status focus-badge">Milestone 3 重點</span>
+        </div>
+        <div class="module-desc">
+          接股後的操作面板。把股票庫存、成本、技術位置、策略觀察與市場評論集中在同一頁，
+          讓你判斷要續抱、觀察、減碼、分批處理，還是等待反彈。
+        </div>
+        <ul class="module-list">
+          <li><b>持股總覽</b>：股數、成本、現價、市值、損益與批次資訊</li>
+          <li><b>技術評估</b>：結構位置、漲跌表現、波動、趨勢觀察</li>
+          <li><b>市場評論</b>：個股與市場背景的綜合說明</li>
+          <li><b>技術提醒</b>：過熱 / 反彈 / 壓力 / 風險提示</li>
+          <li><b>Market Comment</b>：方便快速閱讀的核心評論區</li>
+        </ul>
+        <div class="row">
+          <a class="btn blue" href="./m6.html">打開 M6 股票庫存與操作策略</a>
+        </div>
+      </section>
+
+      <section class="module-card">
+        <div class="module-title">
+          <h2>M3｜FCN 評分</h2>
+          <span class="status simple">簡化版</span>
+        </div>
+        <div class="module-desc">
+          已可呈現 Pure FCN / Event FCN、Worst-of、Reason 與 R1 / R2 / R3，先建立可理解、可排序的決策畫面。
+        </div>
+        <ul class="module-list">
+          <li>FCN Ranking</li>
+          <li>Pure FCN / Event FCN</li>
+          <li>Worst-of / Reason</li>
+          <li>R1 / R2 / R3 解釋</li>
+        </ul>
+        <div class="row">
+          <a class="btn" href="./m3.html">打開 M3 評分</a>
+        </div>
+      </section>
+
+      <section class="module-card">
+        <div class="module-title">
+          <h2>M4｜FCN 資料入口</h2>
+          <span class="status draft">初步版</span>
+        </div>
+        <div class="module-desc">
+          Daily Key-in + Inquiry + Edit。先把 raw data pipeline 跑順，後面再接全自動與 S rate module。
+        </div>
+        <ul class="module-list">
+          <li>FCN ID / Basket / KI / Strike / Rate / Tenor / EKI</li>
+          <li>status / is_portfolio / entry_time / exit_time</li>
+          <li>Inquiry / Edit / Export JSON</li>
+          <li>寫入 FCN total pool 的操作流程</li>
+        </ul>
+        <div class="row">
+          <a class="btn" href="./m4.html">打開 M4 初步版</a>
+        </div>
+      </section>
+
+      <section class="module-card hold">
+        <div class="module-title">
+          <h2>M5｜S Rate / S Snapshot</h2>
+          <span class="status hold-badge">Hold</span>
+        </div>
+        <div class="module-desc">
+          先保留架構位置。未來將推論市場隱含的 S_snapshot / S_rate，再進一步推導 S_event_fcn。
+        </div>
+        <ul class="module-list">
+          <li>S_snapshot（市場隱含甜度）</li>
+          <li>S_rate（模型推論利率）</li>
+          <li>real market vs model implied</li>
+          <li>做單與否的定價決策</li>
+        </ul>
+        <div class="row">
+          <a class="btn secondary" href="javascript:void(0)">Coming Soon</a>
+        </div>
+      </section>
+
+      <section class="module-card hold">
+        <div class="module-title">
+          <h2>M7｜Pool30股票遴選評定系統</h2>
+          <span class="status hold-badge">持續使用</span>
+        </div>
+        <div class="module-desc">
+          估值、趨勢、結構、時機、資金、品質與持倉曝險整合檢視。快速判斷今天哪些股票值得做 FCN、哪些只能觀察、哪些應剔除。
+        </div>
+        <ul class="module-list">
+          <li>Score Dashboard</li>
+          <li>Score Ranking</li>
+          <li>Four Pools</li>
+          <li>Simulation Pool / Today Highlight / Reject 邏輯</li>
+        </ul>
+        <div class="row">
+          <a class="btn" href="./m7.html">打開股票遴選評定系統</a>
+        </div>
+      </section>
+
+      <section class="module-card hold">
+        <div class="module-title">
+          <h2>M7 Basket｜FCN股票遴選決策系統</h2>
+          <span class="status hold-badge">持續使用</span>
+        </div>
+        <div class="module-desc">
+          以 simulation_pool 做今日 universe，再依 pool 內分類產出今日結構、分類＋曝險排序、風格 slot 建議，以及預建議 basket。
+        </div>
+        <ul class="module-list">
+          <li>今日 universe 建立</li>
+          <li>basket 候選組合</li>
+          <li>分類 / 曝險 / 結構配置</li>
+          <li>給 M8 詢價模型使用</li>
+        </ul>
+        <div class="row">
+          <a class="btn" href="./m7_basket.html">打開 FCN 股票遴選決策系統</a>
+        </div>
+      </section>
+
+      <section class="module-card hold">
+        <div class="module-title">
+          <h2>M8｜詢價定價模型</h2>
+          <span class="status hold-badge">持續使用</span>
+        </div>
+        <div class="module-desc">
+          配合 M7 basket 與結構條件，評估 fair yield、simulation rate、gap 與情境可行性，作為詢價與外單評估基礎。
+        </div>
+        <ul class="module-list">
+          <li>定價 / 情境模擬</li>
+          <li>fair yield 與 simulation rate</li>
+          <li>Gap 比較</li>
+          <li>做單與否的利率判讀</li>
+        </ul>
+        <div class="row">
+          <a class="btn" href="./m8_batch.html">打開定價模型版</a>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer-note">
+      <b>Milestone 3 核心原則：</b>
+      從「FCN 持倉監控」延伸到「接股後的股票管理」，讓 M2 與 M6 接起來。
+      先把股票庫存、技術評估、Market Comment 與操作提醒做成穩定入口，再往後串接 M7 / M8 / M5。
+    </div>
+  </div>
+</body>
+</html>
