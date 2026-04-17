@@ -6,24 +6,10 @@
   <title>M9｜資產管理系統</title>
   <style>
     :root{
-      --bg:#f4f7fb;
-      --card:#ffffff;
-      --line:#d8e0ea;
-      --text:#0f172a;
-      --sub:#5b6475;
-      --blue:#2563eb;
-      --green:#16a34a;
-      --red:#dc2626;
-      --orange:#f59e0b;
-      --purple:#7c3aed;
-      --teal:#0f766e;
-      --soft-blue:#eef4ff;
-      --soft-green:#eefaf2;
-      --soft-red:#fff2f2;
-      --soft-orange:#fff8eb;
-      --soft-purple:#f5f0ff;
-      --shadow:0 6px 18px rgba(15,23,42,.06);
-      --radius:18px;
+      --bg:#f4f7fb; --card:#ffffff; --line:#d8e0ea; --text:#0f172a; --sub:#5b6475;
+      --blue:#2563eb; --green:#16a34a; --red:#dc2626; --orange:#f59e0b; --purple:#7c3aed;
+      --teal:#0f766e; --soft-blue:#eef4ff; --soft-green:#eefaf2; --soft-red:#fff2f2;
+      --soft-orange:#fff8eb; --soft-purple:#f5f0ff; --shadow:0 6px 18px rgba(15,23,42,.06); --radius:18px;
     }
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,"Microsoft JhengHei",sans-serif;}
@@ -34,12 +20,8 @@
     .title-wrap .sub{margin-top:6px;color:var(--sub);font-size:15px;line-height:1.6;}
     .top-actions{display:flex;gap:10px;flex-wrap:wrap;}
     .btn{border:0;border-radius:12px;padding:10px 14px;background:#111827;color:#fff;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;box-shadow:var(--shadow);}
-    .btn.secondary{background:#64748b;}
-    .btn.blue{background:var(--blue);}
-    .btn.green{background:var(--green);}
-    .btn.orange{background:var(--orange);color:#111;}
-    .btn.purple{background:var(--purple);}
-    .btn.teal{background:var(--teal);}
+    .btn.secondary{background:#64748b}.btn.blue{background:var(--blue)}.btn.green{background:var(--green)}
+    .btn.orange{background:var(--orange);color:#111}.btn.purple{background:var(--purple)}.btn.teal{background:var(--teal)}
     .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
     .banner{padding:16px 18px;margin-bottom:16px;}
     .banner-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:14px;}
@@ -48,29 +30,23 @@
     .banner-note ul,.banner-box ul{margin:0;padding-left:18px;line-height:1.75;color:#243042;}
     .banner-box{border:1px solid var(--line);border-radius:16px;padding:16px;background:#fff;}
     .summary-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:16px;}
-    .summary-card{padding:18px;min-height:138px;position:relative;overflow:hidden;}
-    .summary-card.blue{background:var(--soft-blue);border-color:#cbdcff;}
-    .summary-card.red{background:var(--soft-red);border-color:#f5c7c7;}
-    .summary-card.green{background:var(--soft-green);border-color:#cceccf;}
-    .summary-card.orange{background:var(--soft-orange);border-color:#f4ddb0;}
-    .summary-card.purple{background:var(--soft-purple);border-color:#dbcdfa;}
+    .summary-card{padding:18px;min-height:128px;position:relative;overflow:hidden;}
+    .summary-card.blue{background:var(--soft-blue);border-color:#cbdcff}.summary-card.red{background:var(--soft-red);border-color:#f5c7c7}
+    .summary-card.green{background:var(--soft-green);border-color:#cceccf}.summary-card.orange{background:var(--soft-orange);border-color:#f4ddb0}
+    .summary-card.purple{background:var(--soft-purple);border-color:#dbcdfa}
     .summary-label{color:#334155;font-weight:700;font-size:15px;margin-bottom:10px;}
     .summary-value{font-size:40px;font-weight:800;line-height:1.05;margin-bottom:8px;}
     .summary-sub{color:var(--sub);font-size:14px;line-height:1.6;}
     .nav-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;}
     .nav-card{padding:18px;display:flex;justify-content:space-between;align-items:center;gap:14px;}
-    .nav-card.blue{background:linear-gradient(180deg,#f8fbff 0%,#eef4ff 100%);}
-    .nav-card.green{background:linear-gradient(180deg,#f7fff8 0%,#eefaf2 100%);}
-    .nav-left h3{margin:0 0 8px;font-size:28px;}
-    .nav-left p{margin:0 0 10px;color:var(--sub);line-height:1.7;}
+    .nav-card.blue{background:linear-gradient(180deg,#f8fbff 0%,#eef4ff 100%)} .nav-card.green{background:linear-gradient(180deg,#f7fff8 0%,#eefaf2 100%)}
+    .nav-left h3{margin:0 0 8px;font-size:28px;} .nav-left p{margin:0 0 10px;color:var(--sub);line-height:1.7;}
     .nav-icon{width:88px;height:88px;border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:42px;background:#fff;border:1px solid var(--line);flex:0 0 auto;}
     .layout{display:grid;grid-template-columns:450px 1fr;gap:16px;align-items:start;}
     .panel{padding:16px;margin-bottom:16px;}
     .panel-header{display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;user-select:none;}
-    .panel-title{font-size:26px;font-weight:800;margin:0;}
-    .panel-sub{margin-top:4px;color:var(--sub);font-size:14px;}
-    .panel-body{margin-top:16px;}
-    .collapsed .panel-body{display:none;}
+    .panel-title{font-size:26px;font-weight:800;margin:0;} .panel-sub{margin-top:4px;color:var(--sub);font-size:14px;}
+    .panel-body{margin-top:16px;} .collapsed .panel-body{display:none;}
     .collapse-btn{font-size:24px;font-weight:800;color:#475569;min-width:28px;text-align:center;}
     .form-grid{display:grid;grid-template-columns:1fr;gap:12px;}
     .input-card{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fbfdff;}
@@ -83,47 +59,40 @@
     input,select,textarea{width:100%;border:1px solid #cfd8e3;border-radius:10px;padding:10px 12px;font-size:14px;background:#fff;color:var(--text);}
     textarea{min-height:80px;resize:vertical;}
     .mini-btn{border:0;border-radius:10px;padding:10px 12px;cursor:pointer;font-weight:700;background:#e2e8f0;color:#111827;white-space:nowrap;}
-    .mini-btn.add{background:#dbeafe;color:#1d4ed8;}
-    .mini-btn.del{background:#fee2e2;color:#b91c1c;}
+    .mini-btn.add{background:#dbeafe;color:#1d4ed8}.mini-btn.del{background:#fee2e2;color:#b91c1c}
     .hint{margin-top:10px;font-size:13px;color:var(--sub);line-height:1.6;}
     .dashboard-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-bottom:16px;}
     .table-card,.chart-card{padding:16px;}
     .table-card h3,.chart-card h3{margin:0 0 14px;font-size:24px;}
     table{width:100%;border-collapse:collapse;font-size:14px;}
     th,td{border:1px solid #d7e0ea;padding:10px 8px;text-align:left;vertical-align:top;}
-    th{background:#edf3fa;font-weight:700;}
-    tfoot td{background:#f8fbff;font-weight:800;}
+    th{background:#edf3fa;font-weight:700;} tfoot td{background:#f8fbff;font-weight:800;}
     .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
     .chart-box{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fbfdff;}
     .chart-title{font-size:16px;font-weight:800;margin-bottom:10px;}
     .pie-wrap{display:grid;grid-template-columns:220px 1fr;gap:14px;align-items:center;}
-    .pie{width:190px;height:190px;border-radius:50%;margin:auto;border:10px solid #fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 2px 8px rgba(0,0,0,.05);}
+    .pie{width:190px;height:190px;border-radius:50%;margin:auto;border:10px solid #fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.8), 0 2px 8px rgba(0,0,0,.05);}
     .legend{display:flex;flex-direction:column;gap:8px;}
     .legend-item{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:14px;}
     .legend-left{display:flex;align-items:center;gap:8px;min-width:0;}
     .swatch{width:12px;height:12px;border-radius:999px;flex:0 0 auto;}
     .bar-chart{display:flex;flex-direction:column;gap:12px;padding-top:6px;}
-    .bar-row{display:grid;grid-template-columns:90px 1fr 100px;gap:10px;align-items:center;font-size:14px;}
+    .bar-row{display:grid;grid-template-columns:90px 1fr 90px;gap:10px;align-items:center;font-size:14px;}
     .bar-track{height:18px;border-radius:999px;background:#eaf0f7;overflow:hidden;position:relative;}
     .bar-fill{height:100%;border-radius:999px;}
-    .analysis-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+    .analysis-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px;}
     .analysis-card{padding:16px;min-height:210px;}
     .analysis-card h4{margin:0 0 10px;font-size:22px;}
     .analysis-card ul{margin:0;padding-left:18px;line-height:1.75;}
-    .analysis-card.blue{background:var(--soft-blue);border-color:#cbdcff;}
-    .analysis-card.green{background:var(--soft-green);border-color:#cceccf;}
-    .analysis-card.orange{background:var(--soft-orange);border-color:#f4ddb0;}
-    .analysis-card.purple{background:var(--soft-purple);border-color:#dbcdfa;}
+    .analysis-card.blue{background:var(--soft-blue);border-color:#cbdcff}.analysis-card.green{background:var(--soft-green);border-color:#cceccf}
+    .analysis-card.orange{background:var(--soft-orange);border-color:#f4ddb0}.analysis-card.purple{background:var(--soft-purple);border-color:#dbcdfa}
     .big-number{font-size:34px;font-weight:800;margin:4px 0 10px;}
     .badge{display:inline-block;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#e2e8f0;color:#334155;margin-bottom:10px;}
-    .good{background:#dcfce7;color:#166534;}
-    .warn{background:#fef3c7;color:#92400e;}
-    .risk{background:#fee2e2;color:#991b1b;}
+    .good{background:#dcfce7;color:#166534}.warn{background:#fef3c7;color:#92400e}.risk{background:#fee2e2;color:#991b1b}
     .footer-tip{margin-top:16px;background:#eff6ff;border:1px solid #cfe0ff;border-radius:14px;padding:12px 14px;color:#1e3a8a;line-height:1.7;font-size:14px;}
     .save-status{font-size:13px;color:#64748b;margin-left:6px;}
-    .fcn-summary-lines{line-height:1.9;font-size:14px;}
-    .fcn-summary-lines .bank-line{margin-top:4px;}
-    @media (max-width:1280px){.summary-grid{grid-template-columns:repeat(2,1fr)}.layout,.dashboard-grid,.chart-grid{grid-template-columns:1fr}.analysis-grid{grid-template-columns:1fr 1fr}.banner-grid{grid-template-columns:1fr}}
+    .timeline-note{font-size:13px;color:var(--sub);margin-top:6px;}
+    @media (max-width:1280px){.summary-grid{grid-template-columns:repeat(2,1fr)}.layout{grid-template-columns:1fr}.dashboard-grid,.chart-grid{grid-template-columns:1fr}.analysis-grid{grid-template-columns:1fr 1fr}.banner-grid{grid-template-columns:1fr}}
     @media (max-width:860px){.summary-grid,.nav-grid,.analysis-grid{grid-template-columns:1fr}.row-item,.row-item.expense-row,.row-item.deposit-row,.row-item.asset-row{grid-template-columns:1fr}.pie-wrap{grid-template-columns:1fr}.title-wrap h1{font-size:30px}.summary-value{font-size:34px}.nav-left h3{font-size:24px}.panel-title{font-size:22px}.bar-row{grid-template-columns:70px 1fr 80px}}
   </style>
 </head>
@@ -179,14 +148,8 @@
     </div>
 
     <div class="nav-grid">
-      <div class="card nav-card blue">
-        <div class="nav-left"><h3>FCN 資產分析與管理</h3><p>連到 M2 Dashboard，管理 FCN 持倉健康、提早出場、到期專區與風險追蹤。</p><a class="btn blue" href="./m2.html">前往 M2 Dashboard</a></div>
-        <div class="nav-icon">📘</div>
-      </div>
-      <div class="card nav-card green">
-        <div class="nav-left"><h3>股票資產分析與管理</h3><p>連到 M6 Dashboard，管理接股後股票部位、技術評估、市場評論與操作提醒。</p><a class="btn green" href="./m6.html">前往 M6 Dashboard</a></div>
-        <div class="nav-icon">📗</div>
-      </div>
+      <div class="card nav-card blue"><div class="nav-left"><h3>FCN 資產分析與管理</h3><p>連到 M2 Dashboard，管理 FCN 持倉健康、提早出場、到期專區與風險追蹤。</p><a class="btn blue" href="./m2.html">前往 M2 Dashboard</a></div><div class="nav-icon">📘</div></div>
+      <div class="card nav-card green"><div class="nav-left"><h3>股票資產分析與管理</h3><p>連到 M6 Dashboard，管理接股後股票部位、技術評估、市場評論與操作提醒。</p><a class="btn green" href="./m6.html">前往 M6 Dashboard</a></div><div class="nav-icon">📗</div></div>
     </div>
 
     <div class="layout">
@@ -204,7 +167,9 @@
 
         <section class="card panel" data-panel>
           <div class="panel-header" onclick="togglePanel(this)"><div><div class="panel-title">輸入區｜負債</div><div class="panel-sub">房貸 / 信貸 / 股票質押 / 其他貸款</div></div><div class="collapse-btn">−</div></div>
-          <div class="panel-body"><div class="input-card"><h4>負債項目</h4><div id="liabilityRows" class="rows"></div><button class="mini-btn add" onclick="addLiabilityRow()">＋ 新增負債</button><div class="hint">每筆可填：剩餘本金、年利率、每月本金、每月利息。股票質押可只填每月利息。</div></div></div>
+          <div class="panel-body">
+            <div class="input-card"><h4>負債項目</h4><div id="liabilityRows" class="rows"></div><button class="mini-btn add" onclick="addLiabilityRow()">＋ 新增負債</button><div class="hint">每筆可填：剩餘本金、年利率、每月本金、每月利息。股票質押可只填每月利息。</div></div>
+          </div>
         </section>
 
         <section class="card panel" data-panel>
@@ -223,7 +188,15 @@
           <div class="panel-body">
             <div class="input-card" style="margin-bottom:12px;">
               <h4>系統設定</h4>
-              <div class="rows"><div class="row-item asset-row"><input id="usdRate" type="number" value="33" oninput="recalc()" placeholder="USD/TWD 匯率" /><input value="USD/TWD 匯率" disabled /><input value="用於換算存款與美元資產" disabled /><input id="saveHint" value="自動保存中" disabled /><span class="save-status" id="saveStatus">尚未儲存</span></div></div>
+              <div class="rows">
+                <div class="row-item asset-row">
+                  <input id="usdRate" type="number" value="33" oninput="recalc()" placeholder="USD/TWD 匯率" />
+                  <input value="USD/TWD 匯率" disabled />
+                  <input value="用於換算存款與美元資產" disabled />
+                  <input id="saveHint" value="自動保存中" disabled />
+                  <span class="save-status" id="saveStatus">尚未儲存</span>
+                </div>
+              </div>
             </div>
             <div class="input-card"><h4>財務備註</h4><textarea id="noteBox" placeholder="例如：第10個月有工程款支出、第25個月需支付房屋尾款、需保留半年生活備用金..." oninput="triggerAutoSave()"></textarea><div class="hint">這區可記錄重大支出、到期提醒、保守現金部位目標、房貸規劃等。</div></div>
           </div>
@@ -285,114 +258,75 @@
           <section class="card analysis-card purple"><h4>現金流建議</h4><ul id="cashAdvice"><li>等待輸入資料後產生。</li></ul></section>
         </div>
 
-        <section class="card chart-card" id="fcnIncomeCard">
+        <section class="card table-card">
           <h3>FCN 利息分析（來自 fcn_pool.json）</h3>
-          <div id="fcnSummaryBox" class="fcn-summary-lines">載入中...</div>
-          <div class="chart-box" style="margin-top:12px;">
-            <div class="chart-title">FCN 現金流圖（bar chart）</div>
-            <div class="bar-chart" id="fcnCashBarChart"></div>
-          </div>
+          <div id="fcnSummaryBox">載入中...</div>
           <table style="width:100%; margin-top:12px;">
             <thead>
               <tr>
-                <th>項次</th>
-                <th>FCN</th>
-                <th>銀行</th>
-                <th>本月</th>
-                <th>次月</th>
-                <th>次次月</th>
-                <th>狀態</th>
+                <th>項次</th><th>FCN</th><th>銀行</th><th>本月</th><th>次月</th><th>次次月</th><th>狀態</th>
               </tr>
             </thead>
             <tbody id="fcnTableBody"><tr><td colspan="7">載入中...</td></tr></tbody>
           </table>
         </section>
 
-        <div class="footer-tip">本版已支援：<b>自動儲存、JSON 匯入匯出、圖表、可擴充輸入區、一鍵展開收合</b>。下個版本可以再升級：<b>房貸攤還試算、年度現金流預估、重大支出時間軸、資產歷史趨勢圖</b>。</div>
+        <section class="card chart-card">
+          <h3>FCN 現金流圖（未來 12 個月）</h3>
+          <div class="chart-box">
+            <div class="chart-title">依月份預估 FCN 利息收入</div>
+            <div class="bar-chart" id="fcnTimelineChart"></div>
+            <div class="timeline-note">邏輯：依 entry + 49 天啟動，之後每 30 天估算一次；若全部 basket 已 hit，則視為提早出場不再列入。</div>
+          </div>
+        </section>
+
+        <div class="footer-tip">本版已支援：<b>自動儲存、JSON 匯入匯出、圖表、可擴充輸入區、一鍵展開收合、下匯版本可小可升級：房貸攤還試算、年度現金流預估、重大支出時間軸、資產歷史趨勢圖。</b></div>
       </div>
     </div>
   </div>
 
-  <script>
+  <script type="module">
+    import {
+      loadFcnPool,
+      buildFcnSummary,
+      buildFcnTable,
+      buildFcnTimeline
+    } from "./js/m9/m9_fcn_engine.js";
+
     const STORAGE_KEY = "m9_asset_management_v2";
-    const PIE_COLORS = ["#2563eb", "#16a34a", "#f59e0b", "#7c3aed"];
+    const PIE_COLORS = ["#2563eb","#16a34a","#f59e0b","#7c3aed"];
     let autoSaveTimer = null;
-    let fcnEngine = null;
 
     function formatNum(v){ const n = Number(v) || 0; return n.toLocaleString("zh-Hant-TW", { maximumFractionDigits: 0 }); }
-    function formatMoney(v){ return Number(v || 0).toLocaleString("zh-Hant-TW", { minimumFractionDigits: 0, maximumFractionDigits: 2 }); }
+    function formatMoney(v){ return Number(v || 0).toLocaleString("zh-Hant-TW", { maximumFractionDigits: 2 }); }
     function val(el){ return Number(el?.value || 0) || 0; }
     function freqText(v){ if(v==="monthly") return "每月"; if(v==="quarterly") return "每3個月"; if(v==="yearly") return "每年"; if(v==="oneoff") return "一次性"; return v; }
-    function monthlyValue(amount, freq){ const a = Number(amount) || 0; if(freq==="monthly") return a; if(freq==="quarterly") return a/3; if(freq==="yearly") return a/12; return 0; }
-
+    function monthlyValue(amount, freq){ const a = Number(amount)||0; if(freq==="monthly") return a; if(freq==="quarterly") return a/3; if(freq==="yearly") return a/12; if(freq==="oneoff") return 0; return a; }
     function panelList(){ return [...document.querySelectorAll("[data-panel]")]; }
-    function togglePanel(header){ const panel = header.closest("[data-panel]"); panel.classList.toggle("collapsed"); const btn = panel.querySelector(".collapse-btn"); btn.textContent = panel.classList.contains("collapsed") ? "+" : "−"; triggerAutoSave(); }
-    function expandAll(){ panelList().forEach(p=>{ p.classList.remove("collapsed"); const btn=p.querySelector(".collapse-btn"); if(btn) btn.textContent="−"; }); triggerAutoSave(); }
-    function collapseAll(){ panelList().forEach(p=>{ p.classList.add("collapsed"); const btn=p.querySelector(".collapse-btn"); if(btn) btn.textContent="+"; }); triggerAutoSave(); }
+    window.togglePanel = function(header){ const panel = header.closest("[data-panel]"); panel.classList.toggle("collapsed"); const btn = panel.querySelector(".collapse-btn"); btn.textContent = panel.classList.contains("collapsed") ? "+" : "−"; triggerAutoSave(); };
+    window.expandAll = function(){ panelList().forEach(p=>{ p.classList.remove("collapsed"); const btn = p.querySelector(".collapse-btn"); if(btn) btn.textContent="−"; }); triggerAutoSave(); };
+    window.collapseAll = function(){ panelList().forEach(p=>{ p.classList.add("collapsed"); const btn = p.querySelector(".collapse-btn"); if(btn) btn.textContent="+"; }); triggerAutoSave(); };
 
-    function createInput(type="text", value="", placeholder=""){
-      const input = document.createElement("input"); input.type = type; input.value = value; input.placeholder = placeholder;
-      input.oninput = () => { recalc(); triggerAutoSave(); };
-      return input;
-    }
-    function createSelect(options, value){
-      const s = document.createElement("select");
-      options.forEach(([v,t])=>{ const o=document.createElement("option"); o.value=v; o.textContent=t; if(v===value) o.selected=true; s.appendChild(o); });
-      s.onchange = () => { recalc(); triggerAutoSave(); };
-      return s;
-    }
+    function createInput(type="text", value="", placeholder=""){ const input=document.createElement("input"); input.type=type; input.value=value; input.placeholder=placeholder; input.oninput=()=>{ recalc(); triggerAutoSave(); }; return input; }
+    function createSelect(options, value){ const s=document.createElement("select"); options.forEach(([v,t])=>{ const o=document.createElement("option"); o.value=v; o.textContent=t; if(v===value) o.selected=true; s.appendChild(o);}); s.onchange=()=>{recalc(); triggerAutoSave();}; return s; }
     function createDelButton(row){ const btn=document.createElement("button"); btn.className="mini-btn del"; btn.textContent="刪除"; btn.onclick=()=>{ row.remove(); recalc(); triggerAutoSave(); }; return btn; }
 
-    function addAssetRow(targetId, name="", category="", amount=0, note=""){
-      const wrap=document.getElementById(targetId); const row=document.createElement("div"); row.className="row-item asset-row";
-      const i1=createInput("text", name, "項目名稱"); i1.dataset.role="name";
-      const i2=createInput("text", category, "分類/帳戶"); i2.dataset.role="category";
-      const i3=createInput("number", amount, "金額(TWD)"); i3.dataset.role="amount";
-      const i4=createInput("text", note, "備註"); i4.dataset.role="note";
-      row.append(i1,i2,i3,i4,createDelButton(row)); wrap.appendChild(row); recalc(); triggerAutoSave();
-    }
-    function addLiabilityRow(name="", principal=0, rate=0, monthlyPrincipal=0, monthlyInterest=0){
-      const wrap=document.getElementById("liabilityRows"); const row=document.createElement("div"); row.className="row-item";
-      const i1=createInput("text", name, "項目名稱"); i1.dataset.role="name";
-      const i2=createInput("number", principal, "剩餘本金"); i2.dataset.role="principal";
-      const i3=createInput("number", rate, "年利率%"); i3.dataset.role="rate";
-      const i4=createInput("number", monthlyPrincipal, "每月本金"); i4.dataset.role="monthlyPrincipal";
-      const i5=createInput("number", monthlyInterest, "每月利息"); i5.dataset.role="monthlyInterest";
-      row.append(i1,i2,i3,i4,i5,createDelButton(row)); wrap.appendChild(row); recalc(); triggerAutoSave();
-    }
-    function addExpenseRow(name="", freq="monthly", amount=0, note=""){
-      const wrap=document.getElementById("expenseRows"); const row=document.createElement("div"); row.className="row-item expense-row";
-      const i1=createInput("text", name, "支出名稱"); i1.dataset.role="name";
-      const i2=createSelect([["monthly","每月"],["quarterly","每3個月"],["yearly","每年"],["oneoff","一次性"]], freq); i2.dataset.role="freq";
-      const i3=createInput("number", amount, "金額"); i3.dataset.role="amount";
-      const i4=createInput("text", note, "備註"); i4.dataset.role="note";
-      row.append(i1,i2,i3,i4,createDelButton(row)); wrap.appendChild(row); recalc(); triggerAutoSave();
-    }
-    function addIncomeRow(name="", freq="monthly", amount=0, note=""){
-      const wrap=document.getElementById("incomeRows"); const row=document.createElement("div"); row.className="row-item expense-row";
-      const i1=createInput("text", name, "收入名稱"); i1.dataset.role="name";
-      const i2=createSelect([["monthly","每月"],["quarterly","每3個月"],["yearly","每年"],["oneoff","一次性"]], freq); i2.dataset.role="freq";
-      const i3=createInput("number", amount, "金額"); i3.dataset.role="amount";
-      const i4=createInput("text", note, "備註"); i4.dataset.role="note";
-      row.append(i1,i2,i3,i4,createDelButton(row)); wrap.appendChild(row); recalc(); triggerAutoSave();
-    }
-    function addDepositRow(currency="NTD", account="", balance=0){
-      const wrap=document.getElementById("depositRows"); const row=document.createElement("div"); row.className="row-item deposit-row";
-      const i1=createSelect([["NTD","NTD"],["USD","USD"]], currency); i1.dataset.role="currency";
-      const i2=createInput("text", account, "帳戶名稱"); i2.dataset.role="account";
-      const i3=createInput("number", balance, "餘額"); i3.dataset.role="balance";
-      row.append(i1,i2,i3,createDelButton(row)); wrap.appendChild(row); recalc(); triggerAutoSave();
-    }
+    function addAssetRow(targetId, name="", category="", amount=0, note=""){ const wrap=document.getElementById(targetId); const row=document.createElement("div"); row.className="row-item asset-row"; const i1=createInput("text",name,"項目名稱"); i1.dataset.role="name"; const i2=createInput("text",category,"分類/帳戶"); i2.dataset.role="category"; const i3=createInput("number",amount,"金額(TWD)"); i3.dataset.role="amount"; const i4=createInput("text",note,"備註"); i4.dataset.role="note"; row.append(i1,i2,i3,i4,createDelButton(row)); wrap.appendChild(row); recalc(); triggerAutoSave(); }
+    function addLiabilityRow(name="", principal=0, rate=0, monthlyPrincipal=0, monthlyInterest=0){ const wrap=document.getElementById("liabilityRows"); const row=document.createElement("div"); row.className="row-item"; const i1=createInput("text",name,"項目名稱"); i1.dataset.role="name"; const i2=createInput("number",principal,"剩餘本金"); i2.dataset.role="principal"; const i3=createInput("number",rate,"年利率%"); i3.dataset.role="rate"; const i4=createInput("number",monthlyPrincipal,"每月本金"); i4.dataset.role="monthlyPrincipal"; const i5=createInput("number",monthlyInterest,"每月利息"); i5.dataset.role="monthlyInterest"; row.append(i1,i2,i3,i4,i5,createDelButton(row)); wrap.appendChild(row); recalc(); triggerAutoSave(); }
+    function addExpenseRow(name="", freq="monthly", amount=0, note=""){ const wrap=document.getElementById("expenseRows"); const row=document.createElement("div"); row.className="row-item expense-row"; const i1=createInput("text",name,"支出名稱"); i1.dataset.role="name"; const i2=createSelect([["monthly","每月"],["quarterly","每3個月"],["yearly","每年"],["oneoff","一次性"]],freq); i2.dataset.role="freq"; const i3=createInput("number",amount,"金額"); i3.dataset.role="amount"; const i4=createInput("text",note,"備註"); i4.dataset.role="note"; row.append(i1,i2,i3,i4,createDelButton(row)); wrap.appendChild(row); recalc(); triggerAutoSave(); }
+    function addIncomeRow(name="", freq="monthly", amount=0, note=""){ const wrap=document.getElementById("incomeRows"); const row=document.createElement("div"); row.className="row-item expense-row"; const i1=createInput("text",name,"收入名稱"); i1.dataset.role="name"; const i2=createSelect([["monthly","每月"],["quarterly","每3個月"],["yearly","每年"],["oneoff","一次性"]],freq); i2.dataset.role="freq"; const i3=createInput("number",amount,"金額"); i3.dataset.role="amount"; const i4=createInput("text",note,"備註"); i4.dataset.role="note"; row.append(i1,i2,i3,i4,createDelButton(row)); wrap.appendChild(row); recalc(); triggerAutoSave(); }
+    function addDepositRow(currency="NTD", account="", balance=0){ const wrap=document.getElementById("depositRows"); const row=document.createElement("div"); row.className="row-item deposit-row"; const i1=createSelect([["NTD","NTD"],["USD","USD"]],currency); i1.dataset.role="currency"; const i2=createInput("text",account,"帳戶名稱"); i2.dataset.role="account"; const i3=createInput("number",balance,"餘額"); i3.dataset.role="balance"; row.append(i1,i2,i3,createDelButton(row)); wrap.appendChild(row); recalc(); triggerAutoSave(); }
 
-    function readAssetRows(id){ return [...document.querySelectorAll(`#${id} .row-item`)].map(row => ({ name: row.querySelector('[data-role="name"]').value || "", category: row.querySelector('[data-role="category"]').value || "", amount: val(row.querySelector('[data-role="amount"]')), note: row.querySelector('[data-role="note"]').value || "" })); }
-    function readLiabilityRows(){ return [...document.querySelectorAll(`#liabilityRows .row-item`)].map(row => ({ name: row.querySelector('[data-role="name"]').value || "", principal: val(row.querySelector('[data-role="principal"]')), rate: val(row.querySelector('[data-role="rate"]')), monthlyPrincipal: val(row.querySelector('[data-role="monthlyPrincipal"]')), monthlyInterest: val(row.querySelector('[data-role="monthlyInterest"]')) })); }
-    function readExpenseRows(){ return [...document.querySelectorAll(`#expenseRows .row-item`)].map(row => ({ name: row.querySelector('[data-role="name"]').value || "", freq: row.querySelector('[data-role="freq"]').value, amount: val(row.querySelector('[data-role="amount"]')), note: row.querySelector('[data-role="note"]').value || "" })); }
-    function readIncomeRows(){ return [...document.querySelectorAll(`#incomeRows .row-item`)].map(row => ({ name: row.querySelector('[data-role="name"]').value || "", freq: row.querySelector('[data-role="freq"]').value, amount: val(row.querySelector('[data-role="amount"]')), note: row.querySelector('[data-role="note"]').value || "" })); }
-    function readDepositRows(){ return [...document.querySelectorAll(`#depositRows .row-item`)].map(row => ({ currency: row.querySelector('[data-role="currency"]').value, account: row.querySelector('[data-role="account"]').value || "", balance: val(row.querySelector('[data-role="balance"]')) })); }
+    function readAssetRows(id){ return [...document.querySelectorAll(`#${id} .row-item`)].map(row=>({ name: row.querySelector('[data-role="name"]').value||"", category: row.querySelector('[data-role="category"]').value||"", amount: val(row.querySelector('[data-role="amount"]')), note: row.querySelector('[data-role="note"]').value||"" })); }
+    function readLiabilityRows(){ return [...document.querySelectorAll(`#liabilityRows .row-item`)].map(row=>({ name: row.querySelector('[data-role="name"]').value||"", principal: val(row.querySelector('[data-role="principal"]')), rate: val(row.querySelector('[data-role="rate"]')), monthlyPrincipal: val(row.querySelector('[data-role="monthlyPrincipal"]')), monthlyInterest: val(row.querySelector('[data-role="monthlyInterest"]')) })); }
+    function readExpenseRows(){ return [...document.querySelectorAll(`#expenseRows .row-item`)].map(row=>({ name: row.querySelector('[data-role="name"]').value||"", freq: row.querySelector('[data-role="freq"]').value, amount: val(row.querySelector('[data-role="amount"]')), note: row.querySelector('[data-role="note"]').value||"" })); }
+    function readIncomeRows(){ return [...document.querySelectorAll(`#incomeRows .row-item`)].map(row=>({ name: row.querySelector('[data-role="name"]').value||"", freq: row.querySelector('[data-role="freq"]').value, amount: val(row.querySelector('[data-role="amount"]')), note: row.querySelector('[data-role="note"]').value||"" })); }
+    function readDepositRows(){ return [...document.querySelectorAll(`#depositRows .row-item`)].map(row=>({ currency: row.querySelector('[data-role="currency"]').value, account: row.querySelector('[data-role="account"]').value||"", balance: val(row.querySelector('[data-role="balance"]')) })); }
 
     function fillTableBody(tableId, rows){
-      const tbody=document.querySelector(`#${tableId} tbody`); tbody.innerHTML="";
-      rows.forEach(cells=>{ const tr=document.createElement("tr"); cells.forEach(cell=>{ const td=document.createElement("td"); td.textContent=cell; tr.appendChild(td); }); tbody.appendChild(tr); });
+      const tbody=document.querySelector(`#${tableId} tbody`);
+      tbody.innerHTML="";
+      rows.forEach(cells=>{ const tr=document.createElement("tr"); cells.forEach(cell=>{ const td=document.createElement("td"); td.textContent=cell; tr.appendChild(td);}); tbody.appendChild(tr); });
       if(!rows.length){ const tr=document.createElement("tr"); const td=document.createElement("td"); td.colSpan=document.querySelectorAll(`#${tableId} thead th`).length; td.textContent="尚未輸入資料"; tr.appendChild(td); tbody.appendChild(tr); }
     }
 
@@ -403,23 +337,16 @@
       pie.style.background=`conic-gradient(${segments.join(", ")})`; legend.innerHTML="";
       data.forEach((item,idx)=>{ const pct=item.value/total*100; const row=document.createElement("div"); row.className="legend-item"; row.innerHTML=`<div class="legend-left"><span class="swatch" style="background:${PIE_COLORS[idx]}"></span><span>${item.label}</span></div><div>${formatNum(item.value)} ｜ ${pct.toFixed(1)}%</div>`; legend.appendChild(row); });
     }
-
-    function renderCashBars(data, targetId="cashBarChart"){
-      const box=document.getElementById(targetId); if(!box) return; box.innerHTML="";
-      const max=Math.max(...data.map(x=>Math.abs(x.value)),1);
-      data.forEach(item=>{ const row=document.createElement("div"); row.className="bar-row"; const width=Math.max(4, Math.abs(item.value)/max*100); row.innerHTML=`<div>${item.label}</div><div class="bar-track"><div class="bar-fill" style="width:${width}%; background:${item.color};"></div></div><div>${formatMoney(item.value)}</div>`; box.appendChild(row); });
-    }
+    function renderCashBars(data){ const box=document.getElementById("cashBarChart"); box.innerHTML=""; const max=Math.max(...data.map(x=>Math.abs(x.value)),1); data.forEach(item=>{ const row=document.createElement("div"); row.className="bar-row"; const width=Math.max(4,Math.abs(item.value)/max*100); row.innerHTML=`<div>${item.label}</div><div class="bar-track"><div class="bar-fill" style="width:${width}%; background:${item.color};"></div></div><div>${formatNum(item.value)}</div>`; box.appendChild(row); }); }
+    function renderFcnTimelineBars(data){ const box=document.getElementById("fcnTimelineChart"); if(!box) return; box.innerHTML=""; const max=Math.max(...data.map(x=>Math.abs(x.amount)),1); data.forEach(item=>{ const row=document.createElement("div"); row.className="bar-row"; const width=Math.max(4,Math.abs(item.amount)/max*100); row.innerHTML=`<div>${item.label}</div><div class="bar-track"><div class="bar-fill" style="width:${width}%; background:#2563eb;"></div></div><div>${formatMoney(item.amount)}</div>`; box.appendChild(row); }); }
 
     function setList(id, items){ const el=document.getElementById(id); el.innerHTML=""; items.forEach(text=>{ const li=document.createElement("li"); li.textContent=text; el.appendChild(li); }); }
-
     function buildAdvice(data){
-      const {totalAssets,totalDebt,netWorth,debtRatio,monthlyDebtPay,monthlyExpense,monthlyIncome,monthlyNet,fcnSum,stockSum,depositSum}=data;
-      let health=50;
-      if(debtRatio<0.35) health+=18; else if(debtRatio<0.55) health+=10; else if(debtRatio<0.7) health+=2; else health-=12;
+      const { totalAssets,totalDebt,netWorth,debtRatio,monthlyDebtPay,monthlyExpense,monthlyIncome,monthlyNet,fcnSum,stockSum,depositSum } = data;
+      let health=50; if(debtRatio<0.35) health+=18; else if(debtRatio<0.55) health+=10; else if(debtRatio<0.7) health+=2; else health-=12;
       if(monthlyNet>50000) health+=16; else if(monthlyNet>0) health+=8; else health-=15;
       if(depositSum>(monthlyExpense+monthlyDebtPay)*6) health+=12; else if(depositSum>(monthlyExpense+monthlyDebtPay)*3) health+=6; else health-=8;
-      if(netWorth>0) health+=10; if(fcnSum>totalAssets*0.45) health-=6; if(stockSum>totalAssets*0.45) health-=4;
-      health=Math.max(1,Math.min(100,Math.round(health)));
+      if(netWorth>0) health+=10; if(fcnSum>totalAssets*0.45) health-=6; if(stockSum>totalAssets*0.45) health-=4; health=Math.max(1,Math.min(100,Math.round(health)));
       let badgeText="財務健康度：普通", badgeClass="badge warn", healthText="目前資產與負債尚可，但建議持續觀察現金流與集中風險。";
       if(health>=78){ badgeText="財務健康度：良好"; badgeClass="badge good"; healthText="整體結構偏穩健，現金流與資產緩衝相對健康，可把重點放在優化配置效率。"; }
       else if(health<55){ badgeText="財務健康度：需留意"; badgeClass="badge risk"; healthText="目前結構已有壓力，建議優先檢查負債支出與高波動資產占比，避免現金流被壓縮。"; }
@@ -427,137 +354,208 @@
       const assetAdvice=[]; if(fcnSum>totalAssets*0.4) assetAdvice.push("FCN 比例偏高，可分散到較高流動性的資產，降低單一結構性商品比重。"); if(stockSum>totalAssets*0.4) assetAdvice.push("股票部位偏高，建議搭配現金或低波動資產，避免股市波動放大總資產起伏。"); if(depositSum<(monthlyExpense+monthlyDebtPay)*6) assetAdvice.push("存款緩衝偏少，建議逐步建立 6 個月以上生活與債務準備金。"); if(depositSum>totalAssets*0.35) assetAdvice.push("存款占比較高，若風險可控，可考慮部分提高資金運用效率。"); if(!assetAdvice.length) assetAdvice.push("資產配置目前相對平衡，可進一步追求收益效率與流動性管理。");
       const debtAdvice=[]; if(debtRatio>0.65) debtAdvice.push("總負債比率偏高，建議優先盤點高利率負債，避免槓桿過度集中。"); if(monthlyDebtPay>monthlyIncome*0.45) debtAdvice.push("每月債務支出占收入比例偏高，需注意未來現金流壓力。"); if(debtRatio<=0.65 && monthlyDebtPay<=monthlyIncome*0.45) debtAdvice.push("目前債務支出尚在可控範圍，但仍應持續監測利率變動與到期結構。");
       const cashAdvice=[]; if(monthlyNet>50000) cashAdvice.push("每月淨現金流不錯，可考慮部分投入低波動配置或預留重大支出準備。"); else if(monthlyNet>0) cashAdvice.push("每月仍有正現金流，建議優先補足緊急預備金與未來大額支出準備。"); else cashAdvice.push("每月現金流為負，應先調整支出或降低債務壓力，再考慮新增投資。"); if(monthlyExpense>monthlyIncome*0.5) cashAdvice.push("日常支出占收入比偏高，可檢查固定支出與非必要支出。"); if(monthlyDebtPay>monthlyExpense) cashAdvice.push("債務支出已高於日常生活支出，需特別留意槓桿風險。");
-      setList("assetAdvice", assetAdvice); setList("debtAdvice", debtAdvice); setList("cashAdvice", cashAdvice);
+      setList("assetAdvice",assetAdvice); setList("debtAdvice",debtAdvice); setList("cashAdvice",cashAdvice);
     }
 
     function renderFcnSummary(s){
-      const el=document.getElementById("fcnSummaryBox"); if(!el) return;
-      const totalCount = s.total?.count || 0;
+      const totalCount = Object.values(s.byBank || {}).reduce((sum, b) => sum + (b.count || 0), 0);
       const totalThisMonth = s.total?.thisMonth || 0;
       const totalNextMonth = s.total?.nextMonth || 0;
       const totalThirdMonth = s.total?.thirdMonth || 0;
-      const preferredBanks = ["富邦","永豐"]; const extraBanks = Object.keys(s.byBank || {}).filter(b => !preferredBanks.includes(b)); const finalBanks = [...preferredBanks, ...extraBanks];
+
+      const bankNames = ["富邦", "永豐"];
+      const extraBanks = Object.keys(s.byBank || {}).filter(b => !bankNames.includes(b));
+      const finalBanks = [...bankNames, ...extraBanks];
+
       let bankHtml = "";
       finalBanks.forEach(bank => {
-        const b = s.byBank?.[bank] || { thisMonth:0, nextMonth:0, thirdMonth:0, count:0 };
-        bankHtml += `<div class="bank-line">${bank}（本月 ${formatMoney(b.thisMonth)} / 次月 ${formatMoney(b.nextMonth)} / 次次月 ${formatMoney(b.thirdMonth)}）</div>`;
+        const b = s.byBank?.[bank] || { thisMonth: 0, nextMonth: 0, thirdMonth: 0, count: 0 };
+        bankHtml += `<div style="margin-bottom:6px;">${bank}：本月（${formatMoney(b.thisMonth)}）　次月（${formatMoney(b.nextMonth)}）　次次月（${formatMoney(b.thirdMonth)}）</div>`;
       });
-      el.innerHTML = `
-        <div><b>FCN 檔數：</b> ${totalCount}</div>
-        <div><b>本月：</b> ${formatMoney(totalThisMonth)}</div>
-        <div><b>次月：</b> ${formatMoney(totalNextMonth)}</div>
-        <div><b>次次月：</b> ${formatMoney(totalThirdMonth)}</div>
-        <div style="margin-top:8px;"><b>銀行分布：</b></div>
-        ${bankHtml}
+
+      document.getElementById("fcnSummaryBox").innerHTML = `
+        <div style="line-height:1.9;">
+          <div><b>FCN 檔數：</b> ${totalCount}</div>
+          <div><b>本月：</b> ${formatMoney(totalThisMonth)}</div>
+          <div><b>次月：</b> ${formatMoney(totalNextMonth)}</div>
+          <div><b>次次月：</b> ${formatMoney(totalThirdMonth)}</div>
+          <div style="margin-top:8px;"><b>銀行分布：</b></div>
+          ${bankHtml}
+        </div>
       `;
-      renderCashBars([
-        { label: "本月", value: totalThisMonth, color: "#2563eb" },
-        { label: "次月", value: totalNextMonth, color: "#16a34a" },
-        { label: "次次月", value: totalThirdMonth, color: "#7c3aed" }
-      ], "fcnCashBarChart");
     }
-
     function renderFcnTable(rows){
-      const tbody=document.getElementById("fcnTableBody"); if(!tbody) return; tbody.innerHTML="";
-      if(!rows.length){ tbody.innerHTML='<tr><td colspan="7">沒有 active FCN</td></tr>'; return; }
-      rows.forEach((r,idx)=>{ const tr=document.createElement("tr"); tr.innerHTML=`<td>${idx+1}</td><td>${r.id}</td><td>${r.bank}</td><td>${formatMoney(r.thisMonth)}</td><td>${formatMoney(r.nextMonth)}</td><td>${formatMoney(r.thirdMonth)}</td><td>${r.earlyExit ? "🟢 即將出場" : "持有中"}</td>`; tbody.appendChild(tr); });
+      const tbody = document.getElementById("fcnTableBody");
+      tbody.innerHTML = "";
+      if(!rows.length){ tbody.innerHTML = `<tr><td colspan="7">尚無 active FCN</td></tr>`; return; }
+      rows.forEach((r, idx) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td>${idx + 1}</td><td>${r.id}</td><td>${r.bank}</td><td>${formatMoney(r.thisMonth)}</td><td>${formatMoney(r.nextMonth)}</td><td>${formatMoney(r.thirdMonth)}</td><td>${r.earlyExit ? "🟢 即將出場" : "持有中"}</td>`;
+        tbody.appendChild(tr);
+      });
     }
 
-    async function refreshFcnSection(){
-      if(!fcnEngine) return;
-      const usdRate = Number(document.getElementById("usdRate").value || 33) || 33;
-      try{
-        const pool = await fcnEngine.loadFcnPool();
-        const fcnSummary = fcnEngine.buildFcnSummary(pool, usdRate);
-        const fcnTable = fcnEngine.buildFcnTable(pool, usdRate);
-        renderFcnSummary(fcnSummary);
-        renderFcnTable(fcnTable);
-      }catch(err){
-        console.error("FCN 區塊載入失敗", err);
-        const el=document.getElementById("fcnSummaryBox"); if(el) el.textContent="載入失敗";
-        const tbody=document.getElementById("fcnTableBody"); if(tbody) tbody.innerHTML='<tr><td colspan="7">載入失敗</td></tr>';
-      }
+    async function refreshFcnSection(usdRate){
+      const pool = await loadFcnPool();
+      const fcnSummary = buildFcnSummary(pool, usdRate);
+      const fcnTable = buildFcnTable(pool, usdRate);
+      const fcnTimeline = buildFcnTimeline(pool, usdRate, 12);
+      renderFcnSummary(fcnSummary);
+      renderFcnTable(fcnTable);
+      renderFcnTimelineBars(fcnTimeline);
     }
 
     function recalc(){
       const usdRate = Number(document.getElementById("usdRate").value || 33) || 33;
-      const fcnAssets=readAssetRows("fcnAssetRows"), stockAssets=readAssetRows("stockAssetRows"), otherAssets=readAssetRows("otherAssetRows"), liabilities=readLiabilityRows(), expenses=readExpenseRows(), incomes=readIncomeRows(), deposits=readDepositRows();
-      const fcnSum=fcnAssets.reduce((s,x)=>s+x.amount,0), stockSum=stockAssets.reduce((s,x)=>s+x.amount,0), otherAssetSum=otherAssets.reduce((s,x)=>s+x.amount,0), depositSum=deposits.reduce((s,x)=>s+(x.currency==="USD" ? x.balance*usdRate : x.balance),0);
-      const totalAssets=fcnSum+stockSum+otherAssetSum+depositSum, totalDebt=liabilities.reduce((s,x)=>s+x.principal,0), netWorth=totalAssets-totalDebt, debtRatio=totalAssets>0 ? totalDebt/totalAssets : 0;
-      const monthlyDebtPay=liabilities.reduce((s,x)=>s+x.monthlyPrincipal+x.monthlyInterest,0), monthlyExpense=expenses.reduce((s,x)=>s+monthlyValue(x.amount,x.freq),0), monthlyIncome=incomes.reduce((s,x)=>s+monthlyValue(x.amount,x.freq),0), monthlyNet=monthlyIncome-monthlyExpense-monthlyDebtPay;
-      document.getElementById("sumAssets").textContent=formatNum(totalAssets); document.getElementById("sumLiabilities").textContent=formatNum(totalDebt); document.getElementById("sumNetWorth").textContent=formatNum(netWorth); document.getElementById("sumDebtRatio").textContent=(debtRatio*100).toFixed(2)+"%"; document.getElementById("sumCashflow").textContent=formatNum(monthlyNet);
-      const pct=v=>totalAssets>0 ? ((v/totalAssets)*100).toFixed(1)+"%" : "0%";
-      document.getElementById("tblFcnAsset").textContent=formatNum(fcnSum); document.getElementById("tblFcnAssetPct").textContent=pct(fcnSum); document.getElementById("tblStockAsset").textContent=formatNum(stockSum); document.getElementById("tblStockAssetPct").textContent=pct(stockSum); document.getElementById("tblDeposits").textContent=formatNum(depositSum); document.getElementById("tblDepositsPct").textContent=pct(depositSum); document.getElementById("tblOtherAsset").textContent=formatNum(otherAssetSum); document.getElementById("tblOtherAssetPct").textContent=pct(otherAssetSum); document.getElementById("tblDebt").textContent=formatNum(totalDebt); document.getElementById("tblDebtPct").textContent=pct(totalDebt); document.getElementById("tblNetWorth").textContent=formatNum(netWorth);
-      document.getElementById("tblMonthlyIncome").textContent=formatNum(monthlyIncome); document.getElementById("tblMonthlyExpense").textContent=formatNum(monthlyExpense); document.getElementById("tblMonthlyDebtPay").textContent=formatNum(monthlyDebtPay); document.getElementById("tblMonthlyNet").textContent=formatNum(monthlyNet); document.getElementById("tblMonthlyTag").textContent=monthlyNet>50000 ? "現金流健康" : monthlyNet>0 ? "現金流尚可" : "現金流偏緊";
-      fillTableBody("liabilityTable", liabilities.map(x=>[x.name||"未命名", formatNum(x.principal), x.rate ? x.rate+"%" : "—", formatNum(x.monthlyPrincipal), formatNum(x.monthlyInterest), formatNum(x.monthlyPrincipal+x.monthlyInterest)]));
-      fillTableBody("depositTable", deposits.map(x=>[x.currency, x.account||"未命名", x.currency==="USD" ? x.balance.toLocaleString("zh-Hant-TW", {maximumFractionDigits:0}) : formatNum(x.balance), formatNum(x.currency==="USD" ? x.balance*usdRate : x.balance)]));
-      fillTableBody("incomeTable", incomes.map(x=>[x.name||"未命名", freqText(x.freq), formatNum(x.amount), formatNum(monthlyValue(x.amount,x.freq))]));
-      fillTableBody("expenseTable", expenses.map(x=>[x.name||"未命名", freqText(x.freq), formatNum(x.amount), formatNum(monthlyValue(x.amount,x.freq))]));
+      const fcnAssets = readAssetRows("fcnAssetRows");
+      const stockAssets = readAssetRows("stockAssetRows");
+      const otherAssets = readAssetRows("otherAssetRows");
+      const liabilities = readLiabilityRows();
+      const expenses = readExpenseRows();
+      const incomes = readIncomeRows();
+      const deposits = readDepositRows();
+
+      const fcnSum = fcnAssets.reduce((s,x)=>s+x.amount,0);
+      const stockSum = stockAssets.reduce((s,x)=>s+x.amount,0);
+      const otherAssetSum = otherAssets.reduce((s,x)=>s+x.amount,0);
+      const depositSum = deposits.reduce((s,x)=>s+(x.currency==="USD" ? x.balance * usdRate : x.balance),0);
+
+      const totalAssets = fcnSum + stockSum + otherAssetSum + depositSum;
+      const totalDebt = liabilities.reduce((s,x)=>s+x.principal,0);
+      const netWorth = totalAssets - totalDebt;
+      const debtRatio = totalAssets > 0 ? totalDebt / totalAssets : 0;
+
+      const monthlyDebtPay = liabilities.reduce((s,x)=>s+x.monthlyPrincipal+x.monthlyInterest,0);
+      const monthlyExpense = expenses.reduce((s,x)=>s+monthlyValue(x.amount,x.freq),0);
+      const monthlyIncome = incomes.reduce((s,x)=>s+monthlyValue(x.amount,x.freq),0);
+      const monthlyNet = monthlyIncome - monthlyExpense - monthlyDebtPay;
+
+      document.getElementById("sumAssets").textContent = formatNum(totalAssets);
+      document.getElementById("sumLiabilities").textContent = formatNum(totalDebt);
+      document.getElementById("sumNetWorth").textContent = formatNum(netWorth);
+      document.getElementById("sumDebtRatio").textContent = (debtRatio*100).toFixed(2) + "%";
+      document.getElementById("sumCashflow").textContent = formatNum(monthlyNet);
+
+      const pct = (v) => totalAssets > 0 ? ((v / totalAssets) * 100).toFixed(1) + "%" : "0%";
+      document.getElementById("tblFcnAsset").textContent = formatNum(fcnSum);
+      document.getElementById("tblFcnAssetPct").textContent = pct(fcnSum);
+      document.getElementById("tblStockAsset").textContent = formatNum(stockSum);
+      document.getElementById("tblStockAssetPct").textContent = pct(stockSum);
+      document.getElementById("tblDeposits").textContent = formatNum(depositSum);
+      document.getElementById("tblDepositsPct").textContent = pct(depositSum);
+      document.getElementById("tblOtherAsset").textContent = formatNum(otherAssetSum);
+      document.getElementById("tblOtherAssetPct").textContent = pct(otherAssetSum);
+      document.getElementById("tblDebt").textContent = formatNum(totalDebt);
+      document.getElementById("tblDebtPct").textContent = pct(totalDebt);
+      document.getElementById("tblNetWorth").textContent = formatNum(netWorth);
+
+      document.getElementById("tblMonthlyIncome").textContent = formatNum(monthlyIncome);
+      document.getElementById("tblMonthlyExpense").textContent = formatNum(monthlyExpense);
+      document.getElementById("tblMonthlyDebtPay").textContent = formatNum(monthlyDebtPay);
+      document.getElementById("tblMonthlyNet").textContent = formatNum(monthlyNet);
+      document.getElementById("tblMonthlyTag").textContent = monthlyNet > 50000 ? "現金流健康" : monthlyNet > 0 ? "現金流尚可" : "現金流偏緊";
+
+      fillTableBody("liabilityTable", liabilities.map(x => [x.name || "未命名", formatNum(x.principal), x.rate ? x.rate + "%" : "—", formatNum(x.monthlyPrincipal), formatNum(x.monthlyInterest), formatNum(x.monthlyPrincipal + x.monthlyInterest)]));
+      fillTableBody("depositTable", deposits.map(x => [x.currency, x.account || "未命名", x.currency === "USD" ? x.balance.toLocaleString("zh-Hant-TW", {maximumFractionDigits:0}) : formatNum(x.balance), formatNum(x.currency === "USD" ? x.balance * usdRate : x.balance)]));
+      fillTableBody("incomeTable", incomes.map(x => [x.name || "未命名", freqText(x.freq), formatNum(x.amount), formatNum(monthlyValue(x.amount, x.freq))]));
+      fillTableBody("expenseTable", expenses.map(x => [x.name || "未命名", freqText(x.freq), formatNum(x.amount), formatNum(monthlyValue(x.amount, x.freq))]));
+
       renderPieChart([{label:"FCN資產", value:fcnSum},{label:"股票資產", value:stockSum},{label:"存款", value:depositSum},{label:"其他資產", value:otherAssetSum}]);
-      renderCashBars([{label:"收入", value:monthlyIncome, color:"#16a34a"},{label:"支出", value:monthlyExpense, color:"#f59e0b"},{label:"負債", value:monthlyDebtPay, color:"#dc2626"},{label:"淨現金流", value:Math.max(monthlyNet,0), color:"#7c3aed"}], "cashBarChart");
-      buildAdvice({totalAssets,totalDebt,netWorth,debtRatio,monthlyDebtPay,monthlyExpense,monthlyIncome,monthlyNet,fcnSum,stockSum,depositSum,otherAssetSum});
-      refreshFcnSection();
+      renderCashBars([{label:"收入", value:monthlyIncome, color:"#16a34a"},{label:"支出", value:monthlyExpense, color:"#f59e0b"},{label:"負債", value:monthlyDebtPay, color:"#dc2626"},{label:"淨現金流", value:Math.max(monthlyNet,0), color:"#7c3aed"}]);
+      buildAdvice({ totalAssets,totalDebt,netWorth,debtRatio,monthlyDebtPay,monthlyExpense,monthlyIncome,monthlyNet,fcnSum,stockSum,depositSum,otherAssetSum });
+
+      refreshFcnSection(usdRate);
     }
 
     function getCollapsedState(){ return panelList().map(p => p.classList.contains("collapsed")); }
-    function saveData(){ const payload={ usdRate:document.getElementById("usdRate").value, noteBox:document.getElementById("noteBox").value, fcnAssets:readAssetRows("fcnAssetRows"), stockAssets:readAssetRows("stockAssetRows"), otherAssets:readAssetRows("otherAssetRows"), liabilities:readLiabilityRows(), expenses:readExpenseRows(), incomes:readIncomeRows(), deposits:readDepositRows(), collapsed:getCollapsedState() }; localStorage.setItem(STORAGE_KEY, JSON.stringify(payload)); const status=document.getElementById("saveStatus"); if(status) status.textContent="已自動儲存"; }
+    function saveData(){
+      const payload = { usdRate: document.getElementById("usdRate").value, noteBox: document.getElementById("noteBox").value, fcnAssets: readAssetRows("fcnAssetRows"), stockAssets: readAssetRows("stockAssetRows"), otherAssets: readAssetRows("otherAssetRows"), liabilities: readLiabilityRows(), expenses: readExpenseRows(), incomes: readIncomeRows(), deposits: readDepositRows(), collapsed: getCollapsedState() };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      const status=document.getElementById("saveStatus"); if(status) status.textContent="已自動儲存";
+    }
     function triggerAutoSave(){ const status=document.getElementById("saveStatus"); if(status) status.textContent="儲存中..."; clearTimeout(autoSaveTimer); autoSaveTimer=setTimeout(()=>saveData(),300); }
-    function clearContainer(id){ const el=document.getElementById(id); el.innerHTML=""; }
+    function clearContainer(id){ document.getElementById(id).innerHTML=""; }
 
     function loadFromData(data){
       clearContainer("fcnAssetRows"); clearContainer("stockAssetRows"); clearContainer("otherAssetRows"); clearContainer("liabilityRows"); clearContainer("expenseRows"); clearContainer("incomeRows"); clearContainer("depositRows");
-      document.getElementById("usdRate").value=data.usdRate ?? 33; document.getElementById("noteBox").value=data.noteBox ?? "";
-      (data.fcnAssets||[]).forEach(x=>addAssetRow("fcnAssetRows", x.name, x.category, x.amount, x.note));
-      (data.stockAssets||[]).forEach(x=>addAssetRow("stockAssetRows", x.name, x.category, x.amount, x.note));
-      (data.otherAssets||[]).forEach(x=>addAssetRow("otherAssetRows", x.name, x.category, x.amount, x.note));
-      (data.liabilities||[]).forEach(x=>addLiabilityRow(x.name, x.principal, x.rate, x.monthlyPrincipal, x.monthlyInterest));
-      (data.expenses||[]).forEach(x=>addExpenseRow(x.name, x.freq, x.amount, x.note));
-      (data.incomes||[]).forEach(x=>addIncomeRow(x.name, x.freq, x.amount, x.note));
-      (data.deposits||[]).forEach(x=>addDepositRow(x.currency, x.account, x.balance));
-      if(Array.isArray(data.collapsed)){ panelList().forEach((p,i)=>{ p.classList.toggle("collapsed", !!data.collapsed[i]); const btn=p.querySelector(".collapse-btn"); if(btn) btn.textContent=p.classList.contains("collapsed") ? "+" : "−"; }); }
+      document.getElementById("usdRate").value = data.usdRate ?? 33;
+      document.getElementById("noteBox").value = data.noteBox ?? "";
+      (data.fcnAssets || []).forEach(x => addAssetRow("fcnAssetRows", x.name, x.category, x.amount, x.note));
+      (data.stockAssets || []).forEach(x => addAssetRow("stockAssetRows", x.name, x.category, x.amount, x.note));
+      (data.otherAssets || []).forEach(x => addAssetRow("otherAssetRows", x.name, x.category, x.amount, x.note));
+      (data.liabilities || []).forEach(x => addLiabilityRow(x.name, x.principal, x.rate, x.monthlyPrincipal, x.monthlyInterest));
+      (data.expenses || []).forEach(x => addExpenseRow(x.name, x.freq, x.amount, x.note));
+      (data.incomes || []).forEach(x => addIncomeRow(x.name, x.freq, x.amount, x.note));
+      (data.deposits || []).forEach(x => addDepositRow(x.currency, x.account, x.balance));
+      if(Array.isArray(data.collapsed)){ panelList().forEach((p,i)=>{ p.classList.toggle("collapsed", !!data.collapsed[i]); const btn=p.querySelector(".collapse-btn"); if(btn) btn.textContent=p.classList.contains("collapsed")?"+":"−"; }); }
       recalc(); saveData();
     }
 
-    function exportData(){ const payload={ usdRate:document.getElementById("usdRate").value, noteBox:document.getElementById("noteBox").value, fcnAssets:readAssetRows("fcnAssetRows"), stockAssets:readAssetRows("stockAssetRows"), otherAssets:readAssetRows("otherAssetRows"), liabilities:readLiabilityRows(), expenses:readExpenseRows(), incomes:readIncomeRows(), deposits:readDepositRows(), collapsed:getCollapsedState(), exported_at:new Date().toISOString() }; const blob=new Blob([JSON.stringify(payload,null,2)], {type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="m9_asset_data.json"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href), 500); }
-    function importData(event){ const file=event.target.files?.[0]; if(!file) return; const reader=new FileReader(); reader.onload=()=>{ try{ loadFromData(JSON.parse(reader.result)); alert("匯入成功"); }catch(err){ alert("匯入失敗：JSON 格式不正確"); } }; reader.readAsText(file, "utf-8"); event.target.value=""; }
-    function clearAllData(){ if(!confirm("確定要清空所有 M9 資料嗎？")) return; localStorage.removeItem(STORAGE_KEY); clearContainer("fcnAssetRows"); clearContainer("stockAssetRows"); clearContainer("otherAssetRows"); clearContainer("liabilityRows"); clearContainer("expenseRows"); clearContainer("incomeRows"); clearContainer("depositRows"); document.getElementById("usdRate").value=33; document.getElementById("noteBox").value=""; recalc(); document.getElementById("saveStatus").textContent="已清空，請重新整理載入 JSON"; }
+    window.exportData = function(){
+      const payload = { usdRate: document.getElementById("usdRate").value, noteBox: document.getElementById("noteBox").value, fcnAssets: readAssetRows("fcnAssetRows"), stockAssets: readAssetRows("stockAssetRows"), otherAssets: readAssetRows("otherAssetRows"), liabilities: readLiabilityRows(), expenses: readExpenseRows(), incomes: readIncomeRows(), deposits: readDepositRows(), collapsed: getCollapsedState(), exported_at: new Date().toISOString() };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="m9_asset_data.json"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(a.href),500);
+    };
+    window.importData = function(event){
+      const file=event.target.files?.[0]; if(!file) return;
+      const reader=new FileReader();
+      reader.onload=()=>{ try{ const data=JSON.parse(reader.result); loadFromData(data); alert("匯入成功"); }catch(err){ alert("匯入失敗：JSON 格式不正確"); } };
+      reader.readAsText(file,"utf-8"); event.target.value="";
+    };
+    window.clearAllData = function(){
+      if(!confirm("確定要清空所有 M9 資料嗎？")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      clearContainer("fcnAssetRows"); clearContainer("stockAssetRows"); clearContainer("otherAssetRows"); clearContainer("liabilityRows"); clearContainer("expenseRows"); clearContainer("incomeRows"); clearContainer("depositRows");
+      document.getElementById("usdRate").value = 33; document.getElementById("noteBox").value = ""; recalc();
+      document.getElementById("saveStatus").textContent = "已清空，請重新整理載入 JSON";
+    };
 
     function initDefault(skipSave=false){
       clearContainer("fcnAssetRows"); clearContainer("stockAssetRows"); clearContainer("otherAssetRows"); clearContainer("liabilityRows"); clearContainer("expenseRows"); clearContainer("incomeRows"); clearContainer("depositRows");
-      document.getElementById("usdRate").value=33; document.getElementById("noteBox").value="";
-      addAssetRow("fcnAssetRows","FCN 資產總值","FCN Pool",4000000,"可先填估值"); addAssetRow("stockAssetRows","股票資產總值","接股 / 股票",1500000,""); addAssetRow("otherAssetRows","其他資產","保單 / 其他",0,"");
-      addLiabilityRow("房貸 1｜新竹竹北 哈洛德",8000000,2.5,16667,8333); addLiabilityRow("房貸 2｜桃園青埔 帝璽",0,2.3,0,0); addLiabilityRow("信貸 3｜Bank XX",2000000,2.6,66667,4333); addLiabilityRow("股票質押｜券商 B",28000000,3.0,0,70000);
-      addExpenseRow("小孩補習費","monthly",15000,""); addExpenseRow("生活食材","monthly",20000,""); addExpenseRow("三節禮金","yearly",50000,""); addExpenseRow("水電瓦斯電信","monthly",5000,""); addExpenseRow("社區管理費","quarterly",18000,"");
-      addIncomeRow("收入 A","monthly",120000,""); addIncomeRow("收入 B","monthly",30000,"");
-      addDepositRow("NTD","NTD A",800000); addDepositRow("NTD","NTD B",360000); addDepositRow("USD","USD A",25000); addDepositRow("USD","USD B",10000);
-      recalc(); if(!skipSave) saveData();
+      document.getElementById("usdRate").value = 33; document.getElementById("noteBox").value = "";
+      addAssetRow("fcnAssetRows","FCN 資產總值","FCN Pool",4000000,"可先填估值");
+      addAssetRow("stockAssetRows","股票資產總值","接股 / 股票",1500000,"");
+      addAssetRow("otherAssetRows","其他資產","保單 / 其他",0,"");
+      addLiabilityRow("房貸 1｜新竹竹北 哈洛德",8000000,2.5,16667,8333);
+      addLiabilityRow("房貸 2｜桃園青埔 帝璽",0,2.3,0,0);
+      addLiabilityRow("信貸 3｜Bank XX",2000000,2.6,66667,4333);
+      addLiabilityRow("股票質押｜券商 B",28000000,3.0,0,70000);
+      addExpenseRow("小孩補習費","monthly",15000,"");
+      addExpenseRow("生活食材","monthly",20000,"");
+      addExpenseRow("三節禮金","yearly",50000,"");
+      addExpenseRow("水電瓦斯電信","monthly",5000,"");
+      addExpenseRow("社區管理費","quarterly",18000,"");
+      addIncomeRow("收入 A","monthly",120000,"");
+      addIncomeRow("收入 B","monthly",30000,"");
+      addDepositRow("NTD","NTD A",800000);
+      addDepositRow("NTD","NTD B",360000);
+      addDepositRow("USD","USD A",25000);
+      addDepositRow("USD","USD B",10000);
+      recalc();
+      if(!skipSave) saveData();
     }
 
     async function init(){
-      try{ fcnEngine = await import("./js/m9/m9_fcn_engine.js"); }
-      catch(err){ console.error("m9_fcn_engine.js 載入失敗", err); }
-
-      const raw=localStorage.getItem(STORAGE_KEY);
+      const raw = localStorage.getItem(STORAGE_KEY);
       if(raw){
-        try{ loadFromData(JSON.parse(raw)); document.getElementById("saveStatus").textContent="已讀取本機資料"; return; }
-        catch(e){ console.warn("localStorage 壞掉", e); }
+        try{
+          const data = JSON.parse(raw);
+          loadFromData(data);
+          document.getElementById("saveStatus").textContent = "已讀取本機資料";
+          return;
+        }catch(e){
+          console.warn("localStorage 壞掉，改抓 JSON");
+        }
       }
-      try{ const res=await fetch("./data/m9_asset_data.json"); const data=await res.json(); loadFromData(data); document.getElementById("saveStatus").textContent="已載入 GitHub JSON"; }
-      catch(err){ initDefault(); }
+      try{
+        const res = await fetch("./data/m9_asset_data.json");
+        const data = await res.json();
+        loadFromData(data);
+        document.getElementById("saveStatus").textContent = "已載入 GitHub JSON";
+      }catch(err){
+        console.warn("JSON 讀取失敗，使用預設資料", err);
+        initDefault();
+      }
     }
-
-    window.expandAll = expandAll;
-    window.collapseAll = collapseAll;
-    window.recalc = recalc;
-    window.exportData = exportData;
-    window.importData = importData;
-    window.clearAllData = clearAllData;
-    window.togglePanel = togglePanel;
-    window.addAssetRow = addAssetRow;
-    window.addLiabilityRow = addLiabilityRow;
-    window.addExpenseRow = addExpenseRow;
-    window.addIncomeRow = addIncomeRow;
-    window.addDepositRow = addDepositRow;
 
     init();
   </script>
