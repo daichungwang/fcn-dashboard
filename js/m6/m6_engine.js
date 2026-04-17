@@ -60,7 +60,35 @@ export async function loadJson(url) {
 // ==========================================
 
 function normalizeM7TodayMap(m7TodayRaw = []) {
-  const arr = Array.isArray(m7TodayRaw) ? m7TodayRaw : [];
+  let arr = [];
+
+  if (Array.isArray(m7TodayRaw)) {
+    arr = m7TodayRaw;
+  } else if (m7TodayRaw && typeof m7TodayRaw === "object") {
+    // 常見包法 1：{ data:[...] }
+    if (Array.isArray(m7TodayRaw.data)) {
+      arr = m7TodayRaw.data;
+    }
+    // 常見包法 2：{ items:[...] }
+    else if (Array.isArray(m7TodayRaw.items)) {
+      arr = m7TodayRaw.items;
+    }
+    // 常見包法 3：{ stocks:[...] }
+    else if (Array.isArray(m7TodayRaw.stocks)) {
+      arr = m7TodayRaw.stocks;
+    }
+    // 常見包法 4：物件裡只有一個陣列欄位
+    else {
+      const firstArray = Object.values(m7TodayRaw).find(v => Array.isArray(v));
+      if (Array.isArray(firstArray)) {
+        arr = firstArray;
+      }
+    }
+  }
+
+  console.log("M7 normalize input =", m7TodayRaw);
+  console.log("M7 normalize array length =", arr.length);
+
   const map = {};
 
   for (const item of arr) {
@@ -119,6 +147,9 @@ function normalizeM7TodayMap(m7TodayRaw = []) {
       },
     };
   }
+
+  console.log("M7 normalize map keys =", Object.keys(map).slice(0, 10));
+  console.log("M7 normalize COIN =", map["COIN"]);
 
   return map;
 }
