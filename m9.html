@@ -16,11 +16,13 @@
       --red:#dc2626;
       --orange:#f59e0b;
       --purple:#7c3aed;
+      --teal:#0f766e;
       --soft-blue:#eef4ff;
       --soft-green:#eefaf2;
       --soft-red:#fff2f2;
       --soft-orange:#fff8eb;
       --soft-purple:#f5f0ff;
+      --soft-teal:#ecfeff;
       --shadow:0 6px 18px rgba(15,23,42,.06);
       --radius:18px;
     }
@@ -32,7 +34,7 @@
       font-family:Arial,"Microsoft JhengHei",sans-serif;
     }
     .page{
-      max-width:1440px;
+      max-width:1480px;
       margin:0 auto;
       padding:18px 14px 40px;
     }
@@ -47,7 +49,7 @@
       padding:14px;
     }
     .topbar-inner{
-      max-width:1440px;
+      max-width:1480px;
       margin:0 auto;
       display:flex;
       justify-content:space-between;
@@ -64,6 +66,7 @@
       margin-top:6px;
       color:var(--sub);
       font-size:15px;
+      line-height:1.6;
     }
     .top-actions{
       display:flex;
@@ -90,11 +93,15 @@
     .btn.green{ background:var(--green); }
     .btn.orange{ background:var(--orange); color:#111; }
     .btn.purple{ background:var(--purple); }
-    .toolbar{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:16px;
+    .btn.teal{ background:var(--teal); }
+    .muted-btn{
+      border:1px solid var(--line);
+      background:#fff;
+      color:#334155;
+      border-radius:10px;
+      padding:8px 12px;
+      font-weight:700;
+      cursor:pointer;
     }
     .card{
       background:var(--card);
@@ -160,7 +167,7 @@
       margin-bottom:10px;
     }
     .summary-value{
-      font-size:42px;
+      font-size:40px;
       font-weight:800;
       line-height:1.05;
       margin-bottom:8px;
@@ -168,6 +175,7 @@
     .summary-sub{
       color:var(--sub);
       font-size:14px;
+      line-height:1.6;
     }
 
     .nav-grid{
@@ -209,7 +217,7 @@
 
     .layout{
       display:grid;
-      grid-template-columns:430px 1fr;
+      grid-template-columns:450px 1fr;
       gap:16px;
       align-items:start;
     }
@@ -273,19 +281,20 @@
     }
     .row-item{
       display:grid;
-      grid-template-columns:1.2fr .8fr .8fr .8fr .8fr auto;
+      grid-template-columns:1.15fr .75fr .7fr .7fr .7fr auto;
       gap:8px;
       align-items:center;
     }
     .row-item.expense-row{
-      grid-template-columns:1.2fr .7fr .8fr 1fr auto;
+      grid-template-columns:1.2fr .8fr .8fr 1fr auto;
     }
     .row-item.deposit-row{
-      grid-template-columns:1fr .7fr .9fr .9fr auto;
+      grid-template-columns:.8fr 1fr .9fr auto;
     }
     .row-item.asset-row{
-      grid-template-columns:1fr .8fr .8fr .8fr 1fr auto;
+      grid-template-columns:1fr .9fr .9fr 1fr auto;
     }
+
     input, select, textarea{
       width:100%;
       border:1px solid #cfd8e3;
@@ -296,9 +305,10 @@
       color:var(--text);
     }
     textarea{
-      min-height:72px;
+      min-height:80px;
       resize:vertical;
     }
+
     .mini-btn{
       border:0;
       border-radius:10px;
@@ -307,6 +317,7 @@
       font-weight:700;
       background:#e2e8f0;
       color:#111827;
+      white-space:nowrap;
     }
     .mini-btn.add{ background:#dbeafe; color:#1d4ed8; }
     .mini-btn.del{ background:#fee2e2; color:#b91c1c; }
@@ -331,6 +342,7 @@
       margin:0 0 14px;
       font-size:24px;
     }
+
     table{
       width:100%;
       border-collapse:collapse;
@@ -349,6 +361,93 @@
     tfoot td{
       background:#f8fbff;
       font-weight:800;
+    }
+
+    .chart-card{
+      padding:16px;
+      margin-bottom:16px;
+    }
+    .chart-card h3{
+      margin:0 0 14px;
+      font-size:24px;
+    }
+    .chart-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .chart-box{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px;
+      background:#fbfdff;
+    }
+    .chart-title{
+      font-size:16px;
+      font-weight:800;
+      margin-bottom:10px;
+    }
+    .pie-wrap{
+      display:grid;
+      grid-template-columns:220px 1fr;
+      gap:14px;
+      align-items:center;
+    }
+    .pie{
+      width:190px;
+      height:190px;
+      border-radius:50%;
+      margin:auto;
+      border:10px solid #fff;
+      box-shadow:inset 0 0 0 1px rgba(255,255,255,.8), 0 2px 8px rgba(0,0,0,.05);
+    }
+    .legend{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .legend-item{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      align-items:center;
+      font-size:14px;
+    }
+    .legend-left{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+    }
+    .swatch{
+      width:12px;
+      height:12px;
+      border-radius:999px;
+      flex:0 0 auto;
+    }
+    .bar-chart{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      padding-top:6px;
+    }
+    .bar-row{
+      display:grid;
+      grid-template-columns:90px 1fr 90px;
+      gap:10px;
+      align-items:center;
+      font-size:14px;
+    }
+    .bar-track{
+      height:18px;
+      border-radius:999px;
+      background:#eaf0f7;
+      overflow:hidden;
+      position:relative;
+    }
+    .bar-fill{
+      height:100%;
+      border-radius:999px;
     }
 
     .analysis-grid{
@@ -404,14 +503,21 @@
       font-size:14px;
     }
 
-    @media (max-width:1200px){
+    .save-status{
+      font-size:13px;
+      color:#64748b;
+      margin-left:6px;
+    }
+
+    @media (max-width:1280px){
       .summary-grid{ grid-template-columns:repeat(2,1fr); }
       .layout{ grid-template-columns:1fr; }
       .dashboard-grid{ grid-template-columns:1fr; }
       .analysis-grid{ grid-template-columns:1fr 1fr; }
       .banner-grid{ grid-template-columns:1fr; }
+      .chart-grid{ grid-template-columns:1fr; }
     }
-    @media (max-width:760px){
+    @media (max-width:860px){
       .summary-grid,
       .nav-grid,
       .analysis-grid{ grid-template-columns:1fr; }
@@ -421,10 +527,14 @@
       .row-item.asset-row{
         grid-template-columns:1fr;
       }
+      .pie-wrap{
+        grid-template-columns:1fr;
+      }
       .title-wrap h1{ font-size:30px; }
       .summary-value{ font-size:34px; }
       .nav-left h3{ font-size:24px; }
       .panel-title{ font-size:22px; }
+      .bar-row{ grid-template-columns:70px 1fr 80px; }
     }
   </style>
 </head>
@@ -433,12 +543,16 @@
     <div class="topbar-inner">
       <div class="title-wrap">
         <h1>M9｜資產管理系統</h1>
-        <div class="sub">專業資產負債表 / 現金流管理 / 資產配置建議 / 可擴充輸入區</div>
+        <div class="sub">專業資產負債表 / 現金流管理 / 圖表分析 / localStorage 自動保存 / JSON 匯入匯出</div>
       </div>
       <div class="top-actions">
         <button class="btn secondary" onclick="expandAll()">全部展開</button>
         <button class="btn secondary" onclick="collapseAll()">全部收合</button>
         <button class="btn blue" onclick="recalc()">重新計算</button>
+        <button class="btn teal" onclick="exportData()">匯出 JSON</button>
+        <button class="btn orange" onclick="document.getElementById('importFile').click()">匯入 JSON</button>
+        <button class="btn purple" onclick="clearAllData()">清空資料</button>
+        <input id="importFile" type="file" accept=".json" style="display:none" onchange="importData(event)" />
       </div>
     </div>
   </div>
@@ -451,8 +565,8 @@
           <ul>
             <li>把 FCN、股票、存款、負債、生活費、收入放在同一頁看全貌。</li>
             <li>左側是輸入區，可新增 / 刪除 / 擴充欄位內容。</li>
-            <li>右側是 dashboard 與分析建議，會隨數字即時更新。</li>
-            <li>先求簡單清楚，再慢慢升級成完整財務管理中樞。</li>
+            <li>右側是 dashboard、圖表與分析建議，會隨數字即時更新。</li>
+            <li>資料會自動儲存在瀏覽器，重新開啟頁面也會保留。</li>
           </ul>
         </div>
         <div class="banner-box">
@@ -600,16 +714,28 @@
         <section class="card panel" data-panel>
           <div class="panel-header" onclick="togglePanel(this)">
             <div>
-              <div class="panel-title">輸入區｜補充說明</div>
-              <div class="panel-sub">策略註記 / 家庭規劃 / 特殊支出 / 風險提醒</div>
+              <div class="panel-title">輸入區｜系統設定與備註</div>
+              <div class="panel-sub">匯率、特殊支出、重大事件與策略註記</div>
             </div>
             <div class="collapse-btn">−</div>
           </div>
           <div class="panel-body">
+            <div class="input-card" style="margin-bottom:12px;">
+              <h4>系統設定</h4>
+              <div class="rows">
+                <div class="row-item asset-row">
+                  <input id="usdRate" type="number" value="33" oninput="recalc()" placeholder="USD/TWD 匯率" />
+                  <input value="USD/TWD 匯率" disabled />
+                  <input value="用於換算存款與美元資產" disabled />
+                  <input id="saveHint" value="自動保存中" disabled />
+                  <span class="save-status" id="saveStatus">尚未儲存</span>
+                </div>
+              </div>
+            </div>
             <div class="input-card">
               <h4>財務備註</h4>
-              <textarea id="noteBox" placeholder="例如：第10個月有工程款支出、第25個月需支付房屋尾款、需保留半年生活備用金..."></textarea>
-              <div class="hint">這區先保留給 M9 後續升級，例如：現金流壓力測試、重大支出提醒、到期追蹤。</div>
+              <textarea id="noteBox" placeholder="例如：第10個月有工程款支出、第25個月需支付房屋尾款、需保留半年生活備用金..." oninput="triggerAutoSave()"></textarea>
+              <div class="hint">這區可記錄重大支出、到期提醒、保守現金部位目標、房貸規劃等。</div>
             </div>
           </div>
         </section>
@@ -707,6 +833,23 @@
             </table>
           </section>
         </div>
+
+        <section class="card chart-card">
+          <h3>圖表總覽</h3>
+          <div class="chart-grid">
+            <div class="chart-box">
+              <div class="chart-title">資產配置結構</div>
+              <div class="pie-wrap">
+                <div class="pie" id="assetPie"></div>
+                <div class="legend" id="assetLegend"></div>
+              </div>
+            </div>
+            <div class="chart-box">
+              <div class="chart-title">每月現金流比較</div>
+              <div class="bar-chart" id="cashBarChart"></div>
+            </div>
+          </div>
+        </section>
 
         <div class="dashboard-grid">
           <section class="card table-card">
@@ -807,15 +950,17 @@
         </div>
 
         <div class="footer-tip">
-          小提醒：這版是 M9 第一版骨架，已經可以輸入、增減項目、展開收合與自動彙總。
-          下一步可再加：<b>localStorage 儲存、每月趨勢圖、重大支出提醒、房貸攤還試算、美元匯率自動換算</b>。
+          本版已支援：<b>自動儲存、JSON 匯入匯出、圖表、可擴充輸入區、一鍵展開收合</b>。
+          下個版本可以再升級：<b>房貸攤還試算、年度現金流預估、重大支出時間軸、資產歷史趨勢圖</b>。
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    const FX_USD_TO_TWD = 33;
+    const STORAGE_KEY = "m9_asset_management_v2";
+    const PIE_COLORS = ["#2563eb","#16a34a","#f59e0b","#7c3aed"];
+    let autoSaveTimer = null;
 
     function formatNum(v){
       const n = Number(v) || 0;
@@ -823,6 +968,13 @@
     }
     function val(el){
       return Number(el?.value || 0) || 0;
+    }
+    function freqText(v){
+      if(v === "monthly") return "每月";
+      if(v === "quarterly") return "每3個月";
+      if(v === "yearly") return "每年";
+      if(v === "oneoff") return "一次性";
+      return v;
     }
     function monthlyValue(amount, freq){
       const a = Number(amount) || 0;
@@ -841,6 +993,7 @@
       panel.classList.toggle("collapsed");
       const btn = panel.querySelector(".collapse-btn");
       btn.textContent = panel.classList.contains("collapsed") ? "+" : "−";
+      triggerAutoSave();
     }
     function expandAll(){
       panelList().forEach(p=>{
@@ -848,6 +1001,7 @@
         const btn = p.querySelector(".collapse-btn");
         if(btn) btn.textContent = "−";
       });
+      triggerAutoSave();
     }
     function collapseAll(){
       panelList().forEach(p=>{
@@ -855,6 +1009,7 @@
         const btn = p.querySelector(".collapse-btn");
         if(btn) btn.textContent = "+";
       });
+      triggerAutoSave();
     }
 
     function createInput(type="text", value="", placeholder=""){
@@ -862,7 +1017,10 @@
       input.type = type;
       input.value = value;
       input.placeholder = placeholder;
-      input.oninput = recalc;
+      input.oninput = () => {
+        recalc();
+        triggerAutoSave();
+      };
       return input;
     }
     function createSelect(options, value){
@@ -874,7 +1032,10 @@
         if(v === value) o.selected = true;
         s.appendChild(o);
       });
-      s.onchange = recalc;
+      s.onchange = () => {
+        recalc();
+        triggerAutoSave();
+      };
       return s;
     }
     function createDelButton(row){
@@ -884,6 +1045,7 @@
       btn.onclick = () => {
         row.remove();
         recalc();
+        triggerAutoSave();
       };
       return btn;
     }
@@ -905,6 +1067,7 @@
       row.append(i1, i2, i3, i4, createDelButton(row));
       wrap.appendChild(row);
       recalc();
+      triggerAutoSave();
     }
 
     function addLiabilityRow(name="", principal=0, rate=0, monthlyPrincipal=0, monthlyInterest=0){
@@ -926,6 +1089,7 @@
       row.append(i1, i2, i3, i4, i5, createDelButton(row));
       wrap.appendChild(row);
       recalc();
+      triggerAutoSave();
     }
 
     function addExpenseRow(name="", freq="monthly", amount=0, note=""){
@@ -950,6 +1114,7 @@
       row.append(i1, i2, i3, i4, createDelButton(row));
       wrap.appendChild(row);
       recalc();
+      triggerAutoSave();
     }
 
     function addIncomeRow(name="", freq="monthly", amount=0, note=""){
@@ -974,6 +1139,7 @@
       row.append(i1, i2, i3, i4, createDelButton(row));
       wrap.appendChild(row);
       recalc();
+      triggerAutoSave();
     }
 
     function addDepositRow(currency="NTD", account="", balance=0){
@@ -994,6 +1160,7 @@
       row.append(i1, i2, i3, createDelButton(row));
       wrap.appendChild(row);
       recalc();
+      triggerAutoSave();
     }
 
     function readAssetRows(id){
@@ -1059,101 +1226,62 @@
       }
     }
 
-    function recalc(){
-      const fcnAssets = readAssetRows("fcnAssetRows");
-      const stockAssets = readAssetRows("stockAssetRows");
-      const otherAssets = readAssetRows("otherAssetRows");
-      const liabilities = readLiabilityRows();
-      const expenses = readExpenseRows();
-      const incomes = readIncomeRows();
-      const deposits = readDepositRows();
+    function renderPieChart(data){
+      const total = data.reduce((s,x)=>s+x.value,0);
+      const pie = document.getElementById("assetPie");
+      const legend = document.getElementById("assetLegend");
 
-      const fcnSum = fcnAssets.reduce((s,x)=>s+x.amount,0);
-      const stockSum = stockAssets.reduce((s,x)=>s+x.amount,0);
-      const otherAssetSum = otherAssets.reduce((s,x)=>s+x.amount,0);
-      const depositSum = deposits.reduce((s,x)=>s+(x.currency==="USD" ? x.balance * FX_USD_TO_TWD : x.balance),0);
+      if(total <= 0){
+        pie.style.background = "#e5e7eb";
+        legend.innerHTML = '<div style="color:#64748b;font-size:14px;">尚未輸入資產資料</div>';
+        return;
+      }
 
-      const totalAssets = fcnSum + stockSum + otherAssetSum + depositSum;
-      const totalDebt = liabilities.reduce((s,x)=>s+x.principal,0);
-      const netWorth = totalAssets - totalDebt;
-      const debtRatio = totalAssets > 0 ? totalDebt / totalAssets : 0;
+      let start = 0;
+      const segments = data.map((item, idx)=>{
+        const pct = item.value / total * 100;
+        const end = start + pct;
+        const seg = `${PIE_COLORS[idx]} ${start.toFixed(2)}% ${end.toFixed(2)}%`;
+        start = end;
+        return seg;
+      });
 
-      const monthlyDebtPay = liabilities.reduce((s,x)=>s+x.monthlyPrincipal+x.monthlyInterest,0);
-      const monthlyExpense = expenses.reduce((s,x)=>s+monthlyValue(x.amount,x.freq),0);
-      const monthlyIncome = incomes.reduce((s,x)=>s+monthlyValue(x.amount,x.freq),0);
-      const monthlyNet = monthlyIncome - monthlyExpense - monthlyDebtPay;
+      pie.style.background = `conic-gradient(${segments.join(", ")})`;
 
-      document.getElementById("sumAssets").textContent = formatNum(totalAssets);
-      document.getElementById("sumLiabilities").textContent = formatNum(totalDebt);
-      document.getElementById("sumNetWorth").textContent = formatNum(netWorth);
-      document.getElementById("sumDebtRatio").textContent = (debtRatio*100).toFixed(2) + "%";
-      document.getElementById("sumCashflow").textContent = formatNum(monthlyNet);
-
-      const pct = (v) => totalAssets > 0 ? ((v / totalAssets) * 100).toFixed(1) + "%" : "0%";
-      document.getElementById("tblFcnAsset").textContent = formatNum(fcnSum);
-      document.getElementById("tblFcnAssetPct").textContent = pct(fcnSum);
-      document.getElementById("tblStockAsset").textContent = formatNum(stockSum);
-      document.getElementById("tblStockAssetPct").textContent = pct(stockSum);
-      document.getElementById("tblDeposits").textContent = formatNum(depositSum);
-      document.getElementById("tblDepositsPct").textContent = pct(depositSum);
-      document.getElementById("tblOtherAsset").textContent = formatNum(otherAssetSum);
-      document.getElementById("tblOtherAssetPct").textContent = pct(otherAssetSum);
-      document.getElementById("tblDebt").textContent = formatNum(totalDebt);
-      document.getElementById("tblDebtPct").textContent = pct(totalDebt);
-      document.getElementById("tblNetWorth").textContent = formatNum(netWorth);
-
-      document.getElementById("tblMonthlyIncome").textContent = formatNum(monthlyIncome);
-      document.getElementById("tblMonthlyExpense").textContent = formatNum(monthlyExpense);
-      document.getElementById("tblMonthlyDebtPay").textContent = formatNum(monthlyDebtPay);
-      document.getElementById("tblMonthlyNet").textContent = formatNum(monthlyNet);
-      document.getElementById("tblMonthlyTag").textContent =
-        monthlyNet > 50000 ? "現金流健康" :
-        monthlyNet > 0 ? "現金流尚可" :
-        "現金流偏緊";
-
-      fillTableBody("liabilityTable", liabilities.map(x => [
-        x.name || "未命名",
-        formatNum(x.principal),
-        x.rate ? x.rate + "%" : "—",
-        formatNum(x.monthlyPrincipal),
-        formatNum(x.monthlyInterest),
-        formatNum(x.monthlyPrincipal + x.monthlyInterest)
-      ]));
-
-      fillTableBody("depositTable", deposits.map(x => [
-        x.currency,
-        x.account || "未命名",
-        x.currency === "USD" ? x.balance.toLocaleString("zh-Hant-TW", {maximumFractionDigits:0}) : formatNum(x.balance),
-        formatNum(x.currency === "USD" ? x.balance * FX_USD_TO_TWD : x.balance)
-      ]));
-
-      fillTableBody("incomeTable", incomes.map(x => [
-        x.name || "未命名",
-        freqText(x.freq),
-        formatNum(x.amount),
-        formatNum(monthlyValue(x.amount, x.freq))
-      ]));
-
-      fillTableBody("expenseTable", expenses.map(x => [
-        x.name || "未命名",
-        freqText(x.freq),
-        formatNum(x.amount),
-        formatNum(monthlyValue(x.amount, x.freq))
-      ]));
-
-      buildAdvice({
-        totalAssets,totalDebt,netWorth,debtRatio,
-        monthlyDebtPay,monthlyExpense,monthlyIncome,monthlyNet,
-        fcnSum,stockSum,depositSum,otherAssetSum
+      legend.innerHTML = "";
+      data.forEach((item, idx)=>{
+        const pct = item.value / total * 100;
+        const row = document.createElement("div");
+        row.className = "legend-item";
+        row.innerHTML = `
+          <div class="legend-left">
+            <span class="swatch" style="background:${PIE_COLORS[idx]}"></span>
+            <span>${item.label}</span>
+          </div>
+          <div>${formatNum(item.value)} ｜ ${pct.toFixed(1)}%</div>
+        `;
+        legend.appendChild(row);
       });
     }
 
-    function freqText(v){
-      if(v === "monthly") return "每月";
-      if(v === "quarterly") return "每3個月";
-      if(v === "yearly") return "每年";
-      if(v === "oneoff") return "一次性";
-      return v;
+    function renderCashBars(data){
+      const box = document.getElementById("cashBarChart");
+      box.innerHTML = "";
+      const max = Math.max(...data.map(x => Math.abs(x.value)), 1);
+
+      data.forEach(item=>{
+        const row = document.createElement("div");
+        row.className = "bar-row";
+        const width = Math.max(4, Math.abs(item.value) / max * 100);
+        row.innerHTML = `
+          <div>${item.label}</div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:${width}%; background:${item.color};"></div>
+          </div>
+          <div>${formatNum(item.value)}</div>
+        `;
+        box.appendChild(row);
+      });
     }
 
     function setList(id, items){
@@ -1217,6 +1345,7 @@
       if (fcnSum > totalAssets * 0.4) assetAdvice.push("FCN 比例偏高，可分散到較高流動性的資產，降低單一結構性商品比重。");
       if (stockSum > totalAssets * 0.4) assetAdvice.push("股票部位偏高，建議搭配現金或低波動資產，避免股市波動放大總資產起伏。");
       if (depositSum < (monthlyExpense + monthlyDebtPay) * 6) assetAdvice.push("存款緩衝偏少，建議逐步建立 6 個月以上生活與債務準備金。");
+      if (depositSum > totalAssets * 0.35) assetAdvice.push("存款占比較高，若風險可控，可考慮部分提高資金運用效率。");
       if (!assetAdvice.length) assetAdvice.push("資產配置目前相對平衡，可進一步追求收益效率與流動性管理。");
 
       const debtAdvice = [];
@@ -1237,7 +1366,235 @@
       setList("cashAdvice", cashAdvice);
     }
 
-    function init(){
+    function recalc(){
+      const usdRate = Number(document.getElementById("usdRate").value || 33) || 33;
+      const fcnAssets = readAssetRows("fcnAssetRows");
+      const stockAssets = readAssetRows("stockAssetRows");
+      const otherAssets = readAssetRows("otherAssetRows");
+      const liabilities = readLiabilityRows();
+      const expenses = readExpenseRows();
+      const incomes = readIncomeRows();
+      const deposits = readDepositRows();
+
+      const fcnSum = fcnAssets.reduce((s,x)=>s+x.amount,0);
+      const stockSum = stockAssets.reduce((s,x)=>s+x.amount,0);
+      const otherAssetSum = otherAssets.reduce((s,x)=>s+x.amount,0);
+      const depositSum = deposits.reduce((s,x)=>s+(x.currency==="USD" ? x.balance * usdRate : x.balance),0);
+
+      const totalAssets = fcnSum + stockSum + otherAssetSum + depositSum;
+      const totalDebt = liabilities.reduce((s,x)=>s+x.principal,0);
+      const netWorth = totalAssets - totalDebt;
+      const debtRatio = totalAssets > 0 ? totalDebt / totalAssets : 0;
+
+      const monthlyDebtPay = liabilities.reduce((s,x)=>s+x.monthlyPrincipal+x.monthlyInterest,0);
+      const monthlyExpense = expenses.reduce((s,x)=>s+monthlyValue(x.amount,x.freq),0);
+      const monthlyIncome = incomes.reduce((s,x)=>s+monthlyValue(x.amount,x.freq),0);
+      const monthlyNet = monthlyIncome - monthlyExpense - monthlyDebtPay;
+
+      document.getElementById("sumAssets").textContent = formatNum(totalAssets);
+      document.getElementById("sumLiabilities").textContent = formatNum(totalDebt);
+      document.getElementById("sumNetWorth").textContent = formatNum(netWorth);
+      document.getElementById("sumDebtRatio").textContent = (debtRatio*100).toFixed(2) + "%";
+      document.getElementById("sumCashflow").textContent = formatNum(monthlyNet);
+
+      const pct = (v) => totalAssets > 0 ? ((v / totalAssets) * 100).toFixed(1) + "%" : "0%";
+      document.getElementById("tblFcnAsset").textContent = formatNum(fcnSum);
+      document.getElementById("tblFcnAssetPct").textContent = pct(fcnSum);
+      document.getElementById("tblStockAsset").textContent = formatNum(stockSum);
+      document.getElementById("tblStockAssetPct").textContent = pct(stockSum);
+      document.getElementById("tblDeposits").textContent = formatNum(depositSum);
+      document.getElementById("tblDepositsPct").textContent = pct(depositSum);
+      document.getElementById("tblOtherAsset").textContent = formatNum(otherAssetSum);
+      document.getElementById("tblOtherAssetPct").textContent = pct(otherAssetSum);
+      document.getElementById("tblDebt").textContent = formatNum(totalDebt);
+      document.getElementById("tblDebtPct").textContent = pct(totalDebt);
+      document.getElementById("tblNetWorth").textContent = formatNum(netWorth);
+
+      document.getElementById("tblMonthlyIncome").textContent = formatNum(monthlyIncome);
+      document.getElementById("tblMonthlyExpense").textContent = formatNum(monthlyExpense);
+      document.getElementById("tblMonthlyDebtPay").textContent = formatNum(monthlyDebtPay);
+      document.getElementById("tblMonthlyNet").textContent = formatNum(monthlyNet);
+      document.getElementById("tblMonthlyTag").textContent =
+        monthlyNet > 50000 ? "現金流健康" :
+        monthlyNet > 0 ? "現金流尚可" :
+        "現金流偏緊";
+
+      fillTableBody("liabilityTable", liabilities.map(x => [
+        x.name || "未命名",
+        formatNum(x.principal),
+        x.rate ? x.rate + "%" : "—",
+        formatNum(x.monthlyPrincipal),
+        formatNum(x.monthlyInterest),
+        formatNum(x.monthlyPrincipal + x.monthlyInterest)
+      ]));
+
+      fillTableBody("depositTable", deposits.map(x => [
+        x.currency,
+        x.account || "未命名",
+        x.currency === "USD" ? x.balance.toLocaleString("zh-Hant-TW", {maximumFractionDigits:0}) : formatNum(x.balance),
+        formatNum(x.currency === "USD" ? x.balance * usdRate : x.balance)
+      ]));
+
+      fillTableBody("incomeTable", incomes.map(x => [
+        x.name || "未命名",
+        freqText(x.freq),
+        formatNum(x.amount),
+        formatNum(monthlyValue(x.amount, x.freq))
+      ]));
+
+      fillTableBody("expenseTable", expenses.map(x => [
+        x.name || "未命名",
+        freqText(x.freq),
+        formatNum(x.amount),
+        formatNum(monthlyValue(x.amount, x.freq))
+      ]));
+
+      renderPieChart([
+        {label:"FCN資產", value:fcnSum},
+        {label:"股票資產", value:stockSum},
+        {label:"存款", value:depositSum},
+        {label:"其他資產", value:otherAssetSum}
+      ]);
+
+      renderCashBars([
+        {label:"收入", value:monthlyIncome, color:"#16a34a"},
+        {label:"支出", value:monthlyExpense, color:"#f59e0b"},
+        {label:"負債", value:monthlyDebtPay, color:"#dc2626"},
+        {label:"淨現金流", value:Math.max(monthlyNet,0), color:"#7c3aed"}
+      ]);
+
+      buildAdvice({
+        totalAssets,totalDebt,netWorth,debtRatio,
+        monthlyDebtPay,monthlyExpense,monthlyIncome,monthlyNet,
+        fcnSum,stockSum,depositSum,otherAssetSum
+      });
+    }
+
+    function getCollapsedState(){
+      return panelList().map(p => p.classList.contains("collapsed"));
+    }
+
+    function saveData(){
+      const payload = {
+        usdRate: document.getElementById("usdRate").value,
+        noteBox: document.getElementById("noteBox").value,
+        fcnAssets: readAssetRows("fcnAssetRows"),
+        stockAssets: readAssetRows("stockAssetRows"),
+        otherAssets: readAssetRows("otherAssetRows"),
+        liabilities: readLiabilityRows(),
+        expenses: readExpenseRows(),
+        incomes: readIncomeRows(),
+        deposits: readDepositRows(),
+        collapsed: getCollapsedState()
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      const status = document.getElementById("saveStatus");
+      if(status) status.textContent = "已自動儲存";
+    }
+
+    function triggerAutoSave(){
+      const status = document.getElementById("saveStatus");
+      if(status) status.textContent = "儲存中...";
+      clearTimeout(autoSaveTimer);
+      autoSaveTimer = setTimeout(() => saveData(), 300);
+    }
+
+    function clearContainer(id){
+      const el = document.getElementById(id);
+      el.innerHTML = "";
+    }
+
+    function loadFromData(data){
+      clearContainer("fcnAssetRows");
+      clearContainer("stockAssetRows");
+      clearContainer("otherAssetRows");
+      clearContainer("liabilityRows");
+      clearContainer("expenseRows");
+      clearContainer("incomeRows");
+      clearContainer("depositRows");
+
+      document.getElementById("usdRate").value = data.usdRate ?? 33;
+      document.getElementById("noteBox").value = data.noteBox ?? "";
+
+      (data.fcnAssets || []).forEach(x => addAssetRow("fcnAssetRows", x.name, x.category, x.amount, x.note));
+      (data.stockAssets || []).forEach(x => addAssetRow("stockAssetRows", x.name, x.category, x.amount, x.note));
+      (data.otherAssets || []).forEach(x => addAssetRow("otherAssetRows", x.name, x.category, x.amount, x.note));
+      (data.liabilities || []).forEach(x => addLiabilityRow(x.name, x.principal, x.rate, x.monthlyPrincipal, x.monthlyInterest));
+      (data.expenses || []).forEach(x => addExpenseRow(x.name, x.freq, x.amount, x.note));
+      (data.incomes || []).forEach(x => addIncomeRow(x.name, x.freq, x.amount, x.note));
+      (data.deposits || []).forEach(x => addDepositRow(x.currency, x.account, x.balance));
+
+      if (Array.isArray(data.collapsed)) {
+        panelList().forEach((p, i) => {
+          p.classList.toggle("collapsed", !!data.collapsed[i]);
+          const btn = p.querySelector(".collapse-btn");
+          if(btn) btn.textContent = p.classList.contains("collapsed") ? "+" : "−";
+        });
+      }
+      recalc();
+      saveData();
+    }
+
+    function exportData(){
+      const payload = {
+        usdRate: document.getElementById("usdRate").value,
+        noteBox: document.getElementById("noteBox").value,
+        fcnAssets: readAssetRows("fcnAssetRows"),
+        stockAssets: readAssetRows("stockAssetRows"),
+        otherAssets: readAssetRows("otherAssetRows"),
+        liabilities: readLiabilityRows(),
+        expenses: readExpenseRows(),
+        incomes: readIncomeRows(),
+        deposits: readDepositRows(),
+        collapsed: getCollapsedState(),
+        exported_at: new Date().toISOString()
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "m9_asset_data.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(a.href), 500);
+    }
+
+    function importData(event){
+      const file = event.target.files?.[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const data = JSON.parse(reader.result);
+          loadFromData(data);
+          alert("匯入成功");
+        }catch(err){
+          alert("匯入失敗：JSON 格式不正確");
+        }
+      };
+      reader.readAsText(file, "utf-8");
+      event.target.value = "";
+    }
+
+    function clearAllData(){
+      if(!confirm("確定要清空所有 M9 資料嗎？")) return;
+      localStorage.removeItem(STORAGE_KEY);
+      initDefault(true);
+      document.getElementById("saveStatus").textContent = "已清空";
+    }
+
+    function initDefault(skipSave=false){
+      clearContainer("fcnAssetRows");
+      clearContainer("stockAssetRows");
+      clearContainer("otherAssetRows");
+      clearContainer("liabilityRows");
+      clearContainer("expenseRows");
+      clearContainer("incomeRows");
+      clearContainer("depositRows");
+
+      document.getElementById("usdRate").value = 33;
+      document.getElementById("noteBox").value = "";
+
       addAssetRow("fcnAssetRows","FCN 資產總值","FCN Pool",4000000,"可先填估值");
       addAssetRow("stockAssetRows","股票資產總值","接股 / 股票",1500000,"");
       addAssetRow("otherAssetRows","其他資產","保單 / 其他",0,"");
@@ -1262,6 +1619,22 @@
       addDepositRow("USD","USD B",10000);
 
       recalc();
+      if(!skipSave) saveData();
+    }
+
+    function init(){
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(raw){
+        try{
+          const data = JSON.parse(raw);
+          loadFromData(data);
+          document.getElementById("saveStatus").textContent = "已讀取本機資料";
+          return;
+        }catch(err){
+          console.warn("M9 localStorage 讀取失敗，改用預設資料", err);
+        }
+      }
+      initDefault();
     }
 
     init();
