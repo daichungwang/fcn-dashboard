@@ -1,0 +1,13 @@
+{
+  "symbol": "ANET",
+  "engine_suggested_category": "growth",
+  "engine_into_stock_pool": true,
+  "engine_into_pool30": "watch_candidate",
+
+  "human_decision": {
+    "approve_into_stock_pool": true,
+    "approve_into_pool30": false,
+    "final_category": "growth",
+    "review_note": "先納入大池，暫不進 pool30"
+  }
+}
