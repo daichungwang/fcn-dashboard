@@ -56,7 +56,9 @@ function capexScore(stock) {
   const capex = n(stock.capex);
   const profit = n(stock.profit);
 
-  if (!capex || !profit) return 5; // 中性 fallback
+  if (!Number.isFinite(capex) || !Number.isFinite(profit) || profit <= 0) {
+  return null;
+} // 中性 fallback
 
   const ratio = capex / profit;
 
