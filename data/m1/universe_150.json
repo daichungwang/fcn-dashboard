@@ -1,0 +1,104 @@
+[
+  {"symbol":"NVDA","category":"core","sector":"AI_SEMI","style":["high_capex","high_growth"]},
+  {"symbol":"MSFT","category":"core","sector":"CLOUD","style":["platform"]},
+  {"symbol":"GOOG","category":"core","sector":"CLOUD","style":["platform"]},
+  {"symbol":"AMZN","category":"core","sector":"CLOUD","style":["platform"]},
+  {"symbol":"META","category":"core","sector":"AI_PLATFORM","style":["high_growth"]},
+  {"symbol":"TSM","category":"core","sector":"FOUNDRY","style":["capex"]},
+  {"symbol":"AVGO","category":"core","sector":"SEMI","style":["quality"]},
+  {"symbol":"AAPL","category":"core","sector":"CONSUMER_TECH","style":["ecosystem"]},
+  {"symbol":"ADBE","category":"core","sector":"SOFTWARE","style":["high_margin"]},
+  {"symbol":"CRM","category":"core","sector":"CLOUD_SAAS","style":["stable_growth"]},
+  {"symbol":"NOW","category":"core","sector":"CLOUD_SAAS","style":["enterprise_core"]},
+
+  {"symbol":"AMD","category":"growth","sector":"AI_SEMI","style":["growth"]},
+  {"symbol":"MRVL","category":"growth","sector":"AI_SEMI","style":["growth"]},
+  {"symbol":"AMAT","category":"growth","sector":"SEMI_EQUIPMENT","style":["cyclical"]},
+  {"symbol":"LRCX","category":"growth","sector":"SEMI_EQUIPMENT","style":["cyclical"]},
+  {"symbol":"KLAC","category":"growth","sector":"SEMI_EQUIPMENT","style":["cyclical"]},
+  {"symbol":"ASML","category":"growth","sector":"SEMI_EQUIPMENT","style":["monopoly"]},
+  {"symbol":"ON","category":"growth","sector":"SEMI","style":["cyclical"]},
+  {"symbol":"ARM","category":"growth","sector":"SEMI","style":["ip"]},
+  {"symbol":"MU","category":"growth","sector":"MEMORY","style":["cyclical"]},
+
+  {"symbol":"PLTR","category":"growth","sector":"DATA_AI","style":["high_growth"]},
+  {"symbol":"SNOW","category":"growth","sector":"DATA_CLOUD","style":["high_growth"]},
+  {"symbol":"PANW","category":"growth","sector":"CYBERSECURITY","style":["growth"]},
+  {"symbol":"CRWD","category":"growth","sector":"CYBERSECURITY","style":["growth"]},
+  {"symbol":"ZS","category":"growth","sector":"CYBERSECURITY","style":["growth"]},
+  {"symbol":"NET","category":"growth","sector":"CLOUD","style":["growth"]},
+
+  {"symbol":"ORCL","category":"growth","sector":"CLOUD","style":["turnaround"]},
+  {"symbol":"UBER","category":"growth","sector":"PLATFORM","style":["turnaround"]},
+  {"symbol":"SHOP","category":"growth","sector":"ECOMMERCE","style":["growth"]},
+
+  {"symbol":"TSLA","category":"growth","sector":"EV","style":["high_beta"]},
+  {"symbol":"RIVN","category":"speculative","sector":"EV","style":["high_beta"]},
+  {"symbol":"LCID","category":"speculative","sector":"EV","style":["high_beta"]},
+
+  {"symbol":"COIN","category":"speculative","sector":"CRYPTO","style":["high_beta"]},
+  {"symbol":"HOOD","category":"speculative","sector":"FINTECH","style":["high_beta"]},
+  {"symbol":"SOFI","category":"speculative","sector":"FINTECH","style":["high_beta"]},
+  {"symbol":"RIOT","category":"speculative","sector":"CRYPTO","style":["high_beta"]},
+  {"symbol":"MARA","category":"speculative","sector":"CRYPTO","style":["high_beta"]},
+
+  {"symbol":"CCL","category":"income","sector":"CRUISE","style":["cyclical"]},
+  {"symbol":"AAL","category":"income","sector":"AIRLINE","style":["cyclical"]},
+  {"symbol":"UAL","category":"income","sector":"AIRLINE","style":["cyclical"]},
+  {"symbol":"DAL","category":"income","sector":"AIRLINE","style":["cyclical"]},
+  {"symbol":"LVS","category":"income","sector":"CASINO","style":["cyclical"]},
+  {"symbol":"WYNN","category":"income","sector":"CASINO","style":["cyclical"]},
+
+  {"symbol":"XOM","category":"income","sector":"ENERGY","style":["cashflow"]},
+  {"symbol":"CVX","category":"income","sector":"ENERGY","style":["cashflow"]},
+  {"symbol":"COP","category":"income","sector":"ENERGY","style":["cashflow"]},
+  {"symbol":"OXY","category":"income","sector":"ENERGY","style":["cyclical"]},
+
+  {"symbol":"CAT","category":"income","sector":"INDUSTRIAL","style":["cyclical"]},
+  {"symbol":"DE","category":"growth","sector":"INDUSTRIAL","style":["upgrade"]},
+  {"symbol":"GE","category":"growth","sector":"INDUSTRIAL","style":["turnaround"]},
+  {"symbol":"BA","category":"growth","sector":"AEROSPACE","style":["turnaround"]},
+
+  {"symbol":"COST","category":"core","sector":"CONSUMER","style":["quality"]},
+  {"symbol":"WMT","category":"defensive","sector":"CONSUMER","style":["low_vol"]},
+  {"symbol":"TGT","category":"income","sector":"CONSUMER","style":["cashflow"]},
+
+  {"symbol":"PG","category":"defensive","sector":"CONSUMER_STAPLES","style":["low_vol"]},
+  {"symbol":"KO","category":"defensive","sector":"CONSUMER_STAPLES","style":["low_vol"]},
+  {"symbol":"PEP","category":"defensive","sector":"CONSUMER_STAPLES","style":["low_vol"]},
+
+  {"symbol":"JNJ","category":"defensive","sector":"HEALTHCARE","style":["low_vol"]},
+  {"symbol":"PFE","category":"income","sector":"HEALTHCARE","style":["cashflow"]},
+  {"symbol":"ABBV","category":"income","sector":"HEALTHCARE","style":["cashflow"]},
+  {"symbol":"UNH","category":"core","sector":"HEALTHCARE","style":["quality"]},
+
+  {"symbol":"JPM","category":"defensive","sector":"BANK","style":["low_vol"]},
+  {"symbol":"GS","category":"growth","sector":"BANK","style":["cyclical"]},
+  {"symbol":"MS","category":"growth","sector":"BANK","style":["cyclical"]},
+  {"symbol":"BLK","category":"core","sector":"ASSET_MANAGEMENT","style":["quality"]},
+
+  {"symbol":"QQQ","category":"defensive","sector":"ETF","style":["index"]},
+  {"symbol":"SPY","category":"defensive","sector":"ETF","style":["index"]},
+  {"symbol":"DIA","category":"defensive","sector":"ETF","style":["index"]},
+  {"symbol":"IWM","category":"defensive","sector":"ETF","style":["index"]},
+  {"symbol":"SMH","category":"defensive","sector":"ETF","style":["semi"]},
+  {"symbol":"XLF","category":"defensive","sector":"ETF","style":["financial"]},
+  {"symbol":"XLV","category":"defensive","sector":"ETF","style":["health"]},
+  {"symbol":"XLE","category":"defensive","sector":"ETF","style":["energy"]},
+  {"symbol":"XLP","category":"defensive","sector":"ETF","style":["staples"]},
+  {"symbol":"LQD","category":"defensive","sector":"BOND","style":["low_vol"]},
+
+  {"symbol":"NKE","category":"income","sector":"CONSUMER","style":["brand"]},
+  {"symbol":"DIS","category":"growth","sector":"MEDIA","style":["turnaround"]},
+  {"symbol":"NFLX","category":"core","sector":"MEDIA","style":["platform"]},
+
+  {"symbol":"INTC","category":"growth","sector":"SEMI","style":["turnaround"]},
+  {"symbol":"QCOM","category":"core","sector":"SEMI","style":["cashflow"]},
+  {"symbol":"TXN","category":"income","sector":"SEMI","style":["cashflow"]},
+
+  {"symbol":"BABA","category":"speculative","sector":"ECOMMERCE","style":["china"]},
+  {"symbol":"PDD","category":"growth","sector":"ECOMMERCE","style":["growth"]},
+
+  {"symbol":"SQ","category":"growth","sector":"FINTECH","style":["growth"]},
+  {"symbol":"PYPL","category":"growth","sector":"FINTECH","style":["turnaround"]}
+]
