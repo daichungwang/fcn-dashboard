@@ -1,1 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>振宇 FCN 系統｜M1 市場資訊</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
+      background: #f5f6f8;
+      color: #111;
+    }
+
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 14px 40px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 18px;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .section {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,.03);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .section-header h3 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .section-note {
+      color: #666;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .market-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .market-table th,
+    .market-table td {
+      border-bottom: 1px solid #eee;
+      padding: 10px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .market-table th {
+      background: #222;
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .market-up { color: #137333; font-weight: 700; }
+    .market-down { color: #b42318; font-weight: 700; }
+    .market-flat { color: #666; }
+
+    .news-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .news-card {
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 12px;
+      background: #fcfcfc;
+    }
+
+    .news-title {
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.45;
+      margin-bottom: 6px;
+    }
+
+    .news-summary {
+      color: #333;
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 8px;
+    }
+
+    .news-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      font-size: 12px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 6px;
+    }
+
+    .stock-card {
+      border: 1px solid #eee;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+
+    .stock-card.positive {
+      border-left: 5px solid #20a05a;
+    }
+
+    .stock-card.negative {
+      border-left: 5px solid #c93d35;
+    }
+
+    .stock-card.neutral {
+      border-left: 5px solid #999;
+    }
+
+    .stock-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .stock-symbol {
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .stock-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .stock-tags span {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      border: 1px solid #ddd;
+      background: #f6f6f6;
+      font-size: 12px;
+      color: #444;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+
+    .score-grid > div {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 10px;
+      line-height: 1.5;
+    }
+
+    .snapshot-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .snapshot-grid > div {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 8px 10px;
+      line-height: 1.5;
+    }
+
+    .stock-note {
+      font-size: 14px;
+      line-height: 1.75;
+      margin-bottom: 6px;
+    }
+
+    .action-panel h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .action-group {
+      margin-bottom: 16px;
+    }
+
+    .action-group h4 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .action-item {
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .rule-box {
+      border: 1px solid #eee;
+      border-radius: 14px;
+      background: #fffbe9;
+      padding: 12px 14px;
+    }
+
+    .rule-box summary {
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .rule-content {
+      line-height: 1.8;
+      font-size: 14px;
+    }
+
+    .empty {
+      color: #777;
+      font-size: 14px;
+      line-height: 1.7;
+      padding: 6px 0;
+    }
+
+    .loading {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .error-box {
+      background: #fff1f0;
+      border: 1px solid #f1b5b5;
+      color: #b42318;
+      padding: 12px 14px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      line-height: 1.7;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 960px) {
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .score-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .snapshot-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .section-header h3 {
+        font-size: 22px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 14px 10px 28px;
+      }
+
+      .score-grid,
+      .snapshot-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .market-table {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>📊 M1｜市場資訊</h1>
+    <div class="subtitle">
+      M1 = News-driven Stock Engine。<br />
+      先看市場指標與三大類新聞，再看 Pool30 的事件焦點股票與 Non-Pool30 新發現標的。
+    </div>
+
+    <div id="errorBox" class="error-box" style="display:none;"></div>
+
+    <div class="top-grid">
+      <section class="section">
+        <div class="section-header">
+          <h3>📈 市場指標</h3>
+        </div>
+        <div class="section-note">
+          這裡顯示 M1 使用的總經 / 市場 event source，包括利率、通膨、油價、VIX、美元相關代理指標。
+        </div>
+        <div id="market" class="loading">讀取中...</div>
+      </section>
+
+      <div class="news-grid">
+        <section class="section">
+          <div class="section-header">
+            <h3>🌍 國際新聞</h3>
+          </div>
+          <div class="section-note">顯示 Global / Macro / 地緣政治相關新聞。</div>
+          <div id="news-global" class="loading">讀取中...</div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <h3>💰 財經新聞</h3>
+          </div>
+          <div class="section-note">顯示 Finance / Market / 利率、就業、通膨等事件。</div>
+          <div id="news-finance" class="loading">讀取中...</div>
+        </section>
+
+        <section class="section">
+          <div class="section-header">
+            <h3>🤖 AI 趨勢</h3>
+          </div>
+          <div class="section-note">顯示 AI / 產業鏈 / 資本支出 / AI 需求相關訊號。</div>
+          <div id="news-ai" class="loading">讀取中...</div>
+        </section>
+      </div>
+
+      <section class="section">
+        <div class="section-header">
+          <h3>🔥 Pool30（Event Focus）</h3>
+        </div>
+        <div class="section-note">
+          只顯示今天有事件分數的 Pool30 股票。<br />
+          分數欄位：Baseline / Event / Snapshot / Pure Stock / Event Stock。
+        </div>
+        <div id="pool30" class="loading">讀取中...</div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h3>🟡 Non-Pool30（Discovery）</h3>
+        </div>
+        <div class="section-note">
+          顯示今天因新聞或總經事件浮現、但尚未在 Pool30 內的觀察股票。
+        </div>
+        <div id="discovery" class="loading">讀取中...</div>
+      </section>
+
+      <section class="section">
+        <div id="action" class="loading">讀取中...</div>
+      </section>
+
+      <section class="section">
+        <div id="rule" class="loading">讀取中...</div>
+      </section>
+    </div>
+  </div>
+
+  <script type="module">
+    import { buildNewsRuntime } from "./js/modules/m1_event_engine.js";
+    import { renderModule1Page } from "./js/modules/module1_news.js";
+
+    function showError(err) {
+      const box = document.getElementById("errorBox");
+      box.style.display = "block";
+      box.textContent = `M1 載入失敗：${err?.message || err}`;
+      console.error(err);
+    }
+
+    function toArrayNews(raw) {
+      if (Array.isArray(raw)) return raw;
+
+      const all = [];
+      const global = Array.isArray(raw?.global) ? raw.global : [];
+      const finance = Array.isArray(raw?.finance) ? raw.finance : [];
+      const ai = Array.isArray(raw?.ai) ? raw.ai : [];
+      const fcn = Array.isArray(raw?.fcn) ? raw.fcn : [];
+
+      return [...global, ...finance, ...ai, ...fcn];
+    }
+
+    function groupNews(raw) {
+      if (!raw) {
+        return { global: [], finance: [], ai: [] };
+      }
+
+      if (!Array.isArray(raw) && (raw.global || raw.finance || raw.ai)) {
+        return {
+          global: Array.isArray(raw.global) ? raw.global : [],
+          finance: Array.isArray(raw.finance) ? raw.finance : [],
+          ai: Array.isArray(raw.ai) ? raw.ai : []
+        };
+      }
+
+      const all = Array.isArray(raw) ? raw : [];
+      const result = {
+        global: [],
+        finance: [],
+        ai: []
+      };
+
+      all.forEach((n) => {
+        const type = String(n.type || "").toLowerCase();
+        const title = String(n.title || "").toLowerCase();
+        const summary = String(n.summary || "").toLowerCase();
+        const text = `${title} ${summary}`;
+
+        if (
+          type === "industry" ||
+          text.includes("ai") ||
+          text.includes("nvidia") ||
+          text.includes("tsm") ||
+          text.includes("gpu") ||
+          text.includes("semiconductor")
+        ) {
+          result.ai.push(n);
+        } else if (
+          type === "macro" ||
+          type === "market" ||
+          text.includes("fed") ||
+          text.includes("cpi") ||
+          text.includes("ppi") ||
+          text.includes("rate") ||
+          text.includes("yield") ||
+          text.includes("vix") ||
+          text.includes("oil")
+        ) {
+          result.finance.push(n);
+        } else {
+          result.global.push(n);
+        }
+      });
+
+      return result;
+    }
+
+    function buildSectorMap(pool = []) {
+      const map = {};
+      pool.forEach((s) => {
+        if (!s?.sector) return;
+        map[s.sector] = map[s.sector] || [];
+        map[s.sector].push(s.symbol);
+      });
+      return map;
+    }
+
+    function buildCategoryRuleTable() {
+      return {
+        risk_on: {
+          core: 1,
+          growth: 2,
+          defensive: 0,
+          income: 0,
+          speculative: 2
+        },
+        risk_off: {
+          core: -1,
+          growth: -2,
+          defensive: 1,
+          income: 0,
+          speculative: -3
+        }
+      };
+    }
+
+    function buildStockScores(pool = [], runtime = {}, stockEventMap = {}) {
+      const result = {};
+
+      pool.forEach((stock) => {
+        const baselineMap = {
+          core: 10,
+          growth: 8,
+          defensive: 7,
+          income: 6,
+          speculative: 4
+        };
+
+        const baseline = baselineMap[stock.category] ?? 0;
+        const r = runtime[stock.symbol] || {};
+        const eventNode = stockEventMap[stock.symbol] || {};
+
+        let snapshot = 0;
+        if (Number(r.ret_1m) > 0) snapshot += 1;
+        if (Number(r.ret_6m) > 0) snapshot += 1;
+        if (Number(r.ret_12m) > 0) snapshot += 1;
+
+        const pure = baseline - 1;
+        const event = Number(eventNode.event_score || 0);
+        const eventStock = pure + snapshot + event;
+
+        result[stock.symbol] = {
+          baseline_score: baseline,
+          snapshot_score: snapshot,
+          pure_stock_score: pure,
+          event_score: event,
+          event_stock_score: eventStock
+        };
+      });
+
+      return result;
+    }
+
+    function buildDiscoveryCandidates(runtime = {}, pool = [], stockEventMap = {}) {
+      const inPool = new Set(pool.map((x) => x.symbol));
+      const out = [];
+
+      Object.keys(stockEventMap || {}).forEach((symbol) => {
+        if (inPool.has(symbol)) return;
+
+        const eventNode = stockEventMap[symbol] || {};
+        const eventScore = Number(eventNode.event_score || 0);
+        if (eventScore === 0) return;
+
+        const r = runtime[symbol] || {};
+        let snapshot = 0;
+        if (Number(r.ret_1m) > 0) snapshot += 1;
+        if (Number(r.ret_6m) > 0) snapshot += 1;
+        if (Number(r.ret_12m) > 0) snapshot += 1;
+
+        const pure = 5;
+        const eventStock = pure + snapshot + eventScore;
+
+        out.push({
+          symbol,
+          name: symbol,
+          sector: "UNKNOWN",
+          subsector: "UNKNOWN",
+          category: "income",
+          event_score: eventScore,
+          snapshot_score: snapshot,
+          pure_stock_score: pure,
+          event_stock_score: eventStock,
+          reason: "由總經 / 新聞事件映射浮現"
+        });
+      });
+
+      return out;
+    }
+
+    function buildActionLists(discoveryCandidates = []) {
+      const addList = discoveryCandidates
+        .filter((x) => Number(x.event_score) > 0.2)
+        .slice(0, 5)
+        .map((x) => ({
+          symbol: x.symbol,
+          reason: "事件分數顯著正向，建議列入觀察 / Pool30 候選"
+        }));
+
+      const reviseList = [];
+
+      return { addList, reviseList };
+    }
+
+    async function init() {
+      try {
+        const [
+          marketData,
+          newsRaw,
+          pool,
+          stockRuntime,
+          impactTable
+        ] = await Promise.all([
+          fetch("./data/market.json").then(r => r.json()),
+          fetch("./data/news.json").then(r => r.json()),
+          fetch("./data/pool30.json").then(r => r.json()),
+          fetch("./data/stock_runtime.json").then(r => r.json()),
+          fetch("./data/impact_table_v2.json").then(r => r.json())
+        ]);
+
+        const groupedNews = groupNews(newsRaw);
+        const newsInput = toArrayNews(newsRaw);
+        const sectorMap = buildSectorMap(pool);
+        const marketRuleTable = buildCategoryRuleTable();
+
+        const runtimeResult = buildNewsRuntime(
+          new Date().toISOString(),
+          newsInput,
+          impactTable,
+          sectorMap,
+          marketRuleTable,
+          pool,
+          {}
+        );
+
+        const stockEventMap = runtimeResult.stock_event_map || {};
+        console.log("stockEventMap", stockEventMap);
+        console.log("傳進 UI 的 stockEventMap", stockEventMap);
+        const stockScores = buildStockScores(pool, stockRuntime, stockEventMap);
+        const discoveryCandidates = buildDiscoveryCandidates(stockRuntime, pool, stockEventMap);
+        const { addList, reviseList } = buildActionLists(discoveryCandidates);
+
+        renderModule1Page({
+          marketContainer: document.getElementById("market"),
+          globalNewsContainer: document.getElementById("news-global"),
+          financeNewsContainer: document.getElementById("news-finance"),
+          aiNewsContainer: document.getElementById("news-ai"),
+          pool30Container: document.getElementById("pool30"),
+          discoveryContainer: document.getElementById("discovery"),
+          actionContainer: document.getElementById("action"),
+          ruleContainer: document.getElementById("rule"),
+
+          marketData,
+          globalNews: groupedNews.global,
+          financeNews: groupedNews.finance,
+          aiNews: groupedNews.ai,
+
+          pool,
+          stockEventMap,
+          stockRuntime,
+          stockScores,
+          discoveryCandidates,
+          addList,
+          reviseList
+        });
+      } catch (err) {
+        showError(err);
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
 
