@@ -1,1 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8" />
+<title>M1｜Stock Pool Review Console</title>
 
+<style>
+body {
+  font-family: Arial;
+  background: #f8fafc;
+  margin: 0;
+  padding: 20px;
+  color: #0f172a;
+}
+
+h1 { margin-bottom: 10px; }
+
+.toolbar {
+  margin-bottom: 10px;
+}
+
+button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.summary {
+  background: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
+.filter {
+  background: white;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+}
+
+.bucket {
+  margin-bottom: 20px;
+}
+
+.bucket h2 {
+  padding: 6px;
+  border-left: 6px solid;
+}
+
+.pool30 { border-color: green; }
+.stock { border-color: blue; }
+.watch { border-color: orange; }
+.reject { border-color: red; }
+
+.card {
+  background: white;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.level1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+}
+
+.detail {
+  margin-top: 10px;
+  display: none;
+  font-size: 14px;
+}
+
+.badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: white;
+  font-size: 12px;
+}
+
+.green { background: green; }
+.blue { background: blue; }
+.orange { background: orange; }
+.red { background: red; }
+
+.section {
+  margin-top: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>M1｜Stock Pool Review Console</h1>
+
+<div class="toolbar">
+  <button onclick="applyDefault()">套用系統預設</button>
+  <button onclick="clearAll()">全部清除</button>
+  <button onclick="exportData()">匯出 JSON</button>
+</div>
+
+<div class="summary" id="summary"></div>
+
+<div class="filter">
+  Filter：
+  <select id="filterBucket" onchange="render()">
+    <option value="all">All</option>
+    <option value="pool30">Pool30</option>
+    <option value="stock">Stock Pool</option>
+    <option value="watch">Watch</option>
+    <option value="reject">Reject</option>
+  </select>
+</div>
+
+<div id="container"></div>
+
+<script>
+
+// ===== 假資料（你之後換成 JSON）=====
+let data = [
+{
+  symbol:"ANET",
+  name:"Arista",
+  sector:"AI_SEMI",
+  subsector:"NETWORK",
+  bucket:"stock",
+
+  system:{
+    stock:true,
+    pool30:false,
+    category:"growth"
+  },
+
+  human:{},
+
+  score:{pure:7.8,std:1.12},
+
+  reason_short:[
+    "AI networking 核心受惠",
+    "補強 pool30 缺口",
+    "成長動能強"
+  ],
+
+  reason_detail:{
+    growth:"AI 流量帶動需求",
+    industry:"AI infra networking",
+    competition:"高階交換器優勢",
+    valuation:"合理偏高",
+    risk:"短期過熱"
+  }
+},
+
+{
+  symbol:"TSLA",
+  name:"Tesla",
+  sector:"AI_APP",
+  subsector:"AUTO",
+  bucket:"watch",
+
+  system:{
+    stock:true,
+    pool30:false,
+    category:"growth"
+  },
+
+  human:{},
+
+  score:{pure:6.2,std:0.3},
+
+  reason_short:[
+    "波動高",
+    "估值不穩",
+    "題材主導"
+  ],
+
+  reason_detail:{
+    growth:"電車仍成長",
+    industry:"競爭激烈",
+    competition:"壓力上升",
+    valuation:"偏高",
+    risk:"波動過大"
+  }
+}
+
+];
+
+// ===== Render =====
+
+function render(){
+  const container = document.getElementById("container");
+  container.innerHTML="";
+
+  let filter = document.getElementById("filterBucket").value;
+
+  data.forEach((s,i)=>{
+
+    if(filter!=="all" && s.bucket!==filter) return;
+
+    const card = document.createElement("div");
+    card.className="card";
+
+    const stockChecked = s.human.stock ?? s.system.stock;
+    const poolChecked = s.human.pool30 ?? s.system.pool30;
+    const category = s.human.category ?? s.system.category;
+
+    card.innerHTML = `
+    <div class="level1">
+
+      <div class="controls">
+        <input type="checkbox" ${stockChecked?"checked":""}
+          onchange="update(${i},'stock',this.checked)">
+
+        <input type="checkbox" ${poolChecked?"checked":""}
+          onchange="update(${i},'pool30',this.checked)">
+
+        <select onchange="update(${i},'category',this.value)">
+          ${["core","growth","defensive","income","speculative"]
+            .map(c=>`<option ${c===category?"selected":""}>${c}</option>`).join("")}
+        </select>
+
+        <button onclick="toggle(${i})">▶</button>
+      </div>
+
+      <div>
+        ${s.symbol} ｜ ${s.name}
+        <br>
+        ${s.sector}/${s.subsector}
+        <br>
+        Pure ${s.score.pure} ｜ Std ${s.score.std}
+      </div>
+
+      <div>
+        <span class="badge ${getColor(s.bucket)}">${s.bucket}</span>
+      </div>
+
+    </div>
+
+    <div class="detail" id="detail-${i}">
+
+      <div class="section">
+      <b>System</b><br>
+      ${s.reason_short.join("<br>")}
+      </div>
+
+      <div class="section">
+      <b>AI Detail</b><br>
+      Growth: ${s.reason_detail.growth}<br>
+      Industry: ${s.reason_detail.industry}<br>
+      Competition: ${s.reason_detail.competition}<br>
+      Valuation: ${s.reason_detail.valuation}<br>
+      Risk: ${s.reason_detail.risk}
+      </div>
+
+    </div>
+    `;
+
+    container.appendChild(card);
+
+  });
+
+  updateSummary();
+}
+
+// ===== 控制 =====
+
+function update(i,key,val){
+  if(!data[i].human) data[i].human={};
+  data[i].human[key]=val;
+}
+
+function toggle(i){
+  const el = document.getElementById("detail-"+i);
+  el.style.display = el.style.display==="none"?"block":"none";
+}
+
+function getColor(b){
+  if(b==="pool30") return "green";
+  if(b==="stock") return "blue";
+  if(b==="watch") return "orange";
+  return "red";
+}
+
+// ===== 工具 =====
+
+function applyDefault(){
+  data.forEach(s=>s.human={});
+  render();
+}
+
+function clearAll(){
+  data.forEach(s=>{
+    s.human={stock:false,pool30:false};
+  });
+  render();
+}
+
+function exportData(){
+  const out = data.map(s=>({
+    symbol:s.symbol,
+    final:{
+      stock: s.human.stock ?? s.system.stock,
+      pool30: s.human.pool30 ?? s.system.pool30,
+      category: s.human.category ?? s.system.category
+    }
+  }));
+
+  console.log(out);
+  alert("已輸出到 console");
+}
+
+function updateSummary(){
+  const sum = document.getElementById("summary");
+  sum.innerHTML = `Total: ${data.length}`;
+}
+
+// ===== init =====
+render();
+
+</script>
+
+</body>
+</html>
