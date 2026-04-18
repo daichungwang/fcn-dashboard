@@ -102,10 +102,25 @@ function calcM1(stock) {
   const m3 = m3Score(stock);
   const m7 = m7Score(stock);
 
-  const score =
-    0.5 * capex +
-    0.25 * m3 +
-    0.25 * m7;
+  let weighted = 0;
+  let totalWeight = 0;
+
+  if (capex !== null) {
+    weighted += 0.5 * capex;
+    totalWeight += 0.5;
+  }
+
+  if (m3 !== null) {
+    weighted += 0.25 * m3;
+    totalWeight += 0.25;
+  }
+
+  if (m7 !== null) {
+    weighted += 0.25 * m7;
+    totalWeight += 0.25;
+  }
+
+  const score = totalWeight > 0 ? weighted / totalWeight : 0;
 
   return {
     M1_score: score,
