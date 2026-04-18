@@ -1,0 +1,28 @@
+{
+  "symbol": "ANET",
+  "baseline_score": 8.1,
+  "pure_stock_score": 7.8,
+  "valuation_score": 8.4,
+  "trend_score": 8.9,
+  "quality_score": 7.2,
+
+  "raw_total_score": 80.3,
+  "std_score": 1.12,
+
+  "category_similarity": {
+    "core": 0.72,
+    "growth": 0.88,
+    "defensive": 0.31,
+    "income": 0.25,
+    "speculative": 0.40
+  },
+
+  "suggested_category": "growth",
+  "into_stock_pool": true,
+  "into_pool30": "watch_candidate",
+  "engine_notes": [
+    "與 AI infra / networking 高度相關",
+    "純股分數佳",
+    "標準分高於 growth 類平均"
+  ]
+}
