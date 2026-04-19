@@ -6,7 +6,7 @@ async function main() {
   try {
     const pool30Raw = await fetch("data/pool30.json").then(r => r.json());
     const m7Raw = await fetch("data/m7/m7_new_stock_today.json").then(r => r.json());
-    const fundamentalRaw = await fetch("data/m1/m1_fundamental_map.json").then(r => r.json());
+    const fundamentalRaw = await fetch("data/m1/m1_fundamental_map.json?v=" + Date.now());
 
     const pool30 = normalizePool30(pool30Raw);
     const m7Stocks = normalizeM7Stocks(m7Raw);
