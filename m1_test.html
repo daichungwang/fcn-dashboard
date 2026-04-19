@@ -12,6 +12,7 @@
       --text:#1f2937;
       --muted:#6b7280;
       --blue:#2563eb;
+      --blue2:#1e3a8a;
       --green:#16a34a;
       --red:#dc2626;
       --amber:#d97706;
@@ -35,9 +36,9 @@
       background:linear-gradient(135deg,#0f172a,#1e3a8a);
       color:#fff;
       border-radius:20px;
-      padding:20px 24px;
+      padding:22px 24px;
       box-shadow:var(--shadow);
-      margin-bottom:18px;
+      margin-bottom:16px;
     }
     .hero h1{
       margin:0 0 8px;
@@ -45,12 +46,13 @@
     }
     .hero .sub{
       font-size:14px;
-      opacity:.9;
+      opacity:.95;
       line-height:1.6;
     }
+
     .toolbar{
       display:grid;
-      grid-template-columns:1.3fr 0.8fr 0.8fr auto auto auto;
+      grid-template-columns: 1.2fr 0.7fr 0.7fr auto auto;
       gap:12px;
       margin-bottom:16px;
       align-items:center;
@@ -80,19 +82,24 @@
       font-size:14px;
       font-weight:700;
     }
-    button.secondary{background:#334155;}
+    button.secondary{
+      background:#334155;
+    }
     button.ghost{
       background:#fff;
       color:var(--text);
       border:1px solid var(--line);
     }
+
     .summary{
       display:grid;
-      grid-template-columns:repeat(6,1fr);
+      grid-template-columns: repeat(6,1fr);
       gap:12px;
       margin-bottom:16px;
     }
-    .stat{padding:16px;}
+    .stat{
+      padding:16px;
+    }
     .stat .label{
       color:var(--muted);
       font-size:13px;
@@ -108,13 +115,16 @@
       margin-top:6px;
       line-height:1.5;
     }
+
     .main{
       display:grid;
-      grid-template-columns:1.35fr 0.95fr;
+      grid-template-columns: 1.4fr 0.9fr;
       gap:16px;
       align-items:start;
     }
-    .table-panel{overflow:hidden;}
+    .table-panel{
+      overflow:hidden;
+    }
     .panel-title{
       display:flex;
       justify-content:space-between;
@@ -131,12 +141,12 @@
     }
     .table-wrap{
       overflow:auto;
-      max-height:70vh;
+      max-height:72vh;
     }
     table{
       width:100%;
       border-collapse:collapse;
-      min-width:1200px;
+      min-width:1320px;
     }
     thead th{
       position:sticky;
@@ -160,6 +170,7 @@
       background:#f8fbff;
       cursor:pointer;
     }
+
     .chip{
       display:inline-block;
       padding:4px 8px;
@@ -169,12 +180,20 @@
       font-size:12px;
       font-weight:700;
     }
+    .mono{
+      font-family:Consolas,Menlo,monospace;
+    }
     .ok{color:var(--green);font-weight:700}
     .bad{color:var(--red);font-weight:700}
     .warn{color:var(--amber);font-weight:700}
-    .mono{font-family:Consolas,Menlo,monospace;}
-    .right-col{display:grid;gap:16px;}
-    .json-box{padding:16px;}
+
+    .right-col{
+      display:grid;
+      gap:16px;
+    }
+    .json-box{
+      padding:16px;
+    }
     pre{
       margin:0;
       white-space:pre-wrap;
@@ -184,7 +203,7 @@
       font-family:Consolas,Menlo,monospace;
     }
     .log{
-      max-height:260px;
+      max-height:280px;
       overflow:auto;
       background:#0f172a;
       color:#dbeafe;
@@ -200,13 +219,14 @@
       color:var(--muted);
       line-height:1.6;
     }
-    @media (max-width:1200px){
-      .summary{grid-template-columns:repeat(3,1fr);}
+
+    @media (max-width: 1200px){
+      .summary{grid-template-columns: repeat(3,1fr);}
       .main{grid-template-columns:1fr;}
       .toolbar{grid-template-columns:1fr 1fr;}
     }
-    @media (max-width:700px){
-      .summary{grid-template-columns:repeat(2,1fr);}
+    @media (max-width: 700px){
+      .summary{grid-template-columns: repeat(2,1fr);}
       .toolbar{grid-template-columns:1fr;}
     }
   </style>
@@ -216,7 +236,7 @@
     <div class="hero">
       <h1>M1 Engine Test</h1>
       <div class="sub">
-        Level 1 驗證頁｜先確認：<b>全部股票有進來</b>、<b>COIN / SOFI / QQQ 可查到</b>、<b>M7 / Fundamental 有成功載入</b>。
+        Level 1 驗證頁｜本版直接讀取 <b>data/m1/m1_candidate_80.json</b>，不再依賴 m7 / fundamental。先確認候選股、分數、搜尋與排序是否正確。
       </div>
     </div>
 
@@ -225,51 +245,55 @@
       <select id="categoryFilter" class="control">
         <option value="ALL">全部類別</option>
       </select>
-      <select id="bucketFilter" class="control">
-        <option value="ALL">全部 Bucket</option>
+      <select id="sortFilter" class="control">
+        <option value="score_desc">依 M7 Lite 分數：高 → 低</option>
+        <option value="score_asc">依 M7 Lite 分數：低 → 高</option>
+        <option value="symbol_asc">依股號：A → Z</option>
+        <option value="symbol_desc">依股號：Z → A</option>
+        <option value="snapshot_desc">依 Snapshot：高 → 低</option>
+        <option value="trend_desc">依 Trend：高 → 低</option>
       </select>
       <button id="reloadBtn">重新載入</button>
       <button id="showAllBtn" class="secondary">顯示全部</button>
-      <button id="debugBtn" class="ghost">Console Debug</button>
     </div>
 
     <div class="summary">
       <div class="panel stat">
         <div class="label">總筆數</div>
         <div class="value" id="statTotal">-</div>
-        <div class="sub">合併後實際母體</div>
+        <div class="sub">candidate80 載入總數</div>
       </div>
       <div class="panel stat">
         <div class="label">目前顯示</div>
         <div class="value" id="statShown">-</div>
-        <div class="sub">搜尋 / 篩選後結果</div>
+        <div class="sub">搜尋 / 篩選後筆數</div>
       </div>
       <div class="panel stat">
-        <div class="label">M7 筆數</div>
-        <div class="value" id="statM7">-</div>
-        <div class="sub" id="statM7Src">來源待確認</div>
+        <div class="label">平均分數</div>
+        <div class="value" id="statAvg">-</div>
+        <div class="sub">m7_lite_score 平均</div>
       </div>
       <div class="panel stat">
-        <div class="label">Fundamental 筆數</div>
-        <div class="value" id="statFund">-</div>
-        <div class="sub" id="statFundSrc">來源待確認</div>
+        <div class="label">最高分</div>
+        <div class="value" id="statTop">-</div>
+        <div class="sub">目前清單第一名</div>
       </div>
       <div class="panel stat">
-        <div class="label">Pool 筆數</div>
-        <div class="value" id="statPool">-</div>
-        <div class="sub" id="statPoolSrc">來源待確認</div>
+        <div class="label">資料來源</div>
+        <div class="value" id="statSource" style="font-size:18px;">-</div>
+        <div class="sub">主檔案路徑</div>
       </div>
       <div class="panel stat">
         <div class="label">COIN / SOFI / QQQ</div>
-        <div class="value" id="statCheck">-</div>
-        <div class="sub">快速驗證關鍵股</div>
+        <div class="value" id="statCheck" style="font-size:24px;">-</div>
+        <div class="sub">關鍵股快速驗證</div>
       </div>
     </div>
 
     <div class="main">
       <div class="panel table-panel">
         <div class="panel-title">
-          <span>Level 1 全股票清單</span>
+          <span>Level 1 候選股清單</span>
           <span class="small-note" id="tableNote">載入中...</span>
         </div>
         <div class="table-wrap">
@@ -278,20 +302,21 @@
               <tr>
                 <th>#</th>
                 <th>Symbol</th>
-                <th>Name</th>
                 <th>Category</th>
-                <th>Bucket</th>
-                <th>M1 Score</th>
-                <th>Raw M1</th>
-                <th>Capex</th>
-                <th>M3</th>
-                <th>M7</th>
+                <th>Sector</th>
+                <th>Style</th>
+                <th>M7 Lite</th>
                 <th>Valuation</th>
                 <th>Trend</th>
                 <th>Quality</th>
                 <th>Snapshot</th>
-                <th>Growth</th>
-                <th>Rank</th>
+                <th>1D</th>
+                <th>1W</th>
+                <th>1M</th>
+                <th>3M</th>
+                <th>6M</th>
+                <th>12M</th>
+                <th>Vol Ratio</th>
               </tr>
             </thead>
             <tbody id="tbody"></tbody>
@@ -309,8 +334,8 @@
           <div class="panel-title" style="padding:0 0 12px 0;border-bottom:none;">載入紀錄</div>
           <div id="logBox" class="log"></div>
           <div class="footer-note">
-            這版重點是：<b>先抓 JSON</b>，抓不到就改抓<b>全域變數</b>。  
-            所以若你的舊 engine 已經把 `m7stocks` / `fundamental` 放到 `window`，這版也能接上。
+            本版只驗證 candidate80 主檔是否正確接入。  
+            若分數正常顯示，表示 M1 Level 1 主資料來源已打通。
           </div>
         </div>
       </div>
@@ -319,17 +344,8 @@
 
   <script>
     const state = {
-      raw: {
-        pool: [],
-        m7: [],
-        fundamental: {}
-      },
-      meta: {
-        poolSource: "-",
-        m7Source: "-",
-        fundSource: "-"
-      },
-      merged: [],
+      sourcePath: "./data/m1/m1_candidate_80.json",
+      raw: [],
       filtered: [],
       selected: null
     };
@@ -342,16 +358,18 @@
       let line = `[${time}] ${msg}`;
       if (obj !== null) {
         try {
-          line += "\n" + JSON.stringify(obj, null, 2);
+          line += "\\n" + JSON.stringify(obj, null, 2);
         } catch (e) {}
       }
-      box.textContent = line + "\n\n" + box.textContent;
+      box.textContent = line + "\\n\\n" + box.textContent;
       console.log(msg, obj ?? "");
     }
 
     async function fetchJSON(path) {
-      const res = await fetch(path + (path.includes("?") ? "&" : "?") + "v=" + Date.now(), { cache: "no-store" });
-      if (!res.ok) throw new Error(`${path} 讀取失敗：${res.status}`);
+      const res = await fetch(path + "?v=" + Date.now(), { cache: "no-store" });
+      if (!res.ok) {
+        throw new Error(`${path} 讀取失敗：${res.status}`);
+      }
       return await res.json();
     }
 
@@ -369,11 +387,16 @@
       return Number.isFinite(x) ? x.toFixed(digits) : "-";
     }
 
+    function fmtPct(v, digits = 2) {
+      const x = Number(v);
+      return Number.isFinite(x) ? (x * 100).toFixed(digits) + "%" : "-";
+    }
+
     function scoreClass(v) {
       const x = Number(v);
       if (!Number.isFinite(x)) return "";
       if (x >= 7) return "ok";
-      if (x >= 5) return "warn";
+      if (x >= 6) return "warn";
       return "bad";
     }
 
@@ -386,285 +409,49 @@
         .replaceAll("'", "&#039;");
     }
 
-    function pickSymbol(o = {}) {
-      return String(
-        o.symbol ||
-        o.Symbol ||
-        o.ticker ||
-        o.stock_id ||
-        o.code ||
-        o["股號"] ||
-        ""
-      ).trim().toUpperCase();
-    }
-
-    function pickName(o = {}) {
-      return String(
-        o.name ||
-        o.Name ||
-        o.company ||
-        o.company_name ||
-        o["名稱"] ||
-        o["股名"] ||
-        ""
-      ).trim();
-    }
-
-    function pickCategory(o = {}) {
-      return String(
-        o.category ||
-        o.Category ||
-        o.raw_category ||
-        o.type ||
-        o["類別"] ||
-        "unknown"
-      ).trim().toLowerCase();
-    }
-
-    function normalizeM7Data(json) {
-      if (Array.isArray(json)) return json;
-      if (Array.isArray(json?.stocks)) return json.stocks;
-      if (Array.isArray(json?.data)) return json.data;
-      if (Array.isArray(json?.results)) return json.results;
-      if (Array.isArray(json?.items)) return json.items;
-      if (Array.isArray(json?.m7stocks)) return json.m7stocks;
-      return [];
-    }
-
-    function normalizePoolData(json) {
-      if (Array.isArray(json)) return json;
-      if (Array.isArray(json?.stocks)) return json.stocks;
-      if (Array.isArray(json?.data)) return json.data;
-      if (Array.isArray(json?.results)) return json.results;
-      return [];
-    }
-
-    function normalizeFundamentalData(json) {
-      if (!json) return {};
-      if (Array.isArray(json)) {
-        const obj = {};
-        json.forEach(item => {
-          const symbol = pickSymbol(item);
-          if (symbol) obj[symbol] = item;
-        });
-        return obj;
-      }
-      if (json && typeof json === "object") {
-        if (json.stocks && !Array.isArray(json.stocks) && typeof json.stocks === "object") return json.stocks;
-        if (json.data && !Array.isArray(json.data) && typeof json.data === "object") return json.data;
-        return json;
-      }
-      return {};
-    }
-
-    function getGlobalCandidates() {
-      return {
-        m7: [
-          window.m7stocks,
-          window.m7Stocks,
-          window.__M7__,
-          window.__M7_STOCKS__,
-          window.stockToday,
-          window.todayStocks,
-          window.m7_new_stock_today
-        ],
-        fundamental: [
-          window.fundamental,
-          window.fundamentalData,
-          window.__FUNDAMENTAL__,
-          window.__FUNDAMENTAL_DATA__,
-          window.m1Results,
-          window.m1results,
-          window.m1_output,
-          window.rawM1Results
-        ]
-      };
-    }
-
-    function getFirstValidM7FromGlobals() {
-      const candidates = getGlobalCandidates().m7;
-      for (const item of candidates) {
-        const arr = normalizeM7Data(item);
-        if (arr.length) return arr;
-      }
-      return [];
-    }
-
-    function getFirstValidFundFromGlobals() {
-      const candidates = getGlobalCandidates().fundamental;
-      for (const item of candidates) {
-        const obj = normalizeFundamentalData(item);
-        if (Object.keys(obj).length) return obj;
-      }
-      return {};
-    }
-
-    function buildMergedData() {
-      const pool = state.raw.pool || [];
-      const m7 = state.raw.m7 || [];
-      const fundamental = state.raw.fundamental || {};
-      const map = new Map();
-
-      pool.forEach(item => {
-        const symbol = pickSymbol(item);
-        if (!symbol) return;
-        map.set(symbol, {
-          symbol,
-          name: pickName(item) || symbol,
-          category: pickCategory(item),
-          raw_category: pickCategory(item),
-          initial_bucket: item.initial_bucket || "pool30",
-          source_pool: item
-        });
-      });
-
-      m7.forEach(item => {
-        const symbol = pickSymbol(item);
-        if (!symbol) return;
-
-        const prev = map.get(symbol) || { symbol };
-
-        map.set(symbol, {
-          ...prev,
-          symbol,
-          name: prev.name || pickName(item) || symbol,
-          category: prev.category || pickCategory(item),
-          raw_category: prev.raw_category || pickCategory(item),
-          m7_score:
-            n(item.m7_score) ??
-            n(item.today_score) ??
-            n(item["today_score"]) ??
-            n(item["總分"]),
-          valuation_score:
-            n(item.valuation_score) ??
-            n(item["valuation_score"]),
-          trend_score:
-            n(item.trend_score) ??
-            n(item["trend_score"]),
-          quality_score:
-            n(item.quality_score) ??
-            n(item["quality_score"]),
-          snapshot:
-            n(item.snapshot_score) ??
-            n(item.snapshot) ??
-            n(item["snapshot_score"]),
-          growth:
-            n(item.growth_score) ??
-            n(item.growth) ??
-            n(item["growth"]),
-          source_m7: item
-        });
-      });
-
-      Object.keys(fundamental).forEach(symbolKey => {
-        const symbol = String(symbolKey).trim().toUpperCase();
-        if (!symbol) return;
-
-        const f = fundamental[symbolKey] || {};
-        const prev = map.get(symbol) || { symbol };
-
-        const capexScore =
-          n(f.capex_score) ??
-          n(f["capex_score"]) ??
-          n(f.breakdown?.capex_score) ??
-          n(f.capexRatioScore);
-
-        const m3Score =
-          n(f.m3_score) ??
-          n(f["m3_score"]) ??
-          n(f.breakdown?.m3_score) ??
-          n(f.pure_stock_score) ??
-          n(f.stock_score);
-
-        const m7Score =
-          n(f.m7_score) ??
-          n(f["m7_score"]) ??
-          n(f.breakdown?.m7_score) ??
-          n(prev.m7_score);
-
-        const rawM1 =
-          n(f.raw_m1_score) ??
-          n(f["raw_m1_score"]) ??
-          (
-            (capexScore ?? 0) * 0.5 +
-            (m3Score ?? 0) * 0.25 +
-            (m7Score ?? 0) * 0.25
-          );
-
-        const finalM1 =
-          n(f["M1 score"]) ??
-          n(f.m1_score) ??
-          n(f.score) ??
-          rawM1;
-
-        map.set(symbol, {
-          ...prev,
-          symbol,
-          name: prev.name || pickName(f) || symbol,
-          category: prev.category || pickCategory(f),
-          raw_category: prev.raw_category || pickCategory(f),
-          raw_m1_score: rawM1,
-          m1_score: finalM1,
-          breakdown: {
-            capex_score: capexScore,
-            m3_score: m3Score,
-            m7_score: m7Score
-          },
-          debug: {
-            score_source_weight: safe(f.debug?.score_source_weight ?? f.score_source_weight),
-            category_bias: safe(f.debug?.category_bias ?? f.category_bias),
-            valuation_score: safe(f.debug?.valuation_score ?? prev.valuation_score ?? f.valuation_score),
-            trend_score: safe(f.debug?.trend_score ?? prev.trend_score ?? f.trend_score),
-            quality_score: safe(f.debug?.quality_score ?? prev.quality_score ?? f.quality_score),
-            snapshot: safe(f.debug?.snapshot ?? prev.snapshot ?? f.snapshot),
-            growth: safe(f.debug?.growth ?? prev.growth ?? f.growth),
-            capex_ratio_prev_y: safe(f.debug?.capex_ratio_prev_y ?? f.capex_ratio_prev_y),
-            revenue_growth_q: safe(f.debug?.revenue_growth_q ?? f.revenue_growth_q),
-            operating_income_growth_q: safe(f.debug?.operating_income_growth_q ?? f.operating_income_growth_q),
-            operating_income_q: safe(f.debug?.operating_income_q ?? f.operating_income_q)
-          },
-          initial_bucket: f.initial_bucket || prev.initial_bucket || "unknown",
-          rank: n(f.rank),
-          source_fundamental: f
-        });
-      });
-
-      const arr = Array.from(map.values());
-
-      arr.sort((a, b) => {
-        const sa = n(a.m1_score, -9999);
-        const sb = n(b.m1_score, -9999);
-        if (sb !== sa) return sb - sa;
-        return a.symbol.localeCompare(b.symbol);
-      });
-
-      arr.forEach((row, idx) => {
-        if (!Number.isFinite(n(row.rank))) row.rank = idx + 1;
-      });
-
-      state.merged = arr;
-      window.allStocks = arr;
-      window.m1MergedStocks = arr;
-      window.m7stocks = state.raw.m7;
-      window.fundamental = state.raw.fundamental;
-
-      log("merged done", {
-        total: arr.length,
-        symbols: arr.map(x => x.symbol)
-      });
-    }
-
-    function updateFilterOptions() {
-      const categories = Array.from(new Set(state.merged.map(x => x.category || "unknown"))).sort();
-      const buckets = Array.from(new Set(state.merged.map(x => x.initial_bucket || "unknown"))).sort();
-
+    function buildCategoryOptions() {
+      const categories = Array.from(new Set(state.raw.map(x => String(x.category || "unknown").toLowerCase()))).sort();
       $("categoryFilter").innerHTML =
         '<option value="ALL">全部類別</option>' +
         categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+    }
 
-      $("bucketFilter").innerHTML =
-        '<option value="ALL">全部 Bucket</option>' +
-        buckets.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+    function applyFilters() {
+      const kw = $("searchInput").value.trim().toUpperCase();
+      const category = $("categoryFilter").value;
+      const sortType = $("sortFilter").value;
+
+      let rows = [...state.raw];
+
+      if (kw) {
+        rows = rows.filter(x =>
+          String(x.symbol || "").toUpperCase().includes(kw) ||
+          String(x.sector || "").toUpperCase().includes(kw) ||
+          String(x.category || "").toUpperCase().includes(kw)
+        );
+      }
+
+      if (category !== "ALL") {
+        rows = rows.filter(x => String(x.category || "").toLowerCase() === category);
+      }
+
+      if (sortType === "score_desc") {
+        rows.sort((a, b) => n(b.m7_lite_score, -999) - n(a.m7_lite_score, -999));
+      } else if (sortType === "score_asc") {
+        rows.sort((a, b) => n(a.m7_lite_score, 999) - n(b.m7_lite_score, 999));
+      } else if (sortType === "symbol_asc") {
+        rows.sort((a, b) => String(a.symbol || "").localeCompare(String(b.symbol || "")));
+      } else if (sortType === "symbol_desc") {
+        rows.sort((a, b) => String(b.symbol || "").localeCompare(String(a.symbol || "")));
+      } else if (sortType === "snapshot_desc") {
+        rows.sort((a, b) => n(b.snapshot_score, -999) - n(a.snapshot_score, -999));
+      } else if (sortType === "trend_desc") {
+        rows.sort((a, b) => n(b.trend_score, -999) - n(a.trend_score, -999));
+      }
+
+      state.filtered = rows;
+      renderTable(rows);
+      updateStats(rows);
     }
 
     function renderTable(rows) {
@@ -673,261 +460,139 @@
         <tr data-symbol="${escapeHtml(row.symbol)}">
           <td>${idx + 1}</td>
           <td><span class="chip mono">${escapeHtml(safe(row.symbol))}</span></td>
-          <td>${escapeHtml(safe(row.name))}</td>
           <td>${escapeHtml(safe(row.category))}</td>
-          <td>${escapeHtml(safe(row.initial_bucket))}</td>
-          <td class="${scoreClass(row.m1_score)}"><b>${fmt(row.m1_score)}</b></td>
-          <td>${fmt(row.raw_m1_score)}</td>
-          <td>${fmt(row.breakdown?.capex_score)}</td>
-          <td>${fmt(row.breakdown?.m3_score)}</td>
-          <td>${fmt(row.breakdown?.m7_score)}</td>
-          <td>${fmt(row.debug?.valuation_score)}</td>
-          <td>${fmt(row.debug?.trend_score)}</td>
-          <td>${fmt(row.debug?.quality_score)}</td>
-          <td>${fmt(row.debug?.snapshot)}</td>
-          <td>${fmt(row.debug?.growth)}</td>
-          <td>${safe(row.rank)}</td>
+          <td>${escapeHtml(safe(row.sector))}</td>
+          <td>${escapeHtml(Array.isArray(row.style) ? row.style.join(", ") : safe(row.style))}</td>
+          <td class="${scoreClass(row.m7_lite_score)}"><b>${fmt(row.m7_lite_score)}</b></td>
+          <td>${fmt(row.valuation_score)}</td>
+          <td>${fmt(row.trend_score)}</td>
+          <td>${fmt(row.quality_score)}</td>
+          <td>${fmt(row.snapshot_score)}</td>
+          <td>${fmtPct(row.ret_1d)}</td>
+          <td>${fmtPct(row.ret_1w)}</td>
+          <td>${fmtPct(row.ret_1m)}</td>
+          <td>${fmtPct(row.ret_3m)}</td>
+          <td>${fmtPct(row.ret_6m)}</td>
+          <td>${fmtPct(row.ret_12m)}</td>
+          <td>${fmt(row.volume_ratio)}</td>
         </tr>
       `).join("");
 
-      $("tableNote").textContent = `共 ${rows.length} 筆（本頁無 20 筆限制）`;
+      $("tableNote").textContent = `共 ${rows.length} 筆`;
 
       Array.from(tbody.querySelectorAll("tr")).forEach(tr => {
         tr.addEventListener("click", () => {
           const symbol = tr.getAttribute("data-symbol");
-          const hit = state.filtered.find(x => x.symbol === symbol) || state.merged.find(x => x.symbol === symbol);
+          const hit = state.filtered.find(x => String(x.symbol) === symbol);
           state.selected = hit;
           $("detailBox").textContent = JSON.stringify(hit, null, 2);
         });
       });
 
-      if (rows.length) {
-        const first = rows[0];
-        state.selected = first;
-        $("detailBox").textContent = JSON.stringify(first, null, 2);
+      if (rows.length > 0) {
+        state.selected = rows[0];
+        $("detailBox").textContent = JSON.stringify(rows[0], null, 2);
       } else {
-        $("detailBox").textContent = "目前無符合資料";
+        $("detailBox").textContent = "目前無符合條件資料";
       }
     }
 
-    function applyFilters() {
-      const kw = $("searchInput").value.trim().toUpperCase();
-      const category = $("categoryFilter").value;
-      const bucket = $("bucketFilter").value;
+    function updateStats(rows) {
+      $("statTotal").textContent = state.raw.length;
+      $("statShown").textContent = rows.length;
 
-      let rows = [...state.merged];
+      const avg = rows.length
+        ? rows.reduce((sum, x) => sum + (n(x.m7_lite_score, 0)), 0) / rows.length
+        : null;
+      $("statAvg").textContent = avg !== null ? fmt(avg) : "-";
 
-      if (kw) {
-        rows = rows.filter(x =>
-          String(x.symbol || "").toUpperCase().includes(kw) ||
-          String(x.name || "").toUpperCase().includes(kw)
-        );
-      }
+      const top = rows.length ? rows[0] : null;
+      $("statTop").textContent = top ? `${top.symbol} ${fmt(top.m7_lite_score)}` : "-";
 
-      if (category !== "ALL") {
-        rows = rows.filter(x => String(x.category) === category);
-      }
+      $("statSource").textContent = "candidate80";
 
-      if (bucket !== "ALL") {
-        rows = rows.filter(x => String(x.initial_bucket) === bucket);
-      }
-
-      state.filtered = rows;
-      renderTable(rows);
-      updateStats();
-    }
-
-    function updateStats() {
-      $("statTotal").textContent = state.merged.length;
-      $("statShown").textContent = state.filtered.length;
-      $("statM7").textContent = state.raw.m7.length;
-      $("statFund").textContent = Object.keys(state.raw.fundamental || {}).length;
-      $("statPool").textContent = state.raw.pool.length;
-
-      $("statM7Src").textContent = state.meta.m7Source || "-";
-      $("statFundSrc").textContent = state.meta.fundSource || "-";
-      $("statPoolSrc").textContent = state.meta.poolSource || "-";
-
-      const checks = ["COIN","SOFI","QQQ"].map(s =>
-        state.merged.some(x => x.symbol === s) ? `${s}✓` : `${s}✗`
+      const checks = ["COIN", "SOFI", "QQQ"].map(s =>
+        state.raw.some(x => String(x.symbol || "").toUpperCase() === s) ? `${s}✓` : `${s}✗`
       );
       $("statCheck").textContent = checks.join(" ");
-    }
 
-    async function loadPool() {
-      const candidates = [
-        "./data/pool30.json",
-        "data/pool30.json",
-        "./pool30.json"
-      ];
-      for (const path of candidates) {
-        try {
-          const json = await fetchJSON(path);
-          const arr = normalizePoolData(json);
-          if (arr.length) {
-            state.raw.pool = arr;
-            state.meta.poolSource = `JSON: ${path}`;
-            log("pool loaded", { path, count: arr.length, symbols: arr.map(x => pickSymbol(x)) });
-            return;
-          }
-        } catch (e) {
-          log("pool try failed", { path, error: String(e) });
-        }
-      }
-      state.raw.pool = [];
-      state.meta.poolSource = "找不到 pool";
-    }
-
-    async function loadM7() {
-      const candidates = [
-        "./data/m7/m7_new_stock_today.json",
-        "data/m7/m7_new_stock_today.json",
-        "./data/m7_new_stock_today.json",
-        "data/m7_new_stock_today.json",
-        "./data/m7/m7stocks.json",
-        "data/m7/m7stocks.json",
-        "./data/m7/stocks.json",
-        "data/m7/stocks.json"
-      ];
-
-      for (const path of candidates) {
-        try {
-          const json = await fetchJSON(path);
-          const arr = normalizeM7Data(json);
-          if (arr.length) {
-            state.raw.m7 = arr;
-            state.meta.m7Source = `JSON: ${path}`;
-            log("m7 loaded", { path, count: arr.length, symbols: arr.map(x => pickSymbol(x)) });
-            return;
-          } else {
-            log("m7 json loaded but empty", { path, keys: Object.keys(json || {}) });
-          }
-        } catch (e) {
-          log("m7 try failed", { path, error: String(e) });
-        }
-      }
-
-      const globalM7 = getFirstValidM7FromGlobals();
-      if (globalM7.length) {
-        state.raw.m7 = globalM7;
-        state.meta.m7Source = "GLOBAL: window.*";
-        log("m7 loaded from global", { count: globalM7.length, symbols: globalM7.map(x => pickSymbol(x)) });
-        return;
-      }
-
-      state.raw.m7 = [];
-      state.meta.m7Source = "找不到 M7";
-      log("m7 not found anywhere");
-    }
-
-    async function loadFundamental() {
-      const candidates = [
-        "./data/m1/fundamental_data.json",
-        "data/m1/fundamental_data.json",
-        "./data/fundamental_data.json",
-        "data/fundamental_data.json",
-        "./data/m1/fundamental.json",
-        "data/m1/fundamental.json",
-        "./data/m1/m1_output.json",
-        "data/m1/m1_output.json",
-        "./data/m1/results.json",
-        "data/m1/results.json"
-      ];
-
-      for (const path of candidates) {
-        try {
-          const json = await fetchJSON(path);
-          const obj = normalizeFundamentalData(json);
-          const count = Object.keys(obj).length;
-          if (count) {
-            state.raw.fundamental = obj;
-            state.meta.fundSource = `JSON: ${path}`;
-            log("fundamental loaded", { path, count, symbols: Object.keys(obj) });
-            return;
-          } else {
-            log("fundamental json loaded but empty", { path, keys: Object.keys(json || {}) });
-          }
-        } catch (e) {
-          log("fundamental try failed", { path, error: String(e) });
-        }
-      }
-
-      const globalFund = getFirstValidFundFromGlobals();
-      const count = Object.keys(globalFund).length;
-      if (count) {
-        state.raw.fundamental = globalFund;
-        state.meta.fundSource = "GLOBAL: window.*";
-        log("fundamental loaded from global", { count, symbols: Object.keys(globalFund) });
-        return;
-      }
-
-      state.raw.fundamental = {};
-      state.meta.fundSource = "找不到 Fundamental";
-      log("fundamental not found anywhere");
+      console.log("candidate count =", state.raw.length);
+      console.log("candidate symbols =", state.raw.map(x => x.symbol));
+      console.log("COIN =", state.raw.find(x => x.symbol === "COIN"));
+      console.log("SOFI =", state.raw.find(x => x.symbol === "SOFI"));
+      console.log("QQQ =", state.raw.find(x => x.symbol === "QQQ"));
     }
 
     async function loadAll() {
       $("logBox").textContent = "";
-      log("start loading...");
+      log("start loading candidate80...");
 
-      await loadPool();
-      await loadM7();
-      await loadFundamental();
+      const candidatePaths = [
+        "./data/m1/m1_candidate_80.json",
+        "data/m1/m1_candidate_80.json"
+      ];
 
-      buildMergedData();
-      updateFilterOptions();
+      let loaded = null;
+      let usedPath = null;
+
+      for (const path of candidatePaths) {
+        try {
+          const json = await fetchJSON(path);
+          if (Array.isArray(json) && json.length) {
+            loaded = json;
+            usedPath = path;
+            break;
+          }
+          log("candidate loaded but empty", { path });
+        } catch (e) {
+          log("candidate try failed", { path, error: String(e) });
+        }
+      }
+
+      if (!loaded) {
+        $("statSource").textContent = "載入失敗";
+        $("tableNote").textContent = "找不到 m1_candidate_80.json";
+        $("detailBox").textContent = "找不到 m1_candidate_80.json，請確認路徑為 data/m1/m1_candidate_80.json";
+        log("candidate80 not found anywhere");
+        state.raw = [];
+        state.filtered = [];
+        renderTable([]);
+        updateStats([]);
+        return;
+      }
+
+      state.raw = loaded;
+      state.sourcePath = usedPath;
+
+      log("candidate80 loaded", {
+        path: usedPath,
+        count: loaded.length,
+        symbols: loaded.map(x => x.symbol)
+      });
+
+      buildCategoryOptions();
       applyFilters();
 
-      console.log("pool =", state.raw.pool);
-      console.log("m7stocks =", state.raw.m7);
-      console.log("fundamental =", state.raw.fundamental);
-      console.log("allStocks =", state.merged);
-      console.log("allStocks.length =", state.merged.length);
-      console.log("symbols =", state.merged.map(x => x.symbol));
-      console.log("COIN =", state.merged.find(x => x.symbol === "COIN"));
-      console.log("SOFI =", state.merged.find(x => x.symbol === "SOFI"));
-      console.log("QQQ =", state.merged.find(x => x.symbol === "QQQ"));
-
+      $("statSource").textContent = usedPath.replace("./", "");
+      window.m1Candidate80 = loaded;
       window.debugM1 = {
-        state,
-        reload: loadAll,
-        symbols: () => state.merged.map(x => x.symbol),
-        find: (s) => state.merged.find(x => x.symbol === String(s).toUpperCase())
+        raw: loaded,
+        find: (s) => loaded.find(x => String(x.symbol || "").toUpperCase() === String(s).toUpperCase()),
+        symbols: () => loaded.map(x => x.symbol)
       };
     }
 
     $("searchInput").addEventListener("input", applyFilters);
     $("categoryFilter").addEventListener("change", applyFilters);
-    $("bucketFilter").addEventListener("change", applyFilters);
+    $("sortFilter").addEventListener("change", applyFilters);
 
     $("reloadBtn").addEventListener("click", loadAll);
 
     $("showAllBtn").addEventListener("click", () => {
       $("searchInput").value = "";
       $("categoryFilter").value = "ALL";
-      $("bucketFilter").value = "ALL";
+      $("sortFilter").value = "score_desc";
       applyFilters();
-    });
-
-    $("debugBtn").addEventListener("click", () => {
-      console.log("=== M1 DEBUG START ===");
-      console.log("pool source =", state.meta.poolSource);
-      console.log("m7 source =", state.meta.m7Source);
-      console.log("fund source =", state.meta.fundSource);
-      console.log("pool length =", state.raw.pool.length);
-      console.log("m7 length =", state.raw.m7.length);
-      console.log("fundamental length =", Object.keys(state.raw.fundamental).length);
-      console.log("allStocks.length =", state.merged.length);
-      console.log("allStocks symbols =", state.merged.map(x => x.symbol));
-      console.log("COIN =", state.merged.find(x => x.symbol === "COIN"));
-      console.log("SOFI =", state.merged.find(x => x.symbol === "SOFI"));
-      console.log("QQQ =", state.merged.find(x => x.symbol === "QQQ"));
-      console.log("window.m7stocks =", window.m7stocks);
-      console.log("window.fundamental =", window.fundamental);
-      console.log("window.fundamentalData =", window.fundamentalData);
-      console.log("window.m1Results =", window.m1Results);
-      console.log("=== M1 DEBUG END ===");
-      alert("debug 已輸出到 console");
     });
 
     loadAll();
