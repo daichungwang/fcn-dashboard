@@ -1,110 +1,34 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8">
-  <title>M1 ENGINE DEBUG</title>
-
+  <meta charset="UTF-8" />
+  <title>M1 Engine Test</title>
   <style>
     body {
-      font-family: Arial;
-      background: #111;
-      color: #eee;
+      font-family: Arial, "Microsoft JhengHei", sans-serif;
       padding: 20px;
+      line-height: 1.5;
+      background: #f8fafc;
+      color: #0f172a;
     }
-
-    h1 {
-      color: #00d4ff;
+    h1, h2, h3 {
+      margin: 0 0 12px 0;
     }
-
-    .block {
-      margin-top: 20px;
-      padding: 15px;
-      background: #1c1c1c;
-      border-radius: 8px;
-    }
-
     pre {
-      font-size: 12px;
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 14px;
+      overflow: auto;
       white-space: pre-wrap;
-      word-break: break-all;
+      word-break: break-word;
     }
   </style>
 </head>
-
 <body>
+  <h1>M1 Engine 測試</h1>
+  <div id="m1_output">Loading...</div>
 
-<h1>🚀 M1 ENGINE DEBUG</h1>
-
-<div class="block">
-  <h3>🔍 COIN / SOFI / QQQ Debug</h3>
-  <div id="keyDebug"></div>
-</div>
-
-<div class="block">
-  <h3>📊 Final Scores（進入L1的股票）</h3>
-  <div id="finalScores"></div>
-</div>
-
-<div class="block">
-  <h3>⚠️ Missing Data（沒進L1的股票）</h3>
-  <div id="missing"></div>
-</div>
-
-<script type="module">
-
-import {
-  runM1EngineDebug,
-  printKeyDebug,
-  getMissingDataList
-} from "./js/m1/m1_engine_debug.js";
-
-// ⚠️ 這裡改成你現在用的資料來源
-const DATA_PATH = "./data/pool30.json"; 
-// 如果你用的是別的，例如 all_stocks.json → 改這裡
-
-fetch(DATA_PATH)
-  .then(res => res.json())
-  .then(allStocks => {
-
-    console.log("原始資料:", allStocks);
-
-    const result = runM1EngineDebug(allStocks);
-
-    console.log("完整結果:", result);
-
-    // =========================
-    // 🔥 1️⃣ 關鍵股票（COIN等）
-    // =========================
-    const key = printKeyDebug(result, ["COIN", "SOFI", "QQQ"]);
-
-    document.getElementById("keyDebug").innerHTML =
-      "<pre>" + JSON.stringify(key, null, 2) + "</pre>";
-
-    // =========================
-    // 🔥 2️⃣ 最終進入 L1 的股票
-    // =========================
-    document.getElementById("finalScores").innerHTML =
-      "<pre>" + JSON.stringify(result.final_scores, null, 2) + "</pre>";
-
-    console.table(result.final_scores);
-
-    // =========================
-    // 🔥 3️⃣ 壞掉的股票
-    // =========================
-    const missing = getMissingDataList(result);
-
-    document.getElementById("missing").innerHTML =
-      "<pre>" + JSON.stringify(missing, null, 2) + "</pre>";
-
-    console.table(missing);
-
-  })
-  .catch(err => {
-    console.error("讀取資料失敗:", err);
-    document.body.innerHTML += "<p style='color:red;'>資料讀取錯誤</p>";
-  });
-
-</script>
-
+  <script type="module" src="js/m1/run_m1.js"></script>
 </body>
 </html>
