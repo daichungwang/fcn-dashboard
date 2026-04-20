@@ -1499,6 +1499,57 @@
   }
 },
   {
+  "date": "2026-04-15",
+  "fcn_id": "DACN26000064 永豐",
+  "basket": [
+    "MU",
+    "INTC",
+    "ARM",
+    "TSLA"
+  ],
+  "tenor": 12,
+  "rate": 46.56,
+  "autocall": 105,
+  "strike": 65,
+  "ki": 64.99,
+  "eki": false,
+  "bank": "法國外貿銀行",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "永豐",
+  "created_time": "2026-04-16T09:00",
+  "entry_time": "2026-04-16T09:00",
+  "exit_time": "2026-04-20T09:00",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "IS code 328000191080",
+  "entry_prices": {
+    "MU": 450,
+    "INTC": 65,
+    "ARM": 160,
+    "TSLA": 399.9999
+  },
+  "maturity_time": "2027-04-23T09:00",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
