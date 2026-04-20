@@ -730,16 +730,6 @@
       </div>
 
       <div class="panel">
-  <div class="panel-title">
-    <span>1.5 AI 篩選校正總表</span>
-    <span class="small-note">五大類統計 + AI 命中率</span>
-  </div>
-  <div class="summary-wrap">
-    <div id="aiCalibrationTable"></div>
-  </div>
-</div>
-      
-      <div class="panel">
         <div class="panel-title">
           <span>2. Filter Rule</span>
           <span class="small-note">公式簡介 / 正式版規則摘要</span>
@@ -1205,45 +1195,6 @@
       }).join("");
     }
 
-    function renderAICalibrationTable() {
-  const html = CATEGORY_ORDER.map(cat => {
-    const pool30 = state.pool30Scored.filter(x => x.category === cat);
-    const candidate = state.candidateScored.filter(x => x.category === cat);
-
-    const strong = candidate.filter(x => x.filter_result === "STRONG").length;
-    const pass = candidate.filter(x => x.filter_result === "PASS").length;
-    const watch = candidate.filter(x => x.filter_result === "WATCH").length;
-
-    const aiRecommend = strong + pass;
-
-    const p50 = avg(pool30.map(x => x.M1_score));
-    const p75 = percentile(pool30.map(x => x.M1_score), 0.75);
-    const cv = calcCV(pool30.map(x => x.M1_score));
-
-    const strictness = state.pool30Rules[cat]?.strictness || "-";
-
-    return `
-      <div class="mini-card">
-        <div class="t">${cat.toUpperCase()}</div>
-        <div class="v">
-          pool30：${pool30.length}<br>
-          p50：${fmt(p50)} ｜ p75：${fmt(p75)} ｜ CV：${fmt(cv)}
-        </div>
-        <div class="s">
-          strict：${strictness}<br>
-          strong/pass/watch：${strong}/${pass}/${watch}<br>
-          candidate：${candidate.length}<br>
-          AI推薦：${aiRecommend} (${candidate.length ? fmt((aiRecommend / candidate.length) * 100) : "0.00"}%)
-        </div>
-      </div>
-    `;
-  }).join("");
-
-  $("aiCalibrationTable").innerHTML = `
-    <div class="category-summary-grid">${html}</div>
-  `;
-}
-    
     function renderRuleGrid() {
       $("ruleGrid").innerHTML = CATEGORY_ORDER.map(cat => {
         const cfg = state.filterConfig[cat] || {};
