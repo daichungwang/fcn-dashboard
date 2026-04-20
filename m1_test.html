@@ -28,7 +28,7 @@
       color:var(--text);
     }
     .wrap{
-      max-width:1800px;
+      max-width:1860px;
       margin:0 auto;
       padding:20px;
     }
@@ -49,13 +49,15 @@
       opacity:.95;
       line-height:1.7;
     }
+
     .toolbar{
       display:grid;
-      grid-template-columns:1.15fr 0.8fr 0.9fr auto auto;
+      grid-template-columns:1.2fr 0.75fr 0.8fr 0.8fr auto auto;
       gap:12px;
       margin-bottom:16px;
       align-items:center;
     }
+
     .panel{
       background:var(--panel);
       border:1px solid var(--line);
@@ -112,7 +114,7 @@
 
     .main{
       display:grid;
-      grid-template-columns:1.48fr 0.92fr;
+      grid-template-columns:1.52fr 0.9fr;
       gap:16px;
       align-items:start;
     }
@@ -133,6 +135,7 @@
       color:var(--muted);
       font-weight:500;
     }
+
     .table-wrap{
       overflow:auto;
       max-height:72vh;
@@ -140,7 +143,7 @@
     table{
       width:100%;
       border-collapse:collapse;
-      min-width:2200px;
+      min-width:2350px;
     }
     thead th{
       position:sticky;
@@ -180,9 +183,10 @@
       color:#334155;
     }
     .mono{font-family:Consolas,Menlo,monospace;}
-    .ok{color:var(--green);font-weight:700}
-    .warn{color:var(--amber);font-weight:700}
-    .bad{color:var(--red);font-weight:700}
+    .ok{color:var(--green);font-weight:800}
+    .warn{color:var(--amber);font-weight:800}
+    .bad{color:var(--red);font-weight:800}
+    .muted{color:var(--muted)}
 
     .right-col{
       display:grid;
@@ -210,6 +214,7 @@
       line-height:1.6;
       font-family:Consolas,Menlo,monospace;
     }
+
     .detail-section{
       margin-bottom:16px;
       border:1px solid var(--line);
@@ -253,6 +258,7 @@
       line-height:1.6;
       font-size:13px;
     }
+
     .stats-grid{
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
@@ -270,14 +276,24 @@
       color:var(--red);
       font-weight:800;
     }
+    .rule-na{
+      color:#64748b;
+      font-weight:800;
+    }
+    .insight{
+      margin-top:8px;
+      font-size:13px;
+      line-height:1.6;
+      color:#334155;
+    }
 
-    @media (max-width:1200px){
+    @media (max-width: 1300px){
       .summary{grid-template-columns:repeat(3,1fr);}
       .main{grid-template-columns:1fr;}
-      .toolbar{grid-template-columns:1fr 1fr;}
+      .toolbar{grid-template-columns:1fr 1fr 1fr;}
       .stats-grid{grid-template-columns:1fr;}
     }
-    @media (max-width:700px){
+    @media (max-width: 800px){
       .summary{grid-template-columns:repeat(2,1fr);}
       .toolbar{grid-template-columns:1fr;}
       .detail-grid{grid-template-columns:1fr;}
@@ -290,7 +306,7 @@
       <h1>M1 Test Dashboard</h1>
       <div class="sub">
         M1 沙盒：主資料 <b>data/m1/m1_candidate_80.json</b> ｜ 評論 <b>data/m1/pool_stock_evaluated_v1.json</b> ｜ 基本面 <b>data/m1/m1_fundamental_map.json</b><br>
-        本版功能：計算 <b>capex / m3 / m7 / m1</b>，顯示 <b>80 檔整體 + 五大類分布統計</b>，並用 <b>pool30 簡單統計基準</b> 產生 filter 結果與 why。
+        本版功能：計算 <b>capex / m3 / m7 / m1</b>，顯示 <b>Candidate 全體分布（不分五大類）</b> 與 <b>五大類分布（80 檔類內分布 vs Pool30 類內基準）</b>，並支援 <b>by category / by result</b> 篩選。
       </div>
     </div>
 
@@ -298,6 +314,14 @@
       <input id="searchInput" class="control" placeholder="搜尋股號 / sector / style，例如 COIN、SOFI、AI_SEMI、high_beta" />
       <select id="categoryFilter" class="control">
         <option value="ALL">全部類別</option>
+      </select>
+      <select id="resultFilter" class="control">
+        <option value="ALL">全部結果</option>
+        <option value="OK">OK</option>
+        <option value="Watch">Watch</option>
+        <option value="Spec Pool">Spec Pool</option>
+        <option value="Not OK">Not OK</option>
+        <option value="N/A">N/A</option>
       </select>
       <select id="sortFilter" class="control">
         <option value="m1_desc">依 m1_score：高 → 低</option>
@@ -344,7 +368,7 @@
 
     <div class="panel json-box" style="margin-bottom:16px;">
       <div class="panel-title">
-        <span>80 檔整體 + 五大類分布統計面板</span>
+        <span>Candidate 全體分布（不分五大類） + 五大類分布</span>
         <span class="small-note">基於 M1 Score，並對照 pool30 規範</span>
       </div>
       <div id="statsPanel"></div>
@@ -418,7 +442,8 @@
       pool30Rows: [],
       pool30Rules: {},
       stats80: {},
-      statsPool30: {}
+      statsPool30: {},
+      overallStats: null
     };
 
     const ETF_FORCE_DEFENSIVE = ["QQQ", "SMH", "SPY", "LQD"];
@@ -720,12 +745,23 @@
       return s[lo] + (s[hi] - s[lo]) * (idx - lo);
     }
 
+    function skewness(arr) {
+      const nums = arr.filter(v => Number.isFinite(v));
+      if (nums.length < 3) return 0;
+      const m = avg(nums);
+      const s = std(nums);
+      if (s === 0) return 0;
+      const nCount = nums.length;
+      const thirdMoment = nums.reduce((sum, x) => sum + Math.pow((x - m) / s, 3), 0);
+      return +(thirdMoment / nCount).toFixed(3);
+    }
+
     function buildStats(arr) {
       const nums = arr.filter(v => Number.isFinite(v));
       if (!nums.length) {
         return {
           count: 0, mean: 0, median: 0, std: 0, cv: 0,
-          min: 0, max: 0, p25: 0, p50: 0, p75: 0, iqr: 0
+          min: 0, max: 0, p25: 0, p50: 0, p75: 0, iqr: 0, skew: 0
         };
       }
 
@@ -746,8 +782,17 @@
         p25: +p25.toFixed(2),
         p50: +p50.toFixed(2),
         p75: +p75.toFixed(2),
-        iqr: +(p75 - p25).toFixed(2)
+        iqr: +(p75 - p25).toFixed(2),
+        skew: skewness(nums)
       };
+    }
+
+    function describeShape(stats) {
+      if (!stats || !stats.count) return "無資料";
+      const delta = stats.mean - stats.median;
+      if (delta <= -0.25) return "左尾（低分拖尾）";
+      if (delta >= 0.25) return "右尾（高分拖尾）";
+      return "近對稱";
     }
 
     function groupByCategory(rows) {
@@ -779,21 +824,63 @@
       return out;
     }
 
+    function classifyStrictness(cv) {
+      if (cv <= 0.12) return "strict";
+      if (cv > 0.20) return "loose";
+      return "medium";
+    }
+
+    function ksDistance(arrA, arrB) {
+      const a = arrA.filter(Number.isFinite).sort((x, y) => x - y);
+      const b = arrB.filter(Number.isFinite).sort((x, y) => x - y);
+      if (!a.length || !b.length) return 1;
+
+      let i = 0, j = 0;
+      let d = 0;
+
+      while (i < a.length && j < b.length) {
+        const x = Math.min(a[i], b[j]);
+        while (i < a.length && a[i] <= x) i++;
+        while (j < b.length && b[j] <= x) j++;
+        const fa = i / a.length;
+        const fb = j / b.length;
+        d = Math.max(d, Math.abs(fa - fb));
+      }
+
+      return +d.toFixed(3);
+    }
+
+    function representativeness(cat, stats80, statsPool30, rows80, rows30) {
+      if (!stats80 || !statsPool30 || !stats80.count || !statsPool30.count) {
+        return { label: "insufficient", why: "樣本不足", ks: 1 };
+      }
+
+      const meanGap = Math.abs(stats80.mean - statsPool30.mean);
+      const cvGap = Math.abs(stats80.cv - statsPool30.cv);
+      const ks = ksDistance(
+        rows80.map(x => Number(x.m1_score)),
+        rows30.map(x => Number(x.m1_score))
+      );
+
+      if (meanGap <= 0.35 && cvGap <= 0.05 && ks <= 0.25) {
+        return { label: "match", why: "均值與分散度接近", ks };
+      }
+      if (meanGap <= 0.8 && cvGap <= 0.12 && ks <= 0.45) {
+        return { label: "drift", why: "有偏移但仍可參考", ks };
+      }
+      return { label: "mismatch", why: "分布差異較大", ks };
+    }
+
     function buildPool30ReferenceRules(pool30Rows) {
       const statsM1 = buildCategoryStats(pool30Rows, "m1_score");
       const statsCapex = buildCategoryStats(pool30Rows, "capex_score");
       const statsM7 = buildCategoryStats(pool30Rows, "m7_score");
 
       const rules = {};
-
       Object.keys(statsM1).forEach(cat => {
         const cv = statsM1[cat].cv || 0;
-        let strictness = "medium";
-        if (cv <= 0.12) strictness = "strict";
-        else if (cv > 0.20) strictness = "loose";
-
         rules[cat] = {
-          strictness,
+          strictness: classifyStrictness(cv),
           m1: statsM1[cat],
           capex: statsCapex[cat],
           m7: statsM7[cat]
@@ -807,7 +894,7 @@
       const cat = String(row.category_norm || "").toLowerCase();
       const rule = rules[cat];
 
-      if (!rule) {
+      if (!rule || !rule.m1.count) {
         return {
           result: "N/A",
           why: "無對應類別規範",
@@ -895,9 +982,17 @@
         categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
     }
 
+    function renderFilterClass(result) {
+      if (result === "OK" || result === "Spec Pool") return "rule-ok";
+      if (result === "Watch") return "rule-watch";
+      if (result === "N/A") return "rule-na";
+      return "rule-no";
+    }
+
     function applyFilters() {
       const kw = $("searchInput").value.trim().toUpperCase();
       const category = $("categoryFilter").value;
+      const resultFilter = $("resultFilter").value;
       const sortType = $("sortFilter").value;
 
       let rows = [...state.candidateScored];
@@ -914,6 +1009,10 @@
 
       if (category !== "ALL") {
         rows = rows.filter(x => String(x.category_norm || "").toLowerCase() === category);
+      }
+
+      if (resultFilter !== "ALL") {
+        rows = rows.filter(x => evaluateByPool30Rule(x, state.pool30Rules || {}).result === resultFilter);
       }
 
       if (sortType === "m1_desc") {
@@ -934,12 +1033,6 @@
     function renderStyleCell(style) {
       if (!Array.isArray(style) || !style.length) return "-";
       return style.map(s => `<span class="chip gray">${escapeHtml(s)}</span>`).join("");
-    }
-
-    function renderFilterClass(result) {
-      if (result === "OK" || result === "Spec Pool") return "rule-ok";
-      if (result === "Watch") return "rule-watch";
-      return "rule-no";
     }
 
     function renderTable(rows) {
@@ -1121,41 +1214,57 @@
     }
 
     function renderStatsPanel() {
-      const allStats = buildStats(state.candidateScored.map(x => Number(x.m1_score)));
+      const allStats = state.overallStats || buildStats(state.candidateScored.map(x => Number(x.m1_score)));
       const by80 = state.stats80 || {};
       const byPool30 = state.statsPool30 || {};
-      const rules = state.pool30Rules || {};
+      const groups80 = groupByCategory(state.candidateScored);
+      const groupsPool30 = groupByCategory(state.pool30Rows);
 
-      function block(title, s) {
+      const overallShape = describeShape(allStats);
+      const overallInsight = [];
+      overallInsight.push(`分布型態：${overallShape}`);
+      if (allStats.cv <= 0.12) overallInsight.push("分數非常集中");
+      else if (allStats.cv <= 0.18) overallInsight.push("分數集中度可接受");
+      else if (allStats.cv <= 0.25) overallInsight.push("分數偏分散，建議 filter");
+      else overallInsight.push("分數非常分散，需要強 filter");
+
+      function block(title, s, extra = "") {
         if (!s) return `<div class="detail-card"><div class="v">${title}: -</div></div>`;
         return `
           <div class="detail-card">
             <div class="k">${title}</div>
             <div class="v">
               n=${s.count} ｜ mean=${s.mean} ｜ median=${s.median} ｜ std=${s.std} ｜ CV=${s.cv}<br>
-              p25=${s.p25} ｜ p50=${s.p50} ｜ p75=${s.p75} ｜ IQR=${s.iqr} ｜ min=${s.min} ｜ max=${s.max}
+              p25=${s.p25} ｜ p50=${s.p50} ｜ p75=${s.p75} ｜ IQR=${s.iqr} ｜ min=${s.min} ｜ max=${s.max} ｜ skew=${s.skew}<br>
+              ${extra}
             </div>
           </div>
         `;
       }
 
-      const cats = ["core","growth","income","defensive","speculative"];
-
       let html = `
         <div class="detail-section">
-          <h3>80 檔整體分布（M1 Score）</h3>
+          <h3>Candidate 全體分布（不分五大類）</h3>
           <div class="stats-grid">
-            ${block("All 80", allStats)}
+            ${block("All Candidate", allStats, `Shape=${overallShape}`)}
           </div>
+          <div class="insight"><b>Insight：</b>${overallInsight.join(" ｜ ")}</div>
         </div>
       `;
 
-      html += `<div class="detail-section"><h3>五大類：80 檔 vs Pool30 基準</h3><div class="stats-grid">`;
+      html += `<div class="detail-section"><h3>五大類分布（80 檔類內分布 vs Pool30 類內基準）</h3><div class="stats-grid">`;
 
-      cats.forEach(cat => {
+      ["core","growth","income","defensive","speculative"].forEach(cat => {
         const s80 = by80[cat];
         const sp = byPool30[cat];
-        const rule = rules[cat];
+        const rep = representativeness(
+          cat,
+          s80,
+          sp,
+          groups80[cat] || [],
+          groupsPool30[cat] || []
+        );
+        const strictness = sp?.count ? classifyStrictness(sp.cv) : "N/A";
 
         html += `
           <div class="detail-card">
@@ -1163,7 +1272,8 @@
             <div class="v">
               <b>80檔</b>：n=${s80?.count ?? 0} mean=${s80?.mean ?? "-"} std=${s80?.std ?? "-"} CV=${s80?.cv ?? "-"} p50=${s80?.p50 ?? "-"} p75=${s80?.p75 ?? "-"}<br>
               <b>Pool30</b>：n=${sp?.count ?? 0} mean=${sp?.mean ?? "-"} std=${sp?.std ?? "-"} CV=${sp?.cv ?? "-"} p50=${sp?.p50 ?? "-"} p75=${sp?.p75 ?? "-"}<br>
-              <b>Rule</b>：${rule?.strictness ?? "-"}
+              <b>Representativeness</b>：${rep.label} ｜ KS=${rep.ks} ｜ ${rep.why}<br>
+              <b>Rule</b>：${strictness}
             </div>
           </div>
         `;
@@ -1195,9 +1305,19 @@
       $("statCheck").textContent = checks.join(" ");
     }
 
+    function buildCategoryOptions() {
+      const categories = Array.from(
+        new Set(state.candidateScored.map(x => String(x.category_norm || "unknown").toLowerCase()))
+      ).sort();
+
+      $("categoryFilter").innerHTML =
+        '<option value="ALL">全部類別</option>' +
+        categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+    }
+
     async function loadAll() {
       $("logBox").textContent = "";
-      log("start loading m1_test with stats dashboard...");
+      log("start loading upgraded m1_test dashboard...");
 
       const candidatePaths = [
         "./data/m1/m1_candidate_80.json",
@@ -1286,6 +1406,7 @@
       state.pool30Rules = buildPool30ReferenceRules(state.pool30Rows);
       state.stats80 = buildCategoryStats(state.candidateScored, "m1_score");
       state.statsPool30 = buildCategoryStats(state.pool30Rows, "m1_score");
+      state.overallStats = buildStats(state.candidateScored.map(x => Number(x.m1_score)));
 
       buildCategoryOptions();
       applyFilters();
@@ -1304,6 +1425,7 @@
         pool30Rules: state.pool30Rules,
         stats80: state.stats80,
         statsPool30: state.statsPool30,
+        overallStats: state.overallStats,
         find: (s) => {
           const symbol = String(s || "").toUpperCase();
           const scored = state.candidateScored.find(x => String(x.symbol || "").toUpperCase() === symbol) || null;
@@ -1319,6 +1441,7 @@
 
     $("searchInput").addEventListener("input", applyFilters);
     $("categoryFilter").addEventListener("change", applyFilters);
+    $("resultFilter").addEventListener("change", applyFilters);
     $("sortFilter").addEventListener("change", applyFilters);
 
     $("reloadBtn").addEventListener("click", loadAll);
@@ -1326,6 +1449,7 @@
     $("showAllBtn").addEventListener("click", () => {
       $("searchInput").value = "";
       $("categoryFilter").value = "ALL";
+      $("resultFilter").value = "ALL";
       $("sortFilter").value = "m1_desc";
       applyFilters();
     });
