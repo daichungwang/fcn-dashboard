@@ -28,7 +28,7 @@
       color:var(--text);
     }
     .wrap{
-      max-width:1860px;
+      max-width:1880px;
       margin:0 auto;
       padding:20px;
     }
@@ -46,13 +46,13 @@
     }
     .hero .sub{
       font-size:14px;
-      opacity:.95;
+      opacity:.96;
       line-height:1.7;
     }
 
     .toolbar{
       display:grid;
-      grid-template-columns:1.2fr 0.75fr 0.8fr 0.8fr auto auto;
+      grid-template-columns:1.15fr 0.75fr 0.75fr 0.85fr auto auto;
       gap:12px;
       margin-bottom:16px;
       align-items:center;
@@ -86,6 +86,11 @@
     button.secondary{
       background:#334155;
     }
+    button.ghost{
+      background:#fff;
+      color:#334155;
+      border:1px solid var(--line);
+    }
 
     .summary{
       display:grid;
@@ -114,7 +119,7 @@
 
     .main{
       display:grid;
-      grid-template-columns:1.52fr 0.9fr;
+      grid-template-columns:1.56fr 0.88fr;
       gap:16px;
       align-items:start;
     }
@@ -143,7 +148,7 @@
     table{
       width:100%;
       border-collapse:collapse;
-      min-width:2350px;
+      min-width:2550px;
     }
     thead th{
       position:sticky;
@@ -187,6 +192,8 @@
     .warn{color:var(--amber);font-weight:800}
     .bad{color:var(--red);font-weight:800}
     .muted{color:var(--muted)}
+    .info{color:#2563eb;font-weight:800}
+    .na{color:#64748b;font-weight:800}
 
     .right-col{
       display:grid;
@@ -287,16 +294,71 @@
       color:#334155;
     }
 
-    @media (max-width: 1300px){
+    .filter-grid{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:12px;
+    }
+    .filter-card{
+      border:1px solid #e8edf5;
+      border-radius:14px;
+      padding:12px;
+      background:#fafcff;
+    }
+    .filter-card h4{
+      margin:0 0 10px;
+      font-size:15px;
+    }
+    .filter-row{
+      margin-bottom:10px;
+    }
+    .filter-row label{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:4px;
+    }
+    .filter-row input,
+    .filter-row select{
+      width:100%;
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      font-size:13px;
+    }
+    .mini-actions{
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+    }
+    .mini-actions button{
+      flex:1;
+      padding:8px 10px;
+      font-size:12px;
+      border-radius:10px;
+    }
+    .filter-summary{
+      margin-top:10px;
+      padding-top:10px;
+      border-top:1px dashed #d9e0ea;
+      font-size:12px;
+      line-height:1.6;
+      color:#334155;
+    }
+
+    @media (max-width: 1400px){
       .summary{grid-template-columns:repeat(3,1fr);}
       .main{grid-template-columns:1fr;}
       .toolbar{grid-template-columns:1fr 1fr 1fr;}
       .stats-grid{grid-template-columns:1fr;}
+      .filter-grid{grid-template-columns:1fr 1fr;}
     }
-    @media (max-width: 800px){
+    @media (max-width: 840px){
       .summary{grid-template-columns:repeat(2,1fr);}
       .toolbar{grid-template-columns:1fr;}
       .detail-grid{grid-template-columns:1fr;}
+      .filter-grid{grid-template-columns:1fr;}
     }
   </style>
 </head>
@@ -306,7 +368,7 @@
       <h1>M1 Test Dashboard</h1>
       <div class="sub">
         M1 沙盒：主資料 <b>data/m1/m1_candidate_80.json</b> ｜ 評論 <b>data/m1/pool_stock_evaluated_v1.json</b> ｜ 基本面 <b>data/m1/m1_fundamental_map.json</b><br>
-        本版功能：計算 <b>capex / m3 / m7 / m1</b>，顯示 <b>Candidate 全體分布（不分五大類）</b> 與 <b>五大類分布（80 檔類內分布 vs Pool30 類內基準）</b>，並支援 <b>by category / by result</b> 篩選。
+        本版功能：計算 <b>capex / m3 / m7 / m1</b>，顯示 <b>Candidate 全體分布（不分五大類）</b> 與 <b>五大類分布（80 檔類內分布 vs Pool30 類內基準）</b>，並整合 <b>Rule 控制面板 / by category / by result</b> 篩選。
       </div>
     </div>
 
@@ -317,10 +379,11 @@
       </select>
       <select id="resultFilter" class="control">
         <option value="ALL">全部結果</option>
-        <option value="OK">OK</option>
-        <option value="Watch">Watch</option>
-        <option value="Spec Pool">Spec Pool</option>
-        <option value="Not OK">Not OK</option>
+        <option value="STRONG">STRONG</option>
+        <option value="PASS">PASS</option>
+        <option value="WATCH">WATCH</option>
+        <option value="DROP">DROP</option>
+        <option value="SPEC_POOL">SPEC_POOL</option>
         <option value="N/A">N/A</option>
       </select>
       <select id="sortFilter" class="control">
@@ -372,6 +435,14 @@
         <span class="small-note">基於 M1 Score，並對照 pool30 規範</span>
       </div>
       <div id="statsPanel"></div>
+    </div>
+
+    <div class="panel json-box" style="margin-bottom:16px;">
+      <div class="panel-title">
+        <span>五大類 Rule 調整面板</span>
+        <span class="small-note">即時調整 Strong / Pass / Watch / Drop 門檻，並立即回饋到主表</span>
+      </div>
+      <div id="filterControlPanel"></div>
     </div>
 
     <div class="main">
@@ -443,10 +514,13 @@
       pool30Rules: {},
       stats80: {},
       statsPool30: {},
-      overallStats: null
+      overallStats: null,
+      filterConfig: {},
+      baselineFilterConfig: {}
     };
 
     const ETF_FORCE_DEFENSIVE = ["QQQ", "SMH", "SPY", "LQD"];
+    const CATEGORIES = ["core","growth","income","defensive","speculative"];
     const $ = (id) => document.getElementById(id);
 
     function log(msg, obj = null) {
@@ -877,24 +951,92 @@
       const statsM7 = buildCategoryStats(pool30Rows, "m7_score");
 
       const rules = {};
-      Object.keys(statsM1).forEach(cat => {
-        const cv = statsM1[cat].cv || 0;
+      CATEGORIES.forEach(cat => {
+        const cv = statsM1[cat]?.cv || 0;
         rules[cat] = {
           strictness: classifyStrictness(cv),
-          m1: statsM1[cat],
-          capex: statsCapex[cat],
-          m7: statsM7[cat]
+          m1: statsM1[cat] || buildStats([]),
+          capex: statsCapex[cat] || buildStats([]),
+          m7: statsM7[cat] || buildStats([])
         };
       });
 
       return rules;
     }
 
-    function evaluateByPool30Rule(row, rules) {
-      const cat = String(row.category_norm || "").toLowerCase();
-      const rule = rules[cat];
+    function buildDefaultFilterConfig() {
+      const cfg = {};
+      CATEGORIES.forEach(cat => {
+        const rule = state.pool30Rules[cat];
+        const strictness = rule?.strictness || "medium";
+        cfg[cat] = buildPresetConfig(cat, strictness);
+      });
+      return cfg;
+    }
 
-      if (!rule || !rule.m1.count) {
+    function buildPresetConfig(cat, presetType) {
+      const rule = state.pool30Rules[cat];
+      const p50 = n(rule?.m1?.p50, 0);
+      const p75 = n(rule?.m1?.p75, 0);
+
+      if (presetType === "strict") {
+        return {
+          presetType: "strict",
+          strong: p75,
+          pass: p50,
+          watch: p50 - 0.30
+        };
+      }
+      if (presetType === "medium") {
+        return {
+          presetType: "medium",
+          strong: p75,
+          pass: p50 - 0.15,
+          watch: p50 - 0.40
+        };
+      }
+      if (presetType === "loose") {
+        return {
+          presetType: "loose",
+          strong: p75 - 0.10,
+          pass: p50 - 0.30,
+          watch: p50 - 0.60
+        };
+      }
+      return {
+        presetType: "custom",
+        strong: p75,
+        pass: p50,
+        watch: p50 - 0.30
+      };
+    }
+
+    function normalizeFilterOrder(cfg) {
+      let strong = Number(cfg.strong);
+      let pass = Number(cfg.pass);
+      let watch = Number(cfg.watch);
+
+      if (!Number.isFinite(strong)) strong = 0;
+      if (!Number.isFinite(pass)) pass = 0;
+      if (!Number.isFinite(watch)) watch = 0;
+
+      if (pass > strong) pass = strong;
+      if (watch > pass) watch = pass;
+
+      return {
+        presetType: cfg.presetType || "custom",
+        strong: +strong.toFixed(2),
+        pass: +pass.toFixed(2),
+        watch: +watch.toFixed(2)
+      };
+    }
+
+    function evaluateByPool30Rule(row) {
+      const cat = String(row.category_norm || "").toLowerCase();
+      const rule = state.pool30Rules[cat];
+      const cfg = state.filterConfig[cat];
+
+      if (!rule || !rule.m1.count || !cfg) {
         return {
           result: "N/A",
           why: "無對應類別規範",
@@ -906,63 +1048,52 @@
       const capex = Number(row.capex_score || 0);
       const m7 = Number(row.m7_score || 0);
 
-      const m1p50 = rule.m1.p50;
-      const m1p75 = rule.m1.p75;
-      const capexp50 = rule.capex.p50;
-      const capexp25 = rule.capex.p25;
-      const m7p50 = rule.m7.p50;
-
-      let result = "Not OK";
+      let result = "DROP";
       let why = [];
-      let ruleText = `${cat} | p50=${m1p50} p75=${m1p75} | ${rule.strictness}`;
+      let ruleText = `${cat} | strong≥${fmt(cfg.strong)} pass≥${fmt(cfg.pass)} watch≥${fmt(cfg.watch)} | ${cfg.presetType}`;
 
-      if (cat === "core") {
-        if (m1 >= m1p75 && capex >= capexp50) {
-          result = "OK";
-          why.push("m1 高於 core p75");
-          why.push("capex 高於 core p50");
-        } else if (m1 >= m1p50) {
-          result = "Watch";
-          why.push("m1 高於 core p50");
+      if (cat === "speculative") {
+        if (m1 >= cfg.strong) {
+          result = "SPEC_POOL";
+          why.push(`m1 ≥ speculative strong`);
+        } else if (m1 >= cfg.pass) {
+          result = "WATCH";
+          why.push(`m1 ≥ speculative pass`);
+        } else {
+          result = "DROP";
+          why.push(`低於 speculative pass`);
         }
-      } else if (cat === "growth") {
-        if (m1 >= m1p75 && m7 >= m7p50) {
-          result = "OK";
-          why.push("m1 高於 growth p75");
-          why.push("m7 高於 growth p50");
-        } else if (m1 >= m1p50) {
-          result = "Watch";
-          why.push("m1 高於 growth p50");
-        }
-      } else if (cat === "income") {
-        if (m1 >= m1p75 && capex >= capexp25) {
-          result = "OK";
-          why.push("m1 高於 income p75");
-          why.push("capex 高於 income p25");
-        } else if (m1 >= m1p50) {
-          result = "Watch";
-          why.push("m1 高於 income p50");
-        }
-      } else if (cat === "defensive") {
-        if (m1 >= m1p75) {
-          result = "OK";
-          why.push("m1 高於 defensive p75");
-        } else if (m1 >= m1p50) {
-          result = "Watch";
-          why.push("m1 高於 defensive p50");
-        }
-      } else if (cat === "speculative") {
-        if (m1 >= m1p75) {
-          result = "Spec Pool";
-          why.push("m1 高於 speculative p75");
-        } else if (m1 >= m1p50) {
-          result = "Watch";
-          why.push("m1 高於 speculative p50");
+      } else {
+        if (m1 >= cfg.strong) {
+          result = "STRONG";
+          why.push(`m1 ≥ strong`);
+        } else if (m1 >= cfg.pass) {
+          result = "PASS";
+          why.push(`m1 ≥ pass`);
+        } else if (m1 >= cfg.watch) {
+          result = "WATCH";
+          why.push(`m1 接近門檻`);
+        } else {
+          result = "DROP";
+          why.push(`m1 低於 watch`);
         }
       }
 
-      if (!why.length) {
-        why.push("低於該類 pool30 基準");
+      if (cat === "core") {
+        if (capex >= rule.capex.p50) why.push("capex ≥ core p50");
+        else why.push("capex < core p50");
+      } else if (cat === "growth") {
+        if (m7 >= rule.m7.p50) why.push("m7 ≥ growth p50");
+        else why.push("m7 < growth p50");
+      } else if (cat === "income") {
+        if (capex >= rule.capex.p25) why.push("capex ≥ income p25");
+        else why.push("capex < income p25");
+      } else if (cat === "defensive") {
+        if (m7 >= rule.m7.p25) why.push("m7 ≥ defensive p25");
+        else why.push("m7 < defensive p25");
+      } else if (cat === "speculative") {
+        if (m7 >= rule.m7.p50) why.push("m7 ≥ speculative p50");
+        else why.push("m7 < speculative p50");
       }
 
       return {
@@ -972,11 +1103,19 @@
       };
     }
 
-  
+    function buildCategoryOptions() {
+      const categories = Array.from(
+        new Set(state.candidateScored.map(x => String(x.category_norm || "unknown").toLowerCase()))
+      ).sort();
+
+      $("categoryFilter").innerHTML =
+        '<option value="ALL">全部類別</option>' +
+        categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+    }
 
     function renderFilterClass(result) {
-      if (result === "OK" || result === "Spec Pool") return "rule-ok";
-      if (result === "Watch") return "rule-watch";
+      if (result === "STRONG" || result === "PASS" || result === "SPEC_POOL") return "rule-ok";
+      if (result === "WATCH") return "rule-watch";
       if (result === "N/A") return "rule-na";
       return "rule-no";
     }
@@ -1004,7 +1143,7 @@
       }
 
       if (resultFilter !== "ALL") {
-        rows = rows.filter(x => evaluateByPool30Rule(x, state.pool30Rules || {}).result === resultFilter);
+        rows = rows.filter(x => evaluateByPool30Rule(x).result === resultFilter);
       }
 
       if (sortType === "m1_desc") {
@@ -1020,6 +1159,15 @@
       state.filtered = rows;
       renderTable(rows);
       updateStats(rows);
+      renderFilterControlPanel();
+      if (state.selected) {
+        const selectedSymbol = String(state.selected.symbol || "").toUpperCase();
+        const hit = state.candidateScored.find(x => String(x.symbol || "").toUpperCase() === selectedSymbol);
+        if (hit) {
+          state.selected = hit;
+          renderDetail(hit);
+        }
+      }
     }
 
     function renderStyleCell(style) {
@@ -1032,7 +1180,7 @@
       tbody.innerHTML = rows.map((row, idx) => {
         const symbol = String(row.symbol || "").toUpperCase();
         const hasComment = state.evaluatedMap.has(symbol);
-        const evalResult = evaluateByPool30Rule(row, state.pool30Rules || {});
+        const evalResult = evaluateByPool30Rule(row);
 
         return `
           <tr data-symbol="${escapeHtml(symbol)}">
@@ -1078,8 +1226,10 @@
       });
 
       if (rows.length) {
-        state.selected = rows[0];
-        renderDetail(rows[0]);
+        const selectedSymbol = state.selected ? String(state.selected.symbol || "").toUpperCase() : null;
+        const keep = selectedSymbol ? rows.find(x => String(x.symbol || "").toUpperCase() === selectedSymbol) : null;
+        state.selected = keep || rows[0];
+        renderDetail(state.selected);
       } else {
         $("detailBox").innerHTML = "目前無符合條件資料";
       }
@@ -1098,7 +1248,7 @@
 
       const symbol = String(row.symbol || "").toUpperCase();
       const evalData = state.evaluatedMap.get(symbol);
-      const poolRule = evaluateByPool30Rule(row, state.pool30Rules || {});
+      const poolRule = evaluateByPool30Rule(row);
 
       const scoreHtml = `
         <div class="detail-section">
@@ -1246,7 +1396,7 @@
 
       html += `<div class="detail-section"><h3>五大類分布（80 檔類內分布 vs Pool30 類內基準）</h3><div class="stats-grid">`;
 
-      ["core","growth","income","defensive","speculative"].forEach(cat => {
+      CATEGORIES.forEach(cat => {
         const s80 = by80[cat];
         const sp = byPool30[cat];
         const rep = representativeness(
@@ -1276,6 +1426,110 @@
       $("statsPanel").innerHTML = html;
     }
 
+    function countResultsByCategory(cat) {
+      const rows = state.candidateScored.filter(x => x.category_norm === cat);
+      const out = { STRONG:0, PASS:0, WATCH:0, DROP:0, SPEC_POOL:0, "N/A":0 };
+      rows.forEach(r => {
+        const result = evaluateByPool30Rule(r).result;
+        if (!(result in out)) out[result] = 0;
+        out[result] += 1;
+      });
+      return out;
+    }
+
+    function renderFilterControlPanel() {
+      const container = $("filterControlPanel");
+      let html = `<div class="filter-grid">`;
+
+      CATEGORIES.forEach(cat => {
+        const rule = state.pool30Rules[cat];
+        const cfg = state.filterConfig[cat];
+        const base = state.baselineFilterConfig[cat];
+        const counts = countResultsByCategory(cat);
+
+        html += `
+          <div class="filter-card">
+            <h4>${cat.toUpperCase()}</h4>
+
+            <div class="filter-row">
+              <label>Rule 類型</label>
+              <div class="muted" style="font-size:12px;line-height:1.6;">
+                Pool30 p50=${fmt(rule?.m1?.p50)} ｜ p75=${fmt(rule?.m1?.p75)} ｜ strictness=${escapeHtml(rule?.strictness || "N/A")}
+              </div>
+              <select data-cat="${cat}" class="preset-select">
+                <option value="strict" ${cfg?.presetType==="strict"?"selected":""}>strict</option>
+                <option value="medium" ${cfg?.presetType==="medium"?"selected":""}>medium</option>
+                <option value="loose" ${cfg?.presetType==="loose"?"selected":""}>loose</option>
+                <option value="custom" ${cfg?.presetType==="custom"?"selected":""}>custom</option>
+              </select>
+            </div>
+
+            <div class="filter-row">
+              <label>Strong threshold</label>
+              <input type="number" step="0.01" class="cfg-strong" data-cat="${cat}" value="${fmt(cfg?.strong)}">
+            </div>
+
+            <div class="filter-row">
+              <label>Pass threshold</label>
+              <input type="number" step="0.01" class="cfg-pass" data-cat="${cat}" value="${fmt(cfg?.pass)}">
+            </div>
+
+            <div class="filter-row">
+              <label>Watch threshold</label>
+              <input type="number" step="0.01" class="cfg-watch" data-cat="${cat}" value="${fmt(cfg?.watch)}">
+            </div>
+
+            <div class="mini-actions">
+              <button class="apply-btn" data-cat="${cat}">Apply</button>
+              <button class="ghost reset-btn" data-cat="${cat}">Reset</button>
+            </div>
+
+            <div class="filter-summary">
+              <div><b>Rule：</b>Strong ≥ ${fmt(cfg?.strong)} ｜ Pass ≥ ${fmt(cfg?.pass)} ｜ Watch ≥ ${fmt(cfg?.watch)}</div>
+              <div><b>Baseline：</b>Strong ≥ ${fmt(base?.strong)} ｜ Pass ≥ ${fmt(base?.pass)} ｜ Watch ≥ ${fmt(base?.watch)}</div>
+              <div><b>Result：</b>STRONG ${counts.STRONG} ｜ PASS ${counts.PASS} ｜ WATCH ${counts.WATCH} ｜ DROP ${counts.DROP}${cat==="speculative" ? ` ｜ SPEC_POOL ${counts.SPEC_POOL}` : ""}</div>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+
+      container.querySelectorAll(".preset-select").forEach(el => {
+        el.addEventListener("change", (e) => {
+          const cat = e.target.dataset.cat;
+          const preset = e.target.value;
+          state.filterConfig[cat] = normalizeFilterOrder(buildPresetConfig(cat, preset));
+          applyFilters();
+        });
+      });
+
+      container.querySelectorAll(".apply-btn").forEach(el => {
+        el.addEventListener("click", (e) => {
+          const cat = e.target.dataset.cat;
+          const strong = Number(container.querySelector(`.cfg-strong[data-cat="${cat}"]`).value);
+          const pass = Number(container.querySelector(`.cfg-pass[data-cat="${cat}"]`).value);
+          const watch = Number(container.querySelector(`.cfg-watch[data-cat="${cat}"]`).value);
+          state.filterConfig[cat] = normalizeFilterOrder({
+            presetType: "custom",
+            strong,
+            pass,
+            watch
+          });
+          applyFilters();
+        });
+      });
+
+      container.querySelectorAll(".reset-btn").forEach(el => {
+        el.addEventListener("click", (e) => {
+          const cat = e.target.dataset.cat;
+          state.filterConfig[cat] = { ...state.baselineFilterConfig[cat] };
+          applyFilters();
+        });
+      });
+    }
+
     function updateStats(rows) {
       $("statTotal").textContent = state.candidateScored.length;
       $("statShown").textContent = rows.length;
@@ -1295,16 +1549,6 @@
         state.candidateScored.some(x => String(x.symbol || "").toUpperCase() === s) ? `${s}✓` : `${s}✗`
       );
       $("statCheck").textContent = checks.join(" ");
-    }
-
-    function buildCategoryOptions() {
-      const categories = Array.from(
-        new Set(state.candidateScored.map(x => String(x.category_norm || "unknown").toLowerCase()))
-      ).sort();
-
-      $("categoryFilter").innerHTML =
-        '<option value="ALL">全部類別</option>' +
-        categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
     }
 
     async function loadAll() {
@@ -1400,13 +1644,17 @@
       state.statsPool30 = buildCategoryStats(state.pool30Rows, "m1_score");
       state.overallStats = buildStats(state.candidateScored.map(x => Number(x.m1_score)));
 
+      state.baselineFilterConfig = buildDefaultFilterConfig();
+      state.filterConfig = JSON.parse(JSON.stringify(state.baselineFilterConfig));
+
       buildCategoryOptions();
-      applyFilters();
       renderStatsPanel();
+      applyFilters();
 
       console.log("candidateScored =", state.candidateScored);
       console.log("pool30Rows =", state.pool30Rows);
       console.log("pool30Rules =", state.pool30Rules);
+      console.log("filterConfig =", state.filterConfig);
 
       window.debugM1 = {
         candidateRaw: state.candidate,
@@ -1418,6 +1666,7 @@
         stats80: state.stats80,
         statsPool30: state.statsPool30,
         overallStats: state.overallStats,
+        filterConfig: state.filterConfig,
         find: (s) => {
           const symbol = String(s || "").toUpperCase();
           const scored = state.candidateScored.find(x => String(x.symbol || "").toUpperCase() === symbol) || null;
@@ -1425,7 +1674,7 @@
             scored,
             evaluated: state.evaluatedMap.get(symbol) || null,
             fundamental: state.fundamentalMap[symbol] || null,
-            poolRule: scored ? evaluateByPool30Rule(scored, state.pool30Rules) : null
+            poolRule: scored ? evaluateByPool30Rule(scored) : null
           };
         }
       };
