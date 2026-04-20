@@ -865,47 +865,42 @@
       state.impactedRows = rows;
     }
 
-    function renderDashboard() {
-      const universeCount = state.universeRaw.length || 150;
-      const candidateCount = state.candidateScoredBase.length;
-      const aiBefore = countAiRecommend(state.candidateScoredBase);
-      const aiAfter = countAiRecommend(state.candidateScoredPreview);
-      const currentDisplay = getFilteredImpactRows().length;
+   function renderDashboard() {
+  const universeCount = state.universeRaw.length || 150;
+  const candidateCount = state.candidateScoredBase.length;
+  const aiBefore = countAiRecommend(state.candidateScoredBase);
+  const aiAfter = countAiRecommend(state.candidateScoredPreview);
 
-      $("statUniverse").textContent = universeCount;
-      $("statCandidate").textContent = `${candidateCount} / ${universeCount}`;
-      $("statCandidateSub").textContent = `${universeCount ? fmt((candidateCount / universeCount) * 100) : "0.00"}%`;
+  $("statUniverse").textContent = universeCount;
+  $("statCandidate").textContent = `${candidateCount} / ${universeCount}`;
+  $("statCandidateSub").textContent = `${universeCount ? fmt((candidateCount / universeCount) * 100) : "0.00"}%`;
 
-      $("statAiBefore").textContent = `${aiBefore} / ${candidateCount}`;
-      $("statAiBeforeSub").textContent = `${candidateCount ? fmt((aiBefore / candidateCount) * 100) : "0.00"}%`;
+  $("statAiBefore").textContent = `${aiBefore} / ${candidateCount}`;
+  $("statAiBeforeSub").textContent = `${candidateCount ? fmt((aiBefore / candidateCount) * 100) : "0.00"}%`;
 
-      $("statAiAfter").textContent = `${aiAfter} / ${candidateCount}`;
-      $("statAiAfterSub").textContent = `${candidateCount ? fmt((aiAfter / candidateCount) * 100) : "0.00"}%`;
+  $("statAiAfter").textContent = `${aiAfter} / ${candidateCount}`;
+  $("statAiAfterSub").textContent = `${candidateCount ? fmt((aiAfter / candidateCount) * 100) : "0.00"}%`;
 
-      $("statDisplay").textContent = `${currentDisplay} / ${candidateCount}`;
-      $("statDisplaySub").textContent = `${candidateCount ? fmt((currentDisplay / candidateCount) * 100) : "0.00"}%`;
+  $("categorySummaryGrid").innerHTML = CATEGORY_ORDER.map(cat => {
+    const all = state.candidateScoredBase.filter(x => x.category === cat);
+    const beforeAi = countAiRecommend(all);
+    const afterAi = countAiRecommend(state.candidateScoredPreview.filter(x => x.category === cat));
 
-      $("categorySummaryGrid").innerHTML = CATEGORY_ORDER.map(cat => {
-        const all = state.candidateScoredBase.filter(x => x.category === cat);
-        const beforeAi = countAiRecommend(all);
-        const afterAi = countAiRecommend(state.candidateScoredPreview.filter(x => x.category === cat));
-
-        return `
-          <div class="mini-card">
-            <div class="t">${escapeHtml(cat.toUpperCase())}</div>
-            <div class="v">
-              Candidate：${all.length} / ${candidateCount}<br>
-              AI推薦：${beforeAi} → ${afterAi}
-            </div>
-            <div class="s">
-              Candidate 比 ${candidateCount ? fmt((all.length / candidateCount) * 100) : "0.00"}%<br>
-              AI推薦比 ${all.length ? fmt((afterAi / all.length) * 100) : "0.00"}%
-            </div>
-          </div>
-        `;
-      }).join("");
-    }
-
+    return `
+      <div class="mini-card">
+        <div class="t">${escapeHtml(cat.toUpperCase())}</div>
+        <div class="v">
+          Candidate：${all.length} / ${candidateCount}<br>
+          AI推薦：${beforeAi} → ${afterAi}
+        </div>
+        <div class="s">
+          Candidate 比 ${candidateCount ? fmt((all.length / candidateCount) * 100) : "0.00"}%<br>
+          AI推薦比 ${all.length ? fmt((afterAi / all.length) * 100) : "0.00"}%
+        </div>
+      </div>
+    `;
+  }).join("");
+}
     function renderRuleCards() {
       $("ruleCards").innerHTML = CATEGORY_ORDER.map(cat => {
         const baseRule = state.filterConfigBase[cat] || {};
