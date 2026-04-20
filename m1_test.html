@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M1 Test - Candidate 80</title>
+  <title>M1 Test Dashboard</title>
   <style>
     :root{
       --bg:#f5f7fb;
@@ -12,7 +12,6 @@
       --text:#1f2937;
       --muted:#6b7280;
       --blue:#2563eb;
-      --blue2:#1e3a8a;
       --green:#16a34a;
       --red:#dc2626;
       --amber:#d97706;
@@ -29,7 +28,7 @@
       color:var(--text);
     }
     .wrap{
-      max-width:1750px;
+      max-width:1800px;
       margin:0 auto;
       padding:20px;
     }
@@ -48,11 +47,11 @@
     .hero .sub{
       font-size:14px;
       opacity:.95;
-      line-height:1.6;
+      line-height:1.7;
     }
     .toolbar{
       display:grid;
-      grid-template-columns:1.2fr 0.8fr 0.9fr auto auto;
+      grid-template-columns:1.15fr 0.8fr 0.9fr auto auto;
       gap:12px;
       margin-bottom:16px;
       align-items:center;
@@ -85,6 +84,7 @@
     button.secondary{
       background:#334155;
     }
+
     .summary{
       display:grid;
       grid-template-columns:repeat(6,1fr);
@@ -109,9 +109,10 @@
       margin-top:6px;
       line-height:1.5;
     }
+
     .main{
       display:grid;
-      grid-template-columns:1.45fr 0.95fr;
+      grid-template-columns:1.48fr 0.92fr;
       gap:16px;
       align-items:start;
     }
@@ -139,7 +140,7 @@
     table{
       width:100%;
       border-collapse:collapse;
-      min-width:1750px;
+      min-width:2200px;
     }
     thead th{
       position:sticky;
@@ -163,6 +164,7 @@
       background:#f8fbff;
       cursor:pointer;
     }
+
     .chip{
       display:inline-block;
       padding:4px 8px;
@@ -178,9 +180,10 @@
       color:#334155;
     }
     .mono{font-family:Consolas,Menlo,monospace;}
-    .ok{color:var(--green);font-weight:700;}
-    .warn{color:var(--amber);font-weight:700;}
-    .bad{color:var(--red);font-weight:700;}
+    .ok{color:var(--green);font-weight:700}
+    .warn{color:var(--amber);font-weight:700}
+    .bad{color:var(--red);font-weight:700}
+
     .right-col{
       display:grid;
       gap:16px;
@@ -237,7 +240,7 @@
     .detail-card .v{
       font-size:14px;
       font-weight:700;
-      line-height:1.5;
+      line-height:1.6;
     }
     .tag-row{
       display:flex;
@@ -250,10 +253,29 @@
       line-height:1.6;
       font-size:13px;
     }
+    .stats-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+    }
+    .rule-ok{
+      color:var(--green);
+      font-weight:800;
+    }
+    .rule-watch{
+      color:var(--amber);
+      font-weight:800;
+    }
+    .rule-no{
+      color:var(--red);
+      font-weight:800;
+    }
+
     @media (max-width:1200px){
       .summary{grid-template-columns:repeat(3,1fr);}
       .main{grid-template-columns:1fr;}
       .toolbar{grid-template-columns:1fr 1fr;}
+      .stats-grid{grid-template-columns:1fr;}
     }
     @media (max-width:700px){
       .summary{grid-template-columns:repeat(2,1fr);}
@@ -265,10 +287,10 @@
 <body>
   <div class="wrap">
     <div class="hero">
-      <h1>M1 Test - Candidate 80</h1>
+      <h1>M1 Test Dashboard</h1>
       <div class="sub">
-        主資料：<b>data/m1/m1_candidate_80.json</b> ｜ 評論：<b>data/m1/pool_stock_evaluated_v1.json</b> ｜ 基本面：<b>data/m1/m1_fundamental_map.json</b><br>
-        本版直接在頁面內計算 <b>capex_score / m3_score / m7_score / m1_score</b>，先驗證公式結果是否合理。
+        M1 沙盒：主資料 <b>data/m1/m1_candidate_80.json</b> ｜ 評論 <b>data/m1/pool_stock_evaluated_v1.json</b> ｜ 基本面 <b>data/m1/m1_fundamental_map.json</b><br>
+        本版功能：計算 <b>capex / m3 / m7 / m1</b>，顯示 <b>80 檔整體 + 五大類分布統計</b>，並用 <b>pool30 簡單統計基準</b> 產生 filter 結果與 why。
       </div>
     </div>
 
@@ -320,10 +342,18 @@
       </div>
     </div>
 
+    <div class="panel json-box" style="margin-bottom:16px;">
+      <div class="panel-title">
+        <span>80 檔整體 + 五大類分布統計面板</span>
+        <span class="small-note">基於 M1 Score，並對照 pool30 規範</span>
+      </div>
+      <div id="statsPanel"></div>
+    </div>
+
     <div class="main">
       <div class="panel table-panel">
         <div class="panel-title">
-          <span>Candidate 80 主表 + M1 測試分數</span>
+          <span>Candidate 80 主表 + Filter 結果</span>
           <span class="small-note" id="tableNote">載入中...</span>
         </div>
         <div class="table-wrap">
@@ -352,6 +382,9 @@
                 <th>6M</th>
                 <th>12M</th>
                 <th>Vol Ratio</th>
+                <th>Pool30 Rule</th>
+                <th>Filter</th>
+                <th>Why</th>
                 <th>評論</th>
               </tr>
             </thead>
@@ -381,11 +414,14 @@
       evaluatedMap: new Map(),
       fundamentalMap: {},
       filtered: [],
-      selected: null
+      selected: null,
+      pool30Rows: [],
+      pool30Rules: {},
+      stats80: {},
+      statsPool30: {}
     };
 
     const ETF_FORCE_DEFENSIVE = ["QQQ", "SMH", "SPY", "LQD"];
-
     const $ = (id) => document.getElementById(id);
 
     function log(msg, obj = null) {
@@ -546,22 +582,6 @@
       return +(sumV / sumW).toFixed(2);
     }
 
-    function calcM3Proxy(row) {
-      const pureProxy = n(row.m7_lite_score);
-      const snapshot = n(row.snapshot_score);
-      const eventProxy = calcEventProxy(row);
-
-      const parts = [];
-      if (pureProxy !== null) parts.push({ w: 0.45, v: pureProxy });
-      if (snapshot !== null) parts.push({ w: 0.35, v: snapshot });
-      if (eventProxy !== null) parts.push({ w: 0.20, v: eventProxy });
-
-      if (!parts.length) return null;
-      const sumW = parts.reduce((s, x) => s + x.w, 0);
-      const sumV = parts.reduce((s, x) => s + x.w * x.v, 0);
-      return +(sumV / sumW).toFixed(2);
-    }
-
     function calcEventProxy(row) {
       const r1d = n(row.ret_1d, 0);
       const r1w = n(row.ret_1w, 0);
@@ -576,6 +596,22 @@
       if (eventRaw >= -0.03) return 5;
       if (eventRaw >= -0.06) return 4;
       return 3;
+    }
+
+    function calcM3Proxy(row) {
+      const pureProxy = n(row.m7_lite_score);
+      const snapshot = n(row.snapshot_score);
+      const eventProxy = calcEventProxy(row);
+
+      const parts = [];
+      if (pureProxy !== null) parts.push({ w: 0.45, v: pureProxy });
+      if (snapshot !== null) parts.push({ w: 0.35, v: snapshot });
+      if (eventProxy !== null) parts.push({ w: 0.20, v: eventProxy });
+
+      if (!parts.length) return null;
+      const sumW = parts.reduce((s, x) => s + x.w, 0);
+      const sumV = parts.reduce((s, x) => s + x.w * x.v, 0);
+      return +(sumV / sumW).toFixed(2);
     }
 
     function calcRawM1(row) {
@@ -655,6 +691,200 @@
       state.candidateScored = normalized;
     }
 
+    function avg(arr) {
+      if (!arr.length) return 0;
+      return arr.reduce((a, b) => a + b, 0) / arr.length;
+    }
+
+    function median(arr) {
+      if (!arr.length) return 0;
+      const s = [...arr].sort((a, b) => a - b);
+      const mid = Math.floor(s.length / 2);
+      return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
+    }
+
+    function std(arr) {
+      if (arr.length <= 1) return 0;
+      const m = avg(arr);
+      const variance = arr.reduce((sum, x) => sum + Math.pow(x - m, 2), 0) / (arr.length - 1);
+      return Math.sqrt(variance);
+    }
+
+    function percentile(arr, p) {
+      if (!arr.length) return 0;
+      const s = [...arr].sort((a, b) => a - b);
+      const idx = (p / 100) * (s.length - 1);
+      const lo = Math.floor(idx);
+      const hi = Math.ceil(idx);
+      if (lo === hi) return s[lo];
+      return s[lo] + (s[hi] - s[lo]) * (idx - lo);
+    }
+
+    function buildStats(arr) {
+      const nums = arr.filter(v => Number.isFinite(v));
+      if (!nums.length) {
+        return {
+          count: 0, mean: 0, median: 0, std: 0, cv: 0,
+          min: 0, max: 0, p25: 0, p50: 0, p75: 0, iqr: 0
+        };
+      }
+
+      const meanVal = avg(nums);
+      const stdVal = std(nums);
+      const p25 = percentile(nums, 25);
+      const p50 = percentile(nums, 50);
+      const p75 = percentile(nums, 75);
+
+      return {
+        count: nums.length,
+        mean: +meanVal.toFixed(2),
+        median: +median(nums).toFixed(2),
+        std: +stdVal.toFixed(2),
+        cv: meanVal !== 0 ? +(stdVal / meanVal).toFixed(3) : 0,
+        min: +Math.min(...nums).toFixed(2),
+        max: +Math.max(...nums).toFixed(2),
+        p25: +p25.toFixed(2),
+        p50: +p50.toFixed(2),
+        p75: +p75.toFixed(2),
+        iqr: +(p75 - p25).toFixed(2)
+      };
+    }
+
+    function groupByCategory(rows) {
+      const groups = {
+        core: [],
+        growth: [],
+        income: [],
+        defensive: [],
+        speculative: []
+      };
+
+      rows.forEach(row => {
+        const c = String(row.category_norm || row.category || "").toLowerCase();
+        if (!groups[c]) groups[c] = [];
+        groups[c].push(row);
+      });
+
+      return groups;
+    }
+
+    function buildCategoryStats(rows, scoreKey = "m1_score") {
+      const groups = groupByCategory(rows);
+      const out = {};
+
+      Object.keys(groups).forEach(cat => {
+        out[cat] = buildStats(groups[cat].map(x => Number(x[scoreKey])));
+      });
+
+      return out;
+    }
+
+    function buildPool30ReferenceRules(pool30Rows) {
+      const statsM1 = buildCategoryStats(pool30Rows, "m1_score");
+      const statsCapex = buildCategoryStats(pool30Rows, "capex_score");
+      const statsM7 = buildCategoryStats(pool30Rows, "m7_score");
+
+      const rules = {};
+
+      Object.keys(statsM1).forEach(cat => {
+        const cv = statsM1[cat].cv || 0;
+        let strictness = "medium";
+        if (cv <= 0.12) strictness = "strict";
+        else if (cv > 0.20) strictness = "loose";
+
+        rules[cat] = {
+          strictness,
+          m1: statsM1[cat],
+          capex: statsCapex[cat],
+          m7: statsM7[cat]
+        };
+      });
+
+      return rules;
+    }
+
+    function evaluateByPool30Rule(row, rules) {
+      const cat = String(row.category_norm || "").toLowerCase();
+      const rule = rules[cat];
+
+      if (!rule) {
+        return {
+          result: "N/A",
+          why: "無對應類別規範",
+          ruleText: "-"
+        };
+      }
+
+      const m1 = Number(row.m1_score || 0);
+      const capex = Number(row.capex_score || 0);
+      const m7 = Number(row.m7_score || 0);
+
+      const m1p50 = rule.m1.p50;
+      const m1p75 = rule.m1.p75;
+      const capexp50 = rule.capex.p50;
+      const capexp25 = rule.capex.p25;
+      const m7p50 = rule.m7.p50;
+
+      let result = "Not OK";
+      let why = [];
+      let ruleText = `${cat} | p50=${m1p50} p75=${m1p75} | ${rule.strictness}`;
+
+      if (cat === "core") {
+        if (m1 >= m1p75 && capex >= capexp50) {
+          result = "OK";
+          why.push("m1 高於 core p75");
+          why.push("capex 高於 core p50");
+        } else if (m1 >= m1p50) {
+          result = "Watch";
+          why.push("m1 高於 core p50");
+        }
+      } else if (cat === "growth") {
+        if (m1 >= m1p75 && m7 >= m7p50) {
+          result = "OK";
+          why.push("m1 高於 growth p75");
+          why.push("m7 高於 growth p50");
+        } else if (m1 >= m1p50) {
+          result = "Watch";
+          why.push("m1 高於 growth p50");
+        }
+      } else if (cat === "income") {
+        if (m1 >= m1p75 && capex >= capexp25) {
+          result = "OK";
+          why.push("m1 高於 income p75");
+          why.push("capex 高於 income p25");
+        } else if (m1 >= m1p50) {
+          result = "Watch";
+          why.push("m1 高於 income p50");
+        }
+      } else if (cat === "defensive") {
+        if (m1 >= m1p75) {
+          result = "OK";
+          why.push("m1 高於 defensive p75");
+        } else if (m1 >= m1p50) {
+          result = "Watch";
+          why.push("m1 高於 defensive p50");
+        }
+      } else if (cat === "speculative") {
+        if (m1 >= m1p75) {
+          result = "Spec Pool";
+          why.push("m1 高於 speculative p75");
+        } else if (m1 >= m1p50) {
+          result = "Watch";
+          why.push("m1 高於 speculative p50");
+        }
+      }
+
+      if (!why.length) {
+        why.push("低於該類 pool30 基準");
+      }
+
+      return {
+        result,
+        why: why.join("；"),
+        ruleText
+      };
+    }
+
     function buildCategoryOptions() {
       const categories = Array.from(
         new Set(state.candidateScored.map(x => String(x.category_norm || "unknown").toLowerCase()))
@@ -706,11 +936,18 @@
       return style.map(s => `<span class="chip gray">${escapeHtml(s)}</span>`).join("");
     }
 
+    function renderFilterClass(result) {
+      if (result === "OK" || result === "Spec Pool") return "rule-ok";
+      if (result === "Watch") return "rule-watch";
+      return "rule-no";
+    }
+
     function renderTable(rows) {
       const tbody = $("tbody");
       tbody.innerHTML = rows.map((row, idx) => {
         const symbol = String(row.symbol || "").toUpperCase();
         const hasComment = state.evaluatedMap.has(symbol);
+        const evalResult = evaluateByPool30Rule(row, state.pool30Rules || {});
 
         return `
           <tr data-symbol="${escapeHtml(symbol)}">
@@ -736,6 +973,9 @@
             <td>${fmtPct(row.ret_6m)}</td>
             <td>${fmtPct(row.ret_12m)}</td>
             <td>${fmt(row.volume_ratio)}</td>
+            <td>${escapeHtml(evalResult.ruleText)}</td>
+            <td class="${renderFilterClass(evalResult.result)}">${escapeHtml(evalResult.result)}</td>
+            <td>${escapeHtml(evalResult.why)}</td>
             <td>${hasComment ? '<span class="ok">有</span>' : '<span class="bad">無</span>'}</td>
           </tr>
         `;
@@ -773,6 +1013,7 @@
 
       const symbol = String(row.symbol || "").toUpperCase();
       const evalData = state.evaluatedMap.get(symbol);
+      const poolRule = evaluateByPool30Rule(row, state.pool30Rules || {});
 
       const scoreHtml = `
         <div class="detail-section">
@@ -786,6 +1027,20 @@
             <div class="detail-card"><div class="k">Biased M1</div><div class="v">${fmt(row.m1_biased_score)}</div></div>
             <div class="detail-card"><div class="k">Category Bias</div><div class="v">${fmt(row.category_bias)}</div></div>
             <div class="detail-card"><div class="k">Weight Used</div><div class="v">${fmt(row.score_source_weight)}</div></div>
+          </div>
+        </div>
+      `;
+
+      const filterHtml = `
+        <div class="detail-section">
+          <h3>Pool30 檢驗規範</h3>
+          <div class="detail-grid">
+            <div class="detail-card"><div class="k">Rule</div><div class="v">${escapeHtml(poolRule.ruleText)}</div></div>
+            <div class="detail-card"><div class="k">Result</div><div class="v ${renderFilterClass(poolRule.result)}">${escapeHtml(poolRule.result)}</div></div>
+          </div>
+          <div style="margin-top:12px;" class="detail-card">
+            <div class="k">Why</div>
+            <div class="v">${escapeHtml(poolRule.why)}</div>
           </div>
         </div>
       `;
@@ -862,7 +1117,61 @@
         `;
       }
 
-      $("detailBox").innerHTML = scoreHtml + candidateHtml + fundamentalHtml + returnHtml + commentHtml;
+      $("detailBox").innerHTML = scoreHtml + filterHtml + candidateHtml + fundamentalHtml + returnHtml + commentHtml;
+    }
+
+    function renderStatsPanel() {
+      const allStats = buildStats(state.candidateScored.map(x => Number(x.m1_score)));
+      const by80 = state.stats80 || {};
+      const byPool30 = state.statsPool30 || {};
+      const rules = state.pool30Rules || {};
+
+      function block(title, s) {
+        if (!s) return `<div class="detail-card"><div class="v">${title}: -</div></div>`;
+        return `
+          <div class="detail-card">
+            <div class="k">${title}</div>
+            <div class="v">
+              n=${s.count} ｜ mean=${s.mean} ｜ median=${s.median} ｜ std=${s.std} ｜ CV=${s.cv}<br>
+              p25=${s.p25} ｜ p50=${s.p50} ｜ p75=${s.p75} ｜ IQR=${s.iqr} ｜ min=${s.min} ｜ max=${s.max}
+            </div>
+          </div>
+        `;
+      }
+
+      const cats = ["core","growth","income","defensive","speculative"];
+
+      let html = `
+        <div class="detail-section">
+          <h3>80 檔整體分布（M1 Score）</h3>
+          <div class="stats-grid">
+            ${block("All 80", allStats)}
+          </div>
+        </div>
+      `;
+
+      html += `<div class="detail-section"><h3>五大類：80 檔 vs Pool30 基準</h3><div class="stats-grid">`;
+
+      cats.forEach(cat => {
+        const s80 = by80[cat];
+        const sp = byPool30[cat];
+        const rule = rules[cat];
+
+        html += `
+          <div class="detail-card">
+            <div class="k">${cat.toUpperCase()}</div>
+            <div class="v">
+              <b>80檔</b>：n=${s80?.count ?? 0} mean=${s80?.mean ?? "-"} std=${s80?.std ?? "-"} CV=${s80?.cv ?? "-"} p50=${s80?.p50 ?? "-"} p75=${s80?.p75 ?? "-"}<br>
+              <b>Pool30</b>：n=${sp?.count ?? 0} mean=${sp?.mean ?? "-"} std=${sp?.std ?? "-"} CV=${sp?.cv ?? "-"} p50=${sp?.p50 ?? "-"} p75=${sp?.p75 ?? "-"}<br>
+              <b>Rule</b>：${rule?.strictness ?? "-"}
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div></div>`;
+
+      $("statsPanel").innerHTML = html;
     }
 
     function updateStats(rows) {
@@ -888,7 +1197,7 @@
 
     async function loadAll() {
       $("logBox").textContent = "";
-      log("start loading m1_test with scores...");
+      log("start loading m1_test with stats dashboard...");
 
       const candidatePaths = [
         "./data/m1/m1_candidate_80.json",
@@ -902,8 +1211,12 @@
         "./data/m1/m1_fundamental_map.json",
         "data/m1/m1_fundamental_map.json"
       ];
+      const pool30Paths = [
+        "./data/pool30.json",
+        "data/pool30.json"
+      ];
 
-      let candidate = null, evaluated = null, fundamental = null;
+      let candidate = null, evaluated = null, fundamental = null, pool30Raw = null;
 
       for (const path of candidatePaths) {
         try {
@@ -940,6 +1253,17 @@
         }
       }
 
+      for (const path of pool30Paths) {
+        try {
+          const json = await fetchJSON(path);
+          pool30Raw = json;
+          log("pool30 loaded", { path, count: Array.isArray(json) ? json.length : 0 });
+          break;
+        } catch (e) {
+          log("pool30 try failed", { path, error: String(e) });
+        }
+      }
+
       if (!candidate) {
         $("detailBox").innerHTML = `<pre>找不到 m1_candidate_80.json</pre>`;
         return;
@@ -950,25 +1274,44 @@
       state.fundamentalMap = fundamental || {};
 
       scoreCandidates();
+
+      const pool30Symbols = Array.isArray(pool30Raw)
+        ? pool30Raw.map(x => String(x.symbol || "").toUpperCase())
+        : [];
+
+      state.pool30Rows = state.candidateScored.filter(x =>
+        pool30Symbols.includes(String(x.symbol || "").toUpperCase())
+      );
+
+      state.pool30Rules = buildPool30ReferenceRules(state.pool30Rows);
+      state.stats80 = buildCategoryStats(state.candidateScored, "m1_score");
+      state.statsPool30 = buildCategoryStats(state.pool30Rows, "m1_score");
+
       buildCategoryOptions();
       applyFilters();
+      renderStatsPanel();
 
       console.log("candidateScored =", state.candidateScored);
-      console.log("COIN =", state.candidateScored.find(x => x.symbol === "COIN"));
-      console.log("SOFI =", state.candidateScored.find(x => x.symbol === "SOFI"));
-      console.log("QQQ =", state.candidateScored.find(x => x.symbol === "QQQ"));
+      console.log("pool30Rows =", state.pool30Rows);
+      console.log("pool30Rules =", state.pool30Rules);
 
       window.debugM1 = {
         candidateRaw: state.candidate,
         candidateScored: state.candidateScored,
         evaluatedMap: state.evaluatedMap,
         fundamentalMap: state.fundamentalMap,
+        pool30Rows: state.pool30Rows,
+        pool30Rules: state.pool30Rules,
+        stats80: state.stats80,
+        statsPool30: state.statsPool30,
         find: (s) => {
           const symbol = String(s || "").toUpperCase();
+          const scored = state.candidateScored.find(x => String(x.symbol || "").toUpperCase() === symbol) || null;
           return {
-            scored: state.candidateScored.find(x => String(x.symbol || "").toUpperCase() === symbol) || null,
+            scored,
             evaluated: state.evaluatedMap.get(symbol) || null,
-            fundamental: state.fundamentalMap[symbol] || null
+            fundamental: state.fundamentalMap[symbol] || null,
+            poolRule: scored ? evaluateByPool30Rule(scored, state.pool30Rules) : null
           };
         }
       };
