@@ -1,32 +1,37 @@
 {
-  "core": {
-    "preset": "loose",
-    "strong": 9.25,
-    "pass": 8.85,
-    "watch": 8.55
-  },
-  "growth": {
-    "preset": "medium",
-    "strong": 8.42,
-    "pass": 8.12,
-    "watch": 7.87
-  },
-  "income": {
-    "preset": "strict",
-    "strong": 6.99,
-    "pass": 6.83,
-    "watch": 6.53
-  },
-  "defensive": {
-    "preset": "strict",
-    "strong": 5.54,
-    "pass": 5.39,
-    "watch": 5.09
-  },
-  "speculative": {
-    "preset": "loose",
-    "strong": 5.69,
-    "pass": 5.45,
-    "watch": 5.15
+  "version": "m1_filter_rules_v1",
+  "updated_at": "2026-04-20T21:10:00+08:00",
+  "source": "m1_test.html",
+  "rules": {
+    "core": {
+      "preset": "loose",
+      "strong": 9.25,
+      "pass": 8.85,
+      "watch": 8.55
+    },
+    "growth": {
+      "preset": "medium",
+      "strong": 8.42,
+      "pass": 8.12,
+      "watch": 7.87
+    },
+    "income": {
+      "preset": "strict",
+      "strong": 6.99,
+      "pass": 6.83,
+      "watch": 6.53
+    },
+    "defensive": {
+      "preset": "strict",
+      "strong": 5.54,
+      "pass": 5.39,
+      "watch": 5.09
+    },
+    "speculative": {
+      "preset": "loose",
+      "strong": 5.69,
+      "pass": 5.45,
+      "watch": 5.15
+    }
   }
 }
