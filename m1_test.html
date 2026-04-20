@@ -3,23 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M1 Test Dashboard</title>
+  <title>M1 Test Dashboard | Rule Calibration</title>
   <style>
     :root{
-      --bg:#f5f7fb;
+      --bg:#f4f7fb;
       --panel:#ffffff;
-      --line:#d9e0ea;
-      --text:#1f2937;
-      --muted:#6b7280;
+      --line:#d8e1ec;
+      --text:#0f172a;
+      --muted:#64748b;
       --blue:#2563eb;
       --green:#16a34a;
-      --red:#dc2626;
       --amber:#d97706;
-      --chip:#eef2ff;
-      --chip2:#f1f5f9;
-      --shadow:0 10px 30px rgba(15,23,42,0.08);
-      --radius:16px;
+      --red:#dc2626;
+      --purple:#7c3aed;
+      --slate:#334155;
+      --shadow:0 10px 28px rgba(15,23,42,0.08);
+      --radius:18px;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -27,42 +28,91 @@
       background:var(--bg);
       color:var(--text);
     }
+
     .wrap{
-      max-width:1880px;
+      max-width:1920px;
       margin:0 auto;
       padding:20px;
     }
+
     .hero{
       background:linear-gradient(135deg,#0f172a,#1e3a8a);
       color:#fff;
-      border-radius:20px;
+      border-radius:22px;
       padding:22px 24px;
       box-shadow:var(--shadow);
       margin-bottom:16px;
     }
+    .hero-top{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
     .hero h1{
       margin:0 0 8px;
-      font-size:28px;
+      font-size:30px;
     }
     .hero .sub{
       font-size:14px;
       opacity:.96;
-      line-height:1.7;
+      line-height:1.75;
+      max-width:980px;
+    }
+
+    .hero-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .btn, .nav-btn{
+      border:none;
+      border-radius:12px;
+      padding:11px 14px;
+      cursor:pointer;
+      font-size:14px;
+      font-weight:800;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:42px;
+    }
+    .btn{
+      background:var(--blue);
+      color:#fff;
+    }
+    .btn.secondary{ background:var(--slate); }
+    .btn.green{ background:var(--green); }
+    .btn.amber{ background:var(--amber); }
+    .btn.red{ background:var(--red); }
+    .btn.purple{ background:var(--purple); }
+    .btn.ghost{
+      background:#fff;
+      color:var(--slate);
+      border:1px solid var(--line);
+    }
+    .btn.small{
+      min-height:34px;
+      padding:7px 10px;
+      font-size:12px;
+      border-radius:10px;
+    }
+    .nav-btn{
+      color:#fff;
+      background:rgba(255,255,255,0.14);
+      border:1px solid rgba(255,255,255,0.18);
     }
 
     .toolbar{
       display:grid;
-      grid-template-columns:1.15fr 0.75fr 0.75fr 0.85fr auto auto;
+      grid-template-columns:1.2fr 0.8fr 0.8fr 0.8fr 0.8fr auto auto;
       gap:12px;
       margin-bottom:16px;
       align-items:center;
-    }
-
-    .panel{
-      background:var(--panel);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
     }
     .control{
       width:100%;
@@ -73,59 +123,14 @@
       font-size:14px;
       color:var(--text);
     }
-    button{
-      border:none;
-      background:var(--blue);
-      color:#fff;
-      padding:12px 16px;
-      border-radius:12px;
-      cursor:pointer;
-      font-size:14px;
-      font-weight:700;
-    }
-    button.secondary{
-      background:#334155;
-    }
-    button.ghost{
-      background:#fff;
-      color:#334155;
+
+    .panel{
+      background:var(--panel);
       border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
     }
 
-    .summary{
-      display:grid;
-      grid-template-columns:repeat(6,1fr);
-      gap:12px;
-      margin-bottom:16px;
-    }
-    .stat{
-      padding:16px;
-    }
-    .stat .label{
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:8px;
-    }
-    .stat .value{
-      font-size:28px;
-      font-weight:800;
-    }
-    .stat .sub{
-      font-size:12px;
-      color:var(--muted);
-      margin-top:6px;
-      line-height:1.5;
-    }
-
-    .main{
-      display:grid;
-      grid-template-columns:1.56fr 0.88fr;
-      gap:16px;
-      align-items:start;
-    }
-    .table-panel{
-      overflow:hidden;
-    }
     .panel-title{
       display:flex;
       justify-content:space-between;
@@ -138,17 +143,181 @@
     .small-note{
       font-size:12px;
       color:var(--muted);
-      font-weight:500;
+      font-weight:600;
     }
 
-    .table-wrap{
-      overflow:auto;
-      max-height:72vh;
+    .summary-grid{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:12px;
+      padding:16px;
     }
+    .stat{
+      border:1px solid #e7edf5;
+      border-radius:14px;
+      background:#fff;
+      padding:14px;
+      min-height:102px;
+    }
+    .stat .label{
+      color:var(--muted);
+      font-size:12px;
+      margin-bottom:8px;
+    }
+    .stat .value{
+      font-size:26px;
+      font-weight:900;
+      line-height:1.1;
+    }
+    .stat .sub{
+      font-size:12px;
+      color:var(--muted);
+      margin-top:8px;
+      line-height:1.55;
+    }
+
+    .category-summary-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:12px;
+      padding:0 16px 16px;
+    }
+    .mini-card{
+      border:1px solid #e7edf5;
+      border-radius:14px;
+      background:#fafcff;
+      padding:12px;
+    }
+    .mini-card .t{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:700;
+    }
+    .mini-card .v{
+      font-size:17px;
+      font-weight:900;
+      line-height:1.45;
+    }
+    .mini-card .s{
+      margin-top:6px;
+      font-size:12px;
+      color:#475569;
+      line-height:1.55;
+    }
+
+    .main{
+      display:grid;
+      grid-template-columns:0.98fr 1.02fr;
+      gap:16px;
+      align-items:start;
+    }
+
+    .rule-grid{
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:12px;
+      padding:16px;
+    }
+
+    .rule-card{
+      border:1px solid #e7edf5;
+      border-radius:16px;
+      background:#fff;
+      padding:12px;
+    }
+    .rule-card h3{
+      margin:0 0 10px;
+      font-size:16px;
+    }
+    .row{
+      margin-bottom:10px;
+    }
+    .row label{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:4px;
+      font-weight:700;
+    }
+    .row input,
+    .row select{
+      width:100%;
+      padding:8px 10px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#fff;
+      font-size:13px;
+      color:var(--text);
+    }
+
+    .rule-meta{
+      border-top:1px dashed #d8e1ec;
+      margin-top:10px;
+      padding-top:10px;
+      font-size:12px;
+      color:#475569;
+      line-height:1.65;
+    }
+
+    .rule-actions{
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+      flex-wrap:wrap;
+    }
+
+    .compare-wrap{
+      padding:16px;
+    }
+
+    .compare-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .compare-card{
+      border:1px solid #e7edf5;
+      border-radius:14px;
+      background:#fff;
+      padding:12px;
+    }
+    .compare-card .head{
+      font-size:13px;
+      color:var(--muted);
+      margin-bottom:8px;
+      font-weight:700;
+    }
+    .compare-card .mainv{
+      font-size:24px;
+      font-weight:900;
+      line-height:1.1;
+    }
+    .compare-card .desc{
+      margin-top:8px;
+      font-size:12px;
+      color:#475569;
+      line-height:1.55;
+    }
+
+    .delta-table-wrap{
+      overflow:auto;
+      max-height:340px;
+      border-top:1px solid var(--line);
+    }
+
     table{
       width:100%;
       border-collapse:collapse;
-      min-width:2550px;
+    }
+    th, td{
+      padding:10px 10px;
+      border-bottom:1px solid #eef2f7;
+      font-size:13px;
+      text-align:left;
+      vertical-align:top;
     }
     thead th{
       position:sticky;
@@ -157,384 +326,282 @@
       z-index:2;
       font-size:12px;
       color:#475569;
-      padding:12px 10px;
-      border-bottom:1px solid var(--line);
-      text-align:left;
-      white-space:nowrap;
-    }
-    tbody td{
-      padding:10px;
-      border-bottom:1px solid #eef2f7;
-      font-size:13px;
-      vertical-align:top;
-    }
-    tbody tr:hover{
-      background:#f8fbff;
-      cursor:pointer;
     }
 
     .chip{
       display:inline-block;
       padding:4px 8px;
-      background:var(--chip);
-      color:#3730a3;
       border-radius:999px;
       font-size:12px;
-      font-weight:700;
+      font-weight:800;
       margin:2px 4px 2px 0;
+      background:#eef2ff;
+      color:#3730a3;
     }
     .chip.gray{
-      background:var(--chip2);
+      background:#f1f5f9;
       color:#334155;
     }
-    .mono{font-family:Consolas,Menlo,monospace;}
-    .ok{color:var(--green);font-weight:800}
-    .warn{color:var(--amber);font-weight:800}
-    .bad{color:var(--red);font-weight:800}
-    .muted{color:var(--muted)}
-    .info{color:#2563eb;font-weight:800}
-    .na{color:#64748b;font-weight:800}
+    .chip.green{
+      background:#ecfdf3;
+      color:#166534;
+    }
+    .chip.orange{
+      background:#fff7ed;
+      color:#c2410c;
+    }
+    .chip.red{
+      background:#fef2f2;
+      color:#b91c1c;
+    }
+    .chip.blue{
+      background:#eff6ff;
+      color:#1d4ed8;
+    }
 
-    .right-col{
+    .ok{ color:var(--green); font-weight:900; }
+    .warn{ color:var(--amber); font-weight:900; }
+    .bad{ color:var(--red); font-weight:900; }
+    .info{ color:var(--blue); font-weight:900; }
+    .muted{ color:var(--muted); }
+
+    .section-stack{
       display:grid;
       gap:16px;
     }
-    .json-box{
-      padding:16px;
-    }
-    pre{
-      margin:0;
-      white-space:pre-wrap;
-      word-break:break-word;
-      font-size:12px;
-      line-height:1.55;
-      font-family:Consolas,Menlo,monospace;
-    }
-    .log{
-      max-height:220px;
-      overflow:auto;
-      background:#0f172a;
-      color:#dbeafe;
-      border-radius:14px;
-      padding:14px;
-      font-size:12px;
-      line-height:1.6;
-      font-family:Consolas,Menlo,monospace;
-    }
 
-    .detail-section{
-      margin-bottom:16px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:14px;
-      background:#fff;
-    }
-    .detail-section h3{
-      margin:0 0 10px;
-      font-size:15px;
-    }
-    .detail-grid{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0,1fr));
-      gap:10px;
-    }
-    .detail-card{
-      border:1px solid #e8edf5;
-      border-radius:12px;
-      padding:10px 12px;
-      background:#fafcff;
-    }
-    .detail-card .k{
+    .helper{
       font-size:12px;
       color:var(--muted);
-      margin-bottom:4px;
-    }
-    .detail-card .v{
-      font-size:14px;
-      font-weight:700;
       line-height:1.6;
-    }
-    .tag-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-    }
-    .list{
-      margin:0;
-      padding-left:18px;
-      line-height:1.6;
-      font-size:13px;
+      padding:0 16px 16px;
     }
 
-    .stats-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:12px;
-    }
-    .rule-ok{
-      color:var(--green);
-      font-weight:800;
-    }
-    .rule-watch{
-      color:var(--amber);
-      font-weight:800;
-    }
-    .rule-no{
-      color:var(--red);
-      font-weight:800;
-    }
-    .rule-na{
-      color:#64748b;
-      font-weight:800;
-    }
-    .insight{
-      margin-top:8px;
-      font-size:13px;
-      line-height:1.6;
-      color:#334155;
+    @media (max-width: 1600px){
+      .rule-grid{ grid-template-columns:repeat(3,1fr); }
+      .category-summary-grid{ grid-template-columns:repeat(3,1fr); }
+      .main{ grid-template-columns:1fr; }
     }
 
-    .filter-grid{
-      display:grid;
-      grid-template-columns:repeat(5,minmax(0,1fr));
-      gap:12px;
-    }
-    .filter-card{
-      border:1px solid #e8edf5;
-      border-radius:14px;
-      padding:12px;
-      background:#fafcff;
-    }
-    .filter-card h4{
-      margin:0 0 10px;
-      font-size:15px;
-    }
-    .filter-row{
-      margin-bottom:10px;
-    }
-    .filter-row label{
-      display:block;
-      font-size:12px;
-      color:var(--muted);
-      margin-bottom:4px;
-    }
-    .filter-row input,
-    .filter-row select{
-      width:100%;
-      padding:8px 10px;
-      border:1px solid var(--line);
-      border-radius:10px;
-      background:#fff;
-      font-size:13px;
-    }
-    .mini-actions{
-      display:flex;
-      gap:8px;
-      margin-top:10px;
-    }
-    .mini-actions button{
-      flex:1;
-      padding:8px 10px;
-      font-size:12px;
-      border-radius:10px;
-    }
-    .filter-summary{
-      margin-top:10px;
-      padding-top:10px;
-      border-top:1px dashed #d9e0ea;
-      font-size:12px;
-      line-height:1.6;
-      color:#334155;
+    @media (max-width: 1100px){
+      .toolbar{ grid-template-columns:1fr 1fr 1fr; }
+      .summary-grid{ grid-template-columns:repeat(2,1fr); }
+      .rule-grid{ grid-template-columns:repeat(2,1fr); }
+      .category-summary-grid{ grid-template-columns:repeat(2,1fr); }
+      .compare-grid{ grid-template-columns:1fr; }
     }
 
-    @media (max-width: 1400px){
-      .summary{grid-template-columns:repeat(3,1fr);}
-      .main{grid-template-columns:1fr;}
-      .toolbar{grid-template-columns:1fr 1fr 1fr;}
-      .stats-grid{grid-template-columns:1fr;}
-      .filter-grid{grid-template-columns:1fr 1fr;}
-    }
-    @media (max-width: 840px){
-      .summary{grid-template-columns:repeat(2,1fr);}
-      .toolbar{grid-template-columns:1fr;}
-      .detail-grid{grid-template-columns:1fr;}
-      .filter-grid{grid-template-columns:1fr;}
+    @media (max-width: 760px){
+      .toolbar{ grid-template-columns:1fr; }
+      .summary-grid,
+      .rule-grid,
+      .category-summary-grid{ grid-template-columns:1fr; }
+      .hero-top{ flex-direction:column; }
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="hero">
-      <h1>M1 Test Dashboard</h1>
-      <div class="sub">
-        M1 沙盒：主資料 <b>data/m1/m1_candidate_80.json</b> ｜ 評論 <b>data/m1/pool_stock_evaluated_v1.json</b> ｜ 基本面 <b>data/m1/m1_fundamental_map.json</b><br>
-        本版功能：計算 <b>capex / m3 / m7 / m1</b>，顯示 <b>Candidate 全體分布（不分五大類）</b> 與 <b>五大類分布（80 檔類內分布 vs Pool30 類內基準）</b>，並整合 <b>Rule 控制面板 / by category / by result</b> 篩選。
+      <div class="hero-top">
+        <div>
+          <h1>M1 Test Dashboard｜Rule Calibration Console</h1>
+          <div class="sub">
+            調整五大類 <b>strict / medium / loose / custom</b> 與 <b>strong / pass / watch</b> 門檻，<br>
+            即時觀察 <b>AI 推薦數、五大類推薦數、受影響股票</b> 的 Before / After 變化。<br>
+            確認合理後，再將規則輸出給正式版 m1。
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a class="nav-btn" href="https://daichungwang-wq.github.io/fcn-dashboard/m1.html">回 M1 正式版</a>
+          <a class="nav-btn" href="https://daichungwang-wq.github.io/fcn-dashboard/milestone3_index.html">回 Milestone3</a>
+          <button id="reloadBtn" class="btn">重新載入</button>
+          <button id="resetAllBtn" class="btn secondary">全部重置</button>
+          <button id="exportRulesBtn" class="btn green">匯出正式規則</button>
+          <button id="copyRulesBtn" class="btn purple">複製規則 JSON</button>
+        </div>
       </div>
     </div>
 
     <div class="toolbar">
-      <input id="searchInput" class="control" placeholder="搜尋股號 / sector / style，例如 COIN、SOFI、AI_SEMI、high_beta" />
+      <input id="searchInput" class="control" placeholder="搜尋受影響股票，例如 META、CEG、watch→pass、core" />
+      <select id="impactFilter" class="control">
+        <option value="ALL">全部變動</option>
+        <option value="UP">只看升級</option>
+        <option value="DOWN">只看降級</option>
+        <option value="UNCHANGED">只看無變動</option>
+      </select>
       <select id="categoryFilter" class="control">
         <option value="ALL">全部類別</option>
       </select>
-      <select id="resultFilter" class="control">
-        <option value="ALL">全部結果</option>
+      <select id="afterResultFilter" class="control">
+        <option value="ALL">全部 After 結果</option>
         <option value="STRONG">STRONG</option>
         <option value="PASS">PASS</option>
         <option value="WATCH">WATCH</option>
         <option value="DROP">DROP</option>
         <option value="SPEC_POOL">SPEC_POOL</option>
-        <option value="N/A">N/A</option>
       </select>
       <select id="sortFilter" class="control">
-        <option value="m1_desc">依 m1_score：高 → 低</option>
-        <option value="m7_desc">依 m7_score：高 → 低</option>
-        <option value="capex_desc">依 capex_score：高 → 低</option>
+        <option value="delta_then_rank">依變動優先 → Rank</option>
+        <option value="rank_asc">依 Rank：小 → 大</option>
         <option value="symbol_asc">依股號：A → Z</option>
       </select>
-      <button id="reloadBtn">重新載入</button>
-      <button id="showAllBtn" class="secondary">顯示全部</button>
+      <button id="previewAllBtn" class="btn ghost">顯示全部變動</button>
+      <button id="previewChangedBtn" class="btn ghost">只看有變動</button>
     </div>
 
-    <div class="summary">
-      <div class="panel stat">
-        <div class="label">Candidate 總筆數</div>
-        <div class="value" id="statTotal">-</div>
-        <div class="sub">m1_candidate_80.json</div>
-      </div>
-      <div class="panel stat">
-        <div class="label">目前顯示</div>
-        <div class="value" id="statShown">-</div>
-        <div class="sub">搜尋 / 篩選後</div>
-      </div>
-      <div class="panel stat">
-        <div class="label">評論比對成功</div>
-        <div class="value" id="statMatch">-</div>
-        <div class="sub">連到 pool_stock_evaluated_v1</div>
-      </div>
-      <div class="panel stat">
-        <div class="label">平均 M1</div>
-        <div class="value" id="statAvgM1">-</div>
-        <div class="sub">normalize 後</div>
-      </div>
-      <div class="panel stat">
-        <div class="label">第一名</div>
-        <div class="value" id="statTop">-</div>
-        <div class="sub">目前排序第一名</div>
-      </div>
-      <div class="panel stat">
-        <div class="label">COIN / SOFI / QQQ</div>
-        <div class="value" id="statCheck" style="font-size:24px;">-</div>
-        <div class="sub">關鍵股快速驗證</div>
-      </div>
-    </div>
-
-    <div class="panel json-box" style="margin-bottom:16px;">
+    <div class="panel" style="margin-bottom:16px;">
       <div class="panel-title">
-        <span>Candidate 全體分布（不分五大類） + 五大類分布</span>
-        <span class="small-note">基於 M1 Score，並對照 pool30 規範</span>
+        <span>1. Dashboard｜Before / After Summary</span>
+        <span class="small-note">原始池 / Candidate / AI 推薦 / 五大類推薦分布</span>
       </div>
-      <div id="statsPanel"></div>
-    </div>
 
-    <div class="panel json-box" style="margin-bottom:16px;">
-      <div class="panel-title">
-        <span>五大類 Rule 調整面板</span>
-        <span class="small-note">即時調整 Strong / Pass / Watch / Drop 門檻，並立即回饋到主表</span>
+      <div class="summary-grid">
+        <div class="stat">
+          <div class="label">原始總池</div>
+          <div class="value" id="statUniverse">-</div>
+          <div class="sub">data/m1/universe_150.json</div>
+        </div>
+
+        <div class="stat">
+          <div class="label">Candidate</div>
+          <div class="value" id="statCandidate">-</div>
+          <div class="sub" id="statCandidateSub">-</div>
+        </div>
+
+        <div class="stat">
+          <div class="label">AI 推薦（Before）</div>
+          <div class="value" id="statAiBefore">-</div>
+          <div class="sub" id="statAiBeforeSub">-</div>
+        </div>
+
+        <div class="stat">
+          <div class="label">AI 推薦（After）</div>
+          <div class="value" id="statAiAfter">-</div>
+          <div class="sub" id="statAiAfterSub">-</div>
+        </div>
       </div>
-      <div id="filterControlPanel"></div>
+
+      <div class="category-summary-grid" id="categorySummaryGrid"></div>
+      <div class="helper">
+        Before = 預設正式規則；After = 你目前在左側 Rule Card 調整後的試算結果。<br>
+        AI 推薦 = STRONG + PASS。
+      </div>
     </div>
 
     <div class="main">
-      <div class="panel table-panel">
-        <div class="panel-title">
-          <span>Candidate 80 主表 + Filter 結果</span>
-          <span class="small-note" id="tableNote">載入中...</span>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Rank</th>
-                <th>Symbol</th>
-                <th>Category</th>
-                <th>Sector</th>
-                <th>Style</th>
-                <th>Capex</th>
-                <th>M3</th>
-                <th>M7</th>
-                <th>M1</th>
-                <th>M7 Lite</th>
-                <th>Valuation</th>
-                <th>Trend</th>
-                <th>Quality</th>
-                <th>Snapshot</th>
-                <th>1D</th>
-                <th>1W</th>
-                <th>1M</th>
-                <th>3M</th>
-                <th>6M</th>
-                <th>12M</th>
-                <th>Vol Ratio</th>
-                <th>Pool30 Rule</th>
-                <th>Filter</th>
-                <th>Why</th>
-                <th>評論</th>
-              </tr>
-            </thead>
-            <tbody id="tbody"></tbody>
-          </table>
+      <div class="section-stack">
+        <div class="panel">
+          <div class="panel-title">
+            <span>2. 中間左：五類 Rule 調整卡</span>
+            <span class="small-note">調整後立即回饋到 Summary 與股票名單</span>
+          </div>
+          <div class="rule-grid" id="ruleCards"></div>
+          <div class="helper">
+            preset 會先套入一組 strong / pass / watch；custom 可手改。<br>
+            strong / pass / watch 必須維持由高到低，系統會自動修正順序。
+          </div>
         </div>
       </div>
 
-      <div class="right-col">
-        <div class="panel json-box">
-          <div class="panel-title" style="padding:0 0 12px 0;border-bottom:none;">股票詳情 / 評論 / 分數拆解</div>
-          <div id="detailBox">請點左側任一股票列</div>
+      <div class="section-stack">
+        <div class="panel">
+          <div class="panel-title">
+            <span>3. 中間右：調整後結果會是什麼</span>
+            <span class="small-note">2.1 AI 推薦數與五類推薦數變化</span>
+          </div>
+
+          <div class="compare-wrap">
+            <div class="compare-grid">
+              <div class="compare-card">
+                <div class="head">全體 AI 推薦數變化</div>
+                <div class="mainv" id="deltaAiMain">-</div>
+                <div class="desc" id="deltaAiDesc">-</div>
+              </div>
+
+              <div class="compare-card">
+                <div class="head">有變動股票數</div>
+                <div class="mainv" id="deltaChangedMain">-</div>
+                <div class="desc" id="deltaChangedDesc">-</div>
+              </div>
+            </div>
+
+            <div class="delta-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>Before AI</th>
+                    <th>After AI</th>
+                    <th>Δ</th>
+                    <th>Before 分布</th>
+                    <th>After 分布</th>
+                  </tr>
+                </thead>
+                <tbody id="categoryDeltaTbody"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
 
-        <div class="panel json-box">
-          <div class="panel-title" style="padding:0 0 12px 0;border-bottom:none;">載入紀錄</div>
-          <div id="logBox" class="log"></div>
+        <div class="panel">
+          <div class="panel-title">
+            <span>4. 裡面有什麼股票，狀況是什麼</span>
+            <span class="small-note">2.2 受影響股票明細（Before / After）</span>
+          </div>
+
+          <div class="delta-table-wrap" style="max-height:620px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Symbol</th>
+                  <th>Category</th>
+                  <th>Before</th>
+                  <th>After</th>
+                  <th>變動</th>
+                  <th>原因</th>
+                  <th>M1</th>
+                  <th>Capex</th>
+                  <th>M3</th>
+                  <th>M7</th>
+                  <th>vs p50</th>
+                </tr>
+              </thead>
+              <tbody id="impactTbody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <script type="module">
+    import { runM1Engine } from "./js/m1/m1_engine.js";
+    import { buildPool30Rules } from "./js/m1/m1_stats_engine.js";
+    import { buildDefaultFilterConfig, applyFilter } from "./js/m1/m1_filter_engine.js";
+
+    const ETF_FORCE_DEFENSIVE = ["QQQ","SMH","SPY","LQD","XLU","VPU","XLF","XLV","XLE","XLP","VOLT","ZAP"];
+    const CATEGORY_ORDER = ["core","growth","income","defensive","speculative"];
+
     const state = {
-      candidate: [],
-      candidateScored: [],
-      evaluatedMap: new Map(),
+      universeRaw: [],
+      candidateRaw: [],
+      pool30Raw: [],
       fundamentalMap: {},
-      filtered: [],
-      selected: null,
-      pool30Rows: [],
+      candidatePrepared: [],
+      candidateScoredBase: [],
+      candidateScoredPreview: [],
       pool30Rules: {},
-      stats80: {},
-      statsPool30: {},
-      overallStats: null,
-      filterConfig: {},
-      baselineFilterConfig: {}
+      filterConfigBase: {},
+      filterConfigPreview: {},
+      impactedRows: [],
+      showChangedOnly: false
     };
 
-    const ETF_FORCE_DEFENSIVE = ["QQQ", "SMH", "SPY", "LQD"];
-    const CATEGORIES = ["core","growth","income","defensive","speculative"];
     const $ = (id) => document.getElementById(id);
-
-    function log(msg, obj = null) {
-      const box = $("logBox");
-      const time = new Date().toLocaleTimeString();
-      let line = `[${time}] ${msg}`;
-      if (obj !== null) {
-        try {
-          line += "\\n" + JSON.stringify(obj, null, 2);
-        } catch (e) {}
-      }
-      box.textContent = line + "\\n\\n" + box.textContent;
-      console.log(msg, obj ?? "");
-    }
 
     async function fetchJSON(path) {
       const url = path + (path.includes("?") ? "&" : "?") + "v=" + Date.now();
@@ -548,76 +615,31 @@
       return Number.isFinite(x) ? x : d;
     }
 
-    function safe(v, d = "-") {
-      return v === undefined || v === null || v === "" ? d : v;
-    }
-
     function fmt(v, digits = 2) {
       const x = Number(v);
       return Number.isFinite(x) ? x.toFixed(digits) : "-";
     }
 
-    function fmtPct(v, digits = 2) {
-      const x = Number(v);
-      return Number.isFinite(x) ? (x * 100).toFixed(digits) + "%" : "-";
-    }
-
-    function scoreClass(v) {
-      const x = Number(v);
-      if (!Number.isFinite(x)) return "";
-      if (x >= 7) return "ok";
-      if (x >= 5) return "warn";
-      return "bad";
-    }
-
     function escapeHtml(str) {
       return String(str ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
 
-    function flattenEvaluated(json) {
-      const all = [];
-      const keys = ["pool30_candidate","stock_pool_candidate","watch_candidate","reject_candidate"];
-      for (const key of keys) {
-        const arr = json?.[key];
-        if (Array.isArray(arr)) all.push(...arr);
-      }
-      return all;
-    }
-
-    function buildEvaluatedMap(list) {
-      const map = new Map();
-      for (const row of list) {
-        const symbol = String(row?.symbol || "").toUpperCase().trim();
-        if (!symbol) continue;
-        map.set(symbol, row);
-      }
-      return map;
-    }
-
-    function normalizeCategory(stock) {
-      const symbol = String(stock.symbol || "").toUpperCase().trim();
+    function normalizeCategory(row) {
+      const symbol = String(row.symbol || "").toUpperCase().trim();
       if (ETF_FORCE_DEFENSIVE.includes(symbol)) return "defensive";
 
-      const raw = String(stock.category || "").toLowerCase().trim();
+      const raw = String(row.category || "").toLowerCase().trim();
       if (raw.includes("core")) return "core";
       if (raw.includes("growth")) return "growth";
       if (raw.includes("income")) return "income";
       if (raw.includes("defensive")) return "defensive";
       if (raw.includes("speculative")) return "speculative";
       return "speculative";
-    }
-
-    function categoryBias(category) {
-      if (category === "core") return 1.12;
-      if (category === "growth") return 1.06;
-      if (category === "income") return 1.00;
-      if (category === "defensive") return 0.93;
-      return 0.85;
     }
 
     function mapRangeScore(x, bands) {
@@ -639,15 +661,12 @@
       const capexScore = mapRangeScore(capex, [
         [15, 10], [12, 8.5], [9, 7], [6, 5.5], [3, 4], [0, 2.5]
       ]);
-
       const revScore = mapRangeScore(rev, [
         [30, 10], [20, 8.5], [10, 7], [5, 5.5], [0, 4], [-999, 2]
       ]);
-
       const opgScore = mapRangeScore(opg, [
         [40, 10], [25, 8.5], [15, 7], [5, 5.5], [0, 4], [-999, 2]
       ]);
-
       const sizeScore = mapRangeScore(opq, [
         [12000, 10], [8000, 8.5], [4000, 7], [1000, 5.5], [1, 4], [0, 2]
       ]);
@@ -665,28 +684,13 @@
       return +(sumV / sumW).toFixed(2);
     }
 
-    function calcM7Score(row) {
-      const val = n(row.valuation_score);
-      const trend = n(row.trend_score);
-      const quality = n(row.quality_score);
-
-      const parts = [];
-      if (val !== null) parts.push({ w: 0.4, v: val });
-      if (trend !== null) parts.push({ w: 0.3, v: trend });
-      if (quality !== null) parts.push({ w: 0.3, v: quality });
-
-      if (!parts.length) return null;
-      const sumW = parts.reduce((s, x) => s + x.w, 0);
-      const sumV = parts.reduce((s, x) => s + x.w * x.v, 0);
-      return +(sumV / sumW).toFixed(2);
-    }
-
     function calcEventProxy(row) {
       const r1d = n(row.ret_1d, 0);
       const r1w = n(row.ret_1w, 0);
       const vr = n(row.volume_ratio, 1);
 
       const eventRaw = 0.55 * r1d + 0.35 * r1w + 0.10 * (vr - 1);
+
       if (eventRaw >= 0.18) return 10;
       if (eventRaw >= 0.12) return 9;
       if (eventRaw >= 0.08) return 8;
@@ -697,321 +701,93 @@
       return 3;
     }
 
-    function calcM3Proxy(row) {
-      const pureProxy = n(row.m7_lite_score);
-      const snapshot = n(row.snapshot_score);
-      const eventProxy = calcEventProxy(row);
-
-      const parts = [];
-      if (pureProxy !== null) parts.push({ w: 0.45, v: pureProxy });
-      if (snapshot !== null) parts.push({ w: 0.35, v: snapshot });
-      if (eventProxy !== null) parts.push({ w: 0.20, v: eventProxy });
-
-      if (!parts.length) return null;
-      const sumW = parts.reduce((s, x) => s + x.w, 0);
-      const sumV = parts.reduce((s, x) => s + x.w * x.v, 0);
-      return +(sumV / sumW).toFixed(2);
-    }
-
-    function calcRawM1(row) {
-      const category = normalizeCategory(row);
-      const capex = row.capex_score;
-      const m3 = row.m3_score;
-      const m7 = row.m7_score;
-
-      let weighted = 0;
-      let totalWeight = 0;
-
-      if (capex !== null) {
-        weighted += 0.5 * capex;
-        totalWeight += 0.5;
-      }
-      if (m3 !== null) {
-        weighted += 0.25 * m3;
-        totalWeight += 0.25;
-      }
-      if (m7 !== null) {
-        weighted += 0.25 * m7;
-        totalWeight += 0.25;
-      }
-
-      const rawScore = totalWeight > 0 ? weighted / totalWeight : 0;
-      const bias = categoryBias(category);
-      const biasedScore = rawScore * bias;
-
-      return {
-        category_norm: category,
-        raw_m1_score: +(rawScore.toFixed(2)),
-        m1_biased_score: +(biasedScore.toFixed(2)),
-        category_bias: +bias.toFixed(2),
-        score_source_weight: +totalWeight.toFixed(2)
-      };
-    }
-
-    function scoreCandidates() {
-      const scored = state.candidate.map(row => {
-        const symbol = String(row.symbol || "").toUpperCase();
-        const f = state.fundamentalMap?.[symbol] || null;
-
+    function prepareRows(rows, fundamentalMap) {
+      return rows.map(row => {
+        const symbol = String(row.symbol || "").toUpperCase().trim();
+        const f = fundamentalMap?.[symbol] || {};
         const capexScore = calcFundamentalScore(f);
-        const m7Score = calcM7Score(row);
-        const m3Score = calcM3Proxy(row);
+        const snapshot = n(row.snapshot_score ?? row.snapshot, null);
+        const pure = n(row.m7_lite_score, null);
+        const event = calcEventProxy(row);
 
-        const base = {
+        return {
           ...row,
-          category_norm: normalizeCategory(row),
+          symbol,
+          category: normalizeCategory(row),
+          name: row.name || row.symbol || "",
+          subsector: row.subsector || "",
           capex_score: capexScore,
-          m3_score: m3Score,
-          m7_score: m7Score,
-          _fundamental_raw: f
-        };
-
-        const m1 = calcRawM1(base);
-
-        return {
-          ...base,
-          raw_m1_score: m1.raw_m1_score,
-          m1_biased_score: m1.m1_biased_score,
-          category_bias: m1.category_bias,
-          score_source_weight: m1.score_source_weight
+          pure_stock_score: pure,
+          snapshot_score: snapshot,
+          event_stock_score: event,
+          valuation_score: n(row.valuation_score, null),
+          trend_score: n(row.trend_score, null),
+          quality_score: n(row.quality_score, null)
         };
       });
-
-      const maxScore = Math.max(...scored.map(x => n(x.m1_biased_score, 0)), 0);
-
-      const normalized = scored.map(x => ({
-        ...x,
-        m1_score: maxScore > 0 ? +((x.m1_biased_score / maxScore) * 10).toFixed(2) : 0
-      }));
-
-      normalized.sort((a, b) => n(b.m1_score, -999) - n(a.m1_score, -999));
-      normalized.forEach((x, idx) => x.rank = idx + 1);
-
-      state.candidateScored = normalized;
     }
 
-    function avg(arr) {
-      if (!arr.length) return 0;
-      return arr.reduce((a, b) => a + b, 0) / arr.length;
-    }
-
-    function median(arr) {
-      if (!arr.length) return 0;
-      const s = [...arr].sort((a, b) => a - b);
-      const mid = Math.floor(s.length / 2);
-      return s.length % 2 ? s[mid] : (s[mid - 1] + s[mid]) / 2;
-    }
-
-    function std(arr) {
-      if (arr.length <= 1) return 0;
-      const m = avg(arr);
-      const variance = arr.reduce((sum, x) => sum + Math.pow(x - m, 2), 0) / (arr.length - 1);
-      return Math.sqrt(variance);
-    }
-
-    function percentile(arr, p) {
-      if (!arr.length) return 0;
-      const s = [...arr].sort((a, b) => a - b);
-      const idx = (p / 100) * (s.length - 1);
-      const lo = Math.floor(idx);
-      const hi = Math.ceil(idx);
-      if (lo === hi) return s[lo];
-      return s[lo] + (s[hi] - s[lo]) * (idx - lo);
-    }
-
-    function skewness(arr) {
-      const nums = arr.filter(v => Number.isFinite(v));
-      if (nums.length < 3) return 0;
-      const m = avg(nums);
-      const s = std(nums);
-      if (s === 0) return 0;
-      const nCount = nums.length;
-      const thirdMoment = nums.reduce((sum, x) => sum + Math.pow((x - m) / s, 3), 0);
-      return +(thirdMoment / nCount).toFixed(3);
-    }
-
-    function buildStats(arr) {
-      const nums = arr.filter(v => Number.isFinite(v));
-      if (!nums.length) {
+    function mergeEngineOutput(preparedRows, engineResult) {
+      const map = new Map((engineResult?.scores || []).map(x => [String(x.symbol || "").toUpperCase(), x]));
+      return preparedRows.map(row => {
+        const e = map.get(row.symbol) || {};
         return {
-          count: 0, mean: 0, median: 0, std: 0, cv: 0,
-          min: 0, max: 0, p25: 0, p50: 0, p75: 0, iqr: 0, skew: 0
+          ...row,
+          rank: e.rank ?? null,
+          M1_score: e.M1_score ?? null,
+          raw_m1_score: e.raw_m1_score ?? null,
+          breakdown: e.breakdown || {
+            capex_score: row.capex_score ?? null,
+            m3_score: null,
+            m7_score: null
+          }
         };
-      }
+      });
+    }
 
-      const meanVal = avg(nums);
-      const stdVal = std(nums);
-      const p25 = percentile(nums, 25);
-      const p50 = percentile(nums, 50);
-      const p75 = percentile(nums, 75);
+    function clone(obj) {
+      return JSON.parse(JSON.stringify(obj));
+    }
 
+    function buildCategoryOptions(rows) {
+      const set = new Set(rows.map(x => x.category).filter(Boolean));
+      $("categoryFilter").innerHTML = `
+        <option value="ALL">全部類別</option>
+        ${[...set].sort().map(c => `<option value="${c}">${c}</option>`).join("")}
+      `;
+    }
+
+    function countAiRecommend(rows) {
+      return rows.filter(x => x.filter_result === "STRONG" || x.filter_result === "PASS").length;
+    }
+
+    function bucketCounts(rows, category) {
+      const list = category ? rows.filter(x => x.category === category) : rows;
       return {
-        count: nums.length,
-        mean: +meanVal.toFixed(2),
-        median: +median(nums).toFixed(2),
-        std: +stdVal.toFixed(2),
-        cv: meanVal !== 0 ? +(stdVal / meanVal).toFixed(3) : 0,
-        min: +Math.min(...nums).toFixed(2),
-        max: +Math.max(...nums).toFixed(2),
-        p25: +p25.toFixed(2),
-        p50: +p50.toFixed(2),
-        p75: +p75.toFixed(2),
-        iqr: +(p75 - p25).toFixed(2),
-        skew: skewness(nums)
+        strong: list.filter(x => x.filter_result === "STRONG").length,
+        pass: list.filter(x => x.filter_result === "PASS").length,
+        watch: list.filter(x => x.filter_result === "WATCH" || x.filter_result === "SPEC_POOL").length,
+        drop: list.filter(x => x.filter_result === "DROP").length
       };
     }
 
-    function describeShape(stats) {
-      if (!stats || !stats.count) return "無資料";
-      const delta = stats.mean - stats.median;
-      if (delta <= -0.25) return "左尾（低分拖尾）";
-      if (delta >= 0.25) return "右尾（高分拖尾）";
-      return "近對稱";
+    function resultRank(result) {
+      if (result === "STRONG") return 4;
+      if (result === "PASS") return 3;
+      if (result === "WATCH" || result === "SPEC_POOL") return 2;
+      if (result === "DROP") return 1;
+      return 0;
     }
 
-    function groupByCategory(rows) {
-      const groups = {
-        core: [],
-        growth: [],
-        income: [],
-        defensive: [],
-        speculative: []
-      };
-
-      rows.forEach(row => {
-        const c = String(row.category_norm || row.category || "").toLowerCase();
-        if (!groups[c]) groups[c] = [];
-        groups[c].push(row);
-      });
-
-      return groups;
+    function compareResult(before, after) {
+      const b = resultRank(before);
+      const a = resultRank(after);
+      if (a > b) return "UP";
+      if (a < b) return "DOWN";
+      return "UNCHANGED";
     }
 
-    function buildCategoryStats(rows, scoreKey = "m1_score") {
-      const groups = groupByCategory(rows);
-      const out = {};
-
-      Object.keys(groups).forEach(cat => {
-        out[cat] = buildStats(groups[cat].map(x => Number(x[scoreKey])));
-      });
-
-      return out;
-    }
-
-    function classifyStrictness(cv) {
-      if (cv <= 0.12) return "strict";
-      if (cv > 0.20) return "loose";
-      return "medium";
-    }
-
-    function ksDistance(arrA, arrB) {
-      const a = arrA.filter(Number.isFinite).sort((x, y) => x - y);
-      const b = arrB.filter(Number.isFinite).sort((x, y) => x - y);
-      if (!a.length || !b.length) return 1;
-
-      let i = 0, j = 0;
-      let d = 0;
-
-      while (i < a.length && j < b.length) {
-        const x = Math.min(a[i], b[j]);
-        while (i < a.length && a[i] <= x) i++;
-        while (j < b.length && b[j] <= x) j++;
-        const fa = i / a.length;
-        const fb = j / b.length;
-        d = Math.max(d, Math.abs(fa - fb));
-      }
-
-      return +d.toFixed(3);
-    }
-
-    function representativeness(cat, stats80, statsPool30, rows80, rows30) {
-      if (!stats80 || !statsPool30 || !stats80.count || !statsPool30.count) {
-        return { label: "insufficient", why: "樣本不足", ks: 1 };
-      }
-
-      const meanGap = Math.abs(stats80.mean - statsPool30.mean);
-      const cvGap = Math.abs(stats80.cv - statsPool30.cv);
-      const ks = ksDistance(
-        rows80.map(x => Number(x.m1_score)),
-        rows30.map(x => Number(x.m1_score))
-      );
-
-      if (meanGap <= 0.35 && cvGap <= 0.05 && ks <= 0.25) {
-        return { label: "match", why: "均值與分散度接近", ks };
-      }
-      if (meanGap <= 0.8 && cvGap <= 0.12 && ks <= 0.45) {
-        return { label: "drift", why: "有偏移但仍可參考", ks };
-      }
-      return { label: "mismatch", why: "分布差異較大", ks };
-    }
-
-    function buildPool30ReferenceRules(pool30Rows) {
-      const statsM1 = buildCategoryStats(pool30Rows, "m1_score");
-      const statsCapex = buildCategoryStats(pool30Rows, "capex_score");
-      const statsM7 = buildCategoryStats(pool30Rows, "m7_score");
-
-      const rules = {};
-      CATEGORIES.forEach(cat => {
-        const cv = statsM1[cat]?.cv || 0;
-        rules[cat] = {
-          strictness: classifyStrictness(cv),
-          m1: statsM1[cat] || buildStats([]),
-          capex: statsCapex[cat] || buildStats([]),
-          m7: statsM7[cat] || buildStats([])
-        };
-      });
-
-      return rules;
-    }
-
-    function buildDefaultFilterConfig() {
-      const cfg = {};
-      CATEGORIES.forEach(cat => {
-        const rule = state.pool30Rules[cat];
-        const strictness = rule?.strictness || "medium";
-        cfg[cat] = buildPresetConfig(cat, strictness);
-      });
-      return cfg;
-    }
-
-    function buildPresetConfig(cat, presetType) {
-      const rule = state.pool30Rules[cat];
-      const p50 = n(rule?.m1?.p50, 0);
-      const p75 = n(rule?.m1?.p75, 0);
-
-      if (presetType === "strict") {
-        return {
-          presetType: "strict",
-          strong: p75,
-          pass: p50,
-          watch: p50 - 0.30
-        };
-      }
-      if (presetType === "medium") {
-        return {
-          presetType: "medium",
-          strong: p75,
-          pass: p50 - 0.15,
-          watch: p50 - 0.40
-        };
-      }
-      if (presetType === "loose") {
-        return {
-          presetType: "loose",
-          strong: p75 - 0.10,
-          pass: p50 - 0.30,
-          watch: p50 - 0.60
-        };
-      }
-      return {
-        presetType: "custom",
-        strong: p75,
-        pass: p50,
-        watch: p50 - 0.30
-      };
-    }
-
-    function normalizeFilterOrder(cfg) {
+    function normalizeRuleOrder(cfg) {
       let strong = Number(cfg.strong);
       let pass = Number(cfg.pass);
       let watch = Number(cfg.watch);
@@ -1024,676 +800,475 @@
       if (watch > pass) watch = pass;
 
       return {
-        presetType: cfg.presetType || "custom",
+        ...cfg,
         strong: +strong.toFixed(2),
         pass: +pass.toFixed(2),
         watch: +watch.toFixed(2)
       };
     }
 
-    function evaluateByPool30Rule(row) {
-      const cat = String(row.category_norm || "").toLowerCase();
-      const rule = state.pool30Rules[cat];
-      const cfg = state.filterConfig[cat];
+    function applyPreview() {
+      const previewCfg = {};
+      CATEGORY_ORDER.forEach(cat => {
+        const preset = $(`preset_${cat}`).value;
+        let strong = n($(`strong_${cat}`).value, 0);
+        let pass = n($(`pass_${cat}`).value, 0);
+        let watch = n($(`watch_${cat}`).value, 0);
 
-      if (!rule || !rule.m1.count || !cfg) {
-        return {
-          result: "N/A",
-          why: "無對應類別規範",
-          ruleText: "-"
-        };
-      }
-
-      const m1 = Number(row.m1_score || 0);
-      const capex = Number(row.capex_score || 0);
-      const m7 = Number(row.m7_score || 0);
-
-      let result = "DROP";
-      let why = [];
-      let ruleText = `${cat} | strong≥${fmt(cfg.strong)} pass≥${fmt(cfg.pass)} watch≥${fmt(cfg.watch)} | ${cfg.presetType}`;
-
-      if (cat === "speculative") {
-        if (m1 >= cfg.strong) {
-          result = "SPEC_POOL";
-          why.push(`m1 ≥ speculative strong`);
-        } else if (m1 >= cfg.pass) {
-          result = "WATCH";
-          why.push(`m1 ≥ speculative pass`);
-        } else {
-          result = "DROP";
-          why.push(`低於 speculative pass`);
-        }
-      } else {
-        if (m1 >= cfg.strong) {
-          result = "STRONG";
-          why.push(`m1 ≥ strong`);
-        } else if (m1 >= cfg.pass) {
-          result = "PASS";
-          why.push(`m1 ≥ pass`);
-        } else if (m1 >= cfg.watch) {
-          result = "WATCH";
-          why.push(`m1 接近門檻`);
-        } else {
-          result = "DROP";
-          why.push(`m1 低於 watch`);
-        }
-      }
-
-      if (cat === "core") {
-        if (capex >= rule.capex.p50) why.push("capex ≥ core p50");
-        else why.push("capex < core p50");
-      } else if (cat === "growth") {
-        if (m7 >= rule.m7.p50) why.push("m7 ≥ growth p50");
-        else why.push("m7 < growth p50");
-      } else if (cat === "income") {
-        if (capex >= rule.capex.p25) why.push("capex ≥ income p25");
-        else why.push("capex < income p25");
-      } else if (cat === "defensive") {
-        if (m7 >= rule.m7.p25) why.push("m7 ≥ defensive p25");
-        else why.push("m7 < defensive p25");
-      } else if (cat === "speculative") {
-        if (m7 >= rule.m7.p50) why.push("m7 ≥ speculative p50");
-        else why.push("m7 < speculative p50");
-      }
-
-      return {
-        result,
-        why: why.join("；"),
-        ruleText
-      };
-    }
-
-    function buildCategoryOptions() {
-      const categories = Array.from(
-        new Set(state.candidateScored.map(x => String(x.category_norm || "unknown").toLowerCase()))
-      ).sort();
-
-      $("categoryFilter").innerHTML =
-        '<option value="ALL">全部類別</option>' +
-        categories.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
-    }
-
-    function renderFilterClass(result) {
-      if (result === "STRONG" || result === "PASS" || result === "SPEC_POOL") return "rule-ok";
-      if (result === "WATCH") return "rule-watch";
-      if (result === "N/A") return "rule-na";
-      return "rule-no";
-    }
-
-    function applyFilters() {
-      const kw = $("searchInput").value.trim().toUpperCase();
-      const category = $("categoryFilter").value;
-      const resultFilter = $("resultFilter").value;
-      const sortType = $("sortFilter").value;
-
-      let rows = [...state.candidateScored];
-
-      if (kw) {
-        rows = rows.filter(x => {
-          const symbol = String(x.symbol || "").toUpperCase();
-          const sector = String(x.sector || "").toUpperCase();
-          const categoryRaw = String(x.category_norm || "").toUpperCase();
-          const style = Array.isArray(x.style) ? x.style.join(",").toUpperCase() : String(x.style || "").toUpperCase();
-          return symbol.includes(kw) || sector.includes(kw) || categoryRaw.includes(kw) || style.includes(kw);
+        previewCfg[cat] = normalizeRuleOrder({
+          preset,
+          strong,
+          pass,
+          watch
         });
-      }
+      });
 
-      if (category !== "ALL") {
-        rows = rows.filter(x => String(x.category_norm || "").toLowerCase() === category);
-      }
-
-      if (resultFilter !== "ALL") {
-        rows = rows.filter(x => evaluateByPool30Rule(x).result === resultFilter);
-      }
-
-      if (sortType === "m1_desc") {
-        rows.sort((a, b) => n(b.m1_score, -999) - n(a.m1_score, -999));
-      } else if (sortType === "m7_desc") {
-        rows.sort((a, b) => n(b.m7_score, -999) - n(a.m7_score, -999));
-      } else if (sortType === "capex_desc") {
-        rows.sort((a, b) => n(b.capex_score, -999) - n(a.capex_score, -999));
-      } else if (sortType === "symbol_asc") {
-        rows.sort((a, b) => String(a.symbol || "").localeCompare(String(b.symbol || "")));
-      }
-
-      state.filtered = rows;
-      renderTable(rows);
-      updateStats(rows);
-      renderFilterControlPanel();
-      if (state.selected) {
-        const selectedSymbol = String(state.selected.symbol || "").toUpperCase();
-        const hit = state.candidateScored.find(x => String(x.symbol || "").toUpperCase() === selectedSymbol);
-        if (hit) {
-          state.selected = hit;
-          renderDetail(hit);
-        }
-      }
+      state.filterConfigPreview = previewCfg;
+      state.candidateScoredPreview = applyFilter(clone(state.candidateScoredBase), state.filterConfigPreview, state.pool30Rules);
+      buildImpactedRows();
+      renderAll();
     }
 
-    function renderStyleCell(style) {
-      if (!Array.isArray(style) || !style.length) return "-";
-      return style.map(s => `<span class="chip gray">${escapeHtml(s)}</span>`).join("");
+    function buildImpactedRows() {
+      const mapBase = new Map(state.candidateScoredBase.map(x => [x.symbol, x]));
+      const mapPreview = new Map(state.candidateScoredPreview.map(x => [x.symbol, x]));
+
+      const rows = state.candidatePrepared.map(row => {
+        const b = mapBase.get(row.symbol);
+        const a = mapPreview.get(row.symbol);
+
+        const direction = compareResult(b?.filter_result, a?.filter_result);
+
+        return {
+          symbol: row.symbol,
+          name: row.name || row.symbol,
+          category: row.category,
+          before_result: b?.filter_result || "-",
+          after_result: a?.filter_result || "-",
+          direction,
+          reason_before: Array.isArray(b?.filter_reason) ? b.filter_reason.join(" / ") : "",
+          reason_after: Array.isArray(a?.filter_reason) ? a.filter_reason.join(" / ") : "",
+          rank: a?.rank ?? b?.rank ?? 9999,
+          m1: a?.M1_score ?? b?.M1_score ?? null,
+          capex: a?.breakdown?.capex_score ?? b?.breakdown?.capex_score ?? null,
+          m3: a?.breakdown?.m3_score ?? b?.breakdown?.m3_score ?? null,
+          m7: a?.breakdown?.m7_score ?? b?.breakdown?.m7_score ?? null,
+          vs_p50: (() => {
+            const rule = state.filterConfigPreview[row.category];
+            const score = a?.M1_score;
+            if (!Number.isFinite(score) || !rule) return null;
+            return score - rule.pass;
+          })()
+        };
+      });
+
+      state.impactedRows = rows;
     }
 
-    function renderTable(rows) {
-      const tbody = $("tbody");
-      tbody.innerHTML = rows.map((row, idx) => {
-        const symbol = String(row.symbol || "").toUpperCase();
-        const hasComment = state.evaluatedMap.has(symbol);
-        const evalResult = evaluateByPool30Rule(row);
+    function renderDashboard() {
+      const universeCount = state.universeRaw.length || 150;
+      const candidateCount = state.candidateScoredBase.length;
+      const aiBefore = countAiRecommend(state.candidateScoredBase);
+      const aiAfter = countAiRecommend(state.candidateScoredPreview);
+      const currentDisplay = getFilteredImpactRows().length;
+
+      $("statUniverse").textContent = universeCount;
+      $("statCandidate").textContent = `${candidateCount} / ${universeCount}`;
+      $("statCandidateSub").textContent = `${universeCount ? fmt((candidateCount / universeCount) * 100) : "0.00"}%`;
+
+      $("statAiBefore").textContent = `${aiBefore} / ${candidateCount}`;
+      $("statAiBeforeSub").textContent = `${candidateCount ? fmt((aiBefore / candidateCount) * 100) : "0.00"}%`;
+
+      $("statAiAfter").textContent = `${aiAfter} / ${candidateCount}`;
+      $("statAiAfterSub").textContent = `${candidateCount ? fmt((aiAfter / candidateCount) * 100) : "0.00"}%`;
+
+      $("statDisplay").textContent = `${currentDisplay} / ${candidateCount}`;
+      $("statDisplaySub").textContent = `${candidateCount ? fmt((currentDisplay / candidateCount) * 100) : "0.00"}%`;
+
+      $("categorySummaryGrid").innerHTML = CATEGORY_ORDER.map(cat => {
+        const all = state.candidateScoredBase.filter(x => x.category === cat);
+        const beforeAi = countAiRecommend(all);
+        const afterAi = countAiRecommend(state.candidateScoredPreview.filter(x => x.category === cat));
 
         return `
-          <tr data-symbol="${escapeHtml(symbol)}">
-            <td>${idx + 1}</td>
-            <td>${safe(row.rank)}</td>
-            <td><span class="chip mono">${escapeHtml(symbol)}</span></td>
-            <td>${escapeHtml(safe(row.category_norm))}</td>
-            <td>${escapeHtml(safe(row.sector))}</td>
-            <td>${renderStyleCell(row.style)}</td>
-            <td class="${scoreClass(row.capex_score)}"><b>${fmt(row.capex_score)}</b></td>
-            <td class="${scoreClass(row.m3_score)}"><b>${fmt(row.m3_score)}</b></td>
-            <td class="${scoreClass(row.m7_score)}"><b>${fmt(row.m7_score)}</b></td>
-            <td class="${scoreClass(row.m1_score)}"><b>${fmt(row.m1_score)}</b></td>
-            <td>${fmt(row.m7_lite_score)}</td>
-            <td>${fmt(row.valuation_score)}</td>
-            <td>${fmt(row.trend_score)}</td>
-            <td>${fmt(row.quality_score)}</td>
-            <td>${fmt(row.snapshot_score)}</td>
-            <td>${fmtPct(row.ret_1d)}</td>
-            <td>${fmtPct(row.ret_1w)}</td>
-            <td>${fmtPct(row.ret_1m)}</td>
-            <td>${fmtPct(row.ret_3m)}</td>
-            <td>${fmtPct(row.ret_6m)}</td>
-            <td>${fmtPct(row.ret_12m)}</td>
-            <td>${fmt(row.volume_ratio)}</td>
-            <td>${escapeHtml(evalResult.ruleText)}</td>
-            <td class="${renderFilterClass(evalResult.result)}">${escapeHtml(evalResult.result)}</td>
-            <td>${escapeHtml(evalResult.why)}</td>
-            <td>${hasComment ? '<span class="ok">有</span>' : '<span class="bad">無</span>'}</td>
-          </tr>
+          <div class="mini-card">
+            <div class="t">${escapeHtml(cat.toUpperCase())}</div>
+            <div class="v">
+              Candidate：${all.length} / ${candidateCount}<br>
+              AI推薦：${beforeAi} → ${afterAi}
+            </div>
+            <div class="s">
+              Candidate 比 ${candidateCount ? fmt((all.length / candidateCount) * 100) : "0.00"}%<br>
+              AI推薦比 ${all.length ? fmt((afterAi / all.length) * 100) : "0.00"}%
+            </div>
+          </div>
         `;
       }).join("");
-
-      $("tableNote").textContent = `共 ${rows.length} 筆`;
-
-      Array.from(tbody.querySelectorAll("tr")).forEach(tr => {
-        tr.addEventListener("click", () => {
-          const symbol = tr.getAttribute("data-symbol");
-          const hit = state.filtered.find(x => String(x.symbol || "").toUpperCase() === symbol);
-          state.selected = hit;
-          renderDetail(hit);
-        });
-      });
-
-      if (rows.length) {
-        const selectedSymbol = state.selected ? String(state.selected.symbol || "").toUpperCase() : null;
-        const keep = selectedSymbol ? rows.find(x => String(x.symbol || "").toUpperCase() === selectedSymbol) : null;
-        state.selected = keep || rows[0];
-        renderDetail(state.selected);
-      } else {
-        $("detailBox").innerHTML = "目前無符合條件資料";
-      }
     }
 
-    function renderList(items) {
-      if (!Array.isArray(items) || !items.length) return "<div>-</div>";
-      return `<ul class="list">${items.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>`;
-    }
+    function renderRuleCards() {
+      $("ruleCards").innerHTML = CATEGORY_ORDER.map(cat => {
+        const baseRule = state.filterConfigBase[cat] || {};
+        const poolRule = state.pool30Rules[cat] || {};
+        const baseRows = state.candidateScoredBase.filter(x => x.category === cat);
+        const previewRows = state.candidateScoredPreview.filter(x => x.category === cat);
 
-    function renderDetail(row) {
-      if (!row) {
-        $("detailBox").innerHTML = "無資料";
-        return;
-      }
+        const aiBefore = countAiRecommend(baseRows);
+        const aiAfter = countAiRecommend(previewRows);
 
-      const symbol = String(row.symbol || "").toUpperCase();
-      const evalData = state.evaluatedMap.get(symbol);
-      const poolRule = evaluateByPool30Rule(row);
-
-      const scoreHtml = `
-        <div class="detail-section">
-          <h3>${escapeHtml(symbol)} ｜ M1 分數拆解</h3>
-          <div class="detail-grid">
-            <div class="detail-card"><div class="k">Capex Score</div><div class="v ${scoreClass(row.capex_score)}">${fmt(row.capex_score)}</div></div>
-            <div class="detail-card"><div class="k">M3 Score</div><div class="v ${scoreClass(row.m3_score)}">${fmt(row.m3_score)}</div></div>
-            <div class="detail-card"><div class="k">M7 Score</div><div class="v ${scoreClass(row.m7_score)}">${fmt(row.m7_score)}</div></div>
-            <div class="detail-card"><div class="k">M1 Score</div><div class="v ${scoreClass(row.m1_score)}">${fmt(row.m1_score)}</div></div>
-            <div class="detail-card"><div class="k">Raw M1</div><div class="v">${fmt(row.raw_m1_score)}</div></div>
-            <div class="detail-card"><div class="k">Biased M1</div><div class="v">${fmt(row.m1_biased_score)}</div></div>
-            <div class="detail-card"><div class="k">Category Bias</div><div class="v">${fmt(row.category_bias)}</div></div>
-            <div class="detail-card"><div class="k">Weight Used</div><div class="v">${fmt(row.score_source_weight)}</div></div>
-          </div>
-        </div>
-      `;
-
-      const filterHtml = `
-        <div class="detail-section">
-          <h3>Pool30 檢驗規範</h3>
-          <div class="detail-grid">
-            <div class="detail-card"><div class="k">Rule</div><div class="v">${escapeHtml(poolRule.ruleText)}</div></div>
-            <div class="detail-card"><div class="k">Result</div><div class="v ${renderFilterClass(poolRule.result)}">${escapeHtml(poolRule.result)}</div></div>
-          </div>
-          <div style="margin-top:12px;" class="detail-card">
-            <div class="k">Why</div>
-            <div class="v">${escapeHtml(poolRule.why)}</div>
-          </div>
-        </div>
-      `;
-
-      const candidateHtml = `
-        <div class="detail-section">
-          <h3>Candidate 資料</h3>
-          <div class="detail-grid">
-            <div class="detail-card"><div class="k">Category</div><div class="v">${escapeHtml(safe(row.category_norm))}</div></div>
-            <div class="detail-card"><div class="k">Sector</div><div class="v">${escapeHtml(safe(row.sector))}</div></div>
-            <div class="detail-card"><div class="k">M7 Lite</div><div class="v">${fmt(row.m7_lite_score)}</div></div>
-            <div class="detail-card"><div class="k">Volume Ratio</div><div class="v">${fmt(row.volume_ratio)}</div></div>
-            <div class="detail-card"><div class="k">Valuation / Trend / Quality</div><div class="v">${fmt(row.valuation_score)} / ${fmt(row.trend_score)} / ${fmt(row.quality_score)}</div></div>
-            <div class="detail-card"><div class="k">Snapshot</div><div class="v">${fmt(row.snapshot_score)}</div></div>
-          </div>
-          <div style="margin-top:12px;">
-            <div class="k" style="font-size:12px;color:#6b7280;margin-bottom:6px;">Style</div>
-            <div class="tag-row">${Array.isArray(row.style) && row.style.length ? row.style.map(s => `<span class="chip gray">${escapeHtml(s)}</span>`).join("") : "-"}</div>
-          </div>
-        </div>
-      `;
-
-      const fundamentalHtml = `
-        <div class="detail-section">
-          <h3>Fundamental Map</h3>
-          <pre>${escapeHtml(JSON.stringify(row._fundamental_raw || null, null, 2))}</pre>
-        </div>
-      `;
-
-      const returnHtml = `
-        <div class="detail-section">
-          <h3>價格 / 報酬</h3>
-          <div class="detail-grid">
-            <div class="detail-card"><div class="k">1D</div><div class="v">${fmtPct(row.ret_1d)}</div></div>
-            <div class="detail-card"><div class="k">1W</div><div class="v">${fmtPct(row.ret_1w)}</div></div>
-            <div class="detail-card"><div class="k">1M</div><div class="v">${fmtPct(row.ret_1m)}</div></div>
-            <div class="detail-card"><div class="k">3M</div><div class="v">${fmtPct(row.ret_3m)}</div></div>
-            <div class="detail-card"><div class="k">6M</div><div class="v">${fmtPct(row.ret_6m)}</div></div>
-            <div class="detail-card"><div class="k">12M</div><div class="v">${fmtPct(row.ret_12m)}</div></div>
-          </div>
-        </div>
-      `;
-
-      let commentHtml = `
-        <div class="detail-section">
-          <h3>評論 / 系統說明</h3>
-          <div class="detail-card"><div class="v bad">pool_stock_evaluated_v1.json 找不到 ${escapeHtml(symbol)} 的對應評論</div></div>
-        </div>
-      `;
-
-      if (evalData) {
-        commentHtml = `
-          <div class="detail-section">
-            <h3>評論 / 系統說明</h3>
-            <div class="detail-grid">
-              <div class="detail-card"><div class="k">Name</div><div class="v">${escapeHtml(safe(evalData.name))}</div></div>
-              <div class="detail-card"><div class="k">Subsector</div><div class="v">${escapeHtml(safe(evalData.subsector))}</div></div>
-              <div class="detail-card"><div class="k">Identity</div><div class="v">${escapeHtml(safe(evalData.identity?.source))} / ${evalData.identity?.already_in_pool30 ? "已在Pool30" : "非Pool30"} / ${evalData.identity?.is_new_stock ? "新股" : "舊股"}</div></div>
-              <div class="detail-card"><div class="k">System Bucket</div><div class="v">${escapeHtml(safe(evalData.system_recommendation?.bucket))}</div></div>
-            </div>
-            <div style="margin-top:14px;" class="detail-card">
-              <div class="k">AI Reason Short</div>
-              <div class="v">${Array.isArray(evalData.ai_reason_short) ? evalData.ai_reason_short.map(x => escapeHtml(x)).join(" ｜ ") : "-"}</div>
-            </div>
-            <div style="margin-top:14px;" class="detail-card">
-              <div class="k">Why Yes</div>
-              ${renderList(evalData.system_reason?.seed_why_yes || evalData.system_reason?.why_yes)}
-            </div>
-            <div style="margin-top:14px;" class="detail-card">
-              <div class="k">Why No</div>
-              ${renderList(evalData.system_reason?.seed_why_no || evalData.system_reason?.why_no)}
-            </div>
-          </div>
-        `;
-      }
-
-      $("detailBox").innerHTML = scoreHtml + filterHtml + candidateHtml + fundamentalHtml + returnHtml + commentHtml;
-    }
-
-    function renderStatsPanel() {
-      const allStats = state.overallStats || buildStats(state.candidateScored.map(x => Number(x.m1_score)));
-      const by80 = state.stats80 || {};
-      const byPool30 = state.statsPool30 || {};
-      const groups80 = groupByCategory(state.candidateScored);
-      const groupsPool30 = groupByCategory(state.pool30Rows);
-
-      const overallShape = describeShape(allStats);
-      const overallInsight = [];
-      overallInsight.push(`分布型態：${overallShape}`);
-      if (allStats.cv <= 0.12) overallInsight.push("分數非常集中");
-      else if (allStats.cv <= 0.18) overallInsight.push("分數集中度可接受");
-      else if (allStats.cv <= 0.25) overallInsight.push("分數偏分散，建議 filter");
-      else overallInsight.push("分數非常分散，需要強 filter");
-
-      function block(title, s, extra = "") {
-        if (!s) return `<div class="detail-card"><div class="v">${title}: -</div></div>`;
         return `
-          <div class="detail-card">
-            <div class="k">${title}</div>
-            <div class="v">
-              n=${s.count} ｜ mean=${s.mean} ｜ median=${s.median} ｜ std=${s.std} ｜ CV=${s.cv}<br>
-              p25=${s.p25} ｜ p50=${s.p50} ｜ p75=${s.p75} ｜ IQR=${s.iqr} ｜ min=${s.min} ｜ max=${s.max} ｜ skew=${s.skew}<br>
-              ${extra}
-            </div>
-          </div>
-        `;
-      }
+          <div class="rule-card">
+            <h3>${escapeHtml(cat.toUpperCase())}</h3>
 
-      let html = `
-        <div class="detail-section">
-          <h3>Candidate 全體分布（不分五大類）</h3>
-          <div class="stats-grid">
-            ${block("All Candidate", allStats, `Shape=${overallShape}`)}
-          </div>
-          <div class="insight"><b>Insight：</b>${overallInsight.join(" ｜ ")}</div>
-        </div>
-      `;
-
-      html += `<div class="detail-section"><h3>五大類分布（80 檔類內分布 vs Pool30 類內基準）</h3><div class="stats-grid">`;
-
-      CATEGORIES.forEach(cat => {
-        const s80 = by80[cat];
-        const sp = byPool30[cat];
-        const rep = representativeness(
-          cat,
-          s80,
-          sp,
-          groups80[cat] || [],
-          groupsPool30[cat] || []
-        );
-        const strictness = sp?.count ? classifyStrictness(sp.cv) : "N/A";
-
-        html += `
-          <div class="detail-card">
-            <div class="k">${cat.toUpperCase()}</div>
-            <div class="v">
-              <b>80檔</b>：n=${s80?.count ?? 0} mean=${s80?.mean ?? "-"} std=${s80?.std ?? "-"} CV=${s80?.cv ?? "-"} p50=${s80?.p50 ?? "-"} p75=${s80?.p75 ?? "-"}<br>
-              <b>Pool30</b>：n=${sp?.count ?? 0} mean=${sp?.mean ?? "-"} std=${sp?.std ?? "-"} CV=${sp?.cv ?? "-"} p50=${sp?.p50 ?? "-"} p75=${sp?.p75 ?? "-"}<br>
-              <b>Representativeness</b>：${rep.label} ｜ KS=${rep.ks} ｜ ${rep.why}<br>
-              <b>Rule</b>：${strictness}
-            </div>
-          </div>
-        `;
-      });
-
-      html += `</div></div>`;
-
-      $("statsPanel").innerHTML = html;
-    }
-
-    function countResultsByCategory(cat) {
-      const rows = state.candidateScored.filter(x => x.category_norm === cat);
-      const out = { STRONG:0, PASS:0, WATCH:0, DROP:0, SPEC_POOL:0, "N/A":0 };
-      rows.forEach(r => {
-        const result = evaluateByPool30Rule(r).result;
-        if (!(result in out)) out[result] = 0;
-        out[result] += 1;
-      });
-      return out;
-    }
-
-    function renderFilterControlPanel() {
-      const container = $("filterControlPanel");
-      let html = `<div class="filter-grid">`;
-
-      CATEGORIES.forEach(cat => {
-        const rule = state.pool30Rules[cat];
-        const cfg = state.filterConfig[cat];
-        const base = state.baselineFilterConfig[cat];
-        const counts = countResultsByCategory(cat);
-
-        html += `
-          <div class="filter-card">
-            <h4>${cat.toUpperCase()}</h4>
-
-            <div class="filter-row">
-              <label>Rule 類型</label>
-              <div class="muted" style="font-size:12px;line-height:1.6;">
-                Pool30 p50=${fmt(rule?.m1?.p50)} ｜ p75=${fmt(rule?.m1?.p75)} ｜ strictness=${escapeHtml(rule?.strictness || "N/A")}
-              </div>
-              <select data-cat="${cat}" class="preset-select">
-                <option value="strict" ${cfg?.presetType==="strict"?"selected":""}>strict</option>
-                <option value="medium" ${cfg?.presetType==="medium"?"selected":""}>medium</option>
-                <option value="loose" ${cfg?.presetType==="loose"?"selected":""}>loose</option>
-                <option value="custom" ${cfg?.presetType==="custom"?"selected":""}>custom</option>
+            <div class="row">
+              <label>Preset</label>
+              <select id="preset_${cat}">
+                <option value="strict" ${baseRule.preset === "strict" ? "selected" : ""}>strict</option>
+                <option value="medium" ${baseRule.preset === "medium" ? "selected" : ""}>medium</option>
+                <option value="loose" ${baseRule.preset === "loose" ? "selected" : ""}>loose</option>
+                <option value="custom" ${baseRule.preset === "custom" ? "selected" : ""}>custom</option>
               </select>
             </div>
 
-            <div class="filter-row">
-              <label>Strong threshold</label>
-              <input type="number" step="0.01" class="cfg-strong" data-cat="${cat}" value="${fmt(cfg?.strong)}">
+            <div class="row">
+              <label>Strong</label>
+              <input id="strong_${cat}" type="number" step="0.01" value="${fmt(baseRule.strong)}" />
             </div>
 
-            <div class="filter-row">
-              <label>Pass threshold</label>
-              <input type="number" step="0.01" class="cfg-pass" data-cat="${cat}" value="${fmt(cfg?.pass)}">
+            <div class="row">
+              <label>Pass</label>
+              <input id="pass_${cat}" type="number" step="0.01" value="${fmt(baseRule.pass)}" />
             </div>
 
-            <div class="filter-row">
-              <label>Watch threshold</label>
-              <input type="number" step="0.01" class="cfg-watch" data-cat="${cat}" value="${fmt(cfg?.watch)}">
+            <div class="row">
+              <label>Watch</label>
+              <input id="watch_${cat}" type="number" step="0.01" value="${fmt(baseRule.watch)}" />
             </div>
 
-            <div class="mini-actions">
-              <button class="apply-btn" data-cat="${cat}">Apply</button>
-              <button class="ghost reset-btn" data-cat="${cat}">Reset</button>
+            <div class="rule-meta">
+              pool30 count：${poolRule.count || 0}<br>
+              p50 / p75 / CV：${fmt(poolRule.pass)} / ${fmt(poolRule.strong)} / ${fmt(poolRule.cv)}<br>
+              strictness：${escapeHtml(poolRule.strictness || "-")}<br>
+              Candidate：${baseRows.length} ｜ AI推薦：${aiBefore} → ${aiAfter}
             </div>
 
-            <div class="filter-summary">
-              <div><b>Rule：</b>Strong ≥ ${fmt(cfg?.strong)} ｜ Pass ≥ ${fmt(cfg?.pass)} ｜ Watch ≥ ${fmt(cfg?.watch)}</div>
-              <div><b>Baseline：</b>Strong ≥ ${fmt(base?.strong)} ｜ Pass ≥ ${fmt(base?.pass)} ｜ Watch ≥ ${fmt(base?.watch)}</div>
-              <div><b>Result：</b>STRONG ${counts.STRONG} ｜ PASS ${counts.PASS} ｜ WATCH ${counts.WATCH} ｜ DROP ${counts.DROP}${cat==="speculative" ? ` ｜ SPEC_POOL ${counts.SPEC_POOL}` : ""}</div>
+            <div class="rule-actions">
+              <button class="btn small" data-apply-cat="${cat}">套用本類</button>
+              <button class="btn ghost small" data-reset-cat="${cat}">重置本類</button>
             </div>
           </div>
         `;
-      });
+      }).join("");
 
-      html += `</div>`;
-      container.innerHTML = html;
+      bindRuleEvents();
+    }
 
-      container.querySelectorAll(".preset-select").forEach(el => {
-        el.addEventListener("change", (e) => {
-          const cat = e.target.dataset.cat;
-          const preset = e.target.value;
-          state.filterConfig[cat] = normalizeFilterOrder(buildPresetConfig(cat, preset));
-          applyFilters();
+    function renderCompareSection() {
+      const beforeAi = countAiRecommend(state.candidateScoredBase);
+      const afterAi = countAiRecommend(state.candidateScoredPreview);
+      const delta = afterAi - beforeAi;
+
+      const changedCount = state.impactedRows.filter(x => x.direction !== "UNCHANGED").length;
+      const upCount = state.impactedRows.filter(x => x.direction === "UP").length;
+      const downCount = state.impactedRows.filter(x => x.direction === "DOWN").length;
+
+      $("deltaAiMain").textContent = `${beforeAi} → ${afterAi} (${delta >= 0 ? "+" : ""}${delta})`;
+      $("deltaAiDesc").textContent = `AI 推薦 = STRONG + PASS`;
+
+      $("deltaChangedMain").textContent = `${changedCount}`;
+      $("deltaChangedDesc").textContent = `升級 ${upCount} ｜ 降級 ${downCount}`;
+
+      $("categoryDeltaTbody").innerHTML = CATEGORY_ORDER.map(cat => {
+        const baseRows = state.candidateScoredBase.filter(x => x.category === cat);
+        const previewRows = state.candidateScoredPreview.filter(x => x.category === cat);
+
+        const beforeAi = countAiRecommend(baseRows);
+        const afterAi = countAiRecommend(previewRows);
+        const d = afterAi - beforeAi;
+
+        const b = bucketCounts(baseRows);
+        const a = bucketCounts(previewRows);
+
+        return `
+          <tr>
+            <td><b>${escapeHtml(cat.toUpperCase())}</b></td>
+            <td>${beforeAi}</td>
+            <td>${afterAi}</td>
+            <td class="${d > 0 ? 'ok' : d < 0 ? 'bad' : 'muted'}">${d >= 0 ? "+" : ""}${d}</td>
+            <td>S ${b.strong} / P ${b.pass} / W ${b.watch} / D ${b.drop}</td>
+            <td>S ${a.strong} / P ${a.pass} / W ${a.watch} / D ${a.drop}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function getFilteredImpactRows() {
+      let rows = [...state.impactedRows];
+
+      const keyword = $("searchInput").value.trim().toLowerCase();
+      const impactFilter = $("impactFilter").value;
+      const categoryFilter = $("categoryFilter").value;
+      const afterResultFilter = $("afterResultFilter").value;
+      const sort = $("sortFilter").value;
+
+      if (state.showChangedOnly) {
+        rows = rows.filter(x => x.direction !== "UNCHANGED");
+      }
+
+      if (keyword) {
+        rows = rows.filter(x => {
+          const text = [
+            x.symbol,
+            x.name,
+            x.category,
+            x.before_result,
+            x.after_result,
+            x.reason_before,
+            x.reason_after
+          ].join(" ").toLowerCase();
+          return text.includes(keyword);
         });
-      });
+      }
 
-      container.querySelectorAll(".apply-btn").forEach(el => {
-        el.addEventListener("click", (e) => {
-          const cat = e.target.dataset.cat;
-          const strong = Number(container.querySelector(`.cfg-strong[data-cat="${cat}"]`).value);
-          const pass = Number(container.querySelector(`.cfg-pass[data-cat="${cat}"]`).value);
-          const watch = Number(container.querySelector(`.cfg-watch[data-cat="${cat}"]`).value);
-          state.filterConfig[cat] = normalizeFilterOrder({
-            presetType: "custom",
-            strong,
-            pass,
-            watch
-          });
-          applyFilters();
+      if (impactFilter !== "ALL") {
+        rows = rows.filter(x => x.direction === impactFilter);
+      }
+
+      if (categoryFilter !== "ALL") {
+        rows = rows.filter(x => x.category === categoryFilter);
+      }
+
+      if (afterResultFilter !== "ALL") {
+        rows = rows.filter(x => x.after_result === afterResultFilter);
+      }
+
+      if (sort === "rank_asc") {
+        rows.sort((a,b) => n(a.rank,9999) - n(b.rank,9999));
+      } else if (sort === "symbol_asc") {
+        rows.sort((a,b) => String(a.symbol).localeCompare(String(b.symbol)));
+      } else {
+        const rankMap = { UP: 1, DOWN: 2, UNCHANGED: 3 };
+        rows.sort((a,b) => {
+          const ra = rankMap[a.direction] || 9;
+          const rb = rankMap[b.direction] || 9;
+          if (ra !== rb) return ra - rb;
+          return n(a.rank,9999) - n(b.rank,9999);
         });
+      }
+
+      return rows;
+    }
+
+    function renderImpactTable() {
+      const rows = getFilteredImpactRows();
+
+      $("impactTbody").innerHTML = rows.map((row, idx) => `
+        <tr>
+          <td>${idx + 1}</td>
+          <td><b>${escapeHtml(row.symbol)}</b><br><span class="muted">${escapeHtml(row.name || "")}</span></td>
+          <td><span class="chip gray">${escapeHtml(row.category)}</span></td>
+          <td><span class="chip ${row.before_result === 'STRONG' ? 'green' : row.before_result === 'PASS' ? 'blue' : row.before_result === 'WATCH' || row.before_result === 'SPEC_POOL' ? 'orange' : 'red'}">${escapeHtml(row.before_result)}</span></td>
+          <td><span class="chip ${row.after_result === 'STRONG' ? 'green' : row.after_result === 'PASS' ? 'blue' : row.after_result === 'WATCH' || row.after_result === 'SPEC_POOL' ? 'orange' : 'red'}">${escapeHtml(row.after_result)}</span></td>
+          <td class="${row.direction === 'UP' ? 'ok' : row.direction === 'DOWN' ? 'bad' : 'muted'}">${row.direction}</td>
+          <td>${escapeHtml(row.reason_after || "-")}</td>
+          <td>${fmt(row.m1)}</td>
+          <td>${fmt(row.capex)}</td>
+          <td>${fmt(row.m3)}</td>
+          <td>${fmt(row.m7)}</td>
+          <td>${row.vs_p50 !== null ? `${row.vs_p50 >= 0 ? "+" : ""}${fmt(row.vs_p50)}` : "-"}</td>
+        </tr>
+      `).join("");
+
+      if (!rows.length) {
+        $("impactTbody").innerHTML = `
+          <tr>
+            <td colspan="12" class="muted">目前沒有符合條件的股票。</td>
+          </tr>
+        `;
+      }
+    }
+
+    function bindRuleEvents() {
+      CATEGORY_ORDER.forEach(cat => {
+        $(`preset_${cat}`).addEventListener("change", () => {
+          const poolRule = state.pool30Rules[cat];
+          if (!poolRule) return;
+
+          const preset = $(`preset_${cat}`).value;
+          let strong = poolRule.strong;
+          let pass = poolRule.pass;
+          let watch = poolRule.pass - 0.30;
+
+          if (preset === "medium") {
+            strong = poolRule.strong;
+            pass = poolRule.pass - 0.15;
+            watch = poolRule.pass - 0.40;
+          } else if (preset === "loose") {
+            strong = poolRule.strong - 0.10;
+            pass = poolRule.pass - 0.30;
+            watch = poolRule.pass - 0.60;
+          } else if (preset === "strict") {
+            strong = poolRule.strong;
+            pass = poolRule.pass;
+            watch = poolRule.pass - 0.30;
+          }
+
+          $(`strong_${cat}`).value = strong.toFixed(2);
+          $(`pass_${cat}`).value = pass.toFixed(2);
+          $(`watch_${cat}`).value = watch.toFixed(2);
+          applyPreview();
+        });
+
+        $(`strong_${cat}`).addEventListener("input", applyPreview);
+        $(`pass_${cat}`).addEventListener("input", applyPreview);
+        $(`watch_${cat}`).addEventListener("input", applyPreview);
       });
 
-      container.querySelectorAll(".reset-btn").forEach(el => {
-        el.addEventListener("click", (e) => {
-          const cat = e.target.dataset.cat;
-          state.filterConfig[cat] = { ...state.baselineFilterConfig[cat] };
-          applyFilters();
+      [...document.querySelectorAll("[data-apply-cat]")].forEach(btn => {
+        btn.addEventListener("click", () => applyPreview());
+      });
+
+      [...document.querySelectorAll("[data-reset-cat]")].forEach(btn => {
+        btn.addEventListener("click", () => {
+          const cat = btn.getAttribute("data-reset-cat");
+          const base = state.filterConfigBase[cat];
+          if (!base) return;
+          $(`preset_${cat}`).value = base.preset || "custom";
+          $(`strong_${cat}`).value = fmt(base.strong);
+          $(`pass_${cat}`).value = fmt(base.pass);
+          $(`watch_${cat}`).value = fmt(base.watch);
+          applyPreview();
         });
       });
     }
 
-    function updateStats(rows) {
-      $("statTotal").textContent = state.candidateScored.length;
-      $("statShown").textContent = rows.length;
+    function exportRules() {
+      const out = {};
+      CATEGORY_ORDER.forEach(cat => {
+        out[cat] = {
+          preset: $(`preset_${cat}`).value,
+          strong: +Number($(`strong_${cat}`).value || 0).toFixed(2),
+          pass: +Number($(`pass_${cat}`).value || 0).toFixed(2),
+          watch: +Number($(`watch_${cat}`).value || 0).toFixed(2)
+        };
+      });
 
-      const matchCount = rows.filter(x => state.evaluatedMap.has(String(x.symbol || "").toUpperCase())).length;
-      $("statMatch").textContent = matchCount;
+      const blob = new Blob([JSON.stringify(out, null, 2)], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "m1_filter_rules_preview.json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
 
-      const avgM1 = rows.length
-        ? rows.reduce((sum, x) => sum + (n(x.m1_score, 0)), 0) / rows.length
-        : null;
-      $("statAvgM1").textContent = avgM1 !== null ? fmt(avgM1) : "-";
+    async function copyRules() {
+      const out = {};
+      CATEGORY_ORDER.forEach(cat => {
+        out[cat] = {
+          preset: $(`preset_${cat}`).value,
+          strong: +Number($(`strong_${cat}`).value || 0).toFixed(2),
+          pass: +Number($(`pass_${cat}`).value || 0).toFixed(2),
+          watch: +Number($(`watch_${cat}`).value || 0).toFixed(2)
+        };
+      });
 
-      const top = rows.length ? rows[0] : null;
-      $("statTop").textContent = top ? `${top.symbol} ${fmt(top.m1_score)}` : "-";
+      try {
+        await navigator.clipboard.writeText(JSON.stringify(out, null, 2));
+        alert("已複製規則 JSON");
+      } catch (e) {
+        alert("複製失敗，請改用匯出檔案。");
+      }
+    }
 
-      const checks = ["COIN","SOFI","QQQ"].map(s =>
-        state.candidateScored.some(x => String(x.symbol || "").toUpperCase() === s) ? `${s}✓` : `${s}✗`
-      );
-      $("statCheck").textContent = checks.join(" ");
+    function renderAll() {
+      renderDashboard();
+      renderRuleCards();
+      renderCompareSection();
+      renderImpactTable();
     }
 
     async function loadAll() {
-      $("logBox").textContent = "";
-      log("start loading upgraded m1_test dashboard...");
+      try {
+        const [universeRaw, candidateRaw, pool30Raw, fundamentalMap] = await Promise.all([
+          fetchJSON("data/m1/universe_150.json").catch(() => []),
+          fetchJSON("data/m1/m1_candidate_80.json"),
+          fetchJSON("data/pool30.json"),
+          fetchJSON("data/m1/m1_fundamental_map.json")
+        ]);
 
-      const candidatePaths = [
-        "./data/m1/m1_candidate_80.json",
-        "data/m1/m1_candidate_80.json"
-      ];
-      const evaluatedPaths = [
-        "./data/m1/pool_stock_evaluated_v1.json",
-        "data/m1/pool_stock_evaluated_v1.json"
-      ];
-      const fundamentalPaths = [
-        "./data/m1/m1_fundamental_map.json",
-        "data/m1/m1_fundamental_map.json"
-      ];
-      const pool30Paths = [
-        "./data/pool30.json",
-        "data/pool30.json"
-      ];
+        state.universeRaw = Array.isArray(universeRaw) ? universeRaw : [];
+        state.candidateRaw = Array.isArray(candidateRaw) ? candidateRaw : [];
+        state.pool30Raw = Array.isArray(pool30Raw) ? pool30Raw : [];
+        state.fundamentalMap = fundamentalMap || {};
 
-      let candidate = null, evaluated = null, fundamental = null, pool30Raw = null;
+        state.candidatePrepared = prepareRows(state.candidateRaw, state.fundamentalMap);
 
-      for (const path of candidatePaths) {
-        try {
-          const json = await fetchJSON(path);
-          if (Array.isArray(json) && json.length) {
-            candidate = json;
-            log("candidate loaded", { path, count: json.length });
-            break;
-          }
-        } catch (e) {
-          log("candidate try failed", { path, error: String(e) });
-        }
+        const pool30Set = new Set(state.pool30Raw.map(x => String(x.symbol || "").toUpperCase().trim()));
+        const pool30Prepared = state.candidatePrepared.filter(x => pool30Set.has(x.symbol));
+
+        const candidateEngine = runM1Engine(state.candidatePrepared);
+        const pool30Engine = runM1Engine(pool30Prepared);
+
+        const candidateScored = mergeEngineOutput(state.candidatePrepared, candidateEngine);
+        const pool30Scored = mergeEngineOutput(pool30Prepared, pool30Engine);
+
+        state.pool30Rules = buildPool30Rules(pool30Scored);
+        state.filterConfigBase = buildDefaultFilterConfig(state.pool30Rules);
+
+        state.candidateScoredBase = applyFilter(clone(candidateScored), state.filterConfigBase, state.pool30Rules);
+        state.candidateScoredPreview = applyFilter(clone(candidateScored), state.filterConfigBase, state.pool30Rules);
+
+        state.filterConfigPreview = clone(state.filterConfigBase);
+
+        buildCategoryOptions(state.candidateScoredBase);
+        buildImpactedRows();
+        renderAll();
+      } catch (err) {
+        console.error(err);
+        document.body.innerHTML = `
+          <div style="padding:24px;font-family:Arial;">
+            <h2 style="color:#dc2626;">載入失敗</h2>
+            <pre>${escapeHtml(String(err.message || err))}</pre>
+          </div>
+        `;
       }
-
-      for (const path of evaluatedPaths) {
-        try {
-          const json = await fetchJSON(path);
-          evaluated = json;
-          log("evaluated loaded", { path });
-          break;
-        } catch (e) {
-          log("evaluated try failed", { path, error: String(e) });
-        }
-      }
-
-      for (const path of fundamentalPaths) {
-        try {
-          const json = await fetchJSON(path);
-          fundamental = json;
-          log("fundamental loaded", { path, count: Object.keys(json || {}).length });
-          break;
-        } catch (e) {
-          log("fundamental try failed", { path, error: String(e) });
-        }
-      }
-
-      for (const path of pool30Paths) {
-        try {
-          const json = await fetchJSON(path);
-          pool30Raw = json;
-          log("pool30 loaded", { path, count: Array.isArray(json) ? json.length : 0 });
-          break;
-        } catch (e) {
-          log("pool30 try failed", { path, error: String(e) });
-        }
-      }
-
-      if (!candidate) {
-        $("detailBox").innerHTML = `<pre>找不到 m1_candidate_80.json</pre>`;
-        return;
-      }
-
-      state.candidate = candidate;
-      state.evaluatedMap = buildEvaluatedMap(flattenEvaluated(evaluated || {}));
-      state.fundamentalMap = fundamental || {};
-
-      scoreCandidates();
-
-      const pool30Symbols = Array.isArray(pool30Raw)
-        ? pool30Raw.map(x => String(x.symbol || "").toUpperCase())
-        : [];
-
-      state.pool30Rows = state.candidateScored.filter(x =>
-        pool30Symbols.includes(String(x.symbol || "").toUpperCase())
-      );
-
-      state.pool30Rules = buildPool30ReferenceRules(state.pool30Rows);
-      state.stats80 = buildCategoryStats(state.candidateScored, "m1_score");
-      state.statsPool30 = buildCategoryStats(state.pool30Rows, "m1_score");
-      state.overallStats = buildStats(state.candidateScored.map(x => Number(x.m1_score)));
-
-      state.baselineFilterConfig = buildDefaultFilterConfig();
-      state.filterConfig = JSON.parse(JSON.stringify(state.baselineFilterConfig));
-
-      buildCategoryOptions();
-      renderStatsPanel();
-      applyFilters();
-
-      console.log("candidateScored =", state.candidateScored);
-      console.log("pool30Rows =", state.pool30Rows);
-      console.log("pool30Rules =", state.pool30Rules);
-      console.log("filterConfig =", state.filterConfig);
-
-      window.debugM1 = {
-        candidateRaw: state.candidate,
-        candidateScored: state.candidateScored,
-        evaluatedMap: state.evaluatedMap,
-        fundamentalMap: state.fundamentalMap,
-        pool30Rows: state.pool30Rows,
-        pool30Rules: state.pool30Rules,
-        stats80: state.stats80,
-        statsPool30: state.statsPool30,
-        overallStats: state.overallStats,
-        filterConfig: state.filterConfig,
-        find: (s) => {
-          const symbol = String(s || "").toUpperCase();
-          const scored = state.candidateScored.find(x => String(x.symbol || "").toUpperCase() === symbol) || null;
-          return {
-            scored,
-            evaluated: state.evaluatedMap.get(symbol) || null,
-            fundamental: state.fundamentalMap[symbol] || null,
-            poolRule: scored ? evaluateByPool30Rule(scored) : null
-          };
-        }
-      };
     }
 
-    $("searchInput").addEventListener("input", applyFilters);
-    $("categoryFilter").addEventListener("change", applyFilters);
-    $("resultFilter").addEventListener("change", applyFilters);
-    $("sortFilter").addEventListener("change", applyFilters);
+    $("searchInput").addEventListener("input", renderImpactTable);
+    $("impactFilter").addEventListener("change", renderImpactTable);
+    $("categoryFilter").addEventListener("change", renderImpactTable);
+    $("afterResultFilter").addEventListener("change", renderImpactTable);
+    $("sortFilter").addEventListener("change", renderImpactTable);
+
+    $("previewAllBtn").addEventListener("click", () => {
+      state.showChangedOnly = false;
+      renderImpactTable();
+    });
+
+    $("previewChangedBtn").addEventListener("click", () => {
+      state.showChangedOnly = true;
+      renderImpactTable();
+    });
 
     $("reloadBtn").addEventListener("click", loadAll);
 
-    $("showAllBtn").addEventListener("click", () => {
-      $("searchInput").value = "";
-      $("categoryFilter").value = "ALL";
-      $("resultFilter").value = "ALL";
-      $("sortFilter").value = "m1_desc";
-      applyFilters();
+    $("resetAllBtn").addEventListener("click", () => {
+      CATEGORY_ORDER.forEach(cat => {
+        const base = state.filterConfigBase[cat];
+        if (!base) return;
+        if ($(`preset_${cat}`)) $(`preset_${cat}`).value = base.preset || "custom";
+        if ($(`strong_${cat}`)) $(`strong_${cat}`).value = fmt(base.strong);
+        if ($(`pass_${cat}`)) $(`pass_${cat}`).value = fmt(base.pass);
+        if ($(`watch_${cat}`)) $(`watch_${cat}`).value = fmt(base.watch);
+      });
+      applyPreview();
     });
+
+    $("exportRulesBtn").addEventListener("click", exportRules);
+    $("copyRulesBtn").addEventListener("click", copyRules);
 
     loadAll();
   </script>
