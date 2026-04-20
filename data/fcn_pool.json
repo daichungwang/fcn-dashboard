@@ -1550,6 +1550,57 @@
   }
 },
   {
+  "date": "2026-03-10",
+  "fcn_id": "FCNxxxxxM 富邦",
+  "basket": [
+    "MRVL",
+    "MU",
+    "NVDA",
+    "SMH"
+  ],
+  "tenor": 7,
+  "rate": 23.81,
+  "autocall": 100,
+  "strike": 62,
+  "ki": 52,
+  "eki": true,
+  "bank": "NATIXIS",
+  "has_position": true,
+  "amt": 50000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-04-20T09:00",
+  "entry_time": "2026-04-20T09:00",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "標的價格=VWAP",
+  "entry_prices": {
+    "MRVL": 140,
+    "MU": 460,
+    "NVDA": 190,
+    "SMH": 399.9999
+  },
+  "maturity_time": "2026-11-30T09:00",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
