@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M1 Review Console v2</title>
+  <title>M1 Review Console v2.2</title>
   <style>
     :root{
       --bg:#f4f7fb;
@@ -129,7 +129,7 @@
 
     .dashboard-grid{
       display:grid;
-      grid-template-columns:1.1fr 1fr;
+      grid-template-columns:1.08fr 0.92fr;
       gap:16px;
       margin-bottom:16px;
       align-items:start;
@@ -163,7 +163,7 @@
 
     .summary-grid{
       display:grid;
-      grid-template-columns:repeat(3,1fr);
+      grid-template-columns:repeat(4,1fr);
       gap:12px;
       margin-bottom:12px;
     }
@@ -172,7 +172,7 @@
       border-radius:14px;
       background:#fff;
       padding:14px;
-      min-height:100px;
+      min-height:108px;
     }
     .stat .label{
       color:var(--muted);
@@ -211,9 +211,9 @@
       font-weight:700;
     }
     .mini-card .v{
-      font-size:18px;
+      font-size:17px;
       font-weight:900;
-      line-height:1.35;
+      line-height:1.45;
     }
     .mini-card .s{
       margin-top:6px;
@@ -366,7 +366,7 @@
 
     .row-line-1{
       display:grid;
-      grid-template-columns:58px 120px 112px 120px 1.2fr;
+      grid-template-columns:58px 120px 112px 150px 1.2fr;
       gap:10px;
       align-items:start;
       margin-bottom:10px;
@@ -374,7 +374,7 @@
 
     .row-line-2{
       display:grid;
-      grid-template-columns:1.55fr 240px 110px 92px 92px;
+      grid-template-columns:1.65fr 220px 118px 92px 92px;
       gap:10px;
       align-items:center;
     }
@@ -640,7 +640,7 @@
     <div class="hero">
       <div class="hero-top">
         <div>
-          <h1>M1 Review Console v2</h1>
+          <h1>M1 Review Console v2.2</h1>
           <div class="sub">
             <b>L1：</b>五大分類卡片，只先看 AI 推薦重點與關鍵數據，方便人工初篩。<br>
             <b>L2 / L3 / L4：</b>右側逐層展開，看 rule、看市場、做人為覆核與備註。<br>
@@ -679,9 +679,9 @@
         <option value="drop">drop</option>
         <option value="thinking">thinking</option>
       </select>
-      <select id="strongOnlyFilter" class="control">
-        <option value="ON">預設只看 STRONG</option>
+      <select id="globalStrongFilter" class="control">
         <option value="OFF">顯示全部結果</option>
+        <option value="ON">全域只看 STRONG</option>
       </select>
       <select id="sortFilter" class="control">
         <option value="rank_asc">依 Rank：小 → 大</option>
@@ -696,26 +696,32 @@
       <div class="panel">
         <div class="panel-title">
           <span>1. Dashboard</span>
-          <span class="small-note">顯示統計 / AI 推薦 / 分類分布</span>
+          <span class="small-note">原始池 / Candidate / AI 推薦 / 目前顯示</span>
         </div>
         <div class="summary-wrap">
           <div class="summary-grid">
             <div class="stat">
-              <div class="label">1.1 目前顯示</div>
-              <div class="value" id="statDisplay">-</div>
-              <div class="sub" id="statDisplaySub">-</div>
+              <div class="label">原始總池</div>
+              <div class="value" id="statUniverse">-</div>
+              <div class="sub">data/m1/universe_150.json</div>
             </div>
 
             <div class="stat">
-              <div class="label">1.2 AI 推薦</div>
+              <div class="label">Candidate</div>
+              <div class="value" id="statCandidate">-</div>
+              <div class="sub" id="statCandidateSub">-</div>
+            </div>
+
+            <div class="stat">
+              <div class="label">AI 推薦</div>
               <div class="value" id="statAiRecommend">-</div>
               <div class="sub" id="statAiRecommendSub">-</div>
             </div>
 
             <div class="stat">
-              <div class="label">平均 M1 / Top1</div>
-              <div class="value" id="statAvgM1">-</div>
-              <div class="sub" id="statTop1">-</div>
+              <div class="label">目前顯示</div>
+              <div class="value" id="statDisplay">-</div>
+              <div class="sub" id="statDisplaySub">-</div>
             </div>
           </div>
 
@@ -761,14 +767,15 @@
 
   <script type="module">
     import { runM1Engine } from "./js/m1/m1_engine.js";
-    import { buildPool30Rules, buildOverallStats } from "./js/m1/m1_stats_engine.js";
+    import { buildPool30Rules } from "./js/m1/m1_stats_engine.js";
     import { buildDefaultFilterConfig, applyFilter } from "./js/m1/m1_filter_engine.js";
 
-    const REVIEW_STORAGE_KEY = "m1_review_console_v2";
+    const REVIEW_STORAGE_KEY = "m1_review_console_v2_2";
     const ETF_FORCE_DEFENSIVE = ["QQQ","SMH","SPY","LQD","XLU","VPU","XLF","XLV","XLE","XLP","VOLT","ZAP"];
     const CATEGORY_ORDER = ["core","growth","income","defensive","speculative"];
 
     const state = {
+      universeRaw: [],
       candidateRaw: [],
       pool30Raw: [],
       fundamentalMap: {},
@@ -781,6 +788,13 @@
       filteredRows: [],
       selected: null,
       reviewMap: {},
+      expandedCategory: {
+        core: true,
+        growth: false,
+        income: false,
+        defensive: false,
+        speculative: false
+      },
       showStrongOnlyByCategory: {
         core: true,
         growth: true,
@@ -991,7 +1005,7 @@
       state.reviewMap[symbol] = {
         decision: patch.decision !== undefined ? patch.decision : cur.decision,
         note: patch.note !== undefined ? patch.note : cur.note,
-        saved: true
+        saved: autoSave ? true : cur.saved
       };
       if (autoSave) saveReviewMap();
     }
@@ -1008,7 +1022,7 @@
     }
 
     function saveCategoryReviews(category) {
-      const rows = state.filteredRows.filter(x => x.category === category);
+      const rows = state.candidateScored.filter(x => x.category === category);
       rows.forEach(row => {
         const cur = getReview(row.symbol);
         state.reviewMap[row.symbol] = {
@@ -1063,9 +1077,6 @@
       const diffP50 = Number.isFinite(row.M1_score) && Number.isFinite(catRule?.pass)
         ? row.M1_score - catRule.pass
         : null;
-      const diffP75 = Number.isFinite(row.M1_score) && Number.isFinite(catRule?.strong)
-        ? row.M1_score - catRule.strong
-        : null;
       const ratioP75 = Number.isFinite(row.M1_score) && Number.isFinite(catRule?.strong) && catRule.strong !== 0
         ? ((row.M1_score / catRule.strong) - 1) * 100
         : null;
@@ -1094,7 +1105,7 @@
       const category = $("categoryFilter").value;
       const engineResult = $("engineResultFilter").value;
       const reviewDecision = $("reviewDecisionFilter").value;
-      const strongOnlyGlobal = $("strongOnlyFilter").value;
+      const globalStrongOnly = $("globalStrongFilter").value;
       const sort = $("sortFilter").value;
 
       let rows = [...state.candidateScored];
@@ -1130,7 +1141,7 @@
         rows = rows.filter(row => getReview(row.symbol).decision === reviewDecision);
       }
 
-      if (strongOnlyGlobal === "ON") {
+      if (globalStrongOnly === "ON") {
         rows = rows.filter(row => row.filter_result === "STRONG");
       }
 
@@ -1145,60 +1156,39 @@
       state.filteredRows = rows;
     }
 
-    function computeDashboardStats() {
-      const total = state.candidateScored.length;
-      const shown = state.filteredRows.length;
-      const shownPct = total ? (shown / total) * 100 : 0;
-
-      const aiRecommendRows = state.candidateScored.filter(x => x.filter_result === "STRONG" || x.filter_result === "PASS");
-      const aiRecommendCount = aiRecommendRows.length;
-      const aiRecommendPct = total ? (aiRecommendCount / total) * 100 : 0;
-
-      const categoryMap = {};
-      CATEGORY_ORDER.forEach(cat => {
-        const all = state.candidateScored.filter(x => x.category === cat);
-        const ai = all.filter(x => x.filter_result === "STRONG" || x.filter_result === "PASS");
-        categoryMap[cat] = {
-          total: all.length,
-          aiCount: ai.length,
-          totalPct: total ? (all.length / total) * 100 : 0,
-          aiPctInCat: all.length ? (ai.length / all.length) * 100 : 0
-        };
-      });
-
-      return {
-        total,
-        shown,
-        shownPct,
-        aiRecommendCount,
-        aiRecommendPct,
-        categoryMap
-      };
-    }
-
     function renderDashboard() {
-      const overall = buildOverallStats(state.candidateScored);
-      const stats = computeDashboardStats();
-      const top1 = state.filteredRows[0]?.symbol || state.candidateScored[0]?.symbol || "-";
+      const universeCount = state.universeRaw.length || 150;
+      const candidateCount = state.candidateScored.length;
+      const aiRecommendRows = state.candidateScored.filter(
+        x => x.filter_result === "STRONG" || x.filter_result === "PASS"
+      );
+      const aiRecommendCount = aiRecommendRows.length;
+      const shownCount = state.filteredRows.length;
 
-      $("statDisplay").textContent = `${stats.shown} / ${stats.total}`;
-      $("statDisplaySub").textContent = `顯示比例 ${fmt(stats.shownPct)}%`;
+      $("statUniverse").textContent = universeCount;
+      $("statCandidate").textContent = `${candidateCount} / ${universeCount}`;
+      $("statCandidateSub").textContent = `${universeCount ? fmt((candidateCount / universeCount) * 100) : "0.00"}%`;
 
-      $("statAiRecommend").textContent = `${stats.aiRecommendCount}`;
-      $("statAiRecommendSub").textContent = `推薦比例 ${fmt(stats.aiRecommendPct)}%`;
+      $("statAiRecommend").textContent = `${aiRecommendCount} / ${candidateCount}`;
+      $("statAiRecommendSub").textContent = `${candidateCount ? fmt((aiRecommendCount / candidateCount) * 100) : "0.00"}%`;
 
-      $("statAvgM1").textContent = fmt(overall.mean);
-      $("statTop1").textContent = `Top1：${top1}`;
+      $("statDisplay").textContent = `${shownCount} / ${candidateCount}`;
+      $("statDisplaySub").textContent = `${candidateCount ? fmt((shownCount / candidateCount) * 100) : "0.00"}%`;
 
       $("categorySummaryGrid").innerHTML = CATEGORY_ORDER.map(cat => {
-        const s = stats.categoryMap[cat] || { total:0, aiCount:0, totalPct:0, aiPctInCat:0 };
+        const all = state.candidateScored.filter(x => x.category === cat);
+        const ai = all.filter(x => x.filter_result === "STRONG" || x.filter_result === "PASS");
+
         return `
           <div class="mini-card">
             <div class="t">${escapeHtml(cat.toUpperCase())}</div>
-            <div class="v">總數 ${s.total} ｜ AI推薦 ${s.aiCount}</div>
+            <div class="v">
+              Candidate：${all.length} / ${candidateCount}<br>
+              AI推薦：${ai.length} / ${all.length || 0}
+            </div>
             <div class="s">
-              總比 ${fmt(s.totalPct)}%<br>
-              AI推薦比 ${fmt(s.aiPctInCat)}%
+              總比 ${candidateCount ? fmt((all.length / candidateCount) * 100) : "0.00"}%<br>
+              AI推薦比 ${all.length ? fmt((ai.length / all.length) * 100) : "0.00"}%
             </div>
           </div>
         `;
@@ -1242,33 +1232,42 @@
       const groups = groupByCategory(state.filteredRows);
 
       $("categoryCards").innerHTML = CATEGORY_ORDER.map(cat => {
+        const candidateRows = state.candidateScored.filter(x => x.category === cat);
+        const aiRows = candidateRows.filter(x => x.filter_result === "STRONG" || x.filter_result === "PASS");
+
         const allRows = groups[cat] || [];
         const strongRows = allRows.filter(x => x.filter_result === "STRONG");
-        const showStrongOnly = state.showStrongOnlyByCategory[cat];
-        const displayRows = showStrongOnly ? strongRows : allRows;
+        const expanded = state.expandedCategory[cat];
+        const strongOnly = state.showStrongOnlyByCategory[cat];
+        const displayRows = strongOnly ? strongRows : allRows;
 
         return `
           <div class="panel category-panel">
             <div class="category-header">
               <div class="category-header-left">
                 <div class="category-name">${escapeHtml(cat.toUpperCase())}</div>
-                <span class="chip gray">總數 ${allRows.length}</span>
-                <span class="chip green">STRONG ${strongRows.length}</span>
+                <span class="chip gray">Candidate ${candidateRows.length} / ${state.candidateScored.length}</span>
+                <span class="chip green">AI推薦 ${aiRows.length} / ${candidateRows.length || 0}</span>
               </div>
 
               <div class="category-actions">
-                <button class="btn ghost small" data-toggle-cat="${escapeHtml(cat)}">${showStrongOnly ? "只看 STRONG" : "顯示全部"}</button>
+                <button class="btn ghost small" data-expand-cat="${escapeHtml(cat)}">${expanded ? "收合" : "展開"}</button>
+                <button class="btn ghost small" data-toggle-strong-cat="${escapeHtml(cat)}">${strongOnly ? "只看 STRONG" : "顯示全部"}</button>
                 <button class="btn green small" data-save-cat="${escapeHtml(cat)}">儲存本類</button>
               </div>
             </div>
 
-            <div class="category-body">
-              ${
-                displayRows.length
-                  ? displayRows.map(row => renderStockRow(row)).join("")
-                  : `<div class="empty-box">本類目前沒有符合條件的股票。</div>`
-              }
-            </div>
+            ${
+              expanded
+              ? `<div class="category-body">
+                  ${
+                    displayRows.length
+                      ? displayRows.map(row => renderStockRow(row)).join("")
+                      : `<div class="empty-box">本類目前沒有符合條件的股票。</div>`
+                  }
+                </div>`
+              : ""
+            }
           </div>
         `;
       }).join("");
@@ -1361,10 +1360,19 @@
     }
 
     function bindCategoryEvents() {
-      [...document.querySelectorAll("[data-toggle-cat]")].forEach(btn => {
+      [...document.querySelectorAll("[data-expand-cat]")].forEach(btn => {
         btn.addEventListener("click", (e) => {
           e.stopPropagation();
-          const cat = btn.getAttribute("data-toggle-cat");
+          const cat = btn.getAttribute("data-expand-cat");
+          state.expandedCategory[cat] = !state.expandedCategory[cat];
+          renderCategoryCards();
+        });
+      });
+
+      [...document.querySelectorAll("[data-toggle-strong-cat]")].forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const cat = btn.getAttribute("data-toggle-strong-cat");
           state.showStrongOnlyByCategory[cat] = !state.showStrongOnlyByCategory[cat];
           renderCategoryCards();
         });
@@ -1469,7 +1477,7 @@
               <div class="detail-card"><div class="k">M7</div><div class="v" style="${scoreColor(row.breakdown?.m7_score)}">${fmt(row.breakdown?.m7_score)}</div></div>
               <div class="detail-card"><div class="k">Rule 位置</div><div class="v">strong ${fmt(catRule.strong)} ｜ pass ${fmt(catRule.pass)} ｜ watch ${fmt(catRule.watch)}</div></div>
               <div class="detail-card"><div class="k">vs p50</div><div class="v">${Number.isFinite(row.M1_score) && Number.isFinite(catRule.pass) ? `${row.M1_score - catRule.pass >= 0 ? "+" : ""}${fmt(row.M1_score - catRule.pass)}` : "-"}</div></div>
-              <div class="detail-card"><div class="k">p75 對比</div><div class="v">${Number.isFinite(row.M1_score) && Number.isFinite(catRule.strong) && catRule.strong !== 0 ? `${(((row.M1_score / catRule.strong) - 1) * 100 >= 0 ? "+" : "") + fmt((((row.M1_score / catRule.strong) - 1) * 100))}%` : "-"}</div></div>
+              <div class="detail-card"><div class="k">p75 對比</div><div class="v">${Number.isFinite(row.M1_score) && Number.isFinite(catRule.strong) && catRule.strong !== 0 ? `${((((row.M1_score / catRule.strong) - 1) * 100) >= 0 ? "+" : "") + fmt((((row.M1_score / catRule.strong) - 1) * 100))}%` : "-"}</div></div>
             </div>
 
             <div style="margin-top:12px;">
@@ -1648,12 +1656,14 @@
       try {
         state.reviewMap = loadReviewMap();
 
-        const [candidateRaw, pool30Raw, fundamentalMap] = await Promise.all([
+        const [universeRaw, candidateRaw, pool30Raw, fundamentalMap] = await Promise.all([
+          fetchJSON("data/m1/universe_150.json").catch(() => []),
           fetchJSON("data/m1/m1_candidate_80.json"),
           fetchJSON("data/pool30.json"),
           fetchJSON("data/m1/m1_fundamental_map.json")
         ]);
 
+        state.universeRaw = Array.isArray(universeRaw) ? universeRaw : [];
         state.candidateRaw = Array.isArray(candidateRaw) ? candidateRaw : [];
         state.pool30Raw = Array.isArray(pool30Raw) ? pool30Raw : [];
         state.fundamentalMap = fundamentalMap || {};
@@ -1687,7 +1697,7 @@
     $("categoryFilter").addEventListener("change", () => refreshView(false));
     $("engineResultFilter").addEventListener("change", () => refreshView(false));
     $("reviewDecisionFilter").addEventListener("change", () => refreshView(false));
-    $("strongOnlyFilter").addEventListener("change", () => refreshView(false));
+    $("globalStrongFilter").addEventListener("change", () => refreshView(false));
     $("sortFilter").addEventListener("change", () => refreshView(false));
 
     $("reloadBtn").addEventListener("click", loadAll);
@@ -1697,12 +1707,20 @@
       $("categoryFilter").value = "ALL";
       $("engineResultFilter").value = "ALL";
       $("reviewDecisionFilter").value = "ALL";
-      $("strongOnlyFilter").value = "ON";
+      $("globalStrongFilter").value = "OFF";
       $("sortFilter").value = "rank_asc";
 
       CATEGORY_ORDER.forEach(cat => {
         state.showStrongOnlyByCategory[cat] = true;
       });
+
+      state.expandedCategory = {
+        core: true,
+        growth: false,
+        income: false,
+        defensive: false,
+        speculative: false
+      };
 
       refreshView(false);
     });
