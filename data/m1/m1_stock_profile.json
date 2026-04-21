@@ -1,361 +1,357 @@
 {
-"AVGO": {
-"symbol": "AVGO",
-"name": "Broadcom Inc.",
-"type": "research_raw",
-"company_overview": "AVGO 不是一般『買景氣循環』的半導體股；FY2025 營收 638.9 億美元、其中半導體 58%、基礎軟體 42%，現金流 269.1 億美元，代表它已經是『AI ASIC + 網通 + VMware 訂閱化』的混合型平台公司，不是單一晶片題材。這種結構對 pool30 有利，因為比純 GPU 或單一手機零組件供應商更抗波動。 ",
-"basic_info": {
-"founded": "前身 Avago 2005 年成立，2016 年以 370 億美元收購 Broadcom 並改名 Broadcom Inc.；管理上可視為『併購整合型平台公司』。 ",
-"headquarters": "Palo Alto, California, U.S.；主市場 Nasdaq。 ",
-"industry": "Semiconductor solutions + infrastructure software；FY2025 半導體 368.6 億美元、軟體 270.3 億美元。 ",
-"market_cap": "約 1.36 兆美元，現價 399.63 美元，TTM PE 約 71.7 倍。 "
-},
-"business_model": {
-"summary": "AVGO 靠 2 條主線賺錢：一條是客製化 AI ASIC、交換器、網通與通訊晶片；另一條是 VMware 帶來的基礎軟體訂閱與授權。FY2025 半導體年增 22%，軟體年增 26%，代表現在不是只有 AI 在撐，VMware 也在拉高毛利與現金流。 ",
-"segments": [
-"Semiconductor Solutions：FY2025 營收 368.6 億美元，占比 58%，年增 22%；Q4 FY2025 單季 110.7 億美元，占比 61%，核心驅動來自 custom AI accelerators 與 Ethernet AI switches。 ",
-"Infrastructure Software：FY2025 營收 270.3 億美元，占比 42%，年增 26%；Q1 FY2025 軟體營收 67.0 億美元、單季年增 47%，代表 VMware 併入後已經不只是會計灌水，而是能把企業 IT 支出轉成高續約性的軟體現金流。 ",
-"Cash-flow model：FY2025 營運現金流 275.4 億美元、FCF 269.1 億美元，FCF margin 約 42.1%；這種現金轉換率很適合 FCN，因為大幅下修通常要先看到企業 IT 或 hyperscaler capex 明顯轉弱。 "
-]
-},
-"customer_analysis": {
-"summary": "AVGO 客戶品質高，但集中度也高。FY2025 透過各通路計算，前五大終端客戶約占營收 40%，且經銷商銷售占 48%；這代表成長快，但一旦 1~2 家 hyperscaler 或 Apple 砍單，財報波動會很直接。 ",
-"key_customers": [
-{
-"name": "Apple",
-"role": "iPhone/RF/連接晶片大客戶",
-"importance": "公開報導顯示 Apple 約占 Broadcom 營收 20%，是最大客戶等級；若自研 Wi-Fi/Bluetooth 替代加速，外界估 Broadcom 可能面臨 10~15 億美元營收風險。這是 AVGO 不能忽視的單一客戶風險。 "
-},
-{
-"name": "Google",
-"role": "TPU/custom AI chip 合作夥伴",
-"importance": "Reuters 指 Broadcom 已與 Google 簽長約到 2031 年，繼續共同開發與供應下一代 TPU 與 AI networking；這種 5 年以上可見度，對 pool30 是加分，因為比一般 1 年 rolling order 更穩。 "
-},
-{
-"name": "Meta",
-"role": "MTIA/custom AI silicon + AI networking 客戶",
-"importance": "Meta 2026 年 4 月擴大合作到 2029 年，首階段部署超過 1GW 運算容量，且官方提到未來 3 年共同開發多世代 AI accelerator；這種規模不是試單，是長期 capex 綁定。 "
-}
-],
-"conclusion": "客戶名單很強，但投資決策要看的是『強客戶 + 高集中』兩面。Apple 約 20% 與 top-5 約 40% 代表 AVGO 不是分散型公司；它更像是少數超大型客戶綁定平台，所以適合 pool30，但不適合在估值極端時追價。 "
-},
-"why_this_company": [
-"FY2025 AI 以外的底盤也夠厚：總營收 638.9 億美元、軟體占 42%，不是只有 AI 一條腿。對 pool30 來說，這種收入結構比純題材股更耐週期。 ",
-"現金流夠硬：FY2025 FCF 269.1 億美元、FCF margin 約 42.1%，而且 adjusted EBITDA margin 67%；這種財務體質使 AVGO 適合 FCN 底層標的，不容易因單季獲利失真爆雷。 ",
-"AI 訂單可視度高：Google 合作到 2031、Meta 合作到 2029，代表不是 1~2 季炒作，而是多年度 AI infrastructure 供應鏈位置。 "
-],
-"market_view": "市場現在 pricing 的是『AI 客製晶片 + 網通基建長約』，不是單純 VMware 整併。Q4 FY2025 AI 半導體營收年增 74%，Q1 FY2026 公司還預估 AI 半導體營收將年增至 82 億美元；但市場也在擔心估值先跑太快，因為現價 399.63 美元已逼近 52 週高點 414.61，美股若再遇 capex 降溫，壓縮的會先是倍數，不一定是基本面。 ",
-"financial_summary": {
-"revenue": "FY2025 營收 638.87 億美元。 ",
-"growth": "FY2025 年增 24%；其中半導體年增 22%，基礎軟體年增 26%。 ",
-"net_margin": "FY2025 GAAP net margin 約 36.2%（231.26 億 / 638.87 億）。 ",
-"fcf_margin": "FY2025 FCF margin 約 42.1%（269.14 億 / 638.87 億）。 ",
-"eps": "TTM EPS 約 4.02 美元；FY2025 GAAP diluted EPS 4.77 美元、non-GAAP 6.82 美元。 ",
-"pe": "目前 TTM PE 約 71.7 倍；Macrotrends 顯示 2026-04-19 PE 約 62.34 倍，明顯高於 2025 年 3 月 Reuters 引述的 forward PE 26.58 倍。 ",
-"dividend_yield": "FY2026 年度目標普通股股利 2.60 美元，較 FY2025 提高 10%。以 399.63 美元估算，現金殖利率約 0.65%。 ",
-"beta": "Yahoo/finance quote 未提供即時 beta，決策上先以『高於大型軟體股、低於純 AI 小型股』看待，不把 beta 當核心依據。 "
-},
-"competition": {
-"summary": "AVGO 的直接比較對象不是單一公司，而是『NVIDIA 的 AI 加速生態 + Marvell 的客製 ASIC + 軟體平台公司』的混合體。現在市場給 AVGO 的 PE 約 71.7 倍，已高於 NVDA 的 45.6 倍，也高於 MRVL 的 32.7 倍，表示市場已把 AI 可見度與 VMware 現金流一起打包進估值。 ",
-"peers": [
-{
-"name": "NVIDIA",
-"position": "通用 AI 加速器龍頭",
-"comparison": "NVDA 現價 PE 約 45.6 倍，低於 AVGO 的 71.7 倍；AVGO 贏在客製 ASIC + 網通 + 軟體現金流，NVDA 贏在標準 GPU 生態與算力定價權。AVGO 不是比較便宜，而是市場押它收入可見度更長。 "
-},
-{
-"name": "Marvell",
-"position": "客製 ASIC / networking 對手",
-"comparison": "MRVL 現價 PE 約 32.7 倍，遠低於 AVGO 的 71.7 倍；Broadcom 多了 270 億美元級別的軟體收入與 269 億美元 FCF，Marvell 沒有這種現金流底盤。 "
-},
-{
-"name": "Oracle",
-"position": "企業軟體與 AI infrastructure 競合者",
-"comparison": "ORCL 現價 177.58 美元，但 Broadcom FY2025 軟體收入已達 270.3 億美元，規模與企業基礎架構影響力不再是小型軟體附屬品；差別是 AVGO 軟體更偏 infra stack，不是 ERP/DB。 "
-}
-],
-"conclusion": "AVGO 的問題不是『有沒有競爭力』，而是『估值已不便宜』。如果把它當半導體股，它太貴；如果把它當 AI 基建平台股，它可以有溢價，但買點要挑。 "
-},
-"valuation_and_timing": {
-"valuation_view": "現價 399.63 美元，距 52 週高點 414.61 僅約 3.6%，TTM PE 約 71.7 倍，Macrotrends 口徑也在 62 倍以上；這不是便宜區，而是『高預期區』。若用 FY2025 FCF 269.1 億美元看，市場願意給它超高倍數，前提是 Google/Meta/AI 網通長約不失速。 ",
-"buy_strategy": "策略不是『現在追』，而是『等回撤再收』。AVGO 適合列入 stock_pool 與 core 觀察，但現位階更像持有加碼候選，不是第一次建倉甜區。若 PE 回到 50~55 倍、或股價回到 330~350 美元區，風險報酬比會明顯改善。 ",
-"sweet_zone": "甜蜜區先抓 330~350 美元，或至少距 52 週高點回檔 15% 以上；進階條件是 TTM PE 低於 55 倍且 AI 半導體年增仍高於 40%。 ",
-"technical_view": {
-"mid_trend": "中期仍是多頭，因為現價 399.63 美元遠高於 52 週低點 165.22 美元，仍在大上升趨勢內。 ",
-"short_term": "短線接近前高區 414.61，美股若再碰 AI capex 雜音，這種靠估值撐的段落最容易先回吐 8%~15%。 ",
-"structure": "結構上屬『高位整理』而非破壞；但高位整理的前提是 Google 2031 與 Meta 2029 的合作敘事不能鬆動。 ",
-"conclusion": "Timing 判斷：等待，不追。AVGO 適合逢回分批，不適合在接近 52 週高點做重倉 FCN 新單。 "
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": true,
-"category": "core",
-"reason": "FY2025 營收 638.9 億美元、FCF 269.1 億美元、半導體/軟體雙引擎，且 Google 到 2031、Meta 到 2029 的 AI 合作提高可見度；這種規模、現金流與客戶質量，足以進 core pool30。 ",
-"upgrade_condition": [
-"若股價回到 330~350 美元或 TTM PE 壓到 55 倍以下，可由『持有』升級成『積極買進』。 ",
-"若 FY2026 AI 半導體營收維持年增 40% 以上，同時 VMware 訂閱化沒有拖累 FCF margin 至 35% 以下，core 權重可上調。 "
-]
-},
-"risk_opportunity": {
-"risk": [
-"客戶集中：top-5 終端客戶約占 FY2025 營收 40%，Apple 單客戶歷史上約 20%；這不是小風險，是估值需要折價的理由。 ",
-"估值過高：現價 PE 約 71.7 倍，已高於 NVDA 的 45.6 倍與 MRVL 的 32.7 倍；只要 AI capex 放緩 1~2 季，先修正的會是倍數。 ",
-"Google 供應鏈議價風險：今天已有報導指出 Google 與 Marvell 接觸新一代 AI 晶片合作，雖然 Broadcom 長約到 2031 仍在，但議價權未必永遠在 Broadcom 這邊。 "
-],
-"opportunity": [
-"AI 長約外溢：Google 合作到 2031、Meta 到 2029，且 Meta 首階段就超過 1GW，代表這不是短單，而是多年度基礎設施部署。 ",
-"軟體拉高抗震：FY2025 軟體營收 270.3 億美元、年增 26%，可在半導體波動期維持 EBITDA 與 FCF；這對 FCN 風險控制很重要。 "
-]
-},
-"final_view": "AVGO 是可以進 pool30 的 core 標的，也是 FCN 可做名單，但前提是不要在高估值區硬追。現在基本面沒有問題，問題是市場已經先把 2026~2031 的 AI 長約價格打進去了；我的判斷是『公司好，時點偏熱，等回檔再買』。 "
-},
-  
-
-"COIN": {
-"symbol": "COIN",
-"name": "Coinbase Global, Inc.",
-"type": "research_raw",
-"company_overview": "Coinbase 是加密金融基礎設施平台，不只是交易所。2025 年總營收為 71.81 億美元，其中交易收入 40.55 億美元占淨營收 59%，訂閱與服務收入 28.28 億美元占淨營收 41%；年均 MTU 920 萬、平台資產 3,760 億美元、全年交易量 1.221 兆美元。投資重點不是『幣價會不會漲』而已，而是 COIN 已把收入結構從單一交易手續費，拉向穩定幣、託管、訂閱、衍生品與基礎設施。",
-"basic_info": {
-"founded": "2012；Brian Armstrong 自 2012 年起擔任共同創辦人兼 CEO。",
-"headquarters": "公司採 remote-first，官方表示不維持傳統總部；主要對外法定聯絡透過 Dallas 代理，營運重心仍在美國並持續擴張機構與合規據點。",
-"industry": "Cryptocurrency exchange / crypto brokerage / custody / stablecoin & payments infrastructure / derivatives",
-"market_cap": "約 867.1 億美元；2026-04-21 股價 205.99 美元。"
-},
-"business_model": {
-"summary": "COIN 的商業模式已從『牛市靠現貨交易抽成』，轉成雙引擎：一邊是交易收入，另一邊是穩定幣、託管、訂閱、staking、開發者服務與衍生品。2025 年交易收入 40.55 億美元只年增 2%，但訂閱與服務收入 28.28 億美元年增 23%，其中 stablecoin 收入 13.49 億美元、年增 48%，已是最重要的抗波動收入來源之一。",
-"segments": [
-"消費者交易：2025 年 consumer transaction revenue 33.23 億美元，年減 3%，代表散戶現貨交易已不是無限上修的成長引擎；這一塊最賺，但景氣循環性也最大。",
-"機構與衍生品：2025 年 institutional transaction revenue 4.80 億美元，年增 39%；其中約 1.52 億美元增量主要來自 Deribit 併購帶動的衍生品交易，這是 COIN 從美國現貨交易所走向全球衍生品平台的關鍵。",
-"訂閱與服務：2025 年訂閱與服務收入 28.28 億美元，佔淨營收 41%；其中 stablecoin 收入 13.49 億美元、blockchain rewards 6.77 億美元、其他訂閱與服務 5.55 億美元。Coinbase One 付費訂閱增加，是其他訂閱與服務成長主因之一。"
-]
-},
-"customer_analysis": {
-"summary": "COIN 的『客戶』不能只看散戶，真正要看的是生態系與機構依賴度。2025 年公司披露單一對手方占總營收 19%，高於 2024 年的 14%，這代表某些核心合作關係已足以影響收入波動；另外公司也明講，收入集中在 Bitcoin、Ethereum 交易，以及 USDC 相關穩定幣收入。這是護城河，也是集中風險。",
-"key_customers": [
-{
-"name": "Circle",
-"role": "USDC 發行與分潤合作方",
-"importance": "2025 年 stablecoin 收入 13.49 億美元、年增 48%，是訂閱與服務收入的最大項目；Circle 協議初始期限 3 年，且 Coinbase 對 USDC 流通與平台持有占比越高，分潤越大。這代表 Circle/USDC 幾乎是 COIN 非交易收入的核心錨點。"
-},
-{
-"name": "BlackRock",
-"role": "ETF 託管/機構交易生態合作方",
-"importance": "BlackRock 的 IBIT 採用 Coinbase Prime；BlackRock 官網披露 Coinbase Prime 在 2025-06-30 擁有 2,450 億美元機構託管資產。這不是單一客戶收入數字，但足以證明 COIN 在機構託管鏈條的地位，且 2024 年 11 檔美國現貨 BTC ETF 中有 8 檔與 Coinbase 合作。"
-},
-{
-"name": "Stripe / Shopify",
-"role": "USDC 支付與 Base 生態導入夥伴",
-"importance": "2025 年 6 月 Stripe 宣布讓 Shopify 商家在 34 個國家接受 USDC；這代表 Coinbase 不只靠投機交易，也在把 USDC 與 Base 往支付場景滲透。這對 stablecoin 與開發者服務收入是中長線增量，不過短線貢獻仍小於交易與 USDC 分潤。"
-}
-],
-"conclusion": "COIN 的客戶結構正在從『散戶交易者』升級到『機構託管 + 穩定幣分銷 + 支付平台』，但 19% 單一對手方營收占比與 USDC/主流幣依賴，代表公司仍未完全擺脫集中風險。對投資人來說，這是高品質平台化的跡象，但也表示你不能把它當純粹多元金融股估值。"
-},
-"why_this_company": [
-"收入結構比 2021~2022 年成熟很多：2025 年交易收入 40.55 億美元，但訂閱與服務已到 28.28 億美元，占淨營收 41%，不是只靠散戶炒幣吃飯。",
-"平台資產仍大：2025 年底平台資產 3,760 億美元，年均 MTU 920 萬，全年交易量 1.221 兆美元，代表 COIN 不是題材股，而是已具規模的美國加密金融入口。",
-"衍生品與機構布局開始補上：2025 年機構交易收入年增 39%，Deribit 2025 年 7 月單月交易收入就超過 3,000 萬美元，且併購後預期立即對 Adjusted EBITDA 有增益。這讓 COIN 從現貨平台變成更完整的加密金融基礎設施。"
-],
-"market_view": "市場現在在 pricing 的不是單純『比特幣漲』，而是 COIN 變成受監管的加密金融平台：2025 年 Coinbase 表示交易量與 crypto trading market share 均翻倍，Coinbase One 訂閱接近 100 萬，並有 12 個產品年化營收超過 1 億美元。市場也在押注 ETF 託管、穩定幣支付與衍生品國際化。相反地，市場在擔心兩件事：第一，2025 年 net income 從 25.79 億美元降到 12.60 億美元，獲利對行情仍高度敏感；第二，營收仍有 19% 來自單一對手方，加上 USDC、BTC、ETH 集中，若監管或幣市降溫，估值壓縮會很快。",
-"financial_summary": {
-"revenue": "2025 年總營收 71.81 億美元。",
-"growth": "年增約 9.4%（2024 年 65.64 億美元 → 2025 年 71.81 億美元）。",
-"net_margin": "約 17.6%（2025 net income 12.60 億美元 / revenue 71.81 億美元）。",
-"fcf_margin": "約 31.9%；以營業現金流 24.26 億美元減資本化內部軟體投資 1.383 億美元估算，自由現金流約 22.88 億美元。",
-"eps": "現價對應 EPS 約 11.54。",
-"pe": "即時 P/E 約 26.95；其他市場資料顯示 TTM P/E 約 42~48，差異反映資料口徑與更新時點不同，因此實務上應把 COIN 視為『高波動估值股』而非精準 PE 股。",
-"dividend_yield": "0%；公司未配息。",
-"beta": "Beta 約 2.69；屬高 beta、高波動標的。另有資料顯示 5Y beta 約 3.61，方向一致：波動遠高於大盤。"
-},
-"competition": {
-"summary": "COIN 不是跟傳統券商直接比，而是同時跟 Robinhood crypto、Kraken、以及部分衍生品/清算型平台競爭。它的優勢是美國監管門檻、ETF 託管、USDC 分潤與機構客戶；弱點是估值高、beta 高，且現貨交易費率長期有被壓縮的風險。",
-"peers": [
-{
-"name": "Robinhood",
-"position": "美國零售交易對手",
-"comparison": "Robinhood 2025 年總營收 45 億美元，低於 Coinbase 的 71.81 億美元；但 Robinhood Q3 2025 單季 crypto revenue 已達 2.68 億美元、年增超過 300%，代表費率更低、流量打法更兇。若散戶交易回暖，兩者會搶同一塊零售交易蛋糕。"
-},
-{
-"name": "Kraken",
-"position": "全球現貨與機構交易對手",
-"comparison": "Kraken 2025 adjusted revenue 22 億美元、年增 33%，規模仍小於 Coinbase 71.81 億美元；但成長率高於 Coinbase 約 9.4%，代表全球競爭並未放緩。Coinbase 勝在美國合規與 ETF 託管，Kraken 勝在國際化與費率競爭彈性。"
-},
-{
-"name": "CME Group",
-"position": "機構衍生品與價格發現平台",
-"comparison": "CME 2025 年總營收 65 億美元、營業利益 42 億美元，獲利結構明顯比 COIN 穩。Coinbase 若要擴大衍生品估值天花板，Deribit 只是第一步，還得證明衍生品收入能像 CME 一樣穿越幣圈景氣循環。"
-}
-],
-"conclusion": "COIN 在美國合規加密入口、ETF 託管與 USDC 生態上有明顯位置，但競爭不是『有沒有對手』，而是『能不能把高波動交易收入換成高黏著平台收入』。如果訂閱、託管、穩定幣和衍生品占比持續提升，COIN 才能從交易所估值往金融基礎設施估值靠。"
-},
-"valuation_and_timing": {
-"valuation_view": "以 2026-04-21 股價 205.99 美元看，即時 P/E 約 26.95；第三方歷史資料顯示 2026 年 4 月的 TTM P/E 約 40~42，而 2024 年底 P/E 約 23.8。這告訴你：COIN 並不便宜，但也不像純泡沫區那樣極端。EV/Sales 目前約 7.6 倍，屬於市場已先給平台溢價的區間。",
-"buy_strategy": "M1 角度不建議追價買。COIN 適合『事件後回檔分批』，不適合當無腦長抱核心大權重。若你是 pool30 / FCN 系統使用者，我會把它放在 stock_pool 或 growth/event 類，而不是 core。買法是等高 beta 回撤到估值與技術都比較甜的位置，再用小部位切入。",
-"sweet_zone": "甜區 1：股價回到 180~190 美元附近，接近 50 日均線區（市場資料約 182~191 美元）且仍站上 200 美元以下的回撤承接帶；甜區 2：若 TTM/即時 P/E 壓回到 22~25 倍附近，才比較有 pool30 升級空間。若股價重新衝到 240 美元以上但沒有同時看到 BTC、交易量、USDC 生態同步上修，風險報酬比就不甜。",
-"technical_view": {
-"mid_trend": "中期偏多但不是低風險。部分技術資料顯示 50 日均線約 191 美元、現價 205.99 美元，代表股價站上 50 日線；但另一些資料顯示 200 日均線約 272 美元，代表長期大結構仍未完全修復。",
-"short_term": "短線偏熱。5 日均線約 199~209 美元附近，現價已接近或略高於短均線上緣，追價風險高於埋伏。",
-"structure": "結構上屬高 beta 反彈股，不是防守股。Beta 2.69~3.61，代表漲得快也跌得快；技術上若失守 190 美元一帶，容易快速回測更深支撐。",
-"conclusion": "判斷：等待，不追。中期可以觀察，短線不甜；只有在回撤至 180~190 美元區、且 BTC/交易量沒有同步轉弱時，才是比較合理的切入區。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": false,
-"category": "growth",
-"reason": "COIN 2025 年營收 71.81 億美元、FCF margin 約 31.9%、平台資產 3,760 億美元，體質已非小型題材股；但 Beta 2.69~3.61、單一對手方占營收 19%、獲利對行情敏感，且長線估值仍高，因此更適合列入 stock_pool / growth-event 追蹤，不適合直接進 pool30 核心名單。",
-"upgrade_condition": [
-"訂閱與服務收入占比從 41% 再往 45%~50% 走，且 stablecoin 以外的 recurring revenue 持續增長，代表非交易收入真的站穩。",
-"估值回落到 P/E 22~25 倍附近，或股價回撤至 180~190 美元甜區，同時 Deribit / 機構衍生品收入持續放大，才有升級到更高權重池的條件。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"收入集中風險明確存在：2025 年單一對手方占總營收 19%，而公司也明講收入集中在 BTC、ETH 交易與 USDC 相關穩定幣收入；這代表只要監管、幣價或 USDC 生態出現波動，財報會很敏感。",
-"獲利彈性雖大，但下修也很快：2025 年營收只年增 9.4%，但 net income 從 25.79 億美元降到 12.60 億美元，年減約 51%。這就是高 operating leverage 的另一面。",
-"股價波動高，不適合保守 FCN 接股：Beta 約 2.69~3.61；若做 FCN，KI/strike 不能設太淺，否則容易在市場風險事件中被穿價。"
-],
-"opportunity": [
-"USDC 是最清楚的 recurring growth 引擎：2025 年 stablecoin 收入 13.49 億美元、年增 48%，而 Coinbase 表示 USDC held on platform 創新高。只要利率與支付滲透維持，這塊可以持續對沖現貨交易循環。",
-"衍生品打開新天花板：Deribit 2025 年 7 月單月交易收入就超過 3,000 萬美元，且管理層預期併購後立即對 Adjusted EBITDA 增益；若衍生品滲透成功，COIN 的估值框架會從現貨交易所往全球加密交易基礎設施上修。",
-"機構託管與 ETF 生態仍是護城河：美國現貨 BTC ETF 在 2024 年有 11 檔中的 8 檔與 Coinbase 合作，BlackRock 也使用 Coinbase Prime。這讓 COIN 比一般交易所更接近『合規關鍵基建』。"
-]
-},
-"final_view": "COIN 是可以進系統追蹤的研究股，但現在更像高 beta 成長平台，不是低波動核心股。它最大的優點是：2025 年已證明自己不是只靠散戶手續費，訂閱與服務收入 28.28 億美元、stablecoin 收入 13.49 億美元、機構與衍生品開始補位。最大的缺點也很明確：收入集中、獲利波動大、beta 很高。M1 判斷：可進 stock_pool，暫不進 pool30；FCN 可做，但只適合高票息、深 KI、低權重，不適合當接股型核心籃子。Timing 判斷：等待回檔到 180~190 美元區再看，不追價。"
-},
-"quality_check": {
-"completeness": 9.4,
-"specificity": 9.5,
-"data_support": 9.6,
-"decision_usefulness": 9.3,
-"fcn_alignment": 9.0,
-"total_score": 9.4,
-"fail_reasons": []
-}
-},
-
-"PLAR": {
-"symbol": "PLTR",
-"name": "Palantir Technologies Inc. (assumed from user input 'PLAR')",
-"type": "research_raw",
-"company_overview": "PLTR 不是一般 SaaS；FY2025 營收 44.75 億美元、年增 56%，其中政府收入占 54%、商業收入占 46%，GAAP net margin 已到 36%，代表它從『有故事沒獲利』進入『高成長 + 高獲利』階段。這使它能進 stock_pool，但估值太高，不適合直接當 pool30 核心。 ",
-"basic_info": {
-"founded": "2003 年成立，2020 年直接上市；到 2025 年才真正進入 40 億美元以上收入級距。 ",
-"headquarters": "公司公開資料顯示 2026 年已將總部遷至 Miami, Florida。 ",
-"industry": "AI software / data integration / decision intelligence；核心產品為 Gotham、Foundry、Apollo、AIP。 ",
-"market_cap": "約 4328 億美元，現價 145.89 美元，TTM PE 約 395.1 倍。 "
-},
-"business_model": {
-"summary": "PLTR 靠『政府高黏著長約 + 商業 AIP 滲透加速』賺錢。FY2025 營收 44.75 億美元，政府占 54%、商業占 46%；其中美國營收 33.2 億美元，占 74%，說明真正的引擎是美國市場，而不是全球平均擴散。 ",
-"segments": [
-"Government：FY2025 收入占比 54%，年增 53%；其中 U.S. government revenue 18.55 億美元、年增 55%。這個 segment 給 PLTR 現金流與抗週期，但也把它綁在國防與政策預算。 ",
-"Commercial：FY2025 收入占比 46%，年增 60%；其中 U.S. commercial revenue 14.65 億美元、年增 109%。這是市場願意給高倍數的主因，因為代表 AIP 正從 demo 變成真正可收費部署。 ",
-"Cash generation：FY2025 adjusted free cash flow 22.70 億美元、margin 51%；Adjusted operating income 22.54 億美元、margin 50%。這種 margin 比多數 SaaS 同業更硬，但也意味市場對成長失速的容忍度很低。 "
-]
-},
-"customer_analysis": {
-"summary": "PLTR 的客戶集中度比想像中低一點，但仍不是分散型 SaaS。FY2025 top-3 客戶合計占營收 16%，且前三大客戶平均合作年限 10 年；這代表老客戶黏著度高，但若美國政府或大型國防專案延後，仍會影響增速。 ",
-"key_customers": [
-{
-"name": "U.S. Army",
-"role": "政府/國防核心客戶",
-"importance": "2025 年 7 月 U.S. Army 公布新的 Enterprise Agreement，合約上限最高 100 億美元、年限 10 年；這種量級足以支撐市場把 PLTR 當『國防 AI 平台』而不是普通軟體商。 "
-},
-{
-"name": "Airbus",
-"role": "工業/航空代表性商業客戶",
-"importance": "Palantir 與 Airbus 2026 年 2 月宣布延長策略合作；Airbus 不是只買軟體授權，而是把 Skywise 類型的資料與營運平台延續下去，說明 PLTR 可進入高複雜製造流程。 "
-},
-{
-"name": "bp",
-"role": "能源大型商業客戶",
-"importance": "Palantir 與 bp 在 2024 年簽 5 年策略關係，且官方描述是在既有 10 年合作基礎上擴展；這種『先做 10 年，再續 5 年』比新 logo 更值錢，因為證明產品是 mission-critical。 "
-}
-],
-"conclusion": "PLTR 的客戶結構不是『散客 SaaS』，而是『大客戶、深整合、長週期』模式。這對 FCN 不是壞事，因為黏著度高；但對 timing 是壞事，因為一旦政府預算或大型商業專案認列遞延，股價會放大反應。 "
-},
-"why_this_company": [
-"FY2025 營收 44.75 億美元、年增 56%，已不是概念股等級；同年 GAAP net income 16.25 億美元，說明成長與獲利第一次同時站穩。 ",
-"美國商業業務出現真正爆發：U.S. commercial revenue FY2025 年增 109% 至 14.65 億美元，這比單季炒作更有決策價值，因為代表新產品 AIP 已進入規模化變現。 ",
-"現金流品質高：FY2025 adjusted FCF margin 51%、gross margin 82%，這種數字說明 PLTR 不只是接案型 SI，而是高毛利平台型軟體公司。 "
-],
-"market_view": "市場現在 pricing 的不是『Palantir 今年賺多少』，而是『AIP 能否把 U.S. commercial 109% 成長再延續 2~3 年』。FY2025 營收年增 56%、Q4 單季年增 70%，很容易把股價推到極端；但市場也在擔心 valuation，因為現價 PE 約 395 倍、52 週高點曾到 207.52 美元，代表一旦增速從 56% 掉到 30% 左右，倍數壓縮會非常痛。 ",
-"financial_summary": {
-"revenue": "FY2025 營收 44.75 億美元。 ",
-"growth": "FY2025 年增 56%；其中政府收入年增 53%，商業收入年增 60%，U.S. commercial 年增 109%。 ",
-"net_margin": "FY2025 GAAP net margin 約 36.3%（16.25 億 / 44.75 億）。 ",
-"fcf_margin": "FY2025 adjusted FCF margin 51%。 ",
-"eps": "TTM EPS 約 0.42 美元；FY2025 GAAP EPS 0.63 美元、adjusted EPS 0.75 美元。 ",
-"pe": "目前 TTM PE 約 395.1 倍；Macrotrends 口徑 2026-04-21 約 217.05 倍，但不管用哪個口徑，都屬極高估值。 ",
-"dividend_yield": "0%；Palantir 目前不配息，投資報酬完全靠成長與估值擴張。 ",
-"beta": "Yahoo/finance quote 未提供即時 beta；但從 52 週區間 89.31~207.52 美元可知波動顯著高於大型平台股。 "
-},
-"competition": {
-"summary": "PLTR 的真正對手不是單一名稱，而是『ServiceNow 的企業 workflow、Snowflake 的資料層、傳統國防 IT 承包商』的疊加。問題是 PLTR 現在 PE 約 395 倍，遠高於 ServiceNow 的 110.6 倍；估值不是高一點，是高出一個等級。 ",
-"peers": [
-{
-"name": "ServiceNow",
-"position": "企業工作流/平台軟體對手",
-"comparison": "NOW 現價 PE 約 110.6 倍，仍遠低於 PLTR 的 395.1 倍；PLTR 若要合理化這個溢價，就必須把 50% 以上成長維持更久。 "
-},
-{
-"name": "Snowflake",
-"position": "資料平台/AI data stack 對手",
-"comparison": "SNOW 目前仍為虧損，PLTR 已達 FY2025 GAAP net margin 36%、gross margin 82%；也就是說，PLTR 獲利品質已明顯勝出，但市場也因此給了極端倍數。 "
-},
-{
-"name": "Microsoft",
-"position": "企業 AI 平台與政府雲競爭者",
-"comparison": "MSFT 現價 PE 約 30.1 倍，遠低於 PLTR 的 395.1 倍；Palantir 若失去『國防 + AIP + deep integration』的獨特性，估值很難撐。 "
-}
-],
-"conclusion": "PLTR 的商業模式開始成立，但估值已經把『未來幾年持續 50% 級成長』先算進去。這在 pool30 是扣分，因為你不是只看公司好不好，還要看買點對不對。 "
-},
-"valuation_and_timing": {
-"valuation_view": "現價 145.89 美元，52 週區間 89.31~207.52，美股高點回落後仍不便宜；TTM PE 約 395.1 倍，Macrotrends 也有 217 倍等級，這不是正常成長股估值，是『故事與業績一起被滿價化』。 ",
-"buy_strategy": "PLTR 的策略不是『有績效就追』，而是『等估值降溫再做』。除非你接受高波動與大回撤，否則現在更適合列觀察清單，不適合在 FCN 或 pool30 裡給高權重。 ",
-"sweet_zone": "甜蜜區先抓 110~125 美元，或至少 PE 回到 150~200 倍區間；保守一點，可要求股價距 52 週高點回撤 30% 以上再評估。 ",
-"technical_view": {
-"mid_trend": "中期仍是多頭，因為現價 145.89 美元明顯高於 52 週低點 89.31 美元，但已低於 52 週高點 207.52 美元很多，屬高波動上升趨勢中的修正段。 ",
-"short_term": "短線不是最差，但也不是甜。從高點 207.52 回到 145.89，已回檔約 29.7%，可見籌碼非常敏感。這種型態對 timing 要求高，不適合追突破。 ",
-"structure": "結構上仍靠 U.S. commercial 109% 成長與 government 55% 成長支撐，只要下一季增速掉到 40% 以下，市場會先重估而不是先表揚。 ",
-"conclusion": "Timing 判斷：等待。公司可以追蹤，但這不是舒服買點，更不是 FCN 友善時點。 "
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": false,
-"category": "growth",
-"reason": "PLTR FY2025 營收年增 56%、GAAP net margin 36%、U.S. commercial 年增 109%，基本面夠強，應放入 stock_pool；但 PE 約 395 倍、波動大、政府預算與政策敏感度高，不適合直接進 pool30 核心名單。 ",
-"upgrade_condition": [
-"若股價回到 110~125 美元，且 U.S. commercial 年增仍高於 60%，可以從 stock_pool 升到 pool30 候選。 ",
-"若 PE 壓回 150~200 倍區間、同時 FY2026 指引 61% 成長沒有下修，才有資格討論進高權重。 "
-]
-},
-"risk_opportunity": {
-"risk": [
-"估值風險極高：TTM PE 約 395 倍，即使用另一資料源也在 217 倍等級；這代表任何增速鈍化都可能觸發大幅倍數收縮。 ",
-"政府暴露高：FY2025 政府收入占 54%，U.S. government revenue 18.55 億美元；若國防/政府專案延後，財報會被放大檢視。 ",
-"大客戶模式：top-3 客戶占 16%，平均合作 10 年，代表集中度沒有失控，但也不是可忽略；大客戶一旦延後簽約或認列，市場會先殺股價。 "
-],
-"opportunity": [
-"AIP 商業化加速：U.S. commercial revenue FY2025 年增 109% 至 14.65 億美元，這是最能支持長期上修的數據。 ",
-"國防長約可見度高：U.S. Army 10 年、最高 100 億美元 Enterprise Agreement，把 PLTR 從專案型供應商往平台級國防軟體推進。 "
-]
-},
-"final_view": "PLTR 是值得追蹤的 growth 標的，但不是現在就該重倉的 pool30 核心。公司基本面很硬：44.75 億美元營收、56% 成長、36% net margin、51% FCF margin；真正的問題不是公司差，而是價格太貴。我的決策是：進 stock_pool、暫不進 pool30、FCN 先不碰。 "
-},
-"quality_check": {
-"completeness": 9.6,
-"specificity": 9.5,
-"data_support": 9.7,
-"decision_usefulness": 9.3,
-"fcn_alignment": 9.2,
-"total_score": 9.5,
-"fail_reasons": [
-"使用者輸入『PLAR』無法確認正式股票代號，本卡以 PLTR（Palantir）作為最可能對應標的；若你原意不是 Palantir，該張卡需重做。 ",
-"technical_view 以現價、52 週區間與估值區間做 timing 判斷，未使用完整 K 線/均線庫，因此屬決策級簡化版，不是交易員級技術報告。 "
-]
-}
+  "AVGO": {
+    "symbol": "AVGO",
+    "name": "Broadcom Inc.",
+    "type": "research_raw",
+    "company_overview": "AVGO 不是一般『買景氣循環』的半導體股；FY2025 營收 638.9 億美元、其中半導體 58%、基礎軟體 42%，現金流 269.1 億美元，代表它已經是『AI ASIC + 網通 + VMware 訂閱化』的混合型平台公司，不是單一晶片題材。這種結構對 pool30 有利，因為比純 GPU 或單一手機零組件供應商更抗波動。 ",
+    "basic_info": {
+      "founded": "前身 Avago 2005 年成立，2016 年以 370 億美元收購 Broadcom 並改名 Broadcom Inc.；管理上可視為『併購整合型平台公司』。 ",
+      "headquarters": "Palo Alto, California, U.S.；主市場 Nasdaq。 ",
+      "industry": "Semiconductor solutions + infrastructure software；FY2025 半導體 368.6 億美元、軟體 270.3 億美元。 ",
+      "market_cap": "約 1.36 兆美元，現價 399.63 美元，TTM PE 約 71.7 倍。 "
+    },
+    "business_model": {
+      "summary": "AVGO 靠 2 條主線賺錢：一條是客製化 AI ASIC、交換器、網通與通訊晶片；另一條是 VMware 帶來的基礎軟體訂閱與授權。FY2025 半導體年增 22%，軟體年增 26%，代表現在不是只有 AI 在撐，VMware 也在拉高毛利與現金流。 ",
+      "segments": [
+        "Semiconductor Solutions：FY2025 營收 368.6 億美元，占比 58%，年增 22%；Q4 FY2025 單季 110.7 億美元，占比 61%，核心驅動來自 custom AI accelerators 與 Ethernet AI switches。 ",
+        "Infrastructure Software：FY2025 營收 270.3 億美元，占比 42%，年增 26%；Q1 FY2025 軟體營收 67.0 億美元、單季年增 47%，代表 VMware 併入後已經不只是會計灌水，而是能把企業 IT 支出轉成高續約性的軟體現金流。 ",
+        "Cash-flow model：FY2025 營運現金流 275.4 億美元、FCF 269.1 億美元，FCF margin 約 42.1%；這種現金轉換率很適合 FCN，因為大幅下修通常要先看到企業 IT 或 hyperscaler capex 明顯轉弱。 "
+      ]
+    },
+    "customer_analysis": {
+      "summary": "AVGO 客戶品質高，但集中度也高。FY2025 透過各通路計算，前五大終端客戶約占營收 40%，且經銷商銷售占 48%；這代表成長快，但一旦 1~2 家 hyperscaler 或 Apple 砍單，財報波動會很直接。 ",
+      "key_customers": [
+        {
+          "name": "Apple",
+          "role": "iPhone/RF/連接晶片大客戶",
+          "importance": "公開報導顯示 Apple 約占 Broadcom 營收 20%，是最大客戶等級；若自研 Wi-Fi/Bluetooth 替代加速，外界估 Broadcom 可能面臨 10~15 億美元營收風險。這是 AVGO 不能忽視的單一客戶風險。 "
+        },
+        {
+          "name": "Google",
+          "role": "TPU/custom AI chip 合作夥伴",
+          "importance": "Reuters 指 Broadcom 已與 Google 簽長約到 2031 年，繼續共同開發與供應下一代 TPU 與 AI networking；這種 5 年以上可見度，對 pool30 是加分，因為比一般 1 年 rolling order 更穩。 "
+        },
+        {
+          "name": "Meta",
+          "role": "MTIA/custom AI silicon + AI networking 客戶",
+          "importance": "Meta 2026 年 4 月擴大合作到 2029 年，首階段部署超過 1GW 運算容量，且官方提到未來 3 年共同開發多世代 AI accelerator；這種規模不是試單，是長期 capex 綁定。 "
+        }
+      ],
+      "conclusion": "客戶名單很強，但投資決策要看的是『強客戶 + 高集中』兩面。Apple 約 20% 與 top-5 約 40% 代表 AVGO 不是分散型公司；它更像是少數超大型客戶綁定平台，所以適合 pool30，但不適合在估值極端時追價。 "
+    },
+    "why_this_company": [
+      "FY2025 AI 以外的底盤也夠厚：總營收 638.9 億美元、軟體占 42%，不是只有 AI 一條腿。對 pool30 來說，這種收入結構比純題材股更耐週期。 ",
+      "現金流夠硬：FY2025 FCF 269.1 億美元、FCF margin 約 42.1%，而且 adjusted EBITDA margin 67%；這種財務體質使 AVGO 適合 FCN 底層標的，不容易因單季獲利失真爆雷。 ",
+      "AI 訂單可視度高：Google 合作到 2031、Meta 合作到 2029，代表不是 1~2 季炒作，而是多年度 AI infrastructure 供應鏈位置。 "
+    ],
+    "market_view": "市場現在 pricing 的是『AI 客製晶片 + 網通基建長約』，不是單純 VMware 整併。Q4 FY2025 AI 半導體營收年增 74%，Q1 FY2026 公司還預估 AI 半導體營收將年增至 82 億美元；但市場也在擔心估值先跑太快，因為現價 399.63 美元已逼近 52 週高點 414.61，美股若再遇 capex 降溫，壓縮的會先是倍數，不一定是基本面。 ",
+    "financial_summary": {
+      "revenue": "FY2025 營收 638.87 億美元。 ",
+      "growth": "FY2025 年增 24%；其中半導體年增 22%，基礎軟體年增 26%。 ",
+      "net_margin": "FY2025 GAAP net margin 約 36.2%（231.26 億 / 638.87 億）。 ",
+      "fcf_margin": "FY2025 FCF margin 約 42.1%（269.14 億 / 638.87 億）。 ",
+      "eps": "TTM EPS 約 4.02 美元；FY2025 GAAP diluted EPS 4.77 美元、non-GAAP 6.82 美元。 ",
+      "pe": "目前 TTM PE 約 71.7 倍；Macrotrends 顯示 2026-04-19 PE 約 62.34 倍，明顯高於 2025 年 3 月 Reuters 引述的 forward PE 26.58 倍。 ",
+      "dividend_yield": "FY2026 年度目標普通股股利 2.60 美元，較 FY2025 提高 10%。以 399.63 美元估算，現金殖利率約 0.65%。 ",
+      "beta": "Yahoo/finance quote 未提供即時 beta，決策上先以『高於大型軟體股、低於純 AI 小型股』看待，不把 beta 當核心依據。 "
+    },
+    "competition": {
+      "summary": "AVGO 的直接比較對象不是單一公司，而是『NVIDIA 的 AI 加速生態 + Marvell 的客製 ASIC + 軟體平台公司』的混合體。現在市場給 AVGO 的 PE 約 71.7 倍，已高於 NVDA 的 45.6 倍，也高於 MRVL 的 32.7 倍，表示市場已把 AI 可見度與 VMware 現金流一起打包進估值。 ",
+      "peers": [
+        {
+          "name": "NVIDIA",
+          "position": "通用 AI 加速器龍頭",
+          "comparison": "NVDA 現價 PE 約 45.6 倍，低於 AVGO 的 71.7 倍；AVGO 贏在客製 ASIC + 網通 + 軟體現金流，NVDA 贏在標準 GPU 生態與算力定價權。AVGO 不是比較便宜，而是市場押它收入可見度更長。 "
+        },
+        {
+          "name": "Marvell",
+          "position": "客製 ASIC / networking 對手",
+          "comparison": "MRVL 現價 PE 約 32.7 倍，遠低於 AVGO 的 71.7 倍；Broadcom 多了 270 億美元級別的軟體收入與 269 億美元 FCF，Marvell 沒有這種現金流底盤。 "
+        },
+        {
+          "name": "Oracle",
+          "position": "企業軟體與 AI infrastructure 競合者",
+          "comparison": "ORCL 現價 177.58 美元，但 Broadcom FY2025 軟體收入已達 270.3 億美元，規模與企業基礎架構影響力不再是小型軟體附屬品；差別是 AVGO 軟體更偏 infra stack，不是 ERP/DB。 "
+        }
+      ],
+      "conclusion": "AVGO 的問題不是『有沒有競爭力』，而是『估值已不便宜』。如果把它當半導體股，它太貴；如果把它當 AI 基建平台股，它可以有溢價，但買點要挑。 "
+    },
+    "valuation_and_timing": {
+      "valuation_view": "現價 399.63 美元，距 52 週高點 414.61 僅約 3.6%，TTM PE 約 71.7 倍，Macrotrends 口徑也在 62 倍以上；這不是便宜區，而是『高預期區』。若用 FY2025 FCF 269.1 億美元看，市場願意給它超高倍數，前提是 Google/Meta/AI 網通長約不失速。 ",
+      "buy_strategy": "策略不是『現在追』，而是『等回撤再收』。AVGO 適合列入 stock_pool 與 core 觀察，但現位階更像持有加碼候選，不是第一次建倉甜區。若 PE 回到 50~55 倍、或股價回到 330~350 美元區，風險報酬比會明顯改善。 ",
+      "sweet_zone": "甜蜜區先抓 330~350 美元，或至少距 52 週高點回檔 15% 以上；進階條件是 TTM PE 低於 55 倍且 AI 半導體年增仍高於 40%。 ",
+      "technical_view": {
+        "mid_trend": "中期仍是多頭，因為現價 399.63 美元遠高於 52 週低點 165.22 美元，仍在大上升趨勢內。 ",
+        "short_term": "短線接近前高區 414.61，美股若再碰 AI capex 雜音，這種靠估值撐的段落最容易先回吐 8%~15%。 ",
+        "structure": "結構上屬『高位整理』而非破壞；但高位整理的前提是 Google 2031 與 Meta 2029 的合作敘事不能鬆動。 ",
+        "conclusion": "Timing 判斷：等待，不追。AVGO 適合逢回分批，不適合在接近 52 週高點做重倉 FCN 新單。 "
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "core",
+      "reason": "FY2025 營收 638.9 億美元、FCF 269.1 億美元、半導體/軟體雙引擎，且 Google 到 2031、Meta 到 2029 的 AI 合作提高可見度；這種規模、現金流與客戶質量，足以進 core pool30。 ",
+      "upgrade_condition": [
+        "若股價回到 330~350 美元或 TTM PE 壓到 55 倍以下，可由『持有』升級成『積極買進』。 ",
+        "若 FY2026 AI 半導體營收維持年增 40% 以上，同時 VMware 訂閱化沒有拖累 FCF margin 至 35% 以下，core 權重可上調。 "
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "客戶集中：top-5 終端客戶約占 FY2025 營收 40%，Apple 單客戶歷史上約 20%；這不是小風險，是估值需要折價的理由。 ",
+        "估值過高：現價 PE 約 71.7 倍，已高於 NVDA 的 45.6 倍與 MRVL 的 32.7 倍；只要 AI capex 放緩 1~2 季，先修正的會是倍數。 ",
+        "Google 供應鏈議價風險：今天已有報導指出 Google 與 Marvell 接觸新一代 AI 晶片合作，雖然 Broadcom 長約到 2031 仍在，但議價權未必永遠在 Broadcom 這邊。 "
+      ],
+      "opportunity": [
+        "AI 長約外溢：Google 合作到 2031、Meta 到 2029，且 Meta 首階段就超過 1GW，代表這不是短單，而是多年度基礎設施部署。 ",
+        "軟體拉高抗震：FY2025 軟體營收 270.3 億美元、年增 26%，可在半導體波動期維持 EBITDA 與 FCF；這對 FCN 風險控制很重要。 "
+      ]
+    },
+    "final_view": "AVGO 是可以進 pool30 的 core 標的，也是 FCN 可做名單，但前提是不要在高估值區硬追。現在基本面沒有問題，問題是市場已經先把 2026~2031 的 AI 長約價格打進去了；我的判斷是『公司好，時點偏熱，等回檔再買』。 "
+  },
+  "COIN": {
+    "symbol": "COIN",
+    "name": "Coinbase Global, Inc.",
+    "type": "research_raw",
+    "company_overview": "Coinbase 是加密金融基礎設施平台，不只是交易所。2025 年總營收為 71.81 億美元，其中交易收入 40.55 億美元占淨營收 59%，訂閱與服務收入 28.28 億美元占淨營收 41%；年均 MTU 920 萬、平台資產 3,760 億美元、全年交易量 1.221 兆美元。投資重點不是『幣價會不會漲』而已，而是 COIN 已把收入結構從單一交易手續費，拉向穩定幣、託管、訂閱、衍生品與基礎設施。",
+    "basic_info": {
+      "founded": "2012；Brian Armstrong 自 2012 年起擔任共同創辦人兼 CEO。",
+      "headquarters": "公司採 remote-first，官方表示不維持傳統總部；主要對外法定聯絡透過 Dallas 代理，營運重心仍在美國並持續擴張機構與合規據點。",
+      "industry": "Cryptocurrency exchange / crypto brokerage / custody / stablecoin & payments infrastructure / derivatives",
+      "market_cap": "約 867.1 億美元；2026-04-21 股價 205.99 美元。"
+    },
+    "business_model": {
+      "summary": "COIN 的商業模式已從『牛市靠現貨交易抽成』，轉成雙引擎：一邊是交易收入，另一邊是穩定幣、託管、訂閱、staking、開發者服務與衍生品。2025 年交易收入 40.55 億美元只年增 2%，但訂閱與服務收入 28.28 億美元年增 23%，其中 stablecoin 收入 13.49 億美元、年增 48%，已是最重要的抗波動收入來源之一。",
+      "segments": [
+        "消費者交易：2025 年 consumer transaction revenue 33.23 億美元，年減 3%，代表散戶現貨交易已不是無限上修的成長引擎；這一塊最賺，但景氣循環性也最大。",
+        "機構與衍生品：2025 年 institutional transaction revenue 4.80 億美元，年增 39%；其中約 1.52 億美元增量主要來自 Deribit 併購帶動的衍生品交易，這是 COIN 從美國現貨交易所走向全球衍生品平台的關鍵。",
+        "訂閱與服務：2025 年訂閱與服務收入 28.28 億美元，佔淨營收 41%；其中 stablecoin 收入 13.49 億美元、blockchain rewards 6.77 億美元、其他訂閱與服務 5.55 億美元。Coinbase One 付費訂閱增加，是其他訂閱與服務成長主因之一。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "COIN 的『客戶』不能只看散戶，真正要看的是生態系與機構依賴度。2025 年公司披露單一對手方占總營收 19%，高於 2024 年的 14%，這代表某些核心合作關係已足以影響收入波動；另外公司也明講，收入集中在 Bitcoin、Ethereum 交易，以及 USDC 相關穩定幣收入。這是護城河，也是集中風險。",
+      "key_customers": [
+        {
+          "name": "Circle",
+          "role": "USDC 發行與分潤合作方",
+          "importance": "2025 年 stablecoin 收入 13.49 億美元、年增 48%，是訂閱與服務收入的最大項目；Circle 協議初始期限 3 年，且 Coinbase 對 USDC 流通與平台持有占比越高，分潤越大。這代表 Circle/USDC 幾乎是 COIN 非交易收入的核心錨點。"
+        },
+        {
+          "name": "BlackRock",
+          "role": "ETF 託管/機構交易生態合作方",
+          "importance": "BlackRock 的 IBIT 採用 Coinbase Prime；BlackRock 官網披露 Coinbase Prime 在 2025-06-30 擁有 2,450 億美元機構託管資產。這不是單一客戶收入數字，但足以證明 COIN 在機構託管鏈條的地位，且 2024 年 11 檔美國現貨 BTC ETF 中有 8 檔與 Coinbase 合作。"
+        },
+        {
+          "name": "Stripe / Shopify",
+          "role": "USDC 支付與 Base 生態導入夥伴",
+          "importance": "2025 年 6 月 Stripe 宣布讓 Shopify 商家在 34 個國家接受 USDC；這代表 Coinbase 不只靠投機交易，也在把 USDC 與 Base 往支付場景滲透。這對 stablecoin 與開發者服務收入是中長線增量，不過短線貢獻仍小於交易與 USDC 分潤。"
+        }
+      ],
+      "conclusion": "COIN 的客戶結構正在從『散戶交易者』升級到『機構託管 + 穩定幣分銷 + 支付平台』，但 19% 單一對手方營收占比與 USDC/主流幣依賴，代表公司仍未完全擺脫集中風險。對投資人來說，這是高品質平台化的跡象，但也表示你不能把它當純粹多元金融股估值。"
+    },
+    "why_this_company": [
+      "收入結構比 2021~2022 年成熟很多：2025 年交易收入 40.55 億美元，但訂閱與服務已到 28.28 億美元，占淨營收 41%，不是只靠散戶炒幣吃飯。",
+      "平台資產仍大：2025 年底平台資產 3,760 億美元，年均 MTU 920 萬，全年交易量 1.221 兆美元，代表 COIN 不是題材股，而是已具規模的美國加密金融入口。",
+      "衍生品與機構布局開始補上：2025 年機構交易收入年增 39%，Deribit 2025 年 7 月單月交易收入就超過 3,000 萬美元，且併購後預期立即對 Adjusted EBITDA 有增益。這讓 COIN 從現貨平台變成更完整的加密金融基礎設施。"
+    ],
+    "market_view": "市場現在在 pricing 的不是單純『比特幣漲』，而是 COIN 變成受監管的加密金融平台：2025 年 Coinbase 表示交易量與 crypto trading market share 均翻倍，Coinbase One 訂閱接近 100 萬，並有 12 個產品年化營收超過 1 億美元。市場也在押注 ETF 託管、穩定幣支付與衍生品國際化。相反地，市場在擔心兩件事：第一，2025 年 net income 從 25.79 億美元降到 12.60 億美元，獲利對行情仍高度敏感；第二，營收仍有 19% 來自單一對手方，加上 USDC、BTC、ETH 集中，若監管或幣市降溫，估值壓縮會很快。",
+    "financial_summary": {
+      "revenue": "2025 年總營收 71.81 億美元。",
+      "growth": "年增約 9.4%（2024 年 65.64 億美元 → 2025 年 71.81 億美元）。",
+      "net_margin": "約 17.6%（2025 net income 12.60 億美元 / revenue 71.81 億美元）。",
+      "fcf_margin": "約 31.9%；以營業現金流 24.26 億美元減資本化內部軟體投資 1.383 億美元估算，自由現金流約 22.88 億美元。",
+      "eps": "現價對應 EPS 約 11.54。",
+      "pe": "即時 P/E 約 26.95；其他市場資料顯示 TTM P/E 約 42~48，差異反映資料口徑與更新時點不同，因此實務上應把 COIN 視為『高波動估值股』而非精準 PE 股。",
+      "dividend_yield": "0%；公司未配息。",
+      "beta": "Beta 約 2.69；屬高 beta、高波動標的。另有資料顯示 5Y beta 約 3.61，方向一致：波動遠高於大盤。"
+    },
+    "competition": {
+      "summary": "COIN 不是跟傳統券商直接比，而是同時跟 Robinhood crypto、Kraken、以及部分衍生品/清算型平台競爭。它的優勢是美國監管門檻、ETF 託管、USDC 分潤與機構客戶；弱點是估值高、beta 高，且現貨交易費率長期有被壓縮的風險。",
+      "peers": [
+        {
+          "name": "Robinhood",
+          "position": "美國零售交易對手",
+          "comparison": "Robinhood 2025 年總營收 45 億美元，低於 Coinbase 的 71.81 億美元；但 Robinhood Q3 2025 單季 crypto revenue 已達 2.68 億美元、年增超過 300%，代表費率更低、流量打法更兇。若散戶交易回暖，兩者會搶同一塊零售交易蛋糕。"
+        },
+        {
+          "name": "Kraken",
+          "position": "全球現貨與機構交易對手",
+          "comparison": "Kraken 2025 adjusted revenue 22 億美元、年增 33%，規模仍小於 Coinbase 71.81 億美元；但成長率高於 Coinbase 約 9.4%，代表全球競爭並未放緩。Coinbase 勝在美國合規與 ETF 託管，Kraken 勝在國際化與費率競爭彈性。"
+        },
+        {
+          "name": "CME Group",
+          "position": "機構衍生品與價格發現平台",
+          "comparison": "CME 2025 年總營收 65 億美元、營業利益 42 億美元，獲利結構明顯比 COIN 穩。Coinbase 若要擴大衍生品估值天花板，Deribit 只是第一步，還得證明衍生品收入能像 CME 一樣穿越幣圈景氣循環。"
+        }
+      ],
+      "conclusion": "COIN 在美國合規加密入口、ETF 託管與 USDC 生態上有明顯位置，但競爭不是『有沒有對手』，而是『能不能把高波動交易收入換成高黏著平台收入』。如果訂閱、託管、穩定幣和衍生品占比持續提升，COIN 才能從交易所估值往金融基礎設施估值靠。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "以 2026-04-21 股價 205.99 美元看，即時 P/E 約 26.95；第三方歷史資料顯示 2026 年 4 月的 TTM P/E 約 40~42，而 2024 年底 P/E 約 23.8。這告訴你：COIN 並不便宜，但也不像純泡沫區那樣極端。EV/Sales 目前約 7.6 倍，屬於市場已先給平台溢價的區間。",
+      "buy_strategy": "M1 角度不建議追價買。COIN 適合『事件後回檔分批』，不適合當無腦長抱核心大權重。若你是 pool30 / FCN 系統使用者，我會把它放在 stock_pool 或 growth/event 類，而不是 core。買法是等高 beta 回撤到估值與技術都比較甜的位置，再用小部位切入。",
+      "sweet_zone": "甜區 1：股價回到 180~190 美元附近，接近 50 日均線區（市場資料約 182~191 美元）且仍站上 200 美元以下的回撤承接帶；甜區 2：若 TTM/即時 P/E 壓回到 22~25 倍附近，才比較有 pool30 升級空間。若股價重新衝到 240 美元以上但沒有同時看到 BTC、交易量、USDC 生態同步上修，風險報酬比就不甜。",
+      "technical_view": {
+        "mid_trend": "中期偏多但不是低風險。部分技術資料顯示 50 日均線約 191 美元、現價 205.99 美元，代表股價站上 50 日線；但另一些資料顯示 200 日均線約 272 美元，代表長期大結構仍未完全修復。",
+        "short_term": "短線偏熱。5 日均線約 199~209 美元附近，現價已接近或略高於短均線上緣，追價風險高於埋伏。",
+        "structure": "結構上屬高 beta 反彈股，不是防守股。Beta 2.69~3.61，代表漲得快也跌得快；技術上若失守 190 美元一帶，容易快速回測更深支撐。",
+        "conclusion": "判斷：等待，不追。中期可以觀察，短線不甜；只有在回撤至 180~190 美元區、且 BTC/交易量沒有同步轉弱時，才是比較合理的切入區。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": false,
+      "category": "growth",
+      "reason": "COIN 2025 年營收 71.81 億美元、FCF margin 約 31.9%、平台資產 3,760 億美元，體質已非小型題材股；但 Beta 2.69~3.61、單一對手方占營收 19%、獲利對行情敏感，且長線估值仍高，因此更適合列入 stock_pool / growth-event 追蹤，不適合直接進 pool30 核心名單。",
+      "upgrade_condition": [
+        "訂閱與服務收入占比從 41% 再往 45%~50% 走，且 stablecoin 以外的 recurring revenue 持續增長，代表非交易收入真的站穩。",
+        "估值回落到 P/E 22~25 倍附近，或股價回撤至 180~190 美元甜區，同時 Deribit / 機構衍生品收入持續放大，才有升級到更高權重池的條件。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "收入集中風險明確存在：2025 年單一對手方占總營收 19%，而公司也明講收入集中在 BTC、ETH 交易與 USDC 相關穩定幣收入；這代表只要監管、幣價或 USDC 生態出現波動，財報會很敏感。",
+        "獲利彈性雖大，但下修也很快：2025 年營收只年增 9.4%，但 net income 從 25.79 億美元降到 12.60 億美元，年減約 51%。這就是高 operating leverage 的另一面。",
+        "股價波動高，不適合保守 FCN 接股：Beta 約 2.69~3.61；若做 FCN，KI/strike 不能設太淺，否則容易在市場風險事件中被穿價。"
+      ],
+      "opportunity": [
+        "USDC 是最清楚的 recurring growth 引擎：2025 年 stablecoin 收入 13.49 億美元、年增 48%，而 Coinbase 表示 USDC held on platform 創新高。只要利率與支付滲透維持，這塊可以持續對沖現貨交易循環。",
+        "衍生品打開新天花板：Deribit 2025 年 7 月單月交易收入就超過 3,000 萬美元，且管理層預期併購後立即對 Adjusted EBITDA 增益；若衍生品滲透成功，COIN 的估值框架會從現貨交易所往全球加密交易基礎設施上修。",
+        "機構託管與 ETF 生態仍是護城河：美國現貨 BTC ETF 在 2024 年有 11 檔中的 8 檔與 Coinbase 合作，BlackRock 也使用 Coinbase Prime。這讓 COIN 比一般交易所更接近『合規關鍵基建』。"
+      ]
+    },
+    "final_view": "COIN 是可以進系統追蹤的研究股，但現在更像高 beta 成長平台，不是低波動核心股。它最大的優點是：2025 年已證明自己不是只靠散戶手續費，訂閱與服務收入 28.28 億美元、stablecoin 收入 13.49 億美元、機構與衍生品開始補位。最大的缺點也很明確：收入集中、獲利波動大、beta 很高。M1 判斷：可進 stock_pool，暫不進 pool30；FCN 可做，但只適合高票息、深 KI、低權重，不適合當接股型核心籃子。Timing 判斷：等待回檔到 180~190 美元區再看，不追價。",
+    "quality_check": {
+      "completeness": 9.4,
+      "specificity": 9.5,
+      "data_support": 9.6,
+      "decision_usefulness": 9.3,
+      "fcn_alignment": 9.0,
+      "total_score": 9.4,
+      "fail_reasons": []
+    }
+  },
+  "PLAR": {
+    "symbol": "PLTR",
+    "name": "Palantir Technologies Inc. (assumed from user input 'PLAR')",
+    "type": "research_raw",
+    "company_overview": "PLTR 不是一般 SaaS；FY2025 營收 44.75 億美元、年增 56%，其中政府收入占 54%、商業收入占 46%，GAAP net margin 已到 36%，代表它從『有故事沒獲利』進入『高成長 + 高獲利』階段。這使它能進 stock_pool，但估值太高，不適合直接當 pool30 核心。 ",
+    "basic_info": {
+      "founded": "2003 年成立，2020 年直接上市；到 2025 年才真正進入 40 億美元以上收入級距。 ",
+      "headquarters": "公司公開資料顯示 2026 年已將總部遷至 Miami, Florida。 ",
+      "industry": "AI software / data integration / decision intelligence；核心產品為 Gotham、Foundry、Apollo、AIP。 ",
+      "market_cap": "約 4328 億美元，現價 145.89 美元，TTM PE 約 395.1 倍。 "
+    },
+    "business_model": {
+      "summary": "PLTR 靠『政府高黏著長約 + 商業 AIP 滲透加速』賺錢。FY2025 營收 44.75 億美元，政府占 54%、商業占 46%；其中美國營收 33.2 億美元，占 74%，說明真正的引擎是美國市場，而不是全球平均擴散。 ",
+      "segments": [
+        "Government：FY2025 收入占比 54%，年增 53%；其中 U.S. government revenue 18.55 億美元、年增 55%。這個 segment 給 PLTR 現金流與抗週期，但也把它綁在國防與政策預算。 ",
+        "Commercial：FY2025 收入占比 46%，年增 60%；其中 U.S. commercial revenue 14.65 億美元、年增 109%。這是市場願意給高倍數的主因，因為代表 AIP 正從 demo 變成真正可收費部署。 ",
+        "Cash generation：FY2025 adjusted free cash flow 22.70 億美元、margin 51%；Adjusted operating income 22.54 億美元、margin 50%。這種 margin 比多數 SaaS 同業更硬，但也意味市場對成長失速的容忍度很低。 "
+      ]
+    },
+    "customer_analysis": {
+      "summary": "PLTR 的客戶集中度比想像中低一點，但仍不是分散型 SaaS。FY2025 top-3 客戶合計占營收 16%，且前三大客戶平均合作年限 10 年；這代表老客戶黏著度高，但若美國政府或大型國防專案延後，仍會影響增速。 ",
+      "key_customers": [
+        {
+          "name": "U.S. Army",
+          "role": "政府/國防核心客戶",
+          "importance": "2025 年 7 月 U.S. Army 公布新的 Enterprise Agreement，合約上限最高 100 億美元、年限 10 年；這種量級足以支撐市場把 PLTR 當『國防 AI 平台』而不是普通軟體商。 "
+        },
+        {
+          "name": "Airbus",
+          "role": "工業/航空代表性商業客戶",
+          "importance": "Palantir 與 Airbus 2026 年 2 月宣布延長策略合作；Airbus 不是只買軟體授權，而是把 Skywise 類型的資料與營運平台延續下去，說明 PLTR 可進入高複雜製造流程。 "
+        },
+        {
+          "name": "bp",
+          "role": "能源大型商業客戶",
+          "importance": "Palantir 與 bp 在 2024 年簽 5 年策略關係，且官方描述是在既有 10 年合作基礎上擴展；這種『先做 10 年，再續 5 年』比新 logo 更值錢，因為證明產品是 mission-critical。 "
+        }
+      ],
+      "conclusion": "PLTR 的客戶結構不是『散客 SaaS』，而是『大客戶、深整合、長週期』模式。這對 FCN 不是壞事，因為黏著度高；但對 timing 是壞事，因為一旦政府預算或大型商業專案認列遞延，股價會放大反應。 "
+    },
+    "why_this_company": [
+      "FY2025 營收 44.75 億美元、年增 56%，已不是概念股等級；同年 GAAP net income 16.25 億美元，說明成長與獲利第一次同時站穩。 ",
+      "美國商業業務出現真正爆發：U.S. commercial revenue FY2025 年增 109% 至 14.65 億美元，這比單季炒作更有決策價值，因為代表新產品 AIP 已進入規模化變現。 ",
+      "現金流品質高：FY2025 adjusted FCF margin 51%、gross margin 82%，這種數字說明 PLTR 不只是接案型 SI，而是高毛利平台型軟體公司。 "
+    ],
+    "market_view": "市場現在 pricing 的不是『Palantir 今年賺多少』，而是『AIP 能否把 U.S. commercial 109% 成長再延續 2~3 年』。FY2025 營收年增 56%、Q4 單季年增 70%，很容易把股價推到極端；但市場也在擔心 valuation，因為現價 PE 約 395 倍、52 週高點曾到 207.52 美元，代表一旦增速從 56% 掉到 30% 左右，倍數壓縮會非常痛。 ",
+    "financial_summary": {
+      "revenue": "FY2025 營收 44.75 億美元。 ",
+      "growth": "FY2025 年增 56%；其中政府收入年增 53%，商業收入年增 60%，U.S. commercial 年增 109%。 ",
+      "net_margin": "FY2025 GAAP net margin 約 36.3%（16.25 億 / 44.75 億）。 ",
+      "fcf_margin": "FY2025 adjusted FCF margin 51%。 ",
+      "eps": "TTM EPS 約 0.42 美元；FY2025 GAAP EPS 0.63 美元、adjusted EPS 0.75 美元。 ",
+      "pe": "目前 TTM PE 約 395.1 倍；Macrotrends 口徑 2026-04-21 約 217.05 倍，但不管用哪個口徑，都屬極高估值。 ",
+      "dividend_yield": "0%；Palantir 目前不配息，投資報酬完全靠成長與估值擴張。 ",
+      "beta": "Yahoo/finance quote 未提供即時 beta；但從 52 週區間 89.31~207.52 美元可知波動顯著高於大型平台股。 "
+    },
+    "competition": {
+      "summary": "PLTR 的真正對手不是單一名稱，而是『ServiceNow 的企業 workflow、Snowflake 的資料層、傳統國防 IT 承包商』的疊加。問題是 PLTR 現在 PE 約 395 倍，遠高於 ServiceNow 的 110.6 倍；估值不是高一點，是高出一個等級。 ",
+      "peers": [
+        {
+          "name": "ServiceNow",
+          "position": "企業工作流/平台軟體對手",
+          "comparison": "NOW 現價 PE 約 110.6 倍，仍遠低於 PLTR 的 395.1 倍；PLTR 若要合理化這個溢價，就必須把 50% 以上成長維持更久。 "
+        },
+        {
+          "name": "Snowflake",
+          "position": "資料平台/AI data stack 對手",
+          "comparison": "SNOW 目前仍為虧損，PLTR 已達 FY2025 GAAP net margin 36%、gross margin 82%；也就是說，PLTR 獲利品質已明顯勝出，但市場也因此給了極端倍數。 "
+        },
+        {
+          "name": "Microsoft",
+          "position": "企業 AI 平台與政府雲競爭者",
+          "comparison": "MSFT 現價 PE 約 30.1 倍，遠低於 PLTR 的 395.1 倍；Palantir 若失去『國防 + AIP + deep integration』的獨特性，估值很難撐。 "
+        }
+      ],
+      "conclusion": "PLTR 的商業模式開始成立，但估值已經把『未來幾年持續 50% 級成長』先算進去。這在 pool30 是扣分，因為你不是只看公司好不好，還要看買點對不對。 "
+    },
+    "valuation_and_timing": {
+      "valuation_view": "現價 145.89 美元，52 週區間 89.31~207.52，美股高點回落後仍不便宜；TTM PE 約 395.1 倍，Macrotrends 也有 217 倍等級，這不是正常成長股估值，是『故事與業績一起被滿價化』。 ",
+      "buy_strategy": "PLTR 的策略不是『有績效就追』，而是『等估值降溫再做』。除非你接受高波動與大回撤，否則現在更適合列觀察清單，不適合在 FCN 或 pool30 裡給高權重。 ",
+      "sweet_zone": "甜蜜區先抓 110~125 美元，或至少 PE 回到 150~200 倍區間；保守一點，可要求股價距 52 週高點回撤 30% 以上再評估。 ",
+      "technical_view": {
+        "mid_trend": "中期仍是多頭，因為現價 145.89 美元明顯高於 52 週低點 89.31 美元，但已低於 52 週高點 207.52 美元很多，屬高波動上升趨勢中的修正段。 ",
+        "short_term": "短線不是最差，但也不是甜。從高點 207.52 回到 145.89，已回檔約 29.7%，可見籌碼非常敏感。這種型態對 timing 要求高，不適合追突破。 ",
+        "structure": "結構上仍靠 U.S. commercial 109% 成長與 government 55% 成長支撐，只要下一季增速掉到 40% 以下，市場會先重估而不是先表揚。 ",
+        "conclusion": "Timing 判斷：等待。公司可以追蹤，但這不是舒服買點，更不是 FCN 友善時點。 "
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": false,
+      "category": "growth",
+      "reason": "PLTR FY2025 營收年增 56%、GAAP net margin 36%、U.S. commercial 年增 109%，基本面夠強，應放入 stock_pool；但 PE 約 395 倍、波動大、政府預算與政策敏感度高，不適合直接進 pool30 核心名單。 ",
+      "upgrade_condition": [
+        "若股價回到 110~125 美元，且 U.S. commercial 年增仍高於 60%，可以從 stock_pool 升到 pool30 候選。 ",
+        "若 PE 壓回 150~200 倍區間、同時 FY2026 指引 61% 成長沒有下修，才有資格討論進高權重。 "
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "估值風險極高：TTM PE 約 395 倍，即使用另一資料源也在 217 倍等級；這代表任何增速鈍化都可能觸發大幅倍數收縮。 ",
+        "政府暴露高：FY2025 政府收入占 54%，U.S. government revenue 18.55 億美元；若國防/政府專案延後，財報會被放大檢視。 ",
+        "大客戶模式：top-3 客戶占 16%，平均合作 10 年，代表集中度沒有失控，但也不是可忽略；大客戶一旦延後簽約或認列，市場會先殺股價。 "
+      ],
+      "opportunity": [
+        "AIP 商業化加速：U.S. commercial revenue FY2025 年增 109% 至 14.65 億美元，這是最能支持長期上修的數據。 ",
+        "國防長約可見度高：U.S. Army 10 年、最高 100 億美元 Enterprise Agreement，把 PLTR 從專案型供應商往平台級國防軟體推進。 "
+      ]
+    },
+    "final_view": "PLTR 是值得追蹤的 growth 標的，但不是現在就該重倉的 pool30 核心。公司基本面很硬：44.75 億美元營收、56% 成長、36% net margin、51% FCF margin；真正的問題不是公司差，而是價格太貴。我的決策是：進 stock_pool、暫不進 pool30、FCN 先不碰。 ",
+    "quality_check": {
+      "completeness": 9.6,
+      "specificity": 9.5,
+      "data_support": 9.7,
+      "decision_usefulness": 9.3,
+      "fcn_alignment": 9.2,
+      "total_score": 9.5,
+      "fail_reasons": [
+        "使用者輸入『PLAR』無法確認正式股票代號，本卡以 PLTR（Palantir）作為最可能對應標的；若你原意不是 Palantir，該張卡需重做。 ",
+        "technical_view 以現價、52 週區間與估值區間做 timing 判斷，未使用完整 K 線/均線庫，因此屬決策級簡化版，不是交易員級技術報告。 "
+      ]
+    }
+  }
 }
