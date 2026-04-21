@@ -609,13 +609,6 @@
       color:#3730a3;
     }
 
-    .research-list{
-      margin:0;
-      padding-left:18px;
-      font-size:13px;
-      line-height:1.8;
-    }
-
     @media (max-width: 1550px){
       .toolbar{
         grid-template-columns:1fr 1fr 1fr 1fr;
@@ -1881,22 +1874,62 @@
     }
 
     function exportPool30() {
-      const exported = state.candidateScored
-        .filter(row => getReview(row.symbol).decision === "pool30")
-        .sort((a,b) => n(a.rank,9999) - n(b.rank,9999))
-        .map(row => ({
-          symbol: row.symbol,
-          name: row.name || row.symbol,
+      const selectedRows = state.candidateScored
+        .filter(row => getReview(row.symbol).decision === "pool30");
+
+      const selectedSymbolSet = new Set(selectedRows.map(x => x.symbol));
+
+      const originalMap = new Map(
+        state.pool30Raw.map(item => [
+          String(item.symbol || "").toUpperCase(),
+          {
+            symbol: item.symbol || "",
+            name: item.name || "",
+            sector: item.sector || "",
+            subsector: item.subsector || "",
+            category: item.category || ""
+          }
+        ])
+      );
+
+      const exported = [];
+
+      // 1. 原本就在 pool30 的，完全沿用原檔順序與欄位格式
+      state.pool30Raw.forEach(item => {
+        const sym = String(item.symbol || "").toUpperCase();
+        if (selectedSymbolSet.has(sym)) {
+          exported.push({
+            symbol: item.symbol || "",
+            name: item.name || "",
+            sector: item.sector || "",
+            subsector: item.subsector || "",
+            category: item.category || ""
+          });
+        }
+      });
+
+      // 2. 新加入 pool30 的股票，才用 m1 畫面資料補上，排在最後
+      const newRows = selectedRows
+        .filter(row => !originalMap.has(String(row.symbol || "").toUpperCase()))
+        .sort((a, b) => n(a.rank, 9999) - n(b.rank, 9999));
+
+      newRows.forEach(row => {
+        exported.push({
+          symbol: row.symbol || "",
+          name: row.name || row.symbol || "",
           sector: row.sector || "",
           subsector: row.subsector || "",
           category: row.category || ""
-        }));
+        });
+      });
 
-      const blob = new Blob([JSON.stringify(exported, null, 2)], { type: "application/json;charset=utf-8" });
+      const blob = new Blob([JSON.stringify(exported, null, 2)], {
+        type: "application/json;charset=utf-8"
+      });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "pool30_review_export.json";
+      a.download = "pool30.json";
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -2091,3 +2124,4 @@
   </script>
 </body>
 </html>
+
