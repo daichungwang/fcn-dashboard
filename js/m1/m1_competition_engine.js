@@ -611,7 +611,17 @@ function enrichPoolWithCompetition(pool) {
 }
 
 // ---------- export ----------
-window.M1CompetitionEngine = {
+const M1CompetitionEngine = {
   buildCompetitionCard,
   enrichPoolWithCompetition
 };
+
+// 👉 Node 環境
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = M1CompetitionEngine;
+}
+
+// 👉 Browser 環境
+if (typeof window !== "undefined") {
+  window.M1CompetitionEngine = M1CompetitionEngine;
+}
