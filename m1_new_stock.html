@@ -692,7 +692,11 @@ function fmt(v,d=1){
   const x = Number(v);
   return Number.isFinite(x)?x.toFixed(d):'--';
 }
-
+function pct(v){
+  const x = Number(v);
+  if (!Number.isFinite(x)) return '--';
+  return (x * 100 >= 0 ? '+' : '') + (x * 100).toFixed(1) + '%';
+}
 // =========================
 // fetch
 // =========================
