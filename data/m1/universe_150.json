@@ -1,189 +1,1682 @@
 [
-  {"symbol":"NVDA","category":"core","sector":"AI_SEMI","style":["high_capex","high_growth"]},
-  {"symbol":"MSFT","category":"core","sector":"CLOUD","style":["platform"]},
-  {"symbol":"GOOG","category":"core","sector":"CLOUD","style":["platform"]},
-  {"symbol":"AMZN","category":"core","sector":"CLOUD","style":["platform"]},
-  {"symbol":"META","category":"core","sector":"AI_PLATFORM","style":["high_growth"]},
-  {"symbol":"TSM","category":"core","sector":"FOUNDRY","style":["capex"]},
-  {"symbol":"AVGO","category":"core","sector":"SEMI","style":["quality"]},
-  {"symbol":"AAPL","category":"core","sector":"CONSUMER_TECH","style":["ecosystem"]},
-  {"symbol":"ADBE","category":"core","sector":"SOFTWARE","style":["high_margin"]},
-  {"symbol":"CRM","category":"core","sector":"CLOUD_SAAS","style":["stable_growth"]},
-  {"symbol":"NOW","category":"core","sector":"CLOUD_SAAS","style":["enterprise_core"]},
-
-  {"symbol":"AMD","category":"growth","sector":"AI_SEMI","style":["growth"]},
-  {"symbol":"MRVL","category":"growth","sector":"AI_SEMI","style":["growth"]},
-  {"symbol":"AMAT","category":"growth","sector":"SEMI_EQUIPMENT","style":["cyclical"]},
-  {"symbol":"LRCX","category":"growth","sector":"SEMI_EQUIPMENT","style":["cyclical"]},
-  {"symbol":"KLAC","category":"growth","sector":"SEMI_EQUIPMENT","style":["cyclical"]},
-  {"symbol":"ASML","category":"growth","sector":"SEMI_EQUIPMENT","style":["monopoly"]},
-  {"symbol":"ON","category":"growth","sector":"SEMI","style":["cyclical"]},
-  {"symbol":"ARM","category":"growth","sector":"SEMI","style":["ip"]},
-  {"symbol":"MU","category":"growth","sector":"MEMORY","style":["cyclical"]},
-
-  {"symbol":"PLTR","category":"growth","sector":"DATA_AI","style":["high_growth"]},
-  {"symbol":"SNOW","category":"growth","sector":"DATA_CLOUD","style":["high_growth"]},
-  {"symbol":"PANW","category":"growth","sector":"CYBERSECURITY","style":["growth"]},
-  {"symbol":"CRWD","category":"growth","sector":"CYBERSECURITY","style":["growth"]},
-  {"symbol":"ZS","category":"growth","sector":"CYBERSECURITY","style":["growth"]},
-  {"symbol":"NET","category":"growth","sector":"CLOUD","style":["growth"]},
-
-  {"symbol":"ORCL","category":"growth","sector":"CLOUD","style":["turnaround"]},
-  {"symbol":"UBER","category":"growth","sector":"PLATFORM","style":["turnaround"]},
-  {"symbol":"SHOP","category":"growth","sector":"ECOMMERCE","style":["growth"]},
-
-  {"symbol":"TSLA","category":"growth","sector":"EV","style":["high_beta"]},
-  {"symbol":"RIVN","category":"speculative","sector":"EV","style":["high_beta"]},
-  {"symbol":"LCID","category":"speculative","sector":"EV","style":["high_beta"]},
-
-  {"symbol":"COIN","category":"speculative","sector":"CRYPTO","style":["high_beta"]},
-  {"symbol":"HOOD","category":"speculative","sector":"FINTECH","style":["high_beta"]},
-  {"symbol":"SOFI","category":"speculative","sector":"FINTECH","style":["high_beta"]},
-  {"symbol":"RIOT","category":"speculative","sector":"CRYPTO","style":["high_beta"]},
-  {"symbol":"MARA","category":"speculative","sector":"CRYPTO","style":["high_beta"]},
-
-  {"symbol":"CCL","category":"income","sector":"CRUISE","style":["cyclical"]},
-  {"symbol":"AAL","category":"income","sector":"AIRLINE","style":["cyclical"]},
-  {"symbol":"UAL","category":"income","sector":"AIRLINE","style":["cyclical"]},
-  {"symbol":"DAL","category":"income","sector":"AIRLINE","style":["cyclical"]},
-  {"symbol":"LVS","category":"income","sector":"CASINO","style":["cyclical"]},
-  {"symbol":"WYNN","category":"income","sector":"CASINO","style":["cyclical"]},
-
-  {"symbol":"XOM","category":"income","sector":"ENERGY","style":["cashflow"]},
-  {"symbol":"CVX","category":"income","sector":"ENERGY","style":["cashflow"]},
-  {"symbol":"COP","category":"income","sector":"ENERGY","style":["cashflow"]},
-  {"symbol":"OXY","category":"income","sector":"ENERGY","style":["cyclical"]},
-
-  {"symbol":"CAT","category":"income","sector":"INDUSTRIAL","style":["cyclical"]},
-  {"symbol":"DE","category":"growth","sector":"INDUSTRIAL","style":["upgrade"]},
-  {"symbol":"GE","category":"growth","sector":"INDUSTRIAL","style":["turnaround"]},
-  {"symbol":"BA","category":"growth","sector":"AEROSPACE","style":["turnaround"]},
-
-  {"symbol":"COST","category":"core","sector":"CONSUMER","style":["quality"]},
-  {"symbol":"WMT","category":"defensive","sector":"CONSUMER","style":["low_vol"]},
-  {"symbol":"TGT","category":"income","sector":"CONSUMER","style":["cashflow"]},
-
-  {"symbol":"PG","category":"defensive","sector":"CONSUMER_STAPLES","style":["low_vol"]},
-  {"symbol":"KO","category":"defensive","sector":"CONSUMER_STAPLES","style":["low_vol"]},
-  {"symbol":"PEP","category":"defensive","sector":"CONSUMER_STAPLES","style":["low_vol"]},
-
-  {"symbol":"JNJ","category":"defensive","sector":"HEALTHCARE","style":["low_vol"]},
-  {"symbol":"PFE","category":"income","sector":"HEALTHCARE","style":["cashflow"]},
-  {"symbol":"ABBV","category":"income","sector":"HEALTHCARE","style":["cashflow"]},
-  {"symbol":"UNH","category":"income","sector":"HEALTHCARE","style":["quality"]},
-
-  {"symbol":"JPM","category":"defensive","sector":"BANK","style":["low_vol"]},
-  {"symbol":"GS","category":"growth","sector":"BANK","style":["cyclical"]},
-  {"symbol":"MS","category":"growth","sector":"BANK","style":["cyclical"]},
-  {"symbol":"BLK","category":"defensive","sector":"ASSET_MANAGEMENT","style":["quality"]},
-
-  {"symbol":"QQQ","category":"defensive","sector":"ETF","style":["index"]},
-  {"symbol":"SPY","category":"defensive","sector":"ETF","style":["index"]},
-  {"symbol":"DIA","category":"defensive","sector":"ETF","style":["index"]},
-  {"symbol":"IWM","category":"defensive","sector":"ETF","style":["index"]},
-  {"symbol":"SMH","category":"defensive","sector":"ETF","style":["semi"]},
-  {"symbol":"XLF","category":"defensive","sector":"ETF","style":["financial"]},
-  {"symbol":"XLV","category":"defensive","sector":"ETF","style":["health"]},
-  {"symbol":"XLE","category":"defensive","sector":"ETF","style":["energy"]},
-  {"symbol":"XLP","category":"defensive","sector":"ETF","style":["staples"]},
-  {"symbol":"LQD","category":"defensive","sector":"BOND","style":["low_vol"]},
-
-  {"symbol":"NKE","category":"income","sector":"CONSUMER","style":["brand"]},
-  {"symbol":"DIS","category":"growth","sector":"MEDIA","style":["turnaround"]},
-  {"symbol":"NFLX","category":"core","sector":"MEDIA","style":["platform"]},
-
-  {"symbol":"INTC","category":"growth","sector":"SEMI","style":["turnaround"]},
-  {"symbol":"QCOM","category":"core","sector":"SEMI","style":["cashflow"]},
-  {"symbol":"TXN","category":"income","sector":"SEMI","style":["cashflow"]},
-
-  {"symbol":"BABA","category":"speculative","sector":"ECOMMERCE","style":["china"]},
-  {"symbol":"PDD","category":"growth","sector":"ECOMMERCE","style":["growth"]},
-
-  
-  {"symbol":"REGN","category":"income","sector":"HEALTHCARE","style":["quality"]},
-  {"symbol":"VRTX","category":"core","sector":"HEALTHCARE","style":["growth"]},
-  {"symbol":"ISRG","category":"core","sector":"HEALTHCARE","style":["moat"]},
-
-  {"symbol":"MDT","category":"income","sector":"HEALTHCARE","style":["cashflow"]},
-  {"symbol":"BMY","category":"income","sector":"HEALTHCARE","style":["cashflow"]},
-
-  {"symbol":"DUK","category":"defensive","sector":"UTILITY","style":["low_vol"]},
-  {"symbol":"NEE","category":"defensive","sector":"UTILITY","style":["low_vol"]},
-  {"symbol":"SO","category":"defensive","sector":"UTILITY","style":["low_vol"]},
-
-  {"symbol":"O","category":"income","sector":"REIT","style":["dividend"]},
-  {"symbol":"PLD","category":"core","sector":"REIT","style":["quality"]},
-  {"symbol":"AMT","category":"core","sector":"REIT","style":["infra"]},
-
-  {"symbol":"HD","category":"income","sector":"CONSUMER","style":["cashflow"]},
-  {"symbol":"LOW","category":"income","sector":"CONSUMER","style":["cashflow"]},
-
-  {"symbol":"SBUX","category":"growth","sector":"CONSUMER","style":["brand"]},
-  {"symbol":"MCD","category":"income","sector":"CONSUMER","style":["cashflow"]},
-
-  {"symbol":"BKNG","category":"growth","sector":"TRAVEL","style":["platform"]},
-  {"symbol":"ABNB","category":"growth","sector":"TRAVEL","style":["platform"]},
-
-  {"symbol":"FDX","category":"income","sector":"INDUSTRIAL","style":["cyclical"]},
-  {"symbol":"UPS","category":"income","sector":"INDUSTRIAL","style":["cashflow"]},
-
-  {"symbol":"ETN","category":"core","sector":"INDUSTRIAL","style":["quality"]},
-  {"symbol":"PH","category":"core","sector":"INDUSTRIAL","style":["quality"]},
-
-  {"symbol":"MMM","category":"income","sector":"INDUSTRIAL","style":["turnaround"]},
-
-  {"symbol":"SCHW","category":"growth","sector":"FINANCIAL","style":["cyclical"]},
-  {"symbol":"AXP","category":"core","sector":"FINANCIAL","style":["quality"]},
-
-  {"symbol":"V","category":"core","sector":"FINTECH","style":["moat"]},
-  {"symbol":"MA","category":"core","sector":"FINTECH","style":["moat"]},
-
-  {"symbol":"TTD","category":"growth","sector":"ADTECH","style":["growth"]},
-  {"symbol":"ROKU","category":"speculative","sector":"MEDIA","style":["high_beta"]},
-
-  {"symbol":"SNAP","category":"speculative","sector":"MEDIA","style":["high_beta"]},
-
-  {"symbol":"ZM","category":"growth","sector":"SOFTWARE","style":["post_growth"]},
-
-  {"symbol":"DOCU","category":"speculative","sector":"SOFTWARE","style":["high_beta"]},
-
-  {"symbol":"TWLO","category":"speculative","sector":"SOFTWARE","style":["high_beta"]},
-
-  {"symbol":"OKTA","category":"growth","sector":"CYBERSECURITY","style":["growth"]},
-
-  {"symbol":"DDOG","category":"growth","sector":"CLOUD","style":["growth"]},
-
-  {"symbol":"MDB","category":"growth","sector":"DATA","style":["growth"]},
-
-  {"symbol":"ZS","category":"growth","sector":"CYBERSECURITY","style":["growth"]},
-
-  {"symbol":"HCA","category":"income","sector":"HEALTHCARE","style":["cashflow"]},
-
-  {"symbol":"CI","category":"income","sector":"HEALTHCARE","style":["cashflow"]},
-
-  {"symbol":"ELV","category":"income","sector":"HEALTHCARE","style":["cashflow"]},
-
-  {"symbol":"TMO","category":"core","sector":"HEALTHCARE","style":["quality"]},
-
-  {"symbol":"DHR","category":"core","sector":"HEALTHCARE","style":["quality"]},
-
-  {"symbol":"APD","category":"core","sector":"CHEMICAL","style":["quality"]},
-
-  {"symbol":"LIN","category":"core","sector":"CHEMICAL","style":["quality"]},
-
-  {"symbol":"ECL","category":"core","sector":"CHEMICAL","style":["quality"]},
-    
- { "symbol": "LLY",  "category": "core",  "sector": "HEALTHCARE",  "style": ["high_growth", "moat", "pharma_leader"]},
-
-{  "symbol": "NVO",  "category": "core",  "sector": "HEALTHCARE",  "style": ["high_growth", "moat", "drug_leader"]},
-  {"symbol":"SQ","category":"growth","sector":"FINTECH","style":["growth"]},
-   { "symbol": "COIN", "category": "speculative", "sector": "CRYPTO", "style": ["high_beta"] },
-  { "symbol": "CEG",  "category": "growth",      "sector": "UTILITY_POWER", "style": ["high_growth", "power"] },
-  { "symbol": "VST",  "category": "growth",      "sector": "UTILITY_POWER", "style": ["turnaround", "power"] },
-  { "symbol": "XLU",  "category": "defensive",   "sector": "ETF", "style": ["index", "utility"] },
-  { "symbol": "VPU",  "category": "defensive",   "sector": "ETF", "style": ["index", "utility"] },
-  { "symbol": "ZAP",  "category": "speculative", "sector": "ETF", "style": ["thematic", "high_beta"] },
-  { "symbol": "AIPO", "category": "speculative", "sector": "AI_THEME", "style": ["high_beta", "ai"] },
-  { "symbol": "VOLT", "category": "speculative", "sector": "ETF", "style": ["thematic", "high_beta"] },
-  {"symbol":"PYPL","category":"growth","sector":"FINTECH","style":["turnaround"]}
+  {
+    "symbol": "NVDA",
+    "category": "core",
+    "sector": "AI_SEMI",
+    "style": [
+      "high_capex",
+      "high_growth"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_AI",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "MSFT",
+    "category": "core",
+    "sector": "CLOUD",
+    "style": [
+      "platform"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "GOOG",
+    "category": "core",
+    "sector": "CLOUD",
+    "style": [
+      "platform"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "AMZN",
+    "category": "core",
+    "sector": "CLOUD",
+    "style": [
+      "platform"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "META",
+    "category": "core",
+    "sector": "AI_PLATFORM",
+    "style": [
+      "high_growth"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_AI",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "TSM",
+    "category": "core",
+    "sector": "FOUNDRY",
+    "style": [
+      "capex"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "AVGO",
+    "category": "core",
+    "sector": "SEMI",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "AAPL",
+    "category": "core",
+    "sector": "CONSUMER_TECH",
+    "style": [
+      "ecosystem"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_QUALITY",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ADBE",
+    "category": "core",
+    "sector": "SOFTWARE",
+    "style": [
+      "high_margin"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "CRM",
+    "category": "core",
+    "sector": "CLOUD_SAAS",
+    "style": [
+      "stable_growth"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "NOW",
+    "category": "core",
+    "sector": "CLOUD_SAAS",
+    "style": [
+      "enterprise_core"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "AMD",
+    "category": "growth",
+    "sector": "AI_SEMI",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_AI",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "MRVL",
+    "category": "growth",
+    "sector": "AI_SEMI",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_AI",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "AMAT",
+    "category": "growth",
+    "sector": "SEMI_EQUIPMENT",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_AI",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "LRCX",
+    "category": "growth",
+    "sector": "SEMI_EQUIPMENT",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_AI",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "KLAC",
+    "category": "growth",
+    "sector": "SEMI_EQUIPMENT",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_AI",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "ASML",
+    "category": "growth",
+    "sector": "SEMI_EQUIPMENT",
+    "style": [
+      "monopoly"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_AI",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "ON",
+    "category": "growth",
+    "sector": "SEMI",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_AI",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ARM",
+    "category": "growth",
+    "sector": "SEMI",
+    "style": [
+      "ip"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_AI",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "MU",
+    "category": "growth",
+    "sector": "MEMORY",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_AI",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "PLTR",
+    "category": "growth",
+    "sector": "DATA_AI",
+    "style": [
+      "high_growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "SNOW",
+    "category": "growth",
+    "sector": "DATA_CLOUD",
+    "style": [
+      "high_growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "PANW",
+    "category": "growth",
+    "sector": "CYBERSECURITY",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "CRWD",
+    "category": "growth",
+    "sector": "CYBERSECURITY",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ZS",
+    "category": "growth",
+    "sector": "CYBERSECURITY",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "NET",
+    "category": "growth",
+    "sector": "CLOUD",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ORCL",
+    "category": "growth",
+    "sector": "CLOUD",
+    "style": [
+      "turnaround"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "UBER",
+    "category": "growth",
+    "sector": "PLATFORM",
+    "style": [
+      "turnaround"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_RE_RATING",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "SHOP",
+    "category": "growth",
+    "sector": "ECOMMERCE",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "TSLA",
+    "category": "growth",
+    "sector": "EV",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_PLATFORM",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "RIVN",
+    "category": "speculative",
+    "sector": "EV",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_HIGH_BETA",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "LCID",
+    "category": "speculative",
+    "sector": "EV",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_HIGH_BETA",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "COIN",
+    "category": "speculative",
+    "sector": "CRYPTO",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_CRYPTO",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "HOOD",
+    "category": "speculative",
+    "sector": "FINTECH",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_HIGH_BETA",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "SOFI",
+    "category": "speculative",
+    "sector": "FINTECH",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_HIGH_BETA",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "RIOT",
+    "category": "speculative",
+    "sector": "CRYPTO",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_CRYPTO",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "MARA",
+    "category": "speculative",
+    "sector": "CRYPTO",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_CRYPTO",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "CCL",
+    "category": "income",
+    "sector": "CRUISE",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "AAL",
+    "category": "income",
+    "sector": "AIRLINE",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "UAL",
+    "category": "income",
+    "sector": "AIRLINE",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "DAL",
+    "category": "income",
+    "sector": "AIRLINE",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "LVS",
+    "category": "income",
+    "sector": "CASINO",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "WYNN",
+    "category": "income",
+    "sector": "CASINO",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "XOM",
+    "category": "income",
+    "sector": "ENERGY",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "CVX",
+    "category": "income",
+    "sector": "ENERGY",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "COP",
+    "category": "income",
+    "sector": "ENERGY",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "OXY",
+    "category": "income",
+    "sector": "ENERGY",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "CAT",
+    "category": "income",
+    "sector": "INDUSTRIAL",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "DE",
+    "category": "growth",
+    "sector": "INDUSTRIAL",
+    "style": [
+      "upgrade"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_RE_RATING",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "GE",
+    "category": "growth",
+    "sector": "INDUSTRIAL",
+    "style": [
+      "turnaround"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_RE_RATING",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "BA",
+    "category": "growth",
+    "sector": "AEROSPACE",
+    "style": [
+      "turnaround"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_RE_RATING",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "COST",
+    "category": "core",
+    "sector": "CONSUMER",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_QUALITY",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "WMT",
+    "category": "defensive",
+    "sector": "CONSUMER",
+    "style": [
+      "low_vol"
+    ],
+    "type": "STOCK",
+    "category_main": "DEFENSE",
+    "category_sub": "DEFENSE_LOW_VOL",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "TGT",
+    "category": "income",
+    "sector": "CONSUMER",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CASHFLOW",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "PG",
+    "category": "defensive",
+    "sector": "CONSUMER_STAPLES",
+    "style": [
+      "low_vol"
+    ],
+    "type": "STOCK",
+    "category_main": "DEFENSE",
+    "category_sub": "DEFENSE_LOW_VOL",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "KO",
+    "category": "defensive",
+    "sector": "CONSUMER_STAPLES",
+    "style": [
+      "low_vol"
+    ],
+    "type": "STOCK",
+    "category_main": "DEFENSE",
+    "category_sub": "DEFENSE_LOW_VOL",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "PEP",
+    "category": "defensive",
+    "sector": "CONSUMER_STAPLES",
+    "style": [
+      "low_vol"
+    ],
+    "type": "STOCK",
+    "category_main": "DEFENSE",
+    "category_sub": "DEFENSE_LOW_VOL",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "JNJ",
+    "category": "defensive",
+    "sector": "HEALTHCARE",
+    "style": [
+      "low_vol"
+    ],
+    "type": "STOCK",
+    "category_main": "DEFENSE",
+    "category_sub": "DEFENSE_LOW_VOL",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "PFE",
+    "category": "income",
+    "sector": "HEALTHCARE",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_YIELD",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ABBV",
+    "category": "income",
+    "sector": "HEALTHCARE",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_YIELD",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "UNH",
+    "category": "income",
+    "sector": "HEALTHCARE",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_YIELD",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "JPM",
+    "category": "defensive",
+    "sector": "BANK",
+    "style": [
+      "low_vol"
+    ],
+    "type": "STOCK",
+    "category_main": "DEFENSE",
+    "category_sub": "DEFENSE_LOW_VOL",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "GS",
+    "category": "growth",
+    "sector": "BANK",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_OTHER",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "MS",
+    "category": "growth",
+    "sector": "BANK",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_OTHER",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "BLK",
+    "category": "defensive",
+    "sector": "ASSET_MANAGEMENT",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "DEFENSE",
+    "category_sub": "DEFENSE_LOW_VOL",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "QQQ",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "index"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_H",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "SPY",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "index"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_H",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "DIA",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "index"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_M",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "IWM",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "index"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_M",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "SMH",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "semi"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_H",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "XLF",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "financial"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_M",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "XLV",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "health"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_M",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "XLE",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "energy"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_M",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "XLP",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "staples"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_M",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "LQD",
+    "category": "defensive",
+    "sector": "BOND",
+    "style": [
+      "low_vol"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_L",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "NKE",
+    "category": "income",
+    "sector": "CONSUMER",
+    "style": [
+      "brand"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_BRAND",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "DIS",
+    "category": "growth",
+    "sector": "MEDIA",
+    "style": [
+      "turnaround"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_RE_RATING",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "NFLX",
+    "category": "core",
+    "sector": "MEDIA",
+    "style": [
+      "platform"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "INTC",
+    "category": "growth",
+    "sector": "SEMI",
+    "style": [
+      "turnaround"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_AI",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "QCOM",
+    "category": "core",
+    "sector": "SEMI",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "TXN",
+    "category": "income",
+    "sector": "SEMI",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CASHFLOW",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "BABA",
+    "category": "speculative",
+    "sector": "ECOMMERCE",
+    "style": [
+      "china"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_HIGH_BETA",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "PDD",
+    "category": "growth",
+    "sector": "ECOMMERCE",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "REGN",
+    "category": "income",
+    "sector": "HEALTHCARE",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_YIELD",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "VRTX",
+    "category": "core",
+    "sector": "HEALTHCARE",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_QUALITY",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ISRG",
+    "category": "core",
+    "sector": "HEALTHCARE",
+    "style": [
+      "moat"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_QUALITY",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "MDT",
+    "category": "income",
+    "sector": "HEALTHCARE",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_YIELD",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "BMY",
+    "category": "income",
+    "sector": "HEALTHCARE",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_YIELD",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "DUK",
+    "category": "defensive",
+    "sector": "UTILITY",
+    "style": [
+      "low_vol"
+    ],
+    "type": "STOCK",
+    "category_main": "DEFENSE",
+    "category_sub": "DEFENSE_UTILITY",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "NEE",
+    "category": "defensive",
+    "sector": "UTILITY",
+    "style": [
+      "low_vol"
+    ],
+    "type": "STOCK",
+    "category_main": "DEFENSE",
+    "category_sub": "DEFENSE_UTILITY",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "SO",
+    "category": "defensive",
+    "sector": "UTILITY",
+    "style": [
+      "low_vol"
+    ],
+    "type": "STOCK",
+    "category_main": "DEFENSE",
+    "category_sub": "DEFENSE_UTILITY",
+    "volatility": "LOW"
+  },
+  {
+    "symbol": "O",
+    "category": "income",
+    "sector": "REIT",
+    "style": [
+      "dividend"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_YIELD",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "PLD",
+    "category": "core",
+    "sector": "REIT",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "AMT",
+    "category": "core",
+    "sector": "REIT",
+    "style": [
+      "infra"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "HD",
+    "category": "income",
+    "sector": "CONSUMER",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CASHFLOW",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "LOW",
+    "category": "income",
+    "sector": "CONSUMER",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CASHFLOW",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "SBUX",
+    "category": "growth",
+    "sector": "CONSUMER",
+    "style": [
+      "brand"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_OTHER",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "MCD",
+    "category": "income",
+    "sector": "CONSUMER",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CASHFLOW",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "BKNG",
+    "category": "growth",
+    "sector": "TRAVEL",
+    "style": [
+      "platform"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ABNB",
+    "category": "growth",
+    "sector": "TRAVEL",
+    "style": [
+      "platform"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "FDX",
+    "category": "income",
+    "sector": "INDUSTRIAL",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "UPS",
+    "category": "income",
+    "sector": "INDUSTRIAL",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "ETN",
+    "category": "core",
+    "sector": "INDUSTRIAL",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "PH",
+    "category": "core",
+    "sector": "INDUSTRIAL",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "MMM",
+    "category": "income",
+    "sector": "INDUSTRIAL",
+    "style": [
+      "turnaround"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_CYCLICAL",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "SCHW",
+    "category": "growth",
+    "sector": "FINANCIAL",
+    "style": [
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_OTHER",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "AXP",
+    "category": "core",
+    "sector": "FINANCIAL",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_MAIN",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "V",
+    "category": "core",
+    "sector": "FINTECH",
+    "style": [
+      "moat"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "MA",
+    "category": "core",
+    "sector": "FINTECH",
+    "style": [
+      "moat"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "TTD",
+    "category": "growth",
+    "sector": "ADTECH",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ROKU",
+    "category": "speculative",
+    "sector": "MEDIA",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_HIGH_BETA",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "SNAP",
+    "category": "speculative",
+    "sector": "MEDIA",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_HIGH_BETA",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "ZM",
+    "category": "growth",
+    "sector": "SOFTWARE",
+    "style": [
+      "post_growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "DOCU",
+    "category": "speculative",
+    "sector": "SOFTWARE",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_HIGH_BETA",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "TWLO",
+    "category": "speculative",
+    "sector": "SOFTWARE",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_HIGH_BETA",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "OKTA",
+    "category": "growth",
+    "sector": "CYBERSECURITY",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "DDOG",
+    "category": "growth",
+    "sector": "CLOUD",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "MDB",
+    "category": "growth",
+    "sector": "DATA",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ZS",
+    "category": "growth",
+    "sector": "CYBERSECURITY",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_SOFTWARE",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "HCA",
+    "category": "income",
+    "sector": "HEALTHCARE",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_YIELD",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "CI",
+    "category": "income",
+    "sector": "HEALTHCARE",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_YIELD",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ELV",
+    "category": "income",
+    "sector": "HEALTHCARE",
+    "style": [
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "INCOME",
+    "category_sub": "INCOME_YIELD",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "TMO",
+    "category": "core",
+    "sector": "HEALTHCARE",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_QUALITY",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "DHR",
+    "category": "core",
+    "sector": "HEALTHCARE",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_QUALITY",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "APD",
+    "category": "core",
+    "sector": "CHEMICAL",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "LIN",
+    "category": "core",
+    "sector": "CHEMICAL",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ECL",
+    "category": "core",
+    "sector": "CHEMICAL",
+    "style": [
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_INFRA",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "LLY",
+    "category": "core",
+    "sector": "HEALTHCARE",
+    "style": [
+      "high_growth",
+      "moat",
+      "pharma_leader"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_QUALITY",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "NVO",
+    "category": "core",
+    "sector": "HEALTHCARE",
+    "style": [
+      "high_growth",
+      "moat",
+      "drug_leader"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "CORE_QUALITY",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "SQ",
+    "category": "growth",
+    "sector": "FINTECH",
+    "style": [
+      "growth"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_PLATFORM",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "COIN",
+    "category": "speculative",
+    "sector": "CRYPTO",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_CRYPTO",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "CEG",
+    "category": "growth",
+    "sector": "UTILITY_POWER",
+    "style": [
+      "high_growth",
+      "power"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_RE_RATING",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "VST",
+    "category": "growth",
+    "sector": "UTILITY_POWER",
+    "style": [
+      "turnaround",
+      "power"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_RE_RATING",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "XLU",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "index",
+      "utility"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_M",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "VPU",
+    "category": "defensive",
+    "sector": "ETF",
+    "style": [
+      "index",
+      "utility"
+    ],
+    "type": "ETF",
+    "category_main": "DEFENSE",
+    "category_sub": "ETF_M",
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ZAP",
+    "category": "speculative",
+    "sector": "ETF",
+    "style": [
+      "thematic",
+      "high_beta"
+    ],
+    "type": "ETF",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_THEME_ETF",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "AIPO",
+    "category": "speculative",
+    "sector": "AI_THEME",
+    "style": [
+      "high_beta",
+      "ai"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_HIGH_BETA",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "VOLT",
+    "category": "speculative",
+    "sector": "ETF",
+    "style": [
+      "thematic",
+      "high_beta"
+    ],
+    "type": "ETF",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_THEME_ETF",
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "PYPL",
+    "category": "growth",
+    "sector": "FINTECH",
+    "style": [
+      "turnaround"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "GROWTH_RE_RATING",
+    "volatility": "MID"
+  }
 ]
