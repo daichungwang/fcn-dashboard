@@ -110,6 +110,131 @@
 },
 "final_view": "AVGO 是可以進 pool30 的 core 標的，也是 FCN 可做名單，但前提是不要在高估值區硬追。現在基本面沒有問題，問題是市場已經先把 2026~2031 的 AI 長約價格打進去了；我的判斷是『公司好，時點偏熱，等回檔再買』。 "
 },
+  
+{
+"COIN": {
+"symbol": "COIN",
+"name": "Coinbase Global, Inc.",
+"type": "research_raw",
+"company_overview": "Coinbase 是加密金融基礎設施平台，不只是交易所。2025 年總營收為 71.81 億美元，其中交易收入 40.55 億美元占淨營收 59%，訂閱與服務收入 28.28 億美元占淨營收 41%；年均 MTU 920 萬、平台資產 3,760 億美元、全年交易量 1.221 兆美元。投資重點不是『幣價會不會漲』而已，而是 COIN 已把收入結構從單一交易手續費，拉向穩定幣、託管、訂閱、衍生品與基礎設施。",
+"basic_info": {
+"founded": "2012；Brian Armstrong 自 2012 年起擔任共同創辦人兼 CEO。",
+"headquarters": "公司採 remote-first，官方表示不維持傳統總部；主要對外法定聯絡透過 Dallas 代理，營運重心仍在美國並持續擴張機構與合規據點。",
+"industry": "Cryptocurrency exchange / crypto brokerage / custody / stablecoin & payments infrastructure / derivatives",
+"market_cap": "約 867.1 億美元；2026-04-21 股價 205.99 美元。"
+},
+"business_model": {
+"summary": "COIN 的商業模式已從『牛市靠現貨交易抽成』，轉成雙引擎：一邊是交易收入，另一邊是穩定幣、託管、訂閱、staking、開發者服務與衍生品。2025 年交易收入 40.55 億美元只年增 2%，但訂閱與服務收入 28.28 億美元年增 23%，其中 stablecoin 收入 13.49 億美元、年增 48%，已是最重要的抗波動收入來源之一。",
+"segments": [
+"消費者交易：2025 年 consumer transaction revenue 33.23 億美元，年減 3%，代表散戶現貨交易已不是無限上修的成長引擎；這一塊最賺，但景氣循環性也最大。",
+"機構與衍生品：2025 年 institutional transaction revenue 4.80 億美元，年增 39%；其中約 1.52 億美元增量主要來自 Deribit 併購帶動的衍生品交易，這是 COIN 從美國現貨交易所走向全球衍生品平台的關鍵。",
+"訂閱與服務：2025 年訂閱與服務收入 28.28 億美元，佔淨營收 41%；其中 stablecoin 收入 13.49 億美元、blockchain rewards 6.77 億美元、其他訂閱與服務 5.55 億美元。Coinbase One 付費訂閱增加，是其他訂閱與服務成長主因之一。"
+]
+},
+"customer_analysis": {
+"summary": "COIN 的『客戶』不能只看散戶，真正要看的是生態系與機構依賴度。2025 年公司披露單一對手方占總營收 19%，高於 2024 年的 14%，這代表某些核心合作關係已足以影響收入波動；另外公司也明講，收入集中在 Bitcoin、Ethereum 交易，以及 USDC 相關穩定幣收入。這是護城河，也是集中風險。",
+"key_customers": [
+{
+"name": "Circle",
+"role": "USDC 發行與分潤合作方",
+"importance": "2025 年 stablecoin 收入 13.49 億美元、年增 48%，是訂閱與服務收入的最大項目；Circle 協議初始期限 3 年，且 Coinbase 對 USDC 流通與平台持有占比越高，分潤越大。這代表 Circle/USDC 幾乎是 COIN 非交易收入的核心錨點。"
+},
+{
+"name": "BlackRock",
+"role": "ETF 託管/機構交易生態合作方",
+"importance": "BlackRock 的 IBIT 採用 Coinbase Prime；BlackRock 官網披露 Coinbase Prime 在 2025-06-30 擁有 2,450 億美元機構託管資產。這不是單一客戶收入數字，但足以證明 COIN 在機構託管鏈條的地位，且 2024 年 11 檔美國現貨 BTC ETF 中有 8 檔與 Coinbase 合作。"
+},
+{
+"name": "Stripe / Shopify",
+"role": "USDC 支付與 Base 生態導入夥伴",
+"importance": "2025 年 6 月 Stripe 宣布讓 Shopify 商家在 34 個國家接受 USDC；這代表 Coinbase 不只靠投機交易，也在把 USDC 與 Base 往支付場景滲透。這對 stablecoin 與開發者服務收入是中長線增量，不過短線貢獻仍小於交易與 USDC 分潤。"
+}
+],
+"conclusion": "COIN 的客戶結構正在從『散戶交易者』升級到『機構託管 + 穩定幣分銷 + 支付平台』，但 19% 單一對手方營收占比與 USDC/主流幣依賴，代表公司仍未完全擺脫集中風險。對投資人來說，這是高品質平台化的跡象，但也表示你不能把它當純粹多元金融股估值。"
+},
+"why_this_company": [
+"收入結構比 2021~2022 年成熟很多：2025 年交易收入 40.55 億美元，但訂閱與服務已到 28.28 億美元，占淨營收 41%，不是只靠散戶炒幣吃飯。",
+"平台資產仍大：2025 年底平台資產 3,760 億美元，年均 MTU 920 萬，全年交易量 1.221 兆美元，代表 COIN 不是題材股，而是已具規模的美國加密金融入口。",
+"衍生品與機構布局開始補上：2025 年機構交易收入年增 39%，Deribit 2025 年 7 月單月交易收入就超過 3,000 萬美元，且併購後預期立即對 Adjusted EBITDA 有增益。這讓 COIN 從現貨平台變成更完整的加密金融基礎設施。"
+],
+"market_view": "市場現在在 pricing 的不是單純『比特幣漲』，而是 COIN 變成受監管的加密金融平台：2025 年 Coinbase 表示交易量與 crypto trading market share 均翻倍，Coinbase One 訂閱接近 100 萬，並有 12 個產品年化營收超過 1 億美元。市場也在押注 ETF 託管、穩定幣支付與衍生品國際化。相反地，市場在擔心兩件事：第一，2025 年 net income 從 25.79 億美元降到 12.60 億美元，獲利對行情仍高度敏感；第二，營收仍有 19% 來自單一對手方，加上 USDC、BTC、ETH 集中，若監管或幣市降溫，估值壓縮會很快。",
+"financial_summary": {
+"revenue": "2025 年總營收 71.81 億美元。",
+"growth": "年增約 9.4%（2024 年 65.64 億美元 → 2025 年 71.81 億美元）。",
+"net_margin": "約 17.6%（2025 net income 12.60 億美元 / revenue 71.81 億美元）。",
+"fcf_margin": "約 31.9%；以營業現金流 24.26 億美元減資本化內部軟體投資 1.383 億美元估算，自由現金流約 22.88 億美元。",
+"eps": "現價對應 EPS 約 11.54。",
+"pe": "即時 P/E 約 26.95；其他市場資料顯示 TTM P/E 約 42~48，差異反映資料口徑與更新時點不同，因此實務上應把 COIN 視為『高波動估值股』而非精準 PE 股。",
+"dividend_yield": "0%；公司未配息。",
+"beta": "Beta 約 2.69；屬高 beta、高波動標的。另有資料顯示 5Y beta 約 3.61，方向一致：波動遠高於大盤。"
+},
+"competition": {
+"summary": "COIN 不是跟傳統券商直接比，而是同時跟 Robinhood crypto、Kraken、以及部分衍生品/清算型平台競爭。它的優勢是美國監管門檻、ETF 託管、USDC 分潤與機構客戶；弱點是估值高、beta 高，且現貨交易費率長期有被壓縮的風險。",
+"peers": [
+{
+"name": "Robinhood",
+"position": "美國零售交易對手",
+"comparison": "Robinhood 2025 年總營收 45 億美元，低於 Coinbase 的 71.81 億美元；但 Robinhood Q3 2025 單季 crypto revenue 已達 2.68 億美元、年增超過 300%，代表費率更低、流量打法更兇。若散戶交易回暖，兩者會搶同一塊零售交易蛋糕。"
+},
+{
+"name": "Kraken",
+"position": "全球現貨與機構交易對手",
+"comparison": "Kraken 2025 adjusted revenue 22 億美元、年增 33%，規模仍小於 Coinbase 71.81 億美元；但成長率高於 Coinbase 約 9.4%，代表全球競爭並未放緩。Coinbase 勝在美國合規與 ETF 託管，Kraken 勝在國際化與費率競爭彈性。"
+},
+{
+"name": "CME Group",
+"position": "機構衍生品與價格發現平台",
+"comparison": "CME 2025 年總營收 65 億美元、營業利益 42 億美元，獲利結構明顯比 COIN 穩。Coinbase 若要擴大衍生品估值天花板，Deribit 只是第一步，還得證明衍生品收入能像 CME 一樣穿越幣圈景氣循環。"
+}
+],
+"conclusion": "COIN 在美國合規加密入口、ETF 託管與 USDC 生態上有明顯位置，但競爭不是『有沒有對手』，而是『能不能把高波動交易收入換成高黏著平台收入』。如果訂閱、託管、穩定幣和衍生品占比持續提升，COIN 才能從交易所估值往金融基礎設施估值靠。"
+},
+"valuation_and_timing": {
+"valuation_view": "以 2026-04-21 股價 205.99 美元看，即時 P/E 約 26.95；第三方歷史資料顯示 2026 年 4 月的 TTM P/E 約 40~42，而 2024 年底 P/E 約 23.8。這告訴你：COIN 並不便宜，但也不像純泡沫區那樣極端。EV/Sales 目前約 7.6 倍，屬於市場已先給平台溢價的區間。",
+"buy_strategy": "M1 角度不建議追價買。COIN 適合『事件後回檔分批』，不適合當無腦長抱核心大權重。若你是 pool30 / FCN 系統使用者，我會把它放在 stock_pool 或 growth/event 類，而不是 core。買法是等高 beta 回撤到估值與技術都比較甜的位置，再用小部位切入。",
+"sweet_zone": "甜區 1：股價回到 180~190 美元附近，接近 50 日均線區（市場資料約 182~191 美元）且仍站上 200 美元以下的回撤承接帶；甜區 2：若 TTM/即時 P/E 壓回到 22~25 倍附近，才比較有 pool30 升級空間。若股價重新衝到 240 美元以上但沒有同時看到 BTC、交易量、USDC 生態同步上修，風險報酬比就不甜。",
+"technical_view": {
+"mid_trend": "中期偏多但不是低風險。部分技術資料顯示 50 日均線約 191 美元、現價 205.99 美元，代表股價站上 50 日線；但另一些資料顯示 200 日均線約 272 美元，代表長期大結構仍未完全修復。",
+"short_term": "短線偏熱。5 日均線約 199~209 美元附近，現價已接近或略高於短均線上緣，追價風險高於埋伏。",
+"structure": "結構上屬高 beta 反彈股，不是防守股。Beta 2.69~3.61，代表漲得快也跌得快；技術上若失守 190 美元一帶，容易快速回測更深支撐。",
+"conclusion": "判斷：等待，不追。中期可以觀察，短線不甜；只有在回撤至 180~190 美元區、且 BTC/交易量沒有同步轉弱時，才是比較合理的切入區。"
+}
+},
+"pool30_fit": {
+"stock_pool": true,
+"pool30": false,
+"category": "growth",
+"reason": "COIN 2025 年營收 71.81 億美元、FCF margin 約 31.9%、平台資產 3,760 億美元，體質已非小型題材股；但 Beta 2.69~3.61、單一對手方占營收 19%、獲利對行情敏感，且長線估值仍高，因此更適合列入 stock_pool / growth-event 追蹤，不適合直接進 pool30 核心名單。",
+"upgrade_condition": [
+"訂閱與服務收入占比從 41% 再往 45%~50% 走，且 stablecoin 以外的 recurring revenue 持續增長，代表非交易收入真的站穩。",
+"估值回落到 P/E 22~25 倍附近，或股價回撤至 180~190 美元甜區，同時 Deribit / 機構衍生品收入持續放大，才有升級到更高權重池的條件。"
+]
+},
+"risk_opportunity": {
+"risk": [
+"收入集中風險明確存在：2025 年單一對手方占總營收 19%，而公司也明講收入集中在 BTC、ETH 交易與 USDC 相關穩定幣收入；這代表只要監管、幣價或 USDC 生態出現波動，財報會很敏感。",
+"獲利彈性雖大，但下修也很快：2025 年營收只年增 9.4%，但 net income 從 25.79 億美元降到 12.60 億美元，年減約 51%。這就是高 operating leverage 的另一面。",
+"股價波動高，不適合保守 FCN 接股：Beta 約 2.69~3.61；若做 FCN，KI/strike 不能設太淺，否則容易在市場風險事件中被穿價。"
+],
+"opportunity": [
+"USDC 是最清楚的 recurring growth 引擎：2025 年 stablecoin 收入 13.49 億美元、年增 48%，而 Coinbase 表示 USDC held on platform 創新高。只要利率與支付滲透維持，這塊可以持續對沖現貨交易循環。",
+"衍生品打開新天花板：Deribit 2025 年 7 月單月交易收入就超過 3,000 萬美元，且管理層預期併購後立即對 Adjusted EBITDA 增益；若衍生品滲透成功，COIN 的估值框架會從現貨交易所往全球加密交易基礎設施上修。",
+"機構託管與 ETF 生態仍是護城河：美國現貨 BTC ETF 在 2024 年有 11 檔中的 8 檔與 Coinbase 合作，BlackRock 也使用 Coinbase Prime。這讓 COIN 比一般交易所更接近『合規關鍵基建』。"
+]
+},
+"final_view": "COIN 是可以進系統追蹤的研究股，但現在更像高 beta 成長平台，不是低波動核心股。它最大的優點是：2025 年已證明自己不是只靠散戶手續費，訂閱與服務收入 28.28 億美元、stablecoin 收入 13.49 億美元、機構與衍生品開始補位。最大的缺點也很明確：收入集中、獲利波動大、beta 很高。M1 判斷：可進 stock_pool，暫不進 pool30；FCN 可做，但只適合高票息、深 KI、低權重，不適合當接股型核心籃子。Timing 判斷：等待回檔到 180~190 美元區再看，不追價。"
+},
+"quality_check": {
+"completeness": 9.4,
+"specificity": 9.5,
+"data_support": 9.6,
+"decision_usefulness": 9.3,
+"fcn_alignment": 9.0,
+"total_score": 9.4,
+"fail_reasons": []
+}
+},
+
 "PLAR": {
 "symbol": "PLTR",
 "name": "Palantir Technologies Inc. (assumed from user input 'PLAR')",
