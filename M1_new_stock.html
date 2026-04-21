@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M1 New Stock Research Dashboard</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --panel:#ffffff;
+      --panel-2:#f8fbff;
+      --text:#122033;
+      --muted:#5b6b80;
+      --line:#dbe6f2;
+      --blue:#2457ff;
+      --green:#0c8f52;
+      --orange:#d97706;
+      --red:#c2410c;
+      --purple:#6d28d9;
+      --shadow:0 10px 28px rgba(18,32,51,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Segoe UI", "Noto Sans TC", Arial, sans-serif;
+      background:linear-gradient(180deg,#f7fbff 0%, #eef4fa 100%);
+      color:var(--text);
+    }
+    .wrap{max-width:1600px;margin:0 auto;padding:20px}
+    .hero{
+      position:sticky;top:0;z-index:50;
+      background:rgba(244,247,251,.92);backdrop-filter:blur(8px);
+      border-bottom:1px solid rgba(219,230,242,.9);
+      margin:-20px -20px 20px;padding:16px 20px 14px;
+    }
+    .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+    .title{font-size:30px;font-weight:800;letter-spacing:.2px}
+    .subtitle{color:var(--muted);font-size:14px;margin-top:6px;line-height:1.6}
+    .toolbar{
+      display:grid;grid-template-columns: 220px 160px 160px 160px 170px 1fr auto;
+      gap:10px;align-items:center;margin-top:14px;
+    }
+    .panel{
+      background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .controls{padding:14px}
+    input,select,button{
+      width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);
+      background:#fff;color:var(--text);font-size:14px;
+    }
+    button{cursor:pointer;font-weight:700;background:#fff}
+    button.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+    .stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px}
+    .stat{padding:14px 16px}
+    .stat .k{font-size:12px;color:var(--muted);margin-bottom:6px}
+    .stat .v{font-size:28px;font-weight:800}
+    .layout{display:grid;grid-template-columns:340px 1fr;gap:18px}
+    .side{padding:16px;display:flex;flex-direction:column;gap:14px;align-self:start;position:sticky;top:132px}
+    .side h3,.main h3{margin:0 0 10px;font-size:16px}
+    .formula{font-size:13px;line-height:1.7;color:var(--muted);background:var(--panel-2);border:1px dashed var(--line);padding:12px;border-radius:14px}
+    .formula b{color:var(--text)}
+    .legend{display:grid;gap:8px}
+    .legend-item{display:flex;justify-content:space-between;gap:12px;font-size:13px;padding:8px 10px;background:var(--panel-2);border-radius:10px}
+    .badge{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800;border:1px solid transparent}
+    .b-core{color:#1d4ed8;background:#eaf1ff;border-color:#c9d9ff}
+    .b-growth{color:#7c3aed;background:#f2eaff;border-color:#decbff}
+    .b-defensive{color:#047857;background:#e7f8f1;border-color:#bdebd6}
+    .b-income{color:#b45309;background:#fff4e5;border-color:#ffd7a3}
+    .b-event{color:#b91c1c;background:#ffeded;border-color:#ffc7c7}
+    .main{display:flex;flex-direction:column;gap:14px}
+    .section{padding:16px}
+    .list{display:grid;gap:14px}
+    .card{padding:16px}
+    .card-top{display:grid;grid-template-columns:1.35fr .95fr;gap:14px}
+    .card-title-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+    .symbol{font-size:26px;font-weight:900;letter-spacing:.4px}
+    .name{font-size:15px;color:var(--muted);font-weight:600}
+    .desc{margin-top:10px;line-height:1.72;font-size:14px}
+    .mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+    .mini{background:var(--panel-2);border:1px solid var(--line);border-radius:12px;padding:10px}
+    .mini .k{font-size:12px;color:var(--muted)}
+    .mini .v{font-size:18px;font-weight:800;margin-top:4px}
+    .score-box{display:grid;gap:10px}
+    .score-panel{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:12px}
+    .score-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:8px}
+    .score-head .big{font-size:28px;font-weight:900}
+    .score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .score-chip{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px}
+    .score-chip .k{font-size:11px;color:var(--muted)}
+    .score-chip .v{font-size:16px;font-weight:800;margin-top:3px}
+    .detail-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-top:14px}
+    .block{background:var(--panel-2);border:1px solid var(--line);border-radius:14px;padding:12px}
+    .block-title{font-size:14px;font-weight:800;margin-bottom:8px}
+    .tags{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{padding:6px 10px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:12px}
+    .bullets{margin:0;padding-left:18px;line-height:1.7;font-size:14px}
+    .bullets li+li{margin-top:4px}
+    .muted{color:var(--muted)}
+    .empty{padding:40px;text-align:center;color:var(--muted)}
+    .topbar-note{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .small-pill{padding:5px 10px;border-radius:999px;background:#eef4ff;color:#2643a6;font-size:12px;font-weight:700;border:1px solid #cfe0ff}
+    .footer-note{font-size:12px;color:var(--muted);line-height:1.7}
+    @media (max-width: 1320px){
+      .toolbar{grid-template-columns:1fr 1fr 1fr 1fr}
+      .layout{grid-template-columns:1fr}
+      .side{position:static}
+      .stats{grid-template-columns:repeat(3,1fr)}
+      .card-top,.detail-grid{grid-template-columns:1fr}
+    }
+    @media (max-width: 820px){
+      .toolbar{grid-template-columns:1fr 1fr}
+      .stats{grid-template-columns:repeat(2,1fr)}
+      .mini-grid,.score-row{grid-template-columns:repeat(2,1fr)}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="title">M1 New Stock Research Dashboard</div>
+          <div class="subtitle">
+            專門看公司研究卡的入口：整合 <b>M1 / M3 / M7</b> 分數、公司定位、競爭分析、人話摘要、FCN 視角。
+          </div>
+        </div>
+        <div class="topbar-note">
+          <span class="small-pill">研究卡入口</span>
+          <span class="small-pill">M1 × M3 × M7 整合</span>
+          <span class="small-pill">可作為 pool30 / new stock 研究頁</span>
+        </div>
+      </div>
+      <div class="panel controls">
+        <div class="toolbar">
+          <input id="searchInput" placeholder="搜尋股票代碼 / 公司名稱 / 產業關鍵字" />
+          <select id="categoryFilter">
+            <option value="ALL">全部類別</option>
+            <option value="core">CORE</option>
+            <option value="growth">GROWTH</option>
+            <option value="defensive">DEFENSIVE</option>
+            <option value="income">INCOME</option>
+            <option value="event">EVENT</option>
+          </select>
+          <select id="sectorFilter">
+            <option value="ALL">全部產業</option>
+          </select>
+          <select id="sortMode">
+            <option value="final_desc">綜合分數高 → 低</option>
+            <option value="m1_desc">M1 高 → 低</option>
+            <option value="m3_desc">M3 高 → 低</option>
+            <option value="m7_desc">M7 高 → 低</option>
+            <option value="symbol_asc">代碼 A → Z</option>
+          </select>
+          <select id="passFilter">
+            <option value="ALL">全部狀態</option>
+            <option value="PASS">只看 PASS</option>
+            <option value="WATCH">只看 WATCH</option>
+            <option value="REJECT">只看 REJECT</option>
+          </select>
+          <div></div>
+          <button id="reloadBtn" class="primary">重新載入資料</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats" id="statsRow"></div>
+
+    <div class="layout">
+      <aside class="panel side">
+        <div>
+          <h3>分數引擎設定</h3>
+          <div class="formula">
+            <div><b>Research Final Score</b></div>
+            <div>預設整合公式：</div>
+            <div><b>0.50 × M1 + 0.25 × M3 + 0.25 × M7</b></div>
+            <div class="muted" style="margin-top:8px;">
+              你原本的想法是：<br/>
+              M1 偏「體質 / pool30 核心定位」<br/>
+              M3 偏「主觀決策與情境補強」<br/>
+              M7 偏「估值 / 中期趨勢 / 品質」
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h3>研究卡內容</h3>
+          <div class="legend">
+            <div class="legend-item"><span>公司定位</span><span>做什麼 / 站哪裡</span></div>
+            <div class="legend-item"><span>競爭分析</span><span>誰在競爭 / 護城河</span></div>
+            <div class="legend-item"><span>人話摘要</span><span>一句話判斷</span></div>
+            <div class="legend-item"><span>M1 定位</span><span>Capex / 趨勢 / 估值</span></div>
+            <div class="legend-item"><span>FCN 視角</span><span>適不適合接股</span></div>
+          </div>
+        </div>
+
+        <div>
+          <h3>權重說明</h3>
+          <div class="footer-note">
+            這一頁是 <b>研究入口</b>，不是單純排行榜。<br/>
+            目的：先把股票「看懂」，再決定進不進 pool30、能不能當 FCN 標的、要不要留在觀察名單。
+          </div>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section class="panel section">
+          <h3>公司研究卡列表</h3>
+          <div id="cardList" class="list"></div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // ==========================================
+    // M1 New Stock Research Dashboard
+    // 振宇專用：整合 M1 / M3 / M7 與研究卡入口
+    // ==========================================
+
+    const state = {
+      rows: [],
+      filtered: [],
+      raw: {
+        pool30: [],
+        m3: null,
+        m7: null,
+        market: null
+      }
+    };
+
+    const els = {
+      statsRow: document.getElementById('statsRow'),
+      cardList: document.getElementById('cardList'),
+      searchInput: document.getElementById('searchInput'),
+      categoryFilter: document.getElementById('categoryFilter'),
+      sectorFilter: document.getElementById('sectorFilter'),
+      sortMode: document.getElementById('sortMode'),
+      passFilter: document.getElementById('passFilter'),
+      reloadBtn: document.getElementById('reloadBtn')
+    };
+
+    function n(v, d = 0) {
+      const x = Number(v);
+      return Number.isFinite(x) ? x : d;
+    }
+
+    function clamp(v, min, max) {
+      return Math.max(min, Math.min(max, v));
+    }
+
+    function safe(v, d = '') {
+      return v === undefined || v === null ? d : v;
+    }
+
+    function upper(v) {
+      return String(safe(v)).trim().toUpperCase();
+    }
+
+    function fmt(v, digits = 2) {
+      const x = Number(v);
+      return Number.isFinite(x) ? x.toFixed(digits) : '--';
+    }
+
+    function escapeHtml(str) {
+      return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function catBadge(cat) {
+      const c = String(cat || '').toLowerCase();
+      const cls = c.includes('core') ? 'b-core'
+        : c.includes('growth') ? 'b-growth'
+        : c.includes('defensive') ? 'b-defensive'
+        : c.includes('income') ? 'b-income'
+        : 'b-event';
+      return `<span class="badge ${cls}">${escapeHtml((cat || 'unknown').toUpperCase())}</span>`;
+    }
+
+    async function fetchJson(path) {
+      try {
+        const res = await fetch(path, { cache: 'no-store' });
+        if (!res.ok) throw new Error(path + ' ' + res.status);
+        return await res.json();
+      } catch (err) {
+        console.warn('[fetchJson failed]', path, err.message);
+        return null;
+      }
+    }
+
+    function getPoolArray(poolData) {
+      if (Array.isArray(poolData)) return poolData;
+      if (Array.isArray(poolData?.data)) return poolData.data;
+      if (Array.isArray(poolData?.stocks)) return poolData.stocks;
+      if (Array.isArray(poolData?.pool30)) return poolData.pool30;
+      return [];
+    }
+
+    function getM3Map(m3Data) {
+      const map = new Map();
+      if (!m3Data) return map;
+
+      const candidates = [];
+      if (Array.isArray(m3Data)) candidates.push(...m3Data);
+      if (Array.isArray(m3Data?.stocks)) candidates.push(...m3Data.stocks);
+      if (Array.isArray(m3Data?.results)) candidates.push(...m3Data.results);
+      if (Array.isArray(m3Data?.stock_scores)) candidates.push(...m3Data.stock_scores);
+
+      candidates.forEach(item => {
+        const symbol = upper(item.symbol || item.stock || item['股號']);
+        if (!symbol) return;
+        const score = firstNumber([
+          item.m3_score,
+          item.score,
+          item.total_score,
+          item.pure_stock_score,
+          item.final_score,
+          item['總分']
+        ]);
+        map.set(symbol, {
+          score,
+          why: item.why || item.why_list || [],
+          whyNot: item.whyNot || item.why_not || [],
+          raw: item
+        });
+      });
+      return map;
+    }
+
+    function getM7Map(m7Data) {
+      const map = new Map();
+      if (!m7Data) return map;
+
+      const candidates = [];
+      if (Array.isArray(m7Data)) candidates.push(...m7Data);
+      if (Array.isArray(m7Data?.stocks)) candidates.push(...m7Data.stocks);
+      if (Array.isArray(m7Data?.data)) candidates.push(...m7Data.data);
+      if (Array.isArray(m7Data?.today_stocks)) candidates.push(...m7Data.today_stocks);
+
+      candidates.forEach(item => {
+        const symbol = upper(item.symbol || item.stock || item['股號']);
+        if (!symbol) return;
+        map.set(symbol, {
+          score: firstNumber([
+            item.m7_score,
+            item.today_score,
+            item.score,
+            item['今日分數'],
+            item['總分']
+          ]),
+          valuation_score: firstNumber([item.valuation_score, item['估值分數']]),
+          trend_score: firstNumber([item.trend_score, item['趨勢分數']]),
+          quality_score: firstNumber([item.quality_score, item['品質分數']]),
+          structure_score: firstNumber([item.structure_score, item['結構分數']]),
+          timing_score: firstNumber([item.timing_score, item['時機分數']]),
+          raw: item
+        });
+      });
+      return map;
+    }
+
+    function firstNumber(values, fallback = null) {
+      for (const v of values) {
+        const x = Number(v);
+        if (Number.isFinite(x)) return x;
+      }
+      return fallback;
+    }
+
+    function buildBusinessSummary(stock) {
+      const sector = upper(stock.sector);
+      const symbol = upper(stock.symbol);
+      const manualMap = {
+        ETN: 'Eaton 是全球電力管理公司，主要提供配電設備、電源管理、工業電氣元件與資料中心相關電力基礎建設方案。',
+        NVDA: 'NVIDIA 主要提供 GPU、AI 加速器與資料中心平台，是 AI 基礎建設核心受益股。',
+        AVGO: 'Broadcom 主要提供半導體與基礎設施軟體，涵蓋 AI、網通、客製化晶片與企業軟體。',
+        ORCL: 'Oracle 主要提供資料庫、雲端基礎設施與企業軟體，是企業 IT 與資料中心的重要供應商。',
+        COIN: 'Coinbase 是美國主要加密資產交易平台，營運與加密市場交易活躍度高度相關。',
+        PLD: 'Prologis 是全球大型物流地產 REIT，核心資產為倉儲、物流中心與供應鏈基礎設施。'
+      };
+      if (manualMap[symbol]) return manualMap[symbol];
+      if (sector.includes('INDUSTRIAL')) return '公司屬工業 / 電氣設備領域，主要提供企業與基礎建設客戶所需的硬體、系統整合與工業解決方案。';
+      if (sector.includes('SEMI')) return '公司屬半導體產業，主要提供晶片設計、平台技術或上游關鍵零組件。';
+      if (sector.includes('TECH')) return '公司屬科技平台或企業軟體領域，主要提供雲端、平台、生態系或數位化服務。';
+      if (sector.includes('REIT')) return '公司屬不動產投資信託，主要以資產出租與租金現金流為核心。';
+      return '公司屬特定產業的重要參與者，具備一定市場地位與研究價值。';
+    }
+
+    function buildCompanyPositioning(stock) {
+      const sector = upper(stock.sector);
+      const cat = String(stock.category || '').toLowerCase();
+      if (sector.includes('INDUSTRIAL')) return '位於電力管理 / 工業電氣 / 基礎建設供應鏈核心位置，受惠於電氣化、AI 資料中心與能源轉型趨勢。';
+      if (sector.includes('SEMI')) return '位於半導體產業鏈核心，通常扮演高技術門檻的設計、平台或關鍵零組件角色。';
+      if (sector.includes('TECH')) return '位於企業數位化、雲端或平台經濟核心位置，依靠產品整合與客戶黏著度成長。';
+      if (sector.includes('REIT')) return '位於實體資產與租金現金流產業鏈中，通常受利率與資本成本影響。';
+      if (cat.includes('core')) return '屬於核心型標的，在其產業中具備穩定競爭地位與長期配置價值。';
+      return '位於所屬產業的重要位置，但仍需搭配景氣、估值與技術面判斷。';
+    }
+
+    function buildWhyInM1(stock) {
+      const cat = String(stock.category || '').toLowerCase();
+      const score = n(stock.m1_score);
+      if (cat.includes('core')) return `因為公司體質穩定、產業趨勢清楚、適合長期配置，且 M1 score = ${score.toFixed(2)}，屬於核心研究名單。`;
+      if (cat.includes('growth')) return `因為公司具成長題材與產業爆發力，且 M1 score = ${score.toFixed(2)}，適合作為成長型觀察股。`;
+      if (cat.includes('defensive')) return `因為公司現金流或商業模式相對穩定，且 M1 score = ${score.toFixed(2)}，適合作為防禦型配置。`;
+      return `因為公司具備一定產業地位與投資價值，且 M1 score = ${score.toFixed(2)}。`;
+    }
+
+    function buildHumanSummary(stock) {
+      const cat = String(stock.category || '').toLowerCase();
+      if (cat.includes('core')) return '這是一檔長期趨勢明確、體質不錯的核心股，但重點不是能不能買，而是不能買太貴。';
+      if (cat.includes('growth')) return '這是一檔有成長性的題材股，爆發力夠，但波動也大，適合看時機而不是無腦抱。';
+      if (cat.includes('defensive')) return '這是一檔偏穩定型股票，適合防守配置，但通常不會是成長最快的那一群。';
+      return '這檔股票可以看，但一定要搭配估值與時機，不是看到題材就追。';
+    }
+
+    function buildM1Positioning(stock) {
+      const cat = String(stock.category || '').toLowerCase();
+      let capex = '⭐⭐⭐';
+      let trend = '⭐⭐⭐';
+      let competition = '⭐⭐⭐';
+      let valuation = '正常';
+      if (cat.includes('core')) {
+        capex = '⭐⭐⭐⭐⭐'; trend = '⭐⭐⭐⭐⭐'; competition = '⭐⭐⭐⭐'; valuation = '⚠️偏高';
+      } else if (cat.includes('growth')) {
+        capex = '⭐⭐⭐⭐'; trend = '⭐⭐⭐⭐⭐'; competition = '⭐⭐⭐'; valuation = '⚠️波動大';
+      } else if (cat.includes('defensive')) {
+        capex = '⭐⭐⭐⭐'; trend = '⭐⭐⭐'; competition = '⭐⭐⭐⭐'; valuation = '合理';
+      }
+      return { capex_to_profit: capex, industry_trend: trend, competition_strength: competition, valuation_status: valuation, m1_tag: stock.category || 'UNKNOWN' };
+    }
+
+    function buildCompetitors(stock) {
+      const sector = upper(stock.sector);
+      if (sector.includes('INDUSTRIAL')) return { direct:['Schneider Electric','Siemens','ABB','Rockwell Automation'], indirect:['GE Vernova','Honeywell','Vertiv','Emerson Electric'] };
+      if (sector.includes('SEMI')) return { direct:['AMD','AVGO','MRVL','INTC'], indirect:['TSM','ARM','QCOM'] };
+      if (sector.includes('TECH')) return { direct:['Microsoft','Google','Amazon'], indirect:['Oracle','Meta','Salesforce'] };
+      if (sector.includes('REIT')) return { direct:['Prologis','Equinix','Digital Realty'], indirect:['Public Storage','Americold'] };
+      return { direct:[], indirect:[] };
+    }
+
+    function buildMoat(stock) {
+      const sector = upper(stock.sector);
+      if (sector.includes('INDUSTRIAL')) return '產品整合能力、全球客戶基礎、長期專案訂單與高切換成本，形成穩定護城河。';
+      if (sector.includes('SEMI')) return '技術門檻高、產品迭代快、研發資本密集，使後進者難以快速追上。';
+      if (sector.includes('TECH')) return '平台、生態系與資料 / 客戶黏著度形成高切換成本。';
+      if (sector.includes('REIT')) return '資產規模、地段品質與租戶網路形成長期競爭優勢。';
+      return '具一定規模、產品或客戶基礎優勢。';
+    }
+
+    function buildWhyWin(stock) {
+      const sector = upper(stock.sector);
+      if (sector.includes('INDUSTRIAL')) return ['受惠 AI 資料中心與電力基建需求','電氣化與能源轉型趨勢明確','專案導向與客戶黏著度高'];
+      if (sector.includes('SEMI')) return ['AI / 高效能運算需求支撐','技術門檻高','產業集中度高，龍頭優勢明顯'];
+      if (sector.includes('TECH')) return ['雲端 / 平台化趨勢長期存在','客戶續約與生態系優勢'];
+      if (sector.includes('REIT')) return ['核心資產稀缺','現金流穩定'];
+      return ['具一定產業地位','受惠長期趨勢'];
+    }
+
+    function buildWhyLose() {
+      return ['估值過高時容易先反映過頭','景氣循環或資本支出放緩會影響成長','競爭對手追趕可能壓縮優勢','市場預期過高時，財報小失望也可能大修正'];
+    }
+
+    function buildIndustryStructure(stock) {
+      const sector = upper(stock.sector);
+      if (sector.includes('INDUSTRIAL')) return '寡占 + 高技術門檻 + 專案導向產業，龍頭通常同時具規模與交期優勢。';
+      if (sector.includes('SEMI')) return '全球寡占結構明顯，技術、客戶驗證與資本門檻都很高。';
+      if (sector.includes('TECH')) return '平台與生態系競爭明顯，贏家通常持續擴大市占。';
+      if (sector.includes('REIT')) return '資產型產業，利率、出租率與資本成本是核心因素。';
+      return '競爭市場，但龍頭仍有規模優勢。';
+    }
+
+    function buildCompetitionTrend(stock) {
+      const sector = upper(stock.sector);
+      if (sector.includes('INDUSTRIAL')) return '短期受 AI 電力基建帶動需求強，中期競爭會加劇，但龍頭集中度通常更高。';
+      if (sector.includes('SEMI')) return '短期 AI 熱潮支撐需求，中期將進入技術與供應鏈整合競爭。';
+      if (sector.includes('TECH')) return '短期看雲端 / AI 導入，中期看平台整合與企業客戶留存。';
+      if (sector.includes('REIT')) return '短期受利率波動影響，中期仍看資產品質與租金成長。';
+      return '短期有需求支撐，中期競爭仍會持續。';
+    }
+
+    function buildFCNView(stock) {
+      const cat = String(stock.category || '').toLowerCase();
+      if (cat.includes('core')) return '屬高品質核心股，可納入 FCN，但不建議用太高 strike 去接貴股票。';
+      if (cat.includes('growth')) return '可用來拉高 FCN 利率，但波動較大，權重要控制。';
+      if (cat.includes('defensive')) return '適合當 FCN 防守型底倉。';
+      return '僅適合小比例觀察或特殊情境使用。';
+    }
+
+    function buildActionHint(stock) {
+      const cat = String(stock.category || '').toLowerCase();
+      if (cat.includes('core')) return '可長期持有，回檔再看，不建議追高。';
+      if (cat.includes('growth')) return '控制部位，以時機和風險管理為主。';
+      if (cat.includes('defensive')) return '可穩定持有，適合防守配置。';
+      return '先觀察，再決定是否納入。';
+    }
+
+    function buildFinalVerdict(stock) {
+      const cat = String(stock.category || '').toLowerCase();
+      if (cat.includes('core')) return '屬於可長期追蹤與配置的核心股，重點在估值與進場時機。';
+      if (cat.includes('growth')) return '屬於高成長高波動股，適合做成長配置，但不能失去風險控管。';
+      if (cat.includes('defensive')) return '屬於穩健配置股，適合作為組合中的防守與現金流穩定來源。';
+      return '有研究價值，但需要更看重時機與價格。';
+    }
+
+    function getReviewDecision(stock) {
+      return safe(stock.filter_result || stock.review || stock.decision || 'WATCH').toUpperCase();
+    }
+
+    function scoreClass(score) {
+      if (score >= 8.8) return '非常強';
+      if (score >= 8.2) return '偏強';
+      if (score >= 7.5) return '中上';
+      if (score >= 6.8) return '普通';
+      return '觀察';
+    }
+
+    function composeRow(stock, m3Map, m7Map) {
+      const symbol = upper(stock.symbol || stock['股號']);
+      const m3 = m3Map.get(symbol) || {};
+      const m7 = m7Map.get(symbol) || {};
+      const m1Score = firstNumber([stock.m1_score, stock.score, stock['總分']], 0) || 0;
+      const m3Score = firstNumber([m3.score], 0) || 0;
+      const m7Score = firstNumber([m7.score], 0) || 0;
+      const finalScore = 0.5 * m1Score + 0.25 * m3Score + 0.25 * m7Score;
+      const positioning = buildM1Positioning(stock);
+      const comps = buildCompetitors(stock);
+      return {
+        symbol,
+        name: safe(stock.name, symbol),
+        category: safe(stock.category, 'unknown'),
+        sector: safe(stock.sector, 'unknown'),
+        filter_result: getReviewDecision(stock),
+        m1Score,
+        m3Score,
+        m7Score,
+        finalScore,
+        business_summary: buildBusinessSummary(stock),
+        company_positioning: buildCompanyPositioning(stock),
+        why_in_m1: buildWhyInM1(stock),
+        human_summary: buildHumanSummary(stock),
+        m1_positioning: positioning,
+        competitive_position: buildCompanyPositioning(stock),
+        direct_competitors: comps.direct,
+        indirect_competitors: comps.indirect,
+        moat_summary: buildMoat(stock),
+        why_it_wins: buildWhyWin(stock),
+        why_it_can_lose: buildWhyLose(stock),
+        industry_structure: buildIndustryStructure(stock),
+        competition_trend_1y_3y: buildCompetitionTrend(stock),
+        fcn_view: buildFCNView(stock),
+        action_hint: buildActionHint(stock),
+        final_verdict: buildFinalVerdict(stock),
+        m7_parts: {
+          valuation: firstNumber([m7.valuation_score], null),
+          trend: firstNumber([m7.trend_score], null),
+          quality: firstNumber([m7.quality_score], null),
+          structure: firstNumber([m7.structure_score], null),
+          timing: firstNumber([m7.timing_score], null)
+        },
+        m3_why: Array.isArray(m3.why) ? m3.why : [],
+        m3_whyNot: Array.isArray(m3.whyNot) ? m3.whyNot : []
+      };
+    }
+
+    function sortRows(rows, mode) {
+      const arr = [...rows];
+      arr.sort((a, b) => {
+        if (mode === 'm1_desc') return b.m1Score - a.m1Score;
+        if (mode === 'm3_desc') return b.m3Score - a.m3Score;
+        if (mode === 'm7_desc') return b.m7Score - a.m7Score;
+        if (mode === 'symbol_asc') return a.symbol.localeCompare(b.symbol);
+        return b.finalScore - a.finalScore;
+      });
+      return arr;
+    }
+
+    function fillSectorFilter(rows) {
+      const values = [...new Set(rows.map(r => r.sector).filter(Boolean))].sort();
+      const current = els.sectorFilter.value;
+      els.sectorFilter.innerHTML = '<option value="ALL">全部產業</option>' + values.map(v => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');
+      if (values.includes(current)) els.sectorFilter.value = current;
+    }
+
+    function applyFilters() {
+      const q = upper(els.searchInput.value);
+      const cat = els.categoryFilter.value;
+      const sector = els.sectorFilter.value;
+      const pass = els.passFilter.value;
+      let rows = state.rows.filter(r => {
+        if (q) {
+          const blob = upper([r.symbol, r.name, r.sector, r.category, r.business_summary, r.human_summary].join(' '));
+          if (!blob.includes(q)) return false;
+        }
+        if (cat !== 'ALL' && String(r.category).toLowerCase() !== cat.toLowerCase()) return false;
+        if (sector !== 'ALL' && r.sector !== sector) return false;
+        if (pass !== 'ALL' && r.filter_result !== pass) return false;
+        return true;
+      });
+      rows = sortRows(rows, els.sortMode.value);
+      state.filtered = rows;
+      renderStats();
+      renderCards();
+    }
+
+    function renderStats() {
+      const rows = state.filtered;
+      const total = rows.length;
+      const avgFinal = total ? rows.reduce((s, r) => s + r.finalScore, 0) / total : 0;
+      const avgM1 = total ? rows.reduce((s, r) => s + r.m1Score, 0) / total : 0;
+      const avgM3 = total ? rows.reduce((s, r) => s + r.m3Score, 0) / total : 0;
+      const avgM7 = total ? rows.reduce((s, r) => s + r.m7Score, 0) / total : 0;
+      const passCount = rows.filter(r => r.filter_result === 'PASS').length;
+      const coreCount = rows.filter(r => String(r.category).toLowerCase() === 'core').length;
+
+      const cards = [
+        ['顯示檔數', total],
+        ['PASS 檔數', passCount],
+        ['CORE 檔數', coreCount],
+        ['平均 Final', fmt(avgFinal)],
+        ['平均 M1', fmt(avgM1)],
+        ['平均 M3 / M7', `${fmt(avgM3)} / ${fmt(avgM7)}`]
+      ];
+
+      els.statsRow.innerHTML = cards.map(([k, v]) => `
+        <div class="panel stat">
+          <div class="k">${escapeHtml(k)}</div>
+          <div class="v">${escapeHtml(String(v))}</div>
+        </div>
+      `).join('');
+    }
+
+    function renderBullets(items) {
+      const arr = (items || []).filter(Boolean);
+      if (!arr.length) return '<div class="muted">暫無</div>';
+      return `<ul class="bullets">${arr.map(x => `<li>${escapeHtml(String(x))}</li>`).join('')}</ul>`;
+    }
+
+    function renderTags(items) {
+      const arr = (items || []).filter(Boolean);
+      if (!arr.length) return '<div class="muted">暫無</div>';
+      return `<div class="tags">${arr.map(x => `<span class="tag">${escapeHtml(String(x))}</span>`).join('')}</div>`;
+    }
+
+    function renderCards() {
+      const rows = state.filtered;
+      if (!rows.length) {
+        els.cardList.innerHTML = '<div class="panel empty">目前沒有符合條件的股票</div>';
+        return;
+      }
+
+      els.cardList.innerHTML = rows.map(r => `
+        <article class="panel card">
+          <div class="card-top">
+            <div>
+              <div class="card-title-row">
+                <div class="symbol">${escapeHtml(r.symbol)}</div>
+                ${catBadge(r.category)}
+                <span class="badge" style="background:#f3f4f6;border-color:#e5e7eb;color:#374151;">${escapeHtml(r.filter_result)}</span>
+              </div>
+              <div class="name">${escapeHtml(r.name)} ｜ ${escapeHtml(r.sector)}</div>
+              <div class="desc"><b>公司做什麼：</b>${escapeHtml(r.business_summary)}</div>
+              <div class="desc"><b>公司定位：</b>${escapeHtml(r.company_positioning)}</div>
+              <div class="desc"><b>為什麼進 M1：</b>${escapeHtml(r.why_in_m1)}</div>
+
+              <div class="mini-grid">
+                <div class="mini"><div class="k">Capex to Profit</div><div class="v">${escapeHtml(r.m1_positioning.capex_to_profit)}</div></div>
+                <div class="mini"><div class="k">Industry Trend</div><div class="v">${escapeHtml(r.m1_positioning.industry_trend)}</div></div>
+                <div class="mini"><div class="k">Competition</div><div class="v">${escapeHtml(r.m1_positioning.competition_strength)}</div></div>
+                <div class="mini"><div class="k">Valuation</div><div class="v">${escapeHtml(r.m1_positioning.valuation_status)}</div></div>
+              </div>
+            </div>
+
+            <div class="score-box">
+              <div class="score-panel">
+                <div class="score-head">
+                  <div>
+                    <div class="muted" style="font-size:12px;">Research Final Score</div>
+                    <div class="big">${fmt(r.finalScore)}</div>
+                  </div>
+                  <div class="badge" style="background:#eef6ff;border-color:#d7e7ff;color:#1d4ed8;">${escapeHtml(scoreClass(r.finalScore))}</div>
+                </div>
+                <div class="score-row">
+                  <div class="score-chip"><div class="k">M1</div><div class="v">${fmt(r.m1Score)}</div></div>
+                  <div class="score-chip"><div class="k">M3</div><div class="v">${fmt(r.m3Score)}</div></div>
+                  <div class="score-chip"><div class="k">M7</div><div class="v">${fmt(r.m7Score)}</div></div>
+                  <div class="score-chip"><div class="k">M1 Tag</div><div class="v">${escapeHtml(String(r.m1_positioning.m1_tag).toUpperCase())}</div></div>
+                </div>
+              </div>
+
+              <div class="score-panel">
+                <div class="block-title">人話摘要</div>
+                <div class="desc" style="margin-top:0;">${escapeHtml(r.human_summary)}</div>
+              </div>
+
+              <div class="score-panel">
+                <div class="block-title">行動建議</div>
+                <div class="desc" style="margin-top:0;"><b>Action：</b>${escapeHtml(r.action_hint)}</div>
+                <div class="desc" style="margin-top:8px;"><b>FCN View：</b>${escapeHtml(r.fcn_view)}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="detail-grid">
+            <div class="block">
+              <div class="block-title">競爭分析</div>
+              <div class="desc" style="margin-top:0;"><b>競爭定位：</b>${escapeHtml(r.competitive_position)}</div>
+              <div class="desc"><b>護城河：</b>${escapeHtml(r.moat_summary)}</div>
+              <div class="desc"><b>產業結構：</b>${escapeHtml(r.industry_structure)}</div>
+              <div class="desc"><b>1Y / 3Y 競爭趨勢：</b>${escapeHtml(r.competition_trend_1y_3y)}</div>
+              <div style="margin-top:10px;"><b>直接競爭對手</b></div>
+              ${renderTags(r.direct_competitors)}
+              <div style="margin-top:10px;"><b>間接競爭對手</b></div>
+              ${renderTags(r.indirect_competitors)}
+            </div>
+
+            <div class="block">
+              <div class="block-title">M3 / M7 補充</div>
+              <div class="score-row" style="margin-bottom:10px;">
+                <div class="score-chip"><div class="k">Valuation</div><div class="v">${r.m7_parts.valuation == null ? '--' : fmt(r.m7_parts.valuation)}</div></div>
+                <div class="score-chip"><div class="k">Trend</div><div class="v">${r.m7_parts.trend == null ? '--' : fmt(r.m7_parts.trend)}</div></div>
+                <div class="score-chip"><div class="k">Quality</div><div class="v">${r.m7_parts.quality == null ? '--' : fmt(r.m7_parts.quality)}</div></div>
+                <div class="score-chip"><div class="k">Timing</div><div class="v">${r.m7_parts.timing == null ? '--' : fmt(r.m7_parts.timing)}</div></div>
+              </div>
+              <div><b>為什麼會贏</b></div>
+              ${renderBullets(r.why_it_wins)}
+              <div style="margin-top:10px;"><b>為什麼可能輸</b></div>
+              ${renderBullets(r.why_it_can_lose)}
+              <div style="margin-top:10px;"><b>M3 why</b></div>
+              ${renderBullets(r.m3_why)}
+              <div style="margin-top:10px;"><b>M3 why not</b></div>
+              ${renderBullets(r.m3_whyNot)}
+            </div>
+          </div>
+
+          <div class="block" style="margin-top:14px;">
+            <div class="block-title">最終結論</div>
+            <div class="desc" style="margin-top:0;">${escapeHtml(r.final_verdict)}</div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    async function loadAll() {
+      els.reloadBtn.disabled = true;
+      els.reloadBtn.textContent = '載入中...';
+      try {
+        const [poolData, m3Data, m7Data, marketData] = await Promise.all([
+          fetchJson('data/pool30.json'),
+          fetchJson('data/m3/m3_output.json'),
+          fetchJson('data/m7/m7_new_stock_today.json'),
+          fetchJson('data/market_runtime.json')
+        ]);
+
+        state.raw.pool30 = getPoolArray(poolData);
+        state.raw.m3 = m3Data;
+        state.raw.m7 = m7Data;
+        state.raw.market = marketData;
+
+        const m3Map = getM3Map(m3Data);
+        const m7Map = getM7Map(m7Data);
+        state.rows = state.raw.pool30.map(stock => composeRow(stock, m3Map, m7Map));
+        fillSectorFilter(state.rows);
+        applyFilters();
+      } catch (err) {
+        console.error(err);
+        els.cardList.innerHTML = `<div class="panel empty">載入失敗：${escapeHtml(err.message || String(err))}</div>`;
+      } finally {
+        els.reloadBtn.disabled = false;
+        els.reloadBtn.textContent = '重新載入資料';
+      }
+    }
+
+    ['input','change'].forEach(evt => {
+      els.searchInput.addEventListener(evt, applyFilters);
+      els.categoryFilter.addEventListener(evt, applyFilters);
+      els.sectorFilter.addEventListener(evt, applyFilters);
+      els.sortMode.addEventListener(evt, applyFilters);
+      els.passFilter.addEventListener(evt, applyFilters);
+    });
+    els.reloadBtn.addEventListener('click', loadAll);
+
+    loadAll();
+  </script>
+</body>
+</html>
