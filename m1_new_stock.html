@@ -151,19 +151,6 @@ body{
         <span>Dashboard 研究覆蓋率</span>
       </div>
     </div>
-
-    <div class="query-panel">
-      <div class="query-row">
-        <input id="s1" class="stock-input" maxlength="12" placeholder="S1">
-        <input id="s2" class="stock-input" maxlength="12" placeholder="S2">
-        <input id="s3" class="stock-input" maxlength="12" placeholder="S3">
-        <input id="s4" class="stock-input" maxlength="12" placeholder="S4">
-        <input id="s5" class="stock-input" maxlength="12" placeholder="S5">
-        <button id="runBtn" class="btn btn-run">Run Research</button>
-        <button id="clearBtn" class="btn btn-clear">Clear</button>
-      </div>
-      <div class="query-note">主模式：輸入 1~5 檔股票代碼（每格可輸入完整代碼），系統會先顯示 Basket Summary，再列出個股研究卡。未輸入時，不顯示研究結果。</div>
-    </div>
   </section>
 
   <section class="dashboard">
@@ -174,6 +161,22 @@ body{
     <div class="panel panel-body">
       <h3>研究進度 Dashboard</h3>
       <div class="cover-grid" id="coverageGrid"></div>
+    </div>
+  </section>
+
+  <section class="panel panel-body" style="margin-top:16px;">
+    <h3>股票查詢功能</h3>
+    <div class="query-panel" style="margin-top:0;background:linear-gradient(90deg,var(--nav),var(--nav-2));border:1px solid rgba(255,255,255,.08);">
+      <div class="query-row">
+        <input id="s1" class="stock-input" maxlength="12" placeholder="S1">
+        <input id="s2" class="stock-input" maxlength="12" placeholder="S2">
+        <input id="s3" class="stock-input" maxlength="12" placeholder="S3">
+        <input id="s4" class="stock-input" maxlength="12" placeholder="S4">
+        <input id="s5" class="stock-input" maxlength="12" placeholder="S5">
+        <button id="runBtn" class="btn btn-run">Run Research</button>
+        <button id="clearBtn" class="btn btn-clear">Clear</button>
+      </div>
+      <div class="query-note">主模式：輸入 1~5 檔股票代碼（每格可輸入完整代碼），系統會先顯示 Basket Summary，再列出個股研究卡。未輸入時，不顯示研究結果。</div>
     </div>
   </section>
 
@@ -660,8 +663,12 @@ async function init(){
 [el.s1, el.s2, el.s3, el.s4, el.s5].forEach((input, idx, arr) => {
   input.addEventListener('input', () => {
     input.value = up(input.value).replace(/[^A-Z0-9]/g,'').slice(0,12);
-    if(input.value && idx < arr.length - 1) arr[idx+1].focus();
   });
+  input.addEventListener('keydown', e => {
+    if(e.key === 'Enter') runResearch();
+    if(e.key === 'Backspace' && !input.value && idx > 0) arr[idx-1].focus();
+  });
+});
   input.addEventListener('keydown', e => {
     if(e.key === 'Enter') runResearch();
     if(e.key === 'Backspace' && !input.value && idx > 0) arr[idx-1].focus();
@@ -751,5 +758,6 @@ setTimeout(buildUniverseSummary, 800);
 </script>
 </body>
 </html>
+
 
 
