@@ -1,1 +1,964 @@
-
+[
+  {
+    "symbol": "AVGO",
+    "company_name": "Broadcom",
+    "fact": {
+      "summary": "Broadcom 是全球大型半導體與基礎軟體公司，核心業務涵蓋客製化 ASIC、網通晶片、伺服器互連與企業軟體。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Palo Alto, California, USA",
+        "sector": "Semiconductor / Infrastructure Software",
+        "ticker": "AVGO",
+        "market_cap": ""
+      },
+      "business": [
+        "AI / data center 客製化晶片（ASIC）",
+        "網通與交換器晶片",
+        "企業基礎軟體與 VMware 平台"
+      ],
+      "one_line": "AI 基礎設施供應商，不是最前台的 AI 股，但是真正收錢的供應鏈。"
+    },
+    "why": {
+      "core_logic": "AI data center 投資擴張帶動 ASIC 與網通需求，Broadcom 同時具半導體與軟體雙引擎。",
+      "growth_driver": [
+        "超大規模雲端客戶的客製化晶片需求",
+        "AI data center 網路升級",
+        "VMware 併購後的軟體現金流"
+      ],
+      "business_model_note": "不是拼消費市場，而是綁大客戶、長週期、現金流型成長。"
+    },
+    "competition": {
+      "positioning": "屬於 AI infra 供應鏈核心資產，偏 CORE_INFRA。",
+      "vs_peers": "相較 NVDA，AVGO 不是通用 GPU 王者；相較 AMD / MRVL，AVGO 的現金流與企業化程度更成熟。",
+      "peer_summary": "AI 供應鏈裡屬於『不一定最熱，但一定很重要』的角色。"
+    },
+    "good": [
+      "AI 與 data center 需求有長期主線",
+      "客戶黏著度高，導入後不易替換",
+      "半導體 + 軟體雙引擎，現金流品質佳"
+    ],
+    "bad": [
+      "不屬爆發型 AI 股，市場熱度通常不如 NVDA",
+      "成長很大程度來自少數大客戶",
+      "軟體整合與併購後續仍需時間驗證"
+    ],
+    "risk": [
+      "大客戶自研晶片風險",
+      "AI 資本支出若放緩，估值易修正",
+      "併購後整合不如預期"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "AVGO 是 AI 基礎設施型核心資產，適合做核心配置，但不應用最熱 AI 股角度追價。",
+      "positioning": "CORE_INFRA",
+      "action": [
+        "看成穩健型 AI infra 主線股",
+        "適合中長期配置",
+        "追價要保守"
+      ]
+    }
+  },
+  {
+    "symbol": "PLTR",
+    "company_name": "Palantir Technologies",
+    "fact": {
+      "summary": "Palantir 提供資料整合、決策支援與 AI 應用平台，核心客戶涵蓋政府與企業。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Denver, Colorado, USA",
+        "sector": "Data / AI Software",
+        "ticker": "PLTR",
+        "market_cap": ""
+      },
+      "business": [
+        "政府數據與情報分析平台",
+        "企業 AI / decision platform",
+        "AIP 應用層導入"
+      ],
+      "one_line": "不是基礎設施，是 AI 應用層故事股。"
+    },
+    "why": {
+      "core_logic": "市場押注企業與政府會把更多 AI 決策流程交給 Palantir 類型的平台。",
+      "growth_driver": [
+        "企業端 AIP 導入",
+        "政府需求穩定",
+        "AI 應用層故事最容易講"
+      ],
+      "business_model_note": "賣的是高價值軟體與平台能力，不是硬體。"
+    },
+    "competition": {
+      "positioning": "屬於 GROWTH_SOFTWARE，不是 CORE，因為故事強但地位仍在建立。",
+      "vs_peers": "相較 Snowflake / Datadog 偏資料平台，PLTR 更偏決策與政府應用；相較 MSFT，規模與生態差距大。",
+      "peer_summary": "它的優勢是敘事強、政府護城河，但估值與市場情緒波動也最大。"
+    },
+    "good": [
+      "AI 應用層題材明確",
+      "政府業務具穩定性",
+      "高毛利軟體商業模式"
+    ],
+    "bad": [
+      "故事性太強，市場容易過度反應",
+      "企業端成長能否持續仍需驗證",
+      "估值常脫離基本面"
+    ],
+    "risk": [
+      "題材降溫時估值大幅修正",
+      "企業客戶擴張不如預期",
+      "政府預算波動"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "PLTR 是高敘事、高波動的 AI 應用層成長股，適合觀察與交易，不宜當核心防守資產。",
+      "positioning": "GROWTH_SOFTWARE",
+      "action": [
+        "可觀察",
+        "估值高時不追",
+        "更偏交易型而非防守型"
+      ]
+    }
+  },
+  {
+    "symbol": "MU",
+    "company_name": "Micron Technology",
+    "fact": {
+      "summary": "Micron 是全球主要記憶體供應商，產品涵蓋 DRAM、NAND 與 HBM。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Boise, Idaho, USA",
+        "sector": "Memory",
+        "ticker": "MU",
+        "market_cap": ""
+      },
+      "business": [
+        "DRAM",
+        "NAND",
+        "HBM / AI memory"
+      ],
+      "one_line": "AI 受益，但本質仍是記憶體循環股。"
+    },
+    "why": {
+      "core_logic": "AI 伺服器拉高高頻寬記憶體需求，推升記憶體價格與獲利循環。",
+      "growth_driver": [
+        "HBM 需求",
+        "記憶體景氣循環上行",
+        "資料中心升級"
+      ],
+      "business_model_note": "好時很好，壞時很壞，典型景氣循環股。"
+    },
+    "competition": {
+      "positioning": "GROWTH_AI / 記憶體循環股。",
+      "vs_peers": "與 Samsung、SK Hynix 同賽道；不像 NVDA 靠平台吃溢價，MU 靠景氣循環與供需。",
+      "peer_summary": "它受益 AI，但市場不會給它純 AI 平台股那種高估值。"
+    },
+    "good": [
+      "HBM 帶來新動能",
+      "寡占產業",
+      "AI 需求提高記憶體價值"
+    ],
+    "bad": [
+      "記憶體本質仍高度循環",
+      "定價權有限",
+      "盈利波動大"
+    ],
+    "risk": [
+      "價格循環反轉",
+      "HBM 競爭加劇",
+      "景氣下行時修正劇烈"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "MU 屬於 AI 題材加持的景氣循環股，可漲很快，但不能當成穩定型核心資產。",
+      "positioning": "GROWTH_AI",
+      "action": [
+        "適合景氣上行期",
+        "不宜高點追價",
+        "更看循環而非故事"
+      ]
+    }
+  },
+  {
+    "symbol": "AAL",
+    "company_name": "American Airlines",
+    "fact": {
+      "summary": "American Airlines 是美國大型航空公司，收入主要來自客運與航線網路營運。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Fort Worth, Texas, USA",
+        "sector": "Airline",
+        "ticker": "AAL",
+        "market_cap": ""
+      },
+      "business": [
+        "客運",
+        "航線營運",
+        "商務與旅遊需求"
+      ],
+      "one_line": "賺錢靠景氣，不靠主線。"
+    },
+    "why": {
+      "core_logic": "旅遊與商務需求復甦時，航空股的營收與獲利會同步改善。",
+      "growth_driver": [
+        "旅遊復甦",
+        "票價改善",
+        "成本控制"
+      ],
+      "business_model_note": "典型景氣循環產業，油價與景氣是最大變數。"
+    },
+    "competition": {
+      "positioning": "INCOME_CYCLICAL，不是成長股，也不是防守股。",
+      "vs_peers": "與 DAL、UAL 同屬航空景氣股，差異主要在成本結構與資產負債表。",
+      "peer_summary": "看航空股不要看夢，要看景氣、油價與槓桿。"
+    },
+    "good": [
+      "旅遊需求回升時彈性大",
+      "票價改善可快速反映獲利",
+      "景氣好時修復力強"
+    ],
+    "bad": [
+      "高固定成本",
+      "油價敏感",
+      "非長期主流資產"
+    ],
+    "risk": [
+      "油價飆升",
+      "景氣轉弱",
+      "高負債壓力"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "AAL 是標準景氣循環收入股，適合景氣交易，不適合當長期核心配置。",
+      "positioning": "INCOME_CYCLICAL",
+      "action": [
+        "看景氣與油價",
+        "不看夢",
+        "偏短中期交易"
+      ]
+    }
+  },
+  {
+    "symbol": "CEG",
+    "company_name": "Constellation Energy",
+    "fact": {
+      "summary": "CEG 是美國大型清潔能源供應商，擁有核能、天然氣與再生能源發電資產。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Baltimore, Maryland, USA",
+        "sector": "Utility Power",
+        "ticker": "CEG",
+        "market_cap": ""
+      },
+      "business": [
+        "核能發電",
+        "天然氣與再生能源",
+        "企業與批發供電"
+      ],
+      "one_line": "不是 AI 公司，是 AI 用電的受益者。"
+    },
+    "why": {
+      "core_logic": "AI / data center 用電需求增加，市場重新評價發電資產與穩定供電能力。",
+      "growth_driver": [
+        "AI 用電需求",
+        "核能資產稀缺",
+        "低碳供電趨勢"
+      ],
+      "business_model_note": "本質是電力公司，但市場用成長股角度在重估。"
+    },
+    "competition": {
+      "positioning": "DEFENSE / GROWTH_RE_RATING 邏輯兼具，但目前你檔案先歸 growth。",
+      "vs_peers": "相較 NEE 更偏核能與穩定基載，相較 DUK 成長性更高但波動也更大。",
+      "peer_summary": "屬於『舊產業 + 新敘事』的重估型資產。"
+    },
+    "good": [
+      "AI 用電需求是真需求",
+      "核能屬穩定低碳供電",
+      "現金流相對穩"
+    ],
+    "bad": [
+      "不是爆發型成長股",
+      "估值可能過度反映題材",
+      "受政策影響大"
+    ],
+    "risk": [
+      "電價與政策風險",
+      "估值過高",
+      "市場把它當 AI 股錯誤定價"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "CEG 是 AI 用電受益的重估型資產，偏穩健，不是爆發型科技股。",
+      "positioning": "GROWTH_RE_RATING",
+      "action": [
+        "可配置",
+        "偏防守",
+        "不宜用高成長股心態追價"
+      ]
+    }
+  },
+  {
+    "symbol": "COIN",
+    "company_name": "Coinbase",
+    "fact": {
+      "summary": "Coinbase 是美國主要加密資產交易平台，收入高度依賴加密資產交易活躍度。",
+      "basic_data": {
+        "founded": "",
+        "hq": "New York, USA",
+        "sector": "Crypto Platform",
+        "ticker": "COIN",
+        "market_cap": ""
+      },
+      "business": [
+        "加密交易",
+        "託管",
+        "平台服務"
+      ],
+      "one_line": "高彈性、高波動、高情緒。"
+    },
+    "why": {
+      "core_logic": "加密市場熱度上升時，交易量與平台收入同步放大。",
+      "growth_driver": [
+        "比特幣循環",
+        "ETF / 機構化 adoption",
+        "平台服務擴張"
+      ],
+      "business_model_note": "題材驅動明顯，基本面與市場情緒高度連動。"
+    },
+    "competition": {
+      "positioning": "SPEC_CRYPTO，高彈性但非穩定型資產。",
+      "vs_peers": "與 Robinhood、Kraken、Binance 同屬交易平台邏輯，但 COIN 的市場敘事最強。",
+      "peer_summary": "不是防守，不是穩健，重點是情緒與加密循環。"
+    },
+    "good": [
+      "比特幣多頭時彈性很大",
+      "平台與合規優勢",
+      "題材最強時容易成為主角"
+    ],
+    "bad": [
+      "高度情緒化",
+      "不是穩定基本面股",
+      "波動極大"
+    ],
+    "risk": [
+      "監管",
+      "加密資產崩跌",
+      "交易量下滑"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "COIN 是典型投機型資產，行情來時很強，但不能當核心長期配置。",
+      "positioning": "SPEC_CRYPTO",
+      "action": [
+        "小倉位",
+        "嚴格風控",
+        "不當防守標的"
+      ]
+    }
+  },
+  {
+    "symbol": "ARM",
+    "company_name": "Arm Holdings",
+    "fact": {
+      "summary": "Arm 提供處理器架構 IP 授權，是全球晶片設計生態的重要底層規格提供者。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Cambridge, United Kingdom",
+        "sector": "Semiconductor IP",
+        "ticker": "ARM",
+        "market_cap": ""
+      },
+      "business": [
+        "CPU 架構授權",
+        "IP 生態",
+        "行動與資料中心滲透"
+      ],
+      "one_line": "不是賣晶片，是賣規則。"
+    },
+    "why": {
+      "core_logic": "AI / mobile / edge device 擴張下，Arm 架構授權價值提升。",
+      "growth_driver": [
+        "IP 授權擴張",
+        "資料中心滲透",
+        "AI edge 裝置"
+      ],
+      "business_model_note": "輕資產、高毛利，但市場對成長想像很高。"
+    },
+    "competition": {
+      "positioning": "GROWTH_INFRA。",
+      "vs_peers": "與 x86 生態不同，ARM 更偏授權模式，不直接跟 NVDA / AMD 在同一產品層面硬碰硬。",
+      "peer_summary": "重要，但股價常先反映未來很久的預期。"
+    },
+    "good": [
+      "輕資產高毛利",
+      "生態位階高",
+      "長期有資料中心與 edge 成長"
+    ],
+    "bad": [
+      "估值常過高",
+      "營收成長不一定匹配市場想像",
+      "授權模式節奏較慢"
+    ],
+    "risk": [
+      "估值修正",
+      "成長不及預期",
+      "授權生態變化"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "ARM 是重要的基礎 IP 成長股，但市場很容易給太高溢價。",
+      "positioning": "GROWTH_INFRA",
+      "action": [
+        "可觀察",
+        "重估值",
+        "不宜情緒高點追價"
+      ]
+    }
+  },
+  {
+    "symbol": "MRVL",
+    "company_name": "Marvell Technology",
+    "fact": {
+      "summary": "Marvell 主要提供 data center、網通與客製化運算晶片，是 AI 供應鏈中的次核心供應商。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Santa Clara, California, USA",
+        "sector": "AI Semi",
+        "ticker": "MRVL",
+        "market_cap": ""
+      },
+      "business": [
+        "data center 晶片",
+        "網通晶片",
+        "客製化運算"
+      ],
+      "one_line": "不是龍頭，但跟對了 AI 供應鏈。"
+    },
+    "why": {
+      "core_logic": "AI data center 建設帶動互連、交換與客製化晶片需求。",
+      "growth_driver": [
+        "AI infra 升級",
+        "客製化晶片",
+        "data center networking"
+      ],
+      "business_model_note": "供應鏈受益股，強在位置，不強在定價權。"
+    },
+    "competition": {
+      "positioning": "GROWTH_AI。",
+      "vs_peers": "與 AVGO、AMD 相比，MRVL 規模與地位都次一級，但仍在正確賽道上。",
+      "peer_summary": "標準 AI 供應鏈成長股，有機會，但不屬市場必需資產。"
+    },
+    "good": [
+      "搭上 AI 主線",
+      "資料中心需求支撐",
+      "供應鏈位置明確"
+    ],
+    "bad": [
+      "不是不可取代",
+      "估值易受市場情緒影響",
+      "競爭強度較高"
+    ],
+    "risk": [
+      "AI 資本支出放緩",
+      "客戶集中",
+      "市場轉弱時回檔快"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "MRVL 是標準 AI 供應鏈成長股，可參與，但不宜當核心資產看待。",
+      "positioning": "GROWTH_AI",
+      "action": [
+        "順主線",
+        "看資本支出",
+        "重風險控管"
+      ]
+    }
+  },
+  {
+    "symbol": "AMD",
+    "company_name": "Advanced Micro Devices",
+    "fact": {
+      "summary": "AMD 主要提供 CPU、GPU 與資料中心加速器，是 AI 與高效能運算的重要參與者。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Santa Clara, California, USA",
+        "sector": "AI Semi",
+        "ticker": "AMD",
+        "market_cap": ""
+      },
+      "business": [
+        "CPU",
+        "GPU",
+        "AI accelerator",
+        "data center"
+      ],
+      "one_line": "吃 AI，但不是最核心的那個。"
+    },
+    "why": {
+      "core_logic": "市場押注 AMD 在 AI accelerator 與 data center 有追趕空間。",
+      "growth_driver": [
+        "AI GPU / accelerator",
+        "server CPU",
+        "data center share gain"
+      ],
+      "business_model_note": "典型『跟上主線，但不是主角』的成長股。"
+    },
+    "competition": {
+      "positioning": "GROWTH_AI。",
+      "vs_peers": "相較 NVDA 屬挑戰者，相較 INTC 屬追趕中更有成長性的選手。",
+      "peer_summary": "能受益 AI，但市場永遠會拿它跟 NVDA 比。"
+    },
+    "good": [
+      "AI 與 data center 有題材",
+      "CPU / GPU 產品線完整",
+      "成長敘事明確"
+    ],
+    "bad": [
+      "競爭者太強",
+      "不是不可替代",
+      "題材常先反映在估值裡"
+    ],
+    "risk": [
+      "AI 成長低於預期",
+      "市佔率擴張不如預期",
+      "被 NVDA 壓制"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "AMD 是標準 AI 追趕型成長股，有空間，但核心地位仍不如 NVDA。",
+      "positioning": "GROWTH_AI",
+      "action": [
+        "可以參與",
+        "不要神化",
+        "更適合成長型倉位"
+      ]
+    }
+  },
+  {
+    "symbol": "GOOGL",
+    "company_name": "Alphabet",
+    "fact": {
+      "summary": "Alphabet 是全球搜尋、數位廣告、雲端與 AI 平台公司。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Mountain View, California, USA",
+        "sector": "Cloud / Platform",
+        "ticker": "GOOGL",
+        "market_cap": ""
+      },
+      "business": [
+        "搜尋廣告",
+        "YouTube",
+        "Google Cloud",
+        "AI platform"
+      ],
+      "one_line": "平台型核心資產，不一定最熱，但幾乎不能沒有。"
+    },
+    "why": {
+      "core_logic": "廣告現金流穩固，加上 AI 與雲端業務提供長期再成長空間。",
+      "growth_driver": [
+        "搜尋與廣告現金流",
+        "Cloud 成長",
+        "AI 平台化"
+      ],
+      "business_model_note": "平台公司，重點是現金流與主線位置兼具。"
+    },
+    "competition": {
+      "positioning": "CORE_PLATFORM。",
+      "vs_peers": "相較 MSFT 更偏廣告與搜尋平台，相較 AMZN 更偏流量與 AI 平台。",
+      "peer_summary": "它不是單一產品龍頭，而是整個數位生態核心資產。"
+    },
+    "good": [
+      "現金流極強",
+      "平台壟斷力高",
+      "AI / cloud 仍有上行空間"
+    ],
+    "bad": [
+      "成長不如純 AI 股爆發",
+      "反壟斷與監管風險",
+      "市場熱度不一定總在它身上"
+    ],
+    "risk": [
+      "監管",
+      "AI disrupt 搜尋模式",
+      "廣告景氣循環"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "GOOGL 是典型核心平台資產，穩、強、現金流好，但不是最熱的高彈性標的。",
+      "positioning": "CORE_PLATFORM",
+      "action": [
+        "適合核心配置",
+        "可長期持有",
+        "不必用高彈性股心態看待"
+      ]
+    }
+  },
+  {
+    "symbol": "INTC",
+    "company_name": "Intel",
+    "fact": {
+      "summary": "Intel 是傳統 CPU 與半導體大廠，近年進入重建與轉型階段。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Santa Clara, California, USA",
+        "sector": "Semi",
+        "ticker": "INTC",
+        "market_cap": ""
+      },
+      "business": [
+        "CPU",
+        "PC / server",
+        "foundry 重建"
+      ],
+      "one_line": "不是成長股，是翻身故事。"
+    },
+    "why": {
+      "core_logic": "市場在看 Intel 能否從失速中重建製造能力與 foundry 敘事。",
+      "growth_driver": [
+        "重建製造能力",
+        "foundry 故事",
+        "PC / server 需求修復"
+      ],
+      "business_model_note": "真正關鍵不是現在多好，而是能不能翻身。"
+    },
+    "competition": {
+      "positioning": "DEFENSE_REBUILD。",
+      "vs_peers": "與 NVDA / AMD 不同，INTC 的投資邏輯不是 AI 爆發，而是老大廠能否重生。",
+      "peer_summary": "重點是 turnaround，不是主線成長。"
+    },
+    "good": [
+      "體量大",
+      "資產與製造底子仍在",
+      "若重建成功彈性大"
+    ],
+    "bad": [
+      "已失去過往主導地位",
+      "執行風險高",
+      "短期財務與競爭壓力大"
+    ],
+    "risk": [
+      "重建失敗",
+      "foundry 無法成形",
+      "市場信心不足"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "INTC 是重建型資產，不該用核心成長股角度看，而應用 turnaround 角度看。",
+      "positioning": "DEFENSE_REBUILD",
+      "action": [
+        "看翻身",
+        "看執行力",
+        "不要把它當主流 AI 核心"
+      ]
+    }
+  },
+  {
+    "symbol": "ORCL",
+    "company_name": "Oracle",
+    "fact": {
+      "summary": "Oracle 提供資料庫、企業軟體與雲端基礎設施，是企業 IT 與資料中心的重要供應商。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Austin, Texas, USA",
+        "sector": "Cloud",
+        "ticker": "ORCL",
+        "market_cap": ""
+      },
+      "business": [
+        "資料庫",
+        "企業軟體",
+        "OCI cloud infra"
+      ],
+      "one_line": "老軟體公司，被 AI 基建重新拉回主流。"
+    },
+    "why": {
+      "core_logic": "AI / cloud 建設讓 Oracle 的企業基礎設施重新被市場重估。",
+      "growth_driver": [
+        "資料庫與企業客戶",
+        "OCI cloud",
+        "AI infra 合作"
+      ],
+      "business_model_note": "舊平台 + 新主線的典型案例。"
+    },
+    "competition": {
+      "positioning": "GROWTH_SOFTWARE（你目前 universe 先這樣放）。",
+      "vs_peers": "相較 MSFT / AMZN 雲端規模較小，但企業客戶與資料庫切換成本高。",
+      "peer_summary": "不是最強雲端股，但屬正在被重新發現的 infra 補位者。"
+    },
+    "good": [
+      "企業客戶基礎深厚",
+      "資料庫與切換成本高",
+      "AI / cloud 題材帶來 re-rating"
+    ],
+    "bad": [
+      "市場規模與平台力仍不如超大雲端巨頭",
+      "成長有天花板",
+      "估值擴張後容錯變小"
+    ],
+    "risk": [
+      "雲端競爭",
+      "成長不及預期",
+      "市場熱度退潮"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "ORCL 是被 AI / cloud 重估的企業 infra 股，適合看 re-rating，不適合神化成最強主線股。",
+      "positioning": "GROWTH_SOFTWARE",
+      "action": [
+        "可配置",
+        "更適合中期持有",
+        "避免情緒高點追價"
+      ]
+    }
+  },
+  {
+    "symbol": "RCL",
+    "company_name": "Royal Caribbean",
+    "fact": {
+      "summary": "Royal Caribbean 是全球大型郵輪公司，收入主要來自旅遊與消費復甦。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Miami, Florida, USA",
+        "sector": "Cruise",
+        "ticker": "RCL",
+        "market_cap": ""
+      },
+      "business": [
+        "郵輪旅遊",
+        "休閒消費",
+        "航線營運"
+      ],
+      "one_line": "景氣越熱，它越好。"
+    },
+    "why": {
+      "core_logic": "旅遊與高端消費復甦帶動載客率與票價提升。",
+      "growth_driver": [
+        "旅遊需求復甦",
+        "票價改善",
+        "成本控管"
+      ],
+      "business_model_note": "景氣與消費循環股，不是長期結構成長股。"
+    },
+    "competition": {
+      "positioning": "INCOME_CYCLICAL。",
+      "vs_peers": "與 CCL 同類型，但品牌與路線結構不同；核心還是景氣與消費。",
+      "peer_summary": "不是主流資產，是景氣交易資產。"
+    },
+    "good": [
+      "景氣復甦時彈性大",
+      "票價改善能快速反映",
+      "需求回升時股價彈性高"
+    ],
+    "bad": [
+      "高固定成本",
+      "景氣與消費敏感",
+      "不適合防守"
+    ],
+    "risk": [
+      "油價 / 成本",
+      "景氣下行",
+      "消費疲弱"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "RCL 是景氣循環型收入股，適合景氣交易，不適合當長期核心資產。",
+      "positioning": "INCOME_CYCLICAL",
+      "action": [
+        "看景氣",
+        "看消費",
+        "不當防守"
+      ]
+    }
+  },
+  {
+    "symbol": "LVS",
+    "company_name": "Las Vegas Sands",
+    "fact": {
+      "summary": "Las Vegas Sands 是大型博彩與度假村營運商，收入主要來自博彩、旅遊與消費活動。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Las Vegas, Nevada, USA",
+        "sector": "Casino",
+        "ticker": "LVS",
+        "market_cap": ""
+      },
+      "business": [
+        "博彩",
+        "度假村",
+        "旅遊消費"
+      ],
+      "one_line": "靠景氣、旅遊與消費熱度吃飯。"
+    },
+    "why": {
+      "core_logic": "旅遊與高端消費改善時，博彩與度假村收入會同步改善。",
+      "growth_driver": [
+        "澳門與旅遊需求",
+        "消費回暖",
+        "度假村營運效率"
+      ],
+      "business_model_note": "本質仍是景氣消費股。"
+    },
+    "competition": {
+      "positioning": "INCOME_CYCLICAL。",
+      "vs_peers": "與 WYNN、MGM 同類型，看的是旅遊與博彩需求，不是科技主線。",
+      "peer_summary": "賺錢可以很快，但不是市場長期主流。"
+    },
+    "good": [
+      "景氣回升時獲利彈性大",
+      "資產型生意",
+      "消費復甦時動能強"
+    ],
+    "bad": [
+      "受政策與旅遊景氣影響",
+      "不是長期高成長資產",
+      "波動偏高"
+    ],
+    "risk": [
+      "中國 / 澳門政策",
+      "消費走弱",
+      "旅遊放緩"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "LVS 屬於景氣與旅遊循環收入股，適合景氣修復交易，不適合核心配置。",
+      "positioning": "INCOME_CYCLICAL",
+      "action": [
+        "看景氣",
+        "看政策",
+        "偏週期交易"
+      ]
+    }
+  },
+  {
+    "symbol": "NKE",
+    "company_name": "Nike",
+    "fact": {
+      "summary": "Nike 是全球知名運動品牌公司，核心收入來自鞋類、服飾與品牌授權。",
+      "basic_data": {
+        "founded": "",
+        "hq": "Beaverton, Oregon, USA",
+        "sector": "Consumer",
+        "ticker": "NKE",
+        "market_cap": ""
+      },
+      "business": [
+        "鞋類",
+        "服飾",
+        "品牌與通路"
+      ],
+      "one_line": "有品牌，但現在不是市場主線。"
+    },
+    "why": {
+      "core_logic": "品牌力與全球通路讓 Nike 具長期生意基礎，但市場更關心成長恢復速度。",
+      "growth_driver": [
+        "品牌恢復",
+        "庫存改善",
+        "通路效率提升"
+      ],
+      "business_model_note": "成熟品牌股，重點是修復與現金流，不是爆發式成長。"
+    },
+    "competition": {
+      "positioning": "INCOME_BRAND。",
+      "vs_peers": "與 Adidas、Lululemon 類似，但 Nike 仍是最強全球品牌之一；問題不在知名度，在增長與執行。",
+      "peer_summary": "品牌夠強，但現在不是市場最愛的方向。"
+    },
+    "good": [
+      "品牌力強",
+      "全球通路",
+      "長期現金流基礎佳"
+    ],
+    "bad": [
+      "短期成長不夠亮眼",
+      "消費景氣敏感",
+      "市場主流不在這裡"
+    ],
+    "risk": [
+      "庫存與執行力",
+      "消費疲弱",
+      "競爭品牌分流"
+    ],
+    "m1_view": {
+      "capex": null,
+      "trend": null,
+      "competition": null,
+      "valuation_flag": ""
+    },
+    "conclusion": {
+      "summary": "NKE 是品牌型收入股，有長期品牌價值，但短期不屬主流資產，適合看修復而非追故事。",
+      "positioning": "INCOME_BRAND",
+      "action": [
+        "看品牌修復",
+        "看執行",
+        "偏穩健觀察股"
+      ]
+    }
+  }
+]
