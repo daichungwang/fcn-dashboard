@@ -672,7 +672,84 @@ el.runBtn.addEventListener('click', runResearch);
 el.clearBtn.addEventListener('click', clearInputs);
 
 init();
+// =====================
+// Universe 150 Summary
+// =====================
+function buildUniverseSummary(){
+  const container = document.createElement('section');
+  container.className = 'panel panel-body';
+  container.innerHTML = '<h3>📚 Universe 150 Research Map</h3>';
+
+  const categories = {
+    CORE:[], GROWTH:[], DEFENSIVE:[], INCOME:[], SPEC:[]
+  };
+
+  state.universe.forEach(u=>{
+    const cat = categoryTag(u.category);
+    if(cat.includes('CORE')) categories.CORE.push(u);
+    else if(cat.includes('GROWTH')) categories.GROWTH.push(u);
+    else if(cat.includes('DEFENSIVE')) categories.DEFENSIVE.push(u);
+    else if(cat.includes('INCOME')) categories.INCOME.push(u);
+    else categories.SPEC.push(u);
+  });
+
+  Object.entries(categories).forEach(([cat,list])=>{
+    if(!list.length) return;
+
+    const wrap = document.createElement('div');
+    wrap.style.marginTop='16px';
+
+    const header = document.createElement('div');
+    header.innerHTML = `<b>${cat}</b> ｜ ${list.length} 檔 <button data-cat="${cat}">展開</button>`;
+
+    const body = document.createElement('div');
+    body.style.marginTop='8px';
+
+    function render(expand=false){
+      const showList = expand ? list : [list[0]];
+      body.innerHTML = showList.map(s=>{
+        const sym = up(s.symbol);
+        const card = state.cardLookup.get(sym);
+        const hasReport = card && card.research_status?.final_verdict_done;
+        return `<div style="display:flex;gap:12px;font-size:13px;margin:4px 0">
+          <div style="width:70px">${sym}</div>
+          <div style="width:120px">${s.sector||''}</div>
+          <div style="width:60px">--</div>
+          <div style="width:60px">--</div>
+          <div>
+            ${hasReport ? `<button onclick="quickView('${sym}')">查看報告</button>` : `<span style='color:#999'>建置中</span>`}
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    render(false);
+
+    header.querySelector('button').onclick = (e)=>{
+      const expanded = e.target.innerText==='收合';
+      render(!expanded);
+      e.target.innerText = expanded ? '展開' : '收合';
+    };
+
+    wrap.appendChild(header);
+    wrap.appendChild(body);
+    container.appendChild(wrap);
+  });
+
+  document.querySelector('.main').appendChild(container);
+}
+
+function quickView(symbol){
+  el.s1.value = symbol;
+  runResearch();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// call after init
+setTimeout(buildUniverseSummary, 800);
+
 </script>
 </body>
 </html>
+
 
