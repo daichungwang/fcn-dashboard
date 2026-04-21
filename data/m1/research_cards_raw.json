@@ -1,0 +1,103 @@
+{
+  "CEG": {
+    "symbol": "CEG",
+    "name": "Constellation Energy",
+    "type": "research_raw",
+    "version": "v1.0",
+
+    "company_overview": "CEG（Constellation Energy Corporation）是美國最大的碳中和電力供應商之一，於 2022 年自 Exelon 分拆上市，核心資產為核能電廠，並結合天然氣與再生能源，提供穩定且低碳的電力供應。本質上屬於 AI 時代的電力基礎建設供應商。",
+
+    "basic_info": {
+      "ticker": "CEG",
+      "exchange": "NASDAQ",
+      "founded": "2022（分拆上市）",
+      "headquarters": "Baltimore, USA",
+      "industry": "Energy / Clean Power",
+      "market_cap": "約 1060 億 USD",
+      "generation_capacity": "約 32.4 GW"
+    },
+
+    "business_model": {
+      "summary": "CEG 透過核能為核心基載電力，搭配天然氣與再生能源，並與 hyperscaler 簽訂長期供電合約，形成穩定現金流與 AI 成長需求結合的商業模式。",
+      "segments": [
+        "核能基載電力（核心）",
+        "天然氣與再生能源補充供應",
+        "企業長期供電合約（PPA）"
+      ]
+    },
+
+    "why_this_company": [
+      "AI data center 用電需求爆發直接受益",
+      "核能資產稀缺且難以複製",
+      "與 hyperscaler 長期合約提升穩定性"
+    ],
+
+    "market_view": "市場將 CEG 視為 AI 電力基礎建設標的，估值偏高反映未來成長預期，但近期股價回檔顯示市場開始修正過高預期。",
+
+    "financial_summary": {
+      "revenue": "268.5 億 USD",
+      "net_income": "23.2 億 USD",
+      "eps": "7.40",
+      "pe": "約 40",
+      "dividend_yield": "約 0.5%",
+      "beta": "0.66"
+    },
+
+    "competition": {
+      "summary": "CEG 在核能與基載電力上具優勢，但在股息與估值吸引力方面落後 NextEra 與 Duke。",
+      "peers": [
+        {
+          "name": "NextEra Energy",
+          "position": "再生能源領導者",
+          "comparison": "估值較低、股息較高，但財務槓桿較高"
+        },
+        {
+          "name": "Duke Energy",
+          "position": "傳統公用事業",
+          "comparison": "穩定高股息但成長性較低"
+        }
+      ],
+      "conclusion": "CEG 屬於成長型電力資產，競爭定位介於成長與防禦之間"
+    },
+
+    "valuation_and_timing": {
+      "valuation_view": "目前估值偏高但仍在合理區間，反映 AI 電力需求成長預期",
+      "buy_strategy": "不建議追高，適合納入觀察並等待回檔",
+      "sweet_zone": "回檔後較具吸引力",
+      "technical_view": {
+        "mid_trend": "上升",
+        "short_term": "偏熱",
+        "structure": "hot",
+        "conclusion": "公司基本面良好，但短期價格位置偏高"
+      }
+    },
+
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": false,
+      "category": "growth",
+      "reason": "具長期成長潛力，但目前估值與技術面不適合納入核心池",
+      "upgrade_condition": [
+        "股價回檔",
+        "估值回落",
+        "結構轉甜"
+      ]
+    },
+
+    "risk_opportunity": {
+      "risk": [
+        "高估值帶來回檔壓力",
+        "能源政策與電價變動",
+        "AI 電力需求不如預期",
+        "hyperscaler 自建電力風險"
+      ],
+      "opportunity": [
+        "AI data center 電力需求長期成長",
+        "核能重新被市場重估",
+        "低碳能源趨勢持續"
+      ]
+    },
+
+    "final_view": "CEG 是 AI 電力與能源轉型的重要標的，長期具吸引力，但短期估值偏高且結構偏熱，適合納入 Stock Pool 觀察，暫不建議直接進入 Pool30。"
+  }
+}
