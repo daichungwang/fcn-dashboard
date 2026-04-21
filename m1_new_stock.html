@@ -1,1262 +1,675 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>M1 Research Workstation</title>
-<style>
-:root{
-  --bg:#f3f6fb;
-  --bg-2:#eaf0f8;
-  --panel:#ffffff;
-  --panel-soft:#f8fbff;
-  --line:#d9e3f0;
-  --text:#162235;
-  --muted:#5f7187;
-  --nav:#11243f;
-  --nav-2:#183153;
-  --accent:#24b8b2;
-  --good:#0f9f6e;
-  --warn:#d97706;
-  --bad:#dc2626;
-  --shadow:0 10px 30px rgba(22,34,53,.08);
-  --radius:18px;
-}
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:"Segoe UI","Noto Sans TC",Arial,sans-serif;
-  background:linear-gradient(180deg,var(--bg) 0%,var(--bg-2) 100%);
-  color:var(--text);
-}
-.wrap{
-  max-width:1720px;
-  margin:0 auto;
-  padding:18px;
-}
-.hero{
-  background:linear-gradient(90deg,var(--nav),var(--nav-2));
-  color:#fff;
-  border-radius:24px;
-  padding:22px 26px;
-  box-shadow:var(--shadow);
-}
-.hero-top{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  align-items:flex-start;
-  flex-wrap:wrap;
-}
-.hero h1{
-  margin:0;
-  font-size:38px;
-  letter-spacing:.2px;
-}
-.hero .sub{
-  margin-top:8px;
-  color:rgba(255,255,255,.82);
-  font-size:15px;
-  line-height:1.6;
-}
-.hero-pills{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.hero-pills span{
-  padding:8px 12px;
-  border-radius:999px;
-  background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.18);
-  font-size:12px;
-  font-weight:700;
-}
-.dashboard{
-  display:grid;
-  grid-template-columns:1.2fr 1fr;
-  gap:16px;
-  margin-top:18px;
-}
-.panel{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-}
-.panel h3{
-  margin:0 0 12px;
-  font-size:16px;
-}
-.panel-body{
-  padding:18px;
-}
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:12px;
-}
-.stat-card{
-  background:var(--panel-soft);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:12px;
-}
-.stat-k{
-  font-size:12px;
-  color:var(--muted);
-}
-.stat-v{
-  margin-top:6px;
-  font-size:28px;
-  font-weight:900;
-}
-.stat-s{
-  margin-top:4px;
-  font-size:12px;
-  color:var(--muted);
-}
-.cover-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-.cover-card{
-  background:var(--panel-soft);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:12px;
-}
-.cover-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-}
-.cover-name{
-  font-size:13px;
-  font-weight:800;
-}
-.cover-val{
-  font-size:13px;
-  color:var(--muted);
-}
-.progress{
-  margin-top:8px;
-  height:10px;
-  background:#e9eef5;
-  border-radius:999px;
-  overflow:hidden;
-}
-.progress > span{
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,#35c7c1,#49a7ff);
-  border-radius:999px;
-}
-.query-section{
-  margin-top:16px;
-}
-.query-panel{
-  background:linear-gradient(90deg,var(--nav),var(--nav-2));
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:20px;
-  padding:18px;
-}
-.query-row{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-.stock-input{
-  width:92px;
-  height:56px;
-  border-radius:14px;
-  border:1px solid #d7e2ef;
-  background:#fff;
-  text-align:center;
-  font-size:20px;
-  font-weight:800;
-  color:#102033;
-  outline:none;
-}
-.stock-input::placeholder{
-  font-size:18px;
-  color:#8ea0b8;
-  font-weight:700;
-}
-.stock-input:focus{
-  border-color:#67d1cb;
-  box-shadow:0 0 0 4px rgba(36,184,178,.14);
-}
-.btn{
-  height:56px;
-  padding:0 18px;
-  border:none;
-  border-radius:14px;
-  font-size:16px;
-  font-weight:800;
-  cursor:pointer;
-}
-.btn-run{
-  background:linear-gradient(90deg,#37c8c2,#31b4ef);
-  color:#fff;
-}
-.btn-clear{
-  background:#fff;
-  color:#344256;
-  border:1px solid #d7e2ef;
-}
-.query-note{
-  margin-top:10px;
-  color:rgba(255,255,255,.82);
-  font-size:13px;
-}
-.layout{
-  display:grid;
-  grid-template-columns:420px 1fr;
-  gap:16px;
-  margin-top:16px;
-}
-.sidebar{
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-}
-.side-note{
-  font-size:13px;
-  color:var(--muted);
-  line-height:1.7;
-}
-.main{
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-}
-.hidden{
-  display:none !important;
-}
-.basket-summary{
-  padding:18px;
-}
-.summary-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:16px;
-  flex-wrap:wrap;
-}
-.summary-title{
-  font-size:20px;
-  font-weight:900;
-}
-.summary-sub{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:4px;
-}
-.summary-grid{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:12px;
-  margin-top:14px;
-}
-.summary-box{
-  background:var(--panel-soft);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:12px;
-}
-.summary-box .k{
-  font-size:12px;
-  color:var(--muted);
-}
-.summary-box .v{
-  margin-top:6px;
-  font-size:22px;
-  font-weight:900;
-}
-.summary-box .s{
-  margin-top:4px;
-  font-size:12px;
-  color:var(--muted);
-  line-height:1.5;
-}
-.cards{
-  display:grid;
-  gap:16px;
-}
-.research-card{
-  padding:18px;
-}
-.card-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  gap:16px;
-  flex-wrap:wrap;
-}
-.card-left{
-  display:flex;
-  gap:14px;
-  align-items:flex-start;
-}
-.symbol-box{
-  min-width:88px;
-  height:88px;
-  border-radius:18px;
-  background:linear-gradient(180deg,#0f2341,#203b61);
-  color:#fff;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-}
-.symbol-box .sym{
-  font-size:28px;
-  font-weight:900;
-  line-height:1;
-}
-.symbol-box .cat{
-  font-size:11px;
-  opacity:.85;
-  margin-top:6px;
-  text-transform:uppercase;
-}
-.head-meta h2{
-  margin:0;
-  font-size:28px;
-}
-.meta-line{
-  margin-top:6px;
-  color:var(--muted);
-  font-size:14px;
-}
-.tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:8px;
-}
-.tag{
-  padding:6px 10px;
-  border-radius:999px;
-  background:#eef4fb;
-  color:#29415e;
-  border:1px solid #d6e2f0;
-  font-size:12px;
-  font-weight:700;
-}
-.price-strip{
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:10px;
-  min-width:520px;
-}
-.price-box{
-  background:var(--panel-soft);
-  border:1px solid var(--line);
-  border-radius:14px;
-  padding:12px;
-}
-.price-box .k{
-  font-size:11px;
-  color:var(--muted);
-}
-.price-box .v{
-  margin-top:6px;
-  font-size:20px;
-  font-weight:900;
-}
-.price-box .d{
-  margin-top:5px;
-  font-size:12px;
-}
-.up{color:var(--good)}
-.down{color:var(--bad)}
-.warn{color:var(--warn)}
-.body-grid{
-  display:grid;
-  grid-template-columns:1.1fr 1fr;
-  gap:16px;
-  margin-top:16px;
-}
-.info-block{
-  background:var(--panel-soft);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:14px;
-}
-.info-title{
-  font-size:15px;
-  font-weight:900;
-  margin-bottom:10px;
-}
-.info-p{
-  font-size:14px;
-  line-height:1.75;
-  margin:8px 0;
-  color:#25384f;
-}
-.research-block{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-.module-card{
-  background:var(--panel-soft);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:14px;
-}
-.module-title{
-  font-size:16px;
-  font-weight:900;
-  margin-bottom:10px;
-}
-.row{
-  margin-bottom:8px;
-}
-.label{
-  font-size:13px;
-  color:var(--muted);
-}
-.value{
-  font-size:16px;
-  font-weight:800;
-  margin-top:2px;
-}
-.value .num{
-  color:#51657e;
-  margin-left:6px;
-  font-size:15px;
-  font-weight:700;
-}
-.desc{
-  font-size:13px;
-  color:#31455e;
-  margin-top:2px;
-  line-height:1.55;
-}
-.divider{
-  border-top:1px solid var(--line);
-  margin:10px 0;
-}
-.conclusion{
-  font-size:14px;
-  font-weight:900;
-  color:var(--good);
-  line-height:1.55;
-}
-.competition-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
-}
-.list{
-  margin:0;
-  padding-left:18px;
-  color:#2e435a;
-  line-height:1.65;
-  font-size:14px;
-}
-.empty{
-  padding:42px;
-  text-align:center;
-  color:var(--muted);
-  font-size:15px;
-}
-.footer-note{
-  font-size:12px;
-  color:var(--muted);
-  line-height:1.7;
-}
-.universe-map .cat-section{
-  margin-top:16px;
-  padding-top:12px;
-  border-top:1px solid var(--line);
-}
-.cat-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.cat-title{
-  font-size:22px;
-  font-weight:900;
-}
-.cat-sub{
-  font-size:13px;
-  color:var(--muted);
-}
-.mini-btn{
-  padding:8px 12px;
-  border-radius:10px;
-  border:1px solid var(--line);
-  background:#fff;
-  cursor:pointer;
-  font-weight:800;
-}
-.map-table{
-  margin-top:10px;
-}
-.map-row{
-  display:grid;
-  grid-template-columns:100px 170px 90px 90px 130px;
-  gap:10px;
-  align-items:center;
-  padding:10px 12px;
-  border-bottom:1px solid #e6edf5;
-  font-size:14px;
-}
-.map-row.header{
-  font-weight:900;
-  background:var(--panel-soft);
-  border:1px solid var(--line);
-  border-radius:12px;
-  margin-bottom:6px;
-}
-.map-row.item{
-  background:#fff;
-}
-.report-btn{
-  padding:7px 10px;
-  border:none;
-  border-radius:10px;
-  background:linear-gradient(90deg,#37c8c2,#31b4ef);
-  color:#fff;
-  font-weight:800;
-  cursor:pointer;
-}
-.report-pending{
-  color:#8b97a8;
-  font-weight:700;
-}
-@media (max-width:1440px){
-  .dashboard,.layout,.body-grid,.competition-grid{grid-template-columns:1fr}
-  .stats-grid,.summary-grid{grid-template-columns:repeat(3,1fr)}
-  .price-strip{min-width:0;grid-template-columns:repeat(3,1fr)}
-}
-@media (max-width:900px){
-  .stats-grid,.summary-grid,.price-strip,.cover-grid,.research-block{grid-template-columns:1fr 1fr}
-  .hero h1{font-size:30px}
-  .map-row{grid-template-columns:1fr 1fr}
-}
-@media (max-width:640px){
-  .stats-grid,.summary-grid,.price-strip,.cover-grid,.research-block,.map-row{grid-template-columns:1fr}
-  .card-left,.card-head{flex-direction:column}
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M1 New Stock</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --panel:#ffffff;
+      --ink:#1e2a36;
+      --muted:#6c7b8a;
+      --line:#d9e2ec;
+      --brand:#17324d;
+      --brand2:#214a70;
+      --accent:#2ea3ff;
+      --good:#1f8f57;
+      --warn:#c77c11;
+      --bad:#c94141;
+      --shadow:0 10px 30px rgba(16,24,40,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Segoe UI","Noto Sans TC",Arial,sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#eef4fa 0%, #f7f9fc 100%);
+    }
+    .wrap{max-width:1600px;margin:0 auto;padding:18px}
+    .hero{
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      color:#fff;
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      padding:24px 28px;
+    }
+    .hero h1{margin:0;font-size:34px}
+    .hero p{margin:10px 0 0;color:rgba(255,255,255,.86);line-height:1.65}
+    .hero-badges{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .hero-badges span{
+      padding:7px 12px;border-radius:999px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.16);
+      font-size:12px;font-weight:700;
+    }
+
+    .dashboard{
+      display:grid;
+      grid-template-columns:1.1fr 1fr;
+      gap:16px;
+      margin-top:18px;
+    }
+    .panel{
+      background:var(--panel);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+    }
+    .panel-body{padding:18px}
+    .panel h3{margin:0 0 12px;font-size:18px}
+    .stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+    .stat{
+      background:#f8fbff;border:1px solid #e4edf6;border-radius:14px;padding:12px;
+    }
+    .stat .k{font-size:12px;color:var(--muted)}
+    .stat .v{font-size:28px;font-weight:800;margin-top:6px}
+    .cover-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .cover{
+      background:#f8fbff;border:1px solid #e4edf6;border-radius:14px;padding:12px;
+    }
+    .cover .row{display:flex;justify-content:space-between;gap:12px;font-size:13px}
+    .bar{height:10px;background:#eaf0f6;border-radius:999px;overflow:hidden;margin-top:9px}
+    .bar > span{display:block;height:100%;background:linear-gradient(90deg,#38bdf8,#3b82f6)}
+
+    .search-panel{margin-top:16px}
+    .search-box{
+      background:linear-gradient(135deg,#10263f,#1f4467);
+      border-radius:22px;
+      padding:18px;
+      color:#fff;
+    }
+    .search-top{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+    .stock-input{
+      width:96px;height:56px;border-radius:14px;border:none;
+      text-align:center;font-size:20px;font-weight:800;color:#15314e;outline:none;
+    }
+    .btn{
+      height:56px;padding:0 18px;border:none;border-radius:14px;
+      font-size:15px;font-weight:800;cursor:pointer
+    }
+    .btn-run{background:linear-gradient(90deg,#36d1dc,#5b86e5);color:#fff}
+    .btn-clear{background:#fff;color:#22384d}
+    .search-note{margin-top:10px;font-size:13px;color:rgba(255,255,255,.86);line-height:1.6}
+
+    .main-grid{
+      display:grid;grid-template-columns:360px 1fr;gap:16px;margin-top:16px
+    }
+    .side-stack{display:flex;flex-direction:column;gap:16px}
+    .small-note{font-size:13px;color:var(--muted);line-height:1.75}
+
+    .hidden{display:none !important}
+    .empty{
+      text-align:center;padding:40px;color:var(--muted);font-size:15px
+    }
+
+    .basket{padding:18px}
+    .basket-title{font-size:22px;font-weight:900}
+    .basket-sub{margin-top:4px;color:var(--muted);font-size:13px}
+    .basket-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:14px}
+    .basket-box{
+      background:#f8fbff;border:1px solid #e4edf6;border-radius:14px;padding:12px
+    }
+    .basket-box .k{font-size:12px;color:var(--muted)}
+    .basket-box .v{font-size:22px;font-weight:800;margin-top:6px}
+    .basket-box .s{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.55}
+
+    .cards{display:grid;gap:18px}
+    .card{padding:20px}
+    .card-head{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+    .head-left{display:flex;gap:16px}
+    .symbol-pill{
+      min-width:96px;height:96px;border-radius:20px;
+      background:linear-gradient(180deg,#0f2238,#28496d);
+      color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center
+    }
+    .symbol-pill .sym{font-size:28px;font-weight:900;line-height:1}
+    .symbol-pill .cat{font-size:11px;opacity:.82;margin-top:7px;text-transform:uppercase}
+    .title-block h2{margin:0;font-size:30px}
+    .title-meta{margin-top:7px;color:var(--muted);font-size:14px}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+    .tag{
+      border-radius:999px;padding:6px 10px;background:#eef5fc;color:#294561;
+      border:1px solid #dae8f5;font-size:12px;font-weight:700
+    }
+
+    .price-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;min-width:600px}
+    .price-box{
+      background:#f8fbff;border:1px solid #e4edf6;border-radius:14px;padding:12px
+    }
+    .price-box .k{font-size:11px;color:var(--muted)}
+    .price-box .v{font-size:20px;font-weight:800;margin-top:6px}
+    .price-box .d{font-size:12px;color:var(--muted);margin-top:5px}
+
+    .section{
+      margin-top:16px;background:#f9fbfe;border:1px solid #e4edf6;border-radius:16px;padding:16px
+    }
+    .section h4{margin:0 0 10px;font-size:18px}
+    .paragraph{font-size:15px;line-height:1.85;color:#263748}
+    .paragraph + .paragraph{margin-top:10px}
+    .arrow{font-weight:800;color:#0b5cad}
+    .twocol{
+      display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px
+    }
+    .listbox{
+      background:#fff;border:1px solid #e4edf6;border-radius:14px;padding:14px
+    }
+    .listbox h5{margin:0 0 10px;font-size:16px}
+    ul.clean{margin:0;padding-left:18px}
+    ul.clean li{margin:0 0 8px;line-height:1.6}
+    .m1view{
+      margin-top:14px;background:linear-gradient(180deg,#f7fbff,#eef6ff);
+      border:1px solid #dce9f6;border-radius:16px;padding:16px
+    }
+    .m1row{
+      display:grid;grid-template-columns:120px 1fr 120px;gap:12px;
+      border-bottom:1px dashed #d7e5f3;padding:9px 0;align-items:center
+    }
+    .m1row:last-child{border-bottom:none}
+    .m1name{font-weight:800}
+    .m1desc{font-size:14px;color:#39536b}
+    .m1val{text-align:right;font-weight:800}
+    .conclusion{
+      margin-top:14px;padding:14px 16px;border-radius:16px;
+      background:#fff8ec;border:1px solid #f3dfb2
+    }
+    .conclusion .headline{font-size:17px;font-weight:900;color:#7a5210}
+    .conclusion .text{margin-top:8px;line-height:1.8}
+    .do-list{margin-top:8px;padding-left:18px}
+
+    .universe .group{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+    .group-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+    .group-title{font-size:22px;font-weight:900}
+    .mini-btn{
+      padding:8px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:800
+    }
+    .table{margin-top:10px}
+    .row-head,.row-item{
+      display:grid;grid-template-columns:90px 110px 140px 100px 120px 110px;
+      gap:10px;align-items:center;padding:10px 12px;font-size:14px
+    }
+    .row-head{background:#f7fbff;border:1px solid var(--line);border-radius:12px;font-weight:900}
+    .row-item{border-bottom:1px solid #e9eef4}
+    .report-btn{
+      padding:7px 10px;border:none;border-radius:10px;background:linear-gradient(90deg,#38bdf8,#3b82f6);color:#fff;font-weight:800;cursor:pointer
+    }
+    .muted{color:var(--muted)}
+    @media (max-width:1300px){
+      .dashboard,.main-grid,.twocol{grid-template-columns:1fr}
+      .stats-grid,.basket-grid{grid-template-columns:repeat(3,1fr)}
+      .price-strip{min-width:0;grid-template-columns:repeat(3,1fr)}
+    }
+    @media (max-width:760px){
+      .stats-grid,.basket-grid,.cover-grid,.price-strip,.twocol,.row-head,.row-item{grid-template-columns:1fr}
+      .head-left,.card-head{flex-direction:column}
+    }
+  </style>
 </head>
 <body>
-<div class="wrap">
-  <section class="hero">
-    <div class="hero-top">
-      <div>
-        <h1>M1 Research Workstation</h1>
-        <div class="sub">單一 / Basket 股票研究報告入口。整合 universe_150、competitive_cards、market runtime 與 M1 / M3 / M7 / FCN 決策語言。</div>
+  <div class="wrap">
+    <section class="hero">
+      <h1>M1 New Stock</h1>
+      <p>公司研究卡入口。讀取 <b>universe_150.json</b>、<b>competitive_cards.json</b>、<b>m1_market_runtime.json</b>，讓股票查詢、分類與完整分析連動。</p>
+      <div class="hero-badges">
+        <span>五欄輸入</span>
+        <span>Basket Summary</span>
+        <span>完整公司分析</span>
+        <span>M1 分類 / 波動 / 類型</span>
       </div>
-      <div class="hero-pills">
-        <span>1~5 檔 Basket 查詢</span>
-        <span>FCN 標的研究</span>
-        <span>Dashboard 研究覆蓋率</span>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="dashboard">
-    <div class="panel panel-body">
-      <h3>研究目標 / Source Dashboard</h3>
-      <div id="statsGrid" class="stats-grid"></div>
-    </div>
-    <div class="panel panel-body">
-      <h3>研究進度 Dashboard</h3>
-      <div id="coverageGrid" class="cover-grid"></div>
-    </div>
-  </section>
-
-  <section class="query-section panel panel-body">
-    <h3>股票查詢功能</h3>
-    <div class="query-panel">
-      <div class="query-row">
-        <input id="s1" class="stock-input" maxlength="12" placeholder="S1">
-        <input id="s2" class="stock-input" maxlength="12" placeholder="S2">
-        <input id="s3" class="stock-input" maxlength="12" placeholder="S3">
-        <input id="s4" class="stock-input" maxlength="12" placeholder="S4">
-        <input id="s5" class="stock-input" maxlength="12" placeholder="S5">
-        <button id="runBtn" class="btn btn-run">Run Research</button>
-        <button id="clearBtn" class="btn btn-clear">Clear</button>
-      </div>
-      <div class="query-note">主模式：輸入 1~5 檔股票代碼（每格可輸入完整代碼），系統會先顯示 Basket Summary，再列出個股研究卡。未輸入時，不顯示研究結果。</div>
-    </div>
-  </section>
-
-  <section class="layout">
-    <aside class="sidebar">
+    <section class="dashboard">
       <div class="panel panel-body">
-        <h3>頁面定位</h3>
-        <div class="side-note">這一頁不是選股列表，而是研究入口。查 1 檔時看單一公司報告；查 2~5 檔時先看 basket 結構，再看 individual cards。適合 FCN basket 研究與 weak link 判斷。</div>
+        <h3>研究目標 / Source Dashboard</h3>
+        <div id="statsGrid" class="stats-grid"></div>
       </div>
       <div class="panel panel-body">
-        <h3>資料來源</h3>
-        <div class="side-note">
-          1. <b>data/m1/universe_150.json</b>：股票名單 / category / sector / style<br>
-          2. <b>data/m1/competitive_cards.json</b>：公司研究主檔<br>
-          3. <b>data/m1/m1_market_runtime.json</b>：價格 / 報酬 / volume ratio<br>
-          4. <b>data/m3/m3_output.json</b>：主觀判斷補充<br>
-          5. <b>data/m7/m7_new_stock_today.json</b>：估值 / 趨勢 / 時機補充
+        <h3>研究進度 Dashboard</h3>
+        <div id="coverageGrid" class="cover-grid"></div>
+      </div>
+    </section>
+
+    <section class="panel panel-body search-panel">
+      <h3>股票查詢功能</h3>
+      <div class="search-box">
+        <div class="search-top">
+          <input id="s1" class="stock-input" maxlength="12" placeholder="S1" />
+          <input id="s2" class="stock-input" maxlength="12" placeholder="S2" />
+          <input id="s3" class="stock-input" maxlength="12" placeholder="S3" />
+          <input id="s4" class="stock-input" maxlength="12" placeholder="S4" />
+          <input id="s5" class="stock-input" maxlength="12" placeholder="S5" />
+          <button id="runBtn" class="btn btn-run">Run Research</button>
+          <button id="clearBtn" class="btn btn-clear">Clear</button>
         </div>
+        <div class="search-note">輸入 1~5 檔股票代碼，系統會先顯示 Basket Summary，再顯示完整公司分析。若 `competitive_cards.json` 沒資料，會顯示建置中。</div>
       </div>
-      <div class="panel panel-body">
-        <h3>未來功能預告</h3>
-        <div class="footer-note">下一步可再補：技術分析圖形、sparkline、賣出時機區、支撐壓力、M8 fair yield 對接、M9 資產連動。</div>
-      </div>
-    </aside>
+    </section>
 
-    <main class="main">
-      <section id="basketPanel" class="panel basket-summary hidden">
-        <div class="summary-top">
-          <div>
-            <div class="summary-title">📦 Basket Summary</div>
-            <div id="basketSymbols" class="summary-sub">尚未查詢</div>
+    <section class="main-grid">
+      <aside class="side-stack">
+        <div class="panel panel-body">
+          <h3>頁面定位</h3>
+          <div class="small-note">這頁不是只看 summary，而是讓研究內容、分類、波動與市場資料一起顯示。你後面只要持續補 `competitive_cards.json`，系統就會越來越完整。</div>
+        </div>
+        <div class="panel panel-body">
+          <h3>資料來源</h3>
+          <div class="small-note">
+            1. <b>data/m1/universe_150.json</b><br/>
+            2. <b>data/m1/competitive_cards.json</b><br/>
+            3. <b>data/m1/m1_market_runtime.json</b><br/>
+            4. 未來可再接 M1 / M7 engine
           </div>
-          <div id="basketConclusion" class="summary-sub"></div>
         </div>
-        <div id="summaryGrid" class="summary-grid"></div>
-      </section>
+      </aside>
 
-      <section id="cardsWrap" class="cards hidden"></section>
-      <section id="emptyState" class="panel empty">請在上方五個小方框輸入 1~5 檔股票代碼後按 <b>Run Research</b>。</section>
+      <main class="side-stack">
+        <section id="basketPanel" class="panel basket hidden">
+          <div class="basket-title">📦 Basket Summary</div>
+          <div id="basketSymbols" class="basket-sub">尚未查詢</div>
+          <div id="basketGrid" class="basket-grid"></div>
+        </section>
 
-      <section class="panel panel-body universe-map">
-        <h3>📚 Universe 150 Research Map</h3>
-        <div id="universeMap"></div>
-      </section>
-    </main>
-  </section>
-</div>
+        <section id="emptyState" class="panel empty">
+          請在上方輸入股票代碼後按 <b>Run Research</b>。
+        </section>
+
+        <section id="cardsWrap" class="cards hidden"></section>
+
+        <section class="panel panel-body universe">
+          <h3>Universe 150 Research Map</h3>
+          <div id="universeMap"></div>
+        </section>
+      </main>
+    </section>
+  </div>
+
   <script>
-// =========================
-// 全域狀態
-// =========================
-const state = {
-  universe: [],
-  cards: [],
-  market: {},
-  m3: new Map(),
-  m7: new Map(),
-  lookup: new Map(),
-  cardLookup: new Map()
-};
+    const state = {
+      universe: [],
+      cards: [],
+      market: {},
+      lookup: new Map(),
+      cardLookup: new Map()
+    };
 
-// =========================
-// DOM
-// =========================
-const el = {
-  s1: document.getElementById('s1'),
-  s2: document.getElementById('s2'),
-  s3: document.getElementById('s3'),
-  s4: document.getElementById('s4'),
-  s5: document.getElementById('s5'),
+    const el = {
+      s1: document.getElementById('s1'),
+      s2: document.getElementById('s2'),
+      s3: document.getElementById('s3'),
+      s4: document.getElementById('s4'),
+      s5: document.getElementById('s5'),
+      runBtn: document.getElementById('runBtn'),
+      clearBtn: document.getElementById('clearBtn'),
+      statsGrid: document.getElementById('statsGrid'),
+      coverageGrid: document.getElementById('coverageGrid'),
+      basketPanel: document.getElementById('basketPanel'),
+      basketSymbols: document.getElementById('basketSymbols'),
+      basketGrid: document.getElementById('basketGrid'),
+      emptyState: document.getElementById('emptyState'),
+      cardsWrap: document.getElementById('cardsWrap'),
+      universeMap: document.getElementById('universeMap')
+    };
 
-  runBtn: document.getElementById('runBtn'),
-  clearBtn: document.getElementById('clearBtn'),
+    function up(v){ return String(v||"").trim().toUpperCase(); }
+    function n(v,d=0){ const x=Number(v); return Number.isFinite(x)?x:d; }
+    function fmt(v,d=1){ const x=Number(v); return Number.isFinite(x)?x.toFixed(d):"--"; }
+    function pct(v){ const x=Number(v); if(!Number.isFinite(x)) return "--"; return (x>=0?"+":"") + (x*100).toFixed(1) + "%"; }
+    function avg(arr){ const a=arr.filter(x=>Number.isFinite(x)); return a.length ? a.reduce((s,x)=>s+x,0)/a.length : null; }
+    function esc(s){ return String(s ?? "").replace(/[&<>"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
 
-  statsGrid: document.getElementById('statsGrid'),
-  coverageGrid: document.getElementById('coverageGrid'),
+    async function fetchJson(path){
+      try{
+        const res = await fetch(path, {cache:"no-store"});
+        if(!res.ok) throw new Error(path);
+        return await res.json();
+      }catch(err){
+        console.error("fetch fail", path, err);
+        return null;
+      }
+    }
 
-  basketPanel: document.getElementById('basketPanel'),
-  basketSymbols: document.getElementById('basketSymbols'),
-  basketConclusion: document.getElementById('basketConclusion'),
-  summaryGrid: document.getElementById('summaryGrid'),
+    function asArray(data){
+      if(Array.isArray(data)) return data;
+      if(Array.isArray(data?.data)) return data.data;
+      if(Array.isArray(data?.stocks)) return data.stocks;
+      if(Array.isArray(data?.items)) return data.items;
+      if(data && typeof data === "object") return Object.values(data);
+      return [];
+    }
 
-  cardsWrap: document.getElementById('cardsWrap'),
-  emptyState: document.getElementById('emptyState'),
+    function buildLookup(){
+      state.lookup = new Map();
+      state.universe.forEach(x => state.lookup.set(up(x.symbol), x));
 
-  universeMap: document.getElementById('universeMap')
-};
+      state.cardLookup = new Map();
+      state.cards.forEach(x => state.cardLookup.set(up(x.symbol), x));
+    }
 
-// =========================
-// 工具
-// =========================
-function up(v){ return String(v||'').trim().toUpperCase(); }
-function n(v,d=0){ const x=Number(v); return Number.isFinite(x)?x:d; }
-function avg(arr){
-  const a = arr.filter(x=>Number.isFinite(x));
-  return a.length ? a.reduce((s,x)=>s+x,0)/a.length : null;
-}
-function fmt(v,d=1){
-  const x = Number(v);
-  return Number.isFinite(x)?x.toFixed(d):'--';
-}
-function pct(v){
-  const x = Number(v);
-  if (!Number.isFinite(x)) return '--';
-  return (x * 100 >= 0 ? '+' : '') + (x * 100).toFixed(1) + '%';
-}
-// =========================
-// fetch
-// =========================
-async function fetchJson(path){
-  try{
-    const res = await fetch(path,{cache:'no-store'});
-    if(!res.ok) throw new Error();
-    return await res.json();
-  }catch(e){
-    console.warn('fail:',path);
-    return null;
-  }
-}
+    function renderDashboard(){
+      const totalTarget = state.universe.length || 150;
+      const totalCards = state.cards.length;
+      const totalMarket = Object.keys(state.market || {}).length;
 
-// =========================
-// map builder
-// =========================
-function buildLookup(){
-  state.lookup = new Map();
-  state.universe.forEach(x=>{
-    state.lookup.set(up(x.symbol),x);
-  });
+      const stats = [
+        ["研究目標", totalTarget],
+        ["研究卡數", totalCards],
+        ["市場資料", totalMarket],
+        ["Universe", totalTarget],
+        ["覆蓋率", totalTarget ? Math.round(totalCards / totalTarget * 100) + "%" : "--"]
+      ];
 
-  state.cardLookup = new Map();
-  state.cards.forEach(x=>{
-    state.cardLookup.set(up(x.symbol),x);
-  });
-}
-
-// =========================
-// Dashboard
-// =========================
-function renderDashboard(){
-
-  const totalTarget = 150;
-  const totalUniverse = state.universe.length;
-  const totalCards = state.cards.length;
-
-  const stats = [
-    ['研究目標', totalTarget],
-    ['Universe', totalUniverse],
-    ['研究卡數', totalCards],
-    ['市場資料', Object.keys(state.market||{}).length],
-    ['覆蓋率', totalTarget? Math.round(totalCards/totalTarget*100)+'%' : '--']
-  ];
-
-  el.statsGrid.innerHTML = stats.map(s=>`
-    <div class="stat-card">
-      <div class="stat-k">${s[0]}</div>
-      <div class="stat-v">${s[1]}</div>
-    </div>
-  `).join('');
-
-  const coverage = [
-    ['基本資訊', countDone('basic_info_done')],
-    ['競爭分析', countDone('competition_done')],
-    ['技術分析', countDone('technical_done')],
-    ['FCN', countDone('fcn_view_done')],
-    ['Final', countDone('final_verdict_done')]
-  ];
-
-  el.coverageGrid.innerHTML = coverage.map(c=>{
-    const ratio = totalCards ? (c[1]/totalCards*100) : 0;
-    return `
-      <div class="cover-card">
-        <div class="cover-head">
-          <div>${c[0]}</div>
-          <div>${c[1]}/${totalCards}</div>
+      el.statsGrid.innerHTML = stats.map(x => `
+        <div class="stat">
+          <div class="k">${esc(x[0])}</div>
+          <div class="v">${esc(x[1])}</div>
         </div>
-        <div class="progress">
-          <span style="width:${ratio}%"></span>
-        </div>
-      </div>
-    `;
-  }).join('');
-}
-
-function countDone(key){
-  return state.cards.filter(c=>c?.research_status?.[key]).length;
-}
-
-// =========================
-// Query
-// =========================
-function getInputs(){
-  return [...new Set([
-    el.s1.value,
-    el.s2.value,
-    el.s3.value,
-    el.s4.value,
-    el.s5.value
-  ].map(up).filter(Boolean))];
-}
-
-function clearInputs(){
-  [el.s1,el.s2,el.s3,el.s4,el.s5].forEach(x=>x.value='');
-  el.cardsWrap.innerHTML='';
-  el.cardsWrap.classList.add('hidden');
-  el.basketPanel.classList.add('hidden');
-  el.emptyState.classList.remove('hidden');
-}
-
-// =========================
-// Run Research（先做最小版）
-// =========================
-function runResearch(){
-
-  const symbols = getInputs();
-
-  if(!symbols.length){
-    clearInputs();
-    return;
-  }
-
-  const found = symbols.map(s=>state.lookup.get(s)).filter(Boolean);
-
-  if(!found.length){
-    el.cardsWrap.innerHTML = `<div class="empty">查無股票</div>`;
-    el.cardsWrap.classList.remove('hidden');
-    return;
-  }
-
-  // summary
-  el.basketSymbols.textContent = symbols.join(' / ');
-  el.summaryGrid.innerHTML = `
-    <div class="summary-box">
-      <div class="k">檔數</div>
-      <div class="v">${found.length}</div>
-    </div>
-  `;
-  el.basketPanel.classList.remove('hidden');
-
-  // cards（先簡版）
-  el.cardsWrap.innerHTML = found.map(s=>`
-    <div class="panel research-card">
-      <h2>${s.symbol}</h2>
-      <div>${s.sector || ''}</div>
-    </div>
-  `).join('');
-
-  el.cardsWrap.classList.remove('hidden');
-  el.emptyState.classList.add('hidden');
-}
-
-// =========================
-// input 行為（取消自動跳格）
-// =========================
-[el.s1,el.s2,el.s3,el.s4,el.s5].forEach((input)=>{
-  input.addEventListener('input',()=>{
-    input.value = up(input.value).replace(/[^A-Z0-9]/g,'');
-  });
-  input.addEventListener('keydown',(e)=>{
-    if(e.key === 'Enter') runResearch();
-  });
-});
-
-// =========================
-// init
-// =========================
-async function init(){
-
-  const [u,c,m] = await Promise.all([
-    fetchJson('data/m1/universe_150.json'),
-    fetchJson('data/m1/competitive_cards.json'),
-    fetchJson('data/m1/m1_market_runtime.json')
-  ]);
-
-  state.universe = Array.isArray(u) ? u : Object.values(u || {});
-state.cards    = Array.isArray(c) ? c : Object.values(c || {});
-state.market   = m || {};
-
-  buildLookup();
-  renderDashboard();
-}
-
-// =========================
-// bind
-// =========================
-el.runBtn.onclick = runResearch;
-el.clearBtn.onclick = clearInputs;
-
-init();
-// =========================
-// Research Card（完整版）
-// =========================
-function renderResearchCardFull(symbol){
-
-  const base = state.lookup.get(symbol) || {};
-  const card = state.cardLookup.get(symbol) || {};
-  const m = state.market[symbol] || {};
-  const tpl = card.template || {};
-
-  const businessSummary =
-    tpl.business_summary ||
-    card.basic_info?.business_summary ||
-    "建置中";
-
-  const companyPositioning =
-    tpl.company_positioning ||
-    card.basic_info?.company_positioning ||
-    "建置中";
-
-  const whyInM1 =
-    tpl.why_in_m1 ||
-    card.basic_info?.why_in_m1 ||
-    "建置中";
-
-  const moatSummary =
-    tpl.moat_summary ||
-    card.competition?.moat_summary ||
-    "建置中";
-
-  const industryStructure =
-    tpl.industry_structure ||
-    card.competition?.industry_structure ||
-    "建置中";
-
-  const competitionTrend =
-    tpl.competition_trend_1y_3y ||
-    card.competition?.competition_trend_1y_3y ||
-    "建置中";
-
-  const direct =
-    tpl.direct_competitors ||
-    card.competition?.direct_competitors ||
-    [];
-
-  const indirect =
-    tpl.indirect_competitors ||
-    card.competition?.indirect_competitors ||
-    [];
-
-  const whyWin =
-    tpl.why_it_wins ||
-    card.competition?.why_it_wins ||
-    [];
-
-  const whyLose =
-    tpl.why_it_can_lose ||
-    card.competition?.why_it_can_lose ||
-    [];
-
-  const humanSummary =
-    tpl.human_summary ||
-    card.investment_view?.human_summary ||
-    "建置中";
-
-  const actionHint =
-    tpl.action_hint ||
-    card.investment_view?.action_hint ||
-    "建置中";
-
-  const fcnView =
-    tpl.fcn_view ||
-    card.investment_view?.fcn_view ||
-    "建置中";
-
-  const finalVerdict =
-    tpl.final_verdict ||
-    card.investment_view?.final_verdict ||
-    "建置中";
-
-  const m1p = tpl.m1_positioning || card.m1_positioning || {};
-
-  const capexScore =
-    card.m1_scores?.capex ??
-    card.m1_scores?.capex_score ??
-    "--";
-
-  const trendScore =
-    card.m1_scores?.trend ??
-    card.m1_scores?.trend_score ??
-    "--";
-
-  const compScore =
-    card.m1_scores?.competition ??
-    card.m1_scores?.competition_score ??
-    "--";
-
-  const valuationText =
-    m1p.valuation_status || "⚠️偏高";
-
-  const valuationDetail =
-    card.m1_scores?.valuation_detail || "FPE -- / Anchor -- / PEG --";
-
-  const capexComment =
-    card.m1_scores?.capex_comment || "高資本效率，具長期競爭優勢";
-
-  const trendComment =
-    card.m1_scores?.trend_comment || "產業動能強，屬結構性成長";
-
-  const competitionComment =
-    card.m1_scores?.competition_comment || "具護城河，但仍有競爭壓力";
-
-  const valuationComment =
-    card.m1_scores?.valuation_comment || "市場預期已高，需留意回檔風險";
-
-  const priceNow = m.price_now == null ? "--" : "$" + fmt(m.price_now, 2);
-  const ret1w = m.ret_1w == null ? "--" : pct(m.ret_1w);
-  const ret1m = m.ret_1m == null ? "--" : pct(m.ret_1m);
-  const ret3m = m.ret_3m == null ? "--" : pct(m.ret_3m);
-  const ret12m = m.ret_12m == null ? "--" : pct(m.ret_12m);
-  const volRatio = m.volume_ratio == null ? "--" : fmt(m.volume_ratio, 2);
-
-  return `
-    <div class="panel research-card">
-      <div class="card-head">
-        <div class="card-left">
-          <div class="symbol-box">
-            <div class="sym">${symbol}</div>
-            <div class="cat">${base.category || ""}</div>
-          </div>
-          <div class="head-meta">
-            <h2>${tpl.company_name || card.company_name || symbol}</h2>
-            <div class="meta-line">${base.sector || ""} ｜ ${base.category || ""}</div>
-            <div class="tags">
-              <span class="tag">${(base.style || []).join(" / ") || "style --"}</span>
-              <span class="tag">Universe 150</span>
-              <span class="tag">Research Card</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="price-strip">
-          <div class="price-box">
-            <div class="k">Price Now</div>
-            <div class="v">${priceNow}</div>
-            <div class="d">1W / 1M：${ret1w} / ${ret1m}</div>
-          </div>
-          <div class="price-box">
-            <div class="k">3M / 12M</div>
-            <div class="v">${ret3m} / ${ret12m}</div>
-            <div class="d">中線 / 長線變化</div>
-          </div>
-          <div class="price-box">
-            <div class="k">Volume Ratio</div>
-            <div class="v">${volRatio}</div>
-            <div class="d">量能強弱</div>
-          </div>
-          <div class="price-box">
-            <div class="k">Final Verdict</div>
-            <div class="v">${finalVerdict === "建置中" ? "--" : "Ready"}</div>
-            <div class="d">研究報告狀態</div>
-          </div>
-          <div class="price-box">
-            <div class="k">Updated</div>
-            <div class="v">${tpl.updated_at || card.updated_at || "--"}</div>
-            <div class="d">研究更新日期</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="body-grid">
-        <div class="info-block">
-          <div class="info-title">公司研究摘要</div>
-          <div class="info-p"><b>公司做什麼：</b>${businessSummary}</div>
-          <div class="info-p"><b>公司定位：</b>${companyPositioning}</div>
-          <div class="info-p"><b>為什麼進 M1：</b>${whyInM1}</div>
-          <div class="info-p"><b>人話摘要：</b>${humanSummary}</div>
-        </div>
-
-        <div class="module-card">
-          <div class="module-title">📊 M1 定位</div>
-
-          <div class="row">
-            <div class="label">Capex</div>
-            <div class="value">${m1p.capex_to_profit || "⭐⭐⭐⭐☆"} <span class="num">${capexScore} / 10</span></div>
-            <div class="desc">→ ${capexComment}</div>
-          </div>
-
-          <div class="row">
-            <div class="label">趨勢</div>
-            <div class="value">${m1p.industry_trend || "⭐⭐⭐⭐☆"} <span class="num">${trendScore} / 10</span></div>
-            <div class="desc">→ ${trendComment}</div>
-          </div>
-
-          <div class="row">
-            <div class="label">競爭力</div>
-            <div class="value">${m1p.competition_strength || "⭐⭐⭐⭐"} <span class="num">${compScore} / 10</span></div>
-            <div class="desc">→ ${competitionComment}</div>
-          </div>
-
-          <div class="row">
-            <div class="label">估值</div>
-            <div class="value warn">${valuationText} <span class="num">${valuationDetail}</span></div>
-            <div class="desc">→ ${valuationComment}</div>
-          </div>
-
-          <div class="divider"></div>
-          <div class="conclusion">👉 結論：${finalVerdict}</div>
-        </div>
-      </div>
-
-      <div class="competition-grid" style="margin-top:16px;">
-        <div class="info-block">
-          <div class="info-title">競爭分析</div>
-          <div class="info-p"><b>護城河：</b>${moatSummary}</div>
-          <div class="info-p"><b>產業結構：</b>${industryStructure}</div>
-          <div class="info-p"><b>競爭趨勢：</b>${competitionTrend}</div>
-          <div class="info-p"><b>行動建議：</b>${actionHint}</div>
-          <div class="info-p"><b>FCN View：</b>${fcnView}</div>
-        </div>
-
-        <div class="info-block">
-          <div class="info-title">對手 / 贏輸條件</div>
-          <div class="info-p"><b>直接競爭對手：</b>${direct.length ? direct.join("、") : "建置中"}</div>
-          <div class="info-p"><b>間接競爭對手：</b>${indirect.length ? indirect.join("、") : "建置中"}</div>
-          <div class="info-p"><b>Why it wins：</b>${whyWin.length ? whyWin.join("；") : "建置中"}</div>
-          <div class="info-p"><b>Why it can lose：</b>${whyLose.length ? whyLose.join("；") : "建置中"}</div>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-// =========================
-// Universe 150 Map（完整版）
-// =========================
-function buildUniverseSummary(){
-
-  const groups = {
-    CORE:[],
-    GROWTH:[],
-    DEFENSIVE:[],
-    INCOME:[],
-    SPEC:[]
-  };
-
-  state.universe.forEach(u=>{
-    const c = (u.category||'').toLowerCase();
-    if(c.includes('core')) groups.CORE.push(u);
-    else if(c.includes('growth')) groups.GROWTH.push(u);
-    else if(c.includes('defensive')) groups.DEFENSIVE.push(u);
-    else if(c.includes('income')) groups.INCOME.push(u);
-    else groups.SPEC.push(u);
-  });
-
-  el.universeMap.innerHTML = '';
-
-  Object.entries(groups).forEach(([cat,list])=>{
-
-    if(!list.length) return;
-
-    const section = document.createElement('div');
-    section.className = 'cat-section';
-
-    const header = document.createElement('div');
-    header.className = 'cat-head';
-
-    const title = document.createElement('div');
-    title.innerHTML = `<div class="cat-title">${cat}</div>`;
-
-    const btn = document.createElement('button');
-    btn.className = 'mini-btn';
-    btn.innerText = '展開';
-
-    header.appendChild(title);
-    header.appendChild(btn);
-
-    const table = document.createElement('div');
-    table.className = 'map-table';
-
-    function render(expanded){
-
-      const show = expanded ? list : [list[0]];
-
-      table.innerHTML = `
-        <div class="map-row header">
-          <div>Symbol</div>
-          <div>Sector</div>
-          <div>M1</div>
-          <div>Final</div>
-          <div>報告</div>
-        </div>
-      ` + show.map(s=>{
-
-        const sym = up(s.symbol);
-        const card = state.cardLookup.get(sym);
-
-        const ready = card?.research_status?.final_verdict_done;
-
+      `).join("");
+
+      const coverageKeys = [
+        ["有 summary", c => !!c.summary],
+        ["有 content", c => !!c.content],
+        ["有 tags", c => Array.isArray(c.tags) && c.tags.length > 0],
+        ["有分類", c => !!c.category]
+      ];
+
+      el.coverageGrid.innerHTML = coverageKeys.map(([label, fn]) => {
+        const done = state.cards.filter(fn).length;
+        const ratio = totalCards ? (done / totalCards) * 100 : 0;
         return `
-          <div class="map-row item">
-            <div>${sym}</div>
-            <div>${s.sector||''}</div>
-            <div>${card?.m1_scores?.capex || '--'}</div>
-            <div>--</div>
-            <div>
-              ${ready
-                ? `<button class="report-btn" data-s="${sym}">查看</button>`
-                : `<span class="report-pending">建置中</span>`
-              }
-            </div>
+          <div class="cover">
+            <div class="row"><span>${esc(label)}</span><span>${done}/${totalCards}</span></div>
+            <div class="bar"><span style="width:${ratio}%"></span></div>
           </div>
         `;
-      }).join('');
+      }).join("");
+    }
 
-      table.querySelectorAll('.report-btn').forEach(b=>{
-        b.onclick = ()=>{
-          el.s1.value = b.dataset.s;
-          runResearch();
-          window.scrollTo({top:0,behavior:'smooth'});
-        };
+    function getInputs(){
+      return [...new Set([el.s1.value, el.s2.value, el.s3.value, el.s4.value, el.s5.value].map(up).filter(Boolean))];
+    }
+
+    function clearInputs(){
+      [el.s1, el.s2, el.s3, el.s4, el.s5].forEach(i => i.value = "");
+      el.cardsWrap.innerHTML = "";
+      el.cardsWrap.classList.add("hidden");
+      el.basketPanel.classList.add("hidden");
+      el.emptyState.classList.remove("hidden");
+    }
+
+    function renderBasket(symbols){
+      const stocks = symbols.map(s => state.lookup.get(s)).filter(Boolean);
+      const markets = symbols.map(s => state.market[s] || {});
+      const vols = stocks.map(x => x.volatility).filter(Boolean);
+      const cats = stocks.map(x => x.category_main || x.category || "").filter(Boolean);
+
+      el.basketSymbols.textContent = symbols.join(" / ");
+
+      const avg1m = avg(markets.map(m => Number(m.ret_1m)));
+      const avg3m = avg(markets.map(m => Number(m.ret_3m)));
+
+      const boxes = [
+        ["檔數", stocks.length, "本次查詢檔數"],
+        ["分類", cats.join(" / ") || "--", "大分類"],
+        ["波動", vols.join(" / ") || "--", "volatility"],
+        ["平均1M", pct(avg1m), "月度表現"],
+        ["平均3M", pct(avg3m), "季度表現"]
+      ];
+
+      el.basketGrid.innerHTML = boxes.map(([k,v,s]) => `
+        <div class="basket-box">
+          <div class="k">${esc(k)}</div>
+          <div class="v">${esc(v)}</div>
+          <div class="s">${esc(s)}</div>
+        </div>
+      `).join("");
+
+      el.basketPanel.classList.remove("hidden");
+    }
+
+    function renderM1View(stock){
+      const catMain = stock.category_main || up(stock.category);
+      const catSub = stock.category_sub || "--";
+      const vol = stock.volatility || "--";
+      const type = stock.type || "STOCK";
+      const sector = stock.sector || "--";
+
+      const explain = {
+        CORE: "市場主流 + 核心資產",
+        GROWTH: "跟主流有關，但不是核心必需",
+        INCOME: "成熟 / 現金流 / 景氣型",
+        DEFENSE: "防守 / 重估 / ETF / 低波動",
+        SPEC: "高波動 / 高不確定"
+      };
+
+      return `
+        <div class="m1view">
+          <div class="m1row">
+            <div class="m1name">大分類</div>
+            <div class="m1desc">${esc(explain[catMain] || "--")}</div>
+            <div class="m1val">${esc(catMain)}</div>
+          </div>
+          <div class="m1row">
+            <div class="m1name">小分類</div>
+            <div class="m1desc">用來決定模板重點與對口</div>
+            <div class="m1val">${esc(catSub)}</div>
+          </div>
+          <div class="m1row">
+            <div class="m1name">波動</div>
+            <div class="m1desc">用來決定 FCN / 風險使用方式</div>
+            <div class="m1val">${esc(vol)}</div>
+          </div>
+          <div class="m1row">
+            <div class="m1name">類型</div>
+            <div class="m1desc">STOCK / ETF</div>
+            <div class="m1val">${esc(type)}</div>
+          </div>
+          <div class="m1row">
+            <div class="m1name">Sector</div>
+            <div class="m1desc">原始 universe 欄位</div>
+            <div class="m1val">${esc(sector)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function buildFallbackCard(symbol, stock, market){
+      const price = market.price_now == null ? "--" : "$" + fmt(market.price_now, 2);
+      return {
+        company_name: symbol,
+        summary: "尚未建立完整分析，先以分類與市場資料顯示。",
+        content:
+          `${symbol} 目前尚未放入 competitive_cards.json 的完整分析內容。\n\n` +
+          `你可以先用這張卡看分類、波動與市場位置，再把完整公司分析補進 data/m1/competitive_cards.json。\n\n` +
+          `目前價格：${price}`,
+        tags: [stock?.category_main || up(stock?.category), stock?.category_sub || "--"].filter(Boolean),
+        category: stock?.category_main || up(stock?.category || "")
+      };
+    }
+
+    function renderCard(symbol){
+      const stock = state.lookup.get(symbol) || {};
+      const market = state.market[symbol] || {};
+      const card = state.cardLookup.get(symbol) || buildFallbackCard(symbol, stock, market);
+
+      const priceNow = market.price_now == null ? "--" : "$" + fmt(market.price_now,2);
+      const box1w = market.ret_1w == null ? "--" : pct(market.ret_1w);
+      const box1m = market.ret_1m == null ? "--" : pct(market.ret_1m);
+      const box3m = market.ret_3m == null ? "--" : pct(market.ret_3m);
+      const box12m = market.ret_12m == null ? "--" : pct(market.ret_12m);
+      const volRatio = market.volume_ratio == null ? "--" : fmt(market.volume_ratio,2);
+
+      const contentHtml = esc(card.content || "").replace(/\n/g, "<br>");
+
+      return `
+        <section class="panel card">
+          <div class="card-head">
+            <div class="head-left">
+              <div class="symbol-pill">
+                <div class="sym">${esc(symbol)}</div>
+                <div class="cat">${esc(stock.category_main || stock.category || "")}</div>
+              </div>
+              <div class="title-block">
+                <h2>${esc(card.company_name || symbol)}</h2>
+                <div class="title-meta">${esc(stock.sector || "")} ｜ ${esc(stock.category_sub || "")} ｜ ${esc(stock.type || "STOCK")}</div>
+                <div class="tags">
+                  ${(card.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join("")}
+                  ${stock.volatility ? `<span class="tag">VOL-${esc(stock.volatility)}</span>` : ""}
+                </div>
+              </div>
+            </div>
+
+            <div class="price-strip">
+              <div class="price-box"><div class="k">Price Now</div><div class="v">${esc(priceNow)}</div><div class="d">即時價格</div></div>
+              <div class="price-box"><div class="k">1W / 1M</div><div class="v">${esc(box1w)} / ${esc(box1m)}</div><div class="d">短期變化</div></div>
+              <div class="price-box"><div class="k">3M / 12M</div><div class="v">${esc(box3m)} / ${esc(box12m)}</div><div class="d">中長期變化</div></div>
+              <div class="price-box"><div class="k">Volume Ratio</div><div class="v">${esc(volRatio)}</div><div class="d">量能強弱</div></div>
+              <div class="price-box"><div class="k">Category</div><div class="v">${esc(stock.category_main || stock.category || "--")}</div><div class="d">${esc(stock.category_sub || "--")}</div></div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h4>一句話摘要</h4>
+            <div class="paragraph"><span class="arrow">👉</span> ${esc(card.summary || "建置中")}</div>
+          </div>
+
+          <div class="section">
+            <h4>完整分析</h4>
+            <div class="paragraph">${contentHtml || "建置中"}</div>
+          </div>
+
+          <div class="section">
+            <h4>M1 分類視角</h4>
+            ${renderM1View(stock)}
+          </div>
+
+          <div class="conclusion">
+            <div class="headline">使用提醒</div>
+            <div class="text">這張卡的完整人話分析來自 <b>competitive_cards.json</b>；分類、波動與原始屬性來自 <b>universe_150.json</b>；價格與報酬來自 <b>m1_market_runtime.json</b>。你之後只要補資料，畫面就會直接更新。</div>
+          </div>
+        </section>
+      `;
+    }
+
+    function runResearch(){
+      const symbols = getInputs();
+      if(!symbols.length){
+        clearInputs();
+        return;
+      }
+
+      renderBasket(symbols);
+      el.cardsWrap.innerHTML = symbols.map(renderCard).join("");
+      el.cardsWrap.classList.remove("hidden");
+      el.emptyState.classList.add("hidden");
+    }
+
+    function buildUniverseSummary(){
+      const groups = { CORE: [], GROWTH: [], INCOME: [], DEFENSE: [], SPEC: [] };
+      state.universe.forEach(x => {
+        const k = x.category_main || up(x.category);
+        if(!groups[k]) groups[k] = [];
+        groups[k].push(x);
+      });
+
+      el.universeMap.innerHTML = "";
+      Object.entries(groups).forEach(([key, list]) => {
+        if(!list.length) return;
+        const wrap = document.createElement("div");
+        wrap.className = "group";
+        const head = document.createElement("div");
+        head.className = "group-head";
+        head.innerHTML = `<div class="group-title">${key}</div><div class="muted">${list.length} 檔</div>`;
+        const btn = document.createElement("button");
+        btn.className = "mini-btn";
+        btn.textContent = "展開";
+        head.appendChild(btn);
+        wrap.appendChild(head);
+
+        const table = document.createElement("div");
+        table.className = "table";
+        wrap.appendChild(table);
+
+        let open = false;
+        function draw(){
+          const show = open ? list : list.slice(0,1);
+          table.innerHTML = `
+            <div class="row-head">
+              <div>Symbol</div>
+              <div>Type</div>
+              <div>Sub</div>
+              <div>Vol</div>
+              <div>Card</div>
+              <div>Action</div>
+            </div>
+          ` + show.map(item => {
+            const hasCard = state.cardLookup.has(up(item.symbol));
+            return `
+              <div class="row-item">
+                <div>${esc(item.symbol)}</div>
+                <div>${esc(item.type || "STOCK")}</div>
+                <div>${esc(item.category_sub || "--")}</div>
+                <div>${esc(item.volatility || "--")}</div>
+                <div>${hasCard ? "Ready" : "建置中"}</div>
+                <div><button class="report-btn" data-s="${esc(item.symbol)}">查看報告</button></div>
+              </div>
+            `;
+          }).join("");
+
+          table.querySelectorAll(".report-btn").forEach(b => {
+            b.addEventListener("click", () => {
+              el.s1.value = b.dataset.s;
+              el.s2.value = ""; el.s3.value = ""; el.s4.value = ""; el.s5.value = "";
+              runResearch();
+              window.scrollTo({top:0, behavior:"smooth"});
+            });
+          });
+        }
+
+        btn.addEventListener("click", () => {
+          open = !open;
+          btn.textContent = open ? "收合" : "展開";
+          draw();
+        });
+
+        draw();
+        el.universeMap.appendChild(wrap);
       });
     }
 
-    let open = false;
-    render(open);
+    async function init(){
+      const [universe, cards, market] = await Promise.all([
+        fetchJson("data/m1/universe_150.json"),
+        fetchJson("data/m1/competitive_cards.json"),
+        fetchJson("data/m1/m1_market_runtime.json")
+      ]);
 
-    btn.onclick = ()=>{
-      open = !open;
-      btn.innerText = open ? '收合' : '展開';
-      render(open);
-    };
+      state.universe = asArray(universe);
+      state.cards = asArray(cards);
+      state.market = market || {};
 
-    section.appendChild(header);
-    section.appendChild(table);
-    el.universeMap.appendChild(section);
-  });
-}
+      buildLookup();
+      renderDashboard();
+      buildUniverseSummary();
+    }
 
-// =========================
-// override runResearch（升級）
-// =========================
-const _oldRun = runResearch;
-runResearch = function(){
+    [el.s1, el.s2, el.s3, el.s4, el.s5].forEach(input => {
+      input.addEventListener("input", () => {
+        input.value = up(input.value).replace(/[^A-Z0-9]/g, "");
+      });
+      input.addEventListener("keydown", e => {
+        if(e.key === "Enter") runResearch();
+      });
+    });
 
-  const symbols = getInputs();
+    el.runBtn.addEventListener("click", runResearch);
+    el.clearBtn.addEventListener("click", clearInputs);
 
-  if(!symbols.length){
-    clearInputs();
-    return;
-  }
+    init();
+  </script>
+</body>
+</html>
 
-  const found = symbols.filter(s=>state.lookup.has(s));
-
-  if(!found.length){
-    el.cardsWrap.innerHTML = `<div class="empty">查無股票</div>`;
-    el.cardsWrap.classList.remove('hidden');
-    return;
-  }
-
-  el.basketSymbols.textContent = symbols.join(' / ');
-
-  el.cardsWrap.innerHTML = found.map(renderResearchCardFull).join('');
-  el.cardsWrap.classList.remove('hidden');
-
-  el.basketPanel.classList.remove('hidden');
-  el.emptyState.classList.add('hidden');
-};
-
-// =========================
-// init 補上
-// =========================
-const _oldInit = init;
-init = async function(){
-  await _oldInit();
-  buildUniverseSummary();
-};
-</script>
 
 
 
