@@ -491,19 +491,83 @@
     function getLightProfile(symbol){ return state.lightProfiles[up(symbol)] || null; }
     function getProfile(symbol){
       const sym = up(symbol);
-      if(state.profileMode === 'deep') return getDeepProfile(sym) || getLightProfile(sym) || null;
-      if(state.profileMode === 'light') return getLightProfile(sym) || getDeepProfile(sym) || null;
+      if(state.profileMode === 'deep') return getDeepProfile(sym) || null;
+      if(state.profileMode === 'light') return getLightProfile(sym) || null;
       return getDeepProfile(sym) || getLightProfile(sym) || null;
     }
     function getProfileSource(symbol){
       const sym = up(symbol);
       const hasDeep = !!getDeepProfile(sym);
       const hasLight = !!getLightProfile(sym);
-      if(state.profileMode === 'deep') return hasDeep ? 'deep' : (hasLight ? 'light_fallback' : 'fallback');
-      if(state.profileMode === 'light') return hasLight ? 'light' : (hasDeep ? 'deep_fallback' : 'fallback');
+      if(state.profileMode === 'deep') return hasDeep ? 'deep' : 'missing_deep';
+      if(state.profileMode === 'light') return hasLight ? 'light' : 'missing_light';
       return hasDeep ? 'deep' : (hasLight ? 'light' : 'fallback');
     }
     function getMarket(symbol){ return state.market?.[up(symbol)] || {}; }
+
+    function normalizeLightProfile(raw, symbol){
+      const u = getUniverse(symbol);
+      const positioning = Array.isArray(raw?.company_positioning) ? raw.company_positioning : [];
+      const categoryText = String(raw?.final_decision || raw?.market_view || '').toLowerCase();
+      const inferredCategory =
+        categoryText.includes('core') ? 'core' :
+        categoryText.includes('growth') ? 'growth' :
+        categoryText.includes('defensive') ? 'defensive' :
+        categoryText.includes('income') ? 'income' :
+        categoryText.includes('speculative') ? 'speculative' :
+        (u?.category_main || u?.category || 'watch');
+
+      return {
+        symbol: raw?.symbol || symbol,
+        name: raw?.name || u?.name || symbol,
+        type: 'research_light',
+        company_overview: positioning.filter(Boolean).join(' ') || raw?.company_structure || raw?.final_decision || `${symbol} 泛用研究版資料`,
+        basic_info: {
+          industry: u?.sector || u?.category_main || u?.category || '--'
+        },
+        pool30_fit: {
+          pool30: null,
+          stock_pool: true,
+          category: inferredCategory,
+          reason: raw?.final_decision || raw?.market_view || '--'
+        },
+        valuation_and_timing: {
+          valuation_view: raw?.market_view || '--',
+          buy_strategy: raw?.final_decision || '--',
+          technical_view: { conclusion: raw?.final_decision || '--' },
+          sweet_zone: raw?.sweet_zone || ''
+        },
+        business_model: {
+          summary: raw?.company_structure || '--',
+          segments: []
+        },
+        customer_analysis: {
+          summary: raw?.customer_analysis || '--',
+          key_customers: []
+        },
+        financial_summary: {
+          revenue: '--',
+          growth: '--',
+          net_margin: '--',
+          fcf_margin: '--',
+          pe: '--'
+        },
+        competition: {
+          summary: raw?.competition || '--',
+          peers: []
+        },
+        risk_opportunity: {
+          risk: raw?.risk_opportunity ? [raw.risk_opportunity] : [],
+          opportunity: []
+        },
+        final_view: raw?.final_decision || '--',
+        quality_check: { total_score: 7.2, completeness: 7.2, specificity: 7.0, data_support: 6.8 },
+        one_line_1: positioning[0] || '',
+        one_line_2: positioning[1] || '',
+        one_line_3: positioning[2] || '',
+        __raw_light: raw || {}
+      };
+    }
 
     function normalizeProfiles(raw){
       const out = {};
@@ -936,13 +1000,15 @@
 
     function buildSharedStockPayload(symbol){
       const sym = up(symbol);
-      const profile = getProfile(sym);
+      const rawProfile = getProfile(sym);
+      const source = getProfileSource(sym);
+      const profile = source === 'light' ? normalizeLightProfile(rawProfile, sym) : rawProfile;
       const universe = getUniverse(sym);
       const market = getMarket(sym);
       return {
         symbol: sym,
         name: profile?.name || universe?.name || sym,
-        source: getProfileSource(sym),
+        source: source,
         profile_mode: state.profileMode,
         category: (profile?.pool30_fit?.category || universe?.category_main || universe?.category || '').toString().toUpperCase(),
         sector: profile?.basic_info?.industry || universe?.sector || '',
@@ -983,12 +1049,168 @@
       if(el.bridgeSource) el.bridgeSource.textContent = payload.source || '--';
     }
 
+
+    function renderMissingVersion(symbol, source){
+      const labels = {
+        missing_deep: '深度版',
+        missing_light: '泛用版',
+        fallback: '研究'
+      };
+      const label = labels[source] || '研究';
+      el.emptyState.style.display = 'block';
+      el.stockPanel.style.display = 'none';
+      el.emptyState.innerHTML = `此股票目前沒有可用的${label}資料：<b>${esc(symbol)}</b>`;
+      if(el.bridgeSymbol) el.bridgeSymbol.textContent = symbol || '--';
+      if(el.bridgeSource) el.bridgeSource.textContent = source || '--';
+    }
+
+    function renderLightStock(symbol, rawProfile, source, u, m){
+      const profile = normalizeLightProfile(rawProfile, symbol);
+      const category = String(profile?.pool30_fit?.category || u?.category_main || '--').toUpperCase();
+      const summaryText = profile.company_overview || '--';
+      const positionPct = inferPositionPct(profile, m);
+      const hiLo = inferHighLow(profile, m);
+      const priceNow = hiLo.cur ?? n(m?.price_now, null);
+      const returns1w = Number.isFinite(m?.ret_1w) ? pctDecimal(m.ret_1w) : '--';
+      const returns1m = Number.isFinite(m?.ret_1m) ? pctDecimal(m.ret_1m) : '--';
+      const returns3m = Number.isFinite(m?.ret_3m) ? pctDecimal(m.ret_3m) : '--';
+      const returns12m = Number.isFinite(m?.ret_12m) ? pctDecimal(m.ret_12m) : '--';
+      const volumeRatio = Number.isFinite(m?.volume_ratio) ? fmt(m.volume_ratio,2) : '--';
+      const oneLiners = [profile.one_line_1, profile.one_line_2, profile.one_line_3].filter(Boolean).map(x => `<div class="section-note" style="margin-top:6px">${esc(x)}</div>`).join('');
+      const html = `
+        <section class="panel header-panel">
+          <div class="header-grid">
+            <div>
+              <div class="head-left">
+                <div class="logo-pill">
+                  <div class="sym">${esc(symbol)}</div>
+                  <div class="cat">${esc(category)}</div>
+                </div>
+                <div class="title">
+                  <h2>${esc(profile.name || symbol)}</h2>
+                  <div class="one-liner">${esc(summaryText)}</div>
+                  ${oneLiners}
+                  <div class="meta">
+                    <span class="chip">Type：${esc(profile.type || 'research_light')}</span>
+                    <span class="chip">Source：${esc(source)}</span>
+                    <span class="chip">Industry：${esc(profile.basic_info?.industry || '--')}</span>
+                    <span class="chip">Light Mode：文字版 8 模塊</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="price-strip">
+                <div class="mini-kpi"><div class="k">Price Now</div><div class="v">${money(priceNow,2)}</div><div class="d">現價 / 觀察位階</div></div>
+                <div class="mini-kpi"><div class="k">1W / 1M</div><div class="v">${esc(returns1w)} / ${esc(returns1m)}</div><div class="d">短期變化</div></div>
+                <div class="mini-kpi"><div class="k">3M / 12M</div><div class="v">${esc(returns3m)} / ${esc(returns12m)}</div><div class="d">中長期變化</div></div>
+                <div class="mini-kpi"><div class="k">Volume Ratio</div><div class="v">${esc(volumeRatio)}</div><div class="d">量能強弱</div></div>
+                <div class="mini-kpi"><div class="k">52W Position</div><div class="v">${fmt(positionPct,0)}%</div><div class="d">越高越接近高位</div></div>
+              </div>
+
+              <div class="range-wrap">
+                <div class="range-top"><span>價格位置</span><span>52W Low → Current → 52W High</span></div>
+                <div class="range-bar">
+                  <div class="range-fill" style="width:${fmt(positionPct,0)}%"></div>
+                  <div class="range-pin" style="left:${fmt(positionPct,0)}%"></div>
+                </div>
+                <div class="range-label"><span>Low ${money(hiLo.low,2)}</span><span>Current ${money(priceNow,2)}</span><span>High ${money(hiLo.high,2)}</span></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="decision-grid">
+                <div class="decision-card warn">
+                  <div class="k">Pool30</div><div class="v">--</div><div class="d">泛用版不做 pool30 定量判斷</div>
+                </div>
+                <div class="decision-card ${getDecisionClass(category.toLowerCase())}">
+                  <div class="k">Category</div><div class="v">${esc(category)}</div><div class="d">依 universe / 文字推定分類</div>
+                </div>
+                <div class="decision-card warn">
+                  <div class="k">Timing</div><div class="v">TEXT</div><div class="d">${esc(profile.valuation_and_timing?.buy_strategy || profile.final_view || '--')}</div>
+                </div>
+              </div>
+
+              <div class="decision-card warn" style="margin-top:10px">
+                <div class="k">FCN View</div><div class="v">TEXT</div><div class="d">${esc(profile.final_view || '--')}</div>
+              </div>
+
+              <div class="score-grid">
+                <div class="score-box"><div class="k">Business Quality</div><div class="v">L1</div><div class="d">泛用描述版</div></div>
+                <div class="score-box"><div class="k">Revenue Visibility</div><div class="v">L1</div><div class="d">待深度研究</div></div>
+                <div class="score-box"><div class="k">Financial Quality</div><div class="v">L1</div><div class="d">待深度研究</div></div>
+                <div class="score-box"><div class="k">Valuation / Timing</div><div class="v">L1</div><div class="d">文字判斷為主</div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="two-col">
+          <section class="panel panel-body">
+            <div class="panel-head"><h3>2. 公司結構</h3><div class="panel-sub">Light 文字版</div></div>
+            <div class="section-note">${esc(profile.business_model.summary || '--')}</div>
+          </section>
+          <section class="panel panel-body">
+            <div class="panel-head"><h3>3. 客戶分析</h3><div class="panel-sub">Light 文字版</div></div>
+            <div class="section-note">${esc(profile.customer_analysis.summary || '--')}</div>
+          </section>
+        </section>
+
+        <section class="two-col">
+          <section class="panel panel-body">
+            <div class="panel-head"><h3>4. 財務品質</h3><div class="panel-sub">Light 文字版</div></div>
+            <div class="section-note">${esc(rawProfile?.financial_quality || '--')}</div>
+          </section>
+          <section class="panel panel-body">
+            <div class="panel-head"><h3>5. 市場在反映什麼</h3><div class="panel-sub">Light 文字版</div></div>
+            <div class="section-note">${esc(rawProfile?.market_view || '--')}</div>
+          </section>
+        </section>
+
+        <section class="panel panel-body">
+          <div class="panel-head"><h3>6. 競爭分析</h3><div class="panel-sub">Light 文字版</div></div>
+          <div class="section-note">${esc(rawProfile?.competition || '--')}</div>
+        </section>
+
+        <section class="two-col">
+          <section class="panel panel-body">
+            <div class="panel-head"><h3>7. 風險 / 機會</h3><div class="panel-sub">Light 文字版</div></div>
+            <div class="section-note">${esc(rawProfile?.risk_opportunity || '--')}</div>
+          </section>
+          <section class="panel panel-body">
+            <div class="panel-head"><h3>8. 最終判斷</h3><div class="panel-sub">Light 文字版</div></div>
+            <div class="headline-box" style="margin-top:0">
+              <div class="h">一句話結論</div>
+              <div class="t">${esc(rawProfile?.final_decision || '--')}</div>
+            </div>
+          </section>
+        </section>
+      `;
+      el.emptyState.style.display = 'none';
+      el.stockPanel.style.display = 'flex';
+      el.stockPanel.innerHTML = html;
+      el.stockSearch.value = symbol;
+      syncSharedStockPayload(symbol);
+      renderWatchlist();
+    }
+
     function renderStock(symbol){
-      const p = getProfile(symbol);
+      const raw = getProfile(symbol);
       const source = getProfileSource(symbol);
       state.currentSource = source;
       const u = getUniverse(symbol);
       const m = getMarket(symbol);
+
+      if(source === 'missing_deep' || source === 'missing_light'){
+        renderMissingVersion(symbol, source);
+        return;
+      }
+
+      if(source === 'light' && raw){
+        renderLightStock(symbol, raw, source, u, m);
+        return;
+      }
+
+      const p = raw;
       if(!p && !u){
         el.emptyState.style.display = 'block';
         el.emptyState.innerHTML = `找不到 ${esc(symbol)} 資料。`;
