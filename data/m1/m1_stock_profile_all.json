@@ -1,1 +1,325 @@
-
+{
+"AMD": {
+"symbol": "AMD",
+"name": "Advanced Micro Devices",
+"type": "research_light",
+"company_positioning": [
+"AMD 賣的是 CPU、GPU 與 AI accelerator，核心戰場是 data center、PC 與 embedded 運算平台。",
+"它的主要客戶是 hyperscaler、企業伺服器 OEM、PC 品牌廠與遊戲主機平台商，不是單一終端品牌生意。",
+"影響股價的主因是 MI300/MI350 系列 AI GPU 滲透率、EPYC 伺服器市占、以及 NVIDIA 與 cloud capex 的相對變化。"
+],
+"company_structure": "AMD 的結構已從 PC CPU 公司轉向 data center + AI 加速器平台，決勝點在 EPYC 與 Instinct 能否持續拉高 ASP 與產品組合。",
+"customer_analysis": "AMD 客戶集中在 hyperscaler、企業伺服器與 OEM 通路，所以單季表現常受 cloud 採購節奏、企業 IT 預算與遊戲主機週期影響。",
+"financial_quality": "這檔股票的財務品質看 data center 毛利率與 operating leverage，而不是只看整體營收，因為 embedded 與 gaming 波動會稀釋品質感。",
+"market_view": "市場把 AMD 當成 NVIDIA 的第二供應鏈選項與 x86/AI 受益股來定價，但也擔心 AI GPU 軟體生態與出貨節奏落後。",
+"competition": "主要對手是 NVIDIA、Intel 與部分 custom ASIC 供應商。AMD 和 NVIDIA 的差異在於 CUDA 生態與整機櫃話語權，和 Intel 的差異則在伺服器 CPU 執行力與產品節奏。若 hyperscaler 更偏好自研 ASIC，AMD 的估值彈性就會被壓縮。",
+"risk_opportunity": "機會在 AI GPU 與 EPYC 伺服器持續吃市占，風險在於 MI 系列若無法放量或毛利率不如預期，市場會把它重新當成中高週期半導體股。",
+"final_decision": "可列入 stock_pool 與 growth 觀察名單，但更適合等 AI 訂單與產品節奏確認後再加權，不適合在純題材高點追價。"
+},
+"ARM": {
+"symbol": "ARM",
+"name": "Arm Holdings",
+"type": "research_light",
+"company_positioning": [
+"ARM 做的是 CPU IP 授權與 royalty 生意，本質不是賣晶片，而是賣架構標準。",
+"它的客戶是手機 SoC 廠、雲端 CPU 業者、車用晶片公司與邊緣裝置設計商，等於吃的是整個半導體設計生態。",
+"影響股價的主因是 royalty rate 升級、資料中心 Arm CPU 滲透、以及中國授權與授權續約風險。"
+],
+"company_structure": "ARM 的營運分成 license 與 royalty，前者看新設計導入，後者看出貨量與高價值運算平台的單位變現能力。",
+"customer_analysis": "ARM 的客戶遍及 smartphone、cloud、auto 與 IoT，但真正估值關鍵是大客戶從低階核心升級到高 royalty 的 v9、Neoverse 與 AI edge 架構。",
+"financial_quality": "ARM 的財務品質比一般晶片股更輕資產，重點在 gross margin 與 recurring royalty 的可預測性，而不是 capex 強度。",
+"market_view": "市場把 ARM 當成 AI 邊緣運算與資料中心 CPU 架構受益股，但也擔心估值跑太快、授權收入認列節奏不穩，以及中國營收集中問題。",
+"competition": "主要對手是 x86 陣營、RISC-V 生態與部分客戶自研架構。ARM 的差異是已經卡住手機與低功耗運算標準位階，而 RISC-V 的差異在於開放架構與成本彈性。若 hyperscaler 與中國客戶加速轉向自研或 RISC-V，ARM 的長期溢價會被挑戰。",
+"risk_opportunity": "機會在 Neoverse、AI PC 與車用運算提高 royalty mix，風險在於中國授權、SoftBank 資本操作預期、以及高估值下的成長失速。",
+"final_decision": "可放入 stock_pool 與 growth 名單，但現階段更像高估值架構平台股，適合回檔時看，不適合當 FCN 接股核心。"
+},
+"ORCL": {
+"symbol": "ORCL",
+"name": "Oracle",
+"type": "research_light",
+"company_positioning": [
+"ORCL 做的是資料庫、企業應用與 OCI 雲端基礎設施，現在市場最在意的是它從傳統軟體公司轉向 AI cloud。",
+"它的客戶是大型企業、政府單位、資料庫工作負載用戶與需要 GPU cluster 的 AI 公司。",
+"影響股價的主因是 OCI 成長速度、cloud capex 兌現、以及 OpenAI、xAI、企業 AI 訂單能否轉成 backlog 與營收。"
+],
+"company_structure": "ORCL 的結構是 database maintenance 現金牛加上 OCI 高成長引擎，估值重估靠的是後者不是前者。",
+"customer_analysis": "ORCL 客戶黏性高，因為資料庫切換成本大，但近年真正推升股價的是 AI 計算租用客戶與 multicloud 合作夥伴。",
+"financial_quality": "這家公司財務品質看 recurring software support 與 OCI 毛利率改善，而不是只看整體 EPS，因為 capex 正把自由現金流壓短期。",
+"market_view": "市場正在 pricing OCI、GPU cluster 與 multicloud database 爆發，但也擔心 capex 太重、資料中心建設速度與供電交付風險。",
+"competition": "主要對手是 Microsoft Azure、AWS、Google Cloud 與 Snowflake 類資料平台。ORCL 的差異是 database base installed 非常深，且 OCI 在高密度 GPU cluster 與 Oracle Database workloads 有特定優勢。缺點是通用雲生態與企業開發者心智仍落後 hyperscaler 三巨頭。",
+"risk_opportunity": "機會在 OCI 與 multicloud database 擴張，風險在於 AI 雲端需求若延後、capex 堆高折舊、或大型客戶集中讓成長波動放大。",
+"final_decision": "可進 stock_pool，若 OCI 與 backlog 持續上修可進 pool30 邊緣名單，但操作上偏向等拉回而不是追雲端題材。"
+},
+"GOOG": {
+"symbol": "GOOG",
+"name": "Alphabet",
+"type": "research_light",
+"company_positioning": [
+"GOOG 做的是搜尋廣告、YouTube、Google Cloud 與 AI 平台，本質上仍是廣告現金牛加雲端成長股。",
+"它的客戶是全球廣告主、企業 cloud 用戶、開發者與 Android 生態合作方，不是依賴少數大客戶。",
+"影響股價的主因是 Search 廣告韌性、Cloud 成長、Gemini/AI Overviews 的變現方式，以及反壟斷壓力。"
+],
+"company_structure": "GOOG 的營收主體仍是 advertising，但估值提升靠的是 Cloud、AI infrastructure 與搜尋體驗改版能否守住 commercial intent。",
+"customer_analysis": "GOOG 客戶高度分散，真正的集中風險不是單一客戶，而是廣告模式本身與流量入口變化。",
+"financial_quality": "這家公司財務品質非常高，因為 search cash flow 厚、Cloud 利潤率在改善，但 AI capex 正在把現金回收期拉長。",
+"market_view": "市場把 GOOG 當成低估值 mega-cap AI 平台來看，但也擔心 AI 聊天介面改變搜尋點擊結構與廣告單價。",
+"competition": "主要對手是 Meta 的廣告平台、Microsoft/OpenAI 的 AI 搜尋入口，以及 AWS/Microsoft 在 cloud 的競爭。GOOG 的差異在於搜尋流量與資料分發能力仍最強，Cloud 則是第三名但 AI 成長快。問題在於新型 AI 入口若分流搜尋需求，市場不會再給它防守型估值。",
+"risk_opportunity": "機會在 Cloud、Gemini 與 AI 搜尋商業化，風險在於反壟斷、TAC 壓力與 AI 搜尋若降低傳統廣告 monetization。",
+"final_decision": "可列為 pool30 core，適合中長期配置與較保守 FCN 參考股，但買點還是要選在法規或 AI capex 雜音的回檔區。"
+},
+"META": {
+"symbol": "META",
+"name": "Meta Platforms",
+"type": "research_light",
+"company_positioning": [
+"META 做的是社交廣告平台、推薦演算法與 AI 模型生態，賺錢核心仍是 Family of Apps 不是 Reality Labs。",
+"它的客戶是全球廣告主、品牌商與電商投放方，流量資產則來自 Facebook、Instagram、WhatsApp 與 Reels。",
+"影響股價的主因是 ad impressions、ad pricing、AI 推薦對廣告 ROI 的提升，以及 Reality Labs 燒錢幅度。"
+],
+"company_structure": "META 的結構是超高現金流廣告平台加一個長期投入的 VR/AR 與 AI 選擇權部門。",
+"customer_analysis": "META 客戶很分散，但真正決定估值的是平台使用時長、廣告轉換效率與短影音競爭壓力。",
+"financial_quality": "這家公司財務品質高，因為廣告毛利與 operating margin 很厚，但資本支出與 Reality Labs 會拉高市場對費用率的敏感度。",
+"market_view": "市場把 META 當成 AI 廣告效率受益股來定價，但也擔心 AI capex 與 metaverse 投入拖慢自由現金流。",
+"competition": "主要對手是 GOOG 的廣告平台、TikTok 的用戶時長競爭，以及部分零售媒體廣告。META 的差異在於社交圖譜、推薦引擎與廣告轉換能力強，廣告主投放回報通常比純流量平台更直接。缺點是估值已不便宜，且 Reality Labs 長期仍是利潤黑洞。",
+"risk_opportunity": "機會在 AI 推薦持續提高 ad pricing 與 Reels monetization，風險在於監管、內容政策與 Reality Labs 長期虧損。",
+"final_decision": "可列入 pool30 core，但部位管理要比 GOOG 保守一點，因為估值與支出彈性都更高。"
+},
+"PLTR": {
+"symbol": "PLTR",
+"name": "Palantir Technologies",
+"type": "research_light",
+"company_positioning": [
+"PLTR 做的是資料整合、決策軟體與 AI operating system，本質上是高毛利企業/政府軟體平台。",
+"它的客戶是美國政府、國防單位、大型企業與需要部署 AI workflow 的產業客戶。",
+"影響股價的主因是美國商業收入加速、AIP 落地、政府合約續約與估值溢價能否持續。"
+],
+"company_structure": "PLTR 的成長引擎已從政府訂單延伸到商業 AIP 部署，結構上從專案導向走向平台導向。",
+"customer_analysis": "PLTR 客戶數不算極度分散，單一大型合約對營收影響仍大，所以市場很重視 deal value、remaining deal value 與美國商業客戶增速。",
+"financial_quality": "這家公司財務品質好看在軟體毛利率與營業槓桿，但要小心 SBC 與高估值讓市場對成長失速非常敏感。",
+"market_view": "市場把 PLTR 當成 AI 軟體純度很高的公司，但也擔心政府預算、企業導入速度與估值遠高於傳統軟體股。",
+"competition": "主要對手是 Snowflake、Databricks、Accenture 類整合商以及各種企業 AI 平台。PLTR 的差異在於政府安全背景、Ontology 與可快速部署的 operational workflow，不只是資料倉庫。弱點是大型專案色彩仍重，擴張速度容易受客戶導入節奏卡住。",
+"risk_opportunity": "機會在 AIP 與美國商業收入持續上修，風險在於高本益比下只要增速放緩就會引發估值壓縮。",
+"final_decision": "可進 stock_pool 與 event/growth 名單，但不適合當 pool30 核心與保守型 FCN 接股標的。"
+},
+"TSLA": {
+"symbol": "TSLA",
+"name": "Tesla",
+"type": "research_light",
+"company_positioning": [
+"TSLA 做的是電動車、儲能、FSD 與機器人，本質上不只是車廠，而是把硬體與 AI 軟體綁在一起賣。",
+"它的客戶是全球電動車消費者、能源儲存用戶與未來的 robotaxi/FSD 軟體使用者。",
+"影響股價的主因是汽車交付與毛利率、FSD 進展、能源業務成長、以及 Elon Musk 相關執行風格風險。"
+],
+"company_structure": "TSLA 的結構正在從 EV 製造轉向 Auto + Energy + AI 軟體敘事，但當前損益仍主要由汽車毛利率決定。",
+"customer_analysis": "TSLA 客戶分散，但需求很受價格調整、補貼政策、利率與品牌情緒影響，所以交付數與 ASP 比一般科技股更重要。",
+"financial_quality": "這家公司財務品質看 automotive gross margin 與能源業務擴張，而不是只看交車量，因為降價會快速吃掉利潤。",
+"market_view": "市場在 pricing robotaxi、FSD 與 Optimus 選擇權，但也擔心中國競爭、EV 價格戰與交付成長放緩。",
+"competition": "主要對手是 BYD、傳統車廠 EV 陣營與中國本土智慧電車品牌。TSLA 的差異在於超充、生產效率、FSD 資料量與品牌心智，不只是車款規格。缺點是估值長期建在未來 AI/robotaxi 敘事上，和一般車廠很難用同一把尺衡量。",
+"risk_opportunity": "機會在能源儲存與 FSD 商業化，風險在於汽車毛利率被價格戰壓縮、監管限制自駕推進、以及市場對交付失速的再評價。",
+"final_decision": "可進 stock_pool，但更適合 event/growth 而非 core；操作上要把它當高波動敘事股，不要當穩定消費龍頭。"
+},
+"AMAT": {
+"symbol": "AMAT",
+"name": "Applied Materials",
+"type": "research_light",
+"company_positioning": [
+"AMAT 做的是半導體製造設備與材料工程，吃的是晶圓廠 capex，不是終端消費需求。",
+"它的客戶是 TSMC、Samsung、Intel、記憶體廠與邏輯晶片製造商，屬於上游設備核心供應商。",
+"影響股價的主因是先進製程、DRAM/NAND 投資、China equipment demand 與 export control。"
+],
+"company_structure": "AMAT 的結構由 Semiconductor Systems、Applied Global Services 與 Display 組成，其中估值重心在晶圓設備與服務黏著度。",
+"customer_analysis": "AMAT 客戶雖然集中在大型晶圓廠，但需求來源多元，真正風險是區域 capex 波動與中國比重變化。",
+"financial_quality": "這家公司財務品質不錯，因為設備毛利率加上服務收入提高了抗波動性，但本質仍受半導體 capex 週期影響。",
+"market_view": "市場把 AMAT 當成 AI 帶動先進製程與封裝設備受益股，但也擔心記憶體投資延後與出口管制造成中國訂單波動。",
+"competition": "主要對手是 Lam Research、KLA、ASML 與 Tokyo Electron。AMAT 的差異在於產品線更廣，涵蓋 deposition、etch、inspection 外的部分整合能力。缺點是它不像 ASML 那樣具唯一性，所以估值通常不會拿到最高溢價。",
+"risk_opportunity": "機會在 AI 帶動晶圓設備與先進封裝需求，風險在於 China demand 波動、客戶 capex 延後與技術替代。",
+"final_decision": "可進 pool30 的半導體設備核心名單，適合中長期配置，也比純題材股更適合 FCN 參考籃子。"
+},
+"UNH": {
+"symbol": "UNH",
+"name": "UnitedHealth Group",
+"type": "research_light",
+"company_positioning": [
+"UNH 做的是健康保險與醫療服務平台，核心不是單一保單，而是 UnitedHealthcare + Optum 的雙引擎結構。",
+"它的客戶是商業保險用戶、Medicare/Medicaid 受益人、企業雇主與醫療服務體系。",
+"影響股價的主因是 medical loss ratio、Medicare Advantage 定價、監管政策與 Optum 醫療服務利潤率。"
+],
+"company_structure": "UNH 的價值在保險承保能力加上 Optum 醫療管理與 pharmacy benefit 平台，不是單一純保險公司。",
+"customer_analysis": "UNH 客戶看似分散，但獲利高度受 Medicare 與政府支付規則影響，所以政策風險比客戶集中風險更大。",
+"financial_quality": "這家公司財務品質通常很穩，但如果 medical cost trend 失控或 MLR 抬高，市場會立刻下修評價。",
+"market_view": "市場把 UNH 當成大型防守型醫療平台股，但也擔心 Medicare Advantage 利潤受壓與醫療利用率上升。",
+"competition": "主要對手是 Elevance、Cigna、Humana 與 CVS/Aetna。UNH 的差異在於 Optum 讓它不只是保險賺 spread，而是能吃醫療管理與數據平台利潤。弱點是監管與醫療成本通膨一來，市場會同時打保險與服務兩塊估值。",
+"risk_opportunity": "機會在 Optum 擴張與長期人口老化，風險在於 MLR 上升、政府支付政策改變與藥價/給付壓力。",
+"final_decision": "可列為 pool30 defensive/core，但短中期若醫療成本雜音升高，買點要等政策與 MLR 明朗。"
+},
+"COST": {
+"symbol": "COST",
+"name": "Costco Wholesale",
+"type": "research_light",
+"company_positioning": [
+"COST 做的是會員制量販零售，獲利引擎不只是商品毛利，而是高續約率的 membership fee。",
+"它的客戶是家庭消費者、中高頻採買用戶與尋求低價高周轉的會員群。",
+"影響股價的主因是 same-store sales、會員續約率、通膨下的價格優勢，以及消費韌性。"
+],
+"company_structure": "COST 的結構是低毛利商品零售加高品質會員收入，這讓它比一般零售商更像現金流平台。",
+"customer_analysis": "COST 客戶非常分散，但會員黏著度高，所以市場更在意續約率、客單價與電商滲透，而不是單一商品分類。",
+"financial_quality": "這家公司財務品質很好，因為庫存週轉快、會員費穩、現金流厚，但高估值時市場對任何同店成長放緩都會很敏感。",
+"market_view": "市場把 COST 當成高品質防守型消費股，但也擔心估值偏高與消費放緩時的同店銷售壓力。",
+"competition": "主要對手是 Walmart、Target、BJ's 與 Amazon 的日用品/電商流量。COST 的差異是會員制帶來更高黏著與價格信任，不完全靠商品加價率賺錢。弱點是估值通常明顯高於一般零售商，因此市場對執行失誤容忍度很低。",
+"risk_opportunity": "機會在會員費調整與國際展店，風險在於估值過高、消費降級改變 basket mix、以及工資成本上升。",
+"final_decision": "可列為 pool30 defensive/core，但比較適合回檔配置，不適合在消費防守熱潮高點追價。"
+},
+"TGT": {
+"symbol": "TGT",
+"name": "Target",
+"type": "research_light",
+"company_positioning": [
+"TGT 做的是大眾零售與自有品牌消費品，核心在中產家庭採買與門店配送整合。",
+"它的客戶是一般家庭消費者、日用品/服飾用戶與偏好一次購足的社區型客群。",
+"影響股價的主因是 same-store sales、庫存管理、毛利率修復與 discretionary 消費強弱。"
+],
+"company_structure": "TGT 的結構是低價民生品帶流量、可選消費品拉毛利，所以最怕的是兩者同時失速。",
+"customer_analysis": "TGT 客戶分散，但中產家庭消費情緒與通膨壓力會直接反映在 basket size、庫存週轉與 markdown。",
+"financial_quality": "這家公司財務品質比 COST 弱，因為毛利率更受促銷與庫存調整影響，營運槓桿也比較大。",
+"market_view": "市場把 TGT 當成零售修復股，但也擔心客流不如 Walmart 穩、服飾與家居需求疲弱、以及價格競爭。",
+"competition": "主要對手是 Walmart、Costco、Amazon 與部分 dollar stores。TGT 的差異在自有品牌、店內體驗與中高頻家庭採買，但價格護城河不像 Costco，食品與日用品心智也不如 Walmart。這讓它在景氣保守期更容易失去估值溢價。",
+"risk_opportunity": "機會在庫存正常化與可選消費回溫，風險在於促銷加深、毛利率受壓與電商競爭吞掉客流。",
+"final_decision": "可放 stock_pool 的 defensive/watch 名單，但暫不建議列為 pool30 核心，除非同店與毛利率都明確修復。"
+},
+"EL": {
+"symbol": "EL",
+"name": "Estee Lauder",
+"type": "research_light",
+"company_positioning": [
+"EL 做的是高端美妝與護膚品牌組合，賣點不是單一產品，而是 prestige beauty 品牌資產。",
+"它的客戶是全球美妝消費者、百貨通路、旅遊零售與高端零售渠道。",
+"影響股價的主因是中國需求、travel retail 修復、庫存去化與品牌組合重整。"
+],
+"company_structure": "EL 的結構由 skincare、makeup、fragrance 與 haircare 組成，其中護膚與旅遊零售對利潤影響最大。",
+"customer_analysis": "EL 客戶分散，但實際獲利高度受中國高端消費與機場旅遊零售通路影響，所以區域與通路風險比客戶集中更重要。",
+"financial_quality": "這家公司財務品質近年轉弱，因為去庫存、旅遊零售波動與費用率壓力削弱了原本的品牌毛利優勢。",
+"market_view": "市場把 EL 當成消費修復股，但也擔心中國高端美妝需求放緩、通路去庫存拖長與品牌競爭加劇。",
+"competition": "主要對手是 L'Oréal、Shiseido、LVMH Beauty 與新興高端護膚品牌。EL 的差異在 prestige beauty 品牌矩陣與北美百貨渠道深度，但在中國與旅遊零售的波動更大。若品牌力無法轉成 sell-through，市場不會再給它高毛利品牌估值。",
+"risk_opportunity": "機會在中國與 travel retail 回溫、cost reset 與新品拉動，風險在於庫存去化拖長、品牌老化與毛利率恢復不如預期。",
+"final_decision": "可列入 watch 名單，但暫不適合 pool30；要等需求與獲利結構都明顯改善才有升級理由。"
+},
+"QQQ": {
+"symbol": "QQQ",
+"name": "Invesco QQQ Trust",
+"type": "research_light",
+"company_positioning": [
+"QQQ 不是公司，而是追蹤 Nasdaq-100 的大型科技與成長股 ETF。",
+"它的核心曝險來自 mega-cap 科技、半導體、雲端與平台股，等於買的是美國成長股 beta。",
+"影響價格的主因是利率、mega-cap 財報、AI 資本支出循環與風險偏好。"
+],
+"company_structure": "QQQ 的結構高度集中在前幾大科技權重股，所以本質上不是平均分散，而是科技龍頭組合。",
+"customer_analysis": "QQQ 沒有企業客戶分析意義，真正要看的是成分股集中度與資金流對大型科技的偏好。",
+"financial_quality": "QQQ 的品質取決於成分股整體獲利與估值，不是基金本身的損益表，因此更像宏觀配置工具。",
+"market_view": "市場把 QQQ 當成 AI 與大型科技最直接的 beta 工具，但也擔心利率上行或 mega-cap capex 不及預期時的估值修正。",
+"competition": "主要對手是 SPY、VUG、XLK 與部分科技主題 ETF。QQQ 的差異在於科技與非金融成長股權重更高，AI 與半導體暴露也更直接。缺點是遇到 mega-cap 回檔時，避險效果遠不如更平均分散的 broad market ETF。",
+"risk_opportunity": "機會在 AI bull market 與大型科技持續擴張，風險在於成分集中、估值偏貴與利率敏感度高。",
+"final_decision": "可列為 pool30 的 ETF/core 配置工具，適合做大方向 beta，不適合期待單檔超額報酬。"
+},
+"SMH": {
+"symbol": "SMH",
+"name": "VanEck Semiconductor ETF",
+"type": "research_light",
+"company_positioning": [
+"SMH 不是公司，而是半導體 ETF，核心持股集中在 NVIDIA、TSM、Broadcom、ASML 等晶片龍頭。",
+"它代表的是全球半導體產業鏈，而不是單一晶片設計或設備公司的 idiosyncratic story。",
+"影響價格的主因是 AI capex、晶圓設備景氣、記憶體週期與美中出口管制。"
+],
+"company_structure": "SMH 的結構偏向高權重半導體龍頭集中，因此本質上是半導體大市值組合，不是平均曝險。",
+"customer_analysis": "SMH 沒有一般客戶分析，真正要看的是成分股對 hyperscaler、消費電子與記憶體週期的共同曝險。",
+"financial_quality": "SMH 的品質由成分股毛利率與景氣位置決定，所以在 AI 上升周期會比 broad ETF 更有彈性，但回檔也更深。",
+"market_view": "市場把 SMH 當成 AI 晶片與設備主題最直接的 beta 工具，但也擔心出口限制與 capex 高基期後的成長鈍化。",
+"competition": "主要對手是 SOXX 與各類半導體主題 ETF。SMH 的差異在於權重更集中在少數龍頭，因此上漲時彈性大，回檔時也比較不分散。對投資人來說，它更像半導體高純度指數，而不是均衡型 ETF。",
+"risk_opportunity": "機會在 AI 基建延續與先進製程擴產，風險在於龍頭估值過熱、政策限制與記憶體/設備週期反轉。",
+"final_decision": "可列為 pool30 ETF/growth 工具，適合看好半導體週期時使用，但倉位不能用防守股思維。"
+},
+"LQD": {
+"symbol": "LQD",
+"name": "iShares iBoxx $ Investment Grade Corporate Bond ETF",
+"type": "research_light",
+"company_positioning": [
+"LQD 不是公司，而是投資級公司債 ETF，核心是信用債收益而不是股價成長。",
+"它的曝險來自大型企業發債人與利率/信用利差，不是產業營運題材。",
+"影響價格的主因是美債殖利率、信用利差、景氣衰退預期與聯準會政策。"
+],
+"company_structure": "LQD 的結構是長天期 investment-grade corporate bond 組合，因此利率 duration 影響很大。",
+"customer_analysis": "LQD 沒有一般客戶分析意義，真正要看的是持債發行人品質與產業分散，而不是單一公司營收。",
+"financial_quality": "LQD 的品質不看 EPS，而看平均信用評級、違約風險與配息穩定度，所以更適合資產配置而不是成長配置。",
+"market_view": "市場把 LQD 當成利率回落時的收益工具，但也擔心長天期 duration 對殖利率上升很敏感。",
+"competition": "主要對手是 VCIT、AGG、TLT 與其他投資級債 ETF。LQD 的差異在於 corporate credit 曝險比公債高，收益通常較高，但信用利差擴大時也會受傷。它不像股票 ETF 靠成長敘事推動，主要靠 carry 與利率方向。",
+"risk_opportunity": "機會在降息或信用利差收斂，風險在於長天期利率上升與景氣惡化造成 credit spread 擴大。",
+"final_decision": "可列為 defensive/income 配置工具，適合資產管理模組，不適合拿來做高波動 FCN stock basket。"
+},
+"COIN": {
+"symbol": "COIN",
+"name": "Coinbase Global",
+"type": "research_light",
+"company_positioning": [
+"COIN 做的是加密資產交易、託管、穩定幣分潤與加密金融基礎設施，不只是現貨交易所。",
+"它的客戶是零售交易者、機構投資人、ETF 託管合作方、以及使用 USDC/Base 生態的開發者與支付夥伴。",
+"影響股價的主因是加密資產價格、交易量、USDC 收入、監管進展與 ETF/機構滲透。"
+],
+"company_structure": "COIN 的結構正從交易手續費轉向交易 + 訂閱/服務 + stablecoin 收入，估值能不能站穩看後者占比。",
+"customer_analysis": "COIN 客戶結構正在往機構託管與穩定幣分銷升級，但收入仍對 BTC、ETH 與市場情緒高度敏感。",
+"financial_quality": "這家公司財務品質比純交易所故事成熟，但獲利仍有高 operating leverage，本質上還是高波動金融科技股。",
+"market_view": "市場把 COIN 當成美國合規加密金融入口與 stablecoin 受益股，但也擔心監管、交易量循環與單一生態依賴。",
+"competition": "主要對手是 Robinhood crypto、Kraken、Binance 的全球交易流量，以及傳統券商未來可能導入的加密服務。COIN 的差異在於美國合規、ETF 託管與 USDC 生態位置更強，不只是拼最低手續費。缺點是估值會隨幣市情緒大幅擴張或壓縮，波動遠高於一般金融股。",
+"risk_opportunity": "機會在 stablecoin、衍生品與機構託管擴張，風險在於加密市場降溫、監管打擊與高 beta 導致評價快速收縮。",
+"final_decision": "可進 stock_pool 與 event/growth 名單，但不建議列為 pool30 core，也不適合保守型 FCN 接股籃子。"
+},
+"CCL": {
+"symbol": "CCL",
+"name": "Carnival Corporation",
+"type": "research_light",
+"company_positioning": [
+"CCL 做的是郵輪度假與旅遊體驗，核心獲利來自載客率、票價與船上消費。",
+"它的客戶是休閒旅遊消費者、家庭與中高齡度假客群，不是企業客戶型公司。",
+"影響股價的主因是 booking trend、occupancy、票價、燃油成本與高負債結構。"
+],
+"company_structure": "CCL 的結構是高固定成本船隊加高 operating leverage 的旅遊需求生意，所以景氣與油價非常重要。",
+"customer_analysis": "CCL 客戶分散，但需求對消費信心、旅遊預算與地緣事件很敏感，因此預訂趨勢比單一客戶更重要。",
+"financial_quality": "這家公司財務品質不算高，因為疫情後負債壓力與利息成本仍是評價折價來源。",
+"market_view": "市場把 CCL 當成旅遊復甦與票價修復股，但也擔心高槓桿、燃油價格與景氣轉弱。",
+"competition": "主要對手是 Royal Caribbean、Norwegian Cruise Line 與其他旅遊度假選項。CCL 的差異在於船隊規模與品牌組合較大，但資本結構與獲利品質通常不如更強勢的同業。若票價與 onboard spending 不夠強，市場不會給它高倍數。",
+"risk_opportunity": "機會在需求復甦、票價提高與成本控管，風險在於高負債、油價上升與旅遊事件衝擊。",
+"final_decision": "可放 watch/event 名單，但不適合 pool30 與 FCN 接股核心，除非資本結構明顯改善。"
+},
+"AAL": {
+"symbol": "AAL",
+"name": "American Airlines Group",
+"type": "research_light",
+"company_positioning": [
+"AAL 做的是航空客運與相關運輸服務，本質上是高固定成本、低可預測性的景氣循環股。",
+"它的客戶是商務旅客、休閒旅遊客與忠誠計畫會員，需求受票價與景氣高度影響。",
+"影響股價的主因是 unit revenue、載客率、燃油成本、勞動成本與負債結構。"
+],
+"company_structure": "AAL 的結構取決於主業航空營收與 loyalty program 現金流，但航空本業仍是估值主導。",
+"customer_analysis": "AAL 客戶分散，但需求對宏觀景氣、商務旅行恢復與競爭票價極度敏感，沒有真正的護城河客戶結構。",
+"financial_quality": "這家公司財務品質偏弱，因為資本密集、槓桿高、毛利不穩，利潤很容易被燃油與工資吃掉。",
+"market_view": "市場把 AAL 當成景氣與旅遊需求修復股，但也擔心利率高、經濟放緩與成本通膨。",
+"competition": "主要對手是 Delta、United、Southwest 與低成本航空。AAL 的差異在航線網路與規模，但財務體質與品牌溢價通常不如 Delta，成本控制也不如低成本航空。這讓它更像高槓桿景氣交易股，而不是高品質運輸股。",
+"risk_opportunity": "機會在票價回升與需求修復，風險在於油價、工資、景氣下滑與財務槓桿。",
+"final_decision": "可列入 event/watch 名單，但不建議進 pool30，也不適合 FCN 接股策略。"
+},
+"LVS": {
+"symbol": "LVS",
+"name": "Las Vegas Sands",
+"type": "research_light",
+"company_positioning": [
+"LVS 做的是澳門與新加坡為主的綜合度假村與博彩/非博彩消費生意。",
+"它的客戶是旅遊消費者、博彩玩家、會展客群與高端度假用戶，區域集中度很高。",
+"影響股價的主因是澳門 GGR、訪客恢復、Mass market 博彩與新加坡/澳門監管政策。"
+],
+"company_structure": "LVS 的結構由澳門資產與新加坡 Marina Bay Sands 組成，真正品質較好的現金流通常來自高端非博彩與新加坡資產。",
+"customer_analysis": "LVS 客戶不是單一企業，但區域集中在澳門與新加坡，所以旅遊流量、政策與中國消費情緒比客戶集中更重要。",
+"financial_quality": "這家公司財務品質中等，因為博彩現金流很強，但政策與旅遊波動讓獲利穩定度不如一般消費龍頭。",
+"market_view": "市場把 LVS 當成中國旅遊與澳門博彩修復股，但也擔心中國消費疲弱、VIP mix 下降與政策監管。",
+"competition": "主要對手是 Wynn Resorts、MGM China、Melco 與其他亞洲綜合度假村。LVS 的差異在 mass market、會展與高端綜合度假村資產品質，而不是單純賭場桌數。缺點是澳門與亞洲旅遊恢復如果不夠快，市場不會給它高品質消費股估值。",
+"risk_opportunity": "機會在澳門旅遊回溫與新加坡資產穩定現金流，風險在於政策、區域集中與中國消費復甦不及預期。",
+"final_decision": "可放 stock_pool 的 event/consumer recovery 名單，但暫不建議列為 pool30 core，買點要等旅遊與博彩數據確認。"
+}
+}
