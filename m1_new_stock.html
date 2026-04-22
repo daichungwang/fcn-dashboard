@@ -45,7 +45,7 @@
     }
     .toolbar{
       max-width:1680px;margin:0 auto;
-      display:grid;grid-template-columns:1.1fr auto auto auto auto auto;gap:10px;align-items:center;
+      display:grid;grid-template-columns:1.1fr auto auto auto auto auto auto auto;gap:10px;align-items:center;
     }
     .searchBox{
       display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:16px;
@@ -60,6 +60,7 @@
       padding:0 16px;cursor:pointer;box-shadow:var(--shadow);
     }
     .toolbtn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none}
+    .toolbtn.active{background:linear-gradient(135deg,#16395e,#2f80ed);color:#fff;border:none}
     .selector{min-width:132px}
     .suggestions{
       position:absolute;left:0;right:0;top:calc(100% + 8px);background:#fff;border:1px solid var(--line);border-radius:16px;
@@ -281,6 +282,9 @@
         </select>
         <button id="prevBtn" class="toolbtn">← 上一檔</button>
         <button id="nextBtn" class="toolbtn">下一檔 →</button>
+        <button id="deepBtn" class="toolbtn">深度版</button>
+        <button id="lightBtn" class="toolbtn">泛用版</button>
+        <button id="m6Btn" class="toolbtn">前往 M6</button>
         <button id="reloadBtn" class="toolbtn primary">重新載入</button>
         <button id="pdfBtn" class="toolbtn">匯出 PDF</button>
       </div>
@@ -322,6 +326,16 @@
             4. 後續可再接 M1 / M7 分數與圖表引擎
           </div>
         </section>
+
+        <section class="panel panel-body">
+          <h3>模組連結</h3>
+          <div class="small-note">
+            目前股票：<b id="bridgeSymbol">--</b><br/>
+            研究版本：<b id="bridgeSource">--</b><br/>
+            共用橋接：<code>localStorage.m1_shared_stock_payload</code><br/>
+            M6 建議優先讀取共用 payload；若沒有，再回讀 m1 json。
+          </div>
+        </section>
       </aside>
 
       <main class="content">
@@ -336,10 +350,14 @@
       universe: [],
       market: {},
       profiles: {},
+      deepProfiles: {},
+      lightProfiles: {},
+      currentSource: 'fallback',
       universeMap: new Map(),
       currentSymbol: null,
       currentListType: 'profile',
-      currentList: []
+      currentList: [],
+      profileMode: 'auto'
     };
 
     const el = {
@@ -347,12 +365,17 @@
       suggestions: document.getElementById('suggestions'),
       prevBtn: document.getElementById('prevBtn'),
       nextBtn: document.getElementById('nextBtn'),
+      deepBtn: document.getElementById('deepBtn'),
+      lightBtn: document.getElementById('lightBtn'),
+      m6Btn: document.getElementById('m6Btn'),
       reloadBtn: document.getElementById('reloadBtn'),
       pdfBtn: document.getElementById('pdfBtn'),
       listSelector: document.getElementById('listSelector'),
       watchlist: document.getElementById('watchlist'),
       emptyState: document.getElementById('emptyState'),
-      stockPanel: document.getElementById('stockPanel')
+      stockPanel: document.getElementById('stockPanel'),
+      bridgeSymbol: document.getElementById('bridgeSymbol'),
+      bridgeSource: document.getElementById('bridgeSource')
     };
 
     function esc(s){ return String(s ?? '').replace(/[&<>\"]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
@@ -399,7 +422,22 @@
     }
 
     function getUniverse(symbol){ return state.universeMap.get(up(symbol)) || {}; }
-    function getProfile(symbol){ return state.profiles[up(symbol)] || null; }
+    function getDeepProfile(symbol){ return state.deepProfiles[up(symbol)] || null; }
+    function getLightProfile(symbol){ return state.lightProfiles[up(symbol)] || null; }
+    function getProfile(symbol){
+      const sym = up(symbol);
+      if(state.profileMode === 'deep') return getDeepProfile(sym) || getLightProfile(sym) || null;
+      if(state.profileMode === 'light') return getLightProfile(sym) || getDeepProfile(sym) || null;
+      return getDeepProfile(sym) || getLightProfile(sym) || null;
+    }
+    function getProfileSource(symbol){
+      const sym = up(symbol);
+      const hasDeep = !!getDeepProfile(sym);
+      const hasLight = !!getLightProfile(sym);
+      if(state.profileMode === 'deep') return hasDeep ? 'deep' : (hasLight ? 'light_fallback' : 'fallback');
+      if(state.profileMode === 'light') return hasLight ? 'light' : (hasDeep ? 'deep_fallback' : 'fallback');
+      return hasDeep ? 'deep' : (hasLight ? 'light' : 'fallback');
+    }
     function getMarket(symbol){ return state.market?.[up(symbol)] || {}; }
 
     function normalizeProfiles(raw){
@@ -666,8 +704,75 @@
       setTimeout(() => { document.title = oldTitle; }, 300);
     }
 
+
+    function openM6(){
+      const sym = up(state.currentSymbol || 'AVGO');
+      window.location.href = `m6.html?symbol=${encodeURIComponent(sym)}`;
+    }
+
+    function setProfileMode(mode){
+      state.profileMode = mode;
+      el.deepBtn.classList.toggle('active', mode === 'deep');
+      el.lightBtn.classList.toggle('active', mode === 'light');
+      el.deepBtn.classList.toggle('active', state.profileMode === 'deep');
+      el.lightBtn.classList.toggle('active', state.profileMode === 'light');
+      renderWatchlist();
+      renderStock(state.currentSymbol);
+    }
+
+    function buildSharedStockPayload(symbol){
+      const sym = up(symbol);
+      const profile = getProfile(sym);
+      const universe = getUniverse(sym);
+      const market = getMarket(sym);
+      return {
+        symbol: sym,
+        name: profile?.name || universe?.name || sym,
+        source: getProfileSource(sym),
+        profile_mode: state.profileMode,
+        category: (profile?.pool30_fit?.category || universe?.category_main || universe?.category || '').toString().toUpperCase(),
+        sector: profile?.basic_info?.industry || universe?.sector || '',
+        summary: profile?.company_overview || profile?.final_view || '',
+        decisions: {
+          pool30: profile?.pool30_fit?.pool30 ?? null,
+          stock_pool: profile?.pool30_fit?.stock_pool ?? null,
+          category: profile?.pool30_fit?.category || null,
+          timing: profile?.valuation_and_timing?.technical_view?.conclusion || profile?.valuation_and_timing?.buy_strategy || null,
+          fcn: /FCN 可做|適合 FCN|FCN 底層標的|可做名單/.test(JSON.stringify(profile || {})) ? 'LIMITED' : 'AVOID'
+        },
+        market: {
+          price_now: market?.price_now ?? null,
+          ret_1w: market?.ret_1w ?? null,
+          ret_1m: market?.ret_1m ?? null,
+          ret_3m: market?.ret_3m ?? null,
+          ret_12m: market?.ret_12m ?? null,
+          volume_ratio: market?.volume_ratio ?? null
+        },
+        financial: profile?.financial_summary || {},
+        customer: profile?.customer_analysis || {},
+        competition: profile?.competition || {},
+        risk_opportunity: profile?.risk_opportunity || {},
+        final_view: profile?.final_view || ''
+      };
+    }
+
+    function syncSharedStockPayload(symbol){
+      const payload = buildSharedStockPayload(symbol);
+      window.__M1_CURRENT__ = payload;
+      try{
+        localStorage.setItem('m1_shared_stock_payload', JSON.stringify(payload));
+      }catch(err){
+        console.warn('sync shared payload fail', err);
+      }
+      document.dispatchEvent(new CustomEvent('m1:stock-change', { detail: payload }));
+      if(el.bridgeSymbol) el.bridgeSymbol.textContent = payload.symbol || '--';
+      if(el.bridgeSource) el.bridgeSource.textContent = payload.source || '--';
+    }
+
     function renderStock(symbol){
       const p = getProfile(symbol);
+      const source = getProfileSource(symbol);
+      state.currentSource = source;
       const u = getUniverse(symbol);
       const m = getMarket(symbol);
       if(!p && !u){
@@ -785,6 +890,7 @@
                   <div class="one-liner">${esc(summaryText)}</div>
                   <div class="meta">
                     <span class="chip">Type：${esc(profile?.type || u?.type || 'research')}</span>
+                    <span class="chip">Source：${esc(source)}</span>
                     <span class="chip">Industry：${esc(profile?.basic_info?.industry || u?.sector || '--')}</span>
                     <span class="chip">Sweet Zone：${esc(inferSweetZone(profile))}</span>
                   </div>
@@ -988,19 +1094,23 @@
       el.stockPanel.style.display = 'flex';
       el.stockPanel.innerHTML = html;
       el.stockSearch.value = symbol;
+      syncSharedStockPayload(symbol);
       renderWatchlist();
     }
 
     async function init(){
-      const [universe, market, profiles] = await Promise.all([
+      const [universe, market, deepProfiles, lightProfiles] = await Promise.all([
         fetchJson('data/m1/universe_150.json'),
         fetchJson('data/m1/m1_market_runtime.json'),
-        fetchJson('data/m1/m1_stock_profile.json')
+        fetchJson('data/m1/m1_stock_profile.json'),
+        fetchJson('data/m1/m1_stock_profile_all.json')
       ]);
 
       state.universe = asArray(universe);
       state.market = market || {};
-      state.profiles = normalizeProfiles(profiles || {});
+      state.deepProfiles = normalizeProfiles(deepProfiles || {});
+      state.lightProfiles = normalizeProfiles(lightProfiles || {});
+      state.profiles = { ...state.lightProfiles, ...state.deepProfiles };
       buildUniverseMap();
 
       state.currentListType = el.listSelector.value;
@@ -1010,10 +1120,12 @@
       state.currentSymbol = state.currentList.includes(urlSymbol) ? urlSymbol : (state.currentList.includes(last) ? last : (state.currentList[0] || urlSymbol || 'AVGO'));
 
       if(!state.currentList.length){
-        el.emptyState.innerHTML = '沒有可用資料，請確認 data/m1/m1_stock_profile.json / universe_150.json / m1_market_runtime.json 路徑。';
+        el.emptyState.innerHTML = '沒有可用資料，請確認 data/m1/m1_stock_profile.json / data/m1/m1_stock_profile_all.json / universe_150.json / m1_market_runtime.json 路徑。';
         return;
       }
 
+      el.deepBtn.classList.toggle('active', state.profileMode === 'deep');
+      el.lightBtn.classList.toggle('active', state.profileMode === 'light');
       renderWatchlist();
       renderStock(state.currentSymbol);
     }
@@ -1031,12 +1143,17 @@
     });
     el.prevBtn.addEventListener('click', goPrev);
     el.nextBtn.addEventListener('click', goNext);
+    el.deepBtn.addEventListener('click', () => setProfileMode('deep'));
+    el.lightBtn.addEventListener('click', () => setProfileMode('light'));
+    el.m6Btn.addEventListener('click', openM6);
     el.reloadBtn.addEventListener('click', () => location.reload());
     el.pdfBtn.addEventListener('click', exportPDF);
     el.listSelector.addEventListener('change', () => {
       state.currentListType = el.listSelector.value;
       state.currentList = getList(state.currentListType);
       if(!state.currentList.includes(state.currentSymbol)) state.currentSymbol = state.currentList[0] || state.currentSymbol;
+      el.deepBtn.classList.toggle('active', state.profileMode === 'deep');
+      el.lightBtn.classList.toggle('active', state.profileMode === 'light');
       renderWatchlist();
       renderStock(state.currentSymbol);
     });
@@ -1045,6 +1162,10 @@
   </script>
 </body>
 </html>
+
+
+
+
 
 
 
