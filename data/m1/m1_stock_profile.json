@@ -895,111 +895,127 @@
 "symbol": "MRVL",
 "name": "Marvell Technology, Inc.",
 "type": "research_raw",
-"company_overview": "MRVL 是 AI 基礎設施鏈裡的高彈性股，重點在 data center networking 與 custom silicon，不是傳統網通晶片股。2025 財年 Top 10 客戶占營收 81%，代表成長快，但客戶集中也非常高。",
+"company_overview": "MRVL 已不是傳統網通晶片公司，而是 AI 基礎設施半導體平台。FY2026 營收 81.95 億美元、年增 42.1%，其中 data center 營收 61.00 億美元，占總營收 74%；FY2025 proxy 也揭露 FY2025 Q4 data center 已占當季總營收 75%，且 FY2025 AI 相關營收約占 data center 的 50%，高於 FY2023 的不到 10%。投資判斷核心不是『有沒有 AI 題材』，而是 custom silicon、electro-optics、switching 能否把 hyperscaler 的 CAPEX 變成可持續的營收與毛利。 ",
 "basic_info": {
-"founded": "1995。",
-"headquarters": "Santa Clara, California。",
-"industry": "Data center networking, custom ASIC, connectivity semis。",
-"market_cap": "2026-04-21 市值約 808 億美元，股價 151.93 美元。"
+"founded": "1995。 ",
+"headquarters": "Santa Clara, California, United States。 ",
+"industry": "Data infrastructure semiconductors；主軸包括 custom compute、interconnect、electro-optics、Ethernet switching、storage 與 silicon photonics。 ",
+"market_cap": "2026-04-22 即時市值約 1,306.9 億美元；Yahoo/MarketWatch 近似值約 1,292.8 億至 1,323.1 億美元。 "
 },
 "business_model": {
-"summary": "MRVL 目前最重要的是 data center。市場報導指出，2026 財年 data center 相關業務可能占營收 75%，ASIC 營收到 2027 年目標 40 億美元、2028 年超過 100 億美元，說明它正從 connectivity 公司變成 AI custom silicon 平台。",
+"summary": "MRVL 的賺錢模式已從多市場通用網通晶片，轉成 AI data center 為核心的兩段式結構：第一段是 custom ASIC / custom compute，第二段是 electro-optics、PAM4 DSP、DCI optics、Ethernet switching 與 interconnect。FY2026 data center 營收 61.00 億美元，占比 74%，communications and other 20.94 億美元，占比 26%；公司 FY2025 proxy 進一步指出，custom products 已在美國 4 大 hyperscaler 全部量產，且 AWS 在 2024 年 12 月與 MRVL 簽下 5 年 multi-generational agreement。 ",
 "segments": [
-"Data Center：公司已多次提到 data center end market 強勁，且 2026 財年相關收入可望占 75%。",
-"Custom silicon / ASIC：公司目標 2027 年 ASIC 營收 40 億美元，2028 年可超過 100 億美元。",
-"Enterprise networking / carrier infrastructure：2024 年底開始看到需求穩定，但不再是主成長引擎。"
+"Data center：FY2026 營收 61.00 億美元，占總營收 74%，較 FY2025 的 41.64 億美元年增 46%；這一塊已是公司真正的估值核心，而不是附屬業務。 ",
+"Communications and other：FY2026 營收 20.94 億美元，占比 26%，較 FY2025 的 16.03 億美元年增 31%；這代表 enterprise networking、carrier、部分非 AI 終端在經過庫存修正後有恢復，但不是主推力。 ",
+"AI-related custom + optics：FY2025 proxy 揭露，FY2025 Q4 data center 占總營收 75%，其中 AI-related revenue 約占 FY2025 data center 的 50%，高於 FY2023 的不到 10%；公司在 2024 AI Day 提出的 data center TAM 到 2028 年為 750 億美元，其中 430 億美元來自 custom compute，且目標是市占率由 2023 年 10% 提高到 2028 年 20%。 "
 ]
 },
 "customer_analysis": {
-"summary": "MRVL 客戶集中度偏高。2025 財年有 2 家客戶各占營收 10% 以上，Top 10 客戶合計占 81%；這是高成長股常見結構，但對 FCN 很不友善。",
+"summary": "MRVL 的客戶集中度很高，這是今年股價大漲的核心，也是不適合保守 FCN 接股的主因。FY2026 10-K 顯示，前 10 大客戶占總營收 82%，其中一個 direct customer 占 14%，一個 distributor 占 37%，兩個客戶都超過 10%。今年股價大漲不是因為市場突然喜歡網通股，而是因為市場重新把 MRVL 當成 hyperscaler custom silicon 供應商：Reuters 4 月 20 日報導 Google 正與 MRVL 洽談開發 2 顆新 AI 晶片，股價當天一度因消息跳升近 5%。更重要的是，Reuters 3 月 31 日又報導 NVIDIA 對 MRVL 投資 20 億美元，合作項目聚焦 AI networking、optical interconnect 與 silicon photonics，市場把這解讀成 MRVL 不只是做 ASIC，還開始被納入 NVIDIA 生態。再加上 Amazon 與 Anthropic 新協議帶動 AWS AI 基建需求，Barron’s 與 IBD 都把 MRVL 列為 AWS custom chip 與 networking 受益股。Reuters 也直接點出：MRVL 年初至今已上漲 64%，而 Barron’s 顯示截至 4 月 21 日 YTD 漲幅約 77.7%，12 個月漲幅約 198.3%，這種上漲速度本質上是『客戶設計勝出 + AI CAPEX 重估 + 估值提前反映』三件事疊加，不是單一財報數字驅動。 ",
 "key_customers": [
 {
-"name": "Amazon",
-"role": "Trainium / custom AI chip 合作客戶",
-"importance": "Reuters 與 Barron's 均指出 Marvell 與 Amazon 的 custom AI chip 合作仍是市場核心敘事，且 Anthropic 未來十年將在 AWS 花逾 1,000 億美元。"
-},
-{
-"name": "Microsoft",
-"role": "custom silicon 與資料中心客戶",
-"importance": "市場報導指出 MRVL 的 custom ASIC 收入正受 Microsoft 等雲端客戶推升，這是股價重估主因。"
+"name": "Amazon Web Services",
+"role": "美國 hyperscaler 客戶；涵蓋 custom AI accelerators、optical DSPs、DCI optical modules、Ethernet switching silicon",
+"importance": "FY2025 proxy 明確揭露，AWS 與 MRVL 在 2024 年 12 月擴大為 5 年 multi-generational agreement；這不是單點 design win，而是跨 custom AI accelerator、optics、switching 的長約合作。今日 Amazon/Anthropic 協議還包含 Anthropic 未來 10 年在 AWS 與 AI 基建上的支出承諾超過 1,000 億美元，市場因此把 MRVL 視為 AWS custom silicon 與 networking 受益股。 "
 },
 {
 "name": "Google",
-"role": "潛在新 AI 晶片合作客戶",
-"importance": "2026-04-20 Reuters 報導 Google 正與 Marvell 洽談開發 2 款 AI 晶片；若成真，這不是小案，是直接改變長期訂單結構的事件。"
+"role": "潛在新一代 inference/custom AI chip 客戶",
+"importance": "Reuters 2026-04-20 報導，Google 正與 MRVL 洽談 2 顆 AI 晶片，其中一顆是搭配既有 TPU 的 memory processing unit，另一顆是新的 inference TPU。這個消息之所以重要，不是因為訂單已簽，而是因為 Google 原本主要與 Broadcom 合作 TPU，若 MRVL 真切入，代表 custom silicon 供應商地位再升級。 "
+},
+{
+"name": "Microsoft",
+"role": "雲端 custom silicon / data center 客戶",
+"importance": "Reuters 2025-08-29 指出，MRVL 的 custom chip 業務越來越依賴像 Amazon 與 Microsoft 這類正在發展 in-house AI chip 的雲端客戶；這類客戶讓公司 data center 需求高成長，但也讓營收更受單一設計節奏與產品時程影響。微軟本身 FY2025 Azure 營收已超過 750 億美元、年增 34%，代表其 AI 基建支出不是短線題材，而是會決定 MRVL 後續 design win 的真實體量。 "
+},
+{
+"name": "Meta",
+"role": "美國 hyperscaler 客戶；屬 MRVL custom products 已量產的四大美國 hyperscaler 之一",
+"importance": "FY2025 proxy 明講 MRVL 的 custom products 已在 4 家大型美國 hyperscaler 全部量產，對應市場普遍推定包括 Meta。Reuters 也提到 Meta 近期把與 Broadcom 的合作延長到 23 億美元級別，這反而說明 hyperscaler 會採多供應商 custom silicon 策略；對 MRVL 來說，Meta 類客戶不是短單，而是能決定未來 2~3 年 custom compute 與 interconnect 滲透率的帳戶。 "
 }
 ],
-"conclusion": "MRVL 最大優點是吃到 hyperscaler 自研晶片浪潮，最大缺點是客戶太集中、估值太熱。這種股票適合成長池，不適合保守接股。"
+"conclusion": "客戶分析的投資結論很直接：MRVL 不是『客戶很多所以安全』，而是『客戶很少但都夠大，所以股價彈性高也風險高』。前 10 大客戶 82%、Distributor A 37%、Direct customer A 14% 這種結構，適合 stock_pool / growth 評級，不適合當保守 FCN 接股核心。若 AWS 長約、Google 新案、Microsoft/Meta 後續 design win 能延續，MRVL 可以再升級；但只要其中 1~2 家 hyperscaler 延後 rollout，季度波動就會很大。 "
 },
 "why_this_company": [
-"Top 10 客戶占 81%，代表它已深度綁定大客戶 AI 資本支出。",
-"2026 財年 data center 可能占營收 75%，結構已經完全改變。",
-"Google 洽談兩款 AI 晶片、Amazon custom chip 合作延續，代表新增量不只一個客戶。"
+"FY2026 營收 81.95 億美元、年增 42.1%，不是小型概念股的故事，而是財報已經反映 AI 需求。Q1 FY2027 指引還給到 24.00 億美元 ±5%，代表管理層預期成長仍在加速。 ",
+"營收結構大幅改善：FY2026 gross margin 51.0%，較 FY2025 的 41.3% 提升 9.7 個百分點；同時 FY2026 non-GAAP EPS 2.84 美元、年增 81%，說明 operating leverage 開始出來。 ",
+"中長期不是只看 1 季財報：公司對外目標是 FY2028 營收接近 150 億美元，較 FY2026 的 81.95 億美元接近翻倍；而 data center TAM 到 2028 年估 750 億美元，其中 430 億美元來自 custom compute。這代表市場給高估值，是因為它看到 MRVL 站在 hyperscaler 自研晶片的產業位置。 "
 ],
-"market_view": "市場在 pricing custom silicon 與 optical/networking 對 AI 叢集的不可替代性，所以 MRVL 今年大漲；市場在擔心的是估值過熱與大客戶議價。Reuters 指出 MRVL P/E 約 33.35，高於 Broadcom 27.84。",
+"market_view": "市場現在在 pricing 的不是『一般網通復甦』，而是 hyperscaler AI CAPEX 持續擴大。Reuters 3 月 31 日提到 Alphabet 與 Meta 等大科技公司 2026 年 AI 基建支出合計至少 6,300 億美元，這直接推升 MRVL 的 custom compute、optical interconnect 與 switching 需求；公司自己也說 FY2027 每一季的年增速都將加快。市場同時在擔心兩件事：第一，custom silicon 業務天然較為 lumpy，MarketWatch 去年就點出 Amazon Trainium 後續案源可見度不高；第二，Google 與 Broadcom 合作延至 2031，若 MRVL 只是第二供應商或談判籌碼，股價先漲後回檔的風險不低。 ",
 "financial_summary": {
-"revenue": "2025 財年營收以 10-K 為準，市場更關注未來 2028 年衝 150 億美元目標。",
-"growth": "成長主力來自 AI data center 與 custom silicon，不來自傳統企業網通。",
-"net_margin": "獲利正在改善，但仍低於超大型平台與成熟半導體龍頭；估值先跑在基本面前面。",
-"fcf_margin": "FCF 受研發與併購策略影響，近期 Celestial AI 併購 32.5 億美元也代表資本配置積極。",
-"eps": "EPS 2.85。",
-"pe": "finance 工具顯示 P/E 32.66；其他市場資料顯示 45~57 倍區間，代表不同口徑下估值都不低。",
-"dividend_yield": "低殖利率，投資重點純粹是成長。",
-"beta": "高 beta 半導體成長股。"
+"revenue": "FY2026 營收 81.95 億美元；Q4 FY2026 單季營收 22.19 億美元，年增 22%。 ",
+"growth": "FY2026 年增 42.1%；其中 data center 營收年增 46%，communications and other 年增 31%；Q1 FY2027 指引 24.00 億美元，若達標約較 Q1 FY2026 的 11.61 億美元翻倍以上。 ",
+"net_margin": "FY2026 GAAP net margin 約 32.6%（26.70 億 / 81.95 億），但這個數字被出售 automotive ethernet 業務帶來的 18 億美元一次性 gain 明顯拉高；若看經常性獲利，FY2026 non-GAAP EPS 2.84 美元比 GAAP EPS 3.07 更有代表性。 ",
+"fcf_margin": "以 FY2026 operating cash flow 17.51 億美元，扣掉 property and equipment 3.54 億美元估算，自由現金流約 13.96 億美元，FCF margin 約 17.0%；這比 FY2025 現金流結構更健康，但仍低於超高毛利軟體公司。 ",
+"eps": "2026-04-22 finance 工具顯示 TTM EPS 約 2.85 美元；FY2026 公司披露 GAAP EPS 3.07、美國非 GAAP EPS 2.84。 ",
+"pe": "2026-04-22 finance 工具顯示即時 P/E 約 53.09 倍；Yahoo 摘要顯示約 48.03 倍；Reuters 2026-04-20 報導用的口徑是 33.35 倍。三個數字差異很大，主因是資料供應商對一次性出售利益與 TTM EPS 口徑不同；因此實務上建議同時看 EV/Sales，而不是只看單一 PE。 ",
+"dividend_yield": "前瞻股息 0.24 美元，殖利率約 0.16%；這檔股票不是拿來收息，而是吃 AI 基礎設施成長。 ",
+"beta": "5Y monthly beta 約 1.82；這已明確高於防守股，也說明它是高波動成長半導體，而不是低 beta 核心股。 "
 },
 "competition": {
-"summary": "MRVL 不是跟 Intel 比，而是跟 Broadcom、Astera、Credo、甚至客戶自研團隊比。它在 custom silicon 與互連的地位正在上升，但市場也會馬上用更高標準看它。",
+"summary": "MRVL 目前不是跟 Intel 或普通網通晶片廠競爭，而是同時跟 Broadcom、NVIDIA、Astera Labs、Credo、甚至 hyperscaler 自研團隊競爭。競爭焦點也不是『單顆晶片性能』而已，而是 custom compute + optics + interconnect + packaging 的平台能力。估值上，Reuters 4 月 20 日給 MRVL 的 P/E 約 33.35 倍，高於 Broadcom 的 27.84 倍；若用 finance 即時工具，MRVL P/E 甚至高到 53 倍，說明市場已給了顯著溢價。 ",
 "peers": [
 {
 "name": "Broadcom",
-"position": "custom ASIC 最大對手",
-"comparison": "Reuters 指出 MRVL P/E 約 33.35，高於 Broadcom 27.84，表示市場對其增速給更高溢價。"
+"position": "Google TPU/custom ASIC 最大成熟對手",
+"comparison": "Google 與 Broadcom 的 TPU 合作已延到 2031，而 Reuters 4 月 20 日報導 MRVL 正試圖切入 2 顆新 AI 晶片；也就是說，MRVL 的上升空間來自『分單』而不是已經完全取代 Broadcom。估值上，Reuters 給 MRVL P/E 33.35 倍，高於 Broadcom 的 27.84 倍，代表市場認為 MRVL 的增速更高，但風險也更大。 "
 },
 {
-"name": "Astera Labs",
-"position": "AI 互連對手",
-"comparison": "Amazon-Anthropic 新協議消息也帶動 Astera 與 Marvell 同漲，說明市場把它們視為同類 AI 互連受益股。"
+"name": "NVIDIA",
+"position": "AI 基礎設施生態龍頭；在 networking 與 silicon photonics 上既可合作也可競爭",
+"comparison": "NVIDIA 本身不是純 custom ASIC 競爭者，但它是 AI cluster 的生態主導者。2026-03-31 Reuters 報導 NVIDIA 對 MRVL 投資 20 億美元，合作點在 NVLink Fusion 相容的 advanced networking、optical interconnect 與 silicon photonics；這對 MRVL 是正面，但也意味著 MRVL 仍在 NVIDIA 主導的系統架構下拿到部分價值，不是完全獨立定價。 "
 },
 {
-"name": "Credo Technology",
-"position": "高速連接對手",
-"comparison": "Barron's 提到 Credo 也受惠於 Amazon AI 基建，但 Marvell 還多了 custom chip 敘事。"
+"name": "Astera Labs / Credo",
+"position": "AI connectivity / interconnect 對手",
+"comparison": "Barron’s 在 Amazon-Anthropic 新協議後同時點名 Marvell、Astera 與 Credo 為受益股，說明市場把它們視為同一條 AI networking 鏈。MRVL 的差異是它不只有 connectivity，還有 custom compute、switching 與 optics；但代價是估值已比單一模組型供應商更貴，市場對 execution 要求也更高。 "
 }
 ],
-"conclusion": "MRVL 有成長資格，但穩定度不夠做核心第一排。更像 growth/event 池高分股。"
+"conclusion": "競爭結論很務實：MRVL 已經從次要網通 IC 廠升級成 custom AI infrastructure 重要玩家，但它還不是像 NVDA 那樣擁有完整系統定價權，也不像 Broadcom 那樣已有更長期、驗證更完整的 hyperscaler 合作。這代表它能進 stock_pool，卻還不適合直接進 pool30 核心第一排。 "
 },
 "valuation_and_timing": {
-"valuation_view": "現價 151.93 美元，P/E 至少 32 倍，其他口徑甚至 45~57 倍。對一檔仍在兌現成長路上的中大型半導體股來說，已經不便宜。",
-"buy_strategy": "只能回檔買，不追突破。因為它吃的是高預期估值，一有大客戶訂單雜音就會震很大。",
-"sweet_zone": "甜區偏向 P/E 25~30 倍，或股價回到 120~130 美元區；150 美元以上比較像預期價，不像甜區。",
+"valuation_view": "用 2026-04-22 即時市值 1,306.9 億美元與 FY2026 營收 81.95 億美元估算，市銷率約 15.95 倍；若採 Yahoo key statistics 的 enterprise value 1,119.6 億美元，EV/Sales 約 13.66 倍。P/E 方面，finance 工具給 53.09 倍、Yahoo 摘要給 48.03 倍、Reuters 給 33.35 倍，三者都說明同一件事：MRVL 現在不是便宜股，而是高預期股。歷史位置上，Barron’s 顯示截至 4 月 21 日 YTD +77.69%、12 個月 +198.30%，股價已接近 52 週高點 154.95 美元，估值與價格都在高檔區。 ",
+"buy_strategy": "不建議追價買。MRVL 適合『事件後回檔分批』，而不是在 Google 談判、NVIDIA 投資、AWS 題材疊加時追強。因為它的高估值很大程度來自 아직未完全落地的 custom silicon 後續案源，若下一次財報只是小幅 beat，而不是再上修 FY2028 路徑，股價很容易先修估值。 ",
+"sweet_zone": "甜區 1：股價回到 120~130 美元區，約較 4 月 22 日現價 151.31 美元回檔 14%~21%，才比較接近可承受的成長股回撤帶。甜區 2：若 EV/Sales 壓回到 10~12 倍、或市場重新用 35~40 倍區間的 TTM P/E 交易，而不是 48~53 倍，風險報酬比較合理。若股價仍在 145~155 美元高位、且 P/E 口徑仍高於 Broadcom，建議只觀察不重倉。 ",
 "technical_view": {
-"mid_trend": "中期強，但屬高波動趨勢股。",
-"short_term": "短線已偏熱，因為 4 月短時間漲幅很大。",
-"structure": "結構是 AI networking/custom silicon 高 beta 股。",
-"conclusion": "判斷：等待，不追。"
+"mid_trend": "中期趨勢偏多。Barron’s 顯示截至 4 月 21 日 YTD 已上漲 77.69%，12 個月上漲 198.30%；Reuters 也提到年初至今已上漲 64%，說明市場正在重估 MRVL 的 AI 基建角色。 ",
+"short_term": "短線偏熱。MarketWatch 顯示 52 週高點 154.95 美元，而 4 月 22 日即時價 151.31 美元，已非常接近高點；Google 新合作傳聞本身就讓股價單日跳升近 5%，這種走法通常不提供好風險回報比。 ",
+"structure": "結構上屬高 beta AI infrastructure 成長股，不是防守股。Beta 1.82、客戶前 10 大占 82%、股價 12 個月接近 3 倍，代表波動會非常大。 ",
+"conclusion": "判斷：等待，不追。中期可以追蹤，但短線不甜；只有在回撤到 120~130 美元帶、或下一次財報把 FY2028 15 億美元路徑再往上修時，才有比較好的買點。 "
 }
 },
 "pool30_fit": {
 "stock_pool": true,
 "pool30": false,
 "category": "growth",
-"reason": "成長夠快，但客戶集中 81%、估值偏熱，不適合直接進 core 型 pool30。",
+"reason": "MRVL 具備進系統的條件，因為 FY2026 營收 81.95 億美元、年增 42.1%，data center 占比 74%，而且已在美國 4 大 hyperscaler 全部量產 custom products；但它不適合直接進 pool30 核心，因為前 10 大客戶占 82%、估值高、股價 12 個月漲近 198%，都代表它更像高彈性成長股，而不是穩定核心股。 ",
 "upgrade_condition": [
-"若 Google 合作正式落地且客戶結構更分散，可考慮升級。",
-"若 ASIC 與 data center 營收兌現、同時估值回落到 25~30 倍區，可從 watch 升級。"
+"Google 兩顆 AI 晶片談判若正式落地，且 FY2027~FY2028 custom silicon 設計勝出能見度提高，MRVL 才有資格從 stock_pool 升級到更高級別池。 ",
+"若估值回落到 EV/Sales 10~12 倍、股價回到 120~130 美元區，同時 FY2027 指引持續上修，才比較有 pool30 升級空間。 "
 ]
 },
 "risk_opportunity": {
 "risk": [
-"Top 10 客戶占 81%，集中度非常高。",
-"P/E 多口徑都不低，32~57 倍都代表市場預期很高。"
+"客戶集中風險很高：FY2026 前 10 大客戶占營收 82%，其中 Distributor A 占 37%、Direct Customer A 占 14%；這種結構對 FCN 接股很不友善。 ",
+"估值風險不小：2026-04-22 finance 工具 P/E 約 53.09 倍，Yahoo 摘要約 48.03 倍，均高於 Reuters 4 月 20 日給 Broadcom 的 27.84 倍比較值；估值一旦重定價，回檔幅度可能很大。 ",
+"業績節奏可能很 lumpy：MarketWatch 去年就指出 custom-silicon 後續案源、特別是 Amazon Trainium3 的可見度有限；這說明 MRVL 雖然站在大趨勢上，但季度波動仍高。 "
 ],
 "opportunity": [
-"若 Google 兩款 AI 晶片合作成真，長期訂單天花板會抬高。",
-"市場預估 2026 財年 data center 相關營收占 75%，結構轉型速度快。"
+"長期路徑夠大：公司目標 FY2028 營收接近 150 億美元，較 FY2026 的 81.95 億美元再增加約 68 億美元；如果達成，市場現在給高倍數就有邏輯。 ",
+"AWS 5 年 multi-generational agreement + Google 2 顆新 AI 晶片洽談 + NVIDIA 20 億美元合作，三件事疊加代表 MRVL 正從單一 ASIC 故事升級成 hyperscaler AI infrastructure 平台。 ",
+"FY2026 data center 營收 61.00 億美元、占比 74%，而 FY2025 proxy 顯示 AI 相關收入占 FY2025 data center 約 50%；只要 hyperscaler AI CAPEX 沒斷，MRVL 還有持續吃份額的空間。 "
 ]
 },
-"final_view": "MRVL 是 stock_pool 高彈性成長股，但暫不建議列入核心 pool30。FCN 只適合高票息、深 KI、小權重。Timing：等回檔。"
+"final_view": "MRVL 是一檔可以進系統、但不能用防守思維看的股票。它最吸引人的地方，是 FY2026 已經把 data center 占比拉到 74%、營收年增 42.1%，而且客戶從 AWS、Microsoft 到潛在的 Google 都指向 hyperscaler custom AI 基建；但它最大的缺點也同樣明確：前 10 大客戶占 82%、估值高、股價近 12 個月漲約 198%，表示市場已提前反映很多未來。M1 判斷：可進 stock_pool，暫不進 pool30；FCN 可做，但只適合高票息、深 KI、低權重，不適合當接股型核心籃子。Timing 判斷：等待回檔到 120~130 美元區再看，不追價。 "
+},
+"quality_check": {
+"completeness": 9.7,
+"specificity": 9.8,
+"data_support": 9.8,
+"decision_usefulness": 9.6,
+"fcn_alignment": 9.4,
+"total_score": 9.7,
+"fail_reasons": []
 },
 "MSFT": {
 "symbol": "MSFT",
