@@ -320,10 +320,10 @@
         <section class="panel panel-body">
           <h3>資料來源</h3>
           <div class="small-note">
-            1. <b>data/m1/m1_stock_profile.json</b><br/>
-            2. <b>data/m1/universe_150.json</b><br/>
-            3. <b>data/m1/m1_market_runtime.json</b><br/>
-            4. 後續可再接 M1 / M7 分數與圖表引擎
+            1. <b>data/m1/m1_stock_profile.json</b>（深度版）<br/>
+            2. <b>data/m1/m1_stock_profile_all.json</b>（泛用版）<br/>
+            3. <b>data/m1/universe_150.json</b><br/>
+            4. <b>data/m1/m1_market_runtime.json</b>
           </div>
         </section>
 
@@ -422,20 +422,24 @@
     }
 
     function getUniverse(symbol){ return state.universeMap.get(up(symbol)) || {}; }
-    function getDeepProfile(symbol){ return state.deepProfiles[up(symbol)] || null; }
-    function getLightProfile(symbol){ return state.lightProfiles[up(symbol)] || null; }
+    function getDeepProfile(symbol){
+      return normalizeProfileShape(state.deepProfiles[up(symbol)] || null);
+    }
+    function getLightProfile(symbol){
+      return normalizeProfileShape(state.lightProfiles[up(symbol)] || null);
+    }
     function getProfile(symbol){
       const sym = up(symbol);
-      if(state.profileMode === 'deep') return getDeepProfile(sym) || getLightProfile(sym) || null;
-      if(state.profileMode === 'light') return getLightProfile(sym) || getDeepProfile(sym) || null;
+      if(state.profileMode === 'deep') return getDeepProfile(sym);
+      if(state.profileMode === 'light') return getLightProfile(sym);
       return getDeepProfile(sym) || getLightProfile(sym) || null;
     }
     function getProfileSource(symbol){
       const sym = up(symbol);
       const hasDeep = !!getDeepProfile(sym);
       const hasLight = !!getLightProfile(sym);
-      if(state.profileMode === 'deep') return hasDeep ? 'deep' : (hasLight ? 'light_fallback' : 'fallback');
-      if(state.profileMode === 'light') return hasLight ? 'light' : (hasDeep ? 'deep_fallback' : 'fallback');
+      if(state.profileMode === 'deep') return hasDeep ? 'deep' : 'fallback';
+      if(state.profileMode === 'light') return hasLight ? 'light' : 'fallback';
       return hasDeep ? 'deep' : (hasLight ? 'light' : 'fallback');
     }
     function getMarket(symbol){ return state.market?.[up(symbol)] || {}; }
@@ -452,6 +456,33 @@
         }
       });
       return out;
+    }
+
+    function normalizeProfileShape(raw){
+      if(!raw || typeof raw !== 'object') return null;
+      const p = { ...raw };
+      const pos = Array.isArray(p.company_positioning) ? p.company_positioning : [];
+      p.one_line_1 = p.one_line_1 || pos[0] || '';
+      p.one_line_2 = p.one_line_2 || pos[1] || '';
+      p.one_line_3 = p.one_line_3 || pos[2] || '';
+      p.type = p.type === 'research_light' ? 'light' : (p.type || 'research');
+      p.company_overview = p.company_overview || [p.one_line_1, p.one_line_2, p.one_line_3].filter(Boolean).join(' ');
+      return p;
+    }
+
+    function modeLabel(mode){
+      return mode === 'deep' ? '深度版' : mode === 'light' ? '泛用版' : '自動';
+    }
+
+    function sourceLabel(source){
+      const m = {
+        deep: 'deep',
+        light: 'light',
+        deep_fallback: 'deep fallback',
+        light_fallback: 'light fallback',
+        fallback: 'fallback'
+      };
+      return m[source] || source || '--';
     }
 
     function getList(type){
@@ -656,7 +687,7 @@
     function renderWatchlist(){
       const list = state.currentList.slice(0,8);
       el.watchlist.innerHTML = list.map(sym => {
-        const p = getProfile(sym);
+        const p = getProfile(sym) || getDeepProfile(sym) || getLightProfile(sym);
         const u = getUniverse(sym);
         return `
           <div class="watch-item" data-sym="${esc(sym)}">
@@ -712,8 +743,6 @@
 
     function setProfileMode(mode){
       state.profileMode = mode;
-      el.deepBtn.classList.toggle('active', mode === 'deep');
-      el.lightBtn.classList.toggle('active', mode === 'light');
       el.deepBtn.classList.toggle('active', state.profileMode === 'deep');
       el.lightBtn.classList.toggle('active', state.profileMode === 'light');
       renderWatchlist();
@@ -766,7 +795,7 @@
       }
       document.dispatchEvent(new CustomEvent('m1:stock-change', { detail: payload }));
       if(el.bridgeSymbol) el.bridgeSymbol.textContent = payload.symbol || '--';
-      if(el.bridgeSource) el.bridgeSource.textContent = payload.source || '--';
+      if(el.bridgeSource) el.bridgeSource.textContent = sourceLabel(payload.source || '--');
     }
 
     function renderStock(symbol){
@@ -779,6 +808,15 @@
         el.emptyState.style.display = 'block';
         el.emptyState.innerHTML = `找不到 ${esc(symbol)} 資料。`;
         el.stockPanel.style.display = 'none';
+        return;
+      }
+      if(!p && u){
+        el.emptyState.style.display = 'block';
+        el.stockPanel.style.display = 'none';
+        el.emptyState.innerHTML = `此股票目前沒有可用的${modeLabel(state.profileMode)}研究資料。<br><span style="font-size:13px;color:#6c7c8d">可先切換另一版本，或補上對應 JSON。</span>`;
+        el.stockSearch.value = symbol;
+        syncSharedStockPayload(symbol);
+        renderWatchlist();
         return;
       }
       const profile = p || {
@@ -887,10 +925,14 @@
                 </div>
                 <div class="title">
                   <h2>${esc(profile?.name || u?.name || symbol)}</h2>
-                  <div class="one-liner">${esc(summaryText)}</div>
+                  <div class="one-liner">
+                    ${[profile?.one_line_1, profile?.one_line_2, profile?.one_line_3].filter(Boolean).length
+                      ? [profile?.one_line_1, profile?.one_line_2, profile?.one_line_3].filter(Boolean).map(x => `<div>${esc(x)}</div>`).join('')
+                      : esc(summaryText)}
+                  </div>
                   <div class="meta">
                     <span class="chip">Type：${esc(profile?.type || u?.type || 'research')}</span>
-                    <span class="chip">Source：${esc(source)}</span>
+                    <span class="chip">Source：${esc(sourceLabel(source))}</span>
                     <span class="chip">Industry：${esc(profile?.basic_info?.industry || u?.sector || '--')}</span>
                     <span class="chip">Sweet Zone：${esc(inferSweetZone(profile))}</span>
                   </div>
