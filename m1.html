@@ -1973,9 +1973,9 @@ timing 判斷
         refreshView(true);
       };
 
-      $("researchBtn").onclick = () => {
-        exportL5Prompt(row.symbol);
-      };
+     $("researchBtn").onclick = () => {
+  window.location.href = `m1_new_stock.html?symbol=${encodeURIComponent(row.symbol)}`;
+};
 
       $("detailDecision").onchange = () => {
         setReview(row.symbol, { decision: $("detailDecision").value }, false);
