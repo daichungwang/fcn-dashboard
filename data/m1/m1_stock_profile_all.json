@@ -305,6 +305,533 @@
 "risk_opportunity": "機會在票價回升與需求修復，風險在於油價、工資、景氣下滑與財務槓桿。",
 "final_decision": "可列入 event/watch 名單，但不建議進 pool30，也不適合 FCN 接股策略。"
 },
+  "ASML": {
+"symbol": "ASML",
+"name": "ASML Holding",
+"type": "research_light",
+"company_positioning": [
+"ASML 做的是光刻設備，尤其是 EUV 與 High-NA EUV，本質上是先進製程最難替代的資本設備供應商。",
+"它的客戶是 TSMC、Intel、Samsung 這類 leading-edge foundry 與 IDM，不靠分散式小客戶吃量。",
+"影響股價的主因是先進製程 CAPEX、EUV 出貨節奏、中國出口管制與 High-NA 導入速度。"
+],
+"company_structure": "ASML 的營收核心是 EUV 系統加上 Installed Base Management，前者吃先進製程 CAPEX，後者提供高毛利服務收入。",
+"customer_analysis": "ASML 客戶高度集中在少數大晶圓廠，但這種集中反而代表技術門檻高，真正風險在 CAPEX 延後與地緣限制。",
+"financial_quality": "這家公司財務品質很高，因為毛利率、訂單能見度與服務收入都優於一般設備股，但單季認列會受大機台交付節奏影響。",
+"market_view": "市場把 ASML 當成 AI 與先進製程軍火商，但也擔心 2nm 以下投資高峰之後的設備需求平滑化。",
+"competition": "主要對手是 Nikon 與 Canon，但在 EUV 幾乎沒有真正可替代對手。ASML 的差異不是單機台規格，而是整套光源、曝光、服務與客戶製程整合能力。對投資人來說，它比較像半導體上游基礎設施，不是一般景氣循環設備股。",
+"risk_opportunity": "機會在 High-NA EUV 與先進邏輯/記憶體 CAPEX，風險在中國出口限制、客戶延後擴產與訂單認列波動。",
+"final_decision": "可列入 pool30 core，適合中長期配置，也比多數半導體題材股更適合當 FCN 參考股。"
+},
+"LRCX": {
+"symbol": "LRCX",
+"name": "Lam Research",
+"type": "research_light",
+"company_positioning": [
+"LRCX 做的是蝕刻、沉積與晶圓製程設備，核心吃的是 NAND、DRAM 與先進邏輯製造需求。",
+"它的客戶是記憶體大廠與 leading-edge logic foundry，不是終端電子品牌。",
+"影響股價的主因是 NAND/DRAM cycle、先進製程 CAPEX、中國設備需求與服務收入韌性。"
+],
+"company_structure": "LRCX 的結構是製程設備加客戶 installed base 服務，前者波動大，後者提供較穩定毛利。",
+"customer_analysis": "LRCX 客戶集中在記憶體與大型晶圓廠，所以市場很在意 Samsung、Micron、SK hynix 與中國記憶體廠的投資節奏。",
+"financial_quality": "財務品質不錯，因為服務與耗材收入提高了抗波動性，但本質仍是半導體 CAPEX 驅動股。",
+"market_view": "市場把 LRCX 當成 AI 帶動 HBM 與先進製程設備受益股，但也擔心記憶體景氣回升不夠平順。",
+"competition": "主要對手是 Applied Materials、Tokyo Electron 與部分 KLA 檢測設備。LRCX 的差異在 etch 與 deposition 的製程深度，尤其在 3D NAND 與先進記憶體鏈更有存在感。缺點是它不像 ASML 那樣有唯一性，因此估值通常受記憶體週期影響較大。",
+"risk_opportunity": "機會在 HBM、3D NAND 與 advanced packaging，風險在記憶體 capex 延後與中國設備需求波動。",
+"final_decision": "可放 pool30 半導體設備核心名單，但部位管理要考慮記憶體週期，不宜用純 AI 永續股思維。"
+},
+"KLAC": {
+"symbol": "KLAC",
+"name": "KLA Corporation",
+"type": "research_light",
+"company_positioning": [
+"KLAC 做的是半導體製程控制、檢測與量測設備，吃的是良率提升而不是單純擴廠數量。",
+"它的客戶是先進 foundry、記憶體廠與封裝廠，特別依賴 leading-edge 客戶的良率需求。",
+"影響股價的主因是先進節點複雜度、良率瓶頸、HBM/先進封裝需求與半導體 CAPEX。"
+],
+"company_structure": "KLAC 的核心是 process control 設備與服務收入，這種模式比純設備商更容易維持高毛利與高黏著。",
+"customer_analysis": "KLAC 客戶集中在少數頂級晶圓廠，但因為每往更先進製程走一步，量測與檢測的重要性就更高，所以客戶黏著度很強。",
+"financial_quality": "這家公司財務品質高，因為 process control 毛利率通常優於一般前段設備，且 recurring service 比重提供穩定現金流。",
+"market_view": "市場把 KLAC 當成先進製程與 HBM 良率軍火商，但也擔心整體 wafer fab equipment 高基期後的拉貨放緩。",
+"competition": "主要對手是 Applied Materials、Hitachi High-Tech 與部分 Onto Innovation。KLAC 的差異在檢測、量測與良率控制位置更關鍵，不像 deposition/etch 那麼容易被 capex 推遲時一起下修。對投資人來說，它通常比一般設備股更像高品質設備平台。",
+"risk_opportunity": "機會在 2nm、HBM、先進封裝與 defect control 升級，風險在大型晶圓廠 capex 保守與中國限制。",
+"final_decision": "可列為 pool30 core 候選，品質通常優於一般設備股，也適合中長期持有。"
+},
+"ANET": {
+"symbol": "ANET",
+"name": "Arista Networks",
+"type": "research_light",
+"company_positioning": [
+"ANET 做的是 data center switching、routing 與 AI cluster 網路，本質上是雲端與 AI 基礎設施網通公司。",
+"它的客戶是 hyperscaler、雲端資料中心與大型企業網路，不靠一般消費型網通市場。",
+"影響股價的主因是 hyperscaler CAPEX、AI cluster 網路升級、Ethernet 在 AI data center 的滲透與客戶集中度。"
+],
+"company_structure": "ANET 的結構由雲端資料中心網路加企業 campus networking 組成，前者決定成長速度，後者提供穩定補底。",
+"customer_analysis": "ANET 客戶集中在少數 hyperscaler，所以 Microsoft、Meta、雲端客戶的採購節奏會直接左右單季成長。",
+"financial_quality": "財務品質很好，因為毛利率與現金流都強，但要接受大客戶訂單波動對季度數字的放大效果。",
+"market_view": "市場把 ANET 當成 AI data center Ethernet 受益股，但也擔心 InfiniBand、客戶自研網路與 cloud capex 波動。",
+"competition": "主要對手是 Cisco、NVIDIA 的 InfiniBand/以太網網路方案與部分白牌交換機供應商。ANET 的差異在 EOS 軟體、雲端客戶關係與高效能乙太網交換能力，不是傳統企業網通邏輯。缺點是客戶集中度高，市場情緒容易跟著 hyperscaler CAPEX 一起震盪。",
+"risk_opportunity": "機會在 AI cluster Ethernet 升級與 800G/1.6T 網路架構，風險在大客戶遞延訂單與網路架構競爭。",
+"final_decision": "可進 pool30 growth/core 邊緣名單，適合 AI 基礎設施配置，但買點要挑 CAPEX 雜音回檔。"
+},
+"SNPS": {
+"symbol": "SNPS",
+"name": "Synopsys",
+"type": "research_light",
+"company_positioning": [
+"SNPS 做的是 EDA 軟體、IP 授權與半導體設計流程工具，等於半導體設計公司的作業系統。",
+"它的客戶是晶片設計公司、系統大廠、foundry 與電子研發團隊，不是終端消費市場。",
+"影響股價的主因是先進晶片設計需求、AI 晶片開發潮、IP 授權擴張與併購整合進度。"
+],
+"company_structure": "SNPS 的結構是高黏著 EDA 訂閱收入加 IP 授權，前者穩，後者提供額外槓桿。",
+"customer_analysis": "SNPS 客戶分散在整個晶片設計生態，但真正的成長動能來自 AI ASIC、先進 SoC 與車用/資料中心設計複雜度提升。",
+"financial_quality": "這家公司財務品質高，因為毛利率、續約率與現金流都接近頂級軟體股，不像一般半導體那樣受庫存循環影響。",
+"market_view": "市場把 SNPS 當成 AI 晶片設計軍火商，但也擔心高估值與大客戶資本配置轉向自研工具。",
+"competition": "主要對手是 Cadence 與部分 Siemens EDA。SNPS 的差異在工具鏈完整、IP 生態深度與先進製程設計流程位置更關鍵。缺點是估值通常很高，只要企業研發支出放緩，市場就會先壓本益比。",
+"risk_opportunity": "機會在 AI ASIC 設計潮與高階 IP 授權，風險在高估值、監管與大客戶研發支出週期。",
+"final_decision": "可列為 pool30 core，屬於半導體鏈中品質很高的軟體型資產。"
+},
+"CDNS": {
+"symbol": "CDNS",
+"name": "Cadence Design Systems",
+"type": "research_light",
+"company_positioning": [
+"CDNS 做的是 EDA 軟體、系統分析與 IP，核心位置在晶片設計流程與電子系統模擬。",
+"它的客戶是 IC design house、系統公司、汽車電子與雲端晶片設計團隊。",
+"影響股價的主因是 AI 晶片設計熱度、EDA 續約、IP 滲透率與研發工具預算。"
+],
+"company_structure": "CDNS 的結構是軟體訂閱加高價值 IP 與系統設計工具，成長品質通常優於一般半導體公司。",
+"customer_analysis": "CDNS 客戶分散，但單位客戶價值高，先進晶片與系統設計越複雜，工具需求就越難縮減。",
+"financial_quality": "這家公司財務品質高，因為高毛利、可預測收入與低資本強度讓現金流非常漂亮。",
+"market_view": "市場把 CDNS 當成 AI 晶片與電子系統複雜度上升的受益股，但也擔心估值長期偏高。",
+"competition": "主要對手是 Synopsys 與 Siemens EDA。CDNS 的差異在數位/類比工具、系統分析與封裝設計整合能力更平衡，不只靠單一 IP 生意。缺點是它和 SNPS 一樣都屬高估值高品質資產，市場很少給便宜價。",
+"risk_opportunity": "機會在 AI SoC、3D-IC、車用電子與系統設計工具滲透，風險在高本益比與企業研發預算波動。",
+"final_decision": "可進 pool30 core，適合長期持有，也比多數半導體鏈更不受庫存循環干擾。"
+},
+"APH": {
+"symbol": "APH",
+"name": "Amphenol",
+"type": "research_light",
+"company_positioning": [
+"APH 做的是連接器、感測與高速互連元件，本質上是把電子訊號與電力傳輸做成關鍵零組件。",
+"它的客戶橫跨 data center、車用、工業、航太與通訊設備，不依賴單一終端市場。",
+"影響股價的主因是 AI server 高速互連需求、工業/車用循環與併購整合能力。"
+],
+"company_structure": "APH 的結構非常分散，透過多終端市場與持續併購維持成長，AI 伺服器只是近年的增量引擎之一。",
+"customer_analysis": "APH 客戶分散度高，這讓它比純 data center 供應商更穩，但也表示股價不會只跟單一 AI 題材同步暴漲。",
+"financial_quality": "這家公司財務品質好，因為毛利率、現金流與資本回報都穩，且連接器屬高附加價值零組件。",
+"market_view": "市場把 APH 當成 AI server 互連與高品質工業零組件股，但也擔心估值已反映太多 data center 熱度。",
+"competition": "主要對手是 TE Connectivity、Molex 與其他工業/車用連接器廠。APH 的差異在產品線更廣、併購紀律更強，且在高速連接與惡劣環境應用的滲透較深。缺點是它不像純 AI 股那樣有爆發彈性，市場更常把它當高品質複合工業股。",
+"risk_opportunity": "機會在 AI 伺服器互連、車用電動化與工業自動化，風險在併購整合失速與終端景氣同步放緩。",
+"final_decision": "可列入 pool30 core/watch，屬於品質穩的產業基礎零組件標的。"
+},
+"VRT": {
+"symbol": "VRT",
+"name": "Vertiv",
+"type": "research_light",
+"company_positioning": [
+"VRT 做的是 data center 電力、冷卻與基礎設施管理，核心位置在 AI 機櫃背後的電與熱。",
+"它的客戶是 hyperscaler、colocation 業者與企業資料中心，不是一般 IT 硬體通路。",
+"影響股價的主因是 AI data center CAPEX、液冷滲透率、電力密度升級與供應鏈交付能力。"
+],
+"company_structure": "VRT 的成長核心是 data center thermal management 與 power management，不是傳統 UPS 老題材。",
+"customer_analysis": "VRT 客戶高度受 data center 建設景氣影響，尤其 hyperscaler 的液冷與高密度機櫃投資最關鍵。",
+"financial_quality": "財務品質正在改善，因為產品組合往高價值液冷與 AI 基礎設施走，但本質仍受專案交付與製造執行影響。",
+"market_view": "市場把 VRT 當成 AI 電力與散熱受益股，但也擔心 CAPEX 高基期後的訂單節奏與估值過熱。",
+"competition": "主要對手是 Eaton、Schneider Electric、nVent 與其他冷卻/配電供應商。VRT 的差異在 data center 純度更高，對 AI 機房液冷與電力架構更敏感。缺點是股價已帶有明顯 AI 基建溢價，市場對執行失誤容忍度低。",
+"risk_opportunity": "機會在液冷、電力密度升級與 hyperscaler 建置潮，風險在專案延後、供應鏈交付與估值壓縮。",
+"final_decision": "可進 stock_pool 與 growth 名單，但部位應比傳統 core 股保守，等待回檔更合理。"
+},
+"ETN": {
+"symbol": "ETN",
+"name": "Eaton",
+"type": "research_light",
+"company_positioning": [
+"ETN 做的是電力管理、配電、工業控制與電氣基礎設施，核心受惠於電網升級與 data center 用電需求。",
+"它的客戶是工業企業、公共事業、建築市場與資料中心資本支出方。",
+"影響股價的主因是 electrification、AI data center 配電需求、住宅/商業建築周期與 backlog 能見度。"
+],
+"company_structure": "ETN 的結構由電氣業務主導，近年估值提升不是靠傳統工業，而是靠電力管理與基礎設施資本支出。",
+"customer_analysis": "ETN 客戶分散，但 data center 與 utility capex 正成為市場最在意的增量來源。",
+"financial_quality": "這家公司財務品質高於一般工業股，因為產品組合改善、毛利率提升與 backlog 提供更好的可見度。",
+"market_view": "市場把 ETN 當成 AI 用電與電氣化受益股，但也擔心工業景氣降溫與估值已先反映多數利多。",
+"competition": "主要對手是 Schneider Electric、ABB、Siemens 與部分 Vertiv/Hubbell 類供應商。ETN 的差異在電力管理組合更完整，從低壓配電到工業控制都有位置，不是單一 data center 題材。缺點是作為工業複合企業，股價彈性通常不如高純度 AI 基建股。",
+"risk_opportunity": "機會在 data center 配電、電網升級與公共建設支出，風險在工業終端放緩與 CAPEX 轉弱。",
+"final_decision": "可列入 pool30 core/watch，屬於品質穩的電力基礎設施標的。"
+},
+"AMZN": {
+"symbol": "AMZN",
+"name": "Amazon",
+"type": "research_light",
+"company_positioning": [
+"AMZN 做的是電商、物流、AWS 雲端、廣告與 AI 基礎設施，是多引擎平台型公司。",
+"它的客戶是全球消費者、第三方賣家、企業雲端客戶與廣告主，不靠單一產品。",
+"影響股價的主因是 AWS 成長、零售效率、廣告利潤率、CAPEX 與 AI 基礎設施投資回報。"
+],
+"company_structure": "AMZN 的結構是低毛利零售流量加高毛利 AWS 與廣告，真正決定估值的是後兩者不是包裹數量。",
+"customer_analysis": "AMZN 客戶極度分散，但市場最在意企業雲端客戶的支出與 Prime 生態的消費黏著度。",
+"financial_quality": "財務品質正在變好，因為物流效率與廣告/AWS 的 mix 改善，但高 CAPEX 讓自由現金流波動比一般平台股大。",
+"market_view": "市場把 AMZN 當成雲端、AI 與廣告複合成長股，但也擔心零售利潤率與 AI 資本支出回收期。",
+"competition": "主要對手是 Walmart/Shopify 在零售、Microsoft/Google 在 cloud、Meta/Google 在廣告。AMZN 的差異在於把物流、流量、雲端與商業基礎設施綁在同一生態，這種複合護城河很少見。缺點是業務太多，市場一旦對 AWS 或 CAPEX 失望，估值反應會很直接。",
+"risk_opportunity": "機會在 AWS AI 工作負載、廣告滲透與零售效率，風險在 CAPEX 過重、監管與零售消費放緩。",
+"final_decision": "可列入 pool30 core，屬於大型複合平台股，但買點仍建議等 AWS 或 CAPEX 雜音造成回檔。"
+},
+"NFLX": {
+"symbol": "NFLX",
+"name": "Netflix",
+"type": "research_light",
+"company_positioning": [
+"NFLX 做的是串流影音訂閱與廣告版內容平台，核心不是電影公司，而是全球內容分發與訂閱引擎。",
+"它的客戶是全球家庭訂閱戶與廣告主，收入來源從純訂閱走向訂閱加廣告雙軌。",
+"影響股價的主因是訂戶成長、ARPU、廣告業務滲透、內容投資效率與密碼共享政策效果。"
+],
+"company_structure": "NFLX 的結構是內容投資換取訂閱現金流，現在新增的估值支撐是 ad-tier 與 live/event content。",
+"customer_analysis": "NFLX 客戶極度分散，但市場更在意 churn、廣告版用戶變現與全球內容 hit rate，而不是單一地區表現。",
+"financial_quality": "這家公司財務品質明顯改善，因為訂閱規模與內容效率拉高了 operating margin，不再只是燒現金串流股。",
+"market_view": "市場把 NFLX 當成高品質 media platform，但也擔心內容成本、競爭平台與高估值下的訂戶放緩。",
+"competition": "主要對手是 Disney+、Max、Amazon Prime Video 與 YouTube 的內容時間競爭。NFLX 的差異在全球化內容分發、推薦演算法與獨立於硬體/電商生態的純訂閱平台模式。缺點是成長若放緩，市場會立刻回頭檢討內容成本與估值溢價。",
+"risk_opportunity": "機會在廣告版、全球內容與 live programming，風險在內容支出與訂戶增速放緩。",
+"final_decision": "可進 stock_pool 與 growth/core 邊緣名單，但不建議在高估值突破時追價。"
+},
+"CRM": {
+"symbol": "CRM",
+"name": "Salesforce",
+"type": "research_light",
+"company_positioning": [
+"CRM 做的是 CRM、雲端應用軟體與企業 AI agent 平台，核心仍是企業工作流與客戶資料管理。",
+"它的客戶是大型企業、中型企業與數位轉型團隊，屬於企業軟體高黏著平台。",
+"影響股價的主因是訂閱成長、Agentforce/AI 變現、費用控制與大型企業 IT 預算。"
+],
+"company_structure": "CRM 的結構由 Sales、Service、Marketing、Data Cloud 與平台工具組成，新的成長敘事是 AI agent 而不是傳統 seat expansion。",
+"customer_analysis": "CRM 客戶分散，但 deal size 與大型企業導入速度會決定市場對 AI 敘事買不買單。",
+"financial_quality": "財務品質比過去更好，因為公司開始重視 operating margin 與現金回饋，不再只有營收擴張。",
+"market_view": "市場把 CRM 當成企業 AI 應用平台，但也擔心 seat growth 放緩與 Agentforce 尚未形成大規模收入。",
+"competition": "主要對手是 Microsoft Dynamics、Oracle、HubSpot 以及 ServiceNow 在工作流層面的競爭。CRM 的差異在 CRM base installed 深、資料模型成熟，並試圖把 AI agent 疊上既有平台。缺點是企業軟體市場成熟度高，新產品若無法明顯帶動增量，估值很難大幅擴張。",
+"risk_opportunity": "機會在 AI agent、Data Cloud 與 margin 改善，風險在大型企業 IT 支出保守與新產品 monetization 不如預期。",
+"final_decision": "可列入 stock_pool/watch，若 AI agent 變現更清楚才有機會升級到更高權重。"
+},
+"NOW": {
+"symbol": "NOW",
+"name": "ServiceNow",
+"type": "research_light",
+"company_positioning": [
+"NOW 做的是企業 workflow、ITSM、自動化與 AI agent 平台，本質上是把企業流程標準化再加上自動化。",
+"它的客戶是大型企業、IT 部門、人資/客服/營運流程團隊，不靠小額消費市場。",
+"影響股價的主因是 subscription revenue、remaining performance obligations、AI agent 滲透與大型合約品質。"
+],
+"company_structure": "NOW 的成長核心仍是訂閱型 workflow 平台，AI agent 與自動化模組是提高 ARPU 的新引擎。",
+"customer_analysis": "NOW 客戶集中在大型企業與高價值流程場景，因此單一客戶數不一定多，但合約黏性與續約率很強。",
+"financial_quality": "這家公司財務品質高，因為毛利率、續約、現金流與長約能見度都接近頂級軟體資產。",
+"market_view": "市場把 NOW 當成企業 AI workflow 第一梯隊，但也擔心高估值下任何 deal timing 波動都會被放大解讀。",
+"competition": "主要對手是 Salesforce、Microsoft、Atlassian 與各種垂直流程軟體。NOW 的差異在 enterprise workflow 深度更強，不是單一 CRM 或協作工具，而是企業流程底座。缺點是估值長期偏貴，市場對增速放緩幾乎沒有耐心。",
+"risk_opportunity": "機會在 AI agent、流程自動化與大企業擴模組，風險在 IT 預算放慢與高估值壓縮。",
+"final_decision": "可列入 pool30 core/watch，屬於高品質企業軟體標的，但適合回檔布局。"
+},
+"SNOW": {
+"symbol": "SNOW",
+"name": "Snowflake",
+"type": "research_light",
+"company_positioning": [
+"SNOW 做的是雲端資料平台、數據共享與 AI/analytics 工作負載平台，不是傳統資料庫公司。",
+"它的客戶是大型企業、數據工程團隊與需要多雲資料分析的企業用戶。",
+"影響股價的主因是 product revenue growth、consumption 變化、AI workload 滲透與大客戶擴張速度。"
+],
+"company_structure": "SNOW 的模式是 consumption-based data platform，成長不是看 seat 數，而是看客戶算力與資料用量。",
+"customer_analysis": "SNOW 客戶分散，但大型企業用量變化很重要，因為 consumption 模式會讓景氣與優化行為直接反映到營收。",
+"financial_quality": "財務品質正在改善，但跟成熟軟體相比仍較受用量波動影響， operating leverage 也沒那麼穩。",
+"market_view": "市場把 SNOW 當成 AI data cloud 受益股，但也擔心企業優化雲端支出與競爭加劇。",
+"competition": "主要對手是 Databricks、Google BigQuery、AWS Redshift 與部分 MongoDB/Oracle analytics 場景。SNOW 的差異在多雲資料共享與使用體驗，不完全綁在單一雲廠商。缺點是 consumption 模式在景氣保守期容易出現成長鈍化。",
+"risk_opportunity": "機會在 AI data platform、Cortex/開發者生態與大型客戶擴用量，風險在用量優化與高估值。",
+"final_decision": "可進 stock_pool 與 growth/watch 名單，但不建議直接列為 pool30 core。"
+},
+"DDOG": {
+"symbol": "DDOG",
+"name": "Datadog",
+"type": "research_light",
+"company_positioning": [
+"DDOG 做的是 observability、APM、安全監控與 cloud operations，本質是企業雲端運維的儀表板。",
+"它的客戶是雲端原生企業、開發團隊、SRE 團隊與大型企業 IT 部門。",
+"影響股價的主因是用量成長、產品擴模組、雲端遷移速度與安全產品滲透。"
+],
+"company_structure": "DDOG 的結構是以 observability 為核心，再往 security、logs、APM 與 cloud cost 擴平台。",
+"customer_analysis": "DDOG 客戶分散，但大客戶用量與雲端工作負載增減會直接影響營收，因為它有明顯 usage-based 特性。",
+"financial_quality": "財務品質不錯，但比純訂閱 SaaS 更受用量波動影響，市場也會盯著新產品能否維持高毛利。",
+"market_view": "市場把 DDOG 當成 cloud infrastructure 與 security 的雙重受益股，但也擔心用量優化與競爭造成增速放緩。",
+"competition": "主要對手是 Dynatrace、New Relic、Splunk/Cisco 與 CrowdStrike 部分安全模組。DDOG 的差異在開發者心智、產品擴張速度與雲端原生監控體驗更強。缺點是 usage-based 模式讓市場對企業優化雲支出非常敏感。",
+"risk_opportunity": "機會在 observability + security 平台化，風險在用量優化與大型客戶支出保守。",
+"final_decision": "可進 stock_pool 與 growth 名單，但更適合在用量雜音或財報回檔後布局。"
+},
+"MDB": {
+"symbol": "MDB",
+"name": "MongoDB",
+"type": "research_light",
+"company_positioning": [
+"MDB 做的是開發者導向的資料庫平台，核心產品是 document database 與 Atlas 雲端服務。",
+"它的客戶是應用開發團隊、企業 IT 與現代化應用架構需要彈性資料模型的公司。",
+"影響股價的主因是 Atlas 成長、用量模式、開發者採用、以及非關聯式資料庫的長期滲透。"
+],
+"company_structure": "MDB 的結構是 Atlas 雲端服務加 Enterprise Advanced，真正估值重心已經轉到 Atlas。",
+"customer_analysis": "MDB 客戶分散，但大型企業擴用量與新應用上雲節奏會決定 Atlas 成長品質。",
+"financial_quality": "財務品質在改善，但比成熟 SaaS 更受開發者用量與雲端消費模式影響，利潤率仍在爬坡。",
+"market_view": "市場把 MDB 當成開發者生態與現代資料架構受益股，但也擔心雲端用量優化與競爭平台擠壓。",
+"competition": "主要對手是 Snowflake 部分資料場景、PostgreSQL 生態、AWS DocumentDB 與 Oracle/SQL Server 傳統資料庫。MDB 的差異在開發者友善與 document model 的靈活性，不是傳統 data warehouse 故事。缺點是當企業 IT 預算保守時，開發者導入與用量擴張也會放慢。",
+"risk_opportunity": "機會在 Atlas 滲透、AI 應用資料層與開發者生態，風險在用量優化與競爭雲平台擠壓。",
+"final_decision": "可列入 growth/watch 名單，但暫不建議當 pool30 核心。"
+},
+"PANW": {
+"symbol": "PANW",
+"name": "Palo Alto Networks",
+"type": "research_light",
+"company_positioning": [
+"PANW 做的是網路安全平台，橫跨 NGFW、SASE、cloud security 與 SOC 自動化。",
+"它的客戶是大型企業、政府與需要整合式資安平台的 IT/security 團隊。",
+"影響股價的主因是 platformization、billings/RPO、cloud security 滲透與大型客戶整合需求。"
+],
+"company_structure": "PANW 的估值核心已從硬體防火牆轉向平台化訂閱與雲端資安，不再只是 appliance 公司。",
+"customer_analysis": "PANW 客戶分散，但大客戶是否願意把多家資安產品整併到單一平台，決定了長約品質與擴張速度。",
+"financial_quality": "這家公司財務品質不錯，因為平台化提升了 recurring revenue，但轉型期會讓短期 billings 解讀變複雜。",
+"market_view": "市場把 PANW 當成平台化資安龍頭，但也擔心 go-to-market 調整與平台折扣策略壓短期成長。",
+"competition": "主要對手是 CrowdStrike、Fortinet、Zscaler 與 Microsoft Security。PANW 的差異在產品組合最全，從網路邊界到 cloud/SOC 都有位置，適合大企業整併供應商。缺點是轉型到平台化時，短期收入節奏容易讓市場誤判。",
+"risk_opportunity": "機會在 platformization、cloud security 與大客戶整併支出，風險在轉型期 billings 波動與競爭加劇。",
+"final_decision": "可進 stock_pool，若平台化與長約品質更明朗，可升級為更高權重資安核心。"
+},
+"CRWD": {
+"symbol": "CRWD",
+"name": "CrowdStrike",
+"type": "research_light",
+"company_positioning": [
+"CRWD 做的是 endpoint security、XDR、identity 與 SOC 平台，本質是雲端原生資安平台公司。",
+"它的客戶是企業資安團隊、政府單位與需要統一安全平台的大型組織。",
+"影響股價的主因是 ARR、模組擴張、事件處理信任修復、以及平台滲透率。"
+],
+"company_structure": "CRWD 的結構是以 Falcon endpoint 為核心，再往 identity、cloud、log 與 NG-SIEM 擴平台。",
+"customer_analysis": "CRWD 客戶分散，但大客戶模組數與續約意願比單純新增客戶數更重要，因為平台化才是估值來源。",
+"financial_quality": "這家公司財務品質高於多數高成長 SaaS，因為毛利與現金流好，但資安事件後的信任修復會影響短期節奏。",
+"market_view": "市場把 CRWD 當成高純度資安平台，但也擔心事件餘波、競爭與高估值下的增速要求。",
+"competition": "主要對手是 Microsoft Security、Palo Alto、SentinelOne 與部分 legacy endpoint 廠商。CRWD 的差異在雲端原生架構、資料集與平台擴張速度更快，不只是防毒替代品。缺點是估值高，而且任何事件都會被市場放大成信任與留存問題。",
+"risk_opportunity": "機會在平台擴張與企業整併資安工具，風險在事件恢復期、競爭與高本益比壓力。",
+"final_decision": "可列入 stock_pool/growth 名單，但不建議在情緒過熱時追價。"
+},
+"GEV": {
+"symbol": "GEV",
+"name": "GE Vernova",
+"type": "research_light",
+"company_positioning": [
+"GEV 做的是發電、輸配電與電網設備，本質上是大型電力資本支出平台，不是純發電公用事業。",
+"它的客戶是公用事業公司、政府、工業客戶與電網基礎設施投資方。",
+"影響股價的主因是 gas turbine backlog、grid equipment、風電執行改善與 AI 用電帶動的電力基建需求。"
+],
+"company_structure": "GEV 的結構是 Power、Electrification 與 Wind，現在市場最買單的是前兩者，不是風電。",
+"customer_analysis": "GEV 客戶集中在大型公用事業與能源投資方，所以 backlog 品質比一般工業公司的訂單數量更重要。",
+"financial_quality": "這家公司財務品質正在改善，但風電拖累與大型專案執行風險讓它還不能完全用高品質工業股角度看。",
+"market_view": "市場把 GEV 當成 AI 用電與電網升級受益股，但也擔心 wind business、專案執行與大型設備交付波動。",
+"competition": "主要對手是 Siemens Energy、Mitsubishi Power、Hitachi Energy 與部分電網/渦輪設備供應商。GEV 的差異在 gas power、grid 與電力服務平台較完整，且受惠於美國與全球電力需求上升。缺點是風電與大型專案執行仍讓獲利品質不如純軟體或輕資產工業股。",
+"risk_opportunity": "機會在電網擴建、gas power 與 AI data center 用電，風險在風電虧損與專案執行。",
+"final_decision": "可進 stock_pool 與 power/infrastructure 名單，但比較像成長中的電力設備平台，不是純 defensive 公用事業。"
+},
+"VST": {
+"symbol": "VST",
+"name": "Vistra",
+"type": "research_light",
+"company_positioning": [
+"VST 做的是美國發電與零售電力供應，核心是電價敏感度與發電資產組合，不是設備製造。",
+"它的客戶是零售電力用戶與電力市場，真正獲利來自發電資產與 power pricing。",
+"影響股價的主因是天然氣/電力價格、ERCOT 與 PJM 市場、data center 用電需求與資產調度。"
+],
+"company_structure": "VST 的結構是零售電力加發電資產組合，市場更看重核能、天然氣與峰值電價彈性。",
+"customer_analysis": "VST 沒有傳統科技股那種客戶分析，真正要看的是終端電力需求、區域市場結構與電價傳導能力。",
+"financial_quality": "財務品質取決於資產組合與避險策略，不像 regulated utility 那麼穩，但比純高槓桿景氣股有更多現金流槓桿。",
+"market_view": "市場把 VST 當成 data center 用電、電價上行與電力短缺受益股，但也擔心政策、燃料成本與區域市場波動。",
+"competition": "主要對手是 CEG、NRG 與其他 merchant power producer。VST 的差異在於發電與零售電力結合，對區域電價與需求變化更敏感。缺點是它不像 regulated utility 有固定回報，獲利波動與市場價格關聯較大。",
+"risk_opportunity": "機會在 AI/data center 拉高尖峰用電與電價，風險在政策、天氣與商品價格波動。",
+"final_decision": "可放 stock_pool 的 power 名單，但部位要用景氣循環與商品價格風險思維管理。"
+},
+"CEG": {
+"symbol": "CEG",
+"name": "Constellation Energy",
+"type": "research_light",
+"company_positioning": [
+"CEG 做的是發電與能源供應，尤其核能資產是市場最重視的估值核心。",
+"它的客戶是零售與商業電力用戶，真正投資邏輯在於核能發電資產的稀缺性與電力價格彈性。",
+"影響股價的主因是核能價值重估、data center 用電需求、長期供電合約與政策支持。"
+],
+"company_structure": "CEG 的價值核心是核能與低碳電力資產，不像一般公用事業主要靠 regulated rate base。",
+"customer_analysis": "CEG 客戶不是科技股式的企業客戶集中問題，真正要看的是長約電力需求與大型用電方對清潔電力的採購。",
+"financial_quality": "財務品質中高，但不像 regulated utility 那麼平滑，因為 merchant power 曝險與核能資產評價會帶來波動。",
+"market_view": "市場把 CEG 當成 AI 用電與核能稀缺資產受益股，但也擔心估值過熱與電力政策變化。",
+"competition": "主要對手是 VST、NRG 與其他擁有大型發電資產的電力公司。CEG 的差異在核能比重高，對大型 AI 用電與低碳電力需求有稀缺性。缺點是估值很容易先反映未來供電故事，回檔時波動也不小。",
+"risk_opportunity": "機會在核能長約、data center power demand 與低碳電力需求，風險在監管與高估值壓縮。",
+"final_decision": "可進 stock_pool/power 名單，但不宜當低波動 defensive 公用事業看待。"
+},
+"NRG": {
+"symbol": "NRG",
+"name": "NRG Energy",
+"type": "research_light",
+"company_positioning": [
+"NRG 做的是發電、零售電力與能源服務，核心獲利受美國電力市場價格與需求變化影響。",
+"它的客戶是住宅、商業與工業用電戶，不是單一企業客戶集中型模式。",
+"影響股價的主因是電價、天然氣成本、負債管理與 data center 帶動的區域用電成長。"
+],
+"company_structure": "NRG 的結構是零售電力加發電組合，股價彈性通常比 regulated utility 更高，也更受商品價格影響。",
+"customer_analysis": "NRG 客戶分散，但真正重要的是地區性電力需求與零售電價傳導，而不是單一客戶續約。",
+"financial_quality": "財務品質中等，因為現金流與回購政策可以支撐估值，但資產與市場價格波動讓穩定度不如防守型公用事業。",
+"market_view": "市場把 NRG 當成電力需求與供電緊張受益股，但也擔心商品價格、負債與政策風險。",
+"competition": "主要對手是 VST、CEG 與其他 merchant power/retail electricity 公司。NRG 的差異在零售與發電組合並重，不像核能故事那麼稀缺，也不像設備股那樣吃 CAPEX。缺點是長期估值通常較難拿到高倍數。",
+"risk_opportunity": "機會在用電需求增長與零售能源服務，風險在商品價格與資本結構。",
+"final_decision": "可列入 power/watch 名單，但更像現金流與商品價格交易股，不是 pool30 核心。"
+},
+"PWR": {
+"symbol": "PWR",
+"name": "Quanta Services",
+"type": "research_light",
+"company_positioning": [
+"PWR 做的是電網、輸配電、能源與基礎設施工程服務，屬於電力與公用事業資本支出的施工平台。",
+"它的客戶是 utility、能源公司、資料中心基建與大型基礎設施投資方。",
+"影響股價的主因是 backlog、電網升級、data center interconnection 與大型專案執行。"
+],
+"company_structure": "PWR 的核心不是賣設備，而是把輸配電、工程與基建施工能力打包成高門檻服務平台。",
+"customer_analysis": "PWR 客戶集中在大型 utility 與能源項目，但 backlog 長、專案規模大，所以可見度比一般工程股高。",
+"financial_quality": "財務品質不錯，因為 backlog 支撐高、資本回報改善，但本質仍受大型專案執行與勞工成本影響。",
+"market_view": "市場把 PWR 當成電網升級與 AI 用電基建受益股，但也擔心估值偏高與施工瓶頸。",
+"competition": "主要對手是 MasTec、MYR Group 與其他電力工程/基建承包商。PWR 的差異在規模、專案能力與 utility 關係更強，能吃到更高價值的輸配電與能源基建。缺點是工程股天生受專案執行與成本控管挑戰，不像設備商有高毛利護城河。",
+"risk_opportunity": "機會在電網改造、data center 接電與公用事業支出，風險在工期、勞工成本與估值壓縮。",
+"final_decision": "可進 stock_pool/power infrastructure 名單，但部位應用基建執行風險思維管理。"
+},
+"AFRM": {
+"symbol": "AFRM",
+"name": "Affirm",
+"type": "research_light",
+"company_positioning": [
+"AFRM 做的是 BNPL、消費分期與商戶支付平台，核心不是傳統信用卡而是 point-of-sale lending。",
+"它的客戶是電商商戶、消費者與需要高轉換率支付工具的零售平台。",
+"影響股價的主因是 GMV、資金成本、信用損失率、合作商戶品質與監管。"
+],
+"company_structure": "AFRM 的成長引擎是 merchant partnerships 加分期資產的風控模型，不是單純放款規模。",
+"customer_analysis": "AFRM 客戶端同時看商戶與消費者，真正關鍵是高品質商戶流量能否帶來可控損失率與高 repeat usage。",
+"financial_quality": "財務品質仍偏脆弱，因為資金成本、信用風險與宏觀消費景氣都會直接影響獲利模型。",
+"market_view": "市場把 AFRM 當成消費 fintech 與支付轉換工具，但也擔心利率高、信用循環與監管壓力。",
+"competition": "主要對手是 Klarna、Afterpay、PayPal 分期與傳統信用卡分期方案。AFRM 的差異在商戶整合、透明分期與資料風控模型，不只是支付按鈕。缺點是商業模式對景氣與資金成本極度敏感，無法用高品質軟體股看待。",
+"risk_opportunity": "機會在大型商戶合作與 BNPL 滲透，風險在信用損失、資金成本與監管。",
+"final_decision": "可列入 event/watch 名單，但不適合 pool30 與 FCN 接股策略。"
+},
+"PYPL": {
+"symbol": "PYPL",
+"name": "PayPal",
+"type": "research_light",
+"company_positioning": [
+"PYPL 做的是數位支付、商戶收單與金融科技平台，核心資產是 PayPal 品牌、Braintree 與 Venmo 生態。",
+"它的客戶是線上商戶、消費者與平台型電商，不是單一銀行或卡組織。",
+"影響股價的主因是 TPV、take rate、Braintree 利潤率、Venmo 變現與支付競爭。"
+],
+"company_structure": "PYPL 的結構由 branded checkout、unbranded processing 與消費金融工具組成，真正問題是成長與利潤的平衡。",
+"customer_analysis": "PYPL 客戶很分散，但大型商戶 processing volume 與 branded checkout 滲透率決定了獲利品質。",
+"financial_quality": "財務品質不差，但市場對它的疑慮在於成長放緩與 Braintree 低毛利拖累整體 mix。",
+"market_view": "市場把 PYPL 當成支付 turnaround 股，但也擔心 Apple Pay、Shop Pay、BNPL 與卡組織分流。",
+"competition": "主要對手是 Stripe、Adyen、Apple Pay、Block 與各種 checkout solutions。PYPL 的差異在雙邊品牌生態與 Venmo，但 Braintree 的 processing 業務利潤率較低，讓成長看起來沒那麼值錢。缺點是市場已不再把它當高成長 fintech，而是等 turnaround 兌現。",
+"risk_opportunity": "機會在 branded checkout 修復、Venmo 變現與成本效率，風險在競爭與 take rate 下滑。",
+"final_decision": "可放 watch 名單，若 checkout 與利潤結構改善才有升級空間。"
+},
+"SHOP": {
+"symbol": "SHOP",
+"name": "Shopify",
+"type": "research_light",
+"company_positioning": [
+"SHOP 做的是電商基礎設施、商戶工具、支付、物流協作與商家 operating system。",
+"它的客戶是 SMB 與中大型品牌商戶，不是靠自營零售賺價差。",
+"影響股價的主因是 GMV、merchant solutions 滲透、Shop Pay、國際擴張與消費景氣。"
+],
+"company_structure": "SHOP 的結構是 subscription solutions 打底，merchant solutions 拉動規模與支付滲透。",
+"customer_analysis": "SHOP 客戶分散度很高，這是優點，但中小商戶景氣敏感度也高，因此 GMV 與支付滲透率比客戶數更重要。",
+"financial_quality": "財務品質在改善，因為高毛利軟體底座加支付/商戶服務規模化，但 still mix 讓毛利率不如純 SaaS。",
+"market_view": "市場把 SHOP 當成電商基建平台與商戶 operating system，但也擔心消費放緩與商戶獲客成本。",
+"competition": "主要對手是 Amazon 平台生態、Wix/BigCommerce、Stripe 以及各種商戶工具整合商。SHOP 的差異在商戶自主品牌工具鏈完整，讓商家不必完全依賴平台型電商。缺點是 merchant solutions 比重上升雖提高 GMV 黏著，也會壓低整體毛利率想像。",
+"risk_opportunity": "機會在支付、跨境與企業商戶擴張，風險在消費景氣與商戶倒閉/降本。",
+"final_decision": "可進 stock_pool/growth 名單，但不建議當防守型 core。"
+},
+"LLY": {
+"symbol": "LLY",
+"name": "Eli Lilly",
+"type": "research_light",
+"company_positioning": [
+"LLY 做的是創新藥，核心投資邏輯集中在 GLP-1 減重/糖尿病藥物與後續管線平台。",
+"它的客戶是全球醫療體系、保險支付方、醫師與患者，但真正收入驅動是大單品滲透與產能。",
+"影響股價的主因是 Mounjaro/Zepbound 需求、產能擴張、保險覆蓋與肥胖症市場競爭。"
+],
+"company_structure": "LLY 的估值核心已從傳統糖尿病藥廠轉向 obesity platform，市場看的是管線延展而不是單一藥物週期。",
+"customer_analysis": "LLY 客戶不是科技股式的大客戶集中，但支付方、藥價與產能供給會決定大單品轉成多少營收。",
+"financial_quality": "財務品質很強，因為大單品帶來高毛利與現金流，但研發與產能投資也很重。",
+"market_view": "市場把 LLY 當成 obesity 龍頭與製藥成長股，但也擔心估值高、產能供應與價格壓力。",
+"competition": "主要對手是 Novo Nordisk 與其他 GLP-1/減重療法開發者。LLY 的差異在 tirzepatide 臨床表現、市場擴張速度與後續口服管線更具想像空間。缺點是估值已反映大量肥胖市場樂觀預期，任何供應或定價問題都會被放大。",
+"risk_opportunity": "機會在 obesity 滲透、口服管線與國際擴張，風險在產能、定價與支付方壓力。",
+"final_decision": "可列入 pool30 core/growth，但買點要挑產能或定價雜音造成的回檔。"
+},
+"NVO": {
+"symbol": "NVO",
+"name": "Novo Nordisk",
+"type": "research_light",
+"company_positioning": [
+"NVO 做的是糖尿病與肥胖症創新藥，核心估值來自 GLP-1 平台而不是傳統胰島素公司定位。",
+"它的客戶是全球醫療體系、醫師與患者，但真正獲利變動看的是 Wegovy/Ozempic 與定價權。",
+"影響股價的主因是 GLP-1 競爭、產能、價格壓力、保險給付與後續肥胖藥管線。"
+],
+"company_structure": "NVO 的結構高度集中在糖尿病與肥胖症藥物，這讓 platform 非常清楚，但也讓競爭風險更集中。",
+"customer_analysis": "NVO 的客戶不是少數大客戶問題，而是 payer、給付範圍與全球市場需求對大單品滲透的影響。",
+"financial_quality": "財務品質仍高，但市場對它的評價已從穩健製藥股轉成要跟 Lilly 比肥胖市場執行力。",
+"market_view": "市場把 NVO 當成 GLP-1 巨頭，但也擔心 2026 定價與競爭壓力升高、成長不再像前期那麼順。",
+"competition": "主要對手是 Eli Lilly，其他還有新一代口服與多受體減重藥開發者。NVO 的差異在 GLP-1 先發優勢與全球糖尿病基礎盤，但目前市場更在意它在肥胖症競爭中的相對位置。缺點是當市場開始比較療效與價格時，它不再能單靠先發優勢拿估值溢價。",
+"risk_opportunity": "機會在全球肥胖市場與新一代管線，風險在價格、競爭與供應鏈壓力。",
+"final_decision": "可列入 stock_pool/core 邊緣名單，但目前操作上應比 LLY 更保守。"
+},
+"ISRG": {
+"symbol": "ISRG",
+"name": "Intuitive Surgical",
+"type": "research_light",
+"company_positioning": [
+"ISRG 做的是達文西手術機器人與相關器械/服務，本質是醫療設備加 recurring procedure 收入平台。",
+"它的客戶是醫院、外科中心與外科醫師，不是一般消費市場。",
+"影響股價的主因是系統裝機量、手術量、器械耗材收入、醫院 CAPEX 與競品進展。"
+],
+"company_structure": "ISRG 的結構是設備裝機帶動後續器械與服務，真正價值在高黏著 recurring revenue，不是一次性賣機器。",
+"customer_analysis": "ISRG 客戶集中在醫院與手術中心，所以醫療資本支出與手術量回升比客戶家數更重要。",
+"financial_quality": "這家公司財務品質很高，因為毛利率、現金流與 recurring revenue 都好，但估值通常不便宜。",
+"market_view": "市場把 ISRG 當成高品質醫療科技平台，但也擔心醫院預算、競爭與程序成長放緩。",
+"competition": "主要對手是 Medtronic、Johnson & Johnson Ottava 等手術機器人競爭者。ISRG 的差異在 installed base、醫師訓練生態與 procedure-based recurring revenue 深度。缺點是估值高，只要手術量或裝機量略低預期就會被市場修正。",
+"risk_opportunity": "機會在手術滲透率提升與國際擴張，風險在醫院 CAPEX 與競品追趕。",
+"final_decision": "可列入 pool30 core/watch，屬於品質高但估值通常偏貴的醫療設備龍頭。"
+},
+"INTU": {
+"symbol": "INTU",
+"name": "Intuit",
+"type": "research_light",
+"company_positioning": [
+"INTU 做的是稅務、會計、小商家財務軟體與個人財務工具，本質上是金融流程軟體平台。",
+"它的客戶是中小企業、會計師、個人報稅用戶與消費金融使用者。",
+"影響股價的主因是 TurboTax 季節表現、QuickBooks 生態、AI 自動化工具與 SMB 景氣。"
+],
+"company_structure": "INTU 的核心是 QuickBooks 與 TurboTax，新的敘事是 AI 對財務流程自動化與服務收入的提升。",
+"customer_analysis": "INTU 客戶分散，真正關鍵在 SMB 客戶留存與每客戶收入提升，而不是單一大型合約。",
+"financial_quality": "這家公司財務品質高，因為毛利率、現金流與訂閱模式都很穩，屬於高品質軟體/服務複合股。",
+"market_view": "市場把 INTU 當成高品質 SMB 軟體與 AI 自動化受益股，但也擔心中小企業景氣與估值不便宜。",
+"competition": "主要對手是 H&R Block、Block/Square 部分商戶工具、Xero 與其他會計軟體。INTU 的差異在消費稅務與 SMB 財務工具雙邊生態很深，且品牌黏著度高。缺點是成長雖穩，但爆發彈性不如高純度 AI 或雲端平台。",
+"risk_opportunity": "機會在 AI 財務助理、QuickBooks 擴模組與個人金融服務，風險在 SMB 景氣放緩與高估值。",
+"final_decision": "可列入 pool30 core/watch，適合長期持有，但買點仍以回檔布局較佳。"
+},
+"ADBE": {
+"symbol": "ADBE",
+"name": "Adobe",
+"type": "research_light",
+"company_positioning": [
+"ADBE 做的是創意軟體、數位體驗與文件工作流，本質是數位內容與設計標準平台。",
+"它的客戶是設計師、企業行銷團隊、創作者與文件管理用戶，客群橫跨個人與企業。",
+"影響股價的主因是 Creative Cloud 訂閱、Firefly AI 變現、Document Cloud 擴張與企業數位行銷支出。"
+],
+"company_structure": "ADBE 的結構由 Creative Cloud、Document Cloud 與 Experience Cloud 組成，估值核心仍是創意軟體訂閱現金流。",
+"customer_analysis": "ADBE 客戶分散，重點在創作者與企業客戶是否願意為 AI 功能升級付費，而不是單純新增用戶數。",
+"financial_quality": "這家公司財務品質高，因為毛利率、現金流與訂閱續約都漂亮，但市場會盯著 AI 是否真的能轉成 ARPU。",
+"market_view": "市場把 ADBE 當成生成式 AI 受益股，但也擔心 Canva、開源工具與 AI 內容工具稀釋傳統軟體護城河。",
+"competition": "主要對手是 Canva、Figma、Microsoft/Google 部分辦公與設計功能，以及新一代 AI 創作工具。ADBE 的差異在專業創作工作流、品牌標準與企業內容管理能力仍最完整。缺點是市場擔心生成式 AI 降低入門門檻，會不會削弱高價軟體的定價權。",
+"risk_opportunity": "機會在 Firefly AI、企業內容工作流與文件雲，風險在新工具競爭與 AI 變現不如預期。",
+"final_decision": "可進 stock_pool/core 邊緣名單，但需要看到 AI 升級真正拉動商業化才適合提高權重。"
+},
 "LVS": {
 "symbol": "LVS",
 "name": "Las Vegas Sands",
