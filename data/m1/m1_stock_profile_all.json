@@ -492,6 +492,133 @@
 "risk_opportunity": "機會在廣告版、全球內容與 live programming，風險在內容支出與訂戶增速放緩。",
 "final_decision": "可進 stock_pool 與 growth/core 邊緣名單，但不建議在高估值突破時追價。"
 },
+  {
+  "NVDA": {
+    "symbol": "NVDA",
+    "name": "NVIDIA",
+    "type": "research_light",
+    "company_positioning": [
+      "NVDA 核心是 AI GPU 與加速運算平台，2025 年 data center 收入占比已超過 80%。",
+      "主要客戶為 hyperscaler（Microsoft、Amazon、Google）與 AI 公司，占營收比重超過 50%。",
+      "股價關鍵來自 AI capex 成長（年增率 >50%）與 GPU ASP 維持能力。"
+    ],
+    "company_structure": "營收結構已從 gaming 轉為 data center 主導，毛利率約 75% 屬超高水準。",
+    "customer_analysis": "前幾大雲端客戶占比高，單一客戶可能達 10~15%，具集中風險。",
+    "financial_quality": "毛利率約 70~75%，營業利益率超過 50%，屬極高品質。",
+    "market_view": "市場視為 AI 核心供應鏈龍頭，但擔心 capex 高基期後成長放緩。",
+    "competition": "主要對手為 AMD 與 custom ASIC（Google TPU），NVDA 優勢在 CUDA 生態。",
+    "risk_opportunity": "機會在 AI 長期需求，風險在 hyperscaler 自研晶片比例提升。",
+    "final_decision": "pool30 core，FCN 可用但須控權重（波動高）。"
+  },
+
+  "MSFT": {
+    "symbol": "MSFT",
+    "name": "Microsoft",
+    "type": "research_light",
+    "company_positioning": [
+      "MSFT 核心是 Azure cloud + enterprise software，雲端收入占比約 50%。",
+      "主要客戶為企業 IT 與開發者，Azure 年成長約 25~30%。",
+      "股價關鍵在 AI（Copilot）變現與 cloud 成長持續性。"
+    ],
+    "company_structure": "Office + Azure + Windows 三大現金流結構穩定。",
+    "customer_analysis": "企業客戶分散，單一客戶占比低於 5%。",
+    "financial_quality": "毛利率約 68%，自由現金流 >700 億美元。",
+    "market_view": "AI 平台龍頭之一，但 capex 高（>500億美元）影響短期現金流。",
+    "competition": "對手為 AWS、Google Cloud，優勢在 enterprise 綁定。",
+    "risk_opportunity": "機會在 AI SaaS，風險在 cloud 成長放緩。",
+    "final_decision": "pool30 core，適合 FCN 核心低波動標的。"
+  },
+
+  "AAPL": {
+    "symbol": "AAPL",
+    "name": "Apple",
+    "type": "research_light",
+    "company_positioning": [
+      "AAPL 核心為 iPhone + services，iPhone 占營收約 50%。",
+      "客戶為全球消費者，活躍裝置超過 20 億台。",
+      "股價關鍵在服務收入（毛利率 >70%）與換機週期。"
+    ],
+    "company_structure": "硬體 + 高毛利服務（services 占比約 25%）。",
+    "customer_analysis": "客戶高度分散，無集中風險。",
+    "financial_quality": "毛利率約 44%，現金流穩定。",
+    "market_view": "成熟平台股，成長低但穩定。",
+    "competition": "競爭對手為 Samsung、Android 生態。",
+    "risk_opportunity": "機會在服務擴張，風險在 iPhone 成長停滯。",
+    "final_decision": "pool30 core，FCN 非常適合。"
+  },
+
+  "TSM": {
+    "symbol": "TSM",
+    "name": "Taiwan Semiconductor",
+    "type": "research_light",
+    "company_positioning": [
+      "TSM 為全球最大晶圓代工，市占超過 55%。",
+      "主要客戶為 Apple、NVIDIA，占比合計超過 40%。",
+      "股價關鍵在先進製程（3nm/2nm）與 AI 晶片需求。"
+    ],
+    "company_structure": "先進製程貢獻營收 >60%。",
+    "customer_analysis": "前兩大客戶占比高（>35%）。",
+    "financial_quality": "毛利率約 53%。",
+    "market_view": "AI 核心製造商。",
+    "competition": "Samsung、Intel。",
+    "risk_opportunity": "機會 AI，風險地緣政治。",
+    "final_decision": "pool30 core。"
+  },
+
+  "AVGO": {
+    "symbol": "AVGO",
+    "name": "Broadcom",
+    "type": "research_light",
+    "company_positioning": [
+      "AVGO 核心為 ASIC + networking，AI 收入占比約 30%。",
+      "主要客戶為 hyperscaler。",
+      "股價關鍵在 custom AI chip。"
+    ],
+    "company_structure": "半導體 + 軟體雙引擎。",
+    "customer_analysis": "客戶集中度高（前五大 >40%）。",
+    "financial_quality": "毛利率約 70%。",
+    "market_view": "AI infra 重要供應商。",
+    "competition": "NVIDIA、Marvell。",
+    "risk_opportunity": "機會 AI ASIC。",
+    "final_decision": "pool30 core。"
+  },
+
+  "MU": {
+    "symbol": "MU",
+    "name": "Micron",
+    "type": "research_light",
+    "company_positioning": [
+      "MU 做 DRAM/NAND，HBM 成長 >100%。",
+      "客戶為 server 與 mobile。",
+      "股價關鍵在記憶體價格 cycle。"
+    ],
+    "company_structure": "memory cycle 明顯。",
+    "customer_analysis": "客戶分散。",
+    "financial_quality": "毛利率波動（-10%~40%）。",
+    "market_view": "AI memory 受益。",
+    "competition": "Samsung、SK hynix。",
+    "risk_opportunity": "景氣循環風險。",
+    "final_decision": "growth，不適合 FCN 核心。"
+  },
+
+  "MRVL": {
+    "symbol": "MRVL",
+    "name": "Marvell",
+    "type": "research_light",
+    "company_positioning": [
+      "MRVL 核心為 data center networking + ASIC。",
+      "AI 收入占比快速上升（>20%）。",
+      "股價關鍵在 cloud 客戶需求。"
+    ],
+    "company_structure": "轉型 AI infra。",
+    "customer_analysis": "客戶集中 hyperscaler。",
+    "financial_quality": "毛利率約 60%。",
+    "market_view": "AI networking。",
+    "competition": "Broadcom。",
+    "risk_opportunity": "客戶集中風險。",
+    "final_decision": "growth。"
+  },
+
 "CRM": {
 "symbol": "CRM",
 "name": "Salesforce",
