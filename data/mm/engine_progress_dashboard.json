@@ -349,22 +349,22 @@
     }
   ],
   "output_demo": {
-    "dynamic_anchor_focus": "NVDA vs AMD anchor behavior is now reviewed from core M7 sandbox outputs (no standalone temp preview files).",
+    "dynamic_anchor_focus": "NVDA vs AMD anchor behavior preview will be served by rerunnable engines (artifact files are intentionally excluded from PR).",
     "demo_outputs": [
       {
-        "name": "m7_v2_scores.json",
-        "path": "../data/m7_sandbox/m7_v2_scores.json",
-        "summary": "Core M7 single-stock scoring output"
+        "name": "Run Dynamic Anchor Engine",
+        "path": "#",
+        "summary": "Generate fresh NVDA vs AMD dynamic-anchor preview on demand"
       },
       {
-        "name": "m7_v2_ab_compare.json",
-        "path": "../data/m7_sandbox/m7_v2_ab_compare.json",
-        "summary": "Baseline vs FCN/Active compare output"
+        "name": "Run M7 Scoring Engine",
+        "path": "#",
+        "summary": "Generate fresh Top M7 rankings and abnormal movers on demand"
       },
       {
-        "name": "m7_v2_run_manifest.json",
-        "path": "../data/m7_sandbox/m7_v2_run_manifest.json",
-        "summary": "Run metadata + parameter snapshot"
+        "name": "Run Compare Engine",
+        "path": "#",
+        "summary": "Generate fresh FCN/Active vs baseline deltas on demand"
       }
     ],
     "top_m7_preview": [
