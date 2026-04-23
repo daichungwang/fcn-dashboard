@@ -176,6 +176,18 @@
     try {
       const res = await fetch(DATA_PATH, { cache: "no-store" });
       if (!res.ok) throw new Error(`讀取失敗：${res.status}`);
+      const dashboardData = await res.json();
+
+      document.getElementById("generatedAt").textContent = `資料時間：${dashboardData.generated_at || "--"} ｜ 版本：${dashboardData.version || "--"}`;
+      renderActiveBuildContext(dashboardData.active_build_context || {});
+      renderOverview(dashboardData.overview || {});
+      renderEngines(dashboardData.engines || []);
+      renderData(dashboardData.data_artifacts || []);
+      renderFormulas(dashboardData.formula_domains || []);
+      renderModules(dashboardData.modules || []);
+      renderRisks(dashboardData.blockers || []);
+      renderMilestones(dashboardData.milestones || []);
+      renderHandoffMemory(dashboardData.handoff_memory || {});
       const raw = await res.text();
       const parsed = parseDashboardJson(raw);
       const data = parsed.data;
