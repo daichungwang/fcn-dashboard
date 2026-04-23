@@ -1,0 +1,41 @@
+{
+  "bundle_version": "runtime_bundle@v1.0.0",
+  "build_id": "RB-6e1ccb9b088b",
+  "generated_at": "2026-04-22T13:26:11.873948+00:00",
+  "config_version": "runtime_bundle_config@v1.0.0",
+  "scope": {
+    "markets": [
+      "US"
+    ],
+    "domains": [
+      "FCN",
+      "US_STOCKS"
+    ],
+    "symbol_scope_mode": "pool30",
+    "symbol_count": 33
+  },
+  "artifacts": [
+    {
+      "name": "long_term_runtime",
+      "path": "data/runtime_staging/long_term_runtime.json",
+      "schema_version": "long_term_runtime@v1.0.0",
+      "record_count": 33,
+      "checksum_sha256": "5860030e5a1b231d7d04d0d3a859b154362a113c219be1b597e29d8c9b27aa93"
+    }
+  ],
+  "validation": {
+    "passed": true,
+    "errors": [],
+    "warnings": [],
+    "error_count": 0,
+    "warning_count": 0
+  },
+  "fallback_stats": {
+    "warning_count": 0,
+    "error_count": 0
+  },
+  "rollback": {
+    "can_rollback": false,
+    "previous_build_id": null
+  }
+}

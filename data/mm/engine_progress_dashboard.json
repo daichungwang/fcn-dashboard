@@ -1,0 +1,253 @@
+{
+  "version": "engine_progress_dashboard@v1.0.0",
+  "generated_at": "2026-04-22T00:00:00Z",
+  "active_build_context": {
+    "current_task": "M7 v2 sandbox scoring validation",
+    "current_focus": "驗證 scoring architecture 與 output quality",
+    "production_modules_locked": [
+      "M1",
+      "M2",
+      "M3",
+      "M6",
+      "M7",
+      "M8",
+      "M9"
+    ],
+    "sandbox_modules_active": [
+      "M7 v2 sandbox",
+      "runtime staging"
+    ],
+    "allowed_scope": [
+      "M7 score validation",
+      "A/B compare review",
+      "dashboard tracking",
+      "sandbox tuning"
+    ],
+    "forbidden_scope": [
+      "production rewrite",
+      "M8 integration",
+      "M9 integration",
+      "unnecessary frontend rebuild"
+    ]
+  },
+  "handoff_memory": {
+    "recently_created_files": [
+      "scripts/new/build_m7_v2_scores.py",
+      "data/m7_sandbox/m7_v2_scores.json",
+      "data/m7_sandbox/m7_v2_ab_compare.json",
+      "data/m7_sandbox/m7_v2_run_manifest.json"
+    ],
+    "recently_modified_files": [
+      "mm/engine_progress_dashboard.html",
+      "js/mm/engine_progress_dashboard.js",
+      "data/mm/engine_progress_dashboard.json"
+    ],
+    "last_completed_task": "完成 M7 v2 sandbox scoring engine + MM memory dashboard",
+    "next_task": "檢查 M7 ranking quality 與 score distribution",
+    "known_risks": [
+      "M7 score weighting drift",
+      "overengineering risk",
+      "avoid production contamination"
+    ]
+  },
+  "overview": {
+    "overall_progress_pct": 34,
+    "production_stability": "YES",
+    "critical_blockers_count": 1,
+    "active_milestones": [
+      "Milestone X: M7 Factor/Data Normalization"
+    ]
+  },
+  "engines": [
+    {
+      "engine_id": "M1_ENGINE",
+      "name": "Research & Pool Builder Engine",
+      "owner": "MM",
+      "status": "BUILD",
+      "readiness_score": 45,
+      "formula_externalized_pct": 20,
+      "blocked": false,
+      "rollback_ready": true,
+      "next_gate": "SANDBOX",
+      "notes": "M1 rule calibration 已可運作，待接 runtime family"
+    },
+    {
+      "engine_id": "M3_ENGINE",
+      "name": "FCN Simulation Engine",
+      "owner": "MM",
+      "status": "SANDBOX",
+      "readiness_score": 60,
+      "formula_externalized_pct": 40,
+      "blocked": false,
+      "rollback_ready": true,
+      "next_gate": "STAGING",
+      "notes": "以 parameter_matrix 驅動，適合先作 governance 試點"
+    },
+    {
+      "engine_id": "M8_ENGINE",
+      "name": "FCN Pricing Engine",
+      "owner": "MM",
+      "status": "BUILD",
+      "readiness_score": 52,
+      "formula_externalized_pct": 15,
+      "blocked": false,
+      "rollback_ready": true,
+      "next_gate": "SANDBOX",
+      "notes": "核心公式集中，待公式正規化"
+    }
+  ],
+  "data_artifacts": [
+    {
+      "artifact_id": "MARKET_RUNTIME",
+      "path": "data/market_runtime.json",
+      "schema_version": "legacy",
+      "status": "PRODUCTION",
+      "coverage_pct": 100,
+      "missing_rate": 0.0,
+      "freshness": "daily",
+      "validator_status": "WARN",
+      "notes": "正式檔，僅讀取不覆蓋"
+    },
+    {
+      "artifact_id": "LONG_TERM_RUNTIME",
+      "path": "data/runtime_staging/long_term_runtime.json",
+      "schema_version": "long_term_runtime@v1.0.0",
+      "status": "DESIGN",
+      "coverage_pct": 0,
+      "missing_rate": 1.0,
+      "freshness": "stale",
+      "validator_status": "WARN",
+      "notes": "Milestone X 第一階段目標"
+    }
+  ],
+  "formula_domains": [
+    {
+      "domain": "valuation",
+      "total_formulas": 12,
+      "registered_formulas": 2,
+      "hardcoded_formulas": 10,
+      "normalization_pct": 16.7,
+      "policy_linked": false
+    },
+    {
+      "domain": "trend",
+      "total_formulas": 10,
+      "registered_formulas": 3,
+      "hardcoded_formulas": 7,
+      "normalization_pct": 30,
+      "policy_linked": true
+    },
+    {
+      "domain": "structure",
+      "total_formulas": 8,
+      "registered_formulas": 1,
+      "hardcoded_formulas": 7,
+      "normalization_pct": 12.5,
+      "policy_linked": true
+    },
+    {
+      "domain": "timing",
+      "total_formulas": 6,
+      "registered_formulas": 1,
+      "hardcoded_formulas": 5,
+      "normalization_pct": 16.7,
+      "policy_linked": true
+    },
+    {
+      "domain": "money",
+      "total_formulas": 4,
+      "registered_formulas": 0,
+      "hardcoded_formulas": 4,
+      "normalization_pct": 0,
+      "policy_linked": true
+    },
+    {
+      "domain": "quality",
+      "total_formulas": 6,
+      "registered_formulas": 1,
+      "hardcoded_formulas": 5,
+      "normalization_pct": 16.7,
+      "policy_linked": false
+    },
+    {
+      "domain": "policy",
+      "total_formulas": 9,
+      "registered_formulas": 2,
+      "hardcoded_formulas": 7,
+      "normalization_pct": 22.2,
+      "policy_linked": true
+    }
+  ],
+  "modules": [
+    {
+      "module_id": "FCN",
+      "status": "SANDBOX",
+      "module_readiness_score": 58,
+      "runtime_dependency_ready": true,
+      "adapter_dependency_ready": false,
+      "go_live_gate_passed": false,
+      "blocked": false,
+      "notes": "M3/M8 鏈路先行"
+    },
+    {
+      "module_id": "US_STOCKS",
+      "status": "BUILD",
+      "module_readiness_score": 50,
+      "runtime_dependency_ready": true,
+      "adapter_dependency_ready": false,
+      "go_live_gate_passed": false,
+      "blocked": false,
+      "notes": "M1/M6/M7 逐步接 runtime family"
+    },
+    {
+      "module_id": "BONDS_ETF",
+      "status": "DESIGN",
+      "module_readiness_score": 30,
+      "runtime_dependency_ready": false,
+      "adapter_dependency_ready": false,
+      "go_live_gate_passed": false,
+      "blocked": false,
+      "notes": "先沿用現有 ETF 欄位，不做擴張"
+    },
+    {
+      "module_id": "CASH_LIABILITIES",
+      "status": "BUILD",
+      "module_readiness_score": 46,
+      "runtime_dependency_ready": true,
+      "adapter_dependency_ready": false,
+      "go_live_gate_passed": false,
+      "blocked": false,
+      "notes": "M9 為主，先維持既有流程"
+    }
+  ],
+  "runtime_builder": {
+    "build_id": "",
+    "bundle_version": "runtime_bundle@v1.0.0",
+    "validation_passed": false,
+    "partial_publish": false,
+    "fallback_used_count": 0,
+    "artifact_outputs": []
+  },
+  "blockers": [
+    {
+      "risk_id": "RISK-001",
+      "severity": "P1",
+      "category": "schema",
+      "title": "M7/M8 欄位仍有硬編碼依賴",
+      "affected_scope": ["US_STOCKS", "FCN"],
+      "mitigation": "先建立 long_term_runtime + manifest，後接 adapter",
+      "eta": "2026-05-15",
+      "status": "open"
+    }
+  ],
+  "milestones": [
+    {
+      "milestone_id": "MSX-P1",
+      "name": "Milestone X Phase 1",
+      "phase": "long_term_runtime v1",
+      "planned_date": "2026-05-31",
+      "actual_date": null,
+      "status": "in_progress"
+    }
+  ]
+}
