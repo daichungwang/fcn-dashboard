@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Engine Progress Dashboard</title>
+  <style>
+    body { font-family: Arial, "Microsoft JhengHei", sans-serif; margin: 0; background: #f5f6f8; color: #111; }
+    .wrap { max-width: 1400px; margin: 0 auto; padding: 18px; }
+    .hero { background:#0f172a; color:#fff; border-radius:14px; padding:16px; margin-bottom:14px; }
+    .grid { display:grid; grid-template-columns: repeat(4, 1fr); gap:10px; margin-bottom:14px; }
+    .card { background:#fff; border:1px solid #ddd; border-radius:12px; padding:12px; }
+    .k { font-size:12px; color:#666; }
+    .v { font-size:22px; font-weight:700; }
+    h2 { margin: 16px 0 8px; font-size: 20px; }
+    table { width:100%; border-collapse: collapse; background:#fff; border:1px solid #ddd; border-radius:12px; overflow:hidden; }
+    th, td { border:1px solid #e5e5e5; padding:8px; font-size:13px; text-align:left; }
+    th { background:#f8fafc; }
+    .list { background:#fff; border:1px solid #ddd; border-radius:12px; padding:12px; }
+    .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700; border:1px solid #ddd; }
+    .ok { background:#ecfdf3; color:#027a48; border-color:#abefc6; }
+    .warn { background:#fffaeb; color:#b54708; border-color:#fec84b; }
+    .bad { background:#fef3f2; color:#b42318; border-color:#fecdca; }
+    #dashboard-error { display:none; background:#fef3f2; color:#b42318; border:1px solid #fecdca; border-radius:10px; padding:10px; margin-bottom:12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1 style="margin:0; font-size:28px;">Engine Progress Dashboard</h1>
+      <div id="generatedAt" style="margin-top:6px; font-size:13px; opacity:0.9;">載入中...</div>
+    </div>
+
+    <div id="dashboard-error"></div>
+
+    <div id="overview" class="grid"></div>
+
+    <h2>Engine Progress</h2>
+    <table>
+      <thead><tr><th>Engine</th><th>Status</th><th>Readiness</th><th>Formula Externalized</th><th>Next Gate</th><th>Notes</th></tr></thead>
+      <tbody id="engine-table"></tbody>
+    </table>
+
+    <h2>Data Readiness</h2>
+    <table>
+      <thead><tr><th>Artifact</th><th>Status</th><th>Coverage</th><th>Missing</th><th>Freshness</th><th>Validator</th></tr></thead>
+      <tbody id="data-table"></tbody>
+    </table>
+
+    <h2>Formula Normalization Progress</h2>
+    <table>
+      <thead><tr><th>Domain</th><th>Total</th><th>Registered</th><th>Hardcoded</th><th>Normalization</th><th>Policy Linked</th></tr></thead>
+      <tbody id="formula-table"></tbody>
+    </table>
+
+    <h2>Module Readiness</h2>
+    <table>
+      <thead><tr><th>Module</th><th>Status</th><th>Score</th><th>Runtime Ready</th><th>Adapter Ready</th><th>Go Live Gate</th></tr></thead>
+      <tbody id="module-table"></tbody>
+    </table>
+
+    <h2>Blockers / Risks</h2>
+    <div id="risk-list" class="list"></div>
+
+    <h2>Milestones</h2>
+    <div id="milestone-list" class="list"></div>
+  </div>
+
+  <script src="../js/mm/engine_progress_dashboard.js"></script>
+</body>
+</html>

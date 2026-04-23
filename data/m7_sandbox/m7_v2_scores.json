@@ -1,0 +1,4237 @@
+{
+  "generated_at": "2026-04-23T01:38:50.953262+00:00",
+  "scope": {
+    "scenarios": [
+      "FCN",
+      "Active"
+    ],
+    "symbol_count": 33
+  },
+  "rows": [
+    {
+      "symbol": "AAL",
+      "name": "American Airlines",
+      "category": "cyclical_high_beta",
+      "sector": "TRAVEL",
+      "subsector": "AIRLINE",
+      "baseline": {
+        "today_score": 79.92,
+        "action": "移除",
+        "components": {
+          "trend": 6.0,
+          "structure": 1.57,
+          "timing": 3.06,
+          "valuation": 65.0,
+          "quality": -2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": -2.97,
+          "1m": 12.85,
+          "3m": -20.42,
+          "6m": -0.76,
+          "12m": 26.42
+        },
+        "swing_days": [
+          -3.84,
+          -4.23,
+          4.16,
+          0.82,
+          0.33,
+          8.01
+        ],
+        "valuation": {
+          "forward_pe": 9.81,
+          "anchor_pe": 12.0,
+          "peg": 0.29,
+          "eps_growth": 33.33
+        },
+        "event_score": 0.0,
+        "market_acceptance": {
+          "volume_ratio": 1.14,
+          "liquidity_proxy": 65064400.0,
+          "size_proxy": 765808017.7841187
+        },
+        "exposure": {
+          "ratio": 0.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 6.9,
+        "structure": 3.83,
+        "timing": 6.02,
+        "valuation": 8.66,
+        "quality": 5.25,
+        "market_acceptance": 8.67
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.0,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 72.15,
+        "active_score": 70.28
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.52,
+          "event_blend_10": 3.47,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 6.9,
+            "structure": 3.83,
+            "timing": 6.02,
+            "valuation": 8.66,
+            "quality": 5.25,
+            "market_acceptance": 8.67
+          }
+        },
+        "active": {
+          "base_10": 6.51,
+          "event_blend_10": 2.6,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 6.9,
+            "structure": 3.83,
+            "timing": 6.02,
+            "valuation": 8.66,
+            "quality": 5.25,
+            "market_acceptance": 8.67
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "market_acceptance",
+            "score_10": 8.67
+          },
+          {
+            "name": "valuation",
+            "score_10": 8.66
+          },
+          {
+            "name": "trend",
+            "score_10": 6.9
+          }
+        ],
+        "penalties": [],
+        "dominant_driver": "market_acceptance",
+        "delta_driver_vs_baseline": "score_down:penalty_mix"
+      },
+      "ranks": {
+        "baseline_rank": 8,
+        "fcn_rank": 10,
+        "active_rank": 22
+      }
+    },
+    {
+      "symbol": "AAPL",
+      "name": "Apple",
+      "category": "core",
+      "sector": "TECH_DEF",
+      "subsector": "DEVICE",
+      "baseline": {
+        "today_score": 89.37,
+        "action": "移除",
+        "components": {
+          "trend": 8.0,
+          "structure": 1.4,
+          "timing": 4.92,
+          "valuation": 64.93,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 2.84,
+          "1m": 7.33,
+          "3m": 7.89,
+          "6m": 5.5,
+          "12m": 33.26
+        },
+        "swing_days": [
+          -2.52,
+          1.04,
+          2.59,
+          -1.14,
+          2.94,
+          -0.14
+        ],
+        "valuation": {
+          "forward_pe": 33.27,
+          "anchor_pe": 34.0,
+          "peg": 3.47,
+          "eps_growth": 9.59
+        },
+        "event_score": 9.8,
+        "market_acceptance": {
+          "volume_ratio": 1.19,
+          "liquidity_proxy": 50154100.0,
+          "size_proxy": 13349517470.455933
+        },
+        "exposure": {
+          "ratio": 8.33,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 8.35,
+        "structure": 3.61,
+        "timing": 6.64,
+        "valuation": 6.0,
+        "quality": 6.98,
+        "market_acceptance": 9.05
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.17,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 81.77,
+        "active_score": 87.29
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.44,
+          "event_blend_10": 9.5,
+          "penalty_10": 0.17,
+          "components_10": {
+            "trend": 8.35,
+            "structure": 3.61,
+            "timing": 6.64,
+            "valuation": 6.0,
+            "quality": 6.98,
+            "market_acceptance": 9.05
+          }
+        },
+        "active": {
+          "base_10": 6.91,
+          "event_blend_10": 9.57,
+          "penalty_10": 0.1,
+          "components_10": {
+            "trend": 8.35,
+            "structure": 3.61,
+            "timing": 6.64,
+            "valuation": 6.0,
+            "quality": 6.98,
+            "market_acceptance": 9.05
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "market_acceptance",
+            "score_10": 9.05
+          },
+          {
+            "name": "trend",
+            "score_10": 8.35
+          },
+          {
+            "name": "quality",
+            "score_10": 6.98
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.17
+          }
+        ],
+        "dominant_driver": "market_acceptance",
+        "delta_driver_vs_baseline": "score_near_baseline"
+      },
+      "ranks": {
+        "baseline_rank": 3,
+        "fcn_rank": 2,
+        "active_rank": 2
+      }
+    },
+    {
+      "symbol": "ALAB",
+      "name": "Astera Labs",
+      "category": "speculative",
+      "sector": "AI_SEMI",
+      "subsector": "CONNECTIVITY",
+      "baseline": {
+        "today_score": 70.1,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 4.97,
+          "timing": 10.0,
+          "valuation": 40.62,
+          "quality": -2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 12.53,
+          "1m": 65.43,
+          "3m": 4.47,
+          "6m": 20.13,
+          "12m": 247.08
+        },
+        "swing_days": [
+          9.2,
+          1.01,
+          1.9,
+          -0.74,
+          0.87,
+          2.28
+        ],
+        "valuation": {
+          "forward_pe": 137.12,
+          "anchor_pe": 18.0,
+          "peg": 2.47,
+          "eps_growth": 55.56
+        },
+        "event_score": 1.0,
+        "market_acceptance": {
+          "volume_ratio": 2.08,
+          "liquidity_proxy": 10832600.0,
+          "size_proxy": 2079534235.2233887
+        },
+        "exposure": {
+          "ratio": 4.76,
+          "danger": 1.0,
+          "watch": 1.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 6.66,
+        "timing": 10.0,
+        "valuation": 4.3,
+        "quality": 10.0,
+        "market_acceptance": 8.97
+      },
+      "penalties_10": {
+        "exposure_penalty": 2.1,
+        "overheat_penalty": 2.78,
+        "warning_tags": [
+          "danger_position",
+          "watch_position"
+        ]
+      },
+      "scores": {
+        "fcn_score": 48.7,
+        "active_score": 53.74
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 7.79,
+          "event_blend_10": 4.19,
+          "penalty_10": 3.76,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 6.66,
+            "timing": 10.0,
+            "valuation": 4.3,
+            "quality": 10.0,
+            "market_acceptance": 8.97
+          }
+        },
+        "active": {
+          "base_10": 8.73,
+          "event_blend_10": 3.39,
+          "penalty_10": 4.04,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 6.66,
+            "timing": 10.0,
+            "valuation": 4.3,
+            "quality": 10.0,
+            "market_acceptance": 8.97
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "timing",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 10.0
+          }
+        ],
+        "penalties": [
+          {
+            "name": "overheat_penalty",
+            "score_10": 2.78
+          },
+          {
+            "name": "exposure_penalty",
+            "score_10": 2.1
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_down:overheat_penalty"
+      },
+      "ranks": {
+        "baseline_rank": 13,
+        "fcn_rank": 28,
+        "active_rank": 30
+      }
+    },
+    {
+      "symbol": "AMAT",
+      "name": "Applied Materials",
+      "category": "core",
+      "sector": "AI_SEMI",
+      "subsector": "SEMI_EQUIP",
+      "baseline": {
+        "today_score": 53.22,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 3.0,
+          "timing": 3.95,
+          "valuation": 27.38,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": -0.33,
+          "1m": 10.44,
+          "3m": 23.91,
+          "6m": 75.27,
+          "12m": 185.13
+        },
+        "swing_days": [
+          0.69,
+          -1.34,
+          1.81,
+          -1.11,
+          -0.35,
+          -0.02
+        ],
+        "valuation": {
+          "forward_pe": 41.08,
+          "anchor_pe": 26.0,
+          "peg": 2.88,
+          "eps_growth": 14.29
+        },
+        "event_score": 0.0,
+        "market_acceptance": {
+          "volume_ratio": 0.94,
+          "liquidity_proxy": 5412100.0,
+          "size_proxy": 2134153320.3277588
+        },
+        "exposure": {
+          "ratio": 0.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 2.73,
+        "timing": 6.32,
+        "valuation": 3.87,
+        "quality": 10.0,
+        "market_acceptance": 7.13
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.0,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 67.71,
+        "active_score": 72.35
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.2,
+          "event_blend_10": 2.85,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 2.73,
+            "timing": 6.32,
+            "valuation": 3.87,
+            "quality": 10.0,
+            "market_acceptance": 7.13
+          }
+        },
+        "active": {
+          "base_10": 6.81,
+          "event_blend_10": 2.14,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 2.73,
+            "timing": 6.32,
+            "valuation": 3.87,
+            "quality": 10.0,
+            "market_acceptance": 7.13
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 10.0
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 7.13
+          }
+        ],
+        "penalties": [],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 27,
+        "fcn_rank": 18,
+        "active_rank": 19
+      }
+    },
+    {
+      "symbol": "AMD",
+      "name": "AMD",
+      "category": "core",
+      "sector": "AI_SEMI",
+      "subsector": "CPU_GPU",
+      "baseline": {
+        "today_score": 69.77,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 3.89,
+          "timing": 10.0,
+          "valuation": 38.66,
+          "quality": 0.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 11.53,
+          "1m": 41.31,
+          "3m": 22.67,
+          "6m": 22.06,
+          "12m": 229.81
+        },
+        "swing_days": [
+          3.47,
+          -1.24,
+          0.05,
+          7.8,
+          1.2,
+          3.34
+        ],
+        "valuation": {
+          "forward_pe": 59.27,
+          "anchor_pe": 22.0,
+          "peg": 1.78,
+          "eps_growth": 33.33
+        },
+        "event_score": 5.5,
+        "market_acceptance": {
+          "volume_ratio": 1.08,
+          "liquidity_proxy": 38808300.0,
+          "size_proxy": 11040572888.012695
+        },
+        "exposure": {
+          "ratio": 13.1,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 6.12,
+        "timing": 10.0,
+        "valuation": 4.06,
+        "quality": 10.0,
+        "market_acceptance": 8.76
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.32,
+        "overheat_penalty": 1.77,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 75.68,
+        "active_score": 79.13
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 7.6,
+          "event_blend_10": 6.81,
+          "penalty_10": 1.39,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 6.12,
+            "timing": 10.0,
+            "valuation": 4.06,
+            "quality": 10.0,
+            "market_acceptance": 8.76
+          }
+        },
+        "active": {
+          "base_10": 8.59,
+          "event_blend_10": 6.48,
+          "penalty_10": 1.97,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 6.12,
+            "timing": 10.0,
+            "valuation": 4.06,
+            "quality": 10.0,
+            "market_acceptance": 8.76
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "timing",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 10.0
+          }
+        ],
+        "penalties": [
+          {
+            "name": "overheat_penalty",
+            "score_10": 1.77
+          },
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.32
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 14,
+        "fcn_rank": 7,
+        "active_rank": 6
+      }
+    },
+    {
+      "symbol": "AMZN",
+      "name": "Amazon",
+      "category": "core",
+      "sector": "AI_PLATFORM",
+      "subsector": "CLOUD_ECOM",
+      "baseline": {
+        "today_score": 61.65,
+        "action": "移除",
+        "components": {
+          "trend": 9.0,
+          "structure": 1.82,
+          "timing": 8.93,
+          "valuation": 32.56,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 0.36,
+          "1m": 21.69,
+          "3m": 8.19,
+          "6m": 17.31,
+          "12m": 44.31
+        },
+        "swing_days": [
+          0.66,
+          -0.91,
+          0.34,
+          0.48,
+          -0.21,
+          3.81
+        ],
+        "valuation": {
+          "forward_pe": 49.98,
+          "anchor_pe": 28.0,
+          "peg": 2.28,
+          "eps_growth": 21.95
+        },
+        "event_score": 9.8,
+        "market_acceptance": {
+          "volume_ratio": 0.93,
+          "liquidity_proxy": 42833300.0,
+          "size_proxy": 10704470159.86023
+        },
+        "exposure": {
+          "ratio": 3.57,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 9.29,
+        "structure": 4.13,
+        "timing": 7.73,
+        "valuation": 4.15,
+        "quality": 7.99,
+        "market_acceptance": 8.32
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.07,
+        "overheat_penalty": 0.07,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 82.07,
+        "active_score": 90.43
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.48,
+          "event_blend_10": 9.21,
+          "penalty_10": 0.11,
+          "components_10": {
+            "trend": 9.29,
+            "structure": 4.13,
+            "timing": 7.73,
+            "valuation": 4.15,
+            "quality": 7.99,
+            "market_acceptance": 8.32
+          }
+        },
+        "active": {
+          "base_10": 7.28,
+          "event_blend_10": 9.35,
+          "penalty_10": 0.11,
+          "components_10": {
+            "trend": 9.29,
+            "structure": 4.13,
+            "timing": 7.73,
+            "valuation": 4.15,
+            "quality": 7.99,
+            "market_acceptance": 8.32
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 9.29
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 8.32
+          },
+          {
+            "name": "quality",
+            "score_10": 7.99
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.07
+          },
+          {
+            "name": "overheat_penalty",
+            "score_10": 0.07
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 21,
+        "fcn_rank": 1,
+        "active_rank": 1
+      }
+    },
+    {
+      "symbol": "ARM",
+      "name": "ARM",
+      "category": "core",
+      "sector": "AI_SEMI",
+      "subsector": "CPU_IP",
+      "baseline": {
+        "today_score": 67.26,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 3.25,
+          "timing": 10.0,
+          "valuation": 38.66,
+          "quality": 0.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 8.85,
+          "1m": 32.6,
+          "3m": 63.75,
+          "6m": 5.97,
+          "12m": 74.53
+        },
+        "swing_days": [
+          0.22,
+          5.02,
+          2.71,
+          1.88,
+          -1.17,
+          2.31
+        ],
+        "valuation": {
+          "forward_pe": 87.75,
+          "anchor_pe": 30.0,
+          "peg": 2.63,
+          "eps_growth": 33.33
+        },
+        "event_score": 6.8,
+        "market_acceptance": {
+          "volume_ratio": 0.75,
+          "liquidity_proxy": 6457600.0,
+          "size_proxy": 1133244259.4726562
+        },
+        "exposure": {
+          "ratio": 33.33,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 5.6,
+        "timing": 9.86,
+        "valuation": 3.99,
+        "quality": 9.29,
+        "market_acceptance": 6.01
+      },
+      "penalties_10": {
+        "exposure_penalty": 1.47,
+        "overheat_penalty": 1.12,
+        "warning_tags": [
+          "exposure_medium"
+        ]
+      },
+      "scores": {
+        "fcn_score": 62.45,
+        "active_score": 72.73
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 7.09,
+          "event_blend_10": 6.49,
+          "penalty_10": 2.14,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 5.6,
+            "timing": 9.86,
+            "valuation": 3.99,
+            "quality": 9.29,
+            "market_acceptance": 6.01
+          }
+        },
+        "active": {
+          "base_10": 7.96,
+          "event_blend_10": 6.56,
+          "penalty_10": 2.0,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 5.6,
+            "timing": 9.86,
+            "valuation": 3.99,
+            "quality": 9.29,
+            "market_acceptance": 6.01
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "timing",
+            "score_10": 9.86
+          },
+          {
+            "name": "quality",
+            "score_10": 9.29
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 1.47
+          },
+          {
+            "name": "overheat_penalty",
+            "score_10": 1.12
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_near_baseline"
+      },
+      "ranks": {
+        "baseline_rank": 17,
+        "fcn_rank": 23,
+        "active_rank": 18
+      }
+    },
+    {
+      "symbol": "AVGO",
+      "name": "Broadcom",
+      "category": "core",
+      "sector": "AI_SEMI",
+      "subsector": "ASIC",
+      "baseline": {
+        "today_score": 61.93,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 2.06,
+          "timing": 10.0,
+          "valuation": 32.28,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 5.62,
+          "1m": 29.52,
+          "3m": 20.92,
+          "6m": 15.13,
+          "12m": 137.16
+        },
+        "swing_days": [
+          0.64,
+          -1.7,
+          2.03,
+          0.44,
+          4.19,
+          0.27
+        ],
+        "valuation": {
+          "forward_pe": 56.64,
+          "anchor_pe": 35.0,
+          "peg": 2.78,
+          "eps_growth": 20.34
+        },
+        "event_score": 8.0,
+        "market_acceptance": {
+          "volume_ratio": 0.72,
+          "liquidity_proxy": 16220600.0,
+          "size_proxy": 6523438919.805908
+        },
+        "exposure": {
+          "ratio": 30.95,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 4.39,
+        "timing": 9.2,
+        "valuation": 4.38,
+        "quality": 9.96,
+        "market_acceptance": 6.74
+      },
+      "penalties_10": {
+        "exposure_penalty": 1.28,
+        "overheat_penalty": 0.77,
+        "warning_tags": [
+          "exposure_medium"
+        ]
+      },
+      "scores": {
+        "fcn_score": 67.54,
+        "active_score": 77.99
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.99,
+          "event_blend_10": 7.49,
+          "penalty_10": 1.74,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 4.39,
+            "timing": 9.2,
+            "valuation": 4.38,
+            "quality": 9.96,
+            "market_acceptance": 6.74
+          }
+        },
+        "active": {
+          "base_10": 7.81,
+          "event_blend_10": 7.62,
+          "penalty_10": 1.53,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 4.39,
+            "timing": 9.2,
+            "valuation": 4.38,
+            "quality": 9.96,
+            "market_acceptance": 6.74
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 9.96
+          },
+          {
+            "name": "timing",
+            "score_10": 9.2
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 1.28
+          },
+          {
+            "name": "overheat_penalty",
+            "score_10": 0.77
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 20,
+        "fcn_rank": 20,
+        "active_rank": 8
+      }
+    },
+    {
+      "symbol": "CCL",
+      "name": "Carnival",
+      "category": "cyclical_high_beta",
+      "sector": "TRAVEL",
+      "subsector": "CRUISE",
+      "baseline": {
+        "today_score": 56.19,
+        "action": "移除",
+        "components": {
+          "trend": 8.0,
+          "structure": 3.0,
+          "timing": 3.0,
+          "valuation": 36.59,
+          "quality": 0.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": -4.64,
+          "1m": 13.43,
+          "3m": -2.36,
+          "6m": -3.36,
+          "12m": 52.17
+        },
+        "swing_days": [
+          -5.69,
+          -0.72,
+          6.99,
+          -5.24,
+          0.45,
+          3.39
+        ],
+        "valuation": {
+          "forward_pe": 18.24,
+          "anchor_pe": 12.0,
+          "peg": 0.5,
+          "eps_growth": 36.36
+        },
+        "event_score": 5.2,
+        "market_acceptance": {
+          "volume_ratio": 1.05,
+          "liquidity_proxy": 29079000.0,
+          "size_proxy": 795601457.7484131
+        },
+        "exposure": {
+          "ratio": 11.9,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 8.5,
+        "structure": 2.32,
+        "timing": 5.71,
+        "valuation": 5.29,
+        "quality": 7.62,
+        "market_acceptance": 8.2
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.28,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 69.03,
+        "active_score": 74.0
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 5.9,
+          "event_blend_10": 6.4,
+          "penalty_10": 0.28,
+          "components_10": {
+            "trend": 8.5,
+            "structure": 2.32,
+            "timing": 5.71,
+            "valuation": 5.29,
+            "quality": 7.62,
+            "market_acceptance": 8.2
+          }
+        },
+        "active": {
+          "base_10": 6.35,
+          "event_blend_10": 6.1,
+          "penalty_10": 0.17,
+          "components_10": {
+            "trend": 8.5,
+            "structure": 2.32,
+            "timing": 5.71,
+            "valuation": 5.29,
+            "quality": 7.62,
+            "market_acceptance": 8.2
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 8.5
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 8.2
+          },
+          {
+            "name": "quality",
+            "score_10": 7.62
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.28
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 26,
+        "fcn_rank": 14,
+        "active_rank": 14
+      }
+    },
+    {
+      "symbol": "COIN",
+      "name": "Coinbase",
+      "category": "speculative",
+      "sector": "CRYPTO",
+      "subsector": "EXCHANGE",
+      "baseline": {
+        "today_score": 33.06,
+        "action": "移除",
+        "components": {
+          "trend": 2.0,
+          "structure": 3.56,
+          "timing": 4.07,
+          "valuation": 18.04,
+          "quality": -2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 6.26,
+          "1m": -0.78,
+          "3m": -13.96,
+          "6m": -41.69,
+          "12m": 3.13
+        },
+        "swing_days": [
+          -7.41,
+          2.57,
+          3.25,
+          2.01,
+          6.23,
+          5.66
+        ],
+        "valuation": {
+          "forward_pe": 33.78,
+          "anchor_pe": 18.0,
+          "peg": 2.46,
+          "eps_growth": 13.73
+        },
+        "event_score": 0.4,
+        "market_acceptance": {
+          "volume_ratio": 1.36,
+          "liquidity_proxy": 15016300.0,
+          "size_proxy": 2942443939.173889
+        },
+        "exposure": {
+          "ratio": 2.38,
+          "danger": 1.0,
+          "watch": 1.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 3.33,
+        "structure": 5.9,
+        "timing": 6.36,
+        "valuation": 3.22,
+        "quality": 1.9,
+        "market_acceptance": 8.66
+      },
+      "penalties_10": {
+        "exposure_penalty": 2.05,
+        "overheat_penalty": 0.0,
+        "warning_tags": [
+          "danger_position",
+          "watch_position"
+        ]
+      },
+      "scores": {
+        "fcn_score": 32.88,
+        "active_score": 46.04
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 4.6,
+          "event_blend_10": 3.7,
+          "penalty_10": 2.05,
+          "components_10": {
+            "trend": 3.33,
+            "structure": 5.9,
+            "timing": 6.36,
+            "valuation": 3.22,
+            "quality": 1.9,
+            "market_acceptance": 8.66
+          }
+        },
+        "active": {
+          "base_10": 5.26,
+          "event_blend_10": 2.88,
+          "penalty_10": 1.23,
+          "components_10": {
+            "trend": 3.33,
+            "structure": 5.9,
+            "timing": 6.36,
+            "valuation": 3.22,
+            "quality": 1.9,
+            "market_acceptance": 8.66
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "market_acceptance",
+            "score_10": 8.66
+          },
+          {
+            "name": "timing",
+            "score_10": 6.36
+          },
+          {
+            "name": "structure",
+            "score_10": 5.9
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 2.05
+          }
+        ],
+        "dominant_driver": "market_acceptance",
+        "delta_driver_vs_baseline": "score_up:market_acceptance"
+      },
+      "ranks": {
+        "baseline_rank": 33,
+        "fcn_rank": 33,
+        "active_rank": 33
+      }
+    },
+    {
+      "symbol": "COST",
+      "name": "Costco",
+      "category": "defensive",
+      "sector": "DEFENSIVE",
+      "subsector": "RETAIL",
+      "baseline": {
+        "today_score": 35.31,
+        "action": "移除",
+        "components": {
+          "trend": 6.0,
+          "structure": 1.33,
+          "timing": 3.6,
+          "valuation": 16.84,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 3.18,
+          "1m": 3.44,
+          "3m": 4.31,
+          "6m": 7.42,
+          "12m": 2.71
+        },
+        "swing_days": [
+          0.8,
+          -0.21,
+          1.28,
+          0.25,
+          1.02,
+          -0.62
+        ],
+        "valuation": {
+          "forward_pe": 55.57,
+          "anchor_pe": 18.0,
+          "peg": 5.73,
+          "eps_growth": 9.7
+        },
+        "event_score": 0.0,
+        "market_acceptance": {
+          "volume_ratio": 0.76,
+          "liquidity_proxy": 1366400.0,
+          "size_proxy": 1374338780.6640625
+        },
+        "exposure": {
+          "ratio": 0.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 6.89,
+        "structure": 3.53,
+        "timing": 6.2,
+        "valuation": 2.28,
+        "quality": 3.84,
+        "market_acceptance": 5.32
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.0,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 48.64,
+        "active_score": 55.37
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 4.44,
+          "event_blend_10": 2.13,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 6.89,
+            "structure": 3.53,
+            "timing": 6.2,
+            "valuation": 2.28,
+            "quality": 3.84,
+            "market_acceptance": 5.32
+          }
+        },
+        "active": {
+          "base_10": 5.22,
+          "event_blend_10": 1.6,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 6.89,
+            "structure": 3.53,
+            "timing": 6.2,
+            "valuation": 2.28,
+            "quality": 3.84,
+            "market_acceptance": 5.32
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 6.89
+          },
+          {
+            "name": "timing",
+            "score_10": 6.2
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 5.32
+          }
+        ],
+        "penalties": [],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 32,
+        "fcn_rank": 29,
+        "active_rank": 29
+      }
+    },
+    {
+      "symbol": "CRDO",
+      "name": "Credo",
+      "category": "speculative",
+      "sector": "AI_SEMI",
+      "subsector": "CONNECTIVITY",
+      "baseline": {
+        "today_score": 71.15,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 8.85,
+          "timing": 10.0,
+          "valuation": 39.57,
+          "quality": -2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 14.92,
+          "1m": 77.29,
+          "3m": 19.65,
+          "6m": 27.65,
+          "12m": 395.19
+        },
+        "swing_days": [
+          5.04,
+          8.61,
+          1.11,
+          -5.6,
+          5.54,
+          18.73
+        ],
+        "valuation": {
+          "forward_pe": 107.84,
+          "anchor_pe": 18.0,
+          "peg": 2.59,
+          "eps_growth": 41.67
+        },
+        "event_score": 0.0,
+        "market_acceptance": {
+          "volume_ratio": 1.31,
+          "liquidity_proxy": 9577200.0,
+          "size_proxy": 1755692374.1455078
+        },
+        "exposure": {
+          "ratio": 2.38,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 9.14,
+        "timing": 10.0,
+        "valuation": 4.13,
+        "quality": 10.0,
+        "market_acceptance": 8.33
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.05,
+        "overheat_penalty": 3.2,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 69.35,
+        "active_score": 62.8
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 8.24,
+          "event_blend_10": 3.33,
+          "penalty_10": 1.97,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 9.14,
+            "timing": 10.0,
+            "valuation": 4.13,
+            "quality": 10.0,
+            "market_acceptance": 8.33
+          }
+        },
+        "active": {
+          "base_10": 9.01,
+          "event_blend_10": 2.5,
+          "penalty_10": 3.23,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 9.14,
+            "timing": 10.0,
+            "valuation": 4.13,
+            "quality": 10.0,
+            "market_acceptance": 8.33
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "timing",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 10.0
+          }
+        ],
+        "penalties": [
+          {
+            "name": "overheat_penalty",
+            "score_10": 3.2
+          },
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.05
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_down:overheat_penalty"
+      },
+      "ranks": {
+        "baseline_rank": 11,
+        "fcn_rank": 12,
+        "active_rank": 24
+      }
+    },
+    {
+      "symbol": "EL",
+      "name": "Estee Lauder",
+      "category": "core",
+      "sector": "CONSUMER",
+      "subsector": "BEAUTY",
+      "baseline": {
+        "today_score": 44.14,
+        "action": "移除",
+        "components": {
+          "trend": 4.0,
+          "structure": 1.41,
+          "timing": 3.0,
+          "valuation": 27.81,
+          "quality": 1.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": -0.73,
+          "1m": -11.71,
+          "3m": -33.72,
+          "6m": -24.73,
+          "12m": 35.61
+        },
+        "swing_days": [
+          -2.56,
+          2.17,
+          1.14,
+          -1.64,
+          0.24,
+          2.51
+        ],
+        "valuation": {
+          "forward_pe": 23.71,
+          "anchor_pe": 20.0,
+          "peg": 1.03,
+          "eps_growth": 23.08
+        },
+        "event_score": 5.6,
+        "market_acceptance": {
+          "volume_ratio": 0.61,
+          "liquidity_proxy": 3371800.0,
+          "size_proxy": 255784750.0579834
+        },
+        "exposure": {
+          "ratio": 11.9,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 4.27,
+        "structure": 3.63,
+        "timing": 3.27,
+        "valuation": 5.97,
+        "quality": 4.08,
+        "market_acceptance": 4.4
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.28,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 51.57,
+        "active_score": 49.66
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 4.41,
+          "event_blend_10": 5.12,
+          "penalty_10": 0.28,
+          "components_10": {
+            "trend": 4.27,
+            "structure": 3.63,
+            "timing": 3.27,
+            "valuation": 5.97,
+            "quality": 4.08,
+            "market_acceptance": 4.4
+          }
+        },
+        "active": {
+          "base_10": 4.08,
+          "event_blend_10": 5.24,
+          "penalty_10": 0.17,
+          "components_10": {
+            "trend": 4.27,
+            "structure": 3.63,
+            "timing": 3.27,
+            "valuation": 5.97,
+            "quality": 4.08,
+            "market_acceptance": 4.4
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "valuation",
+            "score_10": 5.97
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 4.4
+          },
+          {
+            "name": "trend",
+            "score_10": 4.27
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.28
+          }
+        ],
+        "dominant_driver": "valuation",
+        "delta_driver_vs_baseline": "score_up:valuation"
+      },
+      "ranks": {
+        "baseline_rank": 31,
+        "fcn_rank": 27,
+        "active_rank": 32
+      }
+    },
+    {
+      "symbol": "GOOG",
+      "name": "Google",
+      "category": "core",
+      "sector": "AI_PLATFORM",
+      "subsector": "SEARCH_CLOUD",
+      "baseline": {
+        "today_score": 88.49,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 1.59,
+          "timing": 4.22,
+          "valuation": 65.0,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": -0.03,
+          "1m": 10.6,
+          "3m": 2.58,
+          "6m": 30.21,
+          "12m": 114.73
+        },
+        "swing_days": [
+          -1.47,
+          -1.18,
+          1.99,
+          -0.51,
+          1.18,
+          3.56
+        ],
+        "valuation": {
+          "forward_pe": 32.08,
+          "anchor_pe": 35.0,
+          "peg": 2.43,
+          "eps_growth": 13.19
+        },
+        "event_score": 6.0,
+        "market_acceptance": {
+          "volume_ratio": 0.77,
+          "liquidity_proxy": 14581900.0,
+          "size_proxy": 4818880510.800171
+        },
+        "exposure": {
+          "ratio": 19.05,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 3.85,
+        "timing": 6.41,
+        "valuation": 6.72,
+        "quality": 9.66,
+        "market_acceptance": 6.94
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.56,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 77.94,
+        "active_score": 81.55
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 7.08,
+          "event_blend_10": 6.37,
+          "penalty_10": 0.56,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 3.85,
+            "timing": 6.41,
+            "valuation": 6.72,
+            "quality": 9.66,
+            "market_acceptance": 6.94
+          }
+        },
+        "active": {
+          "base_10": 7.24,
+          "event_blend_10": 6.28,
+          "penalty_10": 0.34,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 3.85,
+            "timing": 6.41,
+            "valuation": 6.72,
+            "quality": 9.66,
+            "market_acceptance": 6.94
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 9.66
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 6.94
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.56
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_down:exposure_penalty"
+      },
+      "ranks": {
+        "baseline_rank": 4,
+        "fcn_rank": 4,
+        "active_rank": 4
+      }
+    },
+    {
+      "symbol": "INTC",
+      "name": "Intel",
+      "category": "core",
+      "sector": "AI_SEMI",
+      "subsector": "CPU",
+      "baseline": {
+        "today_score": 59.2,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 3.0,
+          "timing": 10.0,
+          "valuation": 28.8,
+          "quality": 1.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 3.84,
+          "1m": 51.04,
+          "3m": 36.45,
+          "6m": 79.03,
+          "12m": 239.62
+        },
+        "swing_days": [
+          0.85,
+          -4.09,
+          0.0,
+          5.48,
+          1.77,
+          -2.1
+        ],
+        "valuation": {
+          "forward_pe": 31.55,
+          "anchor_pe": 22.0,
+          "peg": 1.89,
+          "eps_growth": 16.67
+        },
+        "event_score": 3.0,
+        "market_acceptance": {
+          "volume_ratio": 0.86,
+          "liquidity_proxy": 91155600.0,
+          "size_proxy": 6039970250.72937
+        },
+        "exposure": {
+          "ratio": 1.19,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 2.67,
+        "timing": 10.0,
+        "valuation": 4.4,
+        "quality": 10.0,
+        "market_acceptance": 8.3
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.02,
+        "overheat_penalty": 1.59,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 69.2,
+        "active_score": 73.1
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.87,
+          "event_blend_10": 5.12,
+          "penalty_10": 0.98,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 2.67,
+            "timing": 10.0,
+            "valuation": 4.4,
+            "quality": 10.0,
+            "market_acceptance": 8.3
+          }
+        },
+        "active": {
+          "base_10": 7.99,
+          "event_blend_10": 4.59,
+          "penalty_10": 1.6,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 2.67,
+            "timing": 10.0,
+            "valuation": 4.4,
+            "quality": 10.0,
+            "market_acceptance": 8.3
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "timing",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 10.0
+          }
+        ],
+        "penalties": [
+          {
+            "name": "overheat_penalty",
+            "score_10": 1.59
+          },
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.02
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 23,
+        "fcn_rank": 13,
+        "active_rank": 16
+      }
+    },
+    {
+      "symbol": "LQD",
+      "name": "iShares iBoxx Investment Grade Corporate Bond ETF",
+      "category": "income",
+      "sector": "ETF",
+      "subsector": "BOND_ETF",
+      "baseline": {
+        "today_score": 65.23,
+        "action": "移除",
+        "components": {
+          "trend": 6.0,
+          "structure": 3.0,
+          "timing": 3.0,
+          "valuation": 46.53,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": -0.34,
+          "1m": 1.63,
+          "3m": -0.26,
+          "6m": -2.31,
+          "12m": 3.54
+        },
+        "swing_days": [
+          -0.38,
+          -0.01,
+          0.56,
+          -0.46,
+          -0.04,
+          0.33
+        ],
+        "valuation": {
+          "forward_pe": 0.0,
+          "anchor_pe": 22.0,
+          "peg": 0.0,
+          "eps_growth": 0.0
+        },
+        "event_score": 0.0,
+        "market_acceptance": {
+          "volume_ratio": 0.71,
+          "liquidity_proxy": 26008100.0,
+          "size_proxy": 2850747856.8740845
+        },
+        "exposure": {
+          "ratio": 0.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 6.13,
+        "structure": 2.98,
+        "timing": 5.14,
+        "valuation": 7.2,
+        "quality": 3.26,
+        "market_acceptance": 6.98
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.0,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 58.74,
+        "active_score": 58.01
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 5.32,
+          "event_blend_10": 2.79,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 6.13,
+            "structure": 2.98,
+            "timing": 5.14,
+            "valuation": 7.2,
+            "quality": 3.26,
+            "market_acceptance": 6.98
+          }
+        },
+        "active": {
+          "base_10": 5.38,
+          "event_blend_10": 2.09,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 6.13,
+            "structure": 2.98,
+            "timing": 5.14,
+            "valuation": 7.2,
+            "quality": 3.26,
+            "market_acceptance": 6.98
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "valuation",
+            "score_10": 7.2
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 6.98
+          },
+          {
+            "name": "trend",
+            "score_10": 6.13
+          }
+        ],
+        "penalties": [],
+        "dominant_driver": "valuation",
+        "delta_driver_vs_baseline": "score_down:penalty_mix"
+      },
+      "ranks": {
+        "baseline_rank": 19,
+        "fcn_rank": 24,
+        "active_rank": 28
+      }
+    },
+    {
+      "symbol": "LVS",
+      "name": "Las Vegas Sands",
+      "category": "cyclical_high_beta",
+      "sector": "TRAVEL",
+      "subsector": "CASINO",
+      "baseline": {
+        "today_score": 56.31,
+        "action": "移除",
+        "components": {
+          "trend": 9.0,
+          "structure": 1.79,
+          "timing": 6.03,
+          "valuation": 32.35,
+          "quality": 1.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 3.64,
+          "1m": 8.71,
+          "3m": -1.71,
+          "6m": 18.54,
+          "12m": 69.53
+        },
+        "swing_days": [
+          0.61,
+          -0.78,
+          1.64,
+          0.8,
+          1.33,
+          1.24
+        ],
+        "valuation": {
+          "forward_pe": 19.84,
+          "anchor_pe": 15.0,
+          "peg": 0.95,
+          "eps_growth": 20.83
+        },
+        "event_score": 0.0,
+        "market_acceptance": {
+          "volume_ratio": 1.23,
+          "liquidity_proxy": 3945000.0,
+          "size_proxy": 226995303.61175537
+        },
+        "exposure": {
+          "ratio": 0.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 9.38,
+        "structure": 4.09,
+        "timing": 7.01,
+        "valuation": 5.2,
+        "quality": 9.0,
+        "market_acceptance": 6.77
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.0,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 71.62,
+        "active_score": 74.56
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.62,
+          "event_blend_10": 2.71,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 9.38,
+            "structure": 4.09,
+            "timing": 7.01,
+            "valuation": 5.2,
+            "quality": 9.0,
+            "market_acceptance": 6.77
+          }
+        },
+        "active": {
+          "base_10": 7.05,
+          "event_blend_10": 2.03,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 9.38,
+            "structure": 4.09,
+            "timing": 7.01,
+            "valuation": 5.2,
+            "quality": 9.0,
+            "market_acceptance": 6.77
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 9.38
+          },
+          {
+            "name": "quality",
+            "score_10": 9.0
+          },
+          {
+            "name": "timing",
+            "score_10": 7.01
+          }
+        ],
+        "penalties": [],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 25,
+        "fcn_rank": 11,
+        "active_rank": 12
+      }
+    },
+    {
+      "symbol": "META",
+      "name": "Meta",
+      "category": "core",
+      "sector": "AI_PLATFORM",
+      "subsector": "ADS_SOCIAL",
+      "baseline": {
+        "today_score": 74.43,
+        "action": "移除",
+        "components": {
+          "trend": 8.0,
+          "structure": 1.93,
+          "timing": 5.74,
+          "valuation": 52.75,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 0.96,
+          "1m": 12.66,
+          "3m": 10.71,
+          "6m": -6.71,
+          "12m": 33.69
+        },
+        "swing_days": [
+          -0.31,
+          -2.56,
+          1.73,
+          0.79,
+          1.37,
+          4.41
+        ],
+        "valuation": {
+          "forward_pe": 34.84,
+          "anchor_pe": 34.0,
+          "peg": 3.37,
+          "eps_growth": 10.34
+        },
+        "event_score": 7.8,
+        "market_acceptance": {
+          "volume_ratio": 0.49,
+          "liquidity_proxy": 8636000.0,
+          "size_proxy": 5776102471.923828
+        },
+        "exposure": {
+          "ratio": 3.57,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 8.26,
+        "structure": 4.25,
+        "timing": 6.91,
+        "valuation": 5.79,
+        "quality": 6.61,
+        "market_acceptance": 5.25
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.07,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 74.07,
+        "active_score": 77.7
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.12,
+          "event_blend_10": 6.78,
+          "penalty_10": 0.07,
+          "components_10": {
+            "trend": 8.26,
+            "structure": 4.25,
+            "timing": 6.91,
+            "valuation": 5.79,
+            "quality": 6.61,
+            "market_acceptance": 5.25
+          }
+        },
+        "active": {
+          "base_10": 6.41,
+          "event_blend_10": 7.03,
+          "penalty_10": 0.04,
+          "components_10": {
+            "trend": 8.26,
+            "structure": 4.25,
+            "timing": 6.91,
+            "valuation": 5.79,
+            "quality": 6.61,
+            "market_acceptance": 5.25
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 8.26
+          },
+          {
+            "name": "timing",
+            "score_10": 6.91
+          },
+          {
+            "name": "quality",
+            "score_10": 6.61
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.07
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_near_baseline"
+      },
+      "ranks": {
+        "baseline_rank": 10,
+        "fcn_rank": 8,
+        "active_rank": 9
+      }
+    },
+    {
+      "symbol": "MRVL",
+      "name": "Marvell",
+      "category": "core",
+      "sector": "AI_SEMI",
+      "subsector": "NETWORKING",
+      "baseline": {
+        "today_score": 70.7,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 4.52,
+          "timing": 10.0,
+          "valuation": 39.09,
+          "quality": 0.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 13.06,
+          "1m": 72.12,
+          "3m": 89.61,
+          "6m": 72.04,
+          "12m": 198.91
+        },
+        "swing_days": [
+          2.35,
+          5.83,
+          4.74,
+          -0.91,
+          0.58,
+          1.93
+        ],
+        "valuation": {
+          "forward_pe": 58.2,
+          "anchor_pe": 22.0,
+          "peg": 1.58,
+          "eps_growth": 36.84
+        },
+        "event_score": 4.0,
+        "market_acceptance": {
+          "volume_ratio": 1.11,
+          "liquidity_proxy": 31824600.0,
+          "size_proxy": 4815380148.303223
+        },
+        "exposure": {
+          "ratio": 33.33,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 6.43,
+        "timing": 10.0,
+        "valuation": 4.14,
+        "quality": 10.0,
+        "market_acceptance": 8.75
+      },
+      "penalties_10": {
+        "exposure_penalty": 1.47,
+        "overheat_penalty": 3.03,
+        "warning_tags": [
+          "exposure_medium"
+        ]
+      },
+      "scores": {
+        "fcn_score": 55.79,
+        "active_score": 58.16
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 7.68,
+          "event_blend_10": 5.9,
+          "penalty_10": 3.29,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 6.43,
+            "timing": 10.0,
+            "valuation": 4.14,
+            "quality": 10.0,
+            "market_acceptance": 8.75
+          }
+        },
+        "active": {
+          "base_10": 8.64,
+          "event_blend_10": 5.42,
+          "penalty_10": 3.91,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 6.43,
+            "timing": 10.0,
+            "valuation": 4.14,
+            "quality": 10.0,
+            "market_acceptance": 8.75
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "timing",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 10.0
+          }
+        ],
+        "penalties": [
+          {
+            "name": "overheat_penalty",
+            "score_10": 3.03
+          },
+          {
+            "name": "exposure_penalty",
+            "score_10": 1.47
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_down:overheat_penalty"
+      },
+      "ranks": {
+        "baseline_rank": 12,
+        "fcn_rank": 26,
+        "active_rank": 27
+      }
+    },
+    {
+      "symbol": "MSFT",
+      "name": "Microsoft",
+      "category": "core",
+      "sector": "AI_PLATFORM",
+      "subsector": "CLOUD",
+      "baseline": {
+        "today_score": 83.0,
+        "action": "移除",
+        "components": {
+          "trend": 6.0,
+          "structure": 3.23,
+          "timing": 9.96,
+          "valuation": 54.16,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 7.9,
+          "1m": 11.07,
+          "3m": -6.68,
+          "6m": -17.41,
+          "12m": 15.63
+        },
+        "swing_days": [
+          1.46,
+          -1.12,
+          0.6,
+          2.2,
+          4.61,
+          2.27
+        ],
+        "valuation": {
+          "forward_pe": 33.14,
+          "anchor_pe": 34.0,
+          "peg": 2.32,
+          "eps_growth": 14.29
+        },
+        "event_score": 0.0,
+        "market_acceptance": {
+          "volume_ratio": 0.93,
+          "liquidity_proxy": 31992100.0,
+          "size_proxy": 13569769253.15857
+        },
+        "exposure": {
+          "ratio": 0.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 6.13,
+        "structure": 5.59,
+        "timing": 7.99,
+        "valuation": 6.48,
+        "quality": 3.71,
+        "market_acceptance": 8.22
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.0,
+        "overheat_penalty": 0.15,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 68.06,
+        "active_score": 70.49
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.24,
+          "event_blend_10": 3.29,
+          "penalty_10": 0.09,
+          "components_10": {
+            "trend": 6.13,
+            "structure": 5.59,
+            "timing": 7.99,
+            "valuation": 6.48,
+            "quality": 3.71,
+            "market_acceptance": 8.22
+          }
+        },
+        "active": {
+          "base_10": 6.7,
+          "event_blend_10": 2.47,
+          "penalty_10": 0.15,
+          "components_10": {
+            "trend": 6.13,
+            "structure": 5.59,
+            "timing": 7.99,
+            "valuation": 6.48,
+            "quality": 3.71,
+            "market_acceptance": 8.22
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "market_acceptance",
+            "score_10": 8.22
+          },
+          {
+            "name": "timing",
+            "score_10": 7.99
+          },
+          {
+            "name": "valuation",
+            "score_10": 6.48
+          }
+        ],
+        "penalties": [
+          {
+            "name": "overheat_penalty",
+            "score_10": 0.15
+          }
+        ],
+        "dominant_driver": "market_acceptance",
+        "delta_driver_vs_baseline": "score_down:overheat_penalty"
+      },
+      "ranks": {
+        "baseline_rank": 7,
+        "fcn_rank": 15,
+        "active_rank": 21
+      }
+    },
+    {
+      "symbol": "MU",
+      "name": "Micron",
+      "category": "core",
+      "sector": "AI_SEMI",
+      "subsector": "MEMORY",
+      "baseline": {
+        "today_score": 59.08,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 2.38,
+          "timing": 3.0,
+          "valuation": 39.18,
+          "quality": 0.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": -3.5,
+          "1m": 6.26,
+          "3m": 23.12,
+          "6m": 122.05,
+          "12m": 540.05
+        },
+        "swing_days": [
+          0.21,
+          -1.46,
+          -0.47,
+          0.22,
+          -2.03,
+          9.17
+        ],
+        "valuation": {
+          "forward_pe": 53.5,
+          "anchor_pe": 20.0,
+          "peg": 1.42,
+          "eps_growth": 37.7
+        },
+        "event_score": 7.0,
+        "market_acceptance": {
+          "volume_ratio": 0.59,
+          "liquidity_proxy": 27626500.0,
+          "size_proxy": 12414796704.89502
+        },
+        "exposure": {
+          "ratio": 27.38,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 4.73,
+        "timing": 5.02,
+        "valuation": 4.15,
+        "quality": 10.0,
+        "market_acceptance": 6.43
+      },
+      "penalties_10": {
+        "exposure_penalty": 1.04,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 67.93,
+        "active_score": 74.45
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.48,
+          "event_blend_10": 6.77,
+          "penalty_10": 1.04,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 4.73,
+            "timing": 5.02,
+            "valuation": 4.15,
+            "quality": 10.0,
+            "market_acceptance": 6.43
+          }
+        },
+        "active": {
+          "base_10": 6.71,
+          "event_blend_10": 6.83,
+          "penalty_10": 0.63,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 4.73,
+            "timing": 5.02,
+            "valuation": 4.15,
+            "quality": 10.0,
+            "market_acceptance": 6.43
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 10.0
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 6.43
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 1.04
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 24,
+        "fcn_rank": 16,
+        "active_rank": 13
+      }
+    },
+    {
+      "symbol": "NKE",
+      "name": "Nike",
+      "category": "core",
+      "sector": "CONSUMER",
+      "subsector": "APPAREL",
+      "baseline": {
+        "today_score": 77.25,
+        "action": "移除",
+        "components": {
+          "trend": 0.0,
+          "structure": 2.81,
+          "timing": 3.0,
+          "valuation": 65.0,
+          "quality": -1.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 4.95,
+          "1m": -11.42,
+          "3m": -27.09,
+          "6m": -31.14,
+          "12m": -18.7
+        },
+        "swing_days": [
+          -0.19,
+          0.98,
+          0.72,
+          0.57,
+          2.81,
+          3.01
+        ],
+        "valuation": {
+          "forward_pe": 14.06,
+          "anchor_pe": 20.0,
+          "peg": 1.02,
+          "eps_growth": 13.79
+        },
+        "event_score": 10.0,
+        "market_acceptance": {
+          "volume_ratio": 0.74,
+          "liquidity_proxy": 22148000.0,
+          "size_proxy": 1027445706.4819336
+        },
+        "exposure": {
+          "ratio": 11.9,
+          "danger": 1.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 1.79,
+        "structure": 5.18,
+        "timing": 4.63,
+        "valuation": 7.92,
+        "quality": 1.0,
+        "market_acceptance": 6.69
+      },
+      "penalties_10": {
+        "exposure_penalty": 1.78,
+        "overheat_penalty": 0.0,
+        "warning_tags": [
+          "danger_position"
+        ]
+      },
+      "scores": {
+        "fcn_score": 47.01,
+        "active_score": 51.4
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 4.74,
+          "event_blend_10": 8.68,
+          "penalty_10": 1.78,
+          "components_10": {
+            "trend": 1.79,
+            "structure": 5.18,
+            "timing": 4.63,
+            "valuation": 7.92,
+            "quality": 1.0,
+            "market_acceptance": 6.69
+          }
+        },
+        "active": {
+          "base_10": 4.4,
+          "event_blend_10": 9.01,
+          "penalty_10": 1.07,
+          "components_10": {
+            "trend": 1.79,
+            "structure": 5.18,
+            "timing": 4.63,
+            "valuation": 7.92,
+            "quality": 1.0,
+            "market_acceptance": 6.69
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "valuation",
+            "score_10": 7.92
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 6.69
+          },
+          {
+            "name": "structure",
+            "score_10": 5.18
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 1.78
+          }
+        ],
+        "dominant_driver": "valuation",
+        "delta_driver_vs_baseline": "score_down:exposure_penalty"
+      },
+      "ranks": {
+        "baseline_rank": 9,
+        "fcn_rank": 30,
+        "active_rank": 31
+      }
+    },
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA",
+      "category": "core",
+      "sector": "AI_SEMI",
+      "subsector": "GPU",
+      "baseline": {
+        "today_score": 66.11,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 2.11,
+          "timing": 7.49,
+          "valuation": 38.93,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 1.71,
+          "1m": 15.74,
+          "3m": 12.25,
+          "6m": 9.09,
+          "12m": 102.12
+        },
+        "swing_days": [
+          -1.08,
+          0.19,
+          1.68,
+          -0.26,
+          1.2,
+          3.8
+        ],
+        "valuation": {
+          "forward_pe": 47.59,
+          "anchor_pe": 27.0,
+          "peg": 1.34,
+          "eps_growth": 35.48
+        },
+        "event_score": 8.6,
+        "market_acceptance": {
+          "volume_ratio": 0.7,
+          "liquidity_proxy": 107561800.0,
+          "size_proxy": 21499453109.2041
+        },
+        "exposure": {
+          "ratio": 76.19,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 4.45,
+        "timing": 7.37,
+        "valuation": 4.78,
+        "quality": 9.42,
+        "market_acceptance": 7.5
+      },
+      "penalties_10": {
+        "exposure_penalty": 5.17,
+        "overheat_penalty": 0.0,
+        "warning_tags": [
+          "exposure_high"
+        ]
+      },
+      "scores": {
+        "fcn_score": 33.52,
+        "active_score": 60.11
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.89,
+          "event_blend_10": 8.16,
+          "penalty_10": 5.17,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 4.45,
+            "timing": 7.37,
+            "valuation": 4.78,
+            "quality": 9.42,
+            "market_acceptance": 7.5
+          }
+        },
+        "active": {
+          "base_10": 7.46,
+          "event_blend_10": 8.27,
+          "penalty_10": 3.1,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 4.45,
+            "timing": 7.37,
+            "valuation": 4.78,
+            "quality": 9.42,
+            "market_acceptance": 7.5
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 9.42
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 7.5
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 5.17
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_down:exposure_penalty"
+      },
+      "ranks": {
+        "baseline_rank": 18,
+        "fcn_rank": 32,
+        "active_rank": 26
+      }
+    },
+    {
+      "symbol": "ORCL",
+      "name": "Oracle",
+      "category": "core",
+      "sector": "AI_PLATFORM",
+      "subsector": "DATABASE_CLOUD",
+      "baseline": {
+        "today_score": 49.41,
+        "action": "移除",
+        "components": {
+          "trend": 6.0,
+          "structure": 4.98,
+          "timing": 10.0,
+          "valuation": 18.63,
+          "quality": 1.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 11.15,
+          "1m": 21.04,
+          "3m": 0.69,
+          "6m": -37.81,
+          "12m": 42.38
+        },
+        "swing_days": [
+          2.02,
+          1.44,
+          -1.84,
+          5.02,
+          4.18,
+          4.74
+        ],
+        "valuation": {
+          "forward_pe": 28.31,
+          "anchor_pe": 20.0,
+          "peg": 2.74,
+          "eps_growth": 10.34
+        },
+        "event_score": 7.4,
+        "market_acceptance": {
+          "volume_ratio": 1.37,
+          "liquidity_proxy": 39496500.0,
+          "size_proxy": 7155580832.679749
+        },
+        "exposure": {
+          "ratio": 4.76,
+          "danger": 1.0,
+          "watch": 1.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 7.31,
+        "structure": 6.66,
+        "timing": 9.29,
+        "valuation": 3.8,
+        "quality": 5.79,
+        "market_acceptance": 9.21
+      },
+      "penalties_10": {
+        "exposure_penalty": 2.1,
+        "overheat_penalty": 0.82,
+        "warning_tags": [
+          "danger_position",
+          "watch_position"
+        ]
+      },
+      "scores": {
+        "fcn_score": 56.08,
+        "active_score": 70.63
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.57,
+          "event_blend_10": 8.12,
+          "penalty_10": 2.59,
+          "components_10": {
+            "trend": 7.31,
+            "structure": 6.66,
+            "timing": 9.29,
+            "valuation": 3.8,
+            "quality": 5.79,
+            "market_acceptance": 9.21
+          }
+        },
+        "active": {
+          "base_10": 7.55,
+          "event_blend_10": 7.94,
+          "penalty_10": 2.08,
+          "components_10": {
+            "trend": 7.31,
+            "structure": 6.66,
+            "timing": 9.29,
+            "valuation": 3.8,
+            "quality": 5.79,
+            "market_acceptance": 9.21
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "timing",
+            "score_10": 9.29
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 9.21
+          },
+          {
+            "name": "trend",
+            "score_10": 7.31
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 2.1
+          },
+          {
+            "name": "overheat_penalty",
+            "score_10": 0.82
+          }
+        ],
+        "dominant_driver": "timing",
+        "delta_driver_vs_baseline": "score_up:timing"
+      },
+      "ranks": {
+        "baseline_rank": 30,
+        "fcn_rank": 25,
+        "active_rank": 20
+      }
+    },
+    {
+      "symbol": "PLTR",
+      "name": "Palantir",
+      "category": "speculative",
+      "sector": "AI_SOFTWARE",
+      "subsector": "ANALYTICS",
+      "baseline": {
+        "today_score": 51.13,
+        "action": "移除",
+        "components": {
+          "trend": 6.0,
+          "structure": 3.18,
+          "timing": 4.05,
+          "valuation": 32.74,
+          "quality": 0.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 7.57,
+          "1m": -3.13,
+          "3m": -13.39,
+          "6m": -18.06,
+          "12m": 55.3
+        },
+        "swing_days": [
+          0.05,
+          -0.34,
+          2.54,
+          0.43,
+          4.75,
+          2.52
+        ],
+        "valuation": {
+          "forward_pe": 91.23,
+          "anchor_pe": 22.0,
+          "peg": 2.74,
+          "eps_growth": 33.33
+        },
+        "event_score": 6.2,
+        "market_acceptance": {
+          "volume_ratio": 0.9,
+          "liquidity_proxy": 44665900.0,
+          "size_proxy": 6519881477.523804
+        },
+        "exposure": {
+          "ratio": 25.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 7.04,
+        "structure": 5.54,
+        "timing": 6.35,
+        "valuation": 3.97,
+        "quality": 7.08,
+        "market_acceptance": 8.18
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.9,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 65.06,
+        "active_score": 73.17
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.01,
+          "event_blend_10": 6.99,
+          "penalty_10": 0.9,
+          "components_10": {
+            "trend": 7.04,
+            "structure": 5.54,
+            "timing": 6.35,
+            "valuation": 3.97,
+            "quality": 7.08,
+            "market_acceptance": 8.18
+          }
+        },
+        "active": {
+          "base_10": 6.5,
+          "event_blend_10": 6.79,
+          "penalty_10": 0.54,
+          "components_10": {
+            "trend": 7.04,
+            "structure": 5.54,
+            "timing": 6.35,
+            "valuation": 3.97,
+            "quality": 7.08,
+            "market_acceptance": 8.18
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "market_acceptance",
+            "score_10": 8.18
+          },
+          {
+            "name": "quality",
+            "score_10": 7.08
+          },
+          {
+            "name": "trend",
+            "score_10": 7.04
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.9
+          }
+        ],
+        "dominant_driver": "market_acceptance",
+        "delta_driver_vs_baseline": "score_up:market_acceptance"
+      },
+      "ranks": {
+        "baseline_rank": 29,
+        "fcn_rank": 21,
+        "active_rank": 15
+      }
+    },
+    {
+      "symbol": "QQQ",
+      "name": "Invesco QQQ",
+      "category": "income",
+      "sector": "ETF",
+      "subsector": "NASDAQ_ETF",
+      "baseline": {
+        "today_score": 87.32,
+        "action": "移除",
+        "components": {
+          "trend": 8.0,
+          "structure": 1.73,
+          "timing": 6.03,
+          "valuation": 65.0,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 2.5,
+          "1m": 10.7,
+          "3m": 5.96,
+          "6m": 6.69,
+          "12m": 44.96
+        },
+        "swing_days": [
+          -0.38,
+          -0.32,
+          1.31,
+          0.48,
+          1.4,
+          1.82
+        ],
+        "valuation": {
+          "forward_pe": 0.0,
+          "anchor_pe": 26.0,
+          "peg": 0.0,
+          "eps_growth": 0.0
+        },
+        "event_score": 0.0,
+        "market_acceptance": {
+          "volume_ratio": 0.71,
+          "liquidity_proxy": 39420800.0,
+          "size_proxy": 25400004737.695312
+        },
+        "exposure": {
+          "ratio": 0.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 8.71,
+        "structure": 4.02,
+        "timing": 7.01,
+        "valuation": 7.2,
+        "quality": 7.61,
+        "market_acceptance": 7.18
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.0,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 74.03,
+        "active_score": 74.65
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.83,
+          "event_blend_10": 2.87,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 8.71,
+            "structure": 4.02,
+            "timing": 7.01,
+            "valuation": 7.2,
+            "quality": 7.61,
+            "market_acceptance": 7.18
+          }
+        },
+        "active": {
+          "base_10": 7.03,
+          "event_blend_10": 2.16,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 8.71,
+            "structure": 4.02,
+            "timing": 7.01,
+            "valuation": 7.2,
+            "quality": 7.61,
+            "market_acceptance": 7.18
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 8.71
+          },
+          {
+            "name": "quality",
+            "score_10": 7.61
+          },
+          {
+            "name": "valuation",
+            "score_10": 7.2
+          }
+        ],
+        "penalties": [],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_down:penalty_mix"
+      },
+      "ranks": {
+        "baseline_rank": 5,
+        "fcn_rank": 9,
+        "active_rank": 11
+      }
+    },
+    {
+      "symbol": "REGN",
+      "name": "Regeneron",
+      "category": "defensive",
+      "sector": "DEFENSIVE",
+      "subsector": "BIOPHARMA",
+      "baseline": {
+        "today_score": 85.24,
+        "action": "移除",
+        "components": {
+          "trend": 8.0,
+          "structure": 1.05,
+          "timing": 3.0,
+          "valuation": 65.0,
+          "quality": 1.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": -1.08,
+          "1m": 1.98,
+          "3m": 1.85,
+          "6m": 29.29,
+          "12m": 27.65
+        },
+        "swing_days": [
+          -0.27,
+          -0.15,
+          0.61,
+          -1.05,
+          -0.21,
+          1.21
+        ],
+        "valuation": {
+          "forward_pe": 19.16,
+          "anchor_pe": 22.0,
+          "peg": 2.8,
+          "eps_growth": 6.85
+        },
+        "event_score": 0.0,
+        "market_acceptance": {
+          "volume_ratio": 1.17,
+          "liquidity_proxy": 707400.0,
+          "size_proxy": 528682453.6376953
+        },
+        "exposure": {
+          "ratio": 0.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 8.52,
+        "structure": 3.11,
+        "timing": 5.01,
+        "valuation": 6.42,
+        "quality": 7.16,
+        "market_acceptance": 6.06
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.0,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 64.81,
+        "active_score": 63.94
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.0,
+          "event_blend_10": 2.42,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 8.52,
+            "structure": 3.11,
+            "timing": 5.01,
+            "valuation": 6.42,
+            "quality": 7.16,
+            "market_acceptance": 6.06
+          }
+        },
+        "active": {
+          "base_10": 6.03,
+          "event_blend_10": 1.82,
+          "penalty_10": 0.0,
+          "components_10": {
+            "trend": 8.52,
+            "structure": 3.11,
+            "timing": 5.01,
+            "valuation": 6.42,
+            "quality": 7.16,
+            "market_acceptance": 6.06
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 8.52
+          },
+          {
+            "name": "quality",
+            "score_10": 7.16
+          },
+          {
+            "name": "valuation",
+            "score_10": 6.42
+          }
+        ],
+        "penalties": [],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_down:penalty_mix"
+      },
+      "ranks": {
+        "baseline_rank": 6,
+        "fcn_rank": 22,
+        "active_rank": 23
+      }
+    },
+    {
+      "symbol": "SMH",
+      "name": "VanEck Semiconductor ETF",
+      "category": "income",
+      "sector": "ETF",
+      "subsector": "SEMI_ETF",
+      "baseline": {
+        "today_score": 92.91,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 1.76,
+          "timing": 10.0,
+          "valuation": 65.0,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 2.8,
+          "1m": 20.77,
+          "3m": 19.02,
+          "6m": 35.54,
+          "12m": 142.14
+        },
+        "swing_days": [
+          0.15,
+          -0.04,
+          2.06,
+          0.4,
+          0.22,
+          1.95
+        ],
+        "valuation": {
+          "forward_pe": 0.0,
+          "anchor_pe": 20.0,
+          "peg": 0.0,
+          "eps_growth": 0.0
+        },
+        "event_score": 5.0,
+        "market_acceptance": {
+          "volume_ratio": 0.66,
+          "liquidity_proxy": 5587500.0,
+          "size_proxy": 2596287770.462036
+        },
+        "exposure": {
+          "ratio": 20.24,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 4.05,
+        "timing": 8.07,
+        "valuation": 7.2,
+        "quality": 10.0,
+        "market_acceptance": 5.75
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.61,
+        "overheat_penalty": 0.17,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 77.07,
+        "active_score": 80.93
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 7.36,
+          "event_blend_10": 5.3,
+          "penalty_10": 0.72,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 4.05,
+            "timing": 8.07,
+            "valuation": 7.2,
+            "quality": 10.0,
+            "market_acceptance": 5.75
+          }
+        },
+        "active": {
+          "base_10": 7.59,
+          "event_blend_10": 5.23,
+          "penalty_10": 0.54,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 4.05,
+            "timing": 8.07,
+            "valuation": 7.2,
+            "quality": 10.0,
+            "market_acceptance": 5.75
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 10.0
+          },
+          {
+            "name": "timing",
+            "score_10": 8.07
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.61
+          },
+          {
+            "name": "overheat_penalty",
+            "score_10": 0.17
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_down:exposure_penalty"
+      },
+      "ranks": {
+        "baseline_rank": 2,
+        "fcn_rank": 5,
+        "active_rank": 5
+      }
+    },
+    {
+      "symbol": "SOFI",
+      "name": "SoFi",
+      "category": "speculative",
+      "sector": "FINTECH",
+      "subsector": "LENDING",
+      "baseline": {
+        "today_score": 67.41,
+        "action": "移除",
+        "components": {
+          "trend": 6.0,
+          "structure": 3.21,
+          "timing": 8.17,
+          "valuation": 46.38,
+          "quality": -2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 5.14,
+          "1m": 11.42,
+          "3m": -26.13,
+          "6m": -29.05,
+          "12m": 67.08
+        },
+        "swing_days": [
+          -3.44,
+          0.36,
+          2.1,
+          1.28,
+          4.91,
+          5.04
+        ],
+        "valuation": {
+          "forward_pe": 20.92,
+          "anchor_pe": 18.0,
+          "peg": 0.42,
+          "eps_growth": 50.0
+        },
+        "event_score": 0.0,
+        "market_acceptance": {
+          "volume_ratio": 1.18,
+          "liquidity_proxy": 65366600.0,
+          "size_proxy": 1230853073.0129242
+        },
+        "exposure": {
+          "ratio": 0.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 7.17,
+        "structure": 5.57,
+        "timing": 7.54,
+        "valuation": 6.93,
+        "quality": 7.35,
+        "market_acceptance": 8.91
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.0,
+        "overheat_penalty": 0.01,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 77.04,
+        "active_score": 78.0
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 7.0,
+          "event_blend_10": 3.56,
+          "penalty_10": 0.01,
+          "components_10": {
+            "trend": 7.17,
+            "structure": 5.57,
+            "timing": 7.54,
+            "valuation": 6.93,
+            "quality": 7.35,
+            "market_acceptance": 8.91
+          }
+        },
+        "active": {
+          "base_10": 7.28,
+          "event_blend_10": 2.67,
+          "penalty_10": 0.01,
+          "components_10": {
+            "trend": 7.17,
+            "structure": 5.57,
+            "timing": 7.54,
+            "valuation": 6.93,
+            "quality": 7.35,
+            "market_acceptance": 8.91
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "market_acceptance",
+            "score_10": 8.91
+          },
+          {
+            "name": "timing",
+            "score_10": 7.54
+          },
+          {
+            "name": "quality",
+            "score_10": 7.35
+          }
+        ],
+        "penalties": [
+          {
+            "name": "overheat_penalty",
+            "score_10": 0.01
+          }
+        ],
+        "dominant_driver": "market_acceptance",
+        "delta_driver_vs_baseline": "score_up:market_acceptance"
+      },
+      "ranks": {
+        "baseline_rank": 16,
+        "fcn_rank": 6,
+        "active_rank": 7
+      }
+    },
+    {
+      "symbol": "TGT",
+      "name": "Target",
+      "category": "defensive",
+      "sector": "DEFENSIVE",
+      "subsector": "RETAIL",
+      "baseline": {
+        "today_score": 68.6,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 3.51,
+          "timing": 10.0,
+          "valuation": 37.8,
+          "quality": 1.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 10.52,
+          "1m": 16.63,
+          "3m": 20.82,
+          "6m": 45.42,
+          "12m": 40.38
+        },
+        "swing_days": [
+          1.47,
+          1.83,
+          3.17,
+          0.85,
+          2.79,
+          1.4
+        ],
+        "valuation": {
+          "forward_pe": 15.01,
+          "anchor_pe": 13.0,
+          "peg": 1.74,
+          "eps_growth": 8.64
+        },
+        "event_score": 6.2,
+        "market_acceptance": {
+          "volume_ratio": 1.19,
+          "liquidity_proxy": 5739200.0,
+          "size_proxy": 758148355.0292969
+        },
+        "exposure": {
+          "ratio": 11.9,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 5.85,
+        "timing": 8.88,
+        "valuation": 4.86,
+        "quality": 8.63,
+        "market_acceptance": 7.35
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.28,
+        "overheat_penalty": 0.55,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 80.16,
+        "active_score": 85.89
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 7.29,
+          "event_blend_10": 6.66,
+          "penalty_10": 0.61,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 5.85,
+            "timing": 8.88,
+            "valuation": 4.86,
+            "quality": 8.63,
+            "market_acceptance": 7.35
+          }
+        },
+        "active": {
+          "base_10": 8.0,
+          "event_blend_10": 6.55,
+          "penalty_10": 0.72,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 5.85,
+            "timing": 8.88,
+            "valuation": 4.86,
+            "quality": 8.63,
+            "market_acceptance": 7.35
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "timing",
+            "score_10": 8.88
+          },
+          {
+            "name": "quality",
+            "score_10": 8.63
+          }
+        ],
+        "penalties": [
+          {
+            "name": "overheat_penalty",
+            "score_10": 0.55
+          },
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.28
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 15,
+        "fcn_rank": 3,
+        "active_rank": 3
+      }
+    },
+    {
+      "symbol": "TSLA",
+      "name": "Tesla",
+      "category": "speculative",
+      "sector": "EV_AI",
+      "subsector": "EV",
+      "baseline": {
+        "today_score": 52.48,
+        "action": "移除",
+        "components": {
+          "trend": 8.0,
+          "structure": 3.19,
+          "timing": 6.28,
+          "valuation": 31.75,
+          "quality": 0.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 6.1,
+          "1m": 5.02,
+          "3m": -7.83,
+          "6m": -12.04,
+          "12m": 62.38
+        },
+        "swing_days": [
+          -1.55,
+          -2.03,
+          3.01,
+          -0.78,
+          7.62,
+          3.34
+        ],
+        "valuation": {
+          "forward_pe": 104.44,
+          "anchor_pe": 20.0,
+          "peg": 4.48,
+          "eps_growth": 23.33
+        },
+        "event_score": 7.0,
+        "market_acceptance": {
+          "volume_ratio": 0.74,
+          "liquidity_proxy": 50345800.0,
+          "size_proxy": 19454624712.03003
+        },
+        "exposure": {
+          "ratio": 25.0,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 8.19,
+        "structure": 5.55,
+        "timing": 7.07,
+        "valuation": 3.5,
+        "quality": 7.75,
+        "market_acceptance": 7.43
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.9,
+        "overheat_penalty": 0.0,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 67.55,
+        "active_score": 77.36
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.22,
+          "event_blend_10": 7.17,
+          "penalty_10": 0.9,
+          "components_10": {
+            "trend": 8.19,
+            "structure": 5.55,
+            "timing": 7.07,
+            "valuation": 3.5,
+            "quality": 7.75,
+            "market_acceptance": 7.43
+          }
+        },
+        "active": {
+          "base_10": 6.85,
+          "event_blend_10": 7.13,
+          "penalty_10": 0.54,
+          "components_10": {
+            "trend": 8.19,
+            "structure": 5.55,
+            "timing": 7.07,
+            "valuation": 3.5,
+            "quality": 7.75,
+            "market_acceptance": 7.43
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 8.19
+          },
+          {
+            "name": "quality",
+            "score_10": 7.75
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 7.43
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.9
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_up:trend"
+      },
+      "ranks": {
+        "baseline_rank": 28,
+        "fcn_rank": 19,
+        "active_rank": 10
+      }
+    },
+    {
+      "symbol": "TSM",
+      "name": "TSMC",
+      "category": "core",
+      "sector": "AI_SEMI",
+      "subsector": "FOUNDRY",
+      "baseline": {
+        "today_score": 60.61,
+        "action": "移除",
+        "components": {
+          "trend": 10.0,
+          "structure": 1.04,
+          "timing": 3.0,
+          "valuation": 38.78,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": -3.11,
+          "1m": 11.8,
+          "3m": 12.51,
+          "6m": 24.74,
+          "12m": 143.12
+        },
+        "swing_days": [
+          0.5,
+          -1.15,
+          1.97,
+          -3.13,
+          -1.26,
+          2.79
+        ],
+        "valuation": {
+          "forward_pe": 36.44,
+          "anchor_pe": 30.0,
+          "peg": 1.57,
+          "eps_growth": 23.17
+        },
+        "event_score": 7.5,
+        "market_acceptance": {
+          "volume_ratio": 0.74,
+          "liquidity_proxy": 9779000.0,
+          "size_proxy": 3599454188.6901855
+        },
+        "exposure": {
+          "ratio": 54.76,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 10.0,
+        "structure": 3.09,
+        "timing": 5.85,
+        "valuation": 5.82,
+        "quality": 10.0,
+        "market_acceptance": 6.63
+      },
+      "penalties_10": {
+        "exposure_penalty": 3.43,
+        "overheat_penalty": 0.0,
+        "warning_tags": [
+          "exposure_high"
+        ]
+      },
+      "scores": {
+        "fcn_score": 46.43,
+        "active_score": 62.48
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.64,
+          "event_blend_10": 7.15,
+          "penalty_10": 3.43,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 3.09,
+            "timing": 5.85,
+            "valuation": 5.82,
+            "quality": 10.0,
+            "market_acceptance": 6.63
+          }
+        },
+        "active": {
+          "base_10": 6.86,
+          "event_blend_10": 7.24,
+          "penalty_10": 2.06,
+          "components_10": {
+            "trend": 10.0,
+            "structure": 3.09,
+            "timing": 5.85,
+            "valuation": 5.82,
+            "quality": 10.0,
+            "market_acceptance": 6.63
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "trend",
+            "score_10": 10.0
+          },
+          {
+            "name": "quality",
+            "score_10": 10.0
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 6.63
+          }
+        ],
+        "penalties": [
+          {
+            "name": "exposure_penalty",
+            "score_10": 3.43
+          }
+        ],
+        "dominant_driver": "trend",
+        "delta_driver_vs_baseline": "score_down:exposure_penalty"
+      },
+      "ranks": {
+        "baseline_rank": 22,
+        "fcn_rank": 31,
+        "active_rank": 25
+      }
+    },
+    {
+      "symbol": "UNH",
+      "name": "UnitedHealth",
+      "category": "defensive",
+      "sector": "DEFENSIVE",
+      "subsector": "HEALTHCARE",
+      "baseline": {
+        "today_score": 95.38,
+        "action": "移除",
+        "components": {
+          "trend": 6.0,
+          "structure": 3.23,
+          "timing": 10.0,
+          "valuation": 65.0,
+          "quality": 2.0
+        }
+      },
+      "features": {
+        "returns": {
+          "1d": 0.0,
+          "1w": 10.13,
+          "1m": 25.55,
+          "3m": 2.24,
+          "6m": -2.97,
+          "12m": -19.0
+        },
+        "swing_days": [
+          6.96,
+          -0.35,
+          2.6,
+          0.75,
+          -0.04,
+          0.38
+        ],
+        "valuation": {
+          "forward_pe": 13.26,
+          "anchor_pe": 22.0,
+          "peg": 1.79,
+          "eps_growth": 7.41
+        },
+        "event_score": 5.8,
+        "market_acceptance": {
+          "volume_ratio": 2.93,
+          "liquidity_proxy": 26067500.0,
+          "size_proxy": 9019615929.56543
+        },
+        "exposure": {
+          "ratio": 23.81,
+          "danger": 0.0,
+          "watch": 0.0
+        }
+      },
+      "factor_scores_10": {
+        "trend": 6.29,
+        "structure": 5.59,
+        "timing": 9.5,
+        "valuation": 7.78,
+        "quality": 2.27,
+        "market_acceptance": 9.43
+      },
+      "penalties_10": {
+        "exposure_penalty": 0.83,
+        "overheat_penalty": 0.93,
+        "warning_tags": []
+      },
+      "scores": {
+        "fcn_score": 67.73,
+        "active_score": 72.91
+      },
+      "debug": {
+        "fcn": {
+          "base_10": 6.71,
+          "event_blend_10": 7.25,
+          "penalty_10": 1.39,
+          "components_10": {
+            "trend": 6.29,
+            "structure": 5.59,
+            "timing": 9.5,
+            "valuation": 7.78,
+            "quality": 2.27,
+            "market_acceptance": 9.43
+          }
+        },
+        "active": {
+          "base_10": 7.34,
+          "event_blend_10": 6.89,
+          "penalty_10": 1.43,
+          "components_10": {
+            "trend": 6.29,
+            "structure": 5.59,
+            "timing": 9.5,
+            "valuation": 7.78,
+            "quality": 2.27,
+            "market_acceptance": 9.43
+          }
+        }
+      },
+      "explainability": {
+        "contributors": [
+          {
+            "name": "timing",
+            "score_10": 9.5
+          },
+          {
+            "name": "market_acceptance",
+            "score_10": 9.43
+          },
+          {
+            "name": "valuation",
+            "score_10": 7.78
+          }
+        ],
+        "penalties": [
+          {
+            "name": "overheat_penalty",
+            "score_10": 0.93
+          },
+          {
+            "name": "exposure_penalty",
+            "score_10": 0.83
+          }
+        ],
+        "dominant_driver": "timing",
+        "delta_driver_vs_baseline": "score_down:overheat_penalty"
+      },
+      "ranks": {
+        "baseline_rank": 1,
+        "fcn_rank": 17,
+        "active_rank": 17
+      }
+    }
+  ]
+}
