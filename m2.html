@@ -2513,6 +2513,20 @@
       return JSON.parse(raw);
     }
 
+    function ensureEarlyExitRecordForBasket(basket = [], record = {}) {
+      const normalized = {};
+      (basket || []).forEach(symbol => {
+        const key = String(symbol || "").trim().toUpperCase();
+        if (!key) return;
+        const row = record?.[key] || {};
+        normalized[key] = {
+          hit: Boolean(row.hit),
+          first_hit_time: row.first_hit_time || ""
+        };
+      });
+      return normalized;
+    }
+
     function buildOrderedFCNObject(data) {
       return {
         date: data.date || "",
@@ -2569,7 +2583,11 @@
       document.getElementById("fcn_has_ki_breach").value = String(Boolean(fcn.has_ki_breach));
       document.getElementById("fcn_first_ki_breach_time").value = normalizeDateTimeLocalValue(fcn.first_ki_breach_time);
       document.getElementById("fcn_note").value = fcn.note || "";
-      document.getElementById("fcn_early_exit_record").value = JSON.stringify(fcn.early_exit_record || {}, null, 2);
+      document.getElementById("fcn_early_exit_record").value = JSON.stringify(
+        ensureEarlyExitRecordForBasket(Array.isArray(fcn.basket) ? fcn.basket : [], fcn.early_exit_record || {}),
+        null,
+        2
+      );
 
       currentEditingFCNId = fcn.fcn_id || null;
       document.getElementById("managerFormMeta").innerHTML =
@@ -2628,7 +2646,8 @@
 
     function getFormData() {
       const { basket, entry_prices } = getBasketEntryData();
-      const early_exit_record = parseEarlyExitRecordText(document.getElementById("fcn_early_exit_record").value);
+      const early_exit_record_raw = parseEarlyExitRecordText(document.getElementById("fcn_early_exit_record").value);
+      const early_exit_record = ensureEarlyExitRecordForBasket(basket, early_exit_record_raw);
 
       return buildOrderedFCNObject({
         date: document.getElementById("fcn_date").value || "",

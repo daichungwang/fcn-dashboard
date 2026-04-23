@@ -61,7 +61,7 @@
     `).join("");
   }
 
-  function renderData(rows) {
+  function renderDataReadiness(rows) {
     const tbody = document.getElementById("data-table");
     tbody.innerHTML = (rows || []).map(r => `
       <tr>
@@ -147,18 +147,18 @@
     try {
       const res = await fetch(DATA_PATH, { cache: "no-store" });
       if (!res.ok) throw new Error(`讀取失敗：${res.status}`);
-      const data = await res.json();
+      const dashboardData = await res.json();
 
-      document.getElementById("generatedAt").textContent = `資料時間：${data.generated_at || "--"} ｜ 版本：${data.version || "--"}`;
-      renderActiveBuildContext(data.active_build_context || {});
-      renderOverview(data.overview || {});
-      renderEngines(data.engines || []);
-      renderData(data.data_artifacts || []);
-      renderFormulas(data.formula_domains || []);
-      renderModules(data.modules || []);
-      renderRisks(data.blockers || []);
-      renderMilestones(data.milestones || []);
-      renderHandoffMemory(data.handoff_memory || {});
+      document.getElementById("generatedAt").textContent = `資料時間：${dashboardData.generated_at || "--"} ｜ 版本：${dashboardData.version || "--"}`;
+      renderActiveBuildContext(dashboardData.active_build_context || {});
+      renderOverview(dashboardData.overview || {});
+      renderEngines(dashboardData.engines || []);
+      renderDataReadiness(dashboardData.data_artifacts || []);
+      renderFormulas(dashboardData.formula_domains || []);
+      renderModules(dashboardData.modules || []);
+      renderRisks(dashboardData.blockers || []);
+      renderMilestones(dashboardData.milestones || []);
+      renderHandoffMemory(dashboardData.handoff_memory || {});
     } catch (err) {
       setError(`Engine Progress Dashboard 載入失敗：${err.message}`);
     }

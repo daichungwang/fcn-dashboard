@@ -2,19 +2,53 @@
   "version": "engine_progress_dashboard@v1.0.0",
   "generated_at": "2026-04-22T00:00:00Z",
   "active_build_context": {
-    "current_task": "",
-    "current_focus": "",
-    "production_modules_locked": [],
-    "sandbox_modules_active": [],
-    "allowed_scope": [],
-    "forbidden_scope": []
+    "current_task": "M7 v2 sandbox scoring validation",
+    "current_focus": "驗證 scoring architecture 與 output quality",
+    "production_modules_locked": [
+      "M1",
+      "M2",
+      "M3",
+      "M6",
+      "M7",
+      "M8",
+      "M9"
+    ],
+    "sandbox_modules_active": [
+      "M7 v2 sandbox",
+      "runtime staging"
+    ],
+    "allowed_scope": [
+      "M7 score validation",
+      "A/B compare review",
+      "dashboard tracking",
+      "sandbox tuning"
+    ],
+    "forbidden_scope": [
+      "production rewrite",
+      "M8 integration",
+      "M9 integration",
+      "unnecessary frontend rebuild"
+    ]
   },
   "handoff_memory": {
-    "recently_created_files": [],
-    "recently_modified_files": [],
-    "last_completed_task": "",
-    "next_task": "",
-    "known_risks": []
+    "recently_created_files": [
+      "scripts/new/build_m7_v2_scores.py",
+      "data/m7_sandbox/m7_v2_scores.json",
+      "data/m7_sandbox/m7_v2_ab_compare.json",
+      "data/m7_sandbox/m7_v2_run_manifest.json"
+    ],
+    "recently_modified_files": [
+      "mm/engine_progress_dashboard.html",
+      "js/mm/engine_progress_dashboard.js",
+      "data/mm/engine_progress_dashboard.json"
+    ],
+    "last_completed_task": "完成 M7 v2 sandbox scoring engine + MM memory dashboard",
+    "next_task": "檢查 M7 ranking quality 與 score distribution",
+    "known_risks": [
+      "M7 score weighting drift",
+      "overengineering risk",
+      "avoid production contamination"
+    ]
   },
   "overview": {
     "overall_progress_pct": 34,
