@@ -1,0 +1,88 @@
+name: Weekly M1 Universe Rebuild
+
+on:
+  schedule:
+    # Sunday 08:00 Asia/Taipei (UTC+8) = Sunday 00:00 UTC
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  weekly-m1-rebuild:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run weekly rebuild scripts
+        run: |
+          set -euo pipefail
+          python scripts/build_m1_candidate_80.py
+          node scripts/build_m1_pool_output.js
+          node js/m1/generate_fundamental.js
+
+      - name: Validate outputs and print weekly summary
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import sys
+
+          candidate_path = "data/m1/m1_candidate_80.json"
+          pool_path = "data/m1/pool_stock_evaluated_v1.json"
+          fundamental_path = "data/m1/m1_fundamental_map.json"
+
+          expected = [candidate_path, pool_path, fundamental_path]
+          missing = [p for p in expected if not os.path.exists(p)]
+          if missing:
+              print("missing_outputs=" + ", ".join(missing))
+              sys.exit(1)
+
+          with open(candidate_path, "r", encoding="utf-8") as f:
+              candidate = json.load(f)
+          with open(pool_path, "r", encoding="utf-8") as f:
+              pool = json.load(f)
+
+          candidate_count = len(candidate) if isinstance(candidate, list) else 0
+          pool_output_count = len(pool.get("all", [])) if isinstance(pool, dict) else 0
+          fundamental_status = "ok" if os.path.exists(fundamental_path) else "missing"
+
+          print(f"candidate_count={candidate_count}")
+          print(f"pool_output_count={pool_output_count}")
+          print(f"fundamental_file_status={fundamental_status}")
+          PY
+
+      - name: Commit and push changed data/json output files
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git add ":(glob)data/**/*.json"
+
+          if git diff --cached --quiet; then
+            echo "No json/data output changes to commit."
+            exit 0
+          fi
+
+          git commit -m "weekly m1 universe rebuild"
+          git push
