@@ -1,0 +1,24 @@
+{
+  "generated_from": "scripts/mm/build_dynamic_anchor_preview.py",
+  "parameter_config": "configs/mm/dynamic_anchor_regime_v1.json",
+  "market_regime": "risk_off_bear",
+  "industry_regime": "bond_supportive",
+  "row_count": 1,
+  "rows": [
+    {
+      "symbol": "LQD",
+      "category_sub": "BOND_ETF",
+      "industry_family": "bond",
+      "base_anchor": 16.0,
+      "market_regime": "risk_off_bear",
+      "market_multiplier": 0.9,
+      "industry_regime": "bond_supportive",
+      "industry_multiplier": 1.07,
+      "raw_final_anchor": 15.41,
+      "final_anchor": 15.41,
+      "anchor_floor": 13.56,
+      "anchor_ceiling": 17.26,
+      "tolerance_band": 0.12
+    }
+  ]
+}

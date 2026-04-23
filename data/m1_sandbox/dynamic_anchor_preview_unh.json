@@ -1,0 +1,24 @@
+{
+  "generated_from": "scripts/mm/build_dynamic_anchor_preview.py",
+  "parameter_config": "configs/mm/dynamic_anchor_regime_v1.json",
+  "market_regime": "risk_off_bear",
+  "industry_regime": "healthcare_defensive",
+  "row_count": 1,
+  "rows": [
+    {
+      "symbol": "UNH",
+      "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
+      "industry_family": "healthcare_defensive",
+      "base_anchor": 17.0,
+      "market_regime": "risk_off_bear",
+      "market_multiplier": 0.9,
+      "industry_regime": "healthcare_defensive",
+      "industry_multiplier": 1.05,
+      "raw_final_anchor": 16.07,
+      "final_anchor": 16.07,
+      "anchor_floor": 14.14,
+      "anchor_ceiling": 17.99,
+      "tolerance_band": 0.12
+    }
+  ]
+}
