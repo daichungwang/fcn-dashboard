@@ -1158,12 +1158,49 @@
       const watchAmt = (data.watch || []).reduce((s, x) => s + toNumber(x.amt), 0);
       const healthyAmt = (data.healthy || []).reduce((s, x) => s + toNumber(x.amt), 0);
 
+      const activeFCNs = Array.isArray(data.fcns) ? data.fcns.filter(x => (x.status || "active") === "active") : [];
+      const bankTotals = activeFCNs.reduce((acc, fcn) => {
+        const bank = (fcn.tw_bank || "未分類").trim() || "未分類";
+        if (!acc[bank]) acc[bank] = { count: 0, amt: 0 };
+        acc[bank].count += 1;
+        acc[bank].amt += toNumber(fcn.amt, 0);
+        return acc;
+      }, {});
+
+      const preferredBankOrder = ["富邦", "永豐"];
+      const orderedBankEntries = [
+        ...preferredBankOrder
+          .filter(bank => bankTotals[bank])
+          .map(bank => [bank, bankTotals[bank]]),
+        ...Object.entries(bankTotals).filter(([bank]) => !preferredBankOrder.includes(bank))
+      ];
+
+      const bankCountHead = orderedBankEntries.length
+        ? orderedBankEntries.map(([bank]) => `<span style="display:inline-block; min-width:72px;">${bank}</span>`).join("")
+        : `<span class="muted">尚無銀行別資料</span>`;
+
+      const bankCountValue = orderedBankEntries.length
+        ? orderedBankEntries.map(([, info]) => `<span style="display:inline-block; min-width:72px; font-weight:700;">${info.count}</span>`).join("")
+        : ``;
+
+      const bankAmtLine = orderedBankEntries.length
+        ? orderedBankEntries.map(([bank, info]) => {
+            const pct = data.total_amt ? (toNumber(info.amt, 0) / toNumber(data.total_amt, 0)) * 100 : 0;
+            return `${bank} ${fmt(pct, 0)}%`;
+          }).join(" ｜ ")
+        : `尚無銀行別資料`;
+
       return `
         <div class="summary-grid">
           <div class="summary-box">
             <div class="summary-label">持倉總檔數</div>
             <div class="summary-value">${data.total}</div>
-            <div class="summary-sub">總金額：USD ${fmt(data.total_amt, 0)}</div>
+            <div class="summary-sub">
+              <div style="margin-top:6px;">${bankCountHead}</div>
+              <div style="margin-top:2px;">${bankCountValue}</div>
+              <div style="margin-top:8px;">總金額：USD ${fmt(data.total_amt, 0)}</div>
+              <div style="margin-top:2px;">${bankAmtLine}</div>
+            </div>
           </div>
           <div class="summary-box summary-box-exit">
             <div class="summary-label">到期專區</div>
@@ -2507,10 +2544,36 @@
       }
     }
 
-    function parseEarlyExitRecordText(text) {
+    function buildEarlyExitRecordTemplate(basket = [], rawRecord = {}) {
+      const template = {};
+
+      (basket || [])
+        .map(symbol => String(symbol || "").trim().toUpperCase())
+        .filter(Boolean)
+        .forEach(symbol => {
+          const existing = rawRecord?.[symbol] || {};
+          template[symbol] = {
+            hit: Boolean(existing.hit),
+            first_hit_time: existing.first_hit_time || ""
+          };
+        });
+
+      Object.entries(rawRecord || {}).forEach(([symbol, value]) => {
+        const normalized = String(symbol || "").trim().toUpperCase();
+        if (!normalized || template[normalized]) return;
+        template[normalized] = {
+          hit: Boolean(value?.hit),
+          first_hit_time: value?.first_hit_time || ""
+        };
+      });
+
+      return template;
+    }
+
+    function parseEarlyExitRecordText(text, basket = []) {
       const raw = String(text || "").trim();
-      if (!raw) return {};
-      return JSON.parse(raw);
+      if (!raw) return buildEarlyExitRecordTemplate(basket, {});
+      return buildEarlyExitRecordTemplate(basket, JSON.parse(raw));
     }
 
     function buildOrderedFCNObject(data) {
@@ -2569,7 +2632,11 @@
       document.getElementById("fcn_has_ki_breach").value = String(Boolean(fcn.has_ki_breach));
       document.getElementById("fcn_first_ki_breach_time").value = normalizeDateTimeLocalValue(fcn.first_ki_breach_time);
       document.getElementById("fcn_note").value = fcn.note || "";
-      document.getElementById("fcn_early_exit_record").value = JSON.stringify(fcn.early_exit_record || {}, null, 2);
+      document.getElementById("fcn_early_exit_record").value = JSON.stringify(
+        buildEarlyExitRecordTemplate(Array.isArray(fcn.basket) ? fcn.basket : [], fcn.early_exit_record || {}),
+        null,
+        2
+      );
 
       currentEditingFCNId = fcn.fcn_id || null;
       document.getElementById("managerFormMeta").innerHTML =
@@ -2628,7 +2695,10 @@
 
     function getFormData() {
       const { basket, entry_prices } = getBasketEntryData();
-      const early_exit_record = parseEarlyExitRecordText(document.getElementById("fcn_early_exit_record").value);
+      const early_exit_record = parseEarlyExitRecordText(
+        document.getElementById("fcn_early_exit_record").value,
+        basket
+      );
 
       return buildOrderedFCNObject({
         date: document.getElementById("fcn_date").value || "",
