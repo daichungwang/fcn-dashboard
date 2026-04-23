@@ -17,35 +17,6 @@
     box.textContent = msg;
   }
 
-  function getLineColFromIndex(text, index) {
-    const safeIndex = Math.max(0, Math.min(index, text.length));
-    const prefix = text.slice(0, safeIndex);
-    const lines = prefix.split("\n");
-    const line = lines.length;
-    const col = (lines[lines.length - 1] || "").length + 1;
-    return { line, col };
-  }
-
-  function parseDashboardJson(raw) {
-    const text = (raw || "").replace(/^\uFEFF/, "");
-    try {
-      return { data: JSON.parse(text), repaired: false };
-    } catch (primaryError) {
-      const repairedText = text.replace(/,\s*([}\]])/g, "$1");
-      try {
-        return { data: JSON.parse(repairedText), repaired: true };
-      } catch (secondaryError) {
-        const posMatch = /position\s+(\d+)/i.exec(String(primaryError?.message || ""));
-        if (posMatch) {
-          const pos = Number(posMatch[1]);
-          const lc = getLineColFromIndex(text, pos);
-          primaryError.message = `${primaryError.message}（約第 ${lc.line} 行，第 ${lc.col} 欄）`;
-        }
-        throw primaryError;
-      }
-    }
-  }
-
   function renderOverview(overview) {
     const el = document.getElementById("overview");
     el.innerHTML = [
@@ -90,7 +61,7 @@
     `).join("");
   }
 
-  function renderData(rows) {
+  function renderDataReadiness(rows) {
     const tbody = document.getElementById("data-table");
     tbody.innerHTML = (rows || []).map(r => `
       <tr>
@@ -182,30 +153,12 @@
       renderActiveBuildContext(dashboardData.active_build_context || {});
       renderOverview(dashboardData.overview || {});
       renderEngines(dashboardData.engines || []);
-      renderData(dashboardData.data_artifacts || []);
+      renderDataReadiness(dashboardData.data_artifacts || []);
       renderFormulas(dashboardData.formula_domains || []);
       renderModules(dashboardData.modules || []);
       renderRisks(dashboardData.blockers || []);
       renderMilestones(dashboardData.milestones || []);
       renderHandoffMemory(dashboardData.handoff_memory || {});
-      const raw = await res.text();
-      const parsed = parseDashboardJson(raw);
-      const data = parsed.data;
-      if (parsed.repaired) {
-        setError("資料檔偵測到常見 JSON 尾逗號，已自動修復後載入。請同步修正原始 JSON。");
-      }
-      const data = await res.json();
-
-      document.getElementById("generatedAt").textContent = `資料時間：${data.generated_at || "--"} ｜ 版本：${data.version || "--"}`;
-      renderActiveBuildContext(data.active_build_context || {});
-      renderOverview(data.overview || {});
-      renderEngines(data.engines || []);
-      renderData(data.data_artifacts || []);
-      renderFormulas(data.formula_domains || []);
-      renderModules(data.modules || []);
-      renderRisks(data.blockers || []);
-      renderMilestones(data.milestones || []);
-      renderHandoffMemory(data.handoff_memory || {});
     } catch (err) {
       setError(`Engine Progress Dashboard 載入失敗：${err.message}`);
     }
