@@ -32,12 +32,12 @@
     if (!box) return;
 
     const rows = [
-      `• Current Task：${ctx?.current_task || "--"}`,
-      `• Current Focus：${ctx?.current_focus || "--"}`,
-      `• Production Modules Locked：${(ctx?.production_modules_locked || []).join(", ") || "--"}`,
-      `• Sandbox Modules Active：${(ctx?.sandbox_modules_active || []).join(", ") || "--"}`,
-      `• Allowed Scope：${(ctx?.allowed_scope || []).join(", ") || "--"}`,
-      `• Forbidden Scope：${(ctx?.forbidden_scope || []).join(", ") || "--"}`
+      `• 目前任務：${ctx?.current_task || "--"}`,
+      `• 本輪重點：${ctx?.current_focus || "--"}`,
+      `• 正式版已鎖定模組：${(ctx?.production_modules_locked || []).join(", ") || "--"}`,
+      `• 目前 Sandbox：${(ctx?.sandbox_modules_active || []).join(", ") || "--"}`,
+      `• 這輪可做：${(ctx?.allowed_scope || []).join(", ") || "--"}`,
+      `• 這輪不要動：${(ctx?.forbidden_scope || []).join(", ") || "--"}`
     ];
 
     box.innerHTML = rows.join("<br>");
