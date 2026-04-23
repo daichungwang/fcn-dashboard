@@ -115,6 +115,34 @@
     box.innerHTML = list || "無";
   }
 
+  function renderHandoffMemory(mem) {
+    const box = document.getElementById("handoff-memory");
+    if (!box) return;
+
+    const created = (mem?.recently_created_files || []).length
+      ? (mem.recently_created_files || []).map(x => `  - ${x}`).join("<br>")
+      : "  - 無";
+
+    const modified = (mem?.recently_modified_files || []).length
+      ? (mem.recently_modified_files || []).map(x => `  - ${x}`).join("<br>")
+      : "  - 無";
+
+    const risks = (mem?.known_risks || []).length
+      ? (mem.known_risks || []).map(x => `  - ${x}`).join("<br>")
+      : "  - 無";
+
+    box.innerHTML = [
+      "• 最近新增檔案：",
+      created,
+      "• 最近修改檔案：",
+      modified,
+      `• 上一個完成任務：${mem?.last_completed_task || "--"}`,
+      `• 下一步：${mem?.next_task || "--"}`,
+      "• 目前風險提醒：",
+      risks
+    ].join("<br>");
+  }
+
   async function init() {
     try {
       const res = await fetch(DATA_PATH, { cache: "no-store" });
@@ -130,6 +158,7 @@
       renderModules(data.modules || []);
       renderRisks(data.blockers || []);
       renderMilestones(data.milestones || []);
+      renderHandoffMemory(data.handoff_memory || {});
     } catch (err) {
       setError(`Engine Progress Dashboard 載入失敗：${err.message}`);
     }
