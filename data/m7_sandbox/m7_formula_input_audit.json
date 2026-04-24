@@ -1,0 +1,865 @@
+{
+  "summary": {
+    "total_symbols": 33,
+    "symbols_fully_calculable": 0,
+    "symbols_partial": 33,
+    "symbols_blocked": 0,
+    "most_common_missing_fields": [
+      {
+        "field": "price_ref_10y",
+        "count": 66
+      },
+      {
+        "field": "price_ref_5y",
+        "count": 66
+      },
+      {
+        "field": "price_ref_3y",
+        "count": 66
+      },
+      {
+        "field": "ret_d2",
+        "count": 33
+      },
+      {
+        "field": "ret_d3",
+        "count": 33
+      },
+      {
+        "field": "ret_d4",
+        "count": 33
+      },
+      {
+        "field": "ret_d5",
+        "count": 33
+      }
+    ]
+  },
+  "rows": [
+    {
+      "symbol": "AAL",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "AAPL",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ALAB",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "AMAT",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "AMD",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "AMZN",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ARM",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "AVGO",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CCL",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "COIN",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "COST",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CRDO",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "EL",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "GOOG",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "INTC",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "LQD",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "LVS",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "META",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "MRVL",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "MSFT",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "MU",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "NKE",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "NVDA",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ORCL",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "PLTR",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "QQQ",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "REGN",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SMH",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SOFI",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "TGT",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "TSLA",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "TSM",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "UNH",
+      "status": "partial",
+      "missing_inputs": {
+        "valuation": [],
+        "trend": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "structure": [
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y"
+        ],
+        "timing": [
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    }
+  ]
+}

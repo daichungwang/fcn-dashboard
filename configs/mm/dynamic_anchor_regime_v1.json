@@ -1,0 +1,286 @@
+{
+  "version": "dynamic_anchor_regime@v1.1",
+  "description": "MM-controlled parameter center for Dynamic Anchor Regime Engine (Phase 1.1 sandbox with valuation_archetype layer)",
+  "caps": {
+    "min_final_anchor": 8.0,
+    "max_final_anchor": 45.0,
+    "max_adjustment_up_pct": 0.5,
+    "max_adjustment_down_pct": 0.4,
+    "round_digits": 2
+  },
+  "tolerance_bands": {
+    "risk_off_bear": 0.12,
+    "normal": 0.15,
+    "growth_bull": 0.18,
+    "euphoric_ai": 0.22
+  },
+  "market_regimes": {
+    "risk_off_bear": {
+      "multiplier": 0.9,
+      "note": "de-rate valuation under macro stress"
+    },
+    "normal": {
+      "multiplier": 1.0,
+      "note": "neutral baseline"
+    },
+    "growth_bull": {
+      "multiplier": 1.12,
+      "note": "moderate premium in growth-led tape"
+    },
+    "euphoric_ai": {
+      "multiplier": 1.2,
+      "note": "high premium in AI euphoria"
+    }
+  },
+  "industry_regimes": {
+    "semi_upcycle": {
+      "default_multiplier": 1.0,
+      "family_multipliers": {
+        "semi": 1.1,
+        "semi_etf": 1.07
+      }
+    },
+    "semi_downcycle": {
+      "default_multiplier": 1.0,
+      "family_multipliers": {
+        "semi": 0.9,
+        "semi_etf": 0.93
+      }
+    },
+    "software_rerating": {
+      "default_multiplier": 1.0,
+      "family_multipliers": {
+        "software": 1.08,
+        "platform": 1.06
+      }
+    },
+    "software_normal": {
+      "default_multiplier": 1.0,
+      "family_multipliers": {
+        "software": 1.0,
+        "platform": 1.0
+      }
+    },
+    "consumer_weak": {
+      "default_multiplier": 1.0,
+      "family_multipliers": {
+        "consumer": 0.92,
+        "travel": 0.88
+      }
+    },
+    "industrial_normal": {
+      "default_multiplier": 1.0,
+      "family_multipliers": {
+        "industrial": 1.0
+      }
+    },
+    "healthcare_defensive": {
+      "default_multiplier": 1.0,
+      "family_multipliers": {
+        "healthcare_defensive": 1.05,
+        "healthcare_growth": 0.98
+      }
+    },
+    "bond_supportive": {
+      "default_multiplier": 1.0,
+      "family_multipliers": {
+        "bond": 1.07,
+        "yield_income": 1.04,
+        "utility": 1.03
+      }
+    },
+    "travel_recovery": {
+      "default_multiplier": 1.0,
+      "family_multipliers": {
+        "travel": 1.1
+      }
+    },
+    "travel_weak": {
+      "default_multiplier": 1.0,
+      "family_multipliers": {
+        "travel": 0.9
+      }
+    }
+  },
+  "category_family_map": {
+    "CPU_GPU_COMPUTE_SEMI": "semi",
+    "ASIC_CUSTOM_SILICON": "semi",
+    "FOUNDRY_FAB_INFRA": "semi",
+    "MEMORY_CYCLICAL_SEMI": "semi",
+    "SEMI_EQUIPMENT": "semi",
+    "ANALOG_CASHFLOW_SEMI": "semi",
+    "SEMI_TURNAROUND_LEGACY": "semi",
+    "CLOUD_PLATFORM_MEGACAP": "software",
+    "ENTERPRISE_SOFTWARE_SAAS": "software",
+    "CYBERSECURITY_DATA_SOFTWARE": "software",
+    "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET": "platform",
+    "RERATING_TURNAROUND_GROWTH": "platform",
+    "CONSUMER_DEFENSIVE_RETAIL_STAPLES": "consumer",
+    "TRAVEL_LEISURE_CYCLICAL": "travel",
+    "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS": "industrial",
+    "HEALTHCARE_DEFENSIVE_MANAGED": "healthcare_defensive",
+    "HEALTHCARE_GROWTH_BIOTECH": "healthcare_growth",
+    "FINANCIAL_QUALITY_BANK_PAYMENTS": "financial",
+    "UTILITY_LOWVOL_DEFENSIVE": "utility",
+    "YIELD_REIT_BONDLIKE_INCOME": "yield_income",
+    "BROAD_MARKET_ETF": "broad_etf",
+    "SECTOR_ETF": "sector_etf",
+    "SEMI_THEMATIC_ETF": "semi_etf",
+    "BOND_ETF": "bond",
+    "SPEC_THEMATIC_ETF": "spec_etf",
+    "CRYPTO_EXCHANGE_MINERS": "crypto",
+    "CRYPTO_EXCHANGE_PLATFORM": "crypto_exchange",
+    "CRYPTO_MINERS": "crypto_miners",
+    "ENERGY_CASHFLOW_CYCLICAL": "energy"
+  },
+  "base_anchor_by_category_sub": {
+    "CPU_GPU_COMPUTE_SEMI": 30,
+    "ASIC_CUSTOM_SILICON": 28,
+    "FOUNDRY_FAB_INFRA": 24,
+    "MEMORY_CYCLICAL_SEMI": 14,
+    "SEMI_EQUIPMENT": 22,
+    "ANALOG_CASHFLOW_SEMI": 20,
+    "SEMI_TURNAROUND_LEGACY": 15,
+    "CLOUD_PLATFORM_MEGACAP": 26,
+    "ENTERPRISE_SOFTWARE_SAAS": 22,
+    "CYBERSECURITY_DATA_SOFTWARE": 24,
+    "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET": 25,
+    "RERATING_TURNAROUND_GROWTH": 18,
+    "CONSUMER_DEFENSIVE_RETAIL_STAPLES": 20,
+    "TRAVEL_LEISURE_CYCLICAL": 14,
+    "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS": 18,
+    "HEALTHCARE_DEFENSIVE_MANAGED": 17,
+    "HEALTHCARE_GROWTH_BIOTECH": 23,
+    "FINANCIAL_QUALITY_BANK_PAYMENTS": 18,
+    "UTILITY_LOWVOL_DEFENSIVE": 16,
+    "YIELD_REIT_BONDLIKE_INCOME": 14,
+    "BROAD_MARKET_ETF": 21,
+    "SECTOR_ETF": 20,
+    "SEMI_THEMATIC_ETF": 24,
+    "BOND_ETF": 16,
+    "SPEC_THEMATIC_ETF": 26,
+    "CRYPTO_EXCHANGE_MINERS": 20,
+    "CRYPTO_EXCHANGE_PLATFORM": 20,
+    "CRYPTO_MINERS": 20,
+    "ENERGY_CASHFLOW_CYCLICAL": 14
+  },
+  "valuation_archetypes": {
+    "BASELINE": {
+      "multiplier": 1.0,
+      "description": "No extra premium/discount overlay"
+    },
+    "AI_MONOPOLY_PREMIUM": {
+      "multiplier": 1.12,
+      "description": "Category leader with sustained pricing/compute premium"
+    },
+    "AI_CHALLENGER_GROWTH": {
+      "multiplier": 1.04,
+      "description": "High-growth challenger with execution upside and competition discount"
+    },
+    "FOUNDRY_MONOPOLY": {
+      "multiplier": 1.08,
+      "description": "Foundry leadership premium with scale moat"
+    },
+    "TURNAROUND_FOUNDRY": {
+      "multiplier": 0.9,
+      "description": "Turnaround discount until margin/share recovery"
+    },
+    "MEMORY_CYCLE": {
+      "multiplier": 0.95,
+      "description": "Cycle-sensitive memory valuation discount"
+    },
+    "SEMI_MONOPOLY_TOOLING": {
+      "multiplier": 1.1,
+      "description": "Near-monopoly tooling capability premium"
+    },
+    "SEMI_EQUIPMENT_CYCLICAL": {
+      "multiplier": 1.0,
+      "description": "Cyclical equipment baseline valuation"
+    },
+    "IP_ROYALTY_PLATFORM": {
+      "multiplier": 1.07,
+      "description": "Royalty/licensing platform premium"
+    },
+    "PLATFORM_MONETIZATION_PREMIUM": {
+      "multiplier": 1.06,
+      "description": "Recurring monetization platform premium"
+    },
+    "DEFENSIVE_CASHFLOW_COMPOUNDER": {
+      "multiplier": 1.03,
+      "description": "Defensive compounding cashflow premium"
+    },
+    "TURNAROUND_RE_RATING": {
+      "multiplier": 0.94,
+      "description": "Re-rating candidate with execution discount"
+    },
+    "BONDLIKE_INCOME_PROXY": {
+      "multiplier": 1.02,
+      "description": "Stable income proxy premium under yield demand"
+    },
+    "CRYPTO_EXCHANGE_PLATFORM": {
+      "multiplier": 1.05,
+      "description": "Exchange/platform economics premium vs miners"
+    },
+    "CRYPTO_MINERS": {
+      "multiplier": 0.88,
+      "description": "Mining economics discount due to high cyclicality"
+    },
+    "PHARMA_INNOVATION_PREMIUM": {
+      "multiplier": 1.05,
+      "description": "Innovation pipeline premium in healthcare growth"
+    }
+  },
+  "default_archetype_by_category_sub": {
+    "CPU_GPU_COMPUTE_SEMI": "AI_CHALLENGER_GROWTH",
+    "ASIC_CUSTOM_SILICON": "PLATFORM_MONETIZATION_PREMIUM",
+    "FOUNDRY_FAB_INFRA": "FOUNDRY_MONOPOLY",
+    "MEMORY_CYCLICAL_SEMI": "MEMORY_CYCLE",
+    "SEMI_EQUIPMENT": "SEMI_EQUIPMENT_CYCLICAL",
+    "ANALOG_CASHFLOW_SEMI": "DEFENSIVE_CASHFLOW_COMPOUNDER",
+    "SEMI_TURNAROUND_LEGACY": "TURNAROUND_FOUNDRY",
+    "CLOUD_PLATFORM_MEGACAP": "PLATFORM_MONETIZATION_PREMIUM",
+    "ENTERPRISE_SOFTWARE_SAAS": "AI_CHALLENGER_GROWTH",
+    "CYBERSECURITY_DATA_SOFTWARE": "AI_CHALLENGER_GROWTH",
+    "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET": "PLATFORM_MONETIZATION_PREMIUM",
+    "RERATING_TURNAROUND_GROWTH": "TURNAROUND_RE_RATING",
+    "CONSUMER_DEFENSIVE_RETAIL_STAPLES": "DEFENSIVE_CASHFLOW_COMPOUNDER",
+    "TRAVEL_LEISURE_CYCLICAL": "TURNAROUND_RE_RATING",
+    "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS": "DEFENSIVE_CASHFLOW_COMPOUNDER",
+    "HEALTHCARE_DEFENSIVE_MANAGED": "DEFENSIVE_CASHFLOW_COMPOUNDER",
+    "HEALTHCARE_GROWTH_BIOTECH": "PHARMA_INNOVATION_PREMIUM",
+    "FINANCIAL_QUALITY_BANK_PAYMENTS": "DEFENSIVE_CASHFLOW_COMPOUNDER",
+    "UTILITY_LOWVOL_DEFENSIVE": "BONDLIKE_INCOME_PROXY",
+    "YIELD_REIT_BONDLIKE_INCOME": "BONDLIKE_INCOME_PROXY",
+    "BROAD_MARKET_ETF": "BASELINE",
+    "SECTOR_ETF": "BASELINE",
+    "SEMI_THEMATIC_ETF": "SEMI_EQUIPMENT_CYCLICAL",
+    "BOND_ETF": "BONDLIKE_INCOME_PROXY",
+    "SPEC_THEMATIC_ETF": "TURNAROUND_RE_RATING",
+    "CRYPTO_EXCHANGE_PLATFORM": "CRYPTO_EXCHANGE_PLATFORM",
+    "CRYPTO_MINERS": "CRYPTO_MINERS",
+    "ENERGY_CASHFLOW_CYCLICAL": "TURNAROUND_RE_RATING"
+  },
+  "symbol_archetype_overrides": {
+    "NVDA": "AI_MONOPOLY_PREMIUM",
+    "AMD": "AI_CHALLENGER_GROWTH",
+    "TSM": "FOUNDRY_MONOPOLY",
+    "INTC": "TURNAROUND_FOUNDRY",
+    "MU": "MEMORY_CYCLE",
+    "ASML": "SEMI_MONOPOLY_TOOLING",
+    "AMAT": "SEMI_EQUIPMENT_CYCLICAL",
+    "LRCX": "SEMI_EQUIPMENT_CYCLICAL",
+    "KLAC": "SEMI_EQUIPMENT_CYCLICAL",
+    "ARM": "IP_ROYALTY_PLATFORM",
+    "AVGO": "PLATFORM_MONETIZATION_PREMIUM",
+    "QCOM": "IP_ROYALTY_PLATFORM",
+    "TXN": "DEFENSIVE_CASHFLOW_COMPOUNDER",
+    "COIN": "CRYPTO_EXCHANGE_PLATFORM",
+    "RIOT": "CRYPTO_MINERS",
+    "MARA": "CRYPTO_MINERS",
+    "UNH": "DEFENSIVE_CASHFLOW_COMPOUNDER",
+    "LLY": "PHARMA_INNOVATION_PREMIUM",
+    "NVO": "PHARMA_INNOVATION_PREMIUM",
+    "PLTR": "AI_CHALLENGER_GROWTH",
+    "TSLA": "TURNAROUND_RE_RATING"
+  }
+}
