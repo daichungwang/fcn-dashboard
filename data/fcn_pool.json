@@ -1834,6 +1834,67 @@
 },
   {
   "date": "2026-04-21",
+  "fcn_id": "FCN391N 富邦",
+  "basket": [
+    "NVDA",
+    "AVGO",
+    "TSM",
+    "SMH",
+    "QQQ"
+  ],
+  "tenor": 7,
+  "rate": 15.57,
+  "autocall": 100,
+  "strike": 70,
+  "ki": 70,
+  "eki": false,
+  "bank": "法國外貿銀行",
+  "has_position": true,
+  "amt": 100000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-04-21T16:13",
+  "entry_time": "2026-04-21T16:13",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "NVDA": 200.4725,
+    "AVGO": 401.1266,
+    "TSM": 368.0092,
+    "SMH": 465.2677,
+    "QQQ": 646.3933
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SMH": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "QQQ": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+}
+  {
+  "date": "2026-04-21",
   "fcn_id": "FCN369N",
   "basket": [
     "AMD",
