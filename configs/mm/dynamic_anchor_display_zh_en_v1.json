@@ -1,0 +1,66 @@
+{
+  "version": "dynamic_anchor_display_zh_en@v1",
+  "policy": {
+    "backend_keys": "english_only",
+    "frontend_display": "zh_first_with_en_in_parentheses"
+  },
+  "category_sub": {
+    "CPU_GPU_COMPUTE_SEMI": "AI算力晶片（CPU/GPU Compute Semi）",
+    "ASIC_CUSTOM_SILICON": "客製化晶片（ASIC Custom Silicon）",
+    "FOUNDRY_FAB_INFRA": "晶圓代工基礎設施（Foundry Fab Infra）",
+    "MEMORY_CYCLICAL_SEMI": "記憶體循環晶片（Memory Cyclical Semi）",
+    "SEMI_EQUIPMENT": "半導體設備（Semi Equipment）",
+    "ANALOG_CASHFLOW_SEMI": "類比現金流晶片（Analog Cashflow Semi）",
+    "SEMI_TURNAROUND_LEGACY": "半導體轉型復甦（Semi Turnaround Legacy）",
+    "CLOUD_PLATFORM_MEGACAP": "雲端平台龍頭（Cloud Platform Mega-cap）",
+    "ENTERPRISE_SOFTWARE_SAAS": "企業軟體／SaaS（Enterprise Software SaaS）",
+    "CYBERSECURITY_DATA_SOFTWARE": "資安資料軟體（Cybersecurity Data Software）",
+    "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET": "平台生態／消費網路（Platform Ecosystem Consumer Internet）",
+    "RERATING_TURNAROUND_GROWTH": "重評成長／修復成長（Re-rating Turnaround Growth）",
+    "CONSUMER_DEFENSIVE_RETAIL_STAPLES": "防守型消費零售（Consumer Defensive Retail Staples）",
+    "TRAVEL_LEISURE_CYCLICAL": "旅遊休閒循環（Travel Leisure Cyclical）",
+    "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS": "工業資本財／物流（Industrial Capital Goods Logistics）",
+    "HEALTHCARE_DEFENSIVE_MANAGED": "防守型醫療管理（Healthcare Defensive Managed）",
+    "HEALTHCARE_GROWTH_BIOTECH": "成長型醫療生技（Healthcare Growth Biotech）",
+    "FINANCIAL_QUALITY_BANK_PAYMENTS": "高品質金融／銀行支付（Financial Quality Bank Payments）",
+    "UTILITY_LOWVOL_DEFENSIVE": "低波動公用事業（Utility Low-vol Defensive）",
+    "YIELD_REIT_BONDLIKE_INCOME": "收益型REIT／類債（Yield REIT Bond-like Income）",
+    "BROAD_MARKET_ETF": "大盤型ETF（Broad Market ETF）",
+    "SECTOR_ETF": "產業型ETF（Sector ETF）",
+    "SEMI_THEMATIC_ETF": "半導體主題ETF（Semi Thematic ETF）",
+    "BOND_ETF": "債券ETF（Bond ETF）",
+    "SPEC_THEMATIC_ETF": "高波動主題ETF（Spec Thematic ETF）",
+    "CRYPTO_EXCHANGE_MINERS": "加密交易所／礦工（Crypto Exchange Miners）"
+  },
+  "market_regime": {
+    "risk_off_bear": "風險趨避空頭（risk_off_bear）",
+    "normal": "中性常態（normal）",
+    "growth_bull": "成長多頭（growth_bull）",
+    "euphoric_ai": "AI亢奮多頭（euphoric_ai）"
+  },
+  "industry_regime": {
+    "semi_upcycle": "半導體上行週期（semi_upcycle）",
+    "semi_downcycle": "半導體下行週期（semi_downcycle）",
+    "software_rerating": "軟體重評上行（software_rerating）",
+    "software_normal": "軟體常態（software_normal）",
+    "consumer_weak": "消費偏弱（consumer_weak）",
+    "industrial_normal": "工業常態（industrial_normal）",
+    "healthcare_defensive": "醫療防守（healthcare_defensive）",
+    "bond_supportive": "債券友善環境（bond_supportive）",
+    "travel_recovery": "旅遊復甦（travel_recovery）",
+    "travel_weak": "旅遊偏弱（travel_weak）"
+  },
+  "output_labels": {
+    "symbol": "股票（symbol）",
+    "category_sub": "細分類（category_sub）",
+    "market_regime": "市場狀態（market_regime）",
+    "industry_regime": "產業狀態（industry_regime）",
+    "base_anchor": "基準估值（base_anchor）",
+    "final_anchor": "動態估值中樞（final_dynamic_anchor）",
+    "anchor_floor": "估值下緣（anchor_floor）",
+    "anchor_ceiling": "估值上緣（anchor_ceiling）",
+    "market_multiplier": "市場乘數（market_multiplier）",
+    "industry_multiplier": "產業乘數（industry_multiplier）",
+    "tolerance_band": "容忍帶（tolerance_band）"
+  }
+}

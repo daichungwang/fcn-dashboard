@@ -1,0 +1,28 @@
+{
+  "generated_from": "scripts/mm/render_dynamic_anchor_bilingual.py",
+  "source_preview": "data/m1_sandbox/dynamic_anchor_preview_lqd.json",
+  "mapping_config": "configs/mm/dynamic_anchor_display_zh_en_v1.json",
+  "row_count": 1,
+  "rows": [
+    {
+      "symbol": "LQD",
+      "display": {
+        "stock": "股票：LQD",
+        "category_sub": "細分類：債券ETF（Bond ETF）",
+        "market_regime": "市場狀態：風險趨避空頭（risk_off_bear）",
+        "industry_regime": "產業狀態：債券友善環境（bond_supportive）",
+        "base_anchor": "基準估值：16.0x",
+        "final_anchor": "動態估值中樞：15.41x",
+        "anchor_range": "估值區間：13.56x ~ 17.26x"
+      },
+      "backend": {
+        "symbol": "LQD",
+        "category_sub": "BOND_ETF",
+        "market_regime": "risk_off_bear",
+        "industry_regime": "bond_supportive",
+        "base_anchor": 16.0,
+        "final_anchor": 15.41
+      }
+    }
+  ]
+}

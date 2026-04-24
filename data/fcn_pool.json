@@ -1530,10 +1530,10 @@
   "is_portfolio": true,
   "note": "IS code 328000191080",
   "entry_prices": {
-    "MU": 450,
-    "INTC": 65,
-    "ARM": 160,
-    "TSLA": 399.9999
+    "MU": 457.23,
+    "INTC": 68.5,
+    "ARM": 162,
+    "TSLA": 388.9
   },
   "maturity_time": "2027-04-23T09:00",
   "has_ki_breach": false,
@@ -1656,6 +1656,61 @@
       "first_hit_time": ""
     },
     "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-04-22",
+  "fcn_id": "FCN2601454 永豐",
+  "basket": [
+    "NVDA",
+    "AVGO",
+    "SMH",
+    "QQQ"
+  ],
+  "tenor": 7,
+  "rate": 15.52,
+  "autocall": 100,
+  "strike": 70,
+  "ki": 70,
+  "eki": false,
+  "bank": "CITI",
+  "has_position": true,
+  "amt": 100000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "永豐",
+  "created_time": "2026-04-22T17:00",
+  "entry_time": "2026-04-29T17:00",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "NVDA": 202.5,
+    "AVGO": 422.65,
+    "SMH": 476.83,
+    "QQQ": 655.11
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SMH": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "QQQ": {
       "hit": false,
       "first_hit_time": ""
     }
