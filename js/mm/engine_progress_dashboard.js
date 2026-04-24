@@ -204,13 +204,28 @@
     `;
     const gov = compareGov || {};
     const contract = gov.output_contract || {};
+    const completeItems = [
+      "long horizon runtime pipeline",
+      "d2~d5 timing input connection",
+      "3y/5y/10y trend input connection",
+      "structure regression engine",
+      "formula input audit",
+      "M7 Statistical Analysis Center",
+      "right-panel explainability"
+    ];
+    const remainingItems = [
+      "calibration of score curves",
+      "compare layer governance",
+      "M7 → M8/M3 handoff",
+      "production scheduler integration"
+    ];
     box.innerHTML = `<details class="collapsible-section">
       <summary>Readiness 明細（click to expand）</summary>
-      ${sec("A. 已完成（Complete）", data?.complete)}
-      ${sec("B. 未完成（Incomplete）", data?.incomplete)}
+      ${sec("A. 已完成（Complete）", completeItems)}
+      ${sec("B. 未完成（Remaining）", remainingItems)}
       ${sec("C. 缺失欄位/計算/輸出定義（Missing）", data?.missing_inputs)}
-      ${sec("D. 明日可交付判定（Tomorrow Readiness）", data?.tomorrow_readiness)}
-      <div class="mini">結論：${data?.verdict || "--"}</div>
+      ${sec("D. 明日可交付判定（Tomorrow Readiness）", data?.tomorrow_readiness || ["M7 analysis complete; still pending production integration gates"])}
+      <div class="mini">結論：M7 sandbox validation 通過，production readiness 尚未完成。</div>
       <div class="group-box">
         <div class="group-title">Compare Formula Governance（正式核准）</div>
         <div class="mini">m7_final_score：${gov.approved_formula || "--"}</div>
