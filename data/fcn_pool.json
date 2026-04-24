@@ -1779,6 +1779,61 @@
 },
   {
   "date": "2026-04-21",
+  "fcn_id": "FCN371N 富邦",
+  "basket": [
+    "ORCL",
+    "TSLA",
+    "PLTR",
+    "COIN"
+  ],
+  "tenor": 10,
+  "rate": 24.34,
+  "autocall": 100,
+  "strike": 55,
+  "ki": 65,
+  "eki": false,
+  "bank": "法國外貿銀行",
+  "has_position": true,
+  "amt": 20000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-04-24T16:08",
+  "entry_time": "2026-04-24T16:08",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "ORCL": 182.282,
+    "TSLA": 388.9552,
+    "PLTR": 146.671,
+    "COIN": 199.1374
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "ORCL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSLA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "PLTR": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "COIN": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-04-21",
   "fcn_id": "FCN369N",
   "basket": [
     "AMD",
