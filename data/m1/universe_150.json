@@ -9,8 +9,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "CPU_GPU_COMPUTE_SEMI",
-    "Anchor": 30,
+    "category_sub": "CORE_AI",
     "volatility": "MID"
   },
   {
@@ -22,8 +21,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "CLOUD_PLATFORM_MEGACAP",
-    "Anchor": 26,
+    "category_sub": "CORE_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -35,8 +33,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "CLOUD_PLATFORM_MEGACAP",
-    "Anchor": 26,
+    "category_sub": "CORE_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -48,8 +45,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "CLOUD_PLATFORM_MEGACAP",
-    "Anchor": 26,
+    "category_sub": "CORE_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -61,8 +57,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET",
-    "Anchor": 25,
+    "category_sub": "CORE_AI",
     "volatility": "MID"
   },
   {
@@ -74,8 +69,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "FOUNDRY_FAB_INFRA",
-    "Anchor": 24,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -87,8 +81,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "ASIC_CUSTOM_SILICON",
-    "Anchor": 28,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -100,8 +93,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET",
-    "Anchor": 25,
+    "category_sub": "CORE_QUALITY",
     "volatility": "MID"
   },
   {
@@ -113,8 +105,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "ENTERPRISE_SOFTWARE_SAAS",
-    "Anchor": 22,
+    "category_sub": "CORE_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -126,8 +117,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "ENTERPRISE_SOFTWARE_SAAS",
-    "Anchor": 22,
+    "category_sub": "CORE_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -139,8 +129,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "ENTERPRISE_SOFTWARE_SAAS",
-    "Anchor": 22,
+    "category_sub": "CORE_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -152,8 +141,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CPU_GPU_COMPUTE_SEMI",
-    "Anchor": 30,
+    "category_sub": "GROWTH_AI",
     "volatility": "HIGH"
   },
   {
@@ -165,8 +153,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "ASIC_CUSTOM_SILICON",
-    "Anchor": 28,
+    "category_sub": "GROWTH_AI",
     "volatility": "HIGH"
   },
   {
@@ -178,8 +165,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "SEMI_EQUIPMENT",
-    "Anchor": 22,
+    "category_sub": "GROWTH_AI",
     "volatility": "HIGH"
   },
   {
@@ -191,8 +177,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "SEMI_EQUIPMENT",
-    "Anchor": 22,
+    "category_sub": "GROWTH_AI",
     "volatility": "HIGH"
   },
   {
@@ -204,8 +189,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "SEMI_EQUIPMENT",
-    "Anchor": 22,
+    "category_sub": "GROWTH_AI",
     "volatility": "HIGH"
   },
   {
@@ -217,8 +201,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "SEMI_EQUIPMENT",
-    "Anchor": 22,
+    "category_sub": "GROWTH_AI",
     "volatility": "HIGH"
   },
   {
@@ -230,8 +213,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "ANALOG_CASHFLOW_SEMI",
-    "Anchor": 20,
+    "category_sub": "GROWTH_AI",
     "volatility": "MID"
   },
   {
@@ -243,8 +225,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "ASIC_CUSTOM_SILICON",
-    "Anchor": 28,
+    "category_sub": "GROWTH_AI",
     "volatility": "MID"
   },
   {
@@ -256,8 +237,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "MEMORY_CYCLICAL_SEMI",
-    "Anchor": 14,
+    "category_sub": "GROWTH_AI",
     "volatility": "HIGH"
   },
   {
@@ -269,8 +249,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
-    "Anchor": 24,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "HIGH"
   },
   {
@@ -282,8 +261,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
-    "Anchor": 24,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -295,8 +273,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
-    "Anchor": 24,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -308,8 +285,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
-    "Anchor": 24,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -321,8 +297,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
-    "Anchor": 24,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -334,8 +309,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CLOUD_PLATFORM_MEGACAP",
-    "Anchor": 26,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -347,8 +321,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CLOUD_PLATFORM_MEGACAP",
-    "Anchor": 26,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -360,8 +333,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET",
-    "Anchor": 25,
+    "category_sub": "GROWTH_RE_RATING",
     "volatility": "MID"
   },
   {
@@ -373,8 +345,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "GROWTH_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -386,8 +357,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "GROWTH_PLATFORM",
     "volatility": "HIGH"
   },
   {
@@ -399,8 +369,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "SPEC_HIGH_BETA",
     "volatility": "HIGH"
   },
   {
@@ -412,8 +381,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "SPEC_HIGH_BETA",
     "volatility": "HIGH"
   },
   {
@@ -425,8 +393,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "CRYPTO_EXCHANGE_PLATFORM",
-    "Anchor": 20,
+    "category_sub": "SPEC_CRYPTO",
     "volatility": "HIGH"
   },
   {
@@ -438,8 +405,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "SPEC_HIGH_BETA",
     "volatility": "HIGH"
   },
   {
@@ -451,8 +417,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "SPEC_HIGH_BETA",
     "volatility": "HIGH"
   },
   {
@@ -464,8 +429,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "CRYPTO_MINERS",
-    "Anchor": 20,
+    "category_sub": "SPEC_CRYPTO",
     "volatility": "HIGH"
   },
   {
@@ -477,8 +441,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "CRYPTO_MINERS",
-    "Anchor": 20,
+    "category_sub": "SPEC_CRYPTO",
     "volatility": "HIGH"
   },
   {
@@ -490,8 +453,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "TRAVEL_LEISURE_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -503,8 +465,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "TRAVEL_LEISURE_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -516,8 +477,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "TRAVEL_LEISURE_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -529,8 +489,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "TRAVEL_LEISURE_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -542,8 +501,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "TRAVEL_LEISURE_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -555,8 +513,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "TRAVEL_LEISURE_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -568,8 +525,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "ENERGY_CASHFLOW_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -581,8 +537,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "ENERGY_CASHFLOW_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -594,8 +549,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "ENERGY_CASHFLOW_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -607,8 +561,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "ENERGY_CASHFLOW_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -620,8 +573,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -633,8 +585,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "GROWTH_RE_RATING",
     "volatility": "MID"
   },
   {
@@ -646,8 +597,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "GROWTH_RE_RATING",
     "volatility": "MID"
   },
   {
@@ -659,8 +609,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "GROWTH_RE_RATING",
     "volatility": "MID"
   },
   {
@@ -672,8 +621,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "CORE_QUALITY",
     "volatility": "MID"
   },
   {
@@ -685,8 +633,7 @@
     ],
     "type": "STOCK",
     "category_main": "DEFENSE",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "DEFENSE_LOW_VOL",
     "volatility": "LOW"
   },
   {
@@ -698,8 +645,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "INCOME_CASHFLOW",
     "volatility": "MID"
   },
   {
@@ -711,8 +657,7 @@
     ],
     "type": "STOCK",
     "category_main": "DEFENSE",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "DEFENSE_LOW_VOL",
     "volatility": "LOW"
   },
   {
@@ -724,8 +669,7 @@
     ],
     "type": "STOCK",
     "category_main": "DEFENSE",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "DEFENSE_LOW_VOL",
     "volatility": "LOW"
   },
   {
@@ -737,8 +681,7 @@
     ],
     "type": "STOCK",
     "category_main": "DEFENSE",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "DEFENSE_LOW_VOL",
     "volatility": "LOW"
   },
   {
@@ -750,8 +693,7 @@
     ],
     "type": "STOCK",
     "category_main": "DEFENSE",
-    "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
-    "Anchor": 17,
+    "category_sub": "DEFENSE_LOW_VOL",
     "volatility": "LOW"
   },
   {
@@ -763,8 +705,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
-    "Anchor": 17,
+    "category_sub": "INCOME_YIELD",
     "volatility": "MID"
   },
   {
@@ -776,8 +717,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
-    "Anchor": 17,
+    "category_sub": "INCOME_YIELD",
     "volatility": "MID"
   },
   {
@@ -789,8 +729,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
-    "Anchor": 17,
+    "category_sub": "INCOME_YIELD",
     "volatility": "MID"
   },
   {
@@ -802,8 +741,7 @@
     ],
     "type": "STOCK",
     "category_main": "DEFENSE",
-    "category_sub": "FINANCIAL_QUALITY_BANK_PAYMENTS",
-    "Anchor": 18,
+    "category_sub": "DEFENSE_LOW_VOL",
     "volatility": "LOW"
   },
   {
@@ -815,8 +753,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "FINANCIAL_QUALITY_BANK_PAYMENTS",
-    "Anchor": 18,
+    "category_sub": "GROWTH_OTHER",
     "volatility": "MID"
   },
   {
@@ -828,8 +765,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "FINANCIAL_QUALITY_BANK_PAYMENTS",
-    "Anchor": 18,
+    "category_sub": "GROWTH_OTHER",
     "volatility": "MID"
   },
   {
@@ -841,8 +777,7 @@
     ],
     "type": "STOCK",
     "category_main": "DEFENSE",
-    "category_sub": "FINANCIAL_QUALITY_BANK_PAYMENTS",
-    "Anchor": 18,
+    "category_sub": "DEFENSE_LOW_VOL",
     "volatility": "LOW"
   },
   {
@@ -854,8 +789,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "SEMI_THEMATIC_ETF",
-    "Anchor": 24,
+    "category_sub": "ETF_H",
     "volatility": "HIGH"
   },
   {
@@ -867,8 +801,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "BROAD_MARKET_ETF",
-    "Anchor": 21,
+    "category_sub": "ETF_H",
     "volatility": "HIGH"
   },
   {
@@ -880,8 +813,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "BROAD_MARKET_ETF",
-    "Anchor": 21,
+    "category_sub": "ETF_M",
     "volatility": "MID"
   },
   {
@@ -893,8 +825,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "BROAD_MARKET_ETF",
-    "Anchor": 21,
+    "category_sub": "ETF_M",
     "volatility": "HIGH"
   },
   {
@@ -906,8 +837,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "SEMI_THEMATIC_ETF",
-    "Anchor": 24,
+    "category_sub": "ETF_H",
     "volatility": "HIGH"
   },
   {
@@ -919,8 +849,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "SECTOR_ETF",
-    "Anchor": 20,
+    "category_sub": "ETF_M",
     "volatility": "MID"
   },
   {
@@ -932,8 +861,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "SECTOR_ETF",
-    "Anchor": 20,
+    "category_sub": "ETF_M",
     "volatility": "MID"
   },
   {
@@ -945,8 +873,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "SECTOR_ETF",
-    "Anchor": 20,
+    "category_sub": "ETF_M",
     "volatility": "MID"
   },
   {
@@ -958,8 +885,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "SECTOR_ETF",
-    "Anchor": 20,
+    "category_sub": "ETF_M",
     "volatility": "MID"
   },
   {
@@ -971,8 +897,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "BOND_ETF",
-    "Anchor": 16,
+    "category_sub": "ETF_L",
     "volatility": "LOW"
   },
   {
@@ -984,8 +909,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "INCOME_BRAND",
     "volatility": "MID"
   },
   {
@@ -997,8 +921,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET",
-    "Anchor": 25,
+    "category_sub": "GROWTH_RE_RATING",
     "volatility": "MID"
   },
   {
@@ -1010,8 +933,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET",
-    "Anchor": 25,
+    "category_sub": "CORE_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -1023,8 +945,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "SEMI_TURNAROUND_LEGACY",
-    "Anchor": 15,
+    "category_sub": "GROWTH_AI",
     "volatility": "MID"
   },
   {
@@ -1036,8 +957,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "ASIC_CUSTOM_SILICON",
-    "Anchor": 28,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -1049,8 +969,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "ANALOG_CASHFLOW_SEMI",
-    "Anchor": 20,
+    "category_sub": "INCOME_CASHFLOW",
     "volatility": "MID"
   },
   {
@@ -1062,8 +981,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "SPEC_HIGH_BETA",
     "volatility": "HIGH"
   },
   {
@@ -1075,8 +993,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "GROWTH_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -1088,8 +1005,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "HEALTHCARE_GROWTH_BIOTECH",
-    "Anchor": 23,
+    "category_sub": "INCOME_YIELD",
     "volatility": "MID"
   },
   {
@@ -1101,8 +1017,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "HEALTHCARE_GROWTH_BIOTECH",
-    "Anchor": 23,
+    "category_sub": "CORE_QUALITY",
     "volatility": "MID"
   },
   {
@@ -1114,8 +1029,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "HEALTHCARE_GROWTH_BIOTECH",
-    "Anchor": 23,
+    "category_sub": "CORE_QUALITY",
     "volatility": "MID"
   },
   {
@@ -1127,8 +1041,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
-    "Anchor": 17,
+    "category_sub": "INCOME_YIELD",
     "volatility": "MID"
   },
   {
@@ -1140,8 +1053,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "HEALTHCARE_GROWTH_BIOTECH",
-    "Anchor": 23,
+    "category_sub": "INCOME_YIELD",
     "volatility": "MID"
   },
   {
@@ -1153,8 +1065,7 @@
     ],
     "type": "STOCK",
     "category_main": "DEFENSE",
-    "category_sub": "UTILITY_LOWVOL_DEFENSIVE",
-    "Anchor": 16,
+    "category_sub": "DEFENSE_UTILITY",
     "volatility": "LOW"
   },
   {
@@ -1166,8 +1077,7 @@
     ],
     "type": "STOCK",
     "category_main": "DEFENSE",
-    "category_sub": "UTILITY_LOWVOL_DEFENSIVE",
-    "Anchor": 16,
+    "category_sub": "DEFENSE_UTILITY",
     "volatility": "LOW"
   },
   {
@@ -1179,8 +1089,7 @@
     ],
     "type": "STOCK",
     "category_main": "DEFENSE",
-    "category_sub": "UTILITY_LOWVOL_DEFENSIVE",
-    "Anchor": 16,
+    "category_sub": "DEFENSE_UTILITY",
     "volatility": "LOW"
   },
   {
@@ -1192,8 +1101,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "YIELD_REIT_BONDLIKE_INCOME",
-    "Anchor": 14,
+    "category_sub": "INCOME_YIELD",
     "volatility": "MID"
   },
   {
@@ -1205,8 +1113,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "YIELD_REIT_BONDLIKE_INCOME",
-    "Anchor": 14,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -1218,8 +1125,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "YIELD_REIT_BONDLIKE_INCOME",
-    "Anchor": 14,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -1231,8 +1137,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "INCOME_CASHFLOW",
     "volatility": "MID"
   },
   {
@@ -1244,8 +1149,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "INCOME_CASHFLOW",
     "volatility": "MID"
   },
   {
@@ -1257,8 +1161,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "GROWTH_OTHER",
     "volatility": "MID"
   },
   {
@@ -1270,8 +1173,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "CONSUMER_DEFENSIVE_RETAIL_STAPLES",
-    "Anchor": 20,
+    "category_sub": "INCOME_CASHFLOW",
     "volatility": "MID"
   },
   {
@@ -1283,8 +1185,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "TRAVEL_LEISURE_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "GROWTH_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -1296,8 +1197,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "TRAVEL_LEISURE_CYCLICAL",
-    "Anchor": 14,
+    "category_sub": "GROWTH_PLATFORM",
     "volatility": "MID"
   },
   {
@@ -1309,8 +1209,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -1322,8 +1221,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -1335,8 +1233,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -1348,8 +1245,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -1361,8 +1257,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "INCOME_CYCLICAL",
     "volatility": "HIGH"
   },
   {
@@ -1374,8 +1269,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "FINANCIAL_QUALITY_BANK_PAYMENTS",
-    "Anchor": 18,
+    "category_sub": "GROWTH_OTHER",
     "volatility": "MID"
   },
   {
@@ -1387,8 +1281,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "FINANCIAL_QUALITY_BANK_PAYMENTS",
-    "Anchor": 18,
+    "category_sub": "CORE_MAIN",
     "volatility": "MID"
   },
   {
@@ -1400,8 +1293,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "FINANCIAL_QUALITY_BANK_PAYMENTS",
-    "Anchor": 18,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -1413,8 +1305,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "FINANCIAL_QUALITY_BANK_PAYMENTS",
-    "Anchor": 18,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -1426,8 +1317,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -1439,8 +1329,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET",
-    "Anchor": 25,
+    "category_sub": "SPEC_HIGH_BETA",
     "volatility": "HIGH"
   },
   {
@@ -1452,8 +1341,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "PLATFORM_ECOSYSTEM_CONSUMER_INTERNET",
-    "Anchor": 25,
+    "category_sub": "SPEC_HIGH_BETA",
     "volatility": "HIGH"
   },
   {
@@ -1465,8 +1353,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "ENTERPRISE_SOFTWARE_SAAS",
-    "Anchor": 22,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -1478,8 +1365,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "ENTERPRISE_SOFTWARE_SAAS",
-    "Anchor": 22,
+    "category_sub": "SPEC_HIGH_BETA",
     "volatility": "HIGH"
   },
   {
@@ -1491,8 +1377,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "ENTERPRISE_SOFTWARE_SAAS",
-    "Anchor": 22,
+    "category_sub": "SPEC_HIGH_BETA",
     "volatility": "HIGH"
   },
   {
@@ -1504,8 +1389,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
-    "Anchor": 24,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -1517,8 +1401,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CLOUD_PLATFORM_MEGACAP",
-    "Anchor": 26,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -1530,8 +1413,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
-    "Anchor": 24,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -1543,8 +1425,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
-    "Anchor": 24,
+    "category_sub": "GROWTH_SOFTWARE",
     "volatility": "MID"
   },
   {
@@ -1556,8 +1437,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
-    "Anchor": 17,
+    "category_sub": "INCOME_YIELD",
     "volatility": "MID"
   },
   {
@@ -1569,8 +1449,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
-    "Anchor": 17,
+    "category_sub": "INCOME_YIELD",
     "volatility": "MID"
   },
   {
@@ -1582,8 +1461,7 @@
     ],
     "type": "STOCK",
     "category_main": "INCOME",
-    "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
-    "Anchor": 17,
+    "category_sub": "INCOME_YIELD",
     "volatility": "MID"
   },
   {
@@ -1595,8 +1473,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "HEALTHCARE_GROWTH_BIOTECH",
-    "Anchor": 23,
+    "category_sub": "CORE_QUALITY",
     "volatility": "MID"
   },
   {
@@ -1608,8 +1485,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "HEALTHCARE_GROWTH_BIOTECH",
-    "Anchor": 23,
+    "category_sub": "CORE_QUALITY",
     "volatility": "MID"
   },
   {
@@ -1621,8 +1497,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -1634,8 +1509,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -1647,8 +1521,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
-    "Anchor": 18,
+    "category_sub": "CORE_INFRA",
     "volatility": "MID"
   },
   {
@@ -1662,8 +1535,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "HEALTHCARE_GROWTH_BIOTECH",
-    "Anchor": 23,
+    "category_sub": "CORE_QUALITY",
     "volatility": "MID"
   },
   {
@@ -1677,8 +1549,7 @@
     ],
     "type": "STOCK",
     "category_main": "CORE",
-    "category_sub": "HEALTHCARE_GROWTH_BIOTECH",
-    "Anchor": 23,
+    "category_sub": "CORE_QUALITY",
     "volatility": "MID"
   },
   {
@@ -1690,9 +1561,20 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "GROWTH_PLATFORM",
     "volatility": "MID"
+  },
+  {
+    "symbol": "COIN",
+    "category": "speculative",
+    "sector": "CRYPTO",
+    "style": [
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_CRYPTO",
+    "volatility": "HIGH"
   },
   {
     "symbol": "CEG",
@@ -1704,8 +1586,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "UTILITY_LOWVOL_DEFENSIVE",
-    "Anchor": 16,
+    "category_sub": "GROWTH_RE_RATING",
     "volatility": "HIGH"
   },
   {
@@ -1718,8 +1599,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "UTILITY_LOWVOL_DEFENSIVE",
-    "Anchor": 16,
+    "category_sub": "GROWTH_RE_RATING",
     "volatility": "HIGH"
   },
   {
@@ -1732,8 +1612,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "SECTOR_ETF",
-    "Anchor": 20,
+    "category_sub": "ETF_M",
     "volatility": "MID"
   },
   {
@@ -1746,8 +1625,7 @@
     ],
     "type": "ETF",
     "category_main": "DEFENSE",
-    "category_sub": "SECTOR_ETF",
-    "Anchor": 20,
+    "category_sub": "ETF_M",
     "volatility": "MID"
   },
   {
@@ -1760,8 +1638,7 @@
     ],
     "type": "ETF",
     "category_main": "SPEC",
-    "category_sub": "SECTOR_ETF",
-    "Anchor": 20,
+    "category_sub": "SPEC_THEME_ETF",
     "volatility": "HIGH"
   },
   {
@@ -1774,8 +1651,7 @@
     ],
     "type": "STOCK",
     "category_main": "SPEC",
-    "category_sub": "SPEC_THEMATIC_ETF",
-    "Anchor": 26,
+    "category_sub": "SPEC_HIGH_BETA",
     "volatility": "HIGH"
   },
   {
@@ -1788,8 +1664,7 @@
     ],
     "type": "ETF",
     "category_main": "SPEC",
-    "category_sub": "SECTOR_ETF",
-    "Anchor": 20,
+    "category_sub": "SPEC_THEME_ETF",
     "volatility": "HIGH"
   },
   {
@@ -1801,8 +1676,7 @@
     ],
     "type": "STOCK",
     "category_main": "GROWTH",
-    "category_sub": "RERATING_TURNAROUND_GROWTH",
-    "Anchor": 18,
+    "category_sub": "GROWTH_RE_RATING",
     "volatility": "MID"
   }
 ]
