@@ -70,41 +70,7 @@
     "TSM",
     "UNH"
   ],
-  "symbols_cannot_calculate_timing": [
-    "AAL",
-    "AAPL",
-    "ALAB",
-    "AMAT",
-    "AMD",
-    "AMZN",
-    "ARM",
-    "AVGO",
-    "CCL",
-    "COIN",
-    "COST",
-    "CRDO",
-    "EL",
-    "GOOG",
-    "INTC",
-    "LQD",
-    "LVS",
-    "META",
-    "MRVL",
-    "MSFT",
-    "MU",
-    "NKE",
-    "NVDA",
-    "ORCL",
-    "PLTR",
-    "QQQ",
-    "REGN",
-    "SMH",
-    "SOFI",
-    "TGT",
-    "TSLA",
-    "TSM",
-    "UNH"
-  ],
+  "symbols_cannot_calculate_timing": [],
   "symbols_cannot_calculate_money": [],
   "top_missing_fields_by_frequency": [
     {
@@ -118,22 +84,6 @@
     {
       "field": "price_ref_3y",
       "count": 66
-    },
-    {
-      "field": "ret_d2",
-      "count": 33
-    },
-    {
-      "field": "ret_d3",
-      "count": 33
-    },
-    {
-      "field": "ret_d4",
-      "count": 33
-    },
-    {
-      "field": "ret_d5",
-      "count": 33
     }
   ]
 }
