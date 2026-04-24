@@ -1,0 +1,48 @@
+{
+  "generated_from": "scripts/mm/render_dynamic_anchor_bilingual.py",
+  "source_preview": "data/m1_sandbox/dynamic_anchor_preview_semi.json",
+  "mapping_config": "configs/mm/dynamic_anchor_display_zh_en_v1.json",
+  "row_count": 2,
+  "rows": [
+    {
+      "symbol": "NVDA",
+      "display": {
+        "stock": "股票：NVDA",
+        "category_sub": "細分類：AI算力晶片（CPU/GPU Compute Semi）",
+        "market_regime": "市場狀態：成長多頭（growth_bull）",
+        "industry_regime": "產業狀態：半導體上行週期（semi_upcycle）",
+        "base_anchor": "基準估值：30.0x",
+        "final_anchor": "動態估值中樞：36.96x",
+        "anchor_range": "估值區間：30.31x ~ 43.61x"
+      },
+      "backend": {
+        "symbol": "NVDA",
+        "category_sub": "CPU_GPU_COMPUTE_SEMI",
+        "market_regime": "growth_bull",
+        "industry_regime": "semi_upcycle",
+        "base_anchor": 30.0,
+        "final_anchor": 36.96
+      }
+    },
+    {
+      "symbol": "AMD",
+      "display": {
+        "stock": "股票：AMD",
+        "category_sub": "細分類：AI算力晶片（CPU/GPU Compute Semi）",
+        "market_regime": "市場狀態：成長多頭（growth_bull）",
+        "industry_regime": "產業狀態：半導體上行週期（semi_upcycle）",
+        "base_anchor": "基準估值：30.0x",
+        "final_anchor": "動態估值中樞：36.96x",
+        "anchor_range": "估值區間：30.31x ~ 43.61x"
+      },
+      "backend": {
+        "symbol": "AMD",
+        "category_sub": "CPU_GPU_COMPUTE_SEMI",
+        "market_regime": "growth_bull",
+        "industry_regime": "semi_upcycle",
+        "base_anchor": 30.0,
+        "final_anchor": 36.96
+      }
+    }
+  ]
+}

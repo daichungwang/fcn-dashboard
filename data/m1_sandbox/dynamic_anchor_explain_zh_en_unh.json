@@ -1,0 +1,28 @@
+{
+  "generated_from": "scripts/mm/render_dynamic_anchor_bilingual.py",
+  "source_preview": "data/m1_sandbox/dynamic_anchor_preview_unh.json",
+  "mapping_config": "configs/mm/dynamic_anchor_display_zh_en_v1.json",
+  "row_count": 1,
+  "rows": [
+    {
+      "symbol": "UNH",
+      "display": {
+        "stock": "股票：UNH",
+        "category_sub": "細分類：防守型醫療管理（Healthcare Defensive Managed）",
+        "market_regime": "市場狀態：風險趨避空頭（risk_off_bear）",
+        "industry_regime": "產業狀態：醫療防守（healthcare_defensive）",
+        "base_anchor": "基準估值：17.0x",
+        "final_anchor": "動態估值中樞：16.07x",
+        "anchor_range": "估值區間：14.14x ~ 17.99x"
+      },
+      "backend": {
+        "symbol": "UNH",
+        "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
+        "market_regime": "risk_off_bear",
+        "industry_regime": "healthcare_defensive",
+        "base_anchor": 17.0,
+        "final_anchor": 16.07
+      }
+    }
+  ]
+}

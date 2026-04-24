@@ -1,0 +1,98 @@
+name: Daily Runtime Refresh
+
+on:
+  schedule:
+    # 07:30 Asia/Taipei (UTC+8) = 23:30 UTC previous day
+    - cron: "30 23 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  daily-runtime-refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run daily runtime scripts
+        env:
+          NEWSAPI_KEY: ${{ secrets.NEWSAPI_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+        run: |
+          set -euo pipefail
+          failure_point="none"
+
+          if ! python scripts/update_market_runtime.py; then
+            failure_point="scripts/update_market_runtime.py"
+            echo "failure_point=${failure_point}" >> "$GITHUB_ENV"
+            exit 1
+          fi
+
+          if ! python scripts/update_data.py; then
+            failure_point="scripts/update_data.py"
+            echo "failure_point=${failure_point}" >> "$GITHUB_ENV"
+            exit 1
+          fi
+
+          if ! python scripts/update_m1_universe_runtime.py; then
+            failure_point="scripts/update_m1_universe_runtime.py"
+            echo "failure_point=${failure_point}" >> "$GITHUB_ENV"
+            exit 1
+          fi
+
+          echo "failure_point=${failure_point}" >> "$GITHUB_ENV"
+
+      - name: Validate outputs and print summary
+        if: always()
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import glob
+          import os
+          import sys
+
+          expected = [
+              "data/market_runtime.json",
+              "data.json",
+              "data/m1/m1_market_runtime.json",
+          ]
+
+          missing = [p for p in expected if not os.path.exists(p)]
+          json_files = glob.glob("data/**/*.json", recursive=True)
+
+          print(f"total_updated_files={len(json_files)}")
+          print("missing_outputs=" + (", ".join(missing) if missing else "none"))
+          print("abnormal_failure_point=" + os.getenv("failure_point", "none"))
+
+          if missing:
+              sys.exit(1)
+          PY
+
+      - name: Commit and push changed data/json files
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git add data.json ":(glob)data/**/*.json"
+
+          if git diff --cached --quiet; then
+            echo "No data/json changes to commit."
+            exit 0
+          fi
+
+          git commit -m "daily runtime refresh"
+          git push

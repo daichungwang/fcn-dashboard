@@ -332,14 +332,6 @@ def clamp(v: float, lo: float, hi: float) -> float:
     return max(lo, min(hi, v))
 
 
-def return_from_ref(price_now: Any, price_ref: Any) -> float | None:
-    p_now = safe_num(price_now, None)
-    p_ref = safe_num(price_ref, None)
-    if p_now is None or p_ref is None or p_ref == 0:
-        return None
-    return p_now / p_ref - 1.0
-
-
 def round2(v: float) -> float:
     return round(safe_num(v, 0.0), 2)
 
@@ -452,10 +444,6 @@ def build_feature_row(symbol: str, bundle: InputBundle) -> dict[str, Any]:
 
     returns_base = {
         "1d": safe_num(b.get("1日漲跌幅"), None),
-        "d2": None,
-        "d3": None,
-        "d4": None,
-        "d5": None,
         "1w": safe_num(b.get("1週漲跌幅"), None),
         "1m": safe_num(b.get("1月漲跌幅"), None),
         "3m": safe_num(b.get("3月漲跌幅"), None),
@@ -466,25 +454,20 @@ def build_feature_row(symbol: str, bundle: InputBundle) -> dict[str, Any]:
         "10y": safe_num(b.get("10年漲跌幅"), None),
     }
 
-    price_now_rt = safe_num(m.get("price_now"), safe_num(b.get("股價"), None))
     returns_market = {
-        "1d": safe_num(m.get("ret_d1", m.get("ret_1d")), return_from_ref(price_now_rt, m.get("price_ref_d1"))),
-        "d2": safe_num(m.get("ret_d2"), return_from_ref(price_now_rt, m.get("price_ref_d2"))),
-        "d3": safe_num(m.get("ret_d3"), return_from_ref(price_now_rt, m.get("price_ref_d3"))),
-        "d4": safe_num(m.get("ret_d4"), return_from_ref(price_now_rt, m.get("price_ref_d4"))),
-        "d5": safe_num(m.get("ret_d5"), return_from_ref(price_now_rt, m.get("price_ref_d5"))),
-        "1w": safe_num(m.get("ret_1w"), return_from_ref(price_now_rt, m.get("price_ref_1w"))),
-        "1m": safe_num(m.get("ret_1m"), return_from_ref(price_now_rt, m.get("price_ref_1m"))),
-        "3m": safe_num(m.get("ret_3m"), return_from_ref(price_now_rt, m.get("price_ref_3m"))),
-        "6m": safe_num(m.get("ret_6m"), return_from_ref(price_now_rt, m.get("price_ref_6m"))),
-        "12m": safe_num(m.get("ret_12m"), return_from_ref(price_now_rt, m.get("price_ref_12m"))),
-        "3y": safe_num(m.get("ret_3y"), return_from_ref(price_now_rt, m.get("price_ref_3y"))),
-        "5y": safe_num(m.get("ret_5y"), return_from_ref(price_now_rt, m.get("price_ref_5y"))),
-        "10y": safe_num(m.get("ret_10y"), return_from_ref(price_now_rt, m.get("price_ref_10y"))),
+        "1d": safe_num(m.get("ret_d1", m.get("ret_1d")), None),
+        "1w": safe_num(m.get("ret_1w"), None),
+        "1m": safe_num(m.get("ret_1m"), None),
+        "3m": safe_num(m.get("ret_3m"), None),
+        "6m": safe_num(m.get("ret_6m"), None),
+        "12m": safe_num(m.get("ret_12m"), None),
+        "3y": safe_num(m.get("ret_3y"), None),
+        "5y": safe_num(m.get("ret_5y"), None),
+        "10y": safe_num(m.get("ret_10y"), None),
     }
 
     rets = {}
-    for k in ["1d", "d2", "d3", "d4", "d5", "1w", "1m", "3m", "6m", "12m", "3y", "5y", "10y"]:
+    for k in ["1d", "1w", "1m", "3m", "6m", "12m", "3y", "5y", "10y"]:
         val = returns_base[k]
         if val is None:
             val = returns_market[k]

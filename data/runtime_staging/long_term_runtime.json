@@ -1,0 +1,1571 @@
+{
+  "version": "long_term_runtime@v1.0.0",
+  "generated_at": "2026-04-22T13:26:11.873901+00:00",
+  "scope": {
+    "markets": [
+      "US"
+    ],
+    "domains": [
+      "FCN",
+      "US_STOCKS"
+    ]
+  },
+  "source": {
+    "provider": "market_runtime_seed",
+    "pipeline_version": "runtime_bundle@v1.0.0",
+    "notes": "Phase B seed output; long-term fields intentionally null/partial"
+  },
+  "symbols": {
+    "NVDA": {
+      "symbol": "NVDA",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873312+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "TSM": {
+      "symbol": "TSM",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873326+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "AVGO": {
+      "symbol": "AVGO",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873332+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "AMAT": {
+      "symbol": "AMAT",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873337+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "MU": {
+      "symbol": "MU",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873343+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "AMD": {
+      "symbol": "AMD",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873349+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "MRVL": {
+      "symbol": "MRVL",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873354+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "CRDO": {
+      "symbol": "CRDO",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873423+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "ALAB": {
+      "symbol": "ALAB",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873433+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "MSFT": {
+      "symbol": "MSFT",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873438+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "GOOG": {
+      "symbol": "GOOG",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873444+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "AMZN": {
+      "symbol": "AMZN",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873449+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "ORCL": {
+      "symbol": "ORCL",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873455+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "PLTR": {
+      "symbol": "PLTR",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873460+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "ARM": {
+      "symbol": "ARM",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873530+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "TSLA": {
+      "symbol": "TSLA",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873538+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "META": {
+      "symbol": "META",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873544+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "AAPL": {
+      "symbol": "AAPL",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873549+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "COST": {
+      "symbol": "COST",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873554+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "TGT": {
+      "symbol": "TGT",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873559+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "EL": {
+      "symbol": "EL",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873655+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "COIN": {
+      "symbol": "COIN",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873695+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "SOFI": {
+      "symbol": "SOFI",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873703+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "UNH": {
+      "symbol": "UNH",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873709+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "CCL": {
+      "symbol": "CCL",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873714+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "AAL": {
+      "symbol": "AAL",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873751+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "LVS": {
+      "symbol": "LVS",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873760+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "SMH": {
+      "symbol": "SMH",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873828+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "QQQ": {
+      "symbol": "QQQ",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873838+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "LQD": {
+      "symbol": "LQD",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873843+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "INTC": {
+      "symbol": "INTC",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873848+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "NKE": {
+      "symbol": "NKE",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873888+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    },
+    "REGN": {
+      "symbol": "REGN",
+      "as_of_date": "2026-04-22",
+      "trend": {
+        "ret_3y": null,
+        "ret_5y": null,
+        "ret_10y": null,
+        "price_ref_3y": null,
+        "price_ref_5y": null,
+        "price_ref_10y": null
+      },
+      "structure": {
+        "ma_50": null,
+        "ma_200": null,
+        "distance_to_ma50": null,
+        "distance_to_ma200": null,
+        "max_drawdown_3y": null
+      },
+      "valuation": {
+        "pe_percentile_5y": null
+      },
+      "quality": {
+        "eps_cagr_3y": null,
+        "eps_cagr_5y": null
+      },
+      "meta": {
+        "data_quality": "partial",
+        "updated_at": "2026-04-22T13:26:11.873897+00:00",
+        "missing_fields": [
+          "ret_3y",
+          "ret_5y",
+          "ret_10y",
+          "price_ref_3y",
+          "price_ref_5y",
+          "price_ref_10y",
+          "ma_50",
+          "ma_200",
+          "distance_to_ma50",
+          "distance_to_ma200",
+          "max_drawdown_3y",
+          "pe_percentile_5y",
+          "eps_cagr_3y",
+          "eps_cagr_5y"
+        ],
+        "fallback_source": "data/market_runtime.json"
+      }
+    }
+  }
+}

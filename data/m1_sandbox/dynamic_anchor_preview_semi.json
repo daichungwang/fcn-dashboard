@@ -1,0 +1,39 @@
+{
+  "generated_from": "scripts/mm/build_dynamic_anchor_preview.py",
+  "parameter_config": "configs/mm/dynamic_anchor_regime_v1.json",
+  "market_regime": "growth_bull",
+  "industry_regime": "semi_upcycle",
+  "row_count": 2,
+  "rows": [
+    {
+      "symbol": "NVDA",
+      "category_sub": "CPU_GPU_COMPUTE_SEMI",
+      "industry_family": "semi",
+      "base_anchor": 30.0,
+      "market_regime": "growth_bull",
+      "market_multiplier": 1.12,
+      "industry_regime": "semi_upcycle",
+      "industry_multiplier": 1.1,
+      "raw_final_anchor": 36.96,
+      "final_anchor": 36.96,
+      "anchor_floor": 30.31,
+      "anchor_ceiling": 43.61,
+      "tolerance_band": 0.18
+    },
+    {
+      "symbol": "AMD",
+      "category_sub": "CPU_GPU_COMPUTE_SEMI",
+      "industry_family": "semi",
+      "base_anchor": 30.0,
+      "market_regime": "growth_bull",
+      "market_multiplier": 1.12,
+      "industry_regime": "semi_upcycle",
+      "industry_multiplier": 1.1,
+      "raw_final_anchor": 36.96,
+      "final_anchor": 36.96,
+      "anchor_floor": 30.31,
+      "anchor_ceiling": 43.61,
+      "tolerance_band": 0.18
+    }
+  ]
+}

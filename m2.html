@@ -1152,38 +1152,128 @@
       return "decision-box decision-green";
     }
 
+    function calcBankSplit(list = []) {
+      const result = {
+        富邦: 0,
+        永豐: 0,
+        other: 0
+      };
+
+      list.forEach(f => {
+        const amt = toNumber(f?.amt, 0);
+        const bank = String(f?.tw_bank || "").trim();
+
+        if (bank.includes("富邦")) {
+          result.富邦 += amt;
+        } else if (bank.includes("永豐")) {
+          result.永豐 += amt;
+        } else {
+          result.other += amt;
+        }
+      });
+
+      return result;
+    }
+
+   function bankHtml(split, totalAmt = 0, showPct = false) {
+  const fbPct = totalAmt > 0
+    ? ((split.富邦 / totalAmt) * 100).toFixed(0)
+    : 0;
+
+  const sinoPct = totalAmt > 0
+    ? ((split.永豐 / totalAmt) * 100).toFixed(0)
+    : 0;
+
+  const otherPct = totalAmt > 0
+    ? ((split.other / totalAmt) * 100).toFixed(0)
+    : 0;
+
+  let html = "";
+
+  if (showPct) {
+    html += `
+      <div class="summary-sub">
+        富邦：USD ${fmt(split.富邦,0)} (${fbPct}%)
+      </div>
+
+      <div class="summary-sub">
+        永豐：USD ${fmt(split.永豐,0)} (${sinoPct}%)
+      </div>
+    `;
+  } else {
+    html += `
+      <div class="summary-sub">
+        富邦：USD ${fmt(split.富邦,0)}
+      </div>
+
+      <div class="summary-sub">
+        永豐：USD ${fmt(split.永豐,0)}
+      </div>
+    `;
+  }
+
+  if (split.other > 0) {
+    html += `
+      <div class="summary-sub">
+        其他：USD ${fmt(split.other,0)}
+        ${showPct ? `(${otherPct}%)` : ""}
+      </div>
+    `;
+  }
+
+  return html;
+}
+
     function buildSummary(data) {
-      const maturityZoneAmt = (data.maturity_zone || []).reduce((s, x) => s + toNumber(x.amt), 0);
-      const dangerAmt = (data.danger || []).reduce((s, x) => s + toNumber(x.amt), 0);
-      const watchAmt = (data.watch || []).reduce((s, x) => s + toNumber(x.amt), 0);
-      const healthyAmt = (data.healthy || []).reduce((s, x) => s + toNumber(x.amt), 0);
+      const totalList = data.fcns || [];
+      const maturityList = data.maturity_zone || [];
+      const dangerList = data.danger || [];
+      const watchList = data.watch || [];
+      const healthyList = data.healthy || [];
+
+      const totalAmt = totalList.reduce((s, x) => s + toNumber(x.amt), 0);
+      const maturityAmt = maturityList.reduce((s, x) => s + toNumber(x.amt), 0);
+      const dangerAmt = dangerList.reduce((s, x) => s + toNumber(x.amt), 0);
+      const watchAmt = watchList.reduce((s, x) => s + toNumber(x.amt), 0);
+      const healthyAmt = healthyList.reduce((s, x) => s + toNumber(x.amt), 0);
+
+      const totalBank = calcBankSplit(totalList);
+      const maturityBank = calcBankSplit(maturityList);
+      const dangerBank = calcBankSplit(dangerList);
+      const watchBank = calcBankSplit(watchList);
+      const healthyBank = calcBankSplit(healthyList);
 
       return `
         <div class="summary-grid">
           <div class="summary-box">
             <div class="summary-label">持倉總檔數</div>
-            <div class="summary-value">${data.total}</div>
-            <div class="summary-sub">總金額：USD ${fmt(data.total_amt, 0)}</div>
+            <div class="summary-value">${totalList.length}</div>
+            <div class="summary-sub">總金額：USD ${fmt(totalAmt, 0)}</div>
+            ${bankHtml(totalBank)}
           </div>
           <div class="summary-box summary-box-exit">
             <div class="summary-label">到期專區</div>
-            <div class="summary-value" style="color:#0f766e;">${(data.maturity_zone || []).length}</div>
-            <div class="summary-sub">USD ${fmt(maturityZoneAmt, 0)}</div>
+            <div class="summary-value" style="color:#0f766e;">${maturityList.length}</div>
+            <div class="summary-sub">USD ${fmt(maturityAmt, 0)}</div>
+            ${bankHtml(maturityBank)}
           </div>
           <div class="summary-box">
             <div class="summary-label">積極處理｜破下限價</div>
-            <div class="summary-value" style="color:#c62828;">${(data.danger || []).length}</div>
+            <div class="summary-value" style="color:#c62828;">${dangerList.length}</div>
             <div class="summary-sub">USD ${fmt(dangerAmt, 0)}</div>
+            ${bankHtml(dangerBank)}
           </div>
           <div class="summary-box">
             <div class="summary-label">持續追蹤</div>
-            <div class="summary-value" style="color:#b26a00;">${(data.watch || []).length}</div>
+            <div class="summary-value" style="color:#b26a00;">${watchList.length}</div>
             <div class="summary-sub">USD ${fmt(watchAmt, 0)}</div>
+            ${bankHtml(watchBank)}
           </div>
           <div class="summary-box">
             <div class="summary-label">健康</div>
-            <div class="summary-value" style="color:#2e7d32;">${(data.healthy || []).length}</div>
+            <div class="summary-value" style="color:#2e7d32;">${healthyList.length}</div>
             <div class="summary-sub">USD ${fmt(healthyAmt, 0)}</div>
+            ${bankHtml(healthyBank)}
           </div>
         </div>
       `;
@@ -2513,6 +2603,20 @@
       return JSON.parse(raw);
     }
 
+    function ensureEarlyExitRecordForBasket(basket = [], record = {}) {
+      const normalized = {};
+      (basket || []).forEach(symbol => {
+        const key = String(symbol || "").trim().toUpperCase();
+        if (!key) return;
+        const row = record?.[key] || {};
+        normalized[key] = {
+          hit: Boolean(row.hit),
+          first_hit_time: row.first_hit_time || ""
+        };
+      });
+      return normalized;
+    }
+
     function buildOrderedFCNObject(data) {
       return {
         date: data.date || "",
@@ -2569,7 +2673,11 @@
       document.getElementById("fcn_has_ki_breach").value = String(Boolean(fcn.has_ki_breach));
       document.getElementById("fcn_first_ki_breach_time").value = normalizeDateTimeLocalValue(fcn.first_ki_breach_time);
       document.getElementById("fcn_note").value = fcn.note || "";
-      document.getElementById("fcn_early_exit_record").value = JSON.stringify(fcn.early_exit_record || {}, null, 2);
+      document.getElementById("fcn_early_exit_record").value = JSON.stringify(
+        ensureEarlyExitRecordForBasket(Array.isArray(fcn.basket) ? fcn.basket : [], fcn.early_exit_record || {}),
+        null,
+        2
+      );
 
       currentEditingFCNId = fcn.fcn_id || null;
       document.getElementById("managerFormMeta").innerHTML =
@@ -2628,7 +2736,8 @@
 
     function getFormData() {
       const { basket, entry_prices } = getBasketEntryData();
-      const early_exit_record = parseEarlyExitRecordText(document.getElementById("fcn_early_exit_record").value);
+      const early_exit_record_raw = parseEarlyExitRecordText(document.getElementById("fcn_early_exit_record").value);
+      const early_exit_record = ensureEarlyExitRecordForBasket(basket, early_exit_record_raw);
 
       return buildOrderedFCNObject({
         date: document.getElementById("fcn_date").value || "",
@@ -2979,3 +3088,4 @@
   </script>
 </body>
 </html>
+

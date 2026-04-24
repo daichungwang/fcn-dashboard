@@ -1,0 +1,31 @@
+{
+  "version": "runtime_bundle_config@v1.0.0",
+  "scope": {
+    "markets": ["US"],
+    "domains": ["FCN", "US_STOCKS"],
+    "symbol_scope_mode": "pool30",
+    "custom_symbols": []
+  },
+  "inputs": {
+    "pool30_path": "data/pool30.json",
+    "market_runtime_path": "data/market_runtime.json"
+  },
+  "artifacts": {
+    "long_term_runtime_path": "data/runtime_staging/long_term_runtime.json",
+    "runtime_manifest_path": "data/runtime_staging/runtime_manifest.json"
+  },
+  "safety": {
+    "allow_production_write": false,
+    "production_blocklist": [
+      "data/market_runtime.json",
+      "data/m1/m1_market_runtime.json",
+      "data/m7/m7_fundamental_data.json",
+      "data/m7/m7_new_stock_today.json",
+      "data/m3/m3_output.json"
+    ]
+  },
+  "fallback_policy": {
+    "allow_null_long_term_fields": true,
+    "mark_data_quality_partial": true
+  }
+}
