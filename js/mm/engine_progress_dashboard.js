@@ -35,8 +35,11 @@
     if (!box) return;
     const allowed = new Set(["M1", "M3", "M7", "M8", "M9"]);
     box.innerHTML = (items || []).filter(x => allowed.has(x?.module_id)).map(x => {
-      if (x?.enabled) {
-        return `<a class="module-btn" href="${x.path || '#'}">${x.label || x.module_id || "--"}</a>`;
+      const isM7 = x?.module_id === "M7";
+      const enabled = isM7 ? true : !!x?.enabled;
+      const path = isM7 ? "./m7.html" : (x?.path || "#");
+      if (enabled) {
+        return `<a class="module-btn" href="${path}">${x.label || x.module_id || "--"}</a>`;
       }
       return `<span class="module-btn disabled">${x.label || x.module_id || "--"}（coming soon）</span>`;
     }).join("");
@@ -227,6 +230,56 @@
     </details>`;
   }
 
+  function renderControlCenterAutomationPanel(dashboardData, scoreRows, runtimeRows) {
+    const box = document.getElementById("control-center-automation");
+    if (!box) return;
+
+    const rows = scoreRows || [];
+    const runtimeKeys = Object.keys(runtimeRows || {});
+    const warningRows = rows.filter(r => !!r?.data_warning);
+    const lowCoverageRows = rows.filter(r => typeof r?.coverage_pct === "number" && r.coverage_pct < 80);
+    const missingPriceRefRows = rows.filter(r => Array.isArray(r?.missing_price_refs) && r.missing_price_refs.length > 0);
+    const confidenceNums = rows.map(r => Number(r?.confidence)).filter(Number.isFinite);
+    const avgConfidence = confidenceNums.length
+      ? (confidenceNums.reduce((a, b) => a + b, 0) / confidenceNums.length).toFixed(1)
+      : "--";
+
+    const automationActions = [
+      "Step 1: runtime coverage check (market_runtime_long_horizon)",
+      "Step 2: score recompute gate (m7_v2_scores)",
+      "Step 3: audit missing-fields check (m7_formula_input_audit)",
+      "Step 4: distribution sanity check (normality/category)"
+    ];
+
+    const taskNotes = dashboardData?.active_build_context?.current_task || "--";
+    box.innerHTML = `
+      <div class="group-box">
+        <div class="group-title">Automation Status</div>
+        <div class="mini">Current Task: ${taskNotes}</div>
+        <table class="preview-table">
+          <tbody>
+            <tr><td>M7 analysis entry</td><td><a href="./m7.html">Open mm/m7.html</a></td><td>mode</td><td>read-only dashboard</td></tr>
+            <tr><td>score rows</td><td>${rows.length}</td><td>runtime symbols</td><td>${runtimeKeys.length}</td></tr>
+            <tr><td>avg confidence</td><td>${avgConfidence}</td><td>data warnings</td><td>${warningRows.length}</td></tr>
+            <tr><td>coverage &lt; 80</td><td>${lowCoverageRows.length}</td><td>missing_price_refs</td><td>${missingPriceRefRows.length}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <details class="collapsible-section">
+        <summary>Automation Sequence / 控制中心自動化序列</summary>
+        <div class="group-box mini">${automationActions.map(x => `• ${x}`).join("<br>")}</div>
+      </details>
+      <details class="collapsible-section">
+        <summary>Operator Notes / 操作說明</summary>
+        <div class="group-box mini">
+          • 此區塊僅提供控制中心流程與 readiness 訊號，不直接寫入任何 artifact。<br>
+          • 建議先開啟 M7 分析頁確認 statistical / normal distribution / category / stock detail / formula explainability。<br>
+          • 確認完成後再執行 pipeline（保持 source-only 變更流程）。
+        </div>
+      </details>
+    `;
+  }
+
   function setupGlobalExpandCollapse() {
     const expandBtn = document.getElementById("expand-all-btn");
     const collapseBtn = document.getElementById("collapse-all-btn");
@@ -396,6 +449,7 @@
       renderEngineActions(dashboardData.engine_actions || []);
       renderOutputDemo(dashboardData.output_demo || {}, { scoreRow, auditRow, runtimeRow });
       renderM7Readiness(dashboardData.m7_complete_readiness_check || {}, dashboardData.compare_governance || {});
+      renderControlCenterAutomationPanel(dashboardData, scoreRows, runtimeRows);
       renderActiveBuildContext(dashboardData.active_build_context || {});
       renderOverview(dashboardData.overview || {});
       renderEngines(dashboardData.engines || []);
