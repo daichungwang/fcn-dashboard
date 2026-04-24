@@ -1,0 +1,944 @@
+{
+  "version": "engine_progress_dashboard@v1.4.0",
+  "generated_at": "2026-04-23T23:30:00Z",
+  "active_build_context": {
+    "current_task": "M7 single-stock scoring engine + MM parameter/output center proof",
+    "current_focus": "把 MM 變成參數控制中心 + 輸出預覽中心（最小可見版本）",
+    "production_modules_locked": [
+      "M1",
+      "M2",
+      "M3",
+      "M6",
+      "M7",
+      "M8",
+      "M9"
+    ],
+    "sandbox_modules_active": [
+      "M7 v2 sandbox",
+      "runtime staging"
+    ],
+    "allowed_scope": [
+      "M7 score validation",
+      "A/B compare review",
+      "dashboard tracking",
+      "sandbox tuning"
+    ],
+    "forbidden_scope": [
+      "production rewrite",
+      "M8 integration",
+      "M9 integration",
+      "unnecessary frontend rebuild"
+    ]
+  },
+  "handoff_memory": {
+    "recently_created_files": [
+      "scripts/new/build_m7_v2_scores.py",
+      "data/m7_sandbox/m7_v2_scores.json",
+      "data/m7_sandbox/m7_v2_ab_compare.json",
+      "data/m7_sandbox/m7_v2_run_manifest.json"
+    ],
+    "recently_modified_files": [
+      "mm/engine_progress_dashboard.html",
+      "js/mm/engine_progress_dashboard.js",
+      "data/mm/engine_progress_dashboard.json"
+    ],
+    "last_completed_task": "完成 M7 v2 sandbox scoring engine + MM memory dashboard",
+    "next_task": "檢查 M7 ranking quality 與 score distribution",
+    "known_risks": [
+      "M7 score weighting drift",
+      "overengineering risk",
+      "avoid production contamination"
+    ]
+  },
+  "overview": {
+    "overall_progress_pct": 34,
+    "production_stability": "YES",
+    "critical_blockers_count": 1,
+    "active_milestones": [
+      "Milestone X: M7 Factor/Data Normalization"
+    ]
+  },
+  "engines": [
+    {
+      "engine_id": "M1_ENGINE",
+      "name": "Research & Pool Builder Engine",
+      "owner": "MM",
+      "status": "BUILD",
+      "readiness_score": 45,
+      "formula_externalized_pct": 20,
+      "blocked": false,
+      "rollback_ready": true,
+      "next_gate": "SANDBOX",
+      "notes": "M1 rule calibration 已可運作，待接 runtime family"
+    },
+    {
+      "engine_id": "M3_ENGINE",
+      "name": "FCN Simulation Engine",
+      "owner": "MM",
+      "status": "SANDBOX",
+      "readiness_score": 60,
+      "formula_externalized_pct": 40,
+      "blocked": false,
+      "rollback_ready": true,
+      "next_gate": "STAGING",
+      "notes": "以 parameter_matrix 驅動，適合先作 governance 試點"
+    },
+    {
+      "engine_id": "M7_ENGINE",
+      "name": "M7 Single-Stock Score Engine",
+      "owner": "MM",
+      "status": "SANDBOX",
+      "readiness_score": 72,
+      "formula_externalized_pct": 78,
+      "blocked": false,
+      "rollback_ready": true,
+      "next_gate": "STAGING",
+      "notes": "已定位為單檔評分引擎（single-stock scoring）"
+    },
+    {
+      "engine_id": "M8_ENGINE",
+      "name": "FCN Pricing Engine",
+      "owner": "MM",
+      "status": "BUILD",
+      "readiness_score": 52,
+      "formula_externalized_pct": 15,
+      "blocked": false,
+      "rollback_ready": true,
+      "next_gate": "SANDBOX",
+      "notes": "核心公式集中，待公式正規化"
+    }
+  ],
+  "data_artifacts": [
+    {
+      "artifact_id": "MARKET_RUNTIME",
+      "path": "data/market_runtime.json",
+      "schema_version": "legacy",
+      "status": "PRODUCTION",
+      "coverage_pct": 100,
+      "missing_rate": 0.0,
+      "freshness": "daily",
+      "validator_status": "WARN",
+      "notes": "正式檔，僅讀取不覆蓋"
+    },
+    {
+      "artifact_id": "LONG_TERM_RUNTIME",
+      "path": "data/runtime_staging/long_term_runtime.json",
+      "schema_version": "long_term_runtime@v1.0.0",
+      "status": "DESIGN",
+      "coverage_pct": 0,
+      "missing_rate": 1.0,
+      "freshness": "stale",
+      "validator_status": "WARN",
+      "notes": "Milestone X 第一階段目標"
+    }
+  ],
+  "formula_domains": [
+    {
+      "domain": "valuation",
+      "total_formulas": 12,
+      "registered_formulas": 2,
+      "hardcoded_formulas": 10,
+      "normalization_pct": 16.7,
+      "policy_linked": false
+    },
+    {
+      "domain": "trend",
+      "total_formulas": 10,
+      "registered_formulas": 3,
+      "hardcoded_formulas": 7,
+      "normalization_pct": 30,
+      "policy_linked": true
+    },
+    {
+      "domain": "structure",
+      "total_formulas": 8,
+      "registered_formulas": 1,
+      "hardcoded_formulas": 7,
+      "normalization_pct": 12.5,
+      "policy_linked": true
+    },
+    {
+      "domain": "timing",
+      "total_formulas": 6,
+      "registered_formulas": 1,
+      "hardcoded_formulas": 5,
+      "normalization_pct": 16.7,
+      "policy_linked": true
+    },
+    {
+      "domain": "money",
+      "total_formulas": 4,
+      "registered_formulas": 0,
+      "hardcoded_formulas": 4,
+      "normalization_pct": 0,
+      "policy_linked": true
+    },
+    {
+      "domain": "quality",
+      "total_formulas": 6,
+      "registered_formulas": 1,
+      "hardcoded_formulas": 5,
+      "normalization_pct": 16.7,
+      "policy_linked": false
+    },
+    {
+      "domain": "policy",
+      "total_formulas": 9,
+      "registered_formulas": 2,
+      "hardcoded_formulas": 7,
+      "normalization_pct": 22.2,
+      "policy_linked": true
+    }
+  ],
+  "modules": [
+    {
+      "module_id": "FCN",
+      "status": "SANDBOX",
+      "module_readiness_score": 58,
+      "runtime_dependency_ready": true,
+      "adapter_dependency_ready": false,
+      "go_live_gate_passed": false,
+      "blocked": false,
+      "notes": "M3/M8 鏈路先行"
+    },
+    {
+      "module_id": "US_STOCKS",
+      "status": "BUILD",
+      "module_readiness_score": 50,
+      "runtime_dependency_ready": true,
+      "adapter_dependency_ready": false,
+      "go_live_gate_passed": false,
+      "blocked": false,
+      "notes": "M1/M6/M7 逐步接 runtime family"
+    },
+    {
+      "module_id": "BONDS_ETF",
+      "status": "DESIGN",
+      "module_readiness_score": 30,
+      "runtime_dependency_ready": false,
+      "adapter_dependency_ready": false,
+      "go_live_gate_passed": false,
+      "blocked": false,
+      "notes": "先沿用現有 ETF 欄位，不做擴張"
+    },
+    {
+      "module_id": "CASH_LIABILITIES",
+      "status": "BUILD",
+      "module_readiness_score": 46,
+      "runtime_dependency_ready": true,
+      "adapter_dependency_ready": false,
+      "go_live_gate_passed": false,
+      "blocked": false,
+      "notes": "M9 為主，先維持既有流程"
+    }
+  ],
+  "runtime_builder": {
+    "build_id": "",
+    "bundle_version": "runtime_bundle@v1.0.0",
+    "validation_passed": false,
+    "partial_publish": false,
+    "fallback_used_count": 0,
+    "artifact_outputs": []
+  },
+  "blockers": [
+    {
+      "risk_id": "RISK-001",
+      "severity": "P1",
+      "category": "schema",
+      "title": "M7/M8 欄位仍有硬編碼依賴",
+      "affected_scope": [
+        "US_STOCKS",
+        "FCN"
+      ],
+      "mitigation": "先建立 long_term_runtime + manifest，後接 adapter",
+      "eta": "2026-05-15",
+      "status": "open"
+    }
+  ],
+  "milestones": [
+    {
+      "milestone_id": "MSX-P1",
+      "name": "Milestone X Phase 1",
+      "phase": "long_term_runtime v1",
+      "planned_date": "2026-05-31",
+      "actual_date": null,
+      "status": "in_progress"
+    }
+  ],
+  "module_switch": [
+    {
+      "module_id": "M1",
+      "label": "M1",
+      "path": "../m1.html",
+      "enabled": true
+    },
+    {
+      "module_id": "M2",
+      "label": "M2",
+      "path": "../m2.html",
+      "enabled": true
+    },
+    {
+      "module_id": "M3",
+      "label": "M3",
+      "path": "../m3.html",
+      "enabled": true
+    },
+    {
+      "module_id": "M6",
+      "label": "M6",
+      "path": "../m6.html",
+      "enabled": true
+    },
+    {
+      "module_id": "M7",
+      "label": "M7",
+      "path": "../m7.html",
+      "enabled": false,
+      "note": "coming_soon"
+    },
+    {
+      "module_id": "M8",
+      "label": "M8",
+      "path": "../m8_batch.html",
+      "enabled": true
+    },
+    {
+      "module_id": "M9",
+      "label": "M9",
+      "path": "../m9.html",
+      "enabled": true
+    },
+    {
+      "module_id": "MM",
+      "label": "MM",
+      "path": "../mm/engine_progress_dashboard.html",
+      "enabled": true
+    }
+  ],
+  "parameter_controller": {
+    "config_file": "configs/mm/dynamic_anchor_regime_v1.json",
+    "current_market_regime": "growth_bull",
+    "current_industry_regime_policy": "family-based mapping (semi_upcycle / software_rerating / travel_recovery ...)",
+    "archetype_layer_enabled": true,
+    "valuation_curve_profile": "piecewise_v_current (fair zone -5%~+5%, score=7, floor=2, ceiling=10)",
+    "scoring_weights_summary": "FCN: trend 0.20 / structure 0.22 / timing 0.12 / valuation 0.24 / quality 0.12 / mkt_acc 0.10; Active: trend 0.24 / structure 0.16 / timing 0.26 / valuation 0.10 / quality 0.08 / mkt_acc 0.16",
+    "anchor_formula_summary": "final_anchor = base_anchor × market_multiplier × industry_multiplier × archetype_multiplier; valuation_gap = forward_pe / final_anchor - 1",
+    "read_only_today": true,
+    "groups": {
+      "core_valuation_controls": [
+        {
+          "label": "market_regime",
+          "value": "growth_bull",
+          "note": "高影響 / 目前唯讀"
+        },
+        {
+          "label": "industry_regime policy",
+          "value": "family-based mapping",
+          "note": "高影響 / 依 category_family_map 路由"
+        },
+        {
+          "label": "valuation_archetype toggle",
+          "value": "Enabled",
+          "note": "高影響 / 啟用 symbol override + category default"
+        },
+        {
+          "label": "valuation_curve_profile",
+          "value": "piecewise_v_current (-5%~+5% => score 7)",
+          "note": "高影響 / valuation score 直接映射"
+        },
+        {
+          "label": "anchor formula",
+          "value": "final_anchor = base × market × industry × archetype",
+          "note": "高影響 / 估值中樞核心"
+        }
+      ],
+      "score_architecture_controls": [
+        {
+          "label": "m7_raw_score formula",
+          "value": "0.30 valuation + 0.25 trend + 0.20 structure + 0.15 timing + 0.10 money",
+          "note": "正式核准權重"
+        },
+        {
+          "label": "statistical adjustment",
+          "value": "zscore adjustment + h_value adjustment",
+          "note": "Compare 作為最終分數層"
+        },
+        {
+          "label": "deprecated factors",
+          "value": "quality removed from finalized M7 raw formula",
+          "note": "不再列為主公式因子"
+        },
+        {
+          "label": "deprecated score branch",
+          "value": "active score removed from finalized architecture",
+          "note": "僅保留 m7_raw / m7_final"
+        }
+      ],
+      "runtime_execution_controls": [
+        {
+          "label": "runtime bundle status",
+          "value": "staging refresh path defined (artifact not committed in this PR)",
+          "note": "執行層控管在 MM"
+        },
+        {
+          "label": "compare mode",
+          "value": "baseline vs valuation-first prototype",
+          "note": "比較語義待淨化"
+        },
+        {
+          "label": "refresh status",
+          "value": "manual trigger (placeholder actions)",
+          "note": "今晚先確立控制中心骨架"
+        },
+        {
+          "label": "zscore_weight / zscore_cap",
+          "value": "pending_governance_binding",
+          "note": "Compare 統計調整核心參數"
+        },
+        {
+          "label": "historical_weight / historical_cap",
+          "value": "pending_governance_binding",
+          "note": "h_value 調整權重與上限"
+        },
+        {
+          "label": "p_value_threshold / m7_final_threshold",
+          "value": "pending_governance_binding",
+          "note": "Today FCN pool gate 參數"
+        },
+        {
+          "label": "category_target_horizon",
+          "value": "category_sub horizon map (1Y/3Y/5Y/10Y)",
+          "note": "歷史分數時間尺度由 MM 控制"
+        }
+      ]
+    },
+    "blueprint": {
+      "mm_module_rule": [
+        "MM = 控制中心 / mission bridge（參數、治理、執行動作統一在 MM）",
+        "Engine layer 由 MM 控制；modules 只消費輸出，不承擔控制職責",
+        "禁止 module-local control pages，避免架構回退",
+        "M1 維持獨立長期池引擎，不與 M7 compare pipeline 混用"
+      ],
+      "mm_m7_definition": [
+        "正式管線：M1 → M7 → today_fcn_pool → M8 → M6（M1 為長期池，M7 為單檔評分）",
+        "M7 內部：m7_raw_score → Compare statistical adjustment layer → m7_final_score",
+        "MM 控制 compare 參數、horizon 規則與 pool gate 契約"
+      ],
+      "m7_full_definition": [
+        "M7 定義：single-stock score engine；Compare 為 M7 最終分數管線的一部分（非僅解釋層）",
+        "核心公式家族：raw factor score + statistical compare adjustment + gating",
+        "已完成：valuation-first raw scoring骨架",
+        "本次 formalize：Compare statistical adjustment architecture + output contract",
+        "未完成：生產級 compare 計算與統計檢定落地（目前屬 blueprint/governance 層）"
+      ],
+      "m7_formula_terminology": [
+        "m7_raw_score = 0.30 valuation + 0.25 trend + 0.20 structure + 0.15 timing + 0.10 money",
+        "m7_final_score = m7_raw_score + zscore adjustment + h_value adjustment (clamp 0~10)",
+        "Compare 統計層為 M7 最終分數管線的一部分",
+        "today_fcn_pool_status 由 final threshold + p_value + warning gate 決策"
+      ],
+      "parameter_impact_ranking": [
+        "High：zscore_weight / zscore_cap / historical_weight / historical_cap / m7_final_threshold / p_value_threshold",
+        "Medium：category_target_horizon（依 category_sub）與 warning gate policy",
+        "Low：呈現層排序與文案（不改核心計算）"
+      ]
+    }
+  },
+  "engine_actions": [
+    {
+      "name": "Run Dynamic Anchor Engine",
+      "description": "Rebuild dynamic anchor sandbox previews from current MM parameters.",
+      "button_label": "Run (placeholder)"
+    },
+    {
+      "name": "Run M7 Scoring Engine",
+      "description": "Rerun M7 single-stock sandbox scoring with latest framework.",
+      "button_label": "Run (placeholder)"
+    },
+    {
+      "name": "Run Compare Engine",
+      "description": "Recompute baseline vs FCN/Active A/B compare deltas.",
+      "button_label": "Run (placeholder)"
+    },
+    {
+      "name": "Refresh Runtime Bundle",
+      "description": "Refresh runtime staging bundle/manifest for downstream readers.",
+      "button_label": "Refresh (placeholder)"
+    }
+  ],
+  "output_demo": {
+    "prototype_symbol_snapshot": {
+      "symbol": "NVDA",
+      "valuation_score": 8.1,
+      "trend_score": 7.2,
+      "structure_score": 6.4,
+      "timing_score": 8.5,
+      "money_score": 6.2,
+      "m7_raw_score": 7.34,
+      "zscore": 0.41,
+      "historical_score": 22.0,
+      "h_value": 1.08,
+      "m7_final_score": 7.9,
+      "today_fcn_pool_status": "prototype"
+    },
+    "representative_groups": [
+      {
+        "group_name": "1) NVDA / AMD",
+        "summary": "AI compute semi pair",
+        "items": [
+          {
+            "symbol": "NVDA",
+            "status": "available",
+            "category_sub": "CPU_GPU_COMPUTE_SEMI",
+            "valuation_archetype": "AI_MONOPOLY_PREMIUM",
+            "base_anchor": 30.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 41.4,
+            "valuation_gap": 0.15,
+            "valuation_score": 6.34
+          },
+          {
+            "symbol": "AMD",
+            "status": "available",
+            "category_sub": "CPU_GPU_COMPUTE_SEMI",
+            "valuation_archetype": "AI_CHALLENGER_GROWTH",
+            "base_anchor": 30.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 38.44,
+            "valuation_gap": 0.542,
+            "valuation_score": 3.29
+          }
+        ]
+      },
+      {
+        "group_name": "2) AVGO / MRVL",
+        "summary": "ASIC custom silicon pair",
+        "items": [
+          {
+            "symbol": "AVGO",
+            "status": "available",
+            "category_sub": "ASIC_CUSTOM_SILICON",
+            "valuation_archetype": "PLATFORM_MONETIZATION_PREMIUM",
+            "base_anchor": 28.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 36.57,
+            "valuation_gap": 0.549,
+            "valuation_score": 3.26
+          },
+          {
+            "symbol": "MRVL",
+            "status": "available",
+            "category_sub": "ASIC_CUSTOM_SILICON",
+            "valuation_archetype": "PLATFORM_MONETIZATION_PREMIUM",
+            "base_anchor": 28.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 36.57,
+            "valuation_gap": 0.592,
+            "valuation_score": 3.04
+          }
+        ]
+      },
+      {
+        "group_name": "3) TSM / INTC",
+        "summary": "Foundry leader vs turnaround",
+        "items": [
+          {
+            "symbol": "TSM",
+            "status": "available",
+            "category_sub": "FOUNDRY_FAB_INFRA",
+            "valuation_archetype": "FOUNDRY_MONOPOLY",
+            "base_anchor": 24.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 31.93,
+            "valuation_gap": 0.141,
+            "valuation_score": 6.39
+          },
+          {
+            "symbol": "INTC",
+            "status": "available",
+            "category_sub": "SEMI_TURNAROUND_LEGACY",
+            "valuation_archetype": "TURNAROUND_FOUNDRY",
+            "base_anchor": 15.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 16.63,
+            "valuation_gap": 0.897,
+            "valuation_score": 2.0
+          }
+        ]
+      },
+      {
+        "group_name": "4) SMH / LQD",
+        "summary": "Semi ETF vs bond ETF cross-family",
+        "items": [
+          {
+            "symbol": "SMH",
+            "status": "available",
+            "category_sub": "SEMI_THEMATIC_ETF",
+            "valuation_archetype": "SEMI_EQUIPMENT_CYCLICAL",
+            "base_anchor": 24.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 28.76,
+            "valuation_gap": -1.0,
+            "valuation_score": 10.0
+          },
+          {
+            "symbol": "LQD",
+            "status": "available",
+            "category_sub": "BOND_ETF",
+            "valuation_archetype": "BONDLIKE_INCOME_PROXY",
+            "base_anchor": 16.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_normal",
+            "final_anchor": 18.28,
+            "valuation_gap": -1.0,
+            "valuation_score": 10.0
+          }
+        ]
+      },
+      {
+        "group_name": "5) PLTR",
+        "summary": "Single-name software/AI proxy",
+        "items": [
+          {
+            "symbol": "PLTR",
+            "status": "available",
+            "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
+            "valuation_archetype": "AI_CHALLENGER_GROWTH",
+            "base_anchor": 24.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_rerating",
+            "final_anchor": 30.19,
+            "valuation_gap": 2.022,
+            "valuation_score": 2.0
+          }
+        ]
+      },
+      {
+        "group_name": "6) CCL / LVS / AAL",
+        "summary": "Travel cyclicals basket",
+        "items": [
+          {
+            "symbol": "CCL",
+            "status": "available",
+            "category_sub": "TRAVEL_LEISURE_CYCLICAL",
+            "valuation_archetype": "TURNAROUND_RE_RATING",
+            "base_anchor": 14.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "travel_recovery",
+            "final_anchor": 16.21,
+            "valuation_gap": 0.125,
+            "valuation_score": 6.5
+          },
+          {
+            "symbol": "LVS",
+            "status": "available",
+            "category_sub": "TRAVEL_LEISURE_CYCLICAL",
+            "valuation_archetype": "TURNAROUND_RE_RATING",
+            "base_anchor": 14.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "travel_recovery",
+            "final_anchor": 16.21,
+            "valuation_gap": 0.224,
+            "valuation_score": 5.76
+          },
+          {
+            "symbol": "AAL",
+            "status": "available",
+            "category_sub": "TRAVEL_LEISURE_CYCLICAL",
+            "valuation_archetype": "TURNAROUND_RE_RATING",
+            "base_anchor": 14.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "travel_recovery",
+            "final_anchor": 16.21,
+            "valuation_gap": -0.395,
+            "valuation_score": 8.97
+          }
+        ]
+      },
+      {
+        "group_name": "7) 其他分類代表：UNH / COIN",
+        "summary": "Defensive healthcare vs crypto exchange platform",
+        "items": [
+          {
+            "symbol": "UNH",
+            "status": "available",
+            "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
+            "valuation_archetype": "DEFENSIVE_CASHFLOW_COMPOUNDER",
+            "base_anchor": 17.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_normal",
+            "final_anchor": 19.61,
+            "valuation_gap": -0.324,
+            "valuation_score": 8.62
+          },
+          {
+            "symbol": "COIN",
+            "status": "available",
+            "category_sub": "CRYPTO_EXCHANGE_PLATFORM",
+            "valuation_archetype": "CRYPTO_EXCHANGE_PLATFORM",
+            "base_anchor": 20.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_normal",
+            "final_anchor": 23.52,
+            "valuation_gap": 0.436,
+            "valuation_score": 3.82
+          }
+        ]
+      },
+      {
+        "group_name": "ALL",
+        "summary": "All representative symbols (collapsed by default)",
+        "items": [
+          {
+            "symbol": "NVDA",
+            "status": "available",
+            "category_sub": "CPU_GPU_COMPUTE_SEMI",
+            "valuation_archetype": "AI_MONOPOLY_PREMIUM",
+            "base_anchor": 30.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 41.4,
+            "valuation_gap": 0.15,
+            "valuation_score": 6.34
+          },
+          {
+            "symbol": "AMD",
+            "status": "available",
+            "category_sub": "CPU_GPU_COMPUTE_SEMI",
+            "valuation_archetype": "AI_CHALLENGER_GROWTH",
+            "base_anchor": 30.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 38.44,
+            "valuation_gap": 0.542,
+            "valuation_score": 3.29
+          },
+          {
+            "symbol": "AVGO",
+            "status": "available",
+            "category_sub": "ASIC_CUSTOM_SILICON",
+            "valuation_archetype": "PLATFORM_MONETIZATION_PREMIUM",
+            "base_anchor": 28.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 36.57,
+            "valuation_gap": 0.549,
+            "valuation_score": 3.26
+          },
+          {
+            "symbol": "MRVL",
+            "status": "available",
+            "category_sub": "ASIC_CUSTOM_SILICON",
+            "valuation_archetype": "PLATFORM_MONETIZATION_PREMIUM",
+            "base_anchor": 28.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 36.57,
+            "valuation_gap": 0.592,
+            "valuation_score": 3.04
+          },
+          {
+            "symbol": "TSM",
+            "status": "available",
+            "category_sub": "FOUNDRY_FAB_INFRA",
+            "valuation_archetype": "FOUNDRY_MONOPOLY",
+            "base_anchor": 24.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 31.93,
+            "valuation_gap": 0.141,
+            "valuation_score": 6.39
+          },
+          {
+            "symbol": "INTC",
+            "status": "available",
+            "category_sub": "SEMI_TURNAROUND_LEGACY",
+            "valuation_archetype": "TURNAROUND_FOUNDRY",
+            "base_anchor": 15.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 16.63,
+            "valuation_gap": 0.897,
+            "valuation_score": 2.0
+          },
+          {
+            "symbol": "SMH",
+            "status": "available",
+            "category_sub": "SEMI_THEMATIC_ETF",
+            "valuation_archetype": "SEMI_EQUIPMENT_CYCLICAL",
+            "base_anchor": 24.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 28.76,
+            "valuation_gap": -1.0,
+            "valuation_score": 10.0
+          },
+          {
+            "symbol": "LQD",
+            "status": "available",
+            "category_sub": "BOND_ETF",
+            "valuation_archetype": "BONDLIKE_INCOME_PROXY",
+            "base_anchor": 16.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_normal",
+            "final_anchor": 18.28,
+            "valuation_gap": -1.0,
+            "valuation_score": 10.0
+          },
+          {
+            "symbol": "PLTR",
+            "status": "available",
+            "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
+            "valuation_archetype": "AI_CHALLENGER_GROWTH",
+            "base_anchor": 24.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_rerating",
+            "final_anchor": 30.19,
+            "valuation_gap": 2.022,
+            "valuation_score": 2.0
+          },
+          {
+            "symbol": "CCL",
+            "status": "available",
+            "category_sub": "TRAVEL_LEISURE_CYCLICAL",
+            "valuation_archetype": "TURNAROUND_RE_RATING",
+            "base_anchor": 14.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "travel_recovery",
+            "final_anchor": 16.21,
+            "valuation_gap": 0.125,
+            "valuation_score": 6.5
+          },
+          {
+            "symbol": "LVS",
+            "status": "available",
+            "category_sub": "TRAVEL_LEISURE_CYCLICAL",
+            "valuation_archetype": "TURNAROUND_RE_RATING",
+            "base_anchor": 14.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "travel_recovery",
+            "final_anchor": 16.21,
+            "valuation_gap": 0.224,
+            "valuation_score": 5.76
+          },
+          {
+            "symbol": "AAL",
+            "status": "available",
+            "category_sub": "TRAVEL_LEISURE_CYCLICAL",
+            "valuation_archetype": "TURNAROUND_RE_RATING",
+            "base_anchor": 14.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "travel_recovery",
+            "final_anchor": 16.21,
+            "valuation_gap": -0.395,
+            "valuation_score": 8.97
+          },
+          {
+            "symbol": "UNH",
+            "status": "available",
+            "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
+            "valuation_archetype": "DEFENSIVE_CASHFLOW_COMPOUNDER",
+            "base_anchor": 17.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_normal",
+            "final_anchor": 19.61,
+            "valuation_gap": -0.324,
+            "valuation_score": 8.62
+          },
+          {
+            "symbol": "COIN",
+            "status": "available",
+            "category_sub": "CRYPTO_EXCHANGE_PLATFORM",
+            "valuation_archetype": "CRYPTO_EXCHANGE_PLATFORM",
+            "base_anchor": 20.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_normal",
+            "final_anchor": 23.52,
+            "valuation_gap": 0.436,
+            "valuation_score": 3.82
+          }
+        ]
+      }
+    ],
+    "abnormal_movers": [
+      "TSM vs INTC：同半導體家族，但 archetype 不同導致 final_anchor 與 score 分岔",
+      "PLTR：valuation_gap > +2，估值分落在下限區",
+      "LQD/SMH：ForwardPE 近零時 gap 觸及低端，估值分數接近上限（需後續語義治理）"
+    ]
+  },
+  "m7_complete_readiness_check": {
+    "complete": [
+      "category_sub taxonomy 與 base anchor 對齊完成",
+      "market/industry/archetype 三層 anchor 調節框架可運作",
+      "valuation_gap 與 piecewise valuation curve 已落地",
+      "MM 控制中心頁可展示參數→標的→估值分數鏈路"
+    ],
+    "incomplete": [
+      "trend 終版公式未鎖定（目前仍屬框架級）",
+      "structure 終版公式未鎖定（目前仍屬框架級）",
+      "timing 與策略引擎尚未完全對齊",
+      "quality / market_acceptance(money) 資料與公式仍不完整",
+      "多因子總分聚合與 compare semantics 尚未治理完成",
+      "因此不可宣稱 full M7 stock score 已完成"
+    ],
+    "missing_inputs": [
+      "缺少已批准的最終 factor-by-factor 權重方案（或權重治理規則）",
+      "缺少 trend/structure/timing/quality/money 的最終定義版輸入欄位字典",
+      "缺少 compare 語義去汙（避免 prototype 與 full-score 混用）",
+      "缺少 full M7 對外輸出欄位契約（哪些欄位為正式、哪些為暫定）"
+    ],
+    "tomorrow_readiness": [
+      "可交付：valuation-first prototype（可追蹤參數對估值分影響）",
+      "部分可交付：partial M7 stock score（僅在明確標示 prototype 前提）",
+      "不可交付：宣稱 full M7 stock score production-ready"
+    ],
+    "verdict": "目前定位應為「valuation-first prototype / partial score」，不是 full M7 完成版。"
+  },
+  "compare_governance": {
+    "approved_formula": "m7_final_score = clamp(m7_raw_score + clamp(zscore * zscore_weight, -zscore_cap, +zscore_cap) + clamp(h_value_adjustment, -historical_cap, +historical_cap), 0, 10)",
+    "zscore_definition": "zscore = (stock_score - category_mean_adjusted) / pooled_std",
+    "historical_definition": "h_value = stock_historical_score / subcategory_historical_score",
+    "historical_score_definition": "historical_score = Σ(weight_i × return_i), where weight_i = period_length_i / total_target_horizon; buckets: D1,D2,D3,D4,D5,1W,1M,3M,6M,12M,3Y,5Y,10Y",
+    "category_target_horizon_examples": [
+      "CPU_GPU_COMPUTE_SEMI -> 3Y",
+      "ASIC_CUSTOM_SILICON -> 3Y",
+      "FOUNDRY_FAB_INFRA -> 5Y",
+      "SEMI_EQUIPMENT -> 5Y",
+      "CYBERSECURITY_DATA_SOFTWARE -> 3Y",
+      "TRAVEL_LEISURE_CYCLICAL -> 1Y",
+      "CRYPTO_EXCHANGE_PLATFORM -> 1Y",
+      "UTILITY_LOWVOL_DEFENSIVE -> 10Y",
+      "BOND_ETF -> 10Y"
+    ],
+    "today_fcn_pool_gate": "if m7_final_score >= m7_final_threshold AND p_value <= p_value_threshold AND no_critical_warning => TODAY_FCN_POOL else WATCH/REVIEW/REJECT",
+    "output_contract": {
+      "symbol": "",
+      "valuation_score": 0,
+      "trend_score": 0,
+      "structure_score": 0,
+      "timing_score": 0,
+      "money_score": 0,
+      "m7_raw_score": 0,
+      "zscore": 0,
+      "historical_score": 0,
+      "h_value": 0,
+      "m7_final_score": 0,
+      "today_fcn_pool_status": ""
+    },
+    "deprecated_legacy_compare_semantics": [
+      "major_change_reason",
+      "valuation_dominant_delta",
+      "old compare ranking semantics",
+      "active_score_branch",
+      "quality_factor_in_raw_formula"
+    ]
+  }
+}
