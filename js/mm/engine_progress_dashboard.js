@@ -42,28 +42,39 @@
   function renderParameterController(data) {
     const box = document.getElementById("param-controller");
     if (!box) return;
+    const controlBlock = (title, items) => `
+      <div class="group-box">
+        <div class="group-title">${title}</div>
+        <div class="control-grid">${(items || []).map(x => `
+          <div class="control-item">
+            <label>${x.label || "--"}</label>
+            <input disabled value="${x.value || "--"}" />
+            <div class="mini" style="margin-top:6px;">${x.note || ""}</div>
+          </div>
+        `).join("")}</div>
+      </div>
+    `;
+
+    const blueprint = data?.blueprint || {};
+    const bpSection = (title, rows) => `
+      <div class="group-box">
+        <div class="group-title">${title}</div>
+        <div>${(rows || []).map(x => `• ${x}`).join("<br>") || "--"}</div>
+      </div>
+    `;
+
     box.innerHTML = [
       `<div><b>目前 MM 參數檔（Current Config）：</b> ${data?.config_file || "--"}</div>`,
-      `<div class="control-grid" style="margin-top:8px;">
-        <div class="control-item">
-          <label>market_regime</label>
-          <select disabled><option>${data?.current_market_regime || "--"}</option></select>
-        </div>
-        <div class="control-item">
-          <label>industry_regime</label>
-          <select disabled><option>${data?.current_industry_regime_policy || "--"}</option></select>
-        </div>
-        <div class="control-item">
-          <label>valuation_archetype toggle</label>
-          <input disabled value="${data?.archetype_layer_enabled ? "Enabled" : "Disabled"}" />
-        </div>
-        <div class="control-item">
-          <label>valuation curve profile</label>
-          <select disabled><option>${data?.valuation_curve_profile || "--"}</option></select>
-        </div>
-      </div>`,
-      `<div style="margin-top:8px;"><b>scoring weights summary：</b> ${data?.scoring_weights_summary || "--"}</div>`,
-      `<div class="formula-box">${data?.anchor_formula_summary || "--"}</div>`
+      `<details><summary>Blueprint / 藍圖說明（click to expand）</summary>
+        ${bpSection("A. MM 模組規則", blueprint.mm_module_rule)}
+        ${bpSection("B. MM ↔ M7 功能定義", blueprint.mm_m7_definition)}
+        ${bpSection("C. Full M7 定義（single-stock score engine）", blueprint.m7_full_definition)}
+        ${bpSection("D. M7 因子/公式/術語/計算定義", blueprint.m7_formula_terminology)}
+        ${bpSection("E. 參數影響力分級", blueprint.parameter_impact_ranking)}
+      </details>`,
+      controlBlock("A. 核心估值控制（Core Valuation Controls）", data?.groups?.core_valuation_controls),
+      controlBlock("B. 分數架構控制（Score Architecture Controls）", data?.groups?.score_architecture_controls),
+      controlBlock("C. 執行控制（Runtime / Execution Controls）", data?.groups?.runtime_execution_controls)
     ].join("");
   }
 
@@ -82,26 +93,53 @@
   function renderOutputDemo(data) {
     const box = document.getElementById("output-demo");
     if (!box) return;
-
-    const demoItems = (data?.demo_outputs || []).map(x => `
-      <div class="demo-item">
-        <div><a href="${x.path || '#'}" target="_blank" rel="noopener noreferrer">${x.name || "--"}</a></div>
-        <div style="font-size:12px; color:#667085; margin-top:4px;">${x.summary || "--"}</div>
-      </div>
-    `).join("");
-
-    const topM7 = (data?.top_m7_preview || []).map(x =>
-      `#${x.rank} ${x.symbol}（FCN ${x.fcn_score ?? "--"} / Active ${x.active_score ?? "--"}）`
-    ).join("<br>");
-
     box.innerHTML = [
-      `<div style="font-weight:700; margin:0 0 6px;">Dynamic Anchor Demo</div>`,
-      `<div>${data?.dynamic_anchor_focus || "--"}</div>`,
-      `<div class="demo-grid" style="margin-top:8px;">${demoItems || "<div class='demo-item'>無</div>"}</div>`,
-      `<div style="font-weight:700; margin:10px 0 6px;">M7 Top Score Preview（Single-stock engine output）</div>`,
-      `<div>${topM7 || "無"}</div>`,
-      `<div style="font-weight:700; margin:10px 0 6px;">關鍵分歧摘要（Divergence Highlights）</div>`,
-      `<div>${(data?.divergence_highlights || []).map(x => `• ${x}`).join("<br>") || "無"}</div>`
+      `<div class="mini">Parameter → item → score（若資料不足，明確標示 unavailable）</div>`,
+      ...(data?.representative_groups || []).map(g => {
+        const rows = (g.items || []).map(x => `
+          <tr>
+            <td>${x.symbol || "--"}</td>
+            <td>${x.status || "--"}</td>
+            <td>${x.category_sub || "--"}</td>
+            <td>${x.valuation_archetype || "--"}</td>
+            <td>${x.base_anchor ?? "--"}</td>
+            <td>${x.market_regime || "--"}</td>
+            <td>${x.industry_regime || "--"}</td>
+            <td>${x.final_anchor ?? "--"}</td>
+            <td>${x.valuation_gap ?? "--"}</td>
+            <td>${x.valuation_score ?? "--"}</td>
+          </tr>
+        `).join("");
+        return `
+          <div class="group-box">
+            <div class="group-title">${g.group_name || "--"}</div>
+            <div class="mini">${g.summary || ""}</div>
+            <table class="preview-table">
+              <thead><tr><th>Symbol</th><th>Status</th><th>category_sub</th><th>archetype</th><th>base</th><th>market</th><th>industry</th><th>final</th><th>gap</th><th>score</th></tr></thead>
+              <tbody>${rows || "<tr><td colspan='10'>無</td></tr>"}</tbody>
+            </table>
+          </div>
+        `;
+      }).join(""),
+      `<div class="group-box"><div class="group-title">Abnormal Movers（代表）</div><div>${(data?.abnormal_movers || []).map(x => `• ${x}`).join("<br>") || "無"}</div></div>`
+    ].join("");
+  }
+
+  function renderM7Readiness(data) {
+    const box = document.getElementById("m7-readiness");
+    if (!box) return;
+    const sec = (title, rows) => `
+      <div class="group-box">
+        <div class="group-title">${title}</div>
+        <div>${(rows || []).map(x => `• ${x}`).join("<br>") || "--"}</div>
+      </div>
+    `;
+    box.innerHTML = [
+      sec("A. 已完成（Complete）", data?.complete),
+      sec("B. 未完成（Incomplete）", data?.incomplete),
+      sec("C. 缺失欄位/計算/輸出定義（Missing）", data?.missing_inputs),
+      sec("D. 明日可交付判定（Tomorrow Readiness）", data?.tomorrow_readiness),
+      `<div class="mini">結論：${data?.verdict || "--"}</div>`
     ].join("");
   }
 
@@ -247,6 +285,7 @@
       renderParameterController(dashboardData.parameter_controller || {});
       renderEngineActions(dashboardData.engine_actions || []);
       renderOutputDemo(dashboardData.output_demo || {});
+      renderM7Readiness(dashboardData.m7_complete_readiness_check || {});
       renderActiveBuildContext(dashboardData.active_build_context || {});
       renderOverview(dashboardData.overview || {});
       renderEngines(dashboardData.engines || []);

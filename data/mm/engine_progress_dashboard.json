@@ -1,6 +1,6 @@
 {
-  "version": "engine_progress_dashboard@v1.1.0",
-  "generated_at": "2026-04-23T12:00:00Z",
+  "version": "engine_progress_dashboard@v1.2.0",
+  "generated_at": "2026-04-23T23:30:00Z",
   "active_build_context": {
     "current_task": "M7 single-stock scoring engine + MM parameter/output center proof",
     "current_focus": "把 MM 變成參數控制中心 + 輸出預覽中心（最小可見版本）",
@@ -324,7 +324,110 @@
     "valuation_curve_profile": "piecewise_v_current (fair zone -5%~+5%, score=7, floor=2, ceiling=10)",
     "scoring_weights_summary": "FCN: trend 0.20 / structure 0.22 / timing 0.12 / valuation 0.24 / quality 0.12 / mkt_acc 0.10; Active: trend 0.24 / structure 0.16 / timing 0.26 / valuation 0.10 / quality 0.08 / mkt_acc 0.16",
     "anchor_formula_summary": "final_anchor = base_anchor × market_multiplier × industry_multiplier × archetype_multiplier; valuation_gap = forward_pe / final_anchor - 1",
-    "read_only_today": true
+    "read_only_today": true,
+    "groups": {
+      "core_valuation_controls": [
+        {
+          "label": "market_regime",
+          "value": "growth_bull",
+          "note": "高影響 / 目前唯讀"
+        },
+        {
+          "label": "industry_regime policy",
+          "value": "family-based mapping",
+          "note": "高影響 / 依 category_family_map 路由"
+        },
+        {
+          "label": "valuation_archetype toggle",
+          "value": "Enabled",
+          "note": "高影響 / 啟用 symbol override + category default"
+        },
+        {
+          "label": "valuation_curve_profile",
+          "value": "piecewise_v_current (-5%~+5% => score 7)",
+          "note": "高影響 / valuation score 直接映射"
+        },
+        {
+          "label": "anchor formula",
+          "value": "final_anchor = base × market × industry × archetype",
+          "note": "高影響 / 估值中樞核心"
+        }
+      ],
+      "score_architecture_controls": [
+        {
+          "label": "factor families",
+          "value": "trend / structure / timing / valuation / quality / market_acceptance",
+          "note": "僅列現有家族，非宣告已完成"
+        },
+        {
+          "label": "enabled today",
+          "value": "valuation path = implemented",
+          "note": "以 anchor+gap+curve 可運算"
+        },
+        {
+          "label": "placeholder / TBD",
+          "value": "trend / structure / timing / quality / market_acceptance aggregation still not finalized",
+          "note": "不可宣稱 full M7 已完成"
+        },
+        {
+          "label": "weight profile",
+          "value": "Not exposed in MM (approval pending)",
+          "note": "避免展示未批准或易誤解權重"
+        }
+      ],
+      "runtime_execution_controls": [
+        {
+          "label": "runtime bundle status",
+          "value": "staging refresh path defined (artifact not committed in this PR)",
+          "note": "執行層控管在 MM"
+        },
+        {
+          "label": "compare mode",
+          "value": "baseline vs valuation-first prototype",
+          "note": "比較語義待淨化"
+        },
+        {
+          "label": "refresh status",
+          "value": "manual trigger (placeholder actions)",
+          "note": "今晚先確立控制中心骨架"
+        }
+      ]
+    },
+    "blueprint": {
+      "mm_module_rule": [
+        "MM = 控制中心 / 任務橋（mission bridge）",
+        "引擎由 MM 下發參數與執行動作，不放回各 module 頁面",
+        "各 module 只消費輸出，不承擔主控責任",
+        "禁止 module-local control pages，避免控制權分散"
+      ],
+      "mm_m7_definition": [
+        "MM 控制：regime / archetype / curve / compare mode / execution actions",
+        "M7 接收：taxonomy + base anchor + regime multipliers + archetype layer + valuation curve",
+        "M7 回傳 MM：single-stock valuation-first score preview + 異常 movers + 缺失訊號"
+      ],
+      "m7_full_definition": [
+        "M7 定義：single-stock score engine（單檔評分引擎）",
+        "目的：把單檔從參數映射為可比較分數，供 MM 做跨標的管控",
+        "公式家族：anchor family、gap family、curve family、multi-factor aggregation family",
+        "命名慣例：factor_* / score_* / penalty_* / compare_*",
+        "已完成：valuation anchor + archetype + valuation gap + valuation curve",
+        "未完成：trend/structure/timing/quality/money 終版公式與總分聚合語義"
+      ],
+      "m7_formula_terminology": [
+        "valuation：相對 final_anchor 的估值偏離；目前可按 gap curve 計分",
+        "trend：價格趨勢強弱；目前存在框架但終版定義未鎖定",
+        "structure：結構/波段穩定度；目前為框架級，仍需校準",
+        "timing：進出時機；目前為框架級，仍需與策略一致化",
+        "quality：品質與基本面動能；目前資料與公式仍不完整",
+        "market_acceptance(money)：量能/流動性接受度；尚未終版",
+        "aggregation：多因子合成與 compare semantics 仍待治理，暫不宣稱 full score"
+      ],
+      "parameter_impact_ranking": [
+        "High：market_regime / industry_regime / archetype / valuation_curve_profile / base_anchor",
+        "Medium：compare mode / penalty gates / runtime refresh cadence",
+        "Low：dashboard呈現樣式、文案與排序偏好（不改核心計算）"
+      ]
+    }
   },
   "engine_actions": [
     {
@@ -349,47 +452,250 @@
     }
   ],
   "output_demo": {
-    "dynamic_anchor_focus": "NVDA vs AMD anchor behavior preview will be served by rerunnable engines (artifact files are intentionally excluded from PR).",
-    "demo_outputs": [
+    "representative_groups": [
       {
-        "name": "Run Dynamic Anchor Engine",
-        "path": "#",
-        "summary": "Generate fresh NVDA vs AMD dynamic-anchor preview on demand"
+        "group_name": "1) NVDA / AMD",
+        "summary": "AI compute semi pair",
+        "items": [
+          {
+            "symbol": "NVDA",
+            "status": "available",
+            "category_sub": "CPU_GPU_COMPUTE_SEMI",
+            "valuation_archetype": "AI_MONOPOLY_PREMIUM",
+            "base_anchor": 30.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 41.4,
+            "valuation_gap": 0.15,
+            "valuation_score": 6.34
+          },
+          {
+            "symbol": "AMD",
+            "status": "available",
+            "category_sub": "CPU_GPU_COMPUTE_SEMI",
+            "valuation_archetype": "AI_CHALLENGER_GROWTH",
+            "base_anchor": 30.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 38.44,
+            "valuation_gap": 0.542,
+            "valuation_score": 3.29
+          }
+        ]
       },
       {
-        "name": "Run M7 Scoring Engine",
-        "path": "#",
-        "summary": "Generate fresh Top M7 rankings and abnormal movers on demand"
+        "group_name": "2) AVGO / MRVL",
+        "summary": "ASIC custom silicon pair",
+        "items": [
+          {
+            "symbol": "AVGO",
+            "status": "available",
+            "category_sub": "ASIC_CUSTOM_SILICON",
+            "valuation_archetype": "PLATFORM_MONETIZATION_PREMIUM",
+            "base_anchor": 28.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 36.57,
+            "valuation_gap": 0.549,
+            "valuation_score": 3.26
+          },
+          {
+            "symbol": "MRVL",
+            "status": "available",
+            "category_sub": "ASIC_CUSTOM_SILICON",
+            "valuation_archetype": "PLATFORM_MONETIZATION_PREMIUM",
+            "base_anchor": 28.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 36.57,
+            "valuation_gap": 0.592,
+            "valuation_score": 3.04
+          }
+        ]
       },
       {
-        "name": "Run Compare Engine",
-        "path": "#",
-        "summary": "Generate fresh FCN/Active vs baseline deltas on demand"
+        "group_name": "3) TSM / INTC",
+        "summary": "Foundry leader vs turnaround",
+        "items": [
+          {
+            "symbol": "TSM",
+            "status": "available",
+            "category_sub": "FOUNDRY_FAB_INFRA",
+            "valuation_archetype": "FOUNDRY_MONOPOLY",
+            "base_anchor": 24.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 31.93,
+            "valuation_gap": 0.141,
+            "valuation_score": 6.39
+          },
+          {
+            "symbol": "INTC",
+            "status": "available",
+            "category_sub": "SEMI_TURNAROUND_LEGACY",
+            "valuation_archetype": "TURNAROUND_FOUNDRY",
+            "base_anchor": 15.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 16.63,
+            "valuation_gap": 0.897,
+            "valuation_score": 2.0
+          }
+        ]
+      },
+      {
+        "group_name": "4) SMH / LQD",
+        "summary": "Semi ETF vs bond ETF cross-family",
+        "items": [
+          {
+            "symbol": "SMH",
+            "status": "available",
+            "category_sub": "SEMI_THEMATIC_ETF",
+            "valuation_archetype": "SEMI_EQUIPMENT_CYCLICAL",
+            "base_anchor": 24.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "semi_upcycle",
+            "final_anchor": 28.76,
+            "valuation_gap": -1.0,
+            "valuation_score": 10.0
+          },
+          {
+            "symbol": "LQD",
+            "status": "available",
+            "category_sub": "BOND_ETF",
+            "valuation_archetype": "BONDLIKE_INCOME_PROXY",
+            "base_anchor": 16.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_normal",
+            "final_anchor": 18.28,
+            "valuation_gap": -1.0,
+            "valuation_score": 10.0
+          }
+        ]
+      },
+      {
+        "group_name": "5) PLTR",
+        "summary": "Single-name software/AI proxy",
+        "items": [
+          {
+            "symbol": "PLTR",
+            "status": "available",
+            "category_sub": "CYBERSECURITY_DATA_SOFTWARE",
+            "valuation_archetype": "AI_CHALLENGER_GROWTH",
+            "base_anchor": 24.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_rerating",
+            "final_anchor": 30.19,
+            "valuation_gap": 2.022,
+            "valuation_score": 2.0
+          }
+        ]
+      },
+      {
+        "group_name": "6) CCL / LVS / AAL",
+        "summary": "Travel cyclicals basket",
+        "items": [
+          {
+            "symbol": "CCL",
+            "status": "available",
+            "category_sub": "TRAVEL_LEISURE_CYCLICAL",
+            "valuation_archetype": "TURNAROUND_RE_RATING",
+            "base_anchor": 14.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "travel_recovery",
+            "final_anchor": 16.21,
+            "valuation_gap": 0.125,
+            "valuation_score": 6.5
+          },
+          {
+            "symbol": "LVS",
+            "status": "available",
+            "category_sub": "TRAVEL_LEISURE_CYCLICAL",
+            "valuation_archetype": "TURNAROUND_RE_RATING",
+            "base_anchor": 14.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "travel_recovery",
+            "final_anchor": 16.21,
+            "valuation_gap": 0.224,
+            "valuation_score": 5.76
+          },
+          {
+            "symbol": "AAL",
+            "status": "available",
+            "category_sub": "TRAVEL_LEISURE_CYCLICAL",
+            "valuation_archetype": "TURNAROUND_RE_RATING",
+            "base_anchor": 14.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "travel_recovery",
+            "final_anchor": 16.21,
+            "valuation_gap": -0.395,
+            "valuation_score": 8.97
+          }
+        ]
+      },
+      {
+        "group_name": "7) 其他分類代表：UNH / COIN",
+        "summary": "Defensive healthcare vs crypto exchange platform",
+        "items": [
+          {
+            "symbol": "UNH",
+            "status": "available",
+            "category_sub": "HEALTHCARE_DEFENSIVE_MANAGED",
+            "valuation_archetype": "DEFENSIVE_CASHFLOW_COMPOUNDER",
+            "base_anchor": 17.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_normal",
+            "final_anchor": 19.61,
+            "valuation_gap": -0.324,
+            "valuation_score": 8.62
+          },
+          {
+            "symbol": "COIN",
+            "status": "available",
+            "category_sub": "CRYPTO_EXCHANGE_PLATFORM",
+            "valuation_archetype": "CRYPTO_EXCHANGE_PLATFORM",
+            "base_anchor": 20.0,
+            "market_regime": "growth_bull",
+            "industry_regime": "software_normal",
+            "final_anchor": 23.52,
+            "valuation_gap": 0.436,
+            "valuation_score": 3.82
+          }
+        ]
       }
     ],
-    "top_m7_preview": [
-      {
-        "rank": 1,
-        "symbol": "AMZN",
-        "fcn_score": 80.53,
-        "active_score": 89.78
-      },
-      {
-        "rank": 2,
-        "symbol": "TGT",
-        "fcn_score": 88.8,
-        "active_score": 89.49
-      },
-      {
-        "rank": 3,
-        "symbol": "AAPL",
-        "fcn_score": 84.06,
-        "active_score": 88.25
-      }
-    ],
-    "divergence_highlights": [
-      "NVDA vs AMD：同 category_sub，不同 archetype，final_anchor 仍可在 core M7 output 內追蹤",
-      "M7 top preview：同市場 regime 下，不同 valuation_gap 對 single-stock score 造成明顯排序差異"
+    "abnormal_movers": [
+      "TSM vs INTC：同半導體家族，但 archetype 不同導致 final_anchor 與 score 分岔",
+      "PLTR：valuation_gap > +2，估值分落在下限區",
+      "LQD/SMH：ForwardPE 近零時 gap 觸及低端，估值分數接近上限（需後續語義治理）"
     ]
+  },
+  "m7_complete_readiness_check": {
+    "complete": [
+      "category_sub taxonomy 與 base anchor 對齊完成",
+      "market/industry/archetype 三層 anchor 調節框架可運作",
+      "valuation_gap 與 piecewise valuation curve 已落地",
+      "MM 控制中心頁可展示參數→標的→估值分數鏈路"
+    ],
+    "incomplete": [
+      "trend 終版公式未鎖定（目前仍屬框架級）",
+      "structure 終版公式未鎖定（目前仍屬框架級）",
+      "timing 與策略引擎尚未完全對齊",
+      "quality / market_acceptance(money) 資料與公式仍不完整",
+      "多因子總分聚合與 compare semantics 尚未治理完成",
+      "因此不可宣稱 full M7 stock score 已完成"
+    ],
+    "missing_inputs": [
+      "缺少已批准的最終 factor-by-factor 權重方案（或權重治理規則）",
+      "缺少 trend/structure/timing/quality/money 的最終定義版輸入欄位字典",
+      "缺少 compare 語義去汙（避免 prototype 與 full-score 混用）",
+      "缺少 full M7 對外輸出欄位契約（哪些欄位為正式、哪些為暫定）"
+    ],
+    "tomorrow_readiness": [
+      "可交付：valuation-first prototype（可追蹤參數對估值分影響）",
+      "部分可交付：partial M7 stock score（僅在明確標示 prototype 前提）",
+      "不可交付：宣稱 full M7 stock score production-ready"
+    ],
+    "verdict": "目前定位應為「valuation-first prototype / partial score」，不是 full M7 完成版。"
   }
 }
