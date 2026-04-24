@@ -344,6 +344,15 @@ def round2(v: float) -> float:
     return round(safe_num(v, 0.0), 2)
 
 
+def normalize_m1_score_to_10(v: float | None) -> float:
+    x = safe_num(v, None)
+    if x is None:
+        return 0.0
+    if x > 10.0:
+        return clamp(x / 10.0, 0.0, 10.0)
+    return clamp(x, 0.0, 10.0)
+
+
 def piecewise(points: list[list[float]], x: float) -> float:
     if not points:
         return 0.0
@@ -567,6 +576,10 @@ def build_feature_row(symbol: str, bundle: InputBundle) -> dict[str, Any]:
         "sector": b.get("產業") or p.get("sector") or "",
         "subsector": b.get("子產業") or p.get("subsector") or "",
         "returns": rets,
+        "weekly_prices": [safe_num(x, None) for x in m.get("weekly_prices", [])] if isinstance(m.get("weekly_prices"), list) else [],
+        "weekly_returns": [safe_num(x, None) for x in m.get("weekly_returns", [])] if isinstance(m.get("weekly_returns"), list) else [],
+        "history_weeks": int(safe_num(m.get("history_weeks"), 0) or 0),
+        "history_horizon_used": m.get("history_horizon_used"),
         "swing_days": swing_days,
         "valuation": {
             "forward_pe": forward_pe,
@@ -615,39 +628,37 @@ def build_feature_row(symbol: str, bundle: InputBundle) -> dict[str, Any]:
 # Skeleton factor computations
 # -------------------------
 def compute_trend(feature: dict[str, Any]) -> dict[str, float]:
-    rets = feature["returns"]
+    weekly_returns = [safe_num(x, None) for x in feature.get("weekly_returns", [])]
+    weekly_returns = [x for x in weekly_returns if x is not None]
     w = curve_params["trend_curve"]
-    trend_raw = (
-        0.25 * safe_num(rets["1m"], 0.0)
-        + 0.25 * safe_num(rets["3m"], 0.0)
-        + 0.25 * safe_num(rets["6m"], 0.0)
-        + 0.25 * safe_num(rets["12m"], 0.0)
-    )
+    if weekly_returns:
+        trend_raw = (sum(weekly_returns) / len(weekly_returns)) * 100.0
+    else:
+        rets = feature["returns"]
+        trend_raw = (
+            0.25 * safe_num(rets["1m"], 0.0)
+            + 0.25 * safe_num(rets["3m"], 0.0)
+            + 0.25 * safe_num(rets["6m"], 0.0)
+            + 0.25 * safe_num(rets["12m"], 0.0)
+        )
     trend_score_10 = piecewise(w["points"], trend_raw)
     return {"raw": trend_raw, "score_10": clamp(trend_score_10, 0.0, 10.0)}
 
 
 def compute_structure(feature: dict[str, Any]) -> dict[str, float]:
-    rets = feature.get("returns", {})
-    horizon_points = []
-    for horizon, month_x in BUCKET_MONTH_EQUIV.items():
-        if horizon in {"1d", "1w"}:
-            continue
-        rv = safe_num(rets.get(horizon), None)
-        if rv is None:
-            continue
-        y_val = rv * 100.0 if abs(rv) <= 2.0 else rv
-        horizon_points.append((month_x, y_val))
+    weekly_prices = [safe_num(x, None) for x in feature.get("weekly_prices", [])]
+    weekly_prices = [x for x in weekly_prices if x is not None and x > 0]
 
     slope = None
     dispersion = None
     stability = None
     r2 = None
     regression_raw = None
+    drawdown_frequency = None
 
-    if len(horizon_points) >= 3:
-        xs = [p[0] for p in horizon_points]
-        ys = [p[1] for p in horizon_points]
+    if len(weekly_prices) >= 26:
+        xs = list(range(len(weekly_prices)))
+        ys = [math.log(p) for p in weekly_prices]
         mean_x = sum(xs) / len(xs)
         mean_y = sum(ys) / len(ys)
         sxx = sum((x - mean_x) ** 2 for x in xs)
@@ -660,9 +671,13 @@ def compute_structure(feature: dict[str, Any]) -> dict[str, float]:
             ss_res = sum(r * r for r in residuals)
             ss_tot = sum((y - mean_y) ** 2 for y in ys)
             r2 = 1.0 if ss_tot <= 1e-12 else max(0.0, min(1.0, 1.0 - ss_res / ss_tot))
-            dispersion = (ss_res / len(residuals)) ** 0.5
+            dispersion = ((ss_res / len(residuals)) ** 0.5) * 100.0
             stability = max(0.0, min(10.0, r2 * 10.0 - 0.05 * dispersion))
-            regression_raw = slope * 2.5 + stability * 0.8
+            annual_drift_pct = (math.exp(slope * 52.0) - 1.0) * 100.0
+            regression_raw = annual_drift_pct * 0.25 + stability * 0.8
+            weekly_rets = [(weekly_prices[i] / weekly_prices[i - 1] - 1.0) for i in range(1, len(weekly_prices))]
+            if weekly_rets:
+                drawdown_frequency = sum(1 for r in weekly_rets if r < 0) / len(weekly_rets)
 
     days = feature["swing_days"]
     d_weights = [0.2, 0.2, 0.1, 0.1, 0.2, 0.2]
@@ -676,6 +691,7 @@ def compute_structure(feature: dict[str, Any]) -> dict[str, float]:
         "dispersion": dispersion,
         "stability": stability,
         "r2": r2,
+        "drawdown_frequency": drawdown_frequency,
     }
 
 
@@ -1009,6 +1025,16 @@ def main() -> int:
                 + RAW_WEIGHTS["money"] * money["score_10"]
             )
             historical_score = compute_historical_score(feature)
+            m1_score = normalize_m1_score_to_10(feature.get("baseline", {}).get("today_score"))
+            m7_v2_score = clamp(
+                0.20 * m1_score
+                + 0.35 * m7_raw_score
+                + 0.25 * trend["score_10"]
+                + 0.10 * structure["score_10"]
+                + 0.10 * money["score_10"],
+                0.0,
+                10.0,
+            )
 
             rows_out.append({
                 "symbol": sym,
@@ -1023,18 +1049,25 @@ def main() -> int:
                 "structure_dispersion": round2(structure["dispersion"]) if structure.get("dispersion") is not None else None,
                 "structure_stability": round2(structure["stability"]) if structure.get("stability") is not None else None,
                 "structure_r2": round2(structure["r2"]) if structure.get("r2") is not None else None,
+                "drawdown_frequency": round2(structure["drawdown_frequency"] * 100.0) if structure.get("drawdown_frequency") is not None else None,
                 "structure_score": round2(structure["score_10"]),
                 "timing_score": round2(timing["score_10"]),
                 "money_score": round2(money["score_10"]),
+                "m1_score": round2(m1_score),
                 "m7_raw_score": round2(m7_raw_score),
+                "m7_v2_score": round2(m7_v2_score),
                 "historical_score": round2(historical_score),
                 "warning_flag": warning_flag,
                 "coverage_pct": feature["market_acceptance"].get("coverage_pct"),
                 "data_warning": feature["market_acceptance"].get("data_warning"),
                 "missing_price_refs": feature["market_acceptance"].get("missing_price_refs"),
+                "history_weeks": feature.get("history_weeks"),
+                "history_horizon_used": feature.get("history_horizon_used"),
                 "feature_snapshot": {
                     "valuation": feature["valuation"],
                     "returns": feature["returns"],
+                    "weekly_prices": feature.get("weekly_prices", []),
+                    "weekly_returns": feature.get("weekly_returns", []),
                 },
             })
 
@@ -1086,7 +1119,9 @@ def main() -> int:
 
             ab_rows.append({
                 "symbol": row["symbol"],
+                "m1_score": row["m1_score"],
                 "m7_score": row["m7_raw_score"],
+                "m7_v2_score": row["m7_v2_score"],
                 "zscore": row["zscore"],
                 "z_adj": row["z_adj"],
                 "historical_score": row["historical_score"],

@@ -10,6 +10,7 @@ import yfinance as yf
 
 SRC = Path("data/market_runtime.json")
 OUT = Path("data/runtime_staging/market_runtime_long_horizon.json")
+WEEKLY_CACHE_OUT = Path("data/runtime_staging/weekly_price_history.json")
 
 SHORT_RET_MAP = {
     "1d": "ret_1d",
@@ -23,6 +24,7 @@ SHORT_RET_MAP = {
 SWING_KEYS = ["d1", "d2", "d3", "d4", "d5"]
 LONG_YEARS = {"3y": 3, "5y": 5, "10y": 10}
 REF_KEYS = ["d1", "d2", "d3", "d4", "d5", "1w", "1m", "3m", "6m", "12m", "3y", "5y", "10y"]
+WEEKLY_HORIZON_FALLBACK = [("10y", "10Y"), ("5y", "5Y"), ("3y", "3Y"), ("1y", "1Y")]
 
 
 def num(x):
@@ -43,19 +45,6 @@ def to_ref(price_now, ret):
     return round(price_now / (1.0 + ret), 6)
 
 
-def _hist_close_series(symbol: str) -> pd.Series | None:
-    try:
-        hist = yf.Ticker(symbol).history(period="10y", auto_adjust=False)
-    except Exception:
-        return None
-    if hist is None or hist.empty or "Close" not in hist:
-        return None
-    close = hist["Close"].dropna()
-    if close.empty:
-        return None
-    return close
-
-
 def _nearest_close(close: pd.Series, target_ts: pd.Timestamp) -> float | None:
     if close is None or close.empty:
         return None
@@ -74,19 +63,64 @@ def _nearest_close(close: pd.Series, target_ts: pd.Timestamp) -> float | None:
     return num(close.iloc[best])
 
 
-def _compute_long_refs_from_yf(symbol: str, price_now: float | None) -> dict[str, float | None]:
-    out = {"price_ref_3y": None, "price_ref_5y": None, "price_ref_10y": None, "ret_3y": None, "ret_5y": None, "ret_10y": None}
-    if price_now is None:
-        return out
+def _hist_weekly_series(symbol: str) -> tuple[pd.Series | None, str | None]:
+    ticker = yf.Ticker(symbol)
+    for period, label in WEEKLY_HORIZON_FALLBACK:
+        try:
+            hist = ticker.history(period=period, interval="1wk", auto_adjust=False)
+        except Exception:
+            continue
+        if hist is None or hist.empty or "Close" not in hist:
+            continue
+        close = hist["Close"].dropna()
+        if close.empty:
+            continue
+        return close, label
+    return None, None
 
-    close = _hist_close_series(symbol)
-    if close is None:
+
+def _weekly_payload(close: pd.Series | None, horizon_label: str | None) -> dict[str, object]:
+    if close is None or close.empty:
+        return {
+            "weekly_prices": [],
+            "weekly_returns": [],
+            "history_weeks": 0,
+            "history_horizon_used": None,
+        }
+
+    prices = [round(float(v), 6) for v in close.tolist() if num(v) is not None]
+    weekly_returns: list[float] = []
+    for i in range(1, len(prices)):
+        prev = prices[i - 1]
+        cur = prices[i]
+        if prev and prev != 0:
+            weekly_returns.append(round(cur / prev - 1.0, 6))
+
+    return {
+        "weekly_prices": prices,
+        "weekly_returns": weekly_returns,
+        "history_weeks": len(prices),
+        "history_horizon_used": horizon_label,
+    }
+
+
+def _compute_long_refs_from_weekly(close: pd.Series | None, price_now: float | None) -> dict[str, float | None]:
+    out = {
+        "price_ref_3y": None,
+        "price_ref_5y": None,
+        "price_ref_10y": None,
+        "ret_3y": None,
+        "ret_5y": None,
+        "ret_10y": None,
+    }
+    if price_now is None or close is None or close.empty:
         return out
 
     last_ts = close.index[-1]
+    last_ts_naive = last_ts.tz_localize(None) if getattr(last_ts, "tzinfo", None) else last_ts
     for k, years in LONG_YEARS.items():
-        target_ts = (last_ts.tz_localize(None) if getattr(last_ts, "tzinfo", None) else last_ts) - timedelta(days=365 * years)
-        ref_price = _nearest_close(close, pd.Timestamp(target_ts))
+        target_ts = pd.Timestamp(last_ts_naive - timedelta(days=365 * years))
+        ref_price = _nearest_close(close, target_ts)
         out[f"price_ref_{k}"] = ref_price
         out[f"ret_{k}"] = None if ref_price in (None, 0) else round(price_now / ref_price - 1.0, 6)
     return out
@@ -95,6 +129,7 @@ def _compute_long_refs_from_yf(symbol: str, price_now: float | None) -> dict[str
 def main():
     raw = json.load(SRC.open())
     out = {}
+    weekly_cache = {}
 
     for sym, row in raw.items():
         if not isinstance(row, dict):
@@ -120,8 +155,15 @@ def main():
             obj[f"ret_{k}"] = rv
             obj[f"price_ref_{k}"] = to_ref(price_now, rv)
 
-        # long horizon from yfinance 10y history
-        long_vals = _compute_long_refs_from_yf(sym, price_now)
+        close, horizon_label = _hist_weekly_series(sym)
+        weekly_payload = _weekly_payload(close, horizon_label)
+        obj.update(weekly_payload)
+        weekly_cache[sym] = {
+            "symbol": sym,
+            **weekly_payload,
+        }
+
+        long_vals = _compute_long_refs_from_weekly(close, price_now)
         obj.update(long_vals)
 
         # map timing day refs from mapped swing returns
@@ -144,19 +186,23 @@ def main():
         out[sym] = obj
 
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    json.dump(
-        {
-            "generated_from": "scripts/runtime/build_market_runtime_long_horizon.py",
-            "symbol_count": len(out),
-            "rows": out,
-        },
-        OUT.open("w"),
-        indent=2,
-        ensure_ascii=False,
-    )
+    payload = {
+        "generated_from": "scripts/runtime/build_market_runtime_long_horizon.py",
+        "symbol_count": len(out),
+        "rows": out,
+    }
+    json.dump(payload, OUT.open("w"), indent=2, ensure_ascii=False)
+
+    weekly_payload = {
+        "generated_from": "scripts/runtime/build_market_runtime_long_horizon.py",
+        "symbol_count": len(weekly_cache),
+        "rows": weekly_cache,
+    }
+    json.dump(weekly_payload, WEEKLY_CACHE_OUT.open("w"), indent=2, ensure_ascii=False)
+
     print(f"written {OUT}")
+    print(f"written {WEEKLY_CACHE_OUT}")
 
 
 if __name__ == "__main__":
     main()
-

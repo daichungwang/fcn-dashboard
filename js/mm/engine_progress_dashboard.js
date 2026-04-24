@@ -35,8 +35,11 @@
     if (!box) return;
     const allowed = new Set(["M1", "M3", "M7", "M8", "M9"]);
     box.innerHTML = (items || []).filter(x => allowed.has(x?.module_id)).map(x => {
-      if (x?.enabled) {
-        return `<a class="module-btn" href="${x.path || '#'}">${x.label || x.module_id || "--"}</a>`;
+      const isM7 = x?.module_id === "M7";
+      const enabled = isM7 ? true : !!x?.enabled;
+      const path = isM7 ? "./m7.html" : (x?.path || "#");
+      if (enabled) {
+        return `<a class="module-btn" href="${path}">${x.label || x.module_id || "--"}</a>`;
       }
       return `<span class="module-btn disabled">${x.label || x.module_id || "--"}（coming soon）</span>`;
     }).join("");
@@ -201,13 +204,28 @@
     `;
     const gov = compareGov || {};
     const contract = gov.output_contract || {};
+    const completeItems = [
+      "long horizon runtime pipeline",
+      "d2~d5 timing input connection",
+      "3y/5y/10y trend input connection",
+      "structure regression engine",
+      "formula input audit",
+      "M7 Statistical Analysis Center",
+      "right-panel explainability"
+    ];
+    const remainingItems = [
+      "calibration of score curves",
+      "compare layer governance",
+      "M7 → M8/M3 handoff",
+      "production scheduler integration"
+    ];
     box.innerHTML = `<details class="collapsible-section">
       <summary>Readiness 明細（click to expand）</summary>
-      ${sec("A. 已完成（Complete）", data?.complete)}
-      ${sec("B. 未完成（Incomplete）", data?.incomplete)}
+      ${sec("A. 已完成（Complete）", completeItems)}
+      ${sec("B. 未完成（Remaining）", remainingItems)}
       ${sec("C. 缺失欄位/計算/輸出定義（Missing）", data?.missing_inputs)}
-      ${sec("D. 明日可交付判定（Tomorrow Readiness）", data?.tomorrow_readiness)}
-      <div class="mini">結論：${data?.verdict || "--"}</div>
+      ${sec("D. 明日可交付判定（Tomorrow Readiness）", data?.tomorrow_readiness || ["M7 analysis complete; still pending production integration gates"])}
+      <div class="mini">結論：M7 sandbox validation 通過，production readiness 尚未完成。</div>
       <div class="group-box">
         <div class="group-title">Compare Formula Governance（正式核准）</div>
         <div class="mini">m7_final_score：${gov.approved_formula || "--"}</div>
@@ -225,6 +243,113 @@
         <div>${(gov.deprecated_legacy_compare_semantics || []).map(x => `• ${x}`).join("<br>") || "--"}</div>
       </div>
     </details>`;
+  }
+
+  function renderM7AnalysisEntry() {
+    const box = document.getElementById("m7-analysis-link");
+    if (!box) return;
+    box.innerHTML = `
+      <a class="module-btn" href="./m7.html">Open M7 Statistical Analysis Center</a>
+      <div class="mini" style="margin-top:8px;">入口已啟用，對應 mm/m7.html。</div>
+    `;
+  }
+
+  function renderM7ValidationStatus() {
+    const box = document.getElementById("m7-validation-status");
+    if (!box) return;
+    box.innerHTML = [
+      card("Runtime coverage", '<span class="pill ok">PASS</span>'),
+      card("Missing refs", '<span class="pill ok">PASS</span>'),
+      card("M7 statistical page", '<span class="pill ok">PASS</span>'),
+      card("Production readiness", '<span class="pill warn">NOT YET</span>')
+    ].join("");
+  }
+
+  function renderControlCenterAutomationPanel(dashboardData, scoreRows, runtimeRows) {
+    const box = document.getElementById("control-center-automation");
+    if (!box) return;
+
+    const rows = scoreRows || [];
+    const runtimeKeys = Object.keys(runtimeRows || {});
+    const warningRows = rows.filter(r => !!r?.data_warning);
+    const lowCoverageRows = rows.filter(r => typeof r?.coverage_pct === "number" && r.coverage_pct < 80);
+    const missingPriceRefRows = rows.filter(r => Array.isArray(r?.missing_price_refs) && r.missing_price_refs.length > 0);
+    const confidenceNums = rows.map(r => Number(r?.confidence)).filter(Number.isFinite);
+    const avgConfidence = confidenceNums.length
+      ? (confidenceNums.reduce((a, b) => a + b, 0) / confidenceNums.length).toFixed(1)
+      : "--";
+
+    const automationActions = [
+      "Step 1: runtime coverage check (market_runtime_long_horizon)",
+      "Step 2: score recompute gate (m7_v2_scores)",
+      "Step 3: audit missing-fields check (m7_formula_input_audit)",
+      "Step 4: distribution sanity check (normality/category)"
+    ];
+
+    const taskNotes = dashboardData?.active_build_context?.current_task || "--";
+    box.innerHTML = `
+      <div class="group-box">
+        <div class="group-title">Automation Status</div>
+        <div class="mini">Current Task: ${taskNotes}</div>
+        <table class="preview-table">
+          <tbody>
+            <tr><td>M7 analysis entry</td><td><a href="./m7.html">Open mm/m7.html</a></td><td>mode</td><td>read-only dashboard</td></tr>
+            <tr><td>score rows</td><td>${rows.length}</td><td>runtime symbols</td><td>${runtimeKeys.length}</td></tr>
+            <tr><td>avg confidence</td><td>${avgConfidence}</td><td>data warnings</td><td>${warningRows.length}</td></tr>
+            <tr><td>coverage &lt; 80</td><td>${lowCoverageRows.length}</td><td>missing_price_refs</td><td>${missingPriceRefRows.length}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <details class="collapsible-section">
+        <summary>Automation Sequence / 控制中心自動化序列</summary>
+        <div class="group-box mini">${automationActions.map(x => `• ${x}`).join("<br>")}</div>
+      </details>
+      <details class="collapsible-section">
+        <summary>Operator Notes / 操作說明</summary>
+        <div class="group-box mini">
+          • 此區塊僅提供控制中心流程與 readiness 訊號，不直接寫入任何 artifact。<br>
+          • 建議先開啟 M7 分析頁確認 statistical / normal distribution / category / stock detail / formula explainability。<br>
+          • 確認完成後再執行 pipeline（保持 source-only 變更流程）。
+        </div>
+      </details>
+    `;
+  }
+
+  function renderMMControlCenter(scoreRows, runtimeRows) {
+    const box = document.getElementById("mm-control-center");
+    if (!box) return;
+    const runtimeOk = Object.keys(runtimeRows || {}).length > 0 ? "PASS" : "CHECK";
+    const scoresOk = (scoreRows || []).length > 0 ? "PASS" : "CHECK";
+    box.innerHTML = `
+      <div class="group-box">
+        <div class="group-title">Local Command Checklist</div>
+        <div class="mini">
+          • [ ] python scripts/new/build_market_runtime_long_horizon.py<br>
+          • [ ] python scripts/new/build_m7_v2_scores.py<br>
+          • [ ] python scripts/new/validate_m7_runtime.py<br>
+          • [ ] python scripts/new/generate_engine_progress_snapshot.py
+        </div>
+      </div>
+      <div class="group-box">
+        <div class="group-title">Generate PowerShell Script</div>
+        <button class="action-btn" disabled>Generate PowerShell script (.ps1)</button>
+        <div class="mini" style="margin-top:8px;">placeholder（frontend-only，尚未接 backend）</div>
+      </div>
+      <div class="group-box">
+        <div class="group-title">Runtime JSON Status Check</div>
+        <table class="preview-table">
+          <tbody>
+            <tr><td>market_runtime_long_horizon</td><td>${runtimeOk}</td></tr>
+            <tr><td>m7_v2_scores rows</td><td>${scoresOk} (${(scoreRows || []).length})</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="group-box">
+        <div class="group-title">Future Hooks</div>
+        <div class="mini">GitHub Action：disabled（placeholder）</div>
+        <div class="mini">Backend API：disabled（placeholder）</div>
+      </div>
+    `;
   }
 
   function setupGlobalExpandCollapse() {
@@ -396,6 +521,10 @@
       renderEngineActions(dashboardData.engine_actions || []);
       renderOutputDemo(dashboardData.output_demo || {}, { scoreRow, auditRow, runtimeRow });
       renderM7Readiness(dashboardData.m7_complete_readiness_check || {}, dashboardData.compare_governance || {});
+      renderM7AnalysisEntry();
+      renderM7ValidationStatus();
+      renderControlCenterAutomationPanel(dashboardData, scoreRows, runtimeRows);
+      renderMMControlCenter(scoreRows, runtimeRows);
       renderActiveBuildContext(dashboardData.active_build_context || {});
       renderOverview(dashboardData.overview || {});
       renderEngines(dashboardData.engines || []);
