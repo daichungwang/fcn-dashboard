@@ -1558,8 +1558,8 @@
   }
 },
   {
-  "date": "2026-03-10",
-  "fcn_id": "FCNxxxxxM 富邦",
+  "date": "2026-04-20",
+  "fcn_id": "FCN310N 富邦",
   "basket": [
     "MRVL",
     "MU",
@@ -1585,10 +1585,10 @@
   "is_portfolio": true,
   "note": "標的價格=VWAP",
   "entry_prices": {
-    "MRVL": 140,
-    "MU": 460,
-    "NVDA": 190,
-    "SMH": 399.9999
+    "MRVL": 147.2341,
+    "MU": 447.54,
+    "NVDA": 200.7159,
+    "SMH": 462.5778
   },
   "maturity_time": "2026-11-30T09:00",
   "has_ki_breach": false,
