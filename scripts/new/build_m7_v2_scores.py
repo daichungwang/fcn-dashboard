@@ -785,9 +785,9 @@ def compute_trend(feature: dict[str, Any]) -> dict[str, Any]:
         "trend_mode": mode,
         "trend_reliability": reliability,
         "history_weeks": history_weeks,
-        "linear_slope": round2(long_slope),
-        "ma_slope": round2(ma_slope),
-        "acceleration": round2(acceleration),
+        "linear_slope": round(long_slope, 6),
+        "ma_slope": round(ma_slope, 6),
+        "acceleration": round(acceleration, 6),
         "linear_score": round2(linear_score),
         "ma_score": round2(ma_score),
         "acceleration_score": round2(acc_score)
