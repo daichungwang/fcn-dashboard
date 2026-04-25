@@ -743,7 +743,7 @@ def compute_trend(feature: dict[str, Any]) -> dict[str, Any]:
     elif acceleration <= 0.00001:
       acc_score = 5
     else:
-      acc_score = 8
+      ma_score = 9
 
     # -------------------------
     # Final logic
