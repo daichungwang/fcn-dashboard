@@ -245,26 +245,6 @@
     </details>`;
   }
 
-  function renderM7AnalysisEntry() {
-    const box = document.getElementById("m7-analysis-link");
-    if (!box) return;
-    box.innerHTML = `
-      <a class="module-btn" href="./m7.html">Open M7 Statistical Analysis Center</a>
-      <div class="mini" style="margin-top:8px;">Hero 區與本區皆提供一鍵入口，對應 mm/m7.html。</div>
-    `;
-  }
-
-  function renderM7ValidationStatus() {
-    const box = document.getElementById("m7-validation-status");
-    if (!box) return;
-    box.innerHTML = [
-      card("Runtime coverage", '<span class="pill ok">PASS</span>'),
-      card("Missing refs", '<span class="pill ok">PASS</span>'),
-      card("M7 statistical page", '<span class="pill ok">PASS</span>'),
-      card("Production readiness", '<span class="pill warn">NOT YET</span>')
-    ].join("");
-  }
-
   function renderControlCenterAutomationPanel(dashboardData, scoreRows, runtimeRows) {
     const box = document.getElementById("control-center-automation");
     if (!box) return;
@@ -312,43 +292,6 @@
           • 確認完成後再執行 pipeline（保持 source-only 變更流程）。
         </div>
       </details>
-    `;
-  }
-
-  function renderMMControlCenter(scoreRows, runtimeRows) {
-    const box = document.getElementById("mm-control-center");
-    if (!box) return;
-    const runtimeOk = Object.keys(runtimeRows || {}).length > 0 ? "PASS" : "CHECK";
-    const scoresOk = (scoreRows || []).length > 0 ? "PASS" : "CHECK";
-    box.innerHTML = `
-      <div class="group-box">
-        <div class="group-title">Local Command Checklist</div>
-        <div class="mini">
-          • [ ] python scripts/new/build_market_runtime_long_horizon.py<br>
-          • [ ] python scripts/new/build_m7_v2_scores.py<br>
-          • [ ] python scripts/new/validate_m7_runtime.py<br>
-          • [ ] python scripts/new/generate_engine_progress_snapshot.py
-        </div>
-      </div>
-      <div class="group-box">
-        <div class="group-title">Generate PowerShell Script</div>
-        <button class="action-btn" disabled>Generate PowerShell script (.ps1)</button>
-        <div class="mini" style="margin-top:8px;">placeholder（frontend-only，尚未接 backend）</div>
-      </div>
-      <div class="group-box">
-        <div class="group-title">Runtime JSON Status Check</div>
-        <table class="preview-table">
-          <tbody>
-            <tr><td>market_runtime_long_horizon</td><td>${runtimeOk}</td></tr>
-            <tr><td>m7_v2_scores rows</td><td>${scoresOk} (${(scoreRows || []).length})</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="group-box">
-        <div class="group-title">Future Hooks</div>
-        <div class="mini">GitHub Action：disabled（placeholder）</div>
-        <div class="mini">Backend API：disabled（placeholder）</div>
-      </div>
     `;
   }
 
@@ -521,10 +464,7 @@
       renderEngineActions(dashboardData.engine_actions || []);
       renderOutputDemo(dashboardData.output_demo || {}, { scoreRow, auditRow, runtimeRow });
       renderM7Readiness(dashboardData.m7_complete_readiness_check || {}, dashboardData.compare_governance || {});
-      renderM7AnalysisEntry();
-      renderM7ValidationStatus();
       renderControlCenterAutomationPanel(dashboardData, scoreRows, runtimeRows);
-      renderMMControlCenter(scoreRows, runtimeRows);
       renderActiveBuildContext(dashboardData.active_build_context || {});
       renderOverview(dashboardData.overview || {});
       renderEngines(dashboardData.engines || []);
