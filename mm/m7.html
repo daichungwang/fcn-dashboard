@@ -82,7 +82,7 @@
         • Compare layer 是 statistical adjustment（不是 ranking engine）<br>
         • Structure = regression channel health<br>
         • Timing = short swing D1~D5 + 1W<br>
-        • Trend = long horizon return structure with available horizon fallback<br>
+        • Trend = 0.50 長期方向 + 0.30 MA20 slope + 0.20 acceleration；MM config 目前先讀 localStorage，下一階段接 rerank preview<br>
         • Confidence = coverage + missing fields + warning severity synthesis
       </div>
     </details>
@@ -99,6 +99,22 @@
     const SAFE = (v, d="--") => (v === null || v === undefined || Number.isNaN(v)) ? d : v;
     const NUM = (v, d=0) => { const n = Number(v); return Number.isFinite(n) ? n : d; };
     const PCT = (v) => Number.isFinite(v) ? `${v.toFixed(1)}%` : "--";
+
+    const MM_CONFIG_STORAGE_KEY = "mm_parameter_config_v1";
+
+    function getMMConfig(){
+      try {
+        return JSON.parse(localStorage.getItem(MM_CONFIG_STORAGE_KEY) || "{}");
+      } catch (err) {
+        return {};
+      }
+    }
+
+    function mmConfigSummary(config){
+      const keys = Object.keys(config || {});
+      if (!keys.length) return "MM config: default / no local override";
+      return `MM config: ${keys.length} local override(s) active`;
+    }
 
     function showError(msg) {
       const box = document.getElementById("errorBox");
@@ -159,7 +175,12 @@
               <tr><td>valuation data</td><td colspan="3">forward_pe=${SAFE(valuation.forward_pe)}, base_anchor=${SAFE(valuation.base_anchor)}, final_anchor=${SAFE(row.final_anchor)}</td></tr>
               <tr><td>returns</td><td colspan="3">1d=${SAFE(returns["1d"])} / d2=${SAFE(returns["d2"])} / d3=${SAFE(returns["d3"])} / d4=${SAFE(returns["d4"])} / d5=${SAFE(returns["d5"])} / 1w=${SAFE(returns["1w"])} / 1m=${SAFE(returns["1m"])} / 3m=${SAFE(returns["3m"])} / 6m=${SAFE(returns["6m"])} / 12m=${SAFE(returns["12m"])} / 3y=${SAFE(returns["3y"])} / 5y=${SAFE(returns["5y"])} / 10y=${SAFE(returns["10y"])}</td></tr>
               <tr><td>runtime coverage</td><td>${SAFE(runtime.coverage_pct)}</td><td>runtime warning</td><td>${SAFE(runtime.data_warning, "none")}</td></tr>
+              <tr><td>trend mode</td><td>${SAFE(row.trend_mode)}</td><td>trend reliability</td><td>${SAFE(row.trend_reliability)}</td></tr>
+              <tr><td>trend slopes</td><td colspan="3">linear=${SAFE(row.trend_linear_slope)} / MA20=${SAFE(row.trend_ma_slope)} / acceleration=${SAFE(row.trend_acceleration)}</td></tr>
+              <tr><td>trend sub scores</td><td colspan="3">linear=${SAFE(row.trend_linear_score)} / MA20=${SAFE(row.trend_ma_score)} / acceleration=${SAFE(row.trend_acceleration_score)}</td></tr>
               <tr><td>structure slope</td><td>${SAFE(row.structure_slope)}</td><td>structure r2</td><td>${SAFE(row.structure_r2)}</td></tr>
+              <tr><td>structure model</td><td>${SAFE(row.best_structure_model)}</td><td>best r2</td><td>${SAFE(row.best_structure_r2)}</td></tr>
+              <tr><td>structure r2 detail</td><td colspan="3">linear=${SAFE(row.structure_r2_linear)} / quadratic=${SAFE(row.structure_r2_quadratic)} / logarithmic=${SAFE(row.structure_r2_logarithmic)}</td></tr>
               <tr><td>missing_price_refs</td><td colspan="3">${Array.isArray(row.missing_price_refs)&&row.missing_price_refs.length?row.missing_price_refs.join(", "):"[]"}</td></tr>
               <tr><td>audit missing fields</td><td colspan="3">${missing.length?missing.join(", "):"none"}</td></tr>
             </tbody></table>`;
@@ -233,7 +254,9 @@
         if(!rows.length) throw new Error("m7_v2_scores.json has no rows");
         const runtimeRows = runtime?.rows || {};
         const auditRows = audit?.rows || [];
-        document.getElementById("generatedAt").textContent = `scores generated_at: ${scores.generated_at || "--"} ｜ rows: ${rows.length}`;
+        const mmConfig = getMMConfig();
+        console.log("MM CONFIG:", mmConfig);
+        document.getElementById("generatedAt").textContent = `scores generated_at: ${scores.generated_at || "--"} ｜ rows: ${rows.length} ｜ ${mmConfigSummary(mmConfig)}`;
         buildSummary(rows);
         renderScoreTable(rows, runtimeRows, auditRows);
         renderStats(rows);
