@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M7 Statistical Analysis Center</title>
+  <style>
+    body { font-family: Arial, "Microsoft JhengHei", sans-serif; margin:0; background:#f5f6f8; color:#111; }
+    .wrap { max-width:1400px; margin:0 auto; padding:18px; }
+    .hero { background:#0f172a; color:#fff; border-radius:14px; padding:16px; margin-bottom:14px; }
+    .grid { display:grid; grid-template-columns: repeat(6, minmax(0,1fr)); gap:10px; margin-bottom:14px; }
+    .card { background:#fff; border:1px solid #ddd; border-radius:12px; padding:12px; }
+    .k { font-size:12px; color:#666; }
+    .v { font-size:22px; font-weight:700; }
+    .list { background:#fff; border:1px solid #ddd; border-radius:12px; padding:12px; margin-bottom:14px; }
+    h2 { margin:16px 0 8px; font-size:20px; }
+    table { width:100%; border-collapse: collapse; background:#fff; border:1px solid #ddd; border-radius:12px; overflow:hidden; }
+    th, td { border:1px solid #e5e5e5; padding:8px; font-size:12px; text-align:left; }
+    th { background:#f8fafc; position: sticky; top: 0; z-index: 1; }
+    .tbl-wrap { max-height:420px; overflow:auto; border:1px solid #ddd; border-radius:12px; background:#fff; }
+    .mini { font-size:12px; color:#667085; }
+    details { margin-top:10px; }
+    details summary { cursor:pointer; font-weight:700; }
+    .split { display:grid; grid-template-columns: 2fr 1fr; gap:12px; align-items:start; }
+    .error { display:none; background:#fef3f2; color:#b42318; border:1px solid #fecdca; border-radius:10px; padding:10px; margin-bottom:12px; }
+    tr.row-clickable { cursor:pointer; }
+    tr.row-clickable:hover { background:#f9fafb; }
+    .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700; border:1px solid #ddd; }
+    .ok { background:#ecfdf3; color:#027a48; border-color:#abefc6; }
+    .warn { background:#fffaeb; color:#b54708; border-color:#fec84b; }
+    .bad { background:#fef3f2; color:#b42318; border-color:#fecdca; }
+    .hero-actions { margin-top:10px; display:flex; gap:8px; flex-wrap:wrap; }
+    .hero-btn { display:inline-block; padding:8px 12px; border-radius:10px; border:1px solid #d0d5dd; background:#fff; color:#111; text-decoration:none; font-size:13px; font-weight:700; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1 style="margin:0; font-size:28px;">M7 Statistical Analysis Center</h1>
+      <div id="generatedAt" style="margin-top:6px; font-size:13px; opacity:.9;">載入中...</div>
+      <div class="hero-actions">
+        <a class="hero-btn" href="./engine_progress_dashboard.html">Back to MM Mission Control</a>
+      </div>
+    </div>
+
+    <div id="errorBox" class="error"></div>
+
+    <h2>M7 Summary Cards</h2>
+    <div id="summaryCards" class="grid"></div>
+
+    <h2>Stock Score Table</h2>
+    <div class="split">
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>symbol</th><th>category</th><th>valuation</th><th>trend</th><th>money</th>
+              <th>m7_v2</th><th>m7_final</th><th>rank Δ</th><th>confidence</th><th>coverage</th><th>warning</th>
+            </tr>
+          </thead>
+          <tbody id="scoreTable"></tbody>
+        </table>
+      </div>
+      <div id="stockDetail" class="list">
+        <div class="mini">點擊左側股票列查看明細</div>
+      </div>
+    </div>
+
+    <h2>統計分析 Statistical Analysis</h2>
+    <div id="statsBlock" class="tbl-wrap"></div>
+
+    <h2>常態分布檢查 Normality Check</h2>
+    <div id="normalityBlock" class="tbl-wrap"></div>
+
+    <h2>Final vs V2 Distribution Comparison</h2>
+    <div id="distributionCompareBlock" class="tbl-wrap"></div>
+
+    <h2>Category Statistical Analysis</h2>
+    <div id="categoryStatsBlock" class="tbl-wrap"></div>
+
+    <h2>Missing Data / Coverage</h2>
+    <div id="missingBlock" class="list"></div>
+
+    <h2>Formula Explainability</h2>
+    <details class="list" open>
+      <summary>click to expand / collapse</summary>
+      <div class="mini" style="line-height:1.7;">
+        • M7_v2 = 0.55 valuation + 0.30 trend + 0.15 money<br>
+        • m7_raw_score = 0.30 valuation + 0.25 trend + 0.20 structure + 0.15 timing + 0.10 money<br>
+        • m7_final_score = clamp(raw + z_adj + h_adj, 0, 10)<br>
+        • Compare layer 是 statistical adjustment（不是 ranking engine）<br>
+        • Trend = mean(weekly returns) as long-horizon drift proxy<br>
+        • Structure = weekly log(price) regression channel health（diagnostic only）<br>
+        • structure_score = best_structure_r2 × 10（best of linear / quadratic / logarithmic）<br>
+        • Timing = short swing D1~D5 + 1W（diagnostic only）<br>
+        • Structure is diagnostic only because valuation already captures much of business/quality/channel expectation.<br>
+        • Timing is diagnostic only because M7_v2 is intended as a stable stock selection score, not short-term trading score.<br>
+        • Confidence = coverage + missing fields + warning severity synthesis
+      </div>
+    </details>
+  </div>
+
+  <script>
+    const PATHS = {
+      scores: "../data/m7_sandbox/m7_v2_scores.json",
+      audit: "../data/m7_sandbox/m7_formula_input_audit.json",
+      coverage: "../data/runtime_staging/market_runtime_coverage_report.json",
+      runtime: "../data/runtime_staging/market_runtime_long_horizon.json"
+    };
+
+    const SAFE = (v, d="--") => (v === null || v === undefined || Number.isNaN(v)) ? d : v;
+    const NUM = (v, d=0) => { const n = Number(v); return Number.isFinite(n) ? n : d; };
+    const PCT = (v) => Number.isFinite(v) ? `${v.toFixed(1)}%` : "--";
+
+    function showError(msg) {
+      const box = document.getElementById("errorBox");
+      box.style.display = "block";
+      box.textContent = msg;
+    }
+
+    function mean(arr){ if(!arr.length) return null; return arr.reduce((a,b)=>a+b,0)/arr.length; }
+    function median(arr){ if(!arr.length) return null; const s=[...arr].sort((a,b)=>a-b); const m=Math.floor(s.length/2); return s.length%2?s[m]:(s[m-1]+s[m])/2; }
+    function std(arr){ if(arr.length<2) return 0; const m=mean(arr); return Math.sqrt(arr.reduce((a,b)=>a+(b-m)*(b-m),0)/(arr.length-1)); }
+    function quantile(arr, q){ if(!arr.length) return null; const s=[...arr].sort((a,b)=>a-b); const pos=(s.length-1)*q; const b=Math.floor(pos); const r=pos-b; return s[b+1]!==undefined ? s[b]+r*(s[b+1]-s[b]) : s[b]; }
+    function skewness(arr){ const n=arr.length; if(n<3) return null; const m=mean(arr), s=std(arr); if(!s) return 0; const z=arr.map(x=>(x-m)/s); return (n/((n-1)*(n-2)))*z.reduce((a,b)=>a+b*b*b,0); }
+    function kurtosisExcess(arr){ const n=arr.length; if(n<4) return null; const m=mean(arr), s=std(arr); if(!s) return -3; const z=arr.map(x=>(x-m)/s); const sum4=z.reduce((a,b)=>a+b**4,0); return (n*(n+1))/((n-1)*(n-2)*(n-3))*sum4 - (3*(n-1)*(n-1))/((n-2)*(n-3)); }
+
+    function dispersionLabel(sd){ if(sd < 0.75) return "low"; if(sd < 1.5) return "medium"; return "high"; }
+    function normalityLabel(sk, ke){ if(sk===null || ke===null) return "insufficient sample"; if(Math.abs(sk)<0.5 && Math.abs(ke)<1) return "close to normal"; if(Math.abs(sk)<1 && Math.abs(ke)<2) return "acceptable"; return "non-normal / skewed"; }
+
+    function buildSummary(rows){
+      const finals = rows.map(r=>NUM(r.m7_final_score, NaN)).filter(Number.isFinite);
+      const v2s = rows.map(r=>NUM(r.m7_v2_score, NaN)).filter(Number.isFinite);
+      const avgCov = mean(rows.map(r=>NUM(r.coverage_pct, NaN)).filter(Number.isFinite));
+      const cards = [
+        ["total stocks", rows.length],
+        ["avg m7_raw_score", mean(rows.map(r=>NUM(r.m7_raw_score))).toFixed(2)],
+        ["avg m7_final_score", mean(finals).toFixed(2)],
+        ["avg m7_v2_score", mean(v2s).toFixed(2)],
+        ["avg (v2-final)", (mean(v2s)-mean(finals)).toFixed(2)],
+        ["median final", median(finals)?.toFixed(2)],
+        ["p90 final", quantile(finals, 0.9)?.toFixed(2)],
+        ["avg coverage_pct", avgCov!=null ? avgCov.toFixed(2) : "--"]
+      ];
+      document.getElementById("summaryCards").innerHTML = cards.map(([k,v])=>`<div class="card"><div class="k">${k}</div><div class="v">${SAFE(v)}</div></div>`).join("");
+    }
+
+    function renderScoreTable(rows, runtimeRows, auditRows){
+      const tbody = document.getElementById("scoreTable");
+      const byAudit = Object.fromEntries((auditRows||[]).map(r=>[r.symbol,r]));
+      const rankFinal = Object.fromEntries([...rows].sort((a,b)=>NUM(b.m7_final_score)-NUM(a.m7_final_score)).map((r,i)=>[r.symbol,i+1]));
+      const rankV2 = Object.fromEntries([...rows].sort((a,b)=>NUM(b.m7_v2_score)-NUM(a.m7_v2_score)).map((r,i)=>[r.symbol,i+1]));
+      tbody.innerHTML = rows.map(r => `
+        <tr class="row-clickable" data-symbol="${r.symbol}">
+          <td>${SAFE(r.symbol)}</td><td>${SAFE(r.category)}</td><td>${SAFE(r.valuation_score)}</td><td>${SAFE(r.trend_score)}</td>
+          <td>${SAFE(r.money_score)}</td><td><b>${SAFE(r.m7_v2_score)}</b></td><td><b>${SAFE(r.m7_final_score)}</b></td>
+          <td>${SAFE((rankV2[r.symbol]||0) - (rankFinal[r.symbol]||0))}</td><td>${SAFE(r.confidence)}</td>
+          <td>${SAFE(r.coverage_pct)}</td><td>${SAFE(r.data_warning,"")}</td>
+        </tr>`).join("");
+
+      tbody.querySelectorAll("tr").forEach(tr => {
+        tr.addEventListener("click", () => {
+          const sym = tr.getAttribute("data-symbol");
+          const row = rows.find(x => x.symbol === sym) || {};
+          const runtime = runtimeRows[sym] || {};
+          const audit = byAudit[sym] || {};
+          const returns = row?.feature_snapshot?.returns || {};
+          const valuation = row?.feature_snapshot?.valuation || {};
+          const missing = (audit.missing_inputs && typeof audit.missing_inputs === "object")
+            ? Object.entries(audit.missing_inputs).flatMap(([k,v]) => (v||[]).map(x=>`${k}.${x}`))
+            : [];
+
+          document.getElementById("stockDetail").innerHTML = `
+            <div style="font-weight:700; margin-bottom:8px;">${SAFE(sym)} Detail</div>
+            <table class="preview-table"><tbody>
+              <tr><td>valuation data</td><td colspan="3">forward_pe=${SAFE(valuation.forward_pe)}, base_anchor=${SAFE(valuation.base_anchor)}, final_anchor=${SAFE(row.final_anchor)}</td></tr>
+              <tr><td>returns</td><td colspan="3">1d=${SAFE(returns["1d"])} / d2=${SAFE(returns["d2"])} / d3=${SAFE(returns["d3"])} / d4=${SAFE(returns["d4"])} / d5=${SAFE(returns["d5"])} / 1w=${SAFE(returns["1w"])} / 1m=${SAFE(returns["1m"])} / 3m=${SAFE(returns["3m"])} / 6m=${SAFE(returns["6m"])} / 12m=${SAFE(returns["12m"])} / 3y=${SAFE(returns["3y"])} / 5y=${SAFE(returns["5y"])} / 10y=${SAFE(returns["10y"])}</td></tr>
+              <tr><td>runtime coverage</td><td>${SAFE(runtime.coverage_pct)}</td><td>runtime warning</td><td>${SAFE(runtime.data_warning, "none")}</td></tr>
+              <tr><td>m7_v2_formula</td><td colspan="3">${SAFE(row.m7_v2_formula, "0.55*valuation + 0.30*trend + 0.15*money")}</td></tr>
+              <tr><td>structure_diagnostic_score</td><td>${SAFE(row.structure_diagnostic_score, row.structure_score)}</td><td>timing_diagnostic_score</td><td>${SAFE(row.timing_diagnostic_score, row.timing_score)}</td></tr>
+              <tr><td>structure_score</td><td>${SAFE(row.structure_score)}</td><td>timing_score</td><td>${SAFE(row.timing_score)}</td></tr>
+              <tr><td>structure slope</td><td>${SAFE(row.structure_slope)}</td><td>structure dispersion</td><td>${SAFE(row.structure_dispersion)}</td></tr>
+              <tr><td>structure r2 (best)</td><td>${SAFE(row.best_structure_r2, row.structure_r2)}</td><td>best model</td><td>${SAFE(row.best_structure_model, "--")}</td></tr>
+              <tr><td>r2 linear/quadratic/log</td><td colspan="3">${SAFE(row.structure_r2_linear)} / ${SAFE(row.structure_r2_quadratic)} / ${SAFE(row.structure_r2_logarithmic)}</td></tr>
+              <tr><td>d1~d5</td><td colspan="3">d1=${SAFE(returns["1d"])} / d2=${SAFE(returns["d2"])} / d3=${SAFE(returns["d3"])} / d4=${SAFE(returns["d4"])} / d5=${SAFE(returns["d5"])}</td></tr>
+              <tr><td>drawdown_frequency</td><td>${SAFE(row.drawdown_frequency)}</td><td>history</td><td>${SAFE(row.history_horizon_used)} / ${SAFE(row.history_weeks)} weeks</td></tr>
+              <tr><td>missing_price_refs</td><td colspan="3">${Array.isArray(row.missing_price_refs)&&row.missing_price_refs.length?row.missing_price_refs.join(", "):"[]"}</td></tr>
+              <tr><td>audit missing fields</td><td colspan="3">${missing.length?missing.join(", "):"none"}</td></tr>
+            </tbody></table>`;
+        });
+      });
+    }
+
+    function renderStats(rows){
+      const fields = ["m7_raw_score","m7_final_score","m7_v2_score","valuation_score","trend_score","structure_score","timing_score","money_score"];
+      const lines = fields.map(f=>{
+        const arr = rows.map(r=>NUM(r[f], NaN)).filter(Number.isFinite);
+        const m=mean(arr), md=median(arr), sd=std(arr), p25=quantile(arr,0.25), p75=quantile(arr,0.75);
+        const mi=arr.length?Math.min(...arr):null, mx=arr.length?Math.max(...arr):null;
+        return `<tr><td>${f}</td><td>${SAFE(m?.toFixed(3))}</td><td>${SAFE(md?.toFixed(3))}</td><td>${SAFE(sd?.toFixed(3))}</td><td>${SAFE(p25?.toFixed(3))}</td><td>${SAFE(p75?.toFixed(3))}</td><td>${SAFE(mi?.toFixed(3))}</td><td>${SAFE(mx?.toFixed(3))}</td><td>${dispersionLabel(sd||0)}</td></tr>`;
+      }).join("");
+      document.getElementById("statsBlock").innerHTML = `<table><thead><tr><th>field</th><th>mean</th><th>median</th><th>std</th><th>p25</th><th>p75</th><th>min</th><th>max</th><th>dispersion</th></tr></thead><tbody>${lines}</tbody></table>`;
+    }
+
+    function renderNormality(rows){
+      const fields = ["m7_raw_score","m7_final_score","m7_v2_score","valuation_score","trend_score","structure_score","timing_score","money_score"];
+      const lines = fields.map(f=>{
+        const arr = rows.map(r=>NUM(r[f], NaN)).filter(Number.isFinite);
+        const sk = skewness(arr), ke = kurtosisExcess(arr);
+        const within1sd = arr.filter(v => {
+          const m = mean(arr); const s = std(arr); return s ? Math.abs(v - m) <= s : true;
+        }).length;
+        const within1sdPct = arr.length ? (within1sd / arr.length) * 100 : null;
+        return `<tr><td>${f}</td><td>${SAFE(sk?.toFixed(4))}</td><td>${SAFE(ke?.toFixed(4))}</td><td>${PCT(within1sdPct)}</td><td>${normalityLabel(sk,ke)}</td></tr>`;
+      }).join("");
+      document.getElementById("normalityBlock").innerHTML = `<table><thead><tr><th>field</th><th>skewness</th><th>kurtosis_excess</th><th>% within ±1σ</th><th>label</th></tr></thead><tbody>${lines}</tbody></table>`;
+    }
+
+    function renderDistributionCompare(rows){
+      const finals = rows.map(r=>NUM(r.m7_final_score, NaN)).filter(Number.isFinite);
+      const v2s = rows.map(r=>NUM(r.m7_v2_score, NaN)).filter(Number.isFinite);
+      const cmpRows = [
+        ["mean", mean(finals), mean(v2s), (mean(v2s)-mean(finals))],
+        ["median", median(finals), median(v2s), (median(v2s)-median(finals))],
+        ["std", std(finals), std(v2s), (std(v2s)-std(finals))],
+        ["p25", quantile(finals,0.25), quantile(v2s,0.25), (quantile(v2s,0.25)-quantile(finals,0.25))],
+        ["p75", quantile(finals,0.75), quantile(v2s,0.75), (quantile(v2s,0.75)-quantile(finals,0.75))],
+        ["p90", quantile(finals,0.90), quantile(v2s,0.90), (quantile(v2s,0.90)-quantile(finals,0.90))]
+      ].map(([k,a,b,d])=>`<tr><td>${k}</td><td>${SAFE(a?.toFixed(3))}</td><td>${SAFE(b?.toFixed(3))}</td><td>${SAFE(d?.toFixed(3))}</td></tr>`).join("");
+      document.getElementById("distributionCompareBlock").innerHTML = `<table><thead><tr><th>metric</th><th>m7_final_score</th><th>m7_v2_score</th><th>delta(v2-final)</th></tr></thead><tbody>${cmpRows}</tbody></table>`;
+    }
+
+    function renderCategoryStats(rows){
+      const groups = {};
+      rows.forEach(r => { const c = r.category || "unknown"; (groups[c] ||= []).push(r); });
+      const lines = Object.entries(groups).sort((a,b)=>b[1].length-a[1].length).map(([cat, rs]) => {
+        const finals = rs.map(x=>NUM(x.m7_final_score));
+        const top = [...rs].sort((a,b)=>NUM(b.m7_final_score)-NUM(a.m7_final_score))[0];
+        const bottom = [...rs].sort((a,b)=>NUM(a.m7_final_score)-NUM(b.m7_final_score))[0];
+        return `<tr><td>${cat}</td><td>${rs.length}</td><td>${mean(finals).toFixed(3)}</td><td>${median(finals).toFixed(3)}</td><td>${std(finals).toFixed(3)}</td><td>${quantile(finals,0.75).toFixed(3)}</td><td>${SAFE(top?.symbol)}</td><td>${SAFE(bottom?.symbol)}</td></tr>`;
+      }).join("");
+      document.getElementById("categoryStatsBlock").innerHTML = `<table><thead><tr><th>category</th><th>count</th><th>mean final</th><th>median final</th><th>std final</th><th>p75 final</th><th>top</th><th>bottom</th></tr></thead><tbody>${lines}</tbody></table>`;
+    }
+
+    function renderMissing(rows, audit, coverage){
+      const lowCov = rows.filter(r => NUM(r.coverage_pct, 0) < 80).map(r => r.symbol);
+      const warnings = rows.filter(r => !!r.data_warning).map(r => `${r.symbol} (${r.data_warning})`);
+      const topMissing = (audit?.summary?.most_common_missing_fields || []).slice(0, 10).map(x => `${x.field}: ${x.count}`);
+      const covMissing10y = coverage?.symbols_missing_10y || [];
+      const covLow = coverage?.symbols_coverage_pct_below_70 || [];
+      document.getElementById("missingBlock").innerHTML = `
+        <div><b>coverage_pct &lt; 80</b>: ${lowCov.length ? lowCov.join(", ") : "none"}</div>
+        <div style="margin-top:8px;"><b>data_warning</b>: ${warnings.length ? warnings.join(", ") : "none"}</div>
+        <div style="margin-top:8px;"><b>top missing fields (audit)</b>: ${topMissing.length ? topMissing.join(" | ") : "none"}</div>
+        <div style="margin-top:8px;"><b>coverage report missing 10y</b>: ${covMissing10y.length ? covMissing10y.join(", ") : "none"}</div>
+        <div style="margin-top:8px;"><b>coverage report coverage&lt;70</b>: ${covLow.length ? covLow.join(", ") : "none"}</div>`;
+    }
+
+    async function loadJson(path){
+      const res = await fetch(path, { cache: "no-store" });
+      if(!res.ok) throw new Error(`${path} fetch failed: ${res.status}`);
+      return res.json();
+    }
+
+    async function main(){
+      try{
+        const [scores, audit, coverage, runtime] = await Promise.all([
+          loadJson(PATHS.scores), loadJson(PATHS.audit), loadJson(PATHS.coverage), loadJson(PATHS.runtime)
+        ]);
+        const rows = scores?.rows || [];
+        if(!rows.length) throw new Error("m7_v2_scores.json has no rows");
+        const runtimeRows = runtime?.rows || {};
+        const auditRows = audit?.rows || [];
+        document.getElementById("generatedAt").textContent = `scores generated_at: ${scores.generated_at || "--"} ｜ rows: ${rows.length}`;
+        buildSummary(rows);
+        renderScoreTable(rows, runtimeRows, auditRows);
+        renderStats(rows);
+        renderNormality(rows);
+        renderDistributionCompare(rows);
+        renderCategoryStats(rows);
+        renderMissing(rows, audit, coverage);
+      } catch (err) {
+        showError(`M7 page load failed: ${err.message}`);
+      }
+    }
+
+    main();
+  </script>
+</body>
+</html>
