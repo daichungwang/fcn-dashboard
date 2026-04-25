@@ -653,6 +653,11 @@ def compute_structure(feature: dict[str, Any]) -> dict[str, float]:
     dispersion = None
     stability = None
     r2 = None
+    linear_r2 = None
+    quadratic_r2 = None
+    logarithmic_r2 = None
+    best_structure_r2 = None
+    best_structure_model = None
     regression_raw = None
     drawdown_frequency = None
 
@@ -663,6 +668,7 @@ def compute_structure(feature: dict[str, Any]) -> dict[str, float]:
         mean_y = sum(ys) / len(ys)
         sxx = sum((x - mean_x) ** 2 for x in xs)
         if sxx > 0:
+            # Linear regression: y = a + b*x
             sxy = sum((x - mean_x) * (y - mean_y) for x, y in zip(xs, ys))
             slope = sxy / sxx
             intercept = mean_y - slope * mean_x
@@ -683,7 +689,7 @@ def compute_structure(feature: dict[str, Any]) -> dict[str, float]:
     d_weights = [0.2, 0.2, 0.1, 0.1, 0.2, 0.2]
     swing_raw = sum(dw * safe_num(days[i], 0.0) for i, dw in enumerate(d_weights))
     structure_raw = regression_raw if regression_raw is not None else swing_raw
-    structure_score_10 = piecewise(curve_params["structure_curve"]["points"], structure_raw)
+    structure_score_10 = clamp(safe_num(structure_raw, 0.0), 0.0, 10.0) if regression_raw is not None else piecewise(curve_params["structure_curve"]["points"], structure_raw)
     return {
         "raw": structure_raw,
         "score_10": clamp(structure_score_10, 0.0, 10.0),
