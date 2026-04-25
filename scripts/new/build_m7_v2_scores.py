@@ -733,17 +733,17 @@ def compute_trend(feature: dict[str, Any]) -> dict[str, Any]:
     # -------------------------
     # 4. Acceleration
     # -------------------------
-     quadratic_a = calc_quadratic_a(log_prices)
-   acceleration = quadratic_a
+    quadratic_a = calc_quadratic_a(log_prices)
+    acceleration = quadratic_a
 
-   if acceleration < -0.00001:
-      acc_score = 3
+    if acceleration < -0.00001:
+        acc_score = 3
     elif acceleration < 0:
-      acc_score = 5
+        acc_score = 5
     elif acceleration <= 0.00001:
-      acc_score = 5
+        acc_score = 5
     else:
-      ma_score = 9
+        acc_score = 8
 
     # -------------------------
     # Final logic
