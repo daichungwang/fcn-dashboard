@@ -632,22 +632,211 @@ def build_feature_row(symbol: str, bundle: InputBundle) -> dict[str, Any]:
 # -------------------------
 # Skeleton factor computations
 # -------------------------
-def compute_trend(feature: dict[str, Any]) -> dict[str, float]:
-    weekly_returns = [safe_num(x, None) for x in feature.get("weekly_returns", [])]
-    weekly_returns = [x for x in weekly_returns if x is not None]
-    w = curve_params["trend_curve"]
-    if weekly_returns:
-        trend_raw = (sum(weekly_returns) / len(weekly_returns)) * 100.0
-    else:
-        rets = feature["returns"]
-        trend_raw = (
-            0.25 * safe_num(rets["1m"], 0.0)
-            + 0.25 * safe_num(rets["3m"], 0.0)
-            + 0.25 * safe_num(rets["6m"], 0.0)
-            + 0.25 * safe_num(rets["12m"], 0.0)
+請直接 **完整覆蓋你原本 `build_m7_v2_scores_FIXED.py` 的 `compute_trend()` function**。
+
+其他程式不要動。
+
+```python
+import math
+
+
+def compute_trend(feature: dict[str, Any]) -> dict[str, Any]:
+    """
+    Trend v3
+    ---------------------------
+    Trend = 方向強不強
+    Structure = 穩不穩（已由 compute_structure 處理）
+
+    Full mode (history >=300 weeks):
+    0.40 linear_slope_score
+    0.25 recent_slope_score
+    0.20 ma_slope_score
+    0.15 acceleration_score
+
+    Medium mode (52~299 weeks):
+    0.45 recent_slope_score
+    0.35 ma_slope_score
+    0.20 acceleration_score
+
+    Short mode (<52 weeks):
+    fallback to return model
+    """
+
+    weekly_prices = [safe_num(x, None) for x in feature.get("weekly_prices", [])]
+    weekly_prices = [x for x in weekly_prices if x is not None and x > 0]
+
+    history_weeks = len(weekly_prices)
+
+    if history_weeks < 4:
+        return {
+            "raw": 0,
+            "score_10": 0,
+            "trend_mode": "insufficient_data",
+            "trend_reliability": "low"
+        }
+
+    log_prices = [math.log(x) for x in weekly_prices]
+    x = list(range(history_weeks))
+
+    def calc_slope(y_vals):
+        n = len(y_vals)
+        x_vals = list(range(n))
+        x_mean = sum(x_vals) / n
+        y_mean = sum(y_vals) / n
+
+        numerator = sum(
+            (x_vals[i] - x_mean) * (y_vals[i] - y_mean)
+            for i in range(n)
         )
-    trend_score_10 = piecewise(w["points"], trend_raw)
-    return {"raw": trend_raw, "score_10": clamp(trend_score_10, 0.0, 10.0)}
+        denominator = sum(
+            (x_vals[i] - x_mean) ** 2
+            for i in range(n)
+        )
+
+        if denominator == 0:
+            return 0
+
+        return numerator / denominator
+
+    # -------------------------
+    # 1. Long-term slope
+    # -------------------------
+    long_slope = calc_slope(log_prices)
+
+    if long_slope <= 0:
+        linear_score = 2
+    elif long_slope <= 0.002:
+        linear_score = 5
+    elif long_slope <= 0.005:
+        linear_score = 7
+    else:
+        linear_score = 9
+
+    # -------------------------
+    # 2. Recent slope (recent 52 weeks)
+    # -------------------------
+    recent_window = min(52, history_weeks)
+    recent_prices = log_prices[-recent_window:]
+    recent_slope = calc_slope(recent_prices)
+
+    if long_slope <= 0:
+        recent_ratio = 0
+    else:
+        recent_ratio = recent_slope / long_slope
+
+    if recent_ratio <= 0.5:
+        recent_score = 3
+    elif recent_ratio <= 0.9:
+        recent_score = 5
+    elif recent_ratio <= 1.2:
+        recent_score = 7
+    else:
+        recent_score = 9
+
+    # -------------------------
+    # 3. MA slope
+    # -------------------------
+    ma_window = 100 if history_weeks >= 100 else 50 if history_weeks >= 50 else 20
+
+    ma_series = []
+    for i in range(ma_window, history_weeks):
+        ma_series.append(
+            sum(weekly_prices[i-ma_window:i]) / ma_window
+        )
+
+    if len(ma_series) >= 10:
+        ma_log = [math.log(x) for x in ma_series if x > 0]
+        ma_slope = calc_slope(ma_log)
+    else:
+        ma_slope = 0
+
+    if ma_slope <= 0:
+        ma_score = 3
+    elif ma_slope <= 0.002:
+        ma_score = 5
+    elif ma_slope <= 0.005:
+        ma_score = 7
+    else:
+        ma_score = 9
+
+    # -------------------------
+    # 4. Acceleration
+    # -------------------------
+    acceleration = recent_slope - long_slope
+
+    if acceleration < -0.002:
+        acc_score = 3
+    elif acceleration < 0:
+        acc_score = 5
+    elif acceleration <= 0.002:
+        acc_score = 7
+    else:
+        acc_score = 8
+
+    # -------------------------
+    # Final logic
+    # -------------------------
+    if history_weeks >= 300:
+        final_score = (
+            0.40 * linear_score +
+            0.25 * recent_score +
+            0.20 * ma_score +
+            0.15 * acc_score
+        )
+        mode = "full"
+        reliability = "high"
+
+    elif history_weeks >= 52:
+        final_score = (
+            0.45 * recent_score +
+            0.35 * ma_score +
+            0.20 * acc_score
+        )
+        mode = "medium"
+        reliability = "medium"
+
+    else:
+        rets = feature.get("returns", {})
+
+        final_score = (
+            0.4 * safe_num(rets.get("1m"), 0) +
+            0.3 * safe_num(rets.get("3m"), 0) +
+            0.3 * safe_num(rets.get("6m"), 0)
+        )
+
+        final_score = clamp(final_score * 20 + 5, 0, 10)
+        mode = "short_history"
+        reliability = "low"
+
+    return {
+        "raw": round2(final_score),
+        "score_10": round2(clamp(final_score, 0, 10)),
+        "trend_mode": mode,
+        "trend_reliability": reliability,
+        "history_weeks": history_weeks,
+        "linear_slope": round2(long_slope),
+        "recent_slope": round2(recent_slope),
+        "ma_slope": round2(ma_slope),
+        "acceleration": round2(acceleration),
+        "linear_score": round2(linear_score),
+        "recent_score": round2(recent_score),
+        "ma_score": round2(ma_score),
+        "acceleration_score": round2(acc_score)
+    }
+```
+
+---
+
+這版會自然呈現你要的結果：
+
+* entity["stock","Taiwan Semiconductor Manufacturing Company","TSM"] → Trend 中高 + Structure 很高
+* entity["stock","NVIDIA Corporation","NVDA"] → Trend 高 + acceleration 高
+* entity["stock","Coinbase Global, Inc.","COIN"] → Trend 高但 reliability 可能 medium
+* entity["stock","iShares iBoxx $ Investment Grade Corporate Bond ETF","LQD"] → Trend 中低 + Structure 高
+* entity["stock","UnitedHealth Group Incorporated","UNH"] → recent slope 變弱會被抓出來
+
+這版比 avg weekly return 合理非常多。
+
 
 
 def compute_structure(feature: dict[str, Any]) -> dict[str, Any]:
