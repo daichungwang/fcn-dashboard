@@ -569,6 +569,11 @@ def build_feature_row(symbol: str, bundle: InputBundle) -> dict[str, Any]:
     # event score placeholder: baseline quality score proxy (safe fallback)
     event_score = safe_num(exposure.get("Event平均"), 0.0)
 
+    weekly_prices = m.get("weekly_prices")
+    weekly_returns = m.get("weekly_returns")
+    history_weeks = m.get("history_weeks")
+    history_horizon_used = m.get("history_horizon_used")
+
     return {
         "symbol": symbol,
         "name": b.get("股名") or p.get("name") or p.get("名稱") or symbol,
@@ -1017,6 +1022,17 @@ def main() -> int:
             feature = build_feature_row(sym, bundle)
             trend = compute_trend(feature)
             structure = compute_structure(feature)
+            if sym == "TSM":
+                tsm_weekly_len = len([x for x in feature.get("weekly_prices", []) if safe_num(x, None) is not None and safe_num(x, 0.0) > 0])
+                print(
+                    "[debug] TSM weekly_prices_len="
+                    f"{tsm_weekly_len}, best_structure_model={structure.get('best_structure_model')}, "
+                    f"best_structure_r2={structure.get('best_structure_r2')}"
+                )
+                if tsm_weekly_len <= 500:
+                    print("[debug][warn] TSM weekly_prices_len <= 500 (expected > 500)")
+                if structure.get("best_structure_r2") is not None and structure.get("best_structure_r2") <= 0.1:
+                    print("[debug][warn] TSM best_structure_r2 is near legacy-low range (<=0.10)")
             timing = compute_timing(feature)
             valuation = compute_valuation(feature)
             money = compute_market_acceptance(feature)
