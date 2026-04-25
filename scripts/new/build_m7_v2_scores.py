@@ -650,62 +650,84 @@ def compute_trend(feature: dict[str, Any]) -> dict[str, float]:
     return {"raw": trend_raw, "score_10": clamp(trend_score_10, 0.0, 10.0)}
 
 
-def compute_structure(feature: dict[str, Any]) -> dict[str, float]:
-    weekly_prices = [safe_num(x, None) for x in feature.get("weekly_prices", [])]
-    weekly_prices = [x for x in weekly_prices if x is not None and x > 0]
+def compute_structure(feature):
+    import math
+    import numpy as np
+    from sklearn.metrics import r2_score
+    from sklearn.linear_model import LinearRegression
+    from sklearn.preprocessing import PolynomialFeatures
 
-    slope = None
-    dispersion = None
-    stability = None
-    r2 = None
-    linear_r2 = None
-    quadratic_r2 = None
-    logarithmic_r2 = None
-    best_structure_r2 = None
-    best_structure_model = None
-    regression_raw = None
-    drawdown_frequency = None
+    weekly_prices = feature.get("weekly_prices", [])
 
-    if len(weekly_prices) >= 26:
-        xs = list(range(len(weekly_prices)))
-        ys = [math.log(p) for p in weekly_prices]
-        mean_x = sum(xs) / len(xs)
-        mean_y = sum(ys) / len(ys)
-        sxx = sum((x - mean_x) ** 2 for x in xs)
-        if sxx > 0:
-            # Linear regression: y = a + b*x
-            sxy = sum((x - mean_x) * (y - mean_y) for x, y in zip(xs, ys))
-            slope = sxy / sxx
-            intercept = mean_y - slope * mean_x
-            fitted = [intercept + slope * x for x in xs]
-            residuals = [y - y_hat for y, y_hat in zip(ys, fitted)]
-            ss_res = sum(r * r for r in residuals)
-            ss_tot = sum((y - mean_y) ** 2 for y in ys)
-            r2 = 1.0 if ss_tot <= 1e-12 else max(0.0, min(1.0, 1.0 - ss_res / ss_tot))
-            dispersion = ((ss_res / len(residuals)) ** 0.5) * 100.0
-            stability = max(0.0, min(10.0, r2 * 10.0 - 0.05 * dispersion))
-            annual_drift_pct = (math.exp(slope * 52.0) - 1.0) * 100.0
-            regression_raw = annual_drift_pct * 0.25 + stability * 0.8
-            weekly_rets = [(weekly_prices[i] / weekly_prices[i - 1] - 1.0) for i in range(1, len(weekly_prices))]
-            if weekly_rets:
-                drawdown_frequency = sum(1 for r in weekly_rets if r < 0) / len(weekly_rets)
+    weekly_prices = [
+        float(x) for x in weekly_prices
+        if x is not None and float(x) > 0
+    ]
 
-    days = feature["swing_days"]
-    d_weights = [0.2, 0.2, 0.1, 0.1, 0.2, 0.2]
-    swing_raw = sum(dw * safe_num(days[i], 0.0) for i, dw in enumerate(d_weights))
-    structure_raw = regression_raw if regression_raw is not None else swing_raw
-    structure_score_10 = clamp(safe_num(structure_raw, 0.0), 0.0, 10.0) if regression_raw is not None else piecewise(curve_params["structure_curve"]["points"], structure_raw)
-    return {
-        "raw": structure_raw,
-        "score_10": clamp(structure_score, 0.0, 10.0),
-        "structure_score": clamp(structure_score, 0.0, 10.0),
-        "slope": slope,
-        "dispersion": dispersion,
-        "stability": stability,
-        "r2": r2,
-        "drawdown_frequency": drawdown_frequency,
+    if len(weekly_prices) < 52:
+        return {
+            "structure_score": 0,
+            "structure_r2_linear": None,
+            "structure_r2_quadratic": None,
+            "structure_r2_logarithmic": None,
+            "best_structure_r2": None,
+            "best_structure_model": "insufficient_data"
+        }
+
+    y = np.log(np.array(weekly_prices))
+    X = np.arange(len(y)).reshape(-1, 1)
+
+    # -------------------
+    # Linear regression
+    # -------------------
+    linear_model = LinearRegression()
+    linear_model.fit(X, y)
+    y_pred_linear = linear_model.predict(X)
+    r2_linear = r2_score(y, y_pred_linear)
+
+    # -------------------
+    # Quadratic regression
+    # -------------------
+    poly = PolynomialFeatures(degree=2)
+    X_poly = poly.fit_transform(X)
+
+    quad_model = LinearRegression()
+    quad_model.fit(X_poly, y)
+    y_pred_quad = quad_model.predict(X_poly)
+    r2_quad = r2_score(y, y_pred_quad)
+
+    # -------------------
+    # Logarithmic regression
+    # -------------------
+    X_log = np.log(X + 1)
+
+    log_model = LinearRegression()
+    log_model.fit(X_log, y)
+    y_pred_log = log_model.predict(X_log)
+    r2_log = r2_score(y, y_pred_log)
+
+    # -------------------
+    # Pick best model
+    # -------------------
+    models = {
+        "linear": r2_linear,
+        "quadratic": r2_quad,
+        "logarithmic": r2_log
     }
 
+    best_model = max(models, key=models.get)
+    best_r2 = models[best_model]
+
+    structure_score = max(0, min(best_r2 * 10, 10))
+
+    return {
+        "structure_score": round(structure_score, 2),
+        "structure_r2_linear": round(r2_linear, 4),
+        "structure_r2_quadratic": round(r2_quad, 4),
+        "structure_r2_logarithmic": round(r2_log, 4),
+        "best_structure_r2": round(best_r2, 4),
+        "best_structure_model": best_model
+    }
 
 def compute_timing(feature: dict[str, Any]) -> dict[str, float]:
     rets = feature["returns"]
