@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M7 Statistical Analysis Center</title>
+  <title>M7 Sandbox Analysis</title>
   <style>
     body { font-family: Arial, "Microsoft JhengHei", sans-serif; margin:0; background:#f5f6f8; color:#111; }
     .wrap { max-width:1400px; margin:0 auto; padding:18px; }
@@ -19,22 +19,22 @@
     th { background:#f8fafc; position: sticky; top: 0; z-index: 1; }
     .tbl-wrap { max-height:420px; overflow:auto; border:1px solid #ddd; border-radius:12px; background:#fff; }
     .mini { font-size:12px; color:#667085; }
+    .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700; border:1px solid #ddd; }
+    .ok { background:#ecfdf3; color:#027a48; border-color:#abefc6; }
+    .warn { background:#fffaeb; color:#b54708; border-color:#fec84b; }
+    .bad { background:#fef3f2; color:#b42318; border-color:#fecdca; }
     details { margin-top:10px; }
     details summary { cursor:pointer; font-weight:700; }
     .split { display:grid; grid-template-columns: 2fr 1fr; gap:12px; align-items:start; }
     .error { display:none; background:#fef3f2; color:#b42318; border:1px solid #fecdca; border-radius:10px; padding:10px; margin-bottom:12px; }
     tr.row-clickable { cursor:pointer; }
     tr.row-clickable:hover { background:#f9fafb; }
-    .pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700; border:1px solid #ddd; }
-    .ok { background:#ecfdf3; color:#027a48; border-color:#abefc6; }
-    .warn { background:#fffaeb; color:#b54708; border-color:#fec84b; }
-    .bad { background:#fef3f2; color:#b42318; border-color:#fecdca; }
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="hero">
-      <h1 style="margin:0; font-size:28px;">M7 Statistical Analysis Center</h1>
+      <h1 style="margin:0; font-size:28px;">M7 Sandbox Analysis</h1>
       <div id="generatedAt" style="margin-top:6px; font-size:13px; opacity:.9;">載入中...</div>
     </div>
 
@@ -73,17 +73,16 @@
     <h2>Missing Data / Coverage</h2>
     <div id="missingBlock" class="list"></div>
 
-    <h2>Formula Explainability</h2>
+    <h2>Formula Explanation</h2>
     <details class="list" open>
       <summary>click to expand / collapse</summary>
       <div class="mini" style="line-height:1.7;">
         • m7_raw_score = 0.30 valuation + 0.25 trend + 0.20 structure + 0.15 timing + 0.10 money<br>
         • m7_final_score = clamp(raw + z_adj + h_adj, 0, 10)<br>
-        • Compare layer 是 statistical adjustment（不是 ranking engine）<br>
+        • Compare layer is statistical adjustment, not ranking engine<br>
         • Structure = regression channel health<br>
         • Timing = short swing D1~D5 + 1W<br>
-        • Trend = 0.50 長期方向 + 0.30 MA20 slope + 0.20 acceleration；MM config 目前先讀 localStorage，下一階段接 rerank preview<br>
-        • Confidence = coverage + missing fields + warning severity synthesis
+        • Trend = long horizon return structure with available horizon fallback
       </div>
     </details>
   </div>
@@ -93,28 +92,14 @@
       scores: "../data/m7_sandbox/m7_v2_scores.json",
       audit: "../data/m7_sandbox/m7_formula_input_audit.json",
       coverage: "../data/runtime_staging/market_runtime_coverage_report.json",
-      runtime: "../data/runtime_staging/market_runtime_long_horizon.json"
+      runtime: "../data/runtime_staging/market_runtime_long_horizon.json",
     };
 
     const SAFE = (v, d="--") => (v === null || v === undefined || Number.isNaN(v)) ? d : v;
-    const NUM = (v, d=0) => { const n = Number(v); return Number.isFinite(n) ? n : d; };
-    const PCT = (v) => Number.isFinite(v) ? `${v.toFixed(1)}%` : "--";
-
-    const MM_CONFIG_STORAGE_KEY = "mm_parameter_config_v1";
-
-    function getMMConfig(){
-      try {
-        return JSON.parse(localStorage.getItem(MM_CONFIG_STORAGE_KEY) || "{}");
-      } catch (err) {
-        return {};
-      }
-    }
-
-    function mmConfigSummary(config){
-      const keys = Object.keys(config || {});
-      if (!keys.length) return "MM config: default / no local override";
-      return `MM config: ${keys.length} local override(s) active`;
-    }
+    const NUM = (v, d=0) => {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : d;
+    };
 
     function showError(msg) {
       const box = document.getElementById("errorBox");
@@ -124,24 +109,54 @@
 
     function mean(arr){ if(!arr.length) return null; return arr.reduce((a,b)=>a+b,0)/arr.length; }
     function median(arr){ if(!arr.length) return null; const s=[...arr].sort((a,b)=>a-b); const m=Math.floor(s.length/2); return s.length%2?s[m]:(s[m-1]+s[m])/2; }
-    function std(arr){ if(arr.length<2) return 0; const m=mean(arr); return Math.sqrt(arr.reduce((a,b)=>a+(b-m)*(b-m),0)/(arr.length-1)); }
-    function quantile(arr, q){ if(!arr.length) return null; const s=[...arr].sort((a,b)=>a-b); const pos=(s.length-1)*q; const b=Math.floor(pos); const r=pos-b; return s[b+1]!==undefined ? s[b]+r*(s[b+1]-s[b]) : s[b]; }
-    function skewness(arr){ const n=arr.length; if(n<3) return null; const m=mean(arr), s=std(arr); if(!s) return 0; const z=arr.map(x=>(x-m)/s); return (n/((n-1)*(n-2)))*z.reduce((a,b)=>a+b*b*b,0); }
-    function kurtosisExcess(arr){ const n=arr.length; if(n<4) return null; const m=mean(arr), s=std(arr); if(!s) return -3; const z=arr.map(x=>(x-m)/s); const sum4=z.reduce((a,b)=>a+b**4,0); return (n*(n+1))/((n-1)*(n-2)*(n-3))*sum4 - (3*(n-1)*(n-1))/((n-2)*(n-3)); }
-
-    function dispersionLabel(sd){ if(sd < 0.75) return "low"; if(sd < 1.5) return "medium"; return "high"; }
-    function normalityLabel(sk, ke){ if(sk===null || ke===null) return "insufficient sample"; if(Math.abs(sk)<0.5 && Math.abs(ke)<1) return "close to normal"; if(Math.abs(sk)<1 && Math.abs(ke)<2) return "acceptable"; return "non-normal / skewed"; }
+    function std(arr){
+      if(arr.length<2) return 0;
+      const m=mean(arr);
+      const v=arr.reduce((a,b)=>a+(b-m)*(b-m),0)/(arr.length-1);
+      return Math.sqrt(v);
+    }
+    function skewness(arr){
+      const n=arr.length; if(n<3) return null;
+      const m=mean(arr), s=std(arr); if(!s) return 0;
+      const z = arr.map(x=>(x-m)/s);
+      return (n/((n-1)*(n-2))) * z.reduce((a,b)=>a+b*b*b,0);
+    }
+    function kurtosisExcess(arr){
+      const n=arr.length; if(n<4) return null;
+      const m=mean(arr), s=std(arr); if(!s) return -3;
+      const z = arr.map(x=>(x-m)/s);
+      const sum4 = z.reduce((a,b)=>a+b**4,0);
+      const a = (n*(n+1))/((n-1)*(n-2)*(n-3)) * sum4;
+      const b = (3*(n-1)*(n-1))/((n-2)*(n-3));
+      return a - b;
+    }
+    function dispersionLabel(sd){
+      if(sd < 0.75) return "low dispersion";
+      if(sd < 1.5) return "medium dispersion";
+      return "high dispersion";
+    }
+    function normalityLabel(sk, ke){
+      if(sk===null || ke===null) return "insufficient sample";
+      if(Math.abs(sk)<0.5 && Math.abs(ke)<1) return "close to normal";
+      if(Math.abs(sk)<1 && Math.abs(ke)<2) return "acceptable";
+      return "non-normal / skewed";
+    }
 
     function buildSummary(rows){
-      const finals = rows.map(r=>NUM(r.m7_final_score, NaN)).filter(Number.isFinite);
-      const avgCov = mean(rows.map(r=>NUM(r.coverage_pct, NaN)).filter(Number.isFinite));
+      const total = rows.length;
+      const avgRaw = mean(rows.map(r=>NUM(r.m7_raw_score)));
+      const avgFinal = mean(rows.map(r=>NUM(r.m7_final_score)));
+      const cov = rows.map(r=>NUM(r.coverage_pct, NaN)).filter(Number.isFinite);
+      const avgCov = mean(cov);
+      const warnCount = rows.filter(r=>r.data_warning).length;
+      const missingRefCount = rows.filter(r=>Array.isArray(r.missing_price_refs) && r.missing_price_refs.length>0).length;
       const cards = [
-        ["total stocks", rows.length],
-        ["avg m7_raw_score", mean(rows.map(r=>NUM(r.m7_raw_score))).toFixed(2)],
-        ["avg m7_final_score", mean(finals).toFixed(2)],
-        ["median final", median(finals)?.toFixed(2)],
-        ["p90 final", quantile(finals, 0.9)?.toFixed(2)],
-        ["avg coverage_pct", avgCov!=null ? avgCov.toFixed(2) : "--"]
+        ["total stocks", total],
+        ["average m7_raw_score", avgRaw?.toFixed(2)],
+        ["average m7_final_score", avgFinal?.toFixed(2)],
+        ["average coverage_pct", avgCov!=null?avgCov.toFixed(2):"--"],
+        ["count data_warning", warnCount],
+        ["count missing_price_refs not empty", missingRefCount],
       ];
       document.getElementById("summaryCards").innerHTML = cards.map(([k,v])=>`<div class="card"><div class="k">${k}</div><div class="v">${SAFE(v)}</div></div>`).join("");
     }
@@ -151,11 +166,22 @@
       const byAudit = Object.fromEntries((auditRows||[]).map(r=>[r.symbol,r]));
       tbody.innerHTML = rows.map(r => `
         <tr class="row-clickable" data-symbol="${r.symbol}">
-          <td>${SAFE(r.symbol)}</td><td>${SAFE(r.category)}</td><td>${SAFE(r.valuation_score)}</td><td>${SAFE(r.trend_score)}</td>
-          <td>${SAFE(r.structure_score)}</td><td>${SAFE(r.timing_score)}</td><td>${SAFE(r.money_score)}</td><td>${SAFE(r.m7_raw_score)}</td>
-          <td>${SAFE(r.z_adj)}</td><td>${SAFE(r.h_adj)}</td><td><b>${SAFE(r.m7_final_score)}</b></td><td>${SAFE(r.confidence)}</td>
-          <td>${SAFE(r.coverage_pct)}</td><td>${SAFE(r.data_warning,"")}</td>
-        </tr>`).join("");
+          <td>${SAFE(r.symbol)}</td>
+          <td>${SAFE(r.category)}</td>
+          <td>${SAFE(r.valuation_score)}</td>
+          <td>${SAFE(r.trend_score)}</td>
+          <td>${SAFE(r.structure_score)}</td>
+          <td>${SAFE(r.timing_score)}</td>
+          <td>${SAFE(r.money_score)}</td>
+          <td>${SAFE(r.m7_raw_score)}</td>
+          <td>${SAFE(r.z_adj)}</td>
+          <td>${SAFE(r.h_adj)}</td>
+          <td><b>${SAFE(r.m7_final_score)}</b></td>
+          <td>${SAFE(r.confidence)}</td>
+          <td>${SAFE(r.coverage_pct)}</td>
+          <td>${SAFE(r.data_warning, "")}</td>
+        </tr>
+      `).join("");
 
       tbody.querySelectorAll("tr").forEach(tr => {
         tr.addEventListener("click", () => {
@@ -168,22 +194,24 @@
           const missing = (audit.missing_inputs && typeof audit.missing_inputs === "object")
             ? Object.entries(audit.missing_inputs).flatMap(([k,v]) => (v||[]).map(x=>`${k}.${x}`))
             : [];
-
           document.getElementById("stockDetail").innerHTML = `
-            <div style="font-weight:700; margin-bottom:8px;">${SAFE(sym)} Detail</div>
-            <table class="preview-table"><tbody>
-              <tr><td>valuation data</td><td colspan="3">forward_pe=${SAFE(valuation.forward_pe)}, base_anchor=${SAFE(valuation.base_anchor)}, final_anchor=${SAFE(row.final_anchor)}</td></tr>
-              <tr><td>returns</td><td colspan="3">1d=${SAFE(returns["1d"])} / d2=${SAFE(returns["d2"])} / d3=${SAFE(returns["d3"])} / d4=${SAFE(returns["d4"])} / d5=${SAFE(returns["d5"])} / 1w=${SAFE(returns["1w"])} / 1m=${SAFE(returns["1m"])} / 3m=${SAFE(returns["3m"])} / 6m=${SAFE(returns["6m"])} / 12m=${SAFE(returns["12m"])} / 3y=${SAFE(returns["3y"])} / 5y=${SAFE(returns["5y"])} / 10y=${SAFE(returns["10y"])}</td></tr>
-              <tr><td>runtime coverage</td><td>${SAFE(runtime.coverage_pct)}</td><td>runtime warning</td><td>${SAFE(runtime.data_warning, "none")}</td></tr>
-              <tr><td>trend mode</td><td>${SAFE(row.trend_mode)}</td><td>trend reliability</td><td>${SAFE(row.trend_reliability)}</td></tr>
-              <tr><td>trend slopes</td><td colspan="3">linear=${SAFE(row.trend_linear_slope)} / MA20=${SAFE(row.trend_ma_slope)} / acceleration=${SAFE(row.trend_acceleration)}</td></tr>
-              <tr><td>trend sub scores</td><td colspan="3">linear=${SAFE(row.trend_linear_score)} / MA20=${SAFE(row.trend_ma_score)} / acceleration=${SAFE(row.trend_acceleration_score)}</td></tr>
-              <tr><td>structure slope</td><td>${SAFE(row.structure_slope)}</td><td>structure r2</td><td>${SAFE(row.structure_r2)}</td></tr>
-              <tr><td>structure model</td><td>${SAFE(row.best_structure_model)}</td><td>best r2</td><td>${SAFE(row.best_structure_r2)}</td></tr>
-              <tr><td>structure r2 detail</td><td colspan="3">linear=${SAFE(row.structure_r2_linear)} / quadratic=${SAFE(row.structure_r2_quadratic)} / logarithmic=${SAFE(row.structure_r2_logarithmic)}</td></tr>
-              <tr><td>missing_price_refs</td><td colspan="3">${Array.isArray(row.missing_price_refs)&&row.missing_price_refs.length?row.missing_price_refs.join(", "):"[]"}</td></tr>
-              <tr><td>audit missing fields</td><td colspan="3">${missing.length?missing.join(", "):"none"}</td></tr>
-            </tbody></table>`;
+            <div class="group-title">${SAFE(sym)} Detail</div>
+            <table class="preview-table">
+              <tbody>
+                <tr><td>valuation data</td><td colspan="3">forward_pe=${SAFE(valuation.forward_pe)}, base_anchor=${SAFE(valuation.base_anchor)}, final_anchor=${SAFE(row.final_anchor)}</td></tr>
+                <tr><td>returns</td><td colspan="3">
+                  1d=${SAFE(returns["1d"])} / d2=${SAFE(returns["d2"])} / d3=${SAFE(returns["d3"])} / d4=${SAFE(returns["d4"])} / d5=${SAFE(returns["d5"])} /
+                  1w=${SAFE(returns["1w"])} / 1m=${SAFE(returns["1m"])} / 3m=${SAFE(returns["3m"])} / 6m=${SAFE(returns["6m"])} / 12m=${SAFE(returns["12m"])} /
+                  3y=${SAFE(returns["3y"])} / 5y=${SAFE(returns["5y"])} / 10y=${SAFE(returns["10y"])}
+                </td></tr>
+                <tr><td>structure_slope</td><td>${SAFE(row.structure_slope)}</td><td>structure_dispersion</td><td>${SAFE(row.structure_dispersion)}</td></tr>
+                <tr><td>structure_stability</td><td>${SAFE(row.structure_stability)}</td><td>structure_r2</td><td>${SAFE(row.structure_r2)}</td></tr>
+                <tr><td>missing_price_refs</td><td colspan="3">${Array.isArray(row.missing_price_refs)&&row.missing_price_refs.length?row.missing_price_refs.join(", "):"[]"}</td></tr>
+                <tr><td>confidence</td><td>${SAFE(row.confidence)}</td><td>data_warning</td><td>${SAFE(row.data_warning,"null")}</td></tr>
+                <tr><td>missing_fields (audit)</td><td colspan="3">${missing.length?missing.join(", "):"none"}</td></tr>
+              </tbody>
+            </table>
+          `;
         });
       });
     }
@@ -192,11 +220,16 @@
       const fields = ["m7_raw_score","m7_final_score","valuation_score","trend_score","structure_score","timing_score","money_score"];
       const lines = fields.map(f=>{
         const arr = rows.map(r=>NUM(r[f], NaN)).filter(Number.isFinite);
-        const m=mean(arr), md=median(arr), sd=std(arr), p25=quantile(arr,0.25), p75=quantile(arr,0.75);
-        const mi=arr.length?Math.min(...arr):null, mx=arr.length?Math.max(...arr):null;
-        return `<tr><td>${f}</td><td>${SAFE(m?.toFixed(3))}</td><td>${SAFE(md?.toFixed(3))}</td><td>${SAFE(sd?.toFixed(3))}</td><td>${SAFE(p25?.toFixed(3))}</td><td>${SAFE(p75?.toFixed(3))}</td><td>${SAFE(mi?.toFixed(3))}</td><td>${SAFE(mx?.toFixed(3))}</td><td>${dispersionLabel(sd||0)}</td></tr>`;
+        const m = mean(arr), md = median(arr), sd = std(arr), mi = arr.length?Math.min(...arr):null, mx = arr.length?Math.max(...arr):null;
+        const rg = (mi!=null&&mx!=null)?(mx-mi):null;
+        const cv = (m && Number.isFinite(sd)) ? (sd/Math.abs(m)) : null;
+        return `<tr>
+          <td>${f}</td><td>${SAFE(m?.toFixed(3))}</td><td>${SAFE(md?.toFixed(3))}</td><td>${SAFE(sd?.toFixed(3))}</td>
+          <td>${SAFE(mi?.toFixed(3))}</td><td>${SAFE(mx?.toFixed(3))}</td><td>${SAFE(rg?.toFixed(3))}</td>
+          <td>${SAFE(cv?.toFixed(3))}</td><td>${dispersionLabel(sd||0)}</td>
+        </tr>`;
       }).join("");
-      document.getElementById("statsBlock").innerHTML = `<table><thead><tr><th>field</th><th>mean</th><th>median</th><th>std</th><th>p25</th><th>p75</th><th>min</th><th>max</th><th>dispersion</th></tr></thead><tbody>${lines}</tbody></table>`;
+      document.getElementById("statsBlock").innerHTML = `<table><thead><tr><th>field</th><th>mean</th><th>median</th><th>std</th><th>min</th><th>max</th><th>range</th><th>CV</th><th>dispersion</th></tr></thead><tbody>${lines}</tbody></table>`;
     }
 
     function renderNormality(rows){
@@ -204,25 +237,30 @@
       const lines = fields.map(f=>{
         const arr = rows.map(r=>NUM(r[f], NaN)).filter(Number.isFinite);
         const sk = skewness(arr), ke = kurtosisExcess(arr);
-        const within1sd = arr.filter(v => {
-          const m = mean(arr); const s = std(arr); return s ? Math.abs(v - m) <= s : true;
-        }).length;
-        const within1sdPct = arr.length ? (within1sd / arr.length) * 100 : null;
-        return `<tr><td>${f}</td><td>${SAFE(sk?.toFixed(4))}</td><td>${SAFE(ke?.toFixed(4))}</td><td>${PCT(within1sdPct)}</td><td>${normalityLabel(sk,ke)}</td></tr>`;
+        return `<tr><td>${f}</td><td>${SAFE(sk?.toFixed(4))}</td><td>${SAFE(ke?.toFixed(4))}</td><td>${normalityLabel(sk,ke)}</td></tr>`;
       }).join("");
-      document.getElementById("normalityBlock").innerHTML = `<table><thead><tr><th>field</th><th>skewness</th><th>kurtosis_excess</th><th>% within ±1σ</th><th>label</th></tr></thead><tbody>${lines}</tbody></table>`;
+      document.getElementById("normalityBlock").innerHTML = `<table><thead><tr><th>field</th><th>skewness</th><th>kurtosis_excess</th><th>label</th></tr></thead><tbody>${lines}</tbody></table>`;
     }
 
     function renderCategoryStats(rows){
       const groups = {};
-      rows.forEach(r => { const c = r.category || "unknown"; (groups[c] ||= []).push(r); });
-      const lines = Object.entries(groups).sort((a,b)=>b[1].length-a[1].length).map(([cat, rs]) => {
+      rows.forEach(r => {
+        const c = r.category || "unknown";
+        groups[c] = groups[c] || [];
+        groups[c].push(r);
+      });
+      const lines = Object.entries(groups).sort((a,b)=>b[1].length-a[1].length).map(([cat, rs])=>{
         const finals = rs.map(x=>NUM(x.m7_final_score));
+        const raws = rs.map(x=>NUM(x.m7_raw_score));
         const top = [...rs].sort((a,b)=>NUM(b.m7_final_score)-NUM(a.m7_final_score))[0];
         const bottom = [...rs].sort((a,b)=>NUM(a.m7_final_score)-NUM(b.m7_final_score))[0];
-        return `<tr><td>${cat}</td><td>${rs.length}</td><td>${mean(finals).toFixed(3)}</td><td>${median(finals).toFixed(3)}</td><td>${std(finals).toFixed(3)}</td><td>${quantile(finals,0.75).toFixed(3)}</td><td>${SAFE(top?.symbol)}</td><td>${SAFE(bottom?.symbol)}</td></tr>`;
+        return `<tr>
+          <td>${cat}</td><td>${rs.length}</td><td>${mean(raws).toFixed(3)}</td><td>${mean(finals).toFixed(3)}</td>
+          <td>${std(finals).toFixed(3)}</td><td>${Math.min(...finals).toFixed(3)}</td><td>${Math.max(...finals).toFixed(3)}</td>
+          <td>${SAFE(top?.symbol)}</td><td>${SAFE(bottom?.symbol)}</td>
+        </tr>`;
       }).join("");
-      document.getElementById("categoryStatsBlock").innerHTML = `<table><thead><tr><th>category</th><th>count</th><th>mean final</th><th>median final</th><th>std final</th><th>p75 final</th><th>top</th><th>bottom</th></tr></thead><tbody>${lines}</tbody></table>`;
+      document.getElementById("categoryStatsBlock").innerHTML = `<table><thead><tr><th>category</th><th>count</th><th>mean raw</th><th>mean final</th><th>std final</th><th>min final</th><th>max final</th><th>top</th><th>bottom</th></tr></thead><tbody>${lines}</tbody></table>`;
     }
 
     function renderMissing(rows, audit, coverage){
@@ -236,7 +274,8 @@
         <div style="margin-top:8px;"><b>data_warning</b>: ${warnings.length ? warnings.join(", ") : "none"}</div>
         <div style="margin-top:8px;"><b>top missing fields (audit)</b>: ${topMissing.length ? topMissing.join(" | ") : "none"}</div>
         <div style="margin-top:8px;"><b>coverage report missing 10y</b>: ${covMissing10y.length ? covMissing10y.join(", ") : "none"}</div>
-        <div style="margin-top:8px;"><b>coverage report coverage&lt;70</b>: ${covLow.length ? covLow.join(", ") : "none"}</div>`;
+        <div style="margin-top:8px;"><b>coverage report coverage&lt;70</b>: ${covLow.length ? covLow.join(", ") : "none"}</div>
+      `;
     }
 
     async function loadJson(path){
@@ -248,26 +287,29 @@
     async function main(){
       try{
         const [scores, audit, coverage, runtime] = await Promise.all([
-          loadJson(PATHS.scores), loadJson(PATHS.audit), loadJson(PATHS.coverage), loadJson(PATHS.runtime)
+          loadJson(PATHS.scores),
+          loadJson(PATHS.audit),
+          loadJson(PATHS.coverage),
+          loadJson(PATHS.runtime),
         ]);
+
         const rows = scores?.rows || [];
-        if(!rows.length) throw new Error("m7_v2_scores.json has no rows");
+        if(!rows.length){
+          throw new Error("m7_v2_scores.json has no rows");
+        }
         const runtimeRows = runtime?.rows || {};
         const auditRows = audit?.rows || [];
-        const mmConfig = getMMConfig();
-        console.log("MM CONFIG:", mmConfig);
-        document.getElementById("generatedAt").textContent = `scores generated_at: ${scores.generated_at || "--"} ｜ rows: ${rows.length} ｜ ${mmConfigSummary(mmConfig)}`;
+        document.getElementById("generatedAt").textContent = `scores generated_at: ${scores.generated_at || "--"} ｜ rows: ${rows.length}`;
         buildSummary(rows);
         renderScoreTable(rows, runtimeRows, auditRows);
         renderStats(rows);
         renderNormality(rows);
         renderCategoryStats(rows);
         renderMissing(rows, audit, coverage);
-      } catch (err) {
+      }catch(err){
         showError(`M7 page load failed: ${err.message}`);
       }
     }
-
     main();
   </script>
 </body>
