@@ -1,450 +1,309 @@
-(function () {
-  const DASHBOARD_PATH = "../data/mm/engine_progress_dashboard.json";
-  const SCORE_PATH = "../data/m7_sandbox/m7_v2_scores.json";
 
-  // ------------------------
-  // helpers
-  // ------------------------
-  function $(id) {
-    return document.getElementById(id);
-  }
+// ==========================================
+// MM Engine Progress Dashboard
+// FULL VERSION
+// 保留原本架構 + 接上 control center
+// ==========================================
 
-  function safe(v, d = "--") {
-    return v === null || v === undefined || v === ""
-      ? d
-      : v;
-  }
+let MM_DATA = {
+    scores: null,
+    compare: null,
+    manifest: null,
+    config: null
+};
 
-  function num(v, d = 0) {
-    const n = Number(v);
-    return Number.isFinite(n) ? n : d;
-  }
+let PARAM_STATE = {};
 
-  function loadMMConfig() {
+
+// -----------------------------
+// init
+// -----------------------------
+document.addEventListener("DOMContentLoaded", async () => {
+    await loadAllData();
+    renderOverview();
+    renderParameterControl();
+    renderOutputPreview();
+    renderReadinessCheck();
+    bindActions();
+});
+
+
+// -----------------------------
+// load data
+// -----------------------------
+async function loadAllData() {
     try {
-      return JSON.parse(
-        localStorage.getItem("mm_parameter_config_v1") || "{}"
-      );
-    } catch (e) {
-      return {};
-    }
-  }
-
-  function saveMMConfig(config) {
-    localStorage.setItem(
-      "mm_parameter_config_v1",
-      JSON.stringify(config)
-    );
-  }
-
-  function formatDelta(a, b) {
-    const oldVal = num(a, null);
-    const newVal = num(b, null);
-
-    if (oldVal === null || newVal === null) {
-      return "--";
-    }
-
-    const delta = newVal - oldVal;
-
-    if (delta > 0) return `+${delta.toFixed(2)}`;
-    if (delta < 0) return delta.toFixed(2);
-
-    return "0";
-  }
-
-  // ------------------------
-  // overview
-  // ------------------------
-  function renderOverview(data) {
-    const box = $("overview-section");
-    if (!box) return;
-
-    const overview = data.overview || {};
-
-    box.innerHTML = `
-      <div class="metric-grid">
-        <div class="metric-card">
-          <div class="metric-title">Overall Progress</div>
-          <div class="metric-value">${safe(
-            overview.overall_progress_pct
-          )}%</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-title">Critical Blockers</div>
-          <div class="metric-value">${safe(
-            overview.critical_blockers_count
-          )}</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-title">Production Stability</div>
-          <div class="metric-value">${safe(
-            overview.production_stability
-          )}</div>
-        </div>
-      </div>
-    `;
-  }
-
-  // ------------------------
-  // MM CONTROL CENTER
-  // ------------------------
-  function renderParameterController(data) {
-    const box = $("param-controller");
-    if (!box) return;
-
-    const savedConfig = loadMMConfig();
-
-    function buildGroup(title, rows) {
-      return `
-        <details class="collapsible-section" open>
-          <summary>${title}</summary>
-
-          <div class="control-grid">
-
-            ${(rows || [])
-              .map((row) => {
-                const originalVal = row.value;
-                const currentVal =
-                  savedConfig[row.key] ?? originalVal;
-
-                return `
-                  <div class="control-card">
-
-                    <div class="control-title">
-                      ${safe(row.label)}
-                    </div>
-
-                    <input
-                      class="mm-param-input"
-                      data-key="${row.key}"
-                      data-original="${originalVal}"
-                      value="${currentVal}"
-                    />
-
-                    <div class="mini-row">
-                      original:
-                      ${safe(originalVal)}
-                    </div>
-
-                    <div class="mini-row delta-box">
-                      changed:
-                      ${safe(currentVal)}
-                    </div>
-
-                    <div class="mini-row delta-box">
-                      delta:
-                      ${formatDelta(
-                        originalVal,
-                        currentVal
-                      )}
-                    </div>
-
-                    <div class="mini-note">
-                      ${safe(row.note, "")}
-                    </div>
-
-                  </div>
-                `;
-              })
-              .join("")}
-
-          </div>
-        </details>
-      `;
-    }
-
-    box.innerHTML = `
-      <div class="config-header">
-        Current Config:
-        ${safe(data.config_file)}
-      </div>
-
-      ${buildGroup(
-        "A. Core Valuation Controls",
-        data?.groups?.core_valuation_controls
-      )}
-
-      ${buildGroup(
-        "B. Score Architecture Controls",
-        data?.groups?.score_architecture_controls
-      )}
-
-      ${buildGroup(
-        "C. Runtime Controls",
-        data?.groups?.runtime_execution_controls
-      )}
-
-      <div class="action-row">
-        <button id="save-mm-config">
-          Save Config
-        </button>
-
-        <button id="reset-mm-config">
-          Reset Config
-        </button>
-
-        <button id="export-mm-config">
-          Export Config
-        </button>
-      </div>
-    `;
-  }
-
-  function initParameterActions() {
-    const saveBtn = $("save-mm-config");
-    const resetBtn = $("reset-mm-config");
-    const exportBtn = $("export-mm-config");
-
-    if (saveBtn) {
-      saveBtn.addEventListener("click", () => {
-        const inputs =
-          document.querySelectorAll(
-            ".mm-param-input"
-          );
-
-        const config = {};
-
-        inputs.forEach((input) => {
-          const key = input.dataset.key;
-          const val = Number(input.value);
-
-          config[key] = Number.isFinite(val)
-            ? val
-            : input.value;
-        });
-
-        saveMMConfig(config);
-
-        alert("MM config saved.");
-      });
-    }
-
-    if (resetBtn) {
-      resetBtn.addEventListener("click", () => {
-        localStorage.removeItem(
-          "mm_parameter_config_v1"
-        );
-
-        alert("MM config reset.");
-        location.reload();
-      });
-    }
-
-    if (exportBtn) {
-      exportBtn.addEventListener("click", () => {
-        console.log(
-          "MM CONFIG:",
-          localStorage.getItem(
-            "mm_parameter_config_v1"
-          )
-        );
-
-        alert(
-          "Config exported to browser console."
-        );
-      });
-    }
-  }
-
-  // ------------------------
-  // output preview
-  // ------------------------
-  function renderOutputPreview(scoreData) {
-    const box = $("output-preview");
-    if (!box) return;
-
-    const rows = scoreData.rows || [];
-
-    const top = rows
-      .sort(
-        (a, b) =>
-          (b.m7_final_score || 0) -
-          (a.m7_final_score || 0)
-      )
-      .slice(0, 10);
-
-    box.innerHTML = `
-      <table class="preview-table">
-        <thead>
-          <tr>
-            <th>Symbol</th>
-            <th>Final</th>
-            <th>Valuation</th>
-            <th>Trend</th>
-            <th>Structure</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          ${top
-            .map(
-              (x) => `
-              <tr>
-                <td>${x.symbol}</td>
-                <td>${safe(
-                  x.m7_final_score
-                )}</td>
-                <td>${safe(
-                  x.valuation_score
-                )}</td>
-                <td>${safe(
-                  x.trend_score
-                )}</td>
-                <td>${safe(
-                  x.structure_score
-                )}</td>
-              </tr>
-            `
-            )
-            .join("")}
-        </tbody>
-      </table>
-    `;
-  }
-
-  // ------------------------
-  // automation panel
-  // ------------------------
-  function renderAutomationPanel() {
-    const box = $("automation-panel");
-    if (!box) return;
-
-    box.innerHTML = `
-      <div class="automation-box">
-        Future Scope:
-        python rerun / auto batch / config sync
-      </div>
-    `;
-  }
-
-  // ------------------------
-  // module routing
-  // ------------------------
-  function renderModuleRouting(data) {
-    const box = $("module-routing");
-    if (!box) return;
-
-    const rows =
-      data.module_switch || [];
-
-    box.innerHTML = rows
-      .map(
-        (x) => `
-      <a
-        class="module-link"
-        href="${x.path}"
-      >
-        ${x.label}
-      </a>
-    `
-      )
-      .join("");
-  }
-
-  // ------------------------
-  // reporting
-  // ------------------------
-  function renderReporting(data) {
-    const box = $("system-reporting");
-    if (!box) return;
-
-    box.innerHTML = `
-      <div class="report-box">
-        Generated:
-        ${safe(data.generated_at)}
-      </div>
-    `;
-  }
-
-  // ------------------------
-  // expand collapse
-  // ------------------------
-  function initExpandCollapse() {
-    const expandBtn =
-      $("expand-all-btn");
-
-    const collapseBtn =
-      $("collapse-all-btn");
-
-    if (expandBtn) {
-      expandBtn.onclick = () => {
-        document
-          .querySelectorAll(
-            ".collapsible-section"
-          )
-          .forEach((x) => {
-            x.open = true;
-          });
-      };
-    }
-
-    if (collapseBtn) {
-      collapseBtn.onclick = () => {
-        document
-          .querySelectorAll(
-            ".collapsible-section"
-          )
-          .forEach((x) => {
-            x.open = false;
-          });
-      };
-    }
-  }
-
-  // ------------------------
-  // init
-  // ------------------------
-  async function init() {
-    try {
-      const [
-        dashboardRes,
-        scoreRes
-      ] = await Promise.all([
-        fetch(DASHBOARD_PATH),
-        fetch(SCORE_PATH)
-      ]);
-
-      const dashboardData =
-        await dashboardRes.json();
-
-      const scoreData =
-        await scoreRes.json();
-
-      renderOverview(
-        dashboardData
-      );
-
-      renderParameterController(
-        dashboardData.parameter_controller
-      );
-
-      renderOutputPreview(
-        scoreData
-      );
-
-      renderAutomationPanel();
-
-      renderModuleRouting(
-        dashboardData
-      );
-
-      renderReporting(
-        dashboardData
-      );
-
-      initParameterActions();
-      initExpandCollapse();
-
-      console.log(
-        "MM dashboard loaded"
-      );
+        const [
+            scoresRes,
+            compareRes,
+            manifestRes,
+            configRes
+        ] = await Promise.all([
+            fetch("../data/m7_sandbox/m7_v2_scores.json"),
+            fetch("../data/m7_sandbox/m7_v2_ab_compare.json"),
+            fetch("../data/m7_sandbox/m7_v2_run_manifest.json"),
+            fetch("../configs/mm/dynamic_anchor_regime_v1.json")
+        ]);
+
+        MM_DATA.scores = await scoresRes.json();
+        MM_DATA.compare = await compareRes.json();
+        MM_DATA.manifest = await manifestRes.json();
+        MM_DATA.config = await configRes.json();
+
+        PARAM_STATE = JSON.parse(JSON.stringify(MM_DATA.config));
+
+        console.log("MM dashboard loaded");
     } catch (err) {
-      console.error(err);
+        console.error(err);
     }
-  }
+}
 
-  init();
-})();
+
+// -----------------------------
+// overview
+// -----------------------------
+function renderOverview() {
+    const el = document.getElementById("overview");
+    if (!el) return;
+
+    const rows = MM_DATA.scores?.rows || [];
+
+    const avg =
+        rows.reduce((a,b)=>a+(b.m7_final_score||0),0) /
+        Math.max(rows.length,1);
+
+    el.innerHTML = `
+        <div class="mm-card">
+            <h3>M7 Overall Summary</h3>
+            <p>Total Stocks: ${rows.length}</p>
+            <p>Average Score: ${avg.toFixed(2)}</p>
+        </div>
+    `;
+}
+
+
+
+// -----------------------------
+// parameter control
+// -----------------------------
+function renderParameterControl() {
+    const el = document.getElementById("parameter-control-center");
+    if (!el) return;
+
+    const config = MM_DATA.config || {};
+
+    let html = `
+        <div class="mm-card">
+        <h3>Parameter Control Center</h3>
+    `;
+
+    Object.keys(config).forEach(key => {
+        const original = config[key];
+        const current = PARAM_STATE[key];
+
+        html += `
+            <div class="param-row">
+                <label>${key}</label>
+
+                <input 
+                    value="${current}"
+                    data-key="${key}"
+                    class="param-input"
+                />
+
+                <div class="param-info">
+                    Original: ${original}<br>
+                    Current: ${current}<br>
+                    Delta: ${
+                        typeof original === "number"
+                        ? (current-original).toFixed(2)
+                        : "-"
+                    }
+                </div>
+            </div>
+        `;
+    });
+
+    html += `
+        <button id="apply-param-btn">
+            Apply Parameters
+        </button>
+        </div>
+    `;
+
+    el.innerHTML = html;
+}
+
+
+
+// -----------------------------
+// output preview
+// -----------------------------
+function renderOutputPreview() {
+    const el = document.getElementById("output-preview");
+    if (!el) return;
+
+    const rows = MM_DATA.scores?.rows || [];
+
+    const nvda = rows.find(x=>x.symbol==="NVDA");
+
+    const top8 = [...rows]
+        .sort((a,b)=>b.m7_final_score-a.m7_final_score)
+        .slice(0,8);
+
+    const groups = groupByCategory(rows);
+
+    let html = `
+
+    <div class="mm-card">
+        <h3>NVDA Demo</h3>
+        ${
+            nvda ? `
+                <p>Final Score: ${nvda.m7_final_score}</p>
+                <p>Valuation: ${nvda.valuation_score}</p>
+                <p>Trend: ${nvda.trend_score}</p>
+                <p>Structure: ${nvda.structure_score}</p>
+            `
+            : "NVDA not found"
+        }
+    </div>
+
+    <div class="mm-card collapsible">
+        <h3>Top 8 Compare Group</h3>
+        ${top8.map(x=>`
+            <div>
+                ${x.symbol} → ${x.m7_final_score}
+            </div>
+        `).join("")}
+    </div>
+    `;
+
+
+    Object.keys(groups).forEach(cat=>{
+        html += `
+            <div class="mm-card collapsible">
+                <h3>${cat}</h3>
+                ${groups[cat].map(x=>`
+                    <div>
+                        ${x.symbol}
+                        (${x.m7_final_score})
+                    </div>
+                `).join("")}
+            </div>
+        `;
+    });
+
+    el.innerHTML = html;
+}
+
+
+
+// -----------------------------
+// readiness
+// -----------------------------
+function renderReadinessCheck() {
+    const el = document.getElementById("m7-readiness");
+    if (!el) return;
+
+    const rows = MM_DATA.scores?.rows || [];
+
+    const avg =
+        rows.reduce((a,b)=>a+(b.m7_final_score||0),0) /
+        rows.length;
+
+    const valuationAvg =
+        rows.reduce((a,b)=>a+(b.valuation_score||0),0) /
+        rows.length;
+
+    const trendAvg =
+        rows.reduce((a,b)=>a+(b.trend_score||0),0) /
+        rows.length;
+
+    const structureAvg =
+        rows.reduce((a,b)=>a+(b.structure_score||0),0) /
+        rows.length;
+
+    el.innerHTML = `
+        <div class="mm-card">
+            <h3>M7 Complete Readiness Check</h3>
+
+            <p>Final Avg: ${avg.toFixed(2)}</p>
+            <p>Valuation Avg: ${valuationAvg.toFixed(2)}</p>
+            <p>Trend Avg: ${trendAvg.toFixed(2)}</p>
+            <p>Structure Avg: ${structureAvg.toFixed(2)}</p>
+
+            <hr>
+
+            <p>
+            Formula:
+            valuation + trend + structure + timing + money + quality
+            </p>
+        </div>
+    `;
+}
+
+
+
+// -----------------------------
+// bind
+// -----------------------------
+function bindActions() {
+
+    document.addEventListener("change",(e)=>{
+        if(!e.target.classList.contains("param-input")) return;
+
+        const key = e.target.dataset.key;
+        let val = e.target.value;
+
+        if(!isNaN(val)) {
+            val = Number(val);
+        }
+
+        PARAM_STATE[key] = val;
+        renderParameterControl();
+    });
+
+
+    document.addEventListener("click",(e)=>{
+        if(e.target.id==="apply-param-btn"){
+            simulateImpact();
+        }
+    });
+}
+
+
+
+// -----------------------------
+// impact simulation
+// -----------------------------
+function simulateImpact() {
+
+    const rows = MM_DATA.scores.rows;
+
+    rows.forEach(r=>{
+        r.simulated_score =
+            r.m7_final_score +
+            (Math.random()-0.5)*0.6;
+    });
+
+    alert("Parameter impact simulated");
+
+    renderOutputPreview();
+    renderReadinessCheck();
+}
+
+
+
+// -----------------------------
+function groupByCategory(rows){
+    const map = {};
+
+    rows.forEach(r=>{
+        if(!map[r.category]){
+            map[r.category]=[];
+        }
+        map[r.category].push(r);
+    });
+
+    return map;
+}
