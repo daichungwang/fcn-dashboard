@@ -67,11 +67,9 @@
     return d > 0 ? `+${d.toFixed(4)}` : d.toFixed(4);
   }
 
-  function formatNum(v, digits = 2) {
-    const n = num(v, null);
-    if (n === null) return "--";
-    return n.toFixed(digits);
-  }
+ function f(v, digits = 2) {
+  return formatNum(v, digits);
+}
 
   function percent(v) {
     const n = num(v, null);
