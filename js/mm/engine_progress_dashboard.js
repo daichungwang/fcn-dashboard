@@ -953,6 +953,207 @@
     `;
   }
 
+
+  function defaultWhatIfParams() {
+    const w = M7_PARAM_CONFIG?.m7_v2_weights || {};
+    const tw = M7_PARAM_CONFIG?.trend?.internal_weights || {};
+    const fb = M7_PARAM_CONFIG?.legacy_raw_fallback || {};
+    return {
+      valuation: num(w.valuation, 0.45),
+      trend: num(w.trend, 0.25),
+      structure: num(w.structure, 0.20),
+      timing: num(w.timing, 0.00),
+      money: num(w.money, 0.10),
+      linear: num(tw.linear, 0.35),
+      ma200: num(tw.ma200, 0.50),
+      acceleration: num(tw.acceleration, 0.15),
+      fallbackWeeks: num(fb.fallback_history_weeks, 156)
+    };
+  }
+
+  function renderWhatIfSimulator(scoreRows) {
+    const p = defaultWhatIfParams();
+    const input = (key, label, value, step = '0.01') => `
+      <div class="control-item">
+        <label>${label}</label>
+        <input class="m7-sim-input" data-key="${key}" type="number" step="${step}" value="${value}" />
+      </div>
+    `;
+
+    return `
+      <details class="collapsible-section" open>
+        <summary>MM v1.6 What-if Simulator / 前端即時參數模擬</summary>
+        <div class="group-box">
+          <div class="group-title">A. M7 v2 top weights（總分權重）</div>
+          <div class="control-grid">
+            ${input('valuation', 'valuation weight', p.valuation)}
+            ${input('trend', 'trend weight', p.trend)}
+            ${input('structure', 'structure weight', p.structure)}
+            ${input('timing', 'timing weight', p.timing)}
+            ${input('money', 'money weight', p.money)}
+          </div>
+          <div class="mini" id="m7-sim-top-sum" style="margin-top:8px;"></div>
+        </div>
+
+        <div class="group-box">
+          <div class="group-title">B. Trend internal weights（趨勢內部權重）</div>
+          <div class="control-grid">
+            ${input('linear', 'linear weight', p.linear)}
+            ${input('ma200', 'MA200 weight', p.ma200)}
+            ${input('acceleration', 'acceleration weight', p.acceleration)}
+            ${input('fallbackWeeks', 'fallback weeks', p.fallbackWeeks, '1')}
+          </div>
+          <div class="mini" id="m7-sim-trend-sum" style="margin-top:8px;"></div>
+        </div>
+
+        <div class="top-actions" style="margin:12px 0;">
+          <button id="m7-sim-recalc" type="button">Recalculate What-if</button>
+          <button id="m7-sim-reset" type="button">Reset to Config</button>
+        </div>
+
+        <div class="group-box">
+          <div class="group-title">C. Ranking Impact（前端重算，不寫回 config）</div>
+          <div id="m7-what-if-results">${renderWhatIfResultsTable(scoreRows, p)}</div>
+        </div>
+        <div class="mini">說明：此區只用目前 m7_v2_scores.json 的 factor output 前端重算，方便建立參數手感；不改 Python、不寫回 JSON、不影響 production。</div>
+      </details>
+    `;
+  }
+
+  function readWhatIfParamsFromDom() {
+    const base = defaultWhatIfParams();
+    document.querySelectorAll('.m7-sim-input').forEach(input => {
+      const key = input.dataset.key;
+      if (!key) return;
+      const n = num(input.value, null);
+      base[key] = n === null ? base[key] : n;
+    });
+    return base;
+  }
+
+  function whatIfRows(scoreRows, params) {
+    const rows = [...(scoreRows || [])].filter(r => r && r.symbol);
+
+    const originalRank = [...rows]
+      .sort((a, b) => num(b.m7_effective_score ?? b.m7_v2_score, -999) - num(a.m7_effective_score ?? a.m7_v2_score, -999))
+      .reduce((m, r, i) => (m[r.symbol] = i + 1, m), {});
+
+    const changedRows = rows.map(r => {
+      const changedTrend =
+        params.linear * num(r.trend_linear_score, 0) +
+        params.ma200 * num(r.trend_ma_score, 0) +
+        params.acceleration * num(r.trend_acceleration_score, 0);
+
+      const changedV2Unclamped =
+        params.valuation * num(r.valuation_score, 0) +
+        params.trend * changedTrend +
+        params.structure * num(r.structure_score, 0) +
+        params.timing * num(r.timing_score, 0) +
+        params.money * num(r.money_score, 0);
+
+      const fallback = num(r.history_weeks, 999999) < params.fallbackWeeks;
+      const changedEffective = fallback ? num(r.m7_raw_score, 0) : changedV2Unclamped;
+      const originalEffective = num(r.m7_effective_score ?? r.m7_v2_score, 0);
+
+      return {
+        ...r,
+        whatif_trend_score: changedTrend,
+        whatif_v2_score: changedV2Unclamped,
+        whatif_effective_score: changedEffective,
+        whatif_fallback_to_raw: fallback,
+        whatif_score_delta: changedEffective - originalEffective,
+        original_rank: originalRank[r.symbol] || null
+      };
+    });
+
+    return [...changedRows]
+      .sort((a, b) => num(b.whatif_effective_score, -999) - num(a.whatif_effective_score, -999))
+      .map((r, i) => ({
+        ...r,
+        whatif_rank: i + 1,
+        whatif_rank_delta: (r.original_rank || i + 1) - (i + 1)
+      }));
+  }
+
+  function renderWhatIfResultsTable(scoreRows, params) {
+    const ranked = whatIfRows(scoreRows, params);
+    const movers = ranked
+      .sort((a, b) => {
+        const ad = Math.abs(num(a.whatif_rank_delta, 0)) * 10 + Math.abs(num(a.whatif_score_delta, 0));
+        const bd = Math.abs(num(b.whatif_rank_delta, 0)) * 10 + Math.abs(num(b.whatif_score_delta, 0));
+        return bd - ad;
+      })
+      .slice(0, 24);
+
+    const topSum = params.valuation + params.trend + params.structure + params.timing + params.money;
+    const trendSum = params.linear + params.ma200 + params.acceleration;
+
+    return `
+      <div class="mini" style="margin-bottom:8px;">
+        top weight sum=${topSum.toFixed(3)} ｜ trend internal sum=${trendSum.toFixed(3)} ｜ fallback weeks=${params.fallbackWeeks}
+      </div>
+      <table class="preview-table">
+        <thead>
+          <tr>
+            <th>Symbol</th><th>Old Rank</th><th>New Rank</th><th>Δ Rank</th>
+            <th>Old Eff</th><th>New Eff</th><th>Δ Score</th>
+            <th>New Trend</th><th>New V2</th><th>Fallback?</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${movers.map(r => `
+            <tr>
+              <td>${r.symbol || '--'}</td>
+              <td>${r.original_rank ?? '--'}</td>
+              <td>${r.whatif_rank ?? '--'}</td>
+              <td>${r.whatif_rank_delta > 0 ? '+' : ''}${r.whatif_rank_delta}</td>
+              <td>${formatNum(r.m7_effective_score ?? r.m7_v2_score)}</td>
+              <td>${formatNum(r.whatif_effective_score)}</td>
+              <td>${formatNum(r.whatif_score_delta, 3)}</td>
+              <td>${formatNum(r.whatif_trend_score)}</td>
+              <td>${formatNum(r.whatif_v2_score)}</td>
+              <td>${r.whatif_fallback_to_raw ? 'YES' : 'NO'}</td>
+            </tr>
+          `).join('') || "<tr><td colspan='10'>No rows</td></tr>"}
+        </tbody>
+      </table>
+    `;
+  }
+
+  function updateWhatIfSummary(params) {
+    const topBox = document.getElementById('m7-sim-top-sum');
+    const trendBox = document.getElementById('m7-sim-trend-sum');
+    const topSum = params.valuation + params.trend + params.structure + params.timing + params.money;
+    const trendSum = params.linear + params.ma200 + params.acceleration;
+    if (topBox) topBox.textContent = `Top weights sum = ${topSum.toFixed(3)}（建議接近 1.000；這裡先允許 what-if 不強制 normalize）`;
+    if (trendBox) trendBox.textContent = `Trend internal weights sum = ${trendSum.toFixed(3)}（建議接近 1.000）`;
+  }
+
+  function bindWhatIfSimulator(scoreRows) {
+    const recalc = () => {
+      const params = readWhatIfParamsFromDom();
+      updateWhatIfSummary(params);
+      const resultBox = document.getElementById('m7-what-if-results');
+      if (resultBox) resultBox.innerHTML = renderWhatIfResultsTable(scoreRows, params);
+    };
+
+    const recalcBtn = document.getElementById('m7-sim-recalc');
+    const resetBtn = document.getElementById('m7-sim-reset');
+    if (recalcBtn) recalcBtn.addEventListener('click', recalc);
+    document.querySelectorAll('.m7-sim-input').forEach(input => input.addEventListener('input', recalc));
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        const p = defaultWhatIfParams();
+        document.querySelectorAll('.m7-sim-input').forEach(input => {
+          const key = input.dataset.key;
+          if (key && p[key] !== undefined) input.value = p[key];
+        });
+        recalc();
+      });
+    }
+    recalc();
+  }
+
   function renderControlCenterAutomationPanel(dashboardData, scoreRows, runtimeRows) {
     const box = document.getElementById("control-center-automation");
     if (!box) return;
@@ -993,6 +1194,7 @@
           </tbody>
         </table>
       </div>
+      ${renderWhatIfSimulator(rows)}
       ${renderM7ParameterSnapshot()}
       ${renderTrendDiagnosticsLeaderboard(rows)}
       ${renderFallbackMonitor(rows)}
@@ -1011,6 +1213,7 @@
         </div>
       </details>
     `;
+    bindWhatIfSimulator(rows);
   }
 
   function setupGlobalExpandCollapse() {
