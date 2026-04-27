@@ -1564,6 +1564,258 @@
       setError(`Engine Progress Dashboard 載入失敗：${err.message}`);
     }
   }
+function findStockBySymbol(symbol) {
+  const rows = getScoreRows();
+  if (!rows.length) return null;
 
+  const s = String(symbol || "").trim().toUpperCase();
+
+  return rows.find(r => r.symbol === s) || null;
+}
+
+function renderStandardStockCard(symbol = "NVDA") {
+  const stock = findStockBySymbol(symbol);
+
+  const container = document.getElementById("standard-stock-card");
+  if (!container) return;
+
+  if (!stock) {
+    container.innerHTML = `
+      <div class="panel">
+        <h3>Stock Not Found</h3>
+        <div class="muted">${symbol}</div>
+      </div>
+    `;
+    return;
+  }
+
+  const runtime = getRuntimeRows()[stock.symbol] || {};
+
+  const oldScore =
+    stock.m7_effective_score ??
+    stock.m7_v2_score ??
+    stock.m7_raw_score ??
+    0;
+
+  const changedRows = whatIfRows(getScoreRows(), readWhatIfParamsFromDom());
+  const changedStock =
+    changedRows.find(x => x.symbol === stock.symbol) || {};
+
+  const newScore =
+    changedStock.whatif_effective_score ??
+    oldScore;
+
+  const scoreDelta = newScore - oldScore;
+
+  function fmt(v, d=2){
+    const n = Number(v);
+    if(!Number.isFinite(n)) return "--";
+    return n.toFixed(d);
+  }
+
+  function deltaClass(v){
+    if(v>0) return "delta-pos";
+    if(v<0) return "delta-neg";
+    return "delta-flat";
+  }
+
+  container.innerHTML = `
+  
+  <!-- Layer 1 -->
+  <div class="panel" style="margin-bottom:12px;">
+    <h3>${stock.symbol} | ${stock.name}</h3>
+
+    <div class="grid-3">
+      <div class="mini-card">
+        <div class="muted">Price</div>
+        <b>${fmt(runtime.price_now)}</b>
+      </div>
+
+      <div class="mini-card">
+        <div class="muted">1D Delta</div>
+        <b class="${deltaClass(runtime.ret_1d)}">
+          ${fmt(runtime.ret_1d)}%
+        </b>
+      </div>
+
+      <div class="mini-card">
+        <div class="muted">Category</div>
+        <b>${stock.category || "--"}</b>
+      </div>
+    </div>
+
+    <div class="grid-3" style="margin-top:10px;">
+      <div class="mini-card">
+        <div class="muted">Subsector</div>
+        <b>${stock.subsector || "--"}</b>
+      </div>
+
+      <div class="mini-card">
+        <div class="muted">Category Sub</div>
+        <b>${stock.category_sub || "--"}</b>
+      </div>
+
+      <div class="mini-card">
+        <div class="muted">Archetype</div>
+        <b>${stock.valuation_archetype || "--"}</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layer 2 -->
+  <div class="panel" style="margin-bottom:12px;">
+    <h3>Core Scores (Now / New / Delta)</h3>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Now</th>
+            <th>New</th>
+            <th>Delta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>M1</td>
+            <td>${fmt(stock.m1_score)}</td>
+            <td>${fmt(stock.m1_score)}</td>
+            <td>--</td>
+          </tr>
+
+          <tr>
+            <td>M7 Raw</td>
+            <td>${fmt(stock.m7_raw_score)}</td>
+            <td>${fmt(stock.m7_raw_score)}</td>
+            <td>--</td>
+          </tr>
+
+          <tr>
+            <td>M7 Effective</td>
+            <td>${fmt(oldScore)}</td>
+            <td>${fmt(newScore)}</td>
+            <td class="${deltaClass(scoreDelta)}">
+              ${fmt(scoreDelta)}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Layer 3 -->
+  <div class="panel">
+    <h3>Main Factors</h3>
+
+    <div class="grid-5">
+      <div class="mini-card">
+        <div class="muted">Valuation</div>
+        <b>${fmt(stock.valuation_score)}</b>
+      </div>
+
+      <div class="mini-card">
+        <div class="muted">Trend</div>
+        <b>${fmt(stock.trend_score)}</b>
+      </div>
+
+      <div class="mini-card">
+        <div class="muted">Structure</div>
+        <b>${fmt(stock.structure_score)}</b>
+      </div>
+
+      <div class="mini-card">
+        <div class="muted">Timing</div>
+        <b>${fmt(stock.timing_score)}</b>
+      </div>
+
+      <div class="mini-card">
+        <div class="muted">Money</div>
+        <b>${fmt(stock.money_score)}</b>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layer 4 -->
+  <details class="subsection">
+    <summary>Trend Detail</summary>
+    <div class="subsection-body">
+      linear annualized:
+      ${fmt(stock.trend_linear_annualized_pct)}%
+      <br>
+      MA annualized:
+      ${fmt(stock.trend_ma_annualized_pct)}%
+      <br>
+      recent 3Y:
+      ${fmt(stock.trend_recent_3y_annualized_pct)}%
+      <br>
+      acceleration:
+      ${fmt(stock.trend_acceleration_annualized_delta_pct)}%
+    </div>
+  </details>
+
+  <details class="subsection">
+    <summary>Valuation Detail</summary>
+    <div class="subsection-body">
+      PE:
+      ${fmt(stock.feature_snapshot?.valuation?.forward_pe)}
+      <br>
+      Anchor:
+      ${fmt(stock.feature_snapshot?.valuation?.anchor_pe)}
+      <br>
+      PEG:
+      ${fmt(stock.feature_snapshot?.valuation?.peg)}
+      <br>
+      EPS Growth:
+      ${fmt(stock.feature_snapshot?.valuation?.eps_growth)}%
+    </div>
+  </details>
+
+  <details class="subsection">
+    <summary>Structure Detail</summary>
+    <div class="subsection-body">
+      Best Model:
+      ${stock.best_structure_model}
+      <br>
+      R²:
+      ${fmt(stock.best_structure_r2)}
+      <br>
+      Stability:
+      ${fmt(stock.structure_stability)}
+    </div>
+  </details>
+
+  <details class="subsection">
+    <summary>Data Health</summary>
+    <div class="subsection-body">
+      Coverage:
+      ${fmt(stock.coverage_pct)}%
+      <br>
+      History Weeks:
+      ${stock.history_weeks}
+      <br>
+      Horizon:
+      ${stock.history_horizon_used}
+    </div>
+  </details>
+  `;
+}
+
+function bindStockQuery() {
+  const btn = document.getElementById("stock-query-btn");
+  const input = document.getElementById("stock-query-input");
+
+  if (!btn || !input) return;
+
+  btn.addEventListener("click", () => {
+    renderStandardStockCard(input.value);
+  });
+
+  input.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      renderStandardStockCard(input.value);
+    }
+  });
+}
   init();
 })();
