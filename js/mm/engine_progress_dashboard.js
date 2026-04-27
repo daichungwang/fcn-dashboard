@@ -421,36 +421,239 @@
   }
 
   function refreshImpactOnly() {
+    const scoreRows = getScoreRows();
 
-  const scoreRows = getScoreRows();
-
-  renderOutputDemo(
-    DASHBOARD_DATA.output_demo || {},
-    buildExplainContext()
-  );
-
-  renderM7Readiness(
-    DASHBOARD_DATA.m7_complete_readiness_check || {},
-    DASHBOARD_DATA.compare_governance || {}
-  );
-
-  renderOverview(
-    DASHBOARD_DATA.overview || {}
-  );
-
-  const currentSymbol =
-    document.getElementById("stock-query-input")?.value || "NVDA";
-
-  renderStandardStockCard(currentSymbol);
-
-  const resultBox = document.getElementById("m7-what-if-results");
-
-  if (resultBox) {
-    resultBox.innerHTML = renderWhatIfResultsTable(
-      scoreRows,
-      readWhatIfParamsFromDom()
+    renderOutputDemo(
+      DASHBOARD_DATA.output_demo || {},
+      buildExplainContext()
     );
+
+    renderM7Readiness(
+      DASHBOARD_DATA.m7_complete_readiness_check || {},
+      DASHBOARD_DATA.compare_governance || {}
+    );
+
+    renderOverview(
+      DASHBOARD_DATA.overview || {}
+    );
+
+    const currentSymbol =
+      document.getElementById("stock-query-input")?.value || "NVDA";
+
+    renderStandardStockCard(currentSymbol);
+
+    const resultBox = document.getElementById("m7-what-if-results");
+    if (resultBox) {
+      resultBox.innerHTML = renderWhatIfResultsTable(
+        scoreRows,
+        readWhatIfParamsFromDom()
+      );
+    }
   }
+
+  function buildExplainContext() {
+    const prototypeSymbol = DASHBOARD_DATA?.output_demo?.prototype_symbol_snapshot?.symbol || "NVDA";
+    const scoreRows = getScoreRows();
+    const auditRows = getAuditRows();
+    const runtimeRows = getRuntimeRows();
+
+    const scoreRow =
+      scoreRows.find(r => r.symbol === prototypeSymbol) ||
+      scoreRows.find(r => r.symbol === "NVDA") ||
+      scoreRows[0] ||
+      {};
+
+    const auditRow = auditRows.find(r => r.symbol === scoreRow.symbol) || {};
+    const runtimeRow = runtimeRows[scoreRow.symbol] || {};
+
+    return { scoreRow, auditRow, runtimeRow };
+  }
+
+  function renderEngineActions(rows) {
+    const box = document.getElementById("engine-actions");
+    if (!box) return;
+
+    box.innerHTML = `<div class="actions-grid">${(rows || []).map(x => `
+      <div class="action-card">
+        <div style="font-weight:700;">${x.name || "--"}</div>
+        <div style="font-size:12px; color:#667085; margin-top:4px;">${x.description || "--"}</div>
+        <button class="action-btn" disabled>${x.button_label || "Run"}</button>
+      </div>
+    `).join("")}</div>`;
+  }
+
+   function renderPrototypeSnapshot(data, explain = {}) {
+  const stock = {
+    ...(data?.prototype_symbol_snapshot || {}),
+    ...(explain.scoreRow || {})
+  };
+
+  const impacted = enrichImpactRows([stock])[0] || stock;
+  const runtime = explain.runtimeRow || {};
+
+  const oldScore = impacted.mm_original_score || stock.m7_v2_score || 0;
+  const newScore = impacted.mm_changed_score || oldScore;
+  const deltaScore = newScore - oldScore;
+
+  function fmt(v, d = 2) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return "--";
+    return n.toFixed(d);
+  }
+
+  function deltaClass(v) {
+    if (v > 0) return "color:green;font-weight:bold;";
+    if (v < 0) return "color:red;font-weight:bold;";
+    return "";
+  }
+
+  return `
+  
+  <details class="collapsible-section" open>
+    <summary>C1 股票查詢區（預設 NVDA standard stock）</summary>
+
+    <div class="group-box">
+
+      <!-- Layer 1 -->
+      <div class="group-title">1. 股票身份卡</div>
+      <table class="preview-table">
+        <tbody>
+          <tr>
+            <td>Symbol</td>
+            <td>${stock.symbol || "--"}</td>
+            <td>Name</td>
+            <td>${stock.name || "--"}</td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td>${fmt(runtime.price_now)}</td>
+            <td>1D Delta</td>
+            <td>${fmt(runtime.ret_1d)}%</td>
+          </tr>
+          <tr>
+            <td>Category</td>
+            <td>${stock.category || "--"}</td>
+            <td>Subsector</td>
+            <td>${stock.subsector || "--"}</td>
+          </tr>
+          <tr>
+            <td>Category Sub</td>
+            <td>${stock.category_sub || "--"}</td>
+            <td>Archetype</td>
+            <td>${stock.valuation_archetype || "--"}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+
+      <!-- Layer 2 -->
+      <div class="group-title">2. 核心分數（Now / New / Delta）</div>
+      <table class="preview-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Now</th>
+            <th>New</th>
+            <th>Delta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>M1 Score</td>
+            <td>${fmt(stock.m1_score)}</td>
+            <td>${fmt(stock.m1_score)}</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>M7 Raw</td>
+            <td>${fmt(stock.m7_raw_score)}</td>
+            <td>${fmt(stock.m7_raw_score)}</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>M7 V2</td>
+            <td>${fmt(oldScore)}</td>
+            <td>${fmt(newScore)}</td>
+            <td style="${deltaClass(deltaScore)}">${fmt(deltaScore)}</td>
+          </tr>
+          <tr>
+            <td>Effective</td>
+            <td>${fmt(stock.m7_effective_score)}</td>
+            <td>${fmt(newScore)}</td>
+            <td style="${deltaClass(deltaScore)}">${fmt(deltaScore)}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+
+      <!-- Layer 3 -->
+      <div class="group-title">3. 主因子（Now）</div>
+      <table class="preview-table">
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Valuation</td><td>${fmt(stock.valuation_score)}</td></tr>
+          <tr><td>Trend</td><td>${fmt(stock.trend_score)}</td></tr>
+          <tr><td>Structure</td><td>${fmt(stock.structure_score)}</td></tr>
+          <tr><td>Timing</td><td>${fmt(stock.timing_score)}</td></tr>
+          <tr><td>Money</td><td>${fmt(stock.money_score)}</td></tr>
+        </tbody>
+      </table>
+
+      <br>
+
+      <!-- Layer 4 -->
+      <details class="collapsible-section">
+        <summary>Trend Detail</summary>
+        <div class="mini">
+          Linear Score: ${fmt(stock.trend_linear_score)}<br>
+          MA Score: ${fmt(stock.trend_ma_score)}<br>
+          Acceleration Score: ${fmt(stock.trend_acceleration_score)}<br>
+          Linear Annualized: ${fmt(stock.trend_linear_annualized_pct)}%<br>
+          MA Annualized: ${fmt(stock.trend_ma_annualized_pct)}%<br>
+          Recent 3Y: ${fmt(stock.trend_recent_3y_annualized_pct)}%<br>
+        </div>
+      </details>
+
+      <details class="collapsible-section">
+        <summary>Valuation Detail</summary>
+        <div class="mini">
+          Forward PE: ${fmt(stock.feature_snapshot?.valuation?.forward_pe)}<br>
+          Anchor PE: ${fmt(stock.feature_snapshot?.valuation?.anchor_pe)}<br>
+          PEG: ${fmt(stock.feature_snapshot?.valuation?.peg)}<br>
+          EPS Growth: ${fmt(stock.feature_snapshot?.valuation?.eps_growth)}%
+        </div>
+      </details>
+
+      <details class="collapsible-section">
+        <summary>Structure Detail</summary>
+        <div class="mini">
+          Best Model: ${stock.best_structure_model || "--"}<br>
+          Best R²: ${fmt(stock.best_structure_r2)}<br>
+          Dispersion: ${fmt(stock.structure_dispersion)}<br>
+          Stability: ${fmt(stock.structure_stability)}
+        </div>
+      </details>
+
+      <details class="collapsible-section">
+        <summary>Data Health</summary>
+        <div class="mini">
+          Coverage: ${fmt(stock.coverage_pct)}%<br>
+          Warning: ${stock.warning_flag ? "YES" : "NO"}<br>
+          History Weeks: ${stock.history_weeks || "--"}<br>
+          Horizon: ${stock.history_horizon_used || "--"}
+        </div>
+      </details>
+
+    </div>
+  </details>
+  `;
 }
   function renderTopCompareGroups() {
     const rows = enrichImpactRows(getScoreRows());
@@ -585,7 +788,6 @@
 
     box.innerHTML = [
       `<div class="mini">Parameter → item → score；輸入參數後會即時 preview original / changed / delta。</div>`,
-      renderPrototypeSnapshot(data, explain),
       renderTopCompareGroups(),
       renderAllStocksByCategory(),
       `<div class="group-box"><div class="group-title">代表組摘要（Representative Summary）</div><div>${summaryRows || "無"}</div></div>`,
@@ -1190,10 +1392,7 @@
 
     all().forEach(el => { el.open = false; });
   }
-   const currentSymbol =
-        document.getElementById("stock-query-input")?.value || "NVDA";
-      renderStandardStockCard(currentSymbol);
-bindStockQuery();
+
   function renderActiveBuildContext(ctx) {
     const box = document.getElementById("active-build-context");
     if (!box) return;
@@ -1339,6 +1538,47 @@ bindStockQuery();
     ].join("<br>");
   }
 
+
+  function renderParameterBrainDirectControls() {
+    const mainBox = document.getElementById("m7-main-weight-controls");
+    const trendBox = document.getElementById("trend-internal-weight-controls");
+    const p = defaultWhatIfParams();
+
+    if (mainBox && !mainBox.innerHTML.trim()) {
+      const keys = ["valuation", "trend", "structure", "timing", "money"];
+      mainBox.innerHTML = keys.map(key => {
+        const nowVal = p[key] ?? 0;
+        return `
+          <div class="form-row">
+            <div>${key}</div>
+            <div>${formatNum(nowVal, 2)}</div>
+            <div><input class="m7-sim-input" data-key="${key}" type="number" step="0.01" value="${formatNum(nowVal, 2)}" /></div>
+            <div class="muted">0.00</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    if (trendBox && !trendBox.innerHTML.trim()) {
+      const keys = ["linear", "ma200", "acceleration"];
+      trendBox.innerHTML = keys.map(key => {
+        const nowVal = p[key] ?? 0;
+        return `
+          <div class="form-row">
+            <div>${key}</div>
+            <div>${formatNum(nowVal, 2)}</div>
+            <div><input class="m7-sim-input" data-key="${key}" type="number" step="0.01" value="${formatNum(nowVal, 2)}" /></div>
+            <div class="muted">0.00</div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    document.querySelectorAll(".m7-sim-input").forEach(input => {
+      input.oninput = () => refreshImpactOnly();
+    });
+  }
+
   async function init() {
     try {
       clearError();
@@ -1374,6 +1614,7 @@ bindStockQuery();
       renderOutputDemo(DASHBOARD_DATA.output_demo || {}, explain);
       renderM7Readiness(DASHBOARD_DATA.m7_complete_readiness_check || {}, DASHBOARD_DATA.compare_governance || {});
       renderControlCenterAutomationPanel(DASHBOARD_DATA, scoreRows, runtimeRows);
+      renderParameterBrainDirectControls();
       renderActiveBuildContext(DASHBOARD_DATA.active_build_context || {});
       renderOverview(DASHBOARD_DATA.overview || {});
       renderEngines(DASHBOARD_DATA.engines || []);
@@ -1384,6 +1625,11 @@ bindStockQuery();
       renderMilestones(DASHBOARD_DATA.milestones || []);
       renderHandoffMemory(DASHBOARD_DATA.handoff_memory || {});
       setupGlobalExpandCollapse();
+
+      const currentSymbol =
+        document.getElementById("stock-query-input")?.value || "NVDA";
+      renderStandardStockCard(currentSymbol);
+      bindStockQuery();
 
     } catch (err) {
       setError(`Engine Progress Dashboard 載入失敗：${err.message}`);
@@ -1632,15 +1878,15 @@ function bindStockQuery() {
 
   if (!btn || !input) return;
 
-  btn.addEventListener("click", () => {
+  btn.onclick = () => {
     renderStandardStockCard(input.value);
-  });
+  };
 
-  input.addEventListener("keypress", (e) => {
+  input.onkeypress = (e) => {
     if (e.key === "Enter") {
       renderStandardStockCard(input.value);
     }
-  });
+  };
 }
   init();
 })();
