@@ -3,12 +3,14 @@
   const SCORES_PATH = "../data/m7_sandbox/m7_v2_scores.json";
   const AUDIT_PATH = "../data/m7_sandbox/m7_formula_input_audit.json";
   const RUNTIME_PATH = "../data/runtime_staging/market_runtime_long_horizon.json";
+  const M7_PARAM_CONFIG_PATH = "../configs/mm/m7_v2_parameter_config.json";
   const CONFIG_STORAGE_KEY = "mm_parameter_config_v1";
 
   let DASHBOARD_DATA = {};
   let SCORES_DATA = {};
   let AUDIT_DATA = {};
   let RUNTIME_DATA = {};
+  let M7_PARAM_CONFIG = {};
   let PARAM_META = [];
 
   function statusPill(status) {
@@ -102,11 +104,13 @@
   }
 
   function getOriginalM7Weights() {
+    const cfg = M7_PARAM_CONFIG?.m7_v2_weights || {};
     return {
-      valuation: 0.45,
-      trend: 0.25,
-      structure: 0.20,
-      money: 0.10
+      valuation: num(cfg.valuation, 0.45),
+      trend: num(cfg.trend, 0.25),
+      structure: num(cfg.structure, 0.20),
+      timing: num(cfg.timing, 0.00),
+      money: num(cfg.money, 0.10)
     };
   }
 
@@ -145,12 +149,14 @@
     const valuation = num(row.valuation_score, 0);
     const trend = num(row.trend_score, 0);
     const structure = num(row.structure_score, 0);
+    const timing = num(row.timing_score, 0);
     const money = num(row.money_score, 0);
 
     return (
       weights.valuation * valuation +
       weights.trend * trend +
       weights.structure * structure +
+      weights.timing * timing +
       weights.money * money
     );
   }
@@ -474,7 +480,7 @@
               <tr><td>structure_score</td><td>${p.structure_score ?? "--"}</td><td>timing_score</td><td>${p.timing_score ?? "--"}</td></tr>
               <tr><td>money_score</td><td>${p.money_score ?? "--"}</td><td>m7_raw_score</td><td>${p.m7_raw_score ?? "--"}</td></tr>
               <tr><td>m7_v2_score original</td><td>${formatNum(impacted.mm_original_score)}</td><td>changed preview</td><td>${formatNum(impacted.mm_changed_score)}</td></tr>
-              <tr><td>preview delta</td><td>${formatNum(impacted.mm_delta_score, 4)}</td><td>formula</td><td>${p.m7_v2_formula || "0.45*valuation + 0.25*trend + 0.20*structure + 0.10*money"}</td></tr>
+              <tr><td>preview delta</td><td>${formatNum(impacted.mm_delta_score, 4)}</td><td>formula</td><td>${p.m7_v2_formula || "0.45*valuation + 0.25*trend + 0.20*structure + 0.00*timing + 0.10*money"}</td></tr>
               <tr><td>missing_fields</td><td colspan="3">${missingList.length ? missingList.join(", ") : "none"}</td></tr>
               <tr><td>coverage_pct</td><td>${coveragePct}</td><td>data_warning</td><td>${dataWarning}</td></tr>
               <tr><td>zscore</td><td>${p.zscore ?? "--"}</td><td>z_adj</td><td>${p.z_adj ?? "--"}</td></tr>
@@ -726,9 +732,10 @@
             m7_v2_score = ${weights.valuation.toFixed(2)} × valuation
             + ${weights.trend.toFixed(2)} × trend
             + ${weights.structure.toFixed(2)} × structure
+            + ${weights.timing.toFixed(2)} × timing
             + ${weights.money.toFixed(2)} × money
           </div>
-          <div class="mini">原公式：0.45 × valuation + 0.25 × trend + 0.20 × structure + 0.10 × money</div>
+          <div class="mini">原公式：0.45 × valuation + 0.25 × trend + 0.20 × structure + 0.00 × timing + 0.10 × money</div>
         </div>
 
         <div class="group-box">
@@ -779,124 +786,172 @@
   }
 
 
-  function renderM7FormulaRegistry(registry) {
-    let box = document.getElementById("m7-formula-registry");
+  function renderM7ParameterSnapshot() {
+    const cfg = M7_PARAM_CONFIG || {};
+    const w = cfg.m7_v2_weights || {};
+    const trend = cfg.trend || {};
+    const tw = trend.internal_weights || {};
+    const legacy = cfg.legacy_raw_fallback || {};
+    const val = cfg.valuation || {};
+    const money = cfg.money || {};
 
-    if (!box) {
-      const anchor =
-        document.getElementById("m7-readiness") ||
-        document.getElementById("output-demo") ||
-        document.getElementById("control-center-automation");
+    const pct = x => {
+      const n = num(x, null);
+      return n === null ? "--" : `${(n * 100).toFixed(1)}%`;
+    };
 
-      if (!anchor || !anchor.parentNode) return;
-
-      box = document.createElement("div");
-      box.id = "m7-formula-registry";
-      box.className = "section-box";
-      anchor.parentNode.insertBefore(box, anchor.nextSibling);
-    }
-
-    const components = Array.isArray(registry?.score_components)
-      ? registry.score_components
-      : [];
-
-    const listHtml = arr => (arr || []).length
-      ? (arr || []).map(x => `• ${x}`).join("<br>")
-      : "--";
-
-    const inputFieldsHtml = x => listHtml(x?.input_fields || []);
-    const issuesHtml = x => listHtml(x?.issues || []);
-    const suggestionsHtml = x => listHtml(x?.improvement_suggestions || []);
-    const recommendationsHtml = listHtml(registry?.current_recommendation || []);
-
-    box.innerHTML = `
-      <h2>SECTION 4・M7 公式中心（M7 Formula Registry）</h2>
-      <div class="mini">
-        M7 score formula / item-level formula / input fields / current status / improvement suggestions.
-        這是 MM dashboard 的公式說明層，不修改 M7 engine。
-      </div>
-
+    return `
       <details class="collapsible-section" open>
-        <summary>M7 Formula Registry（完整公式中心）</summary>
-
+        <summary>Current M7 Parameter Snapshot / 目前 M7 v2 參數快照</summary>
         <div class="group-box">
-          <div class="group-title">Purpose / 用途</div>
-          <div>${registry?.purpose || "--"}</div>
-        </div>
-
-        <div class="group-box">
-          <div class="group-title">Current Status / 目前狀況</div>
-          <div>${registry?.current_status || "--"}</div>
-        </div>
-
-        <div class="group-box">
-          <div class="group-title">Factor Formula Summary / 因子公式總表</div>
+          <div class="group-title">M7 v2 weights（總分權重）</div>
           <table class="preview-table">
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>中文</th>
-                <th>Main Formula</th>
-                <th>Current Status</th>
-              </tr>
-            </thead>
             <tbody>
-              ${components.length ? components.map(x => `
-                <tr>
-                  <td>${x.item || "--"}</td>
-                  <td>${x.item_zh || "--"}</td>
-                  <td>${x.formula || "--"}</td>
-                  <td>${x.current_status || "--"}</td>
-                </tr>
-              `).join("") : `<tr><td colspan="4">No formula registry data</td></tr>`}
+              <tr><td>valuation</td><td>${pct(w.valuation)}</td><td>trend</td><td>${pct(w.trend)}</td></tr>
+              <tr><td>structure</td><td>${pct(w.structure)}</td><td>timing</td><td>${pct(w.timing)}</td></tr>
+              <tr><td>money</td><td>${pct(w.money)}</td><td>formula</td><td>0.45 valuation + 0.25 trend + 0.20 structure + 0 timing + 0.10 money</td></tr>
             </tbody>
           </table>
         </div>
-
-        ${components.map(x => `
-          <details class="collapsible-section">
-            <summary>${x.item_zh || x.item || "--"} / ${x.item || "--"}</summary>
-
-            <div class="group-box">
-              <div class="group-title">Main Formula / 主公式</div>
-              <div class="formula-box">${x.formula || "--"}</div>
-            </div>
-
-            <div class="group-box">
-              <div class="group-title">Sub Formula / 子公式</div>
-              <div>${x.sub_formula || "--"}</div>
-            </div>
-
-            <div class="group-box">
-              <div class="group-title">Input Fields / 需要欄位</div>
-              <div>${inputFieldsHtml(x)}</div>
-            </div>
-
-            <div class="group-box">
-              <div class="group-title">Current Status / 目前狀況</div>
-              <div>${x.current_status || "--"}</div>
-            </div>
-
-            <div class="group-box">
-              <div class="group-title">Issues / 目前問題</div>
-              <div>${issuesHtml(x)}</div>
-            </div>
-
-            <div class="group-box">
-              <div class="group-title">Improvement Suggestions / 改善建議</div>
-              <div>${suggestionsHtml(x)}</div>
-            </div>
-          </details>
-        `).join("")}
-
         <div class="group-box">
-          <div class="group-title">Current Recommendation / 目前建議</div>
-          <div>${recommendationsHtml}</div>
+          <div class="group-title">Trend internal weights（趨勢內部權重）</div>
+          <table class="preview-table">
+            <tbody>
+              <tr><td>linear</td><td>${pct(tw.linear)}</td><td>MA200</td><td>${pct(tw.ma200)}</td></tr>
+              <tr><td>acceleration</td><td>${pct(tw.acceleration)}</td><td>annualization</td><td>${trend.annualization_formula || "annualized = exp(weekly_slope * 52) - 1"}</td></tr>
+              <tr><td>acceleration period</td><td>${trend.periods?.acceleration_recent_weeks || "--"} weeks</td><td>compare</td><td>${trend.periods?.acceleration_compare || "--"}</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="group-box">
+          <div class="group-title">Fallback Rule（歷史資料不足規則）</div>
+          <div class="mini">${legacy.rule || "if history_weeks < 156 then use m7_raw_score; else use m7_v2_score"}</div>
+          <div class="mini" style="margin-top:6px;">Reason: ${legacy.reason || "--"}</div>
+        </div>
+        <div class="group-box">
+          <div class="group-title">Valuation / Money status</div>
+          <div class="mini">Valuation: ${val.formula || "--"}</div>
+          <div class="mini" style="margin-top:6px;">Money: ${money.status || "--"} ｜ inputs: ${(money.current_inputs || []).join(", ") || "--"}</div>
         </div>
       </details>
     `;
   }
 
+  function renderTrendDiagnosticsLeaderboard(scoreRows) {
+    const rows = [...(scoreRows || [])]
+      .filter(r => r && r.symbol)
+      .sort((a, b) => num(b.trend_score, -999) - num(a.trend_score, -999))
+      .slice(0, 18);
+
+    return `
+      <details class="collapsible-section" open>
+        <summary>Trend Diagnostics Leaderboard / 趨勢診斷排行</summary>
+        <div class="group-box">
+          <table class="preview-table">
+            <thead>
+              <tr>
+                <th>Symbol</th><th>Trend</th><th>Linear %</th><th>MA %</th><th>Recent 3Y %</th><th>Accel Δ%</th>
+                <th>Linear Score</th><th>MA Score</th><th>Accel Score</th><th>Mode</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows.map(r => `
+                <tr>
+                  <td>${r.symbol || "--"}</td>
+                  <td>${formatNum(r.trend_score)}</td>
+                  <td>${formatNum(r.trend_linear_annualized_pct)}</td>
+                  <td>${formatNum(r.trend_ma_annualized_pct)}</td>
+                  <td>${formatNum(r.trend_recent_3y_annualized_pct)}</td>
+                  <td>${formatNum(r.trend_acceleration_annualized_delta_pct)}</td>
+                  <td>${formatNum(r.trend_linear_score)}</td>
+                  <td>${formatNum(r.trend_ma_score)}</td>
+                  <td>${formatNum(r.trend_acceleration_score)}</td>
+                  <td>${r.trend_mode || "--"}</td>
+                </tr>
+              `).join("") || "<tr><td colspan='10'>No rows</td></tr>"}
+            </tbody>
+          </table>
+          <div class="mini" style="margin-top:8px;">Trend 新公式：linear / MA 都以 weekly slope × 52 年化；acceleration = recent 3Y annualized - full annualized。</div>
+        </div>
+      </details>
+    `;
+  }
+
+  function renderFallbackMonitor(scoreRows) {
+    const rows = (scoreRows || []).filter(r => r?.m7_v2_fallback_to_raw || r?.trend_fallback_to_raw || num(r?.history_weeks, 9999) < 156);
+    return `
+      <details class="collapsible-section">
+        <summary>Fallback Monitor / 歷史資料不足監控（${rows.length}）</summary>
+        <div class="group-box">
+          <table class="preview-table">
+            <thead>
+              <tr><th>Symbol</th><th>History Weeks</th><th>Horizon</th><th>Effective Score</th><th>Source</th><th>Reason</th></tr>
+            </thead>
+            <tbody>
+              ${rows.map(r => `
+                <tr>
+                  <td>${r.symbol || "--"}</td>
+                  <td>${r.history_weeks ?? "--"}</td>
+                  <td>${r.history_horizon_used || "--"}</td>
+                  <td>${formatNum(r.m7_effective_score ?? r.m7_v2_score ?? r.m7_raw_score)}</td>
+                  <td>${r.m7_effective_score_source || (r.m7_v2_fallback_to_raw ? "m7_raw_score" : "m7_v2_score")}</td>
+                  <td>${r.trend_fallback_reason || "history_weeks < 156"}</td>
+                </tr>
+              `).join("") || "<tr><td colspan='6'>No fallback rows. All rows have enough history.</td></tr>"}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    `;
+  }
+
+  function renderRankingDelta(scoreRows) {
+    const rows = [...(scoreRows || [])].filter(r => r && r.symbol);
+    const oldRank = [...rows]
+      .sort((a, b) => num(b.m7_raw_score, -999) - num(a.m7_raw_score, -999))
+      .reduce((m, r, i) => (m[r.symbol] = i + 1, m), {});
+
+    const newRanked = [...rows]
+      .sort((a, b) => num(b.m7_effective_score ?? b.m7_v2_score, -999) - num(a.m7_effective_score ?? a.m7_v2_score, -999))
+      .map((r, i) => ({
+        ...r,
+        raw_rank: oldRank[r.symbol] || null,
+        effective_rank: i + 1,
+        rank_delta: (oldRank[r.symbol] || i + 1) - (i + 1)
+      }));
+
+    const movers = newRanked
+      .filter(r => Math.abs(num(r.rank_delta, 0)) > 0)
+      .sort((a, b) => Math.abs(num(b.rank_delta, 0)) - Math.abs(num(a.rank_delta, 0)))
+      .slice(0, 20);
+
+    return `
+      <details class="collapsible-section">
+        <summary>Ranking Delta / Raw vs Effective 排名變化</summary>
+        <div class="group-box">
+          <table class="preview-table">
+            <thead>
+              <tr><th>Symbol</th><th>Raw Rank</th><th>Effective Rank</th><th>Δ Rank</th><th>Raw</th><th>V2</th><th>Effective</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+              ${movers.map(r => `
+                <tr>
+                  <td>${r.symbol || "--"}</td>
+                  <td>${r.raw_rank ?? "--"}</td>
+                  <td>${r.effective_rank ?? "--"}</td>
+                  <td>${r.rank_delta > 0 ? "+" : ""}${r.rank_delta}</td>
+                  <td>${formatNum(r.m7_raw_score)}</td>
+                  <td>${formatNum(r.m7_v2_score)}</td>
+                  <td>${formatNum(r.m7_effective_score ?? r.m7_v2_score)}</td>
+                  <td>${r.m7_effective_score_source || "--"}</td>
+                </tr>
+              `).join("") || "<tr><td colspan='8'>No rank delta rows.</td></tr>"}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    `;
+  }
 
   function renderControlCenterAutomationPanel(dashboardData, scoreRows, runtimeRows) {
     const box = document.getElementById("control-center-automation");
@@ -912,11 +967,14 @@
       ? (confidenceNums.reduce((a, b) => a + b, 0) / confidenceNums.length).toFixed(1)
       : "--";
 
+    const fallbackRows = rows.filter(r => r?.m7_v2_fallback_to_raw || r?.trend_fallback_to_raw || num(r?.history_weeks, 9999) < 156);
+    const trendRows = rows.filter(r => r?.trend_linear_annualized_pct !== undefined || r?.trend_ma_annualized_pct !== undefined);
+
     const automationActions = [
-      "Step 1: runtime coverage check (market_runtime_long_horizon)",
-      "Step 2: score recompute gate (m7_v2_scores)",
-      "Step 3: audit missing-fields check (m7_formula_input_audit)",
-      "Step 4: distribution sanity check (normality/category)"
+      "Step 1: edit configs/mm/m7_v2_parameter_config.json",
+      "Step 2: run python scripts/new/build_m7_v2_scores.py",
+      "Step 3: validate m7_v2_scores.json output fields",
+      "Step 4: inspect ranking delta / fallback monitor / trend diagnostics in MM dashboard"
     ];
 
     const taskNotes = dashboardData?.active_build_context?.current_task || "--";
@@ -927,13 +985,18 @@
         <div class="mini">Current Task: ${taskNotes}</div>
         <table class="preview-table">
           <tbody>
-            <tr><td>M7 analysis entry</td><td><a href="./m7.html">Open mm/m7.html</a></td><td>mode</td><td>read-only dashboard</td></tr>
+            <tr><td>M7 analysis entry</td><td><a href="./m7.html">Open mm/m7.html</a></td><td>mode</td><td>config-driven sandbox</td></tr>
             <tr><td>score rows</td><td>${rows.length}</td><td>runtime symbols</td><td>${runtimeKeys.length}</td></tr>
             <tr><td>avg confidence</td><td>${avgConfidence}</td><td>data warnings</td><td>${warningRows.length}</td></tr>
             <tr><td>coverage &lt; 80</td><td>${lowCoverageRows.length}</td><td>missing_price_refs</td><td>${missingPriceRefRows.length}</td></tr>
+            <tr><td>trend annualized fields</td><td>${trendRows.length}</td><td>fallback rows</td><td>${fallbackRows.length}</td></tr>
           </tbody>
         </table>
       </div>
+      ${renderM7ParameterSnapshot()}
+      ${renderTrendDiagnosticsLeaderboard(rows)}
+      ${renderFallbackMonitor(rows)}
+      ${renderRankingDelta(rows)}
       <details class="collapsible-section">
         <summary>Automation Sequence / 控制中心自動化序列</summary>
         <div class="group-box mini">${automationActions.map(x => `• ${x}`).join("<br>")}</div>
@@ -941,9 +1004,10 @@
       <details class="collapsible-section">
         <summary>Operator Notes / 操作說明</summary>
         <div class="group-box mini">
-          • 此區塊僅提供控制中心流程與 readiness 訊號，不直接寫入任何 artifact。<br>
-          • 建議先開啟 M7 分析頁確認 statistical / normal distribution / category / stock detail / formula explainability。<br>
-          • 確認完成後再執行 pipeline（保持 source-only 變更流程）。
+          • 此區塊用來確認 MM config → Python engine → M7 sandbox output 已接通。<br>
+          • 目前 dashboard 讀取 config 與 score output，但不直接執行 Python；調完 config 後仍需在本機跑 engine。<br>
+          • trend_score 可大於 10，因為我們已把 trend 視為 raw alpha signal；m7_v2_score 仍會依總分公式聚合。<br>
+          • timing factor 不刪除，但 M7 v2 weight = 0；M6 可用同一 engine 改不同權重。
         </div>
       </details>
     `;
@@ -1114,11 +1178,12 @@
     try {
       clearError();
 
-      const [dashboardRes, scoresRes, auditRes, runtimeRes] = await Promise.all([
+      const [dashboardRes, scoresRes, auditRes, runtimeRes, m7ParamConfigRes] = await Promise.all([
         fetch(DATA_PATH, { cache: "no-store" }),
         fetch(SCORES_PATH, { cache: "no-store" }),
         fetch(AUDIT_PATH, { cache: "no-store" }),
-        fetch(RUNTIME_PATH, { cache: "no-store" })
+        fetch(RUNTIME_PATH, { cache: "no-store" }),
+        fetch(M7_PARAM_CONFIG_PATH, { cache: "no-store" })
       ]);
 
       if (!dashboardRes.ok) throw new Error(`讀取失敗：${dashboardRes.status}`);
@@ -1127,6 +1192,7 @@
       SCORES_DATA = scoresRes.ok ? await scoresRes.json() : {};
       AUDIT_DATA = auditRes.ok ? await auditRes.json() : {};
       RUNTIME_DATA = runtimeRes.ok ? await runtimeRes.json() : {};
+      M7_PARAM_CONFIG = m7ParamConfigRes.ok ? await m7ParamConfigRes.json() : {};
 
       const scoreRows = getScoreRows();
       const runtimeRows = getRuntimeRows();
@@ -1142,7 +1208,6 @@
       renderEngineActions(DASHBOARD_DATA.engine_actions || []);
       renderOutputDemo(DASHBOARD_DATA.output_demo || {}, explain);
       renderM7Readiness(DASHBOARD_DATA.m7_complete_readiness_check || {}, DASHBOARD_DATA.compare_governance || {});
-      renderM7FormulaRegistry(DASHBOARD_DATA.m7_formula_registry || {});
       renderControlCenterAutomationPanel(DASHBOARD_DATA, scoreRows, runtimeRows);
       renderActiveBuildContext(DASHBOARD_DATA.active_build_context || {});
       renderOverview(DASHBOARD_DATA.overview || {});
