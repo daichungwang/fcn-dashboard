@@ -457,42 +457,179 @@
     `).join("")}</div>`;
   }
 
-  function renderPrototypeSnapshot(data, explain = {}) {
-    const p = { ...(data?.prototype_symbol_snapshot || {}), ...(explain.scoreRow || {}) };
-    const missingList = compactMissing(explain.auditRow?.missing_inputs);
-    const coveragePct = typeof p.coverage_pct === "number"
-      ? `${p.coverage_pct}%`
-      : typeof explain.runtimeRow?.coverage_pct === "number"
-        ? `${explain.runtimeRow.coverage_pct}%`
-        : "--";
+   function renderPrototypeSnapshot(data, explain = {}) {
+  const stock = {
+    ...(data?.prototype_symbol_snapshot || {}),
+    ...(explain.scoreRow || {})
+  };
 
-    const dataWarning = p.data_warning || explain.runtimeRow?.data_warning || "--";
-    const impacted = enrichImpactRows([p])[0] || p;
+  const impacted = enrichImpactRows([stock])[0] || stock;
+  const runtime = explain.runtimeRow || {};
 
-    return `
-      <details class="collapsible-section" open>
-        <summary>Prototype Symbol Snapshot（原型單檔快照 / NVDA示範）</summary>
-        <div class="group-box">
-          <div class="group-title">${p.symbol || "--"} / status: ${p.today_fcn_pool_status || p.status || "--"}</div>
-          <table class="preview-table">
-            <tbody>
-              <tr><td>valuation_score</td><td>${p.valuation_score ?? "--"}</td><td>trend_score</td><td>${p.trend_score ?? "--"}</td></tr>
-              <tr><td>structure_score</td><td>${p.structure_score ?? "--"}</td><td>timing_score</td><td>${p.timing_score ?? "--"}</td></tr>
-              <tr><td>money_score</td><td>${p.money_score ?? "--"}</td><td>m7_raw_score</td><td>${p.m7_raw_score ?? "--"}</td></tr>
-              <tr><td>m7_v2_score original</td><td>${formatNum(impacted.mm_original_score)}</td><td>changed preview</td><td>${formatNum(impacted.mm_changed_score)}</td></tr>
-              <tr><td>preview delta</td><td>${formatNum(impacted.mm_delta_score, 4)}</td><td>formula</td><td>${p.m7_v2_formula || "0.45*valuation + 0.25*trend + 0.20*structure + 0.00*timing + 0.10*money"}</td></tr>
-              <tr><td>missing_fields</td><td colspan="3">${missingList.length ? missingList.join(", ") : "none"}</td></tr>
-              <tr><td>coverage_pct</td><td>${coveragePct}</td><td>data_warning</td><td>${dataWarning}</td></tr>
-              <tr><td>zscore</td><td>${p.zscore ?? "--"}</td><td>z_adj</td><td>${p.z_adj ?? "--"}</td></tr>
-              <tr><td>h_value</td><td>${p.h_value ?? "--"}</td><td>h_adj</td><td>${p.h_adj ?? "--"}</td></tr>
-              <tr><td>m7_final_score</td><td>${p.m7_final_score ?? "--"}</td><td>confidence</td><td>${typeof p.confidence === "number" ? `${p.confidence}%` : "--"}</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </details>
-    `;
+  const oldScore = impacted.mm_original_score || stock.m7_v2_score || 0;
+  const newScore = impacted.mm_changed_score || oldScore;
+  const deltaScore = newScore - oldScore;
+
+  function fmt(v, d = 2) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return "--";
+    return n.toFixed(d);
   }
 
+  function deltaClass(v) {
+    if (v > 0) return "color:green;font-weight:bold;";
+    if (v < 0) return "color:red;font-weight:bold;";
+    return "";
+  }
+
+  return `
+  
+  <details class="collapsible-section" open>
+    <summary>C1 股票查詢區（預設 NVDA standard stock）</summary>
+
+    <div class="group-box">
+
+      <!-- Layer 1 -->
+      <div class="group-title">1. 股票身份卡</div>
+      <table class="preview-table">
+        <tbody>
+          <tr>
+            <td>Symbol</td>
+            <td>${stock.symbol || "--"}</td>
+            <td>Name</td>
+            <td>${stock.name || "--"}</td>
+          </tr>
+          <tr>
+            <td>Price</td>
+            <td>${fmt(runtime.price_now)}</td>
+            <td>1D Delta</td>
+            <td>${fmt(runtime.ret_1d)}%</td>
+          </tr>
+          <tr>
+            <td>Category</td>
+            <td>${stock.category || "--"}</td>
+            <td>Subsector</td>
+            <td>${stock.subsector || "--"}</td>
+          </tr>
+          <tr>
+            <td>Category Sub</td>
+            <td>${stock.category_sub || "--"}</td>
+            <td>Archetype</td>
+            <td>${stock.valuation_archetype || "--"}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+
+      <!-- Layer 2 -->
+      <div class="group-title">2. 核心分數（Now / New / Delta）</div>
+      <table class="preview-table">
+        <thead>
+          <tr>
+            <th>Metric</th>
+            <th>Now</th>
+            <th>New</th>
+            <th>Delta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>M1 Score</td>
+            <td>${fmt(stock.m1_score)}</td>
+            <td>${fmt(stock.m1_score)}</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>M7 Raw</td>
+            <td>${fmt(stock.m7_raw_score)}</td>
+            <td>${fmt(stock.m7_raw_score)}</td>
+            <td>--</td>
+          </tr>
+          <tr>
+            <td>M7 V2</td>
+            <td>${fmt(oldScore)}</td>
+            <td>${fmt(newScore)}</td>
+            <td style="${deltaClass(deltaScore)}">${fmt(deltaScore)}</td>
+          </tr>
+          <tr>
+            <td>Effective</td>
+            <td>${fmt(stock.m7_effective_score)}</td>
+            <td>${fmt(newScore)}</td>
+            <td style="${deltaClass(deltaScore)}">${fmt(deltaScore)}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+
+      <!-- Layer 3 -->
+      <div class="group-title">3. 主因子（Now）</div>
+      <table class="preview-table">
+        <thead>
+          <tr>
+            <th>Factor</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Valuation</td><td>${fmt(stock.valuation_score)}</td></tr>
+          <tr><td>Trend</td><td>${fmt(stock.trend_score)}</td></tr>
+          <tr><td>Structure</td><td>${fmt(stock.structure_score)}</td></tr>
+          <tr><td>Timing</td><td>${fmt(stock.timing_score)}</td></tr>
+          <tr><td>Money</td><td>${fmt(stock.money_score)}</td></tr>
+        </tbody>
+      </table>
+
+      <br>
+
+      <!-- Layer 4 -->
+      <details class="collapsible-section">
+        <summary>Trend Detail</summary>
+        <div class="mini">
+          Linear Score: ${fmt(stock.trend_linear_score)}<br>
+          MA Score: ${fmt(stock.trend_ma_score)}<br>
+          Acceleration Score: ${fmt(stock.trend_acceleration_score)}<br>
+          Linear Annualized: ${fmt(stock.trend_linear_annualized_pct)}%<br>
+          MA Annualized: ${fmt(stock.trend_ma_annualized_pct)}%<br>
+          Recent 3Y: ${fmt(stock.trend_recent_3y_annualized_pct)}%<br>
+        </div>
+      </details>
+
+      <details class="collapsible-section">
+        <summary>Valuation Detail</summary>
+        <div class="mini">
+          Forward PE: ${fmt(stock.feature_snapshot?.valuation?.forward_pe)}<br>
+          Anchor PE: ${fmt(stock.feature_snapshot?.valuation?.anchor_pe)}<br>
+          PEG: ${fmt(stock.feature_snapshot?.valuation?.peg)}<br>
+          EPS Growth: ${fmt(stock.feature_snapshot?.valuation?.eps_growth)}%
+        </div>
+      </details>
+
+      <details class="collapsible-section">
+        <summary>Structure Detail</summary>
+        <div class="mini">
+          Best Model: ${stock.best_structure_model || "--"}<br>
+          Best R²: ${fmt(stock.best_structure_r2)}<br>
+          Dispersion: ${fmt(stock.structure_dispersion)}<br>
+          Stability: ${fmt(stock.structure_stability)}
+        </div>
+      </details>
+
+      <details class="collapsible-section">
+        <summary>Data Health</summary>
+        <div class="mini">
+          Coverage: ${fmt(stock.coverage_pct)}%<br>
+          Warning: ${stock.warning_flag ? "YES" : "NO"}<br>
+          History Weeks: ${stock.history_weeks || "--"}<br>
+          Horizon: ${stock.history_horizon_used || "--"}
+        </div>
+      </details>
+
+    </div>
+  </details>
+  `;
+}
   function renderTopCompareGroups() {
     const rows = enrichImpactRows(getScoreRows());
 
