@@ -1368,7 +1368,8 @@
 
     all().forEach(el => { el.open = false; });
   }
-
+   renderStandardStockCard("NVDA");
+bindStockQuery();
   function renderActiveBuildContext(ctx) {
     const box = document.getElementById("active-build-context");
     if (!box) return;
