@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MM Formula Test Lab | M7 What-if Calculation Trace</title>
+  <style>
+    :root{--bg:#f5f7fb;--panel:#fff;--line:#d8e1ef;--text:#0f172a;--muted:#667085;--blue:#183b8f;--green:#079455;--red:#d92d20;--amber:#b54708;--shadow:0 10px 30px rgba(15,23,42,.08);--radius:18px}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,"Noto Sans TC","Microsoft JhengHei",sans-serif;font-size:14px}
+    .page{max-width:1680px;margin:0 auto;padding:22px}
+    .hero{background:linear-gradient(135deg,#10275f,#20449e);color:#fff;border-radius:22px;padding:22px 26px;box-shadow:var(--shadow);margin-bottom:18px}
+    .hero h1{margin:0 0 8px;font-size:26px}.hero .sub{opacity:.9;line-height:1.6}
+    .top-actions{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 18px;align-items:center}
+    button,a.btn{appearance:none;border:1px solid #bdd1f4;background:#fff;color:#11306b;border-radius:999px;padding:10px 14px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+    button.primary{background:#16398f;color:#fff;border-color:#16398f} button.good{background:#ecfdf3;color:#027a48;border-color:#abefc6}
+    input,select{border:1px solid var(--line);border-radius:10px;padding:9px 10px;font:inherit;width:100%;background:#fff}
+    .layout{display:grid;grid-template-columns:520px 1fr;gap:16px;align-items:start}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .panel-header{padding:15px 18px;border-bottom:1px solid var(--line);background:#fbfdff;font-weight:800;font-size:16px}
+    .panel-body{padding:16px}.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+    .metric{border:1px solid var(--line);border-radius:14px;padding:12px;background:#fff}.metric .k{color:var(--muted);font-size:12px;margin-bottom:5px}.metric .v{font-size:22px;font-weight:900}
+    .delta-pos{color:var(--green);font-weight:900}.delta-neg{color:var(--red);font-weight:900}.delta-flat{color:#344054;font-weight:800}
+    details.section{border:1px solid var(--line);border-radius:14px;background:#fff;margin-bottom:10px;overflow:hidden}
+    details.section>summary{padding:13px 14px;background:#f8fbff;font-weight:800;cursor:pointer;list-style:none}
+    details.section>summary::-webkit-details-marker{display:none}details.section[open]>summary{border-bottom:1px solid var(--line)}.section-body{padding:14px}
+    table{width:100%;border-collapse:collapse;background:#fff}th,td{border-bottom:1px solid #e7eef8;padding:9px 8px;text-align:left;vertical-align:top;font-size:13px}th{color:#344054;background:#f8fafc;font-weight:800}tr:last-child td{border-bottom:none}
+    .note{color:var(--muted);font-size:12px;line-height:1.6}.pill{display:inline-flex;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:800;border:1px solid var(--line);background:#fff}.pill.ok{background:#ecfdf3;color:#027a48;border-color:#abefc6}.pill.warn{background:#fff7ed;color:#b54708;border-color:#fedf89}
+    .formula{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:12px;font-family:Consolas,monospace;white-space:pre-wrap;line-height:1.55;font-size:12px;margin:8px 0}
+    .error{background:#fef3f2;color:#b42318;border:1px solid #fecdca;border-radius:14px;padding:12px 14px;margin:12px 0;display:none;font-weight:800}
+    @media(max-width:1100px){.layout{grid-template-columns:1fr}.metric-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="hero"><h1>MM Formula Test Lab v1.0</h1><div class="sub">ç¨ç«é©è­ M7 score now / new / deltaãå·¦å´åªæ¹åæ¸èççµæï¼å³å´éå±¤å±éè¨ç®éç¨ãç®çï¼ä¸è¦çãä¸çåºæ¶å±ï¼ææ¯ä¸å±¤å¬å¼åæ¯ä¸å delta æ¤éã</div></div>
+    <div class="top-actions">
+      <a class="btn" href="./engine_progress_dashboard.html">â Back MM Dashboard</a>
+      <button id="reload-btn" class="good">Reload Data</button><button id="reset-btn">Reset Params</button><button id="expand-btn">Expand All</button><button id="collapse-btn">Collapse All</button>
+      <span class="note" id="data-status">loading...</span>
+    </div>
+    <div id="error-box" class="error"></div>
+    <div class="layout">
+      <div class="left"><div class="panel"><div class="panel-header">å·¦å´ï¼åæ¸è®åèåæ¸çµæ</div><div class="panel-body">
+        <div class="grid-2" style="margin-bottom:12px;"><div><label><b>Symbol</b></label><input id="symbol-input" value="NVDA" /></div><div style="display:flex;align-items:flex-end;"><button id="query-btn" class="primary" style="width:100%;justify-content:center;">æ¥è©¢ / Recalculate</button></div></div>
+        <div id="identity-box"></div>
+        <details class="section" open><summary>B1 Top Weights / ç¸½åæ¬é</summary><div class="section-body"><table><thead><tr><th>Item</th><th>Now</th><th>New</th><th>Delta</th></tr></thead><tbody id="top-weight-tbody"></tbody></table><div class="note" style="margin-top:8px;">Ruleï¼B1 åªæ¹ top-level weighted sumãé¤é B2 ææ¹ï¼ä¸éç® factor æ¬èº«ã</div></div></details>
+        <details class="section" open><summary>B2 Factor Internal / å å­å§é¨åæ¸</summary><div class="section-body">
+          <h4>Trendï¼linear / ma200 / acceleration</h4><table><thead><tr><th>Item</th><th>Now</th><th>New</th><th>Delta</th></tr></thead><tbody id="trend-param-tbody"></tbody></table>
+          <h4>Valuationï¼market / industry / archetype</h4><table><thead><tr><th>Item</th><th>Now</th><th>New</th><th>Delta</th></tr></thead><tbody id="valuation-param-tbody"></tbody></table>
+          <h4>Structureï¼allowed models</h4><table><thead><tr><th>Model</th><th>Now</th><th>New</th><th>Delta</th></tr></thead><tbody id="structure-param-tbody"></tbody></table>
+          <h4>Moneyï¼liquidity / flow</h4><table><thead><tr><th>Item</th><th>Now</th><th>New</th><th>Delta</th></tr></thead><tbody id="money-param-tbody"></tbody></table>
+        </div></details>
+        <details class="section" open><summary>Score Result / æçµåæ¸</summary><div class="section-body"><div class="metric-grid"><div class="metric"><div class="k">M7 Now</div><div class="v" id="m7-now">--</div></div><div class="metric"><div class="k">M7 New</div><div class="v" id="m7-new">--</div></div><div class="metric"><div class="k">Delta</div><div class="v" id="m7-delta">--</div></div></div><table><thead><tr><th>Metric</th><th>Now</th><th>New</th><th>Delta</th></tr></thead><tbody id="score-result-tbody"></tbody></table></div></details>
+      </div></div></div>
+      <div class="right"><div class="panel"><div class="panel-header">å³å´ï¼å®æ´è¨ç®éç¨ Trace</div><div class="panel-body" id="trace-box">loading...</div></div></div>
+    </div>
+  </div>
+  <script src="../js/mm/modules/mm_formula_test_engine.js"></script>
+</body>
+</html>
 
