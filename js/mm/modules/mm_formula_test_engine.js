@@ -220,8 +220,7 @@
       linear * w.trend_linear_weight +
       accel * w.trend_acceleration_weight +
       ma * w.trend_ma100_weight,
-      0, 10
-    );
+     );
 
     return { now: base.trend, new: newScore, parts: { linear, accel, ma, weights: w }, audit };
   }
