@@ -101,16 +101,31 @@
   }
 
   function asArray(payload) {
-    if (Array.isArray(payload)) return payload;
-    if (payload && Array.isArray(payload.data)) return payload.data;
-    if (payload && Array.isArray(payload.scores)) return payload.scores;
-    if (payload && Array.isArray(payload.items)) return payload.items;
-    if (payload && typeof payload === "object") {
-      const values = Object.values(payload);
-      if (values.length && values.every(v => v && typeof v === "object" && !Array.isArray(v))) return values;
+  if (Array.isArray(payload)) return payload;
+
+  if (payload && Array.isArray(payload.data)) return payload.data;
+  if (payload && Array.isArray(payload.scores)) return payload.scores;
+  if (payload && Array.isArray(payload.items)) return payload.items;
+  if (payload && Array.isArray(payload.rows)) return payload.rows;
+  if (payload && Array.isArray(payload.results)) return payload.results;
+  if (payload && Array.isArray(payload.records)) return payload.records;
+
+  if (payload && typeof payload === "object") {
+    const values = Object.values(payload);
+
+    const firstArray = values.find(v => Array.isArray(v));
+    if (firstArray) return firstArray;
+
+    if (
+      values.length &&
+      values.every(v => v && typeof v === "object" && !Array.isArray(v))
+    ) {
+      return values;
     }
-    return [];
   }
+
+  return [];
+}
 
   async function loadJson(path, optional = false) {
     try {
