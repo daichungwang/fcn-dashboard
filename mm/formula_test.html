@@ -42,6 +42,8 @@
     .btns{display:flex;gap:8px;flex-wrap:wrap;}
     .metric{display:grid;grid-template-columns:1fr 78px 78px 78px;gap:8px;align-items:center;border-bottom:1px dashed var(--line);padding:8px 0;font-size:13px;}
     .metric.head{font-size:12px;color:var(--muted);font-weight:800;border-bottom:1px solid var(--line);}
+    .paramMetric{display:grid;grid-template-columns:1fr 62px 62px 62px 72px;gap:8px;align-items:center;border-bottom:1px dashed var(--line);padding:8px 0;font-size:12px;}
+    .paramMetric.head{font-size:12px;color:var(--muted);font-weight:800;border-bottom:1px solid var(--line);}
     .num{text-align:right;font-variant-numeric:tabular-nums;}
     .pos{color:var(--good);font-weight:800;}.neg{color:var(--bad);font-weight:800;}.zero{color:var(--muted);}
     .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
@@ -51,15 +53,19 @@
     .param-top{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:6px;}
     .param-name{font-weight:800;}.param-val{font-variant-numeric:tabular-nums;color:var(--blue);font-weight:800;}
     .two{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-    .trace{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:12px;white-space:pre-wrap;line-height:1.55;background:#0f172a;color:#e5e7eb;border-radius:14px;padding:14px;overflow:auto;max-height:520px;}
+    .trace{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:12px;white-space:pre-wrap;line-height:1.55;background:#f8fafc;color:#172033;border:1px solid #d8dee9;border-radius:14px;padding:14px;overflow:auto;max-height:520px;}
     details{border:1px solid var(--line);border-radius:14px;margin:10px 0;background:#fff;overflow:hidden;}
     summary{cursor:pointer;padding:11px 12px;font-weight:800;background:#fbfcff;}
     .detail-body{padding:8px 12px 12px;}
     .warn{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:10px;font-size:12px;line-height:1.5;margin-bottom:10px;}
     .ok{background:#ecfdf3;border:1px solid #abefc6;color:#067647;border-radius:12px;padding:10px;font-size:12px;line-height:1.5;margin-bottom:10px;}
     table{width:100%;border-collapse:collapse;font-size:12px;} th,td{border-bottom:1px solid var(--line);padding:8px;text-align:right;} th:first-child,td:first-child{text-align:left;} th{color:var(--muted);font-weight:800;background:#fbfcff;}
+    .table-scroll{overflow:auto;border:1px solid var(--line);border-radius:12px;}
+    .impact-table{min-width:980px;}
+    .preview-table{min-width:1120px;}
+    .tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 7px;margin:1px;background:#fff;font-size:11px;}
     .small{font-size:12px;color:var(--muted);line-height:1.45;}
-    @media(max-width:980px){.grid{grid-template-columns:1fr}.kpi{grid-template-columns:1fr}.metric{grid-template-columns:1fr 70px 70px 70px}}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}.kpi{grid-template-columns:1fr}.metric{grid-template-columns:1fr 70px 70px 70px}.paramMetric{grid-template-columns:1fr 58px 58px 58px 68px}}
   </style>
 </head>
 <body>
@@ -103,7 +109,7 @@
             <div><span>Delta</span><b id="kpiDelta">--</b></div>
           </div>
 
-          <div class="metric head"><div>Parameter</div><div class="num">Now</div><div class="num">New</div><div class="num">Delta</div></div>
+          <div class="paramMetric head"><div>Parameter</div><div class="num">Now</div><div class="num">New</div><div class="num">Delta</div><div class="num">Delta %</div></div>
           <div id="paramTable"></div>
 
           <h3 style="font-size:14px;margin:18px 0 8px">調整參數</h3>
@@ -123,6 +129,14 @@
           <div id="scoreTable"></div>
 
           <details open>
+            <summary>Factor Impact / 權重調整貢獻表</summary>
+            <div class="detail-body">
+              <div class="small" style="margin-bottom:8px">顯示三段式權重：Now Weight → User New Weight → Effective New Weight（system normalize 後真正計算權重），並拆解每一層對 M7 delta 的貢獻。</div>
+              <div class="table-scroll"><table id="factorImpactTable" class="impact-table"></table></div>
+            </div>
+          </details>
+
+          <details open>
             <summary>逐層公式 trace</summary>
             <div class="detail-body"><div id="traceBox" class="trace">--</div></div>
           </details>
@@ -132,9 +146,12 @@
             <div class="detail-body" id="auditBox">--</div>
           </details>
 
-          <details>
-            <summary>Top 30 delta preview</summary>
-            <div class="detail-body"><table id="deltaPreview"></table></div>
+          <details open>
+            <summary>Top 30 delta preview / 排名與 Impact Factors</summary>
+            <div class="detail-body">
+              <div class="small" style="margin-bottom:8px">依照 M7 delta 絕對值排序，顯示調參後排名變化、價格、M1/M7 now/new，以及造成變化最大的 impact factors。</div>
+              <div class="table-scroll"><table id="deltaPreview" class="preview-table"></table></div>
+            </div>
           </details>
         </div>
       </section>
