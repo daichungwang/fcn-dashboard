@@ -1,6 +1,7 @@
 // MM M7 Runtime Full - no-shrink compatibility runtime
 // This file intentionally keeps the original full dashboard logic intact.
 window.__MM_M7_RUNTIME_LOADED__ = true;
+window.MM_HAS_MANUAL_PARAM_CHANGE = false;
 
 (function () {
   const DATA_PATH = "../data/mm/engine_progress_dashboard.json";
@@ -357,6 +358,7 @@ window.__MM_M7_RUNTIME_LOADED__ = true;
   function bindParameterActions() {
     document.querySelectorAll(".mm-param-input").forEach(input => {
       input.addEventListener("input", () => {
+        window.MM_HAS_MANUAL_PARAM_CHANGE = true;
         const card = input.closest(".control-item");
         if (!card) return;
 
@@ -396,6 +398,7 @@ window.__MM_M7_RUNTIME_LOADED__ = true;
     if (resetBtn) {
       resetBtn.addEventListener("click", () => {
         localStorage.removeItem(CONFIG_STORAGE_KEY);
+        window.MM_HAS_MANUAL_PARAM_CHANGE = false;
         alert("MM config reset.");
         init();
       });
@@ -1301,6 +1304,29 @@ const resultBox = document.getElementById("m7-what-if-results");
   function whatIfRows(scoreRows, params) {
     const rows = [...(scoreRows || [])].filter(r => r && r.symbol);
 
+    if (window.MM_HAS_MANUAL_PARAM_CHANGE !== true) {
+      const baselineRanked = [...rows]
+        .sort((a, b) => num(b.m7_effective_score ?? b.m7_v2_score, -999) - num(a.m7_effective_score ?? a.m7_v2_score, -999))
+        .map((r, i) => {
+          const baselineEffective = num(r.m7_effective_score ?? r.m7_v2_score, 0);
+          return {
+            ...r,
+            whatif_valuation_score: num(r.valuation_score, 0),
+            whatif_trend_score: num(r.trend_score, 0),
+            whatif_structure_score: num(r.structure_score, 0),
+            whatif_money_score: num(r.money_score, 0),
+            whatif_v2_score: num(r.m7_v2_score, baselineEffective),
+            whatif_effective_score: baselineEffective,
+            whatif_fallback_to_raw: !!r.m7_v2_fallback_to_raw,
+            whatif_score_delta: 0,
+            original_rank: i + 1,
+            whatif_rank: i + 1,
+            whatif_rank_delta: 0
+          };
+        });
+      return baselineRanked;
+    }
+
     const originalRank = [...rows]
       .sort((a, b) => num(b.m7_effective_score ?? b.m7_v2_score, -999) - num(a.m7_effective_score ?? a.m7_v2_score, -999))
       .reduce((m, r, i) => (m[r.symbol] = i + 1, m), {});
@@ -1417,9 +1443,10 @@ const resultBox = document.getElementById("m7-what-if-results");
     const recalcBtn = document.getElementById('m7-sim-recalc');
     const resetBtn = document.getElementById('m7-sim-reset');
     if (recalcBtn) recalcBtn.addEventListener('click', recalc);
-    document.querySelectorAll('.m7-sim-input').forEach(input => input.addEventListener('input', recalc));
+    document.querySelectorAll('.m7-sim-input').forEach(input => input.addEventListener('input', () => { window.MM_HAS_MANUAL_PARAM_CHANGE = true; recalc(); }));
     if (resetBtn) {
       resetBtn.addEventListener('click', () => {
+        window.MM_HAS_MANUAL_PARAM_CHANGE = false;
         const p = defaultWhatIfParams();
         document.querySelectorAll('.m7-sim-input').forEach(input => {
           const key = input.dataset.key;
@@ -1698,6 +1725,7 @@ const resultBox = document.getElementById("m7-what-if-results");
 
     document.querySelectorAll(".mm-brain-input").forEach(input => {
       input.oninput = () => {
+        window.MM_HAS_MANUAL_PARAM_CHANGE = true;
         const key = input.dataset.key;
         const rowEl = input.closest(".mm-brain-row");
         if (input.type === "checkbox") {
