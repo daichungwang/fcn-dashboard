@@ -170,7 +170,7 @@
     return String(field(row, ["symbol", "ticker", "Symbol"], "")).toUpperCase();
   }
 
-  function asArray(payload) {
+   function asArray(payload) {
     if (Array.isArray(payload)) return payload;
     if (!payload || typeof payload !== "object") return [];
     if (Array.isArray(payload.data)) return payload.data;
@@ -180,15 +180,16 @@
     if (Array.isArray(payload.results)) return payload.results;
     if (Array.isArray(payload.records)) return payload.records;
     if (Array.isArray(payload.output)) return payload.output;
+
     const values = Object.values(payload);
     const firstArray = values.find(v => Array.isArray(v));
     if (firstArray) return firstArray;
+
     const objectValues = values.filter(v => v && typeof v === "object" && !Array.isArray(v));
     if (objectValues.length && objectValues.length === values.length) return objectValues;
-    console.warn("Unknown JSON structure:", payload);
+
     return [];
   }
-
   async function loadJson(path, optional = false) {
     try {
       const res = await fetch(path, { cache: "no-store" });
