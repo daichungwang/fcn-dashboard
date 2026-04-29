@@ -22,17 +22,17 @@
     *{box-sizing:border-box}
     body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",Arial,sans-serif;}
     header{position:sticky;top:0;z-index:5;background:rgba(245,247,251,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
-    .bar{max-width:1480px;margin:0 auto;padding:14px 20px;display:flex;gap:14px;align-items:center;justify-content:space-between;}
+    .bar{max-width:1560px;margin:0 auto;padding:14px 20px;display:flex;gap:14px;align-items:center;justify-content:space-between;}
     h1{font-size:20px;margin:0;font-weight:800;letter-spacing:.2px;}
     .subtitle{font-size:12px;color:var(--muted);margin-top:4px;}
     .pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 10px;font-size:12px;color:var(--muted);}
-    .wrap{max-width:1480px;margin:0 auto;padding:18px 20px 40px;}
-    .grid{display:grid;grid-template-columns:430px 1fr;gap:18px;align-items:start;}
+    .wrap{max-width:1560px;margin:0 auto;padding:18px 20px 40px;}
+    .top-grid{display:grid;grid-template-columns:430px 1fr;gap:18px;align-items:start;margin-bottom:18px;}
+    .full-grid{display:grid;grid-template-columns:1fr;gap:18px;}
     .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;}
     .card-h{padding:14px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:12px;}
     .card-h strong{font-size:15px;}
     .card-b{padding:14px 16px;}
-    .row{display:flex;gap:10px;align-items:center;justify-content:space-between;margin:8px 0;}
     label{font-size:12px;color:var(--muted);display:block;margin-bottom:5px;}
     select,input[type="number"],input[type="text"]{width:100%;height:36px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:0 10px;color:var(--ink);}
     input[type="range"]{width:100%;}
@@ -47,24 +47,28 @@
     .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
     .kpi div{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:10px;}
     .kpi span{display:block;font-size:11px;color:var(--muted);}.kpi b{font-size:20px;font-variant-numeric:tabular-nums;}
-    .param{border:1px solid var(--line);border-radius:14px;padding:10px;margin:10px 0;background:#fff;}
+    .param-grid{display:grid;grid-template-columns:repeat(2,minmax(260px,1fr));gap:10px;}
+    .param{border:1px solid var(--line);border-radius:14px;padding:10px;background:#fff;}
     .param-top{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:6px;}
     .param-name{font-weight:800;}.param-val{font-variant-numeric:tabular-nums;color:var(--blue);font-weight:800;}
     .two{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
     .trace{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace;font-size:12px;white-space:pre-wrap;line-height:1.55;background:#f8fafc;color:#172033;border:1px solid var(--line);border-radius:14px;padding:14px;overflow:auto;max-height:520px;}
     details{border:1px solid var(--line);border-radius:14px;margin:10px 0;background:#fff;overflow:hidden;}
     summary{cursor:pointer;padding:11px 12px;font-weight:800;background:#fbfcff;}
-    .detail-body{padding:8px 12px 12px;}
+    .detail-body{padding:8px 12px 12px;overflow-x:auto;}
     .warn{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;border-radius:12px;padding:10px;font-size:12px;line-height:1.5;margin-bottom:10px;}
     .ok{background:#ecfdf3;border:1px solid #abefc6;color:#067647;border-radius:12px;padding:10px;font-size:12px;line-height:1.5;margin-bottom:10px;}
-    table{width:100%;border-collapse:collapse;font-size:12px;} th,td{border-bottom:1px solid var(--line);padding:8px;text-align:right;vertical-align:top;} th:first-child,td:first-child{text-align:left;} th{color:var(--muted);font-weight:800;background:#fbfcff;}
+    table{width:100%;border-collapse:collapse;font-size:12px;min-width:760px;} th,td{border-bottom:1px solid var(--line);padding:8px;text-align:right;vertical-align:top;} th:first-child,td:first-child{text-align:left;} th{color:var(--muted);font-weight:800;background:#fbfcff;}
     .small{font-size:12px;color:var(--muted);line-height:1.45;}
     .tag{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px 7px;background:#fff;font-size:11px;color:var(--muted);margin:2px;}
     .mini-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 12px;}
     .mini-card{background:#fbfcff;border:1px solid var(--line);border-radius:12px;padding:10px;}
     .mini-card span{display:block;font-size:11px;color:var(--muted)}
     .mini-card b{font-size:16px;font-variant-numeric:tabular-nums;}
-    @media(max-width:980px){.grid{grid-template-columns:1fr}.kpi{grid-template-columns:1fr}.metric{grid-template-columns:1fr 70px 70px 70px 70px}.mini-grid{grid-template-columns:1fr 1fr}}
+    .section-note{font-size:12px;color:var(--muted);line-height:1.5;margin:4px 0 10px;}
+    .table-tight th,.table-tight td{padding:6px 7px;}
+    @media(max-width:1180px){.top-grid{grid-template-columns:1fr}.param-grid{grid-template-columns:1fr}.mini-grid{grid-template-columns:1fr 1fr}}
+    @media(max-width:760px){.kpi{grid-template-columns:1fr}.metric{grid-template-columns:1fr 70px 70px 70px 70px}.mini-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -79,10 +83,10 @@
   </header>
 
   <main class="wrap">
-    <div class="grid">
+    <div class="top-grid">
       <section class="card">
         <div class="card-h">
-          <strong>左側：參數變化與 M7 結果</strong>
+          <strong>參數變化與 M7 結果</strong>
           <div class="btns">
             <button id="btnReset">Reset</button>
             <button id="btnExport" class="primary">Export Trace</button>
@@ -110,15 +114,24 @@
 
           <div class="metric head"><div>Parameter</div><div class="num">Now</div><div class="num">New</div><div class="num">Delta</div><div class="num">Delta %</div></div>
           <div id="paramTable"></div>
-
-          <h3 style="font-size:14px;margin:18px 0 8px">調整參數</h3>
-          <div id="paramControls"></div>
         </div>
       </section>
 
       <section class="card">
         <div class="card-h">
-          <strong>右側：公式拆解與 trace</strong>
+          <strong>調整參數</strong>
+          <span class="small">操作區固定在右側；移動滑桿後左側 KPI 即時更新。</span>
+        </div>
+        <div class="card-b">
+          <div id="paramControls" class="param-grid"></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="full-grid">
+      <section class="card">
+        <div class="card-h">
+          <strong>公式拆解、分布與敏感度分析</strong>
           <span class="small" id="selectedMeta">--</span>
         </div>
         <div class="card-b">
@@ -127,6 +140,7 @@
           <details open>
             <summary>Raw Score Impact Summary / L2-L3 對 Raw Score 的影響</summary>
             <div class="detail-body">
+              <div class="section-note">主表看每個 factor 的 now/new/delta 與對 Raw score 變化的貢獻；更細的公式留在 trace。</div>
               <table id="rawImpactTable"></table>
             </div>
           </details>
@@ -147,18 +161,31 @@
           </details>
 
           <details open>
+            <summary>Top 30 delta preview / 排名變化與主要因子分數</summary>
+            <div class="detail-body"><table id="deltaPreview"></table></div>
+          </details>
+
+          <details open>
+            <summary>Factor Score Distribution / 主要因子分數分布</summary>
+            <div class="detail-body"><div id="factorDistributionBox">--</div></div>
+          </details>
+
+          <details open>
+            <summary>Sensitivity Analysis / 參數敏感度分析</summary>
+            <div class="detail-body">
+              <div class="section-note">每個參數用小幅 bump 測試，觀察：目前股票影響、全體平均影響、最大影響、最敏感 category。</div>
+              <table id="sensitivityTable"></table>
+            </div>
+          </details>
+
+          <details>
             <summary>逐層公式 trace</summary>
             <div class="detail-body"><div id="traceBox" class="trace">--</div></div>
           </details>
 
-          <details open>
+          <details>
             <summary>子因子 / fallback audit</summary>
             <div class="detail-body" id="auditBox">--</div>
-          </details>
-
-          <details>
-            <summary>Top 30 delta preview</summary>
-            <div class="detail-body"><table id="deltaPreview"></table></div>
           </details>
         </div>
       </section>
