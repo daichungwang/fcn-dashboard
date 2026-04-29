@@ -1193,6 +1193,218 @@ def compute_structure(feature: dict[str, Any]) -> dict[str, Any]:
         "logarithmic_slope": logarithmic_slope,
     }
 
+
+
+def trimmed_mean(values: list[float], trim_pct: float = 0.10) -> float | None:
+    """Return trimmed mean after removing both tails. Used for valuation multiple normal level."""
+    arr = sorted([safe_num(v, None) for v in values if safe_num(v, None) is not None and safe_num(v, 0.0) > 0])
+    if not arr:
+        return None
+    n = len(arr)
+    k = int(math.floor(n * clamp(trim_pct, 0.0, 0.45)))
+    if n - 2 * k <= 0:
+        k = 0
+    core = arr[k:n-k] if k > 0 else arr
+    if not core:
+        return None
+    return sum(core) / len(core)
+
+
+def compute_regression_valuation_band(feature: dict[str, Any], structure: dict[str, Any] | None = None) -> dict[str, Any]:
+    """
+    Historical self-band valuation proxy.
+
+    Core idea:
+      1) Use weekly price regression fair curve as the stock's standard price path.
+      2) weekly_multiple = actual_price / fitted_fair_price.
+      3) historical_trimmed_mean_multiple = trimmed mean of weekly_multiple series.
+      4) current_regression_multiple = current_price / current_fitted_fair_price.
+      5) individual_fair_pe = current_forward_pe * historical_trimmed_mean_multiple / current_regression_multiple.
+
+    This does NOT need historical EPS. It converts historical price premium/discount vs regression curve
+    into a fair PE adjustment for the current forward PE.
+    """
+    val = feature.get("valuation", {}) if isinstance(feature.get("valuation"), dict) else {}
+    current_forward_pe = safe_num(val.get("forward_pe"), None)
+
+    weekly_prices = [safe_num(x, None) for x in feature.get("weekly_prices", [])]
+    weekly_prices = [x for x in weekly_prices if x is not None and x > 0]
+    history_weeks = len(weekly_prices)
+
+    if current_forward_pe is None or current_forward_pe <= 0:
+        return {
+            "individual_fair_pe": None,
+            "regression_fair_pe": None,
+            "current_regression_multiple": None,
+            "historical_trimmed_mean_multiple": None,
+            "historical_median_multiple": None,
+            "historical_p25_multiple": None,
+            "historical_p75_multiple": None,
+            "regression_fair_price_now": None,
+            "regression_actual_price_now": weekly_prices[-1] if weekly_prices else None,
+            "regression_valuation_source": "missing_current_forward_pe",
+            "regression_valuation_quality": "missing",
+        }
+
+    if history_weeks < 52:
+        return {
+            "individual_fair_pe": round2(current_forward_pe),
+            "regression_fair_pe": round2(current_forward_pe),
+            "current_regression_multiple": None,
+            "historical_trimmed_mean_multiple": None,
+            "historical_median_multiple": None,
+            "historical_p25_multiple": None,
+            "historical_p75_multiple": None,
+            "regression_fair_price_now": None,
+            "regression_actual_price_now": weekly_prices[-1] if weekly_prices else None,
+            "regression_valuation_source": "fallback_current_forward_pe_insufficient_history",
+            "regression_valuation_quality": "low",
+        }
+
+    y = [math.log(p) for p in weekly_prices]
+    x = list(range(len(y)))
+    x_log = [math.log(i + 1.0) for i in x]
+
+    def _solve_linear_system(a: list[list[float]], b: list[float]) -> list[float] | None:
+        n = len(b)
+        mat = [row[:] + [b[i]] for i, row in enumerate(a)]
+        for col in range(n):
+            pivot = max(range(col, n), key=lambda r: abs(mat[r][col]))
+            if abs(mat[pivot][col]) < 1e-12:
+                return None
+            if pivot != col:
+                mat[col], mat[pivot] = mat[pivot], mat[col]
+            pivot_val = mat[col][col]
+            for j in range(col, n + 1):
+                mat[col][j] /= pivot_val
+            for r in range(n):
+                if r == col:
+                    continue
+                factor = mat[r][col]
+                for j in range(col, n + 1):
+                    mat[r][j] -= factor * mat[col][j]
+        return [mat[i][n] for i in range(n)]
+
+    def _fit(x_values: list[float], y_values: list[float], degree: int) -> dict[str, Any]:
+        n = len(x_values)
+        if n < degree + 2:
+            return {"r2": None, "coeffs": None, "fitted": []}
+        basis = [[xx ** p for p in range(degree + 1)] for xx in x_values]
+        lhs = []
+        rhs = []
+        for i in range(degree + 1):
+            lhs_row = []
+            for j in range(degree + 1):
+                lhs_row.append(sum(row[i] * row[j] for row in basis))
+            lhs.append(lhs_row)
+            rhs.append(sum(row[i] * yy for row, yy in zip(basis, y_values)))
+        coeffs = _solve_linear_system(lhs, rhs)
+        if coeffs is None:
+            return {"r2": None, "coeffs": None, "fitted": []}
+        fitted = [sum(c * (xx ** p) for p, c in enumerate(coeffs)) for xx in x_values]
+        mean_y = sum(y_values) / len(y_values)
+        ss_tot = sum((yy - mean_y) ** 2 for yy in y_values)
+        ss_res = sum((yy - yyhat) ** 2 for yy, yyhat in zip(y_values, fitted))
+        r2 = 1.0 if ss_tot <= 1e-12 else 1.0 - ss_res / ss_tot
+        return {"r2": clamp(r2, 0.0, 1.0), "coeffs": coeffs, "fitted": fitted}
+
+    linear = _fit(x, y, 1)
+    quadratic = _fit(x, y, 2)
+    logarithmic = _fit(x_log, y, 1)
+    models = {
+        "linear": linear,
+        "quadratic": quadratic,
+        "logarithmic": logarithmic,
+    }
+
+    preferred = (structure or {}).get("best_structure_model")
+    if preferred not in models or models.get(preferred, {}).get("r2") is None:
+        valid = {k: v for k, v in models.items() if v.get("r2") is not None}
+        preferred = max(valid, key=lambda k: valid[k]["r2"]) if valid else None
+
+    if not preferred:
+        return {
+            "individual_fair_pe": round2(current_forward_pe),
+            "regression_fair_pe": round2(current_forward_pe),
+            "current_regression_multiple": None,
+            "historical_trimmed_mean_multiple": None,
+            "historical_median_multiple": None,
+            "historical_p25_multiple": None,
+            "historical_p75_multiple": None,
+            "regression_fair_price_now": None,
+            "regression_actual_price_now": weekly_prices[-1] if weekly_prices else None,
+            "regression_valuation_source": "fallback_current_forward_pe_regression_fit_failed",
+            "regression_valuation_quality": "low",
+        }
+
+    fitted_log = models[preferred].get("fitted", [])
+    fitted_prices = [math.exp(v) for v in fitted_log if v is not None]
+    if len(fitted_prices) != len(weekly_prices):
+        return {
+            "individual_fair_pe": round2(current_forward_pe),
+            "regression_fair_pe": round2(current_forward_pe),
+            "current_regression_multiple": None,
+            "historical_trimmed_mean_multiple": None,
+            "historical_median_multiple": None,
+            "historical_p25_multiple": None,
+            "historical_p75_multiple": None,
+            "regression_fair_price_now": None,
+            "regression_actual_price_now": weekly_prices[-1] if weekly_prices else None,
+            "regression_valuation_source": "fallback_current_forward_pe_bad_fitted_series",
+            "regression_valuation_quality": "low",
+        }
+
+    multiples = []
+    for actual, fair in zip(weekly_prices, fitted_prices):
+        if fair > 0:
+            m = actual / fair
+            if math.isfinite(m) and m > 0:
+                multiples.append(m)
+
+    normal_multiple = trimmed_mean(multiples, 0.10)
+    median_multiple = percentile(multiples, 0.50) if multiples else None
+    p25_multiple = percentile(multiples, 0.25) if multiples else None
+    p75_multiple = percentile(multiples, 0.75) if multiples else None
+    current_fair_price = fitted_prices[-1] if fitted_prices else None
+    current_price = weekly_prices[-1] if weekly_prices else None
+    current_multiple = (current_price / current_fair_price) if current_fair_price and current_fair_price > 0 else None
+
+    if normal_multiple is None or current_multiple is None or current_multiple <= 0:
+        fair_pe = current_forward_pe
+        source = "fallback_current_forward_pe_missing_multiples"
+        quality = "low"
+    else:
+        fair_pe = current_forward_pe * (normal_multiple / current_multiple)
+        source = "current_pe_x_trimmed_mean_multiple_over_current_multiple"
+        r2 = safe_num(models[preferred].get("r2"), 0.0)
+        if history_weeks >= 260 and r2 >= 0.70:
+            quality = "high"
+        elif history_weeks >= 156 and r2 >= 0.50:
+            quality = "medium"
+        else:
+            quality = "low"
+
+    # avoid pathological PE anchors from extreme fits; still keep source/quality visible
+    fair_pe_capped = clamp(safe_num(fair_pe, current_forward_pe), 1.0, 120.0)
+
+    return {
+        "individual_fair_pe": round2(fair_pe_capped),
+        "regression_fair_pe": round2(fair_pe_capped),
+        "current_regression_multiple": round(safe_num(current_multiple, 0.0), 4) if current_multiple is not None else None,
+        "historical_trimmed_mean_multiple": round(safe_num(normal_multiple, 0.0), 4) if normal_multiple is not None else None,
+        "historical_median_multiple": round(safe_num(median_multiple, 0.0), 4) if median_multiple is not None else None,
+        "historical_p25_multiple": round(safe_num(p25_multiple, 0.0), 4) if p25_multiple is not None else None,
+        "historical_p75_multiple": round(safe_num(p75_multiple, 0.0), 4) if p75_multiple is not None else None,
+        "regression_fair_price_now": round2(current_fair_price) if current_fair_price is not None else None,
+        "regression_actual_price_now": round2(current_price) if current_price is not None else None,
+        "regression_valuation_model": preferred,
+        "regression_valuation_r2": round2(models[preferred].get("r2")) if models[preferred].get("r2") is not None else None,
+        "regression_valuation_history_weeks": history_weeks,
+        "regression_valuation_source": source,
+        "regression_valuation_quality": quality,
+    }
+
+
 def compute_timing(feature: dict[str, Any]) -> dict[str, float]:
     rets = feature["returns"]
     timing_raw = (
@@ -1571,6 +1783,9 @@ def main() -> int:
             feature = build_feature_row(sym, bundle)
             trend = compute_trend(feature)
             structure = compute_structure(feature)
+            regression_valuation = compute_regression_valuation_band(feature, structure)
+            if isinstance(feature.get("valuation"), dict):
+                feature["valuation"].update(regression_valuation)
             if sym == "TSM":
                 tsm_weekly_len = len([x for x in feature.get("weekly_prices", []) if safe_num(x, None) is not None and safe_num(x, 0.0) > 0])
                 print(
@@ -1629,6 +1844,20 @@ def main() -> int:
                 "category_sub": feature["valuation"].get("category_sub"),
                 "valuation_archetype": feature["valuation"].get("valuation_archetype"),
                 "valuation_score": round2(valuation["score_10"]),
+                "individual_fair_pe": regression_valuation.get("individual_fair_pe"),
+                "regression_fair_pe": regression_valuation.get("regression_fair_pe"),
+                "current_regression_multiple": regression_valuation.get("current_regression_multiple"),
+                "historical_trimmed_mean_multiple": regression_valuation.get("historical_trimmed_mean_multiple"),
+                "historical_median_multiple": regression_valuation.get("historical_median_multiple"),
+                "historical_p25_multiple": regression_valuation.get("historical_p25_multiple"),
+                "historical_p75_multiple": regression_valuation.get("historical_p75_multiple"),
+                "regression_fair_price_now": regression_valuation.get("regression_fair_price_now"),
+                "regression_actual_price_now": regression_valuation.get("regression_actual_price_now"),
+                "regression_valuation_model": regression_valuation.get("regression_valuation_model"),
+                "regression_valuation_r2": regression_valuation.get("regression_valuation_r2"),
+                "regression_valuation_history_weeks": regression_valuation.get("regression_valuation_history_weeks"),
+                "regression_valuation_source": regression_valuation.get("regression_valuation_source"),
+                "regression_valuation_quality": regression_valuation.get("regression_valuation_quality"),
                 "trend_score": round2(trend["score_10"]),
                 "trend_mode": trend.get("trend_mode"),
                 "trend_reliability": trend.get("trend_reliability"),
