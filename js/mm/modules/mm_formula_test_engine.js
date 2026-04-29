@@ -39,11 +39,11 @@
     money_flow_weight: 0.30,
 
     // 28-sector baseline blend:
-    sector_peer_baseline_weight: 0.70,
-    sector_static_anchor_weight: 0.30,
+    sector_peer_baseline_weight: 0.30,
+    sector_static_anchor_weight: 0.70,
 
-    // Dynamic valuation multipliers are applied as what-if scale factors
-    // on top of row-level Python values from dynamic_anchor_regime_v1.json.
+    // Dynamic valuation multipliers are adjustment factors applied on top of Python/config multipliers.
+    // 1.00 = keep original market/industry/archetype multiplier.
     valuation_market_multiplier_factor: 1.00,
     valuation_industry_multiplier_factor: 1.00,
     valuation_archetype_multiplier_factor: 1.00,
@@ -65,9 +65,9 @@
     ["money_flow_weight", "Money - Flow Weight", 0, 1, 0.01],
     ["sector_peer_baseline_weight", "Valuation - Sector Peer Baseline Weight", 0, 1, 0.01],
     ["sector_static_anchor_weight", "Valuation - Static Anchor Weight", 0, 1, 0.01],
-    ["valuation_market_multiplier_factor", "Valuation - Market Multiplier Factor", 0.50, 1.50, 0.01],
-    ["valuation_industry_multiplier_factor", "Valuation - Industry Multiplier Factor", 0.50, 1.50, 0.01],
-    ["valuation_archetype_multiplier_factor", "Valuation - Archetype Multiplier Factor", 0.50, 1.50, 0.01],
+    ["valuation_market_multiplier_factor", "Valuation - Market Multiplier Factor", 0.70, 1.30, 0.01],
+    ["valuation_industry_multiplier_factor", "Valuation - Industry Multiplier Factor", 0.70, 1.30, 0.01],
+    ["valuation_archetype_multiplier_factor", "Valuation - Archetype Multiplier Factor", 0.70, 1.30, 0.01],
     ["top_adjustment_weight", "Final - Top Adjustment Weight", 0, 2, 0.01],
     ["top_adjustment_cap", "Final - Top Adjustment Cap", 0, 3, 0.05]
   ];
@@ -538,44 +538,44 @@
     const categorySub = getCategorySub(row);
     const family = cfg?.category_family_map?.[categorySub] || null;
 
-    const marketMultiplier =
+    const baseMarketMultiplier =
       num(field(row, ["feature_snapshot.valuation.market_multiplier", "market_multiplier"], null), null) ??
       num(cfg?.market_regimes?.[marketRegime]?.multiplier, 1);
 
-    let industryMultiplier = num(field(row, ["feature_snapshot.valuation.industry_multiplier", "industry_multiplier"], null), null);
-    if (industryMultiplier === null) {
+    let baseIndustryMultiplier = num(field(row, ["feature_snapshot.valuation.industry_multiplier", "industry_multiplier"], null), null);
+    if (baseIndustryMultiplier === null) {
       const ir = cfg?.industry_regimes?.[industryRegime];
-      industryMultiplier = num(ir?.family_multipliers?.[family], num(ir?.default_multiplier, 1));
+      baseIndustryMultiplier = num(ir?.family_multipliers?.[family], num(ir?.default_multiplier, 1));
     }
 
-    const archetypeMultiplier =
+    const baseArchetypeMultiplier =
       num(field(row, ["feature_snapshot.valuation.archetype_multiplier", "archetype_multiplier"], null), null) ??
       num(cfg?.valuation_archetypes?.[archetype]?.multiplier, 1);
 
-    const marketFactor = num(params.valuation_market_multiplier_factor, 1);
-    const industryFactor = num(params.valuation_industry_multiplier_factor, 1);
-    const archetypeFactor = num(params.valuation_archetype_multiplier_factor, 1);
+    const marketFactor = num(params.valuation_market_multiplier_factor, 1.0);
+    const industryFactor = num(params.valuation_industry_multiplier_factor, 1.0);
+    const archetypeFactor = num(params.valuation_archetype_multiplier_factor, 1.0);
 
-    const appliedMarketMultiplier = marketMultiplier * marketFactor;
-    const appliedIndustryMultiplier = industryMultiplier * industryFactor;
-    const appliedArchetypeMultiplier = archetypeMultiplier * archetypeFactor;
+    const marketMultiplier = baseMarketMultiplier * marketFactor;
+    const industryMultiplier = baseIndustryMultiplier * industryFactor;
+    const archetypeMultiplier = baseArchetypeMultiplier * archetypeFactor;
 
     return {
       marketRegime,
       industryRegime,
       archetype,
       family,
-      marketMultiplier,
-      industryMultiplier,
-      archetypeMultiplier,
+      baseMarketMultiplier,
+      baseIndustryMultiplier,
+      baseArchetypeMultiplier,
       marketFactor,
       industryFactor,
       archetypeFactor,
-      appliedMarketMultiplier,
-      appliedIndustryMultiplier,
-      appliedArchetypeMultiplier,
-      combined: appliedMarketMultiplier * appliedIndustryMultiplier * appliedArchetypeMultiplier,
-      baseCombined: marketMultiplier * industryMultiplier * archetypeMultiplier
+      marketMultiplier,
+      industryMultiplier,
+      archetypeMultiplier,
+      combined: marketMultiplier * industryMultiplier * archetypeMultiplier,
+      baseCombined: baseMarketMultiplier * baseIndustryMultiplier * baseArchetypeMultiplier
     };
   }
 
@@ -670,62 +670,12 @@
     };
   }
 
-
-  function piecewiseLinear(points, x) {
-    if (!Array.isArray(points) || !points.length) return null;
-    const pts = points.map(p => [num(p[0], 0), num(p[1], 0)]).sort((a,b) => a[0] - b[0]);
-    const xv = num(x, 0);
-    if (xv <= pts[0][0]) return pts[0][1];
-    if (xv >= pts[pts.length - 1][0]) return pts[pts.length - 1][1];
-    for (let i = 1; i < pts.length; i++) {
-      const [x0, y0] = pts[i - 1];
-      const [x1, y1] = pts[i];
-      if (xv >= x0 && xv <= x1) {
-        const t = x1 === x0 ? 1 : (xv - x0) / (x1 - x0);
-        return y0 + t * (y1 - y0);
-      }
-    }
-    return pts[pts.length - 1][1];
-  }
-
-  function valuationWhatIfActive(params = state.params) {
-    const keys = [
-      "sector_peer_baseline_weight",
-      "sector_static_anchor_weight",
-      "valuation_market_multiplier_factor",
-      "valuation_industry_multiplier_factor",
-      "valuation_archetype_multiplier_factor"
-    ];
-    return keys.some(k => Math.abs(num(params[k], DEFAULT_PARAMS[k]) - DEFAULT_PARAMS[k]) > 0.000001);
-  }
-
-  function computeValuationScoreFromAnchor(currentForwardPE, finalAnchor, fallbackScore) {
-    const pe = num(currentForwardPE, null);
-    const anchor = num(finalAnchor, null);
-    if (pe === null || pe <= 0 || anchor === null || anchor <= 0) return fallbackScore;
-    const gap = pe / anchor - 1.0;
-    const points = [
-      [-1.00, 10.0],
-      [-0.40, 10.0],
-      [-0.20, 9.0],
-      [-0.05, 7.0],
-      [ 0.05, 7.0],
-      [ 0.20, 6.0],
-      [ 0.40, 3.0],
-      [ 0.80, 2.0]
-    ];
-    return clamp(piecewiseLinear(points, gap), 2.0, 10.0);
-  }
-
   function computeM7(ctx, params = state.params) {
     const base = getBaseScores(ctx);
     const trend = computeTrend(ctx, base, params);
     const money = computeMoney(ctx, base, params);
     const top = computeTop(base, params);
     const valuationBaseline = computeValuationBaseline(ctx, params);
-    const valuationNewScore = valuationWhatIfActive(params)
-      ? computeValuationScoreFromAnchor(valuationBaseline.currentForwardPE, valuationBaseline.finalAnchorAfterDynamic, base.valuation)
-      : base.valuation;
 
     const rawWeightsNow = normalizeWeights(DEFAULT_PARAMS, [
       "raw_valuation_weight", "raw_trend_weight", "raw_structure_weight", "raw_timing_weight", "raw_money_weight"
@@ -742,7 +692,7 @@
       base.money * rawWeightsNow.raw_money_weight;
 
     const rawNew =
-      valuationNewScore * rawWeightsNew.raw_valuation_weight +
+      base.valuation * rawWeightsNew.raw_valuation_weight +
       trend.new * rawWeightsNew.raw_trend_weight +
       base.structure * rawWeightsNew.raw_structure_weight +
       base.timing * rawWeightsNew.raw_timing_weight +
@@ -753,7 +703,7 @@
     const newScore = clamp(rawNew + top.new, 0, 10);
 
     const factorRows = [
-      ["valuation", base.valuation, valuationNewScore, rawWeightsNow.raw_valuation_weight, rawWeightsNew.raw_valuation_weight],
+      ["valuation", base.valuation, base.valuation, rawWeightsNow.raw_valuation_weight, rawWeightsNew.raw_valuation_weight],
       ["trend", base.trend, trend.new, rawWeightsNow.raw_trend_weight, rawWeightsNew.raw_trend_weight],
       ["structure", base.structure, base.structure, rawWeightsNow.raw_structure_weight, rawWeightsNew.raw_structure_weight],
       ["timing", base.timing, base.timing, rawWeightsNow.raw_timing_weight, rawWeightsNew.raw_timing_weight],
@@ -777,7 +727,7 @@
     });
 
     const scores = {
-      valuation: { now: base.valuation, new: valuationNewScore },
+      valuation: { now: base.valuation, new: base.valuation },
       trend: { now: base.trend, new: trend.new },
       structure: { now: base.structure, new: base.structure },
       timing: { now: base.timing, new: base.timing },
@@ -806,10 +756,9 @@
     traceLines.push(`  weighted_peer_baseline=${fmt(valuationBaseline.weightedPeerBaseline)} / peer_count=${valuationBaseline.peerCount}`);
     traceLines.push(`  static_anchor=${fmt(valuationBaseline.staticAnchor)}`);
     traceLines.push(`  sector_baseline = peer*${fmt(normalizeWeights(params, ["sector_peer_baseline_weight", "sector_static_anchor_weight"]).sector_peer_baseline_weight)} + static*${fmt(normalizeWeights(params, ["sector_peer_baseline_weight", "sector_static_anchor_weight"]).sector_static_anchor_weight)} = ${fmt(valuationBaseline.sectorBaseline)}`);
-    traceLines.push(`  dynamic multipliers base: market=${fmt(valuationBaseline.dynamic.marketMultiplier)} industry=${fmt(valuationBaseline.dynamic.industryMultiplier)} archetype=${fmt(valuationBaseline.dynamic.archetypeMultiplier)} base_combined=${fmt(valuationBaseline.dynamic.baseCombined)}`);
-    traceLines.push(`  dynamic multiplier factors: market=${fmt(valuationBaseline.dynamic.marketFactor)} industry=${fmt(valuationBaseline.dynamic.industryFactor)} archetype=${fmt(valuationBaseline.dynamic.archetypeFactor)}`);
-    traceLines.push(`  dynamic multipliers applied: market=${fmt(valuationBaseline.dynamic.appliedMarketMultiplier)} industry=${fmt(valuationBaseline.dynamic.appliedIndustryMultiplier)} archetype=${fmt(valuationBaseline.dynamic.appliedArchetypeMultiplier)} combined=${fmt(valuationBaseline.dynamic.combined)}`);
-    traceLines.push(`  valuation score new = ${valuationWhatIfActive(params) ? "recomputed from final_anchor_after_dynamic" : "current Python valuation_score (no valuation slider changed)"} = ${fmt(valuationNewScore)}`);
+    traceLines.push(`  dynamic multipliers base: market=${fmt(valuationBaseline.dynamic.baseMarketMultiplier)} industry=${fmt(valuationBaseline.dynamic.baseIndustryMultiplier)} archetype=${fmt(valuationBaseline.dynamic.baseArchetypeMultiplier)} base_combined=${fmt(valuationBaseline.dynamic.baseCombined)}`);
+    traceLines.push(`  dynamic multiplier factors: market_factor=${fmt(valuationBaseline.dynamic.marketFactor)} industry_factor=${fmt(valuationBaseline.dynamic.industryFactor)} archetype_factor=${fmt(valuationBaseline.dynamic.archetypeFactor)}`);
+    traceLines.push(`  dynamic multipliers effective: market=${fmt(valuationBaseline.dynamic.marketMultiplier)} industry=${fmt(valuationBaseline.dynamic.industryMultiplier)} archetype=${fmt(valuationBaseline.dynamic.archetypeMultiplier)} combined=${fmt(valuationBaseline.dynamic.combined)}`);
     traceLines.push(`  final_anchor_after_dynamic=${fmt(valuationBaseline.finalAnchorAfterDynamic)}`);
     traceLines.push("");
     traceLines.push("TREND:");
@@ -955,7 +904,7 @@
         <div class="mini-card"><span>Weighted Peer Baseline</span><b>${fmt(v.weightedPeerBaseline)}</b></div>
         <div class="mini-card"><span>Static Anchor</span><b>${fmt(v.staticAnchor)}</b></div>
         <div class="mini-card"><span>Sector Baseline</span><b>${fmt(v.sectorBaseline)}</b></div>
-        <div class="mini-card"><span>Regime Adjusted Anchor</span><b>${fmt(v.finalAnchorAfterDynamic)}</b></div>
+        <div class="mini-card"><span>Final Anchor After Dynamic</span><b>${fmt(v.finalAnchorAfterDynamic)}</b></div>
       </div>
       <div class="small">
         <span class="tag">source: ${escapeHtml(v.individualFairPESource)}</span>
@@ -964,10 +913,11 @@
         <span class="tag">R²: ${fmt(r.regressionR2)}</span>
         <span class="tag">history weeks: ${fmt(r.regressionHistoryWeeks, 0)}</span>
         <span class="tag">base market × industry × archetype = ${fmt(v.dynamic.baseCombined)}</span>
-        <span class="tag">applied combined = ${fmt(v.dynamic.combined)}</span>
-        <span class="tag">market: ${escapeHtml(v.dynamic.marketRegime || "--")} / ${fmt(v.dynamic.marketMultiplier)} × factor ${fmt(v.dynamic.marketFactor)}</span>
-        <span class="tag">industry: ${escapeHtml(v.dynamic.industryRegime || "--")} / ${fmt(v.dynamic.industryMultiplier)} × factor ${fmt(v.dynamic.industryFactor)}</span>
-        <span class="tag">archetype: ${escapeHtml(v.dynamic.archetype || "--")} / ${fmt(v.dynamic.archetypeMultiplier)} × factor ${fmt(v.dynamic.archetypeFactor)}</span>
+        <span class="tag">effective market × industry × archetype = ${fmt(v.dynamic.combined)}</span>
+        <span class="tag">factors M/I/A = ${fmt(v.dynamic.marketFactor)} / ${fmt(v.dynamic.industryFactor)} / ${fmt(v.dynamic.archetypeFactor)}</span>
+        <span class="tag">market: ${escapeHtml(v.dynamic.marketRegime || "--")}</span>
+        <span class="tag">industry: ${escapeHtml(v.dynamic.industryRegime || "--")}</span>
+        <span class="tag">archetype: ${escapeHtml(v.dynamic.archetype || "--")}</span>
       </div>
 
       <table class="table-tight" style="margin-top:10px">
@@ -992,11 +942,12 @@
     const rows = Object.values(sectorMap)
       .sort((a, b) => a.categorySub.localeCompare(b.categorySub));
     $("sectorBaselineTable").innerHTML = `
-      <thead><tr><th>Category Sub</th><th>Peers</th><th>Weighted Peer PE</th><th>Static Anchor</th><th>Final Sector Baseline</th></tr></thead>
+      <thead><tr><th>Category Sub</th><th>Companies</th><th>Peers</th><th>Weighted Peer PE</th><th>Static Anchor</th><th>Final Sector Baseline</th></tr></thead>
       <tbody>
         ${rows.map(r => `
           <tr>
             <td>${escapeHtml(r.categorySub)}</td>
+            <td style="text-align:left">${escapeHtml((r.members || []).slice(0, 10).map(m => m.symbol).join(" / ") || "--")}</td>
             <td>${r.peerCount}</td>
             <td>${fmt(r.weightedPeerBaseline)}</td>
             <td>${fmt(r.staticAnchor)}</td>
@@ -1148,9 +1099,10 @@
 
     const catMap = new Map();
     rows.forEach(r => {
-      if (!catMap.has(r.categorySub)) catMap.set(r.categorySub, { categorySub: r.categorySub, n: 0, valuation:0, trend:0, structure:0, timing:0, money:0, m7:0 });
+      if (!catMap.has(r.categorySub)) catMap.set(r.categorySub, { categorySub: r.categorySub, symbols: [], n: 0, valuation:0, trend:0, structure:0, timing:0, money:0, m7:0 });
       const c = catMap.get(r.categorySub);
       c.n += 1;
+      c.symbols.push(r.sym);
       ["valuation","trend","structure","timing","money","m7"].forEach(k => c[k] += num(r[k], 0));
     });
     const catRows = [...catMap.values()].map(c => {
@@ -1165,9 +1117,9 @@
         <tbody>${factorHtml}</tbody>
       </table>
       <table class="table-tight" style="margin-top:12px">
-        <thead><tr><th>Category Sub</th><th>N</th><th>Val</th><th>Trend</th><th>Struct</th><th>Timing</th><th>Money</th><th>M7 Avg</th></tr></thead>
+        <thead><tr><th>Category Sub</th><th>Companies</th><th>N</th><th>Val</th><th>Trend</th><th>Struct</th><th>Timing</th><th>Money</th><th>M7 Avg</th></tr></thead>
         <tbody>${catRows.map(c => `<tr>
-          <td>${escapeHtml(c.categorySub)}</td><td>${c.n}</td><td>${fmt(c.valuation)}</td><td>${fmt(c.trend)}</td><td>${fmt(c.structure)}</td><td>${fmt(c.timing)}</td><td>${fmt(c.money)}</td><td>${fmt(c.m7)}</td>
+          <td>${escapeHtml(c.categorySub)}</td><td style="text-align:left">${escapeHtml((c.symbols || []).join(" / "))}</td><td>${c.n}</td><td>${fmt(c.valuation)}</td><td>${fmt(c.trend)}</td><td>${fmt(c.structure)}</td><td>${fmt(c.timing)}</td><td>${fmt(c.money)}</td><td>${fmt(c.m7)}</td>
         </tr>`).join("")}</tbody>
       </table>
     `;
@@ -1292,7 +1244,7 @@
 
     const name = field(ctx.row, ["name", "company_name"], "");
     $("selectedMeta").textContent = `${ctx.sym}${name ? " / " + name : ""}`;
-    $("ruleBox").innerHTML = `Debug rule：前端會重新計算公式，但必須對齊 Python M7 v2 欄位。Valuation 參數已補齊：sector peer/static 權重 + market/industry/archetype multiplier factor；沒有移動 valuation slider 時，valuation score 保持 Python now 值，移動後才做 what-if 重算。`;
+    $("ruleBox").innerHTML = `Debug rule：前端會重新計算公式，但必須對齊 Python M7 v2 欄位。新增 28產業 baseline engine：個股 fair PE 已讀 Python heat-brake 欄位；再以 avg_dollar_volume/liquidity 加權 → 預設 30% peer baseline + 70% static anchor；market / industry / archetype multiplier factor 可調。`;
 
     renderRawImpactTable(result);
     renderFactorImpactTable(result);
