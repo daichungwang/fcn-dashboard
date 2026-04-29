@@ -2451,7 +2451,7 @@
         writePoolEditorCache();
         renderFCNManager();
 
-        const marketMerged = marketRuntime || {};
+        const marketMerged = marketRuntime?.rows || marketRuntime || {};
 
         const data = runM2HealthEngine({
           fcnPool,
