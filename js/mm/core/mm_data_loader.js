@@ -29,6 +29,16 @@
     if((!Array.isArray(data.positions)||!data.positions.length)&&DEMO.positions){data.positions=DEMO.positions; demoUsed=true;}
     if((!data.m7Audit||data.m7Audit.__missing)&&DEMO.m7Audit){data.m7Audit=DEMO.m7Audit; demoUsed=true;}
     return {data,warnings,sources:SOURCES,demoUsed};
+  async function loadJson(path){
+    try{ const r=await fetch(path); if(!r.ok) throw new Error(String(r.status)); return await r.json(); }
+    catch(e){ return {__missing:true,__error:String(e)}; }
+  }
+  async function loadAll(){
+    const entries=await Promise.all(Object.entries(SOURCES).map(async ([k,p])=>[k,await loadJson(p)]));
+    const data=Object.fromEntries(entries);
+    const warnings=entries.filter(([,v])=>v&&v.__missing).map(([k])=>k);
+    console.log('[MM] data loaded',Object.keys(data).length,'sources; warnings:',warnings);
+    return {data,warnings,sources:SOURCES};
   }
   window.MMDataLoader={loadAll,SOURCES};
 })();
