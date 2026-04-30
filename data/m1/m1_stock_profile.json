@@ -1138,6 +1138,127 @@
 "total_score": 9.7,
 "fail_reasons": []
 },
+"HPQ": {
+"symbol": "HPQ",
+"name": "HP Inc.",
+"type": "research_raw",
+"company_overview": "HPQ 是全球 PC 與列印硬體公司，FY2025 營收 553 億美元、YoY +3.2%，但 GAAP EPS 2.65 美元、YoY -5.7%，代表它是低估值、高股息、但成長彈性有限的成熟硬體股。",
+"basic_info": {
+"founded": "1939 年；2015 年 HP Inc. 與 HPE 分拆後，HPQ 聚焦 PC、印表機與耗材。",
+"headquarters": "Palo Alto, California, USA；FY2025 美國以外沒有單一國家超過營收 10%。",
+"industry": "Personal Computers, Printing Hardware, Supplies, Commercial Devices",
+"market_cap": "約 189 億美元，股價約 20.27 美元，TTM PE 約 7.69。"
+},
+"business_model": {
+"summary": "HPQ 的商業模式是 PC 硬體放量、列印耗材貢獻高利潤；FY2025 Personal Systems 營收 385.3 億美元、約占 69.7%，Printing 營收 167.0 億美元、約占 30.2%，但 Printing 營業利益率 18.7% 明顯高於 Personal Systems 的 5.3%。",
+"segments": [
+"Personal Systems：FY2025 營收 385.3 億美元、YoY +6%，Commercial PS 274.4 億美元、YoY +8%，Consumer PS 110.9 億美元、YoY +4%，這是營收主體但營業利益率只有 5.3%。",
+"Printing：FY2025 營收 167.0 億美元、YoY -4%，其中 Supplies 109.2 億美元、YoY -3%，Commercial Printing 46.3 億美元、YoY -4%，Consumer Printing 11.5 億美元、YoY -4%，代表高毛利耗材仍在衰退。",
+"Corporate Investments：FY2025 營收 0.62 億美元、規模不到總營收 0.2%，目前不是 pool30 決策核心，不能把 HPQ 當 AI 高成長硬體股處理。"
+]
+},
+"customer_analysis": {
+"summary": "HPQ 客戶結構偏分散但通路集中風險存在；FY2025 TD Synnex Corp 單一客戶占 HPQ 營收 12%，是需要納入風險折扣的明確數字。",
+"key_customers": [
+{
+"name": "TD Synnex Corp",
+"role": "全球 IT 分銷商 / 通路客戶",
+"importance": "FY2025 占 HPQ 淨營收 12%，超過 10% 門檻，若分銷庫存調整 1 季，會直接影響 HPQ 出貨與應收帳款節奏。"
+},
+{
+"name": "CDW",
+"role": "企業 IT 解決方案通路與採購平台",
+"importance": "CDW 銷售 HP 的 AI PCs、Printers & Supplies、Poly、Displays、Services and Solutions，代表 HPQ 商用需求高度依賴企業 IT 通路。"
+},
+{
+"name": "Corporate Enterprise / Public Sector customers",
+"role": "商用 PC、工作站、顯示器與配件採購客戶",
+"importance": "HP2B 官方平台服務企業與公部門客戶，FY2025 Commercial PS 營收 274.4 億美元、YoY +8%，是 HPQ 最重要的需求來源。"
+}
+],
+"conclusion": "HPQ 不是單一 hyperscaler 訂單型公司，而是通路與企業採購型公司；TD Synnex 12% 集中度可接受但不能忽略，因為 PC 庫存週期會放大營收波動。"
+},
+"why_this_company": [
+"估值低：HPQ 目前 TTM PE 約 7.69、forward PE 約 7.3，明顯低於多數大型科技硬體股，適合放入 stock pool 觀察低估值 + 股息型 FCN 標的。",
+"現金回饋高：FY2025 FCF 29 億美元，並返還 19 億美元給股東，等於返還約 66% FCF，對股息型投資人有支撐。",
+"負面也清楚：FY2025 Printing 營收 YoY -4%、Supplies YoY -3%，而 GAAP EPS YoY -5.7%，所以它不是成長股，pool30 不能給 core 高權重。"
+],
+"market_view": "市場目前 pricing 的是 Windows 11 換機、AI PC 與企業更新週期；Gartner 指出 2025 年全球 PC 出貨 YoY +9.1%，HP 仍是全球第 2 大 PC 廠，2025 出貨約 5,745.7 萬台。市場同時擔心 2026 記憶體與零組件漲價壓縮需求，HPQ Q1 FY2026 電話會也提到業界預估 2026 PC unit TAM 可能雙位數下滑。",
+"financial_summary": {
+"revenue": "FY2025 revenue 553 億美元。",
+"growth": "FY2025 revenue YoY +3.2%；Q1 FY2026 revenue 144 億美元、YoY +7%。",
+"net_margin": "FY2025 GAAP net earnings 25 億美元 / revenue 553 億美元，net margin 約 4.5%。",
+"fcf_margin": "FY2025 FCF 29 億美元 / revenue 553 億美元，FCF margin 約 5.2%。",
+"eps": "FY2025 GAAP diluted EPS 2.65 美元、YoY -5.7%；non-GAAP diluted EPS 3.12 美元、YoY -9.0%。",
+"pe": "TTM PE 約 7.69；forward PE 約 7.3。",
+"dividend_yield": "Forward dividend 約 1.20 美元、殖利率約 5.96%；2026 年單季股息 0.30 美元。",
+"beta": "約 1.0–1.2 區間；以 PC 硬體循環股處理，不應視為低波動公用事業型股票。"
+},
+"competition": {
+"summary": "HPQ 在 PC 市場是第 2 名跟隨型大型廠，2025 年 HP 出貨約 5,745.7 萬台，低於 Lenovo 7,356.7 萬台；估值上 HPQ forward PE 約 7.3，但低估值反映 Printing 下滑與 PC 毛利壓力，不是純便宜。",
+"peers": [
+{
+"name": "Lenovo",
+"position": "全球 PC 第 1 名",
+"comparison": "2025 年 Lenovo 出貨約 7,356.7 萬台、市占 27.2%，HP 約 5,745.7 萬台，HP 是規模第 2 但不是市占第 1。"
+},
+{
+"name": "Dell Technologies",
+"position": "商用 PC 與企業 IT 競爭者",
+"comparison": "Dell 在商用 PC 與 HP 正面競爭；HPQ Personal Systems FY2025 營業利益率 5.3%，說明 PC 硬體競爭下價格空間有限。"
+},
+{
+"name": "Canon / Epson",
+"position": "列印與耗材競爭者",
+"comparison": "HPQ Printing FY2025 營收 YoY -4%，但營業利益率仍有 18.7%，表示列印是利潤池，但需求收縮會壓低估值上限。"
+}
+],
+"conclusion": "市場定位上，HPQ 是成熟 PC/列印巨頭，不是 AI server 或 GPU 受益主線；產品與服務差異化主要來自商用通路、列印耗材與裝置管理，而不是單一技術壟斷。價格策略上，PC 營業利益率 5.3% 顯示折扣與零組件成本會吃掉獲利；Printing 18.7% 利益率提供現金流，但 Supplies YoY -3% 是中期壓力。通路與供應鏈方面，TD Synnex 占 12% 營收，CDW 等企業通路讓 HPQ 有穩定出貨口，但也讓庫存週期變成投資風險。品牌與行銷方面，HP 全球 PC 第 2 名具知名度，但 Lenovo 2025 出貨 7,356.7 萬台高於 HP 的 5,745.7 萬台，HP 不是市占領導者。財務上，553 億美元營收、29 億美元 FCF、約 5.96% 股息殖利率使它適合 FCN 觀察；但 EPS YoY -5.7%、Printing 下滑，使 pool30 只能給 defensive/income 型定位。"
+},
+"valuation_and_timing": {
+"valuation_view": "目前股價約 20.27 美元、TTM PE 約 7.69、forward PE 約 7.3，低於其 12 個月平均 PE 約 8.91；估值便宜但屬 value trap 風險區，不能因 PE 低就直接升 pool30。",
+"buy_strategy": "策略上只適合分批或 FCN 觀察：若 forward PE 低於 7.0 且股息殖利率高於 6.0%，可視為防禦型低估值進場；若 PE 回到 9.0 以上但 Printing 仍 YoY 負成長，應降低追價意願。",
+"sweet_zone": "Sweet zone：股價 18–20 美元、forward PE ≤7.0、殖利率 ≥6.0%、Q2/Q3 FY2026 Personal Systems YoY 仍正成長且 Printing 下滑縮小到 -2% 以內。",
+"technical_view": {
+"mid_trend": "中期偏弱整理：現價約 20.27 美元，若無法重新站回 22–23 美元區間，代表市場仍以 7–8 倍 PE 對成熟硬體股定價。",
+"short_term": "短線不追：若 PC 換機題材已反映在 Q1 FY2026 revenue +7%，但 2026 PC unit TAM 被預估雙位數下滑，短線上漲容易被財測風險壓回。",
+"structure": "結構屬低估值 + 高股息 + 低成長組合；FY2025 FCF margin 約 5.2%，比高成長科技股更像現金流回饋標的。",
+"conclusion": "可放 stock pool，不建議直接進 pool30；等待 18–20 美元或 forward PE ≤7.0 才有較好安全邊際。"
+}
+},
+"pool30_fit": {
+"stock_pool": true,
+"pool30": false,
+"category": "income",
+"reason": "HPQ 有 553 億美元營收、29 億美元 FCF、約 5.96% 股息殖利率與 7 倍左右 PE，適合 stock pool 的低估值/收益觀察；但 FY2025 EPS YoY -5.7%、Printing YoY -4%、2026 PC TAM 可能雙位數下滑，使它不適合放入 pool30 核心名單。",
+"upgrade_condition": [
+"Printing revenue decline 從 FY2025 的 -4% 改善到 -2% 以內，且 Supplies 不再低於 -3%。",
+"Personal Systems 連續 2 季 YoY +5% 以上，且 segment operating margin 回到 6% 以上。",
+"股價落在 18–20 美元且 forward PE ≤7.0，同時 dividend yield ≥6.0%。"
+]
+},
+"risk_opportunity": {
+"risk": [
+"列印衰退風險：FY2025 Printing 營收 167.0 億美元、YoY -4%，Supplies 109.2 億美元、YoY -3%，如果耗材繼續下滑，HPQ 的高利潤來源會被侵蝕。",
+"PC 需求與成本風險：HPQ Q1 FY2026 提到 2026 PC unit TAM 可能雙位數下滑，且記憶體成本上升會壓縮入門機需求。",
+"通路集中風險：TD Synnex FY2025 占營收 12%，若通路庫存去化 1–2 季，HPQ revenue 與現金轉換週期會受影響。"
+],
+"opportunity": [
+"換機週期機會：Gartner 指出 2025 全球 PC 出貨 YoY +9.1%，Windows 11 更新與 AI PC 可能支撐商用換機需求。",
+"現金回饋機會：FY2025 FCF 29 億美元，返還股東 19 億美元、約 66% FCF，若股價維持 20 美元附近，股息與回購提供下檔支撐。",
+"估值修復機會：目前 forward PE 約 7.3，若市場願意回到 12 個月平均 PE 約 8.9，估值本身有約 20% 左右重估空間，但前提是 EPS 不再下修。"
+]
+},
+"final_view": "HPQ 的投資定位不是 AI 主線，也不是高成長科技股，而是「低 PE + 高股息 + 成熟硬體現金流」標的；FY2025 營收 553 億美元、FCF 29 億美元、殖利率約 5.96%，這些數字支持它進 stock pool 做 FCN 候選。可是它的負面也很明確：FY2025 EPS YoY -5.7%、Printing YoY -4%、Supplies YoY -3%，代表高利潤來源正在收縮，不能用單純低 PE 當成買進理由。我的系統判斷是：HPQ 可以當 income/defensive 觀察股，FCN 可行性中等偏可，但 pool30 暫不建議；除非 Printing 下滑收斂、Personal Systems margin 回到 6% 以上、股價落在 18–20 美元並提供 forward PE ≤7.0 的安全邊際，才有升級條件。",
+"quality_check": {
+"completeness": 9,
+"specificity": 9,
+"data_support": 9,
+"decision_usefulness": 9,
+"fcn_alignment": 8,
+"total_score": 8.8,
+"fail_reasons": []
+},
 "MSFT": {
 "symbol": "MSFT",
 "name": "Microsoft Corporation",
