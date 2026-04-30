@@ -234,6 +234,10 @@
     .headline-box .h{font-size:18px;font-weight:900;color:#7d5712}
     .headline-box .t{margin-top:8px;line-height:1.85;color:#523c15}
 
+
+    .comp-card{border:1px solid #e4edf6;background:#f9fbfe;border-radius:16px;padding:14px;margin-top:10px}
+    .comp-card .t{font-weight:900;margin-bottom:6px;color:#123255}
+    .comp-card .m{font-size:13px;color:#44586b;line-height:1.7;margin-top:4px}
     .empty{padding:54px 24px;text-align:center;color:var(--muted);font-size:16px}
     .collapsible-content.is-collapsed{display:none}
     .collapse-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:800}
@@ -768,57 +772,83 @@ function getList(type){
     function buildRevenueMix(profile){
       const out = [];
       const industry = profile?.basic_info?.industry || '';
-      const segs = profile?.business_model?.segments || [];
+      const segs = Array.isArray(profile?.business_model?.segments) ? profile.business_model.segments : [];
       const fromIndustry = industry.match(/半導體\s*(\d+(?:\.\d+)?)%.*軟體\s*(\d+(?:\.\d+)?)%/);
       if(fromIndustry){
         out.push({name:'Semiconductor', pct:Number(fromIndustry[1]), detail:'半導體主體'});
         out.push({name:'Software', pct:Number(fromIndustry[2]), detail:'基礎軟體'});
       }
       segs.forEach(s => {
-        const name = String(s).split('：')[0] || 'Segment';
-        const pctMatch = String(s).match(/占比\s*(\d+(?:\.\d+)?)%/);
-        const yoyMatch = String(s).match(/年增\s*(\d+(?:\.\d+)?)%/);
-        if(pctMatch) out.push({name, pct:Number(pctMatch[1]), yoy:yoyMatch ? Number(yoyMatch[1]) : null, detail:s});
+        const txt = String(s || '').trim();
+        if(!txt) return;
+        const pctMatch = txt.match(/(?:收入占|營收占|占比|佔比|占|佔)\s*(\d+(?:\.\d+)?)%/);
+        const yoyMatch = txt.match(/(?:年增長|年增|YoY|成長)\s*\+?(\d+(?:\.\d+)?)%/i);
+        let name = txt
+          .replace(/收入占\s*\d+(?:\.\d+)?%.*/,'')
+          .replace(/營收占\s*\d+(?:\.\d+)?%.*/,'')
+          .replace(/占比\s*\d+(?:\.\d+)?%.*/,'')
+          .replace(/佔比\s*\d+(?:\.\d+)?%.*/,'')
+          .split(/[：:，,]/)[0]
+          .trim();
+        name = name || `Segment ${out.length + 1}`;
+        if(pctMatch) out.push({name, pct:Number(pctMatch[1]), yoy:yoyMatch ? Number(yoyMatch[1]) : null, detail:txt});
       });
       const unique = [];
       const seen = new Set();
       out.forEach(x => {
-        const k = x.name.toLowerCase();
+        const k = String(x.name || '').toLowerCase();
         if(seen.has(k)) return;
         seen.add(k);
         unique.push(x);
       });
       if(!unique.length){
-        unique.push({name:'Core Business', pct:60, detail:'主要業務'});
+        unique.push({name:'Core Business', pct:60, detail:profile?.business_model?.summary || '主要業務'});
         unique.push({name:'Other', pct:40, detail:'其餘收入'});
       }
       let total = unique.reduce((s,x)=>s+n(x.pct),0);
       if(total !== 100 && total > 0){
         unique.forEach(x => x.pct = x.pct / total * 100);
       }
-      return unique.slice(0,4);
+      return unique.slice(0,6);
     }
     function buildCustomerMix(profile){
-      const items = profile?.customer_analysis?.key_customers || [];
-      const applePct = 20;
+      const items = Array.isArray(profile?.customer_analysis?.key_customers) ? profile.customer_analysis.key_customers : [];
       const result = [];
-      if(items.find(x => String(x.name).toLowerCase().includes('apple'))) result.push({name:'Apple', pct:applePct});
-      if(items.find(x => String(x.name).toLowerCase().includes('google'))) result.push({name:'Google', pct:14});
-      if(items.find(x => String(x.name).toLowerCase().includes('meta'))) result.push({name:'Meta', pct:10});
-      const top3 = result.reduce((s,x)=>s+x.pct,0);
-      const residual = Math.max(0, 100 - top3);
+      items.forEach((x, idx) => {
+        const name = x?.name || `Customer ${idx + 1}`;
+        const text = `${x?.importance || ''} ${x?.role || ''}`;
+        const pctMatch = text.match(/(?:佔總收入|占總收入|收入占比|營收占比|佔比|占比|佔|占)\s*(\d+(?:\.\d+)?)%/);
+        const pct = pctMatch ? Number(pctMatch[1]) : null;
+        result.push({name, pct, detail:text});
+      });
+      if(!result.length){
+        const summary = String(profile?.customer_analysis?.summary || '');
+        const topMatch = summary.match(/(?:前五大|前 5 大|Top\s*5)[^\d]*(\d+(?:\.\d+)?)%/i);
+        if(topMatch) result.push({name:'Top 5 Customers', pct:Number(topMatch[1]), detail:summary});
+      }
+      let knownTotal = result.reduce((sum,x)=>sum+(Number.isFinite(x.pct)?x.pct:0),0);
+      const missing = result.filter(x => !Number.isFinite(x.pct));
+      if(missing.length){
+        const remain = Math.max(0, Math.min(100, 100 - knownTotal));
+        const fill = Math.max(1, remain / (missing.length + 1));
+        missing.forEach(x => x.pct = fill);
+        knownTotal = result.reduce((sum,x)=>sum+(Number.isFinite(x.pct)?x.pct:0),0);
+      }
+      const residual = Math.max(0, 100 - knownTotal);
       result.push({name:'Other / Enterprise', pct:residual});
-      return result;
+      return result.slice(0,6);
     }
     function inferContracts(profile){
-      const raw = JSON.stringify(profile || {});
       const contracts = [];
-      const customers = ['Google','Meta','Apple','U.S. Army','bp','Airbus'];
-      customers.forEach(c => {
-        const re = new RegExp(`${c}[^0-9]{0,40}(20\\d{2})`, 'i');
-        const m = raw.match(re);
-        if(m){
-          contracts.push({customer:c, endYear:Number(m[1]), text:`合作可視度到 ${m[1]}`});
+      const items = Array.isArray(profile?.customer_analysis?.key_customers) ? profile.customer_analysis.key_customers : [];
+      items.forEach(x => {
+        const text = `${x?.importance || ''} ${x?.role || ''}`;
+        const yearMatch = text.match(/(20\d{2})/);
+        const yrsMatch = text.match(/合約年限\s*(\d+(?:\.\d+)?)\s*年/);
+        if(yearMatch){
+          contracts.push({customer:x?.name || 'Customer', endYear:Number(yearMatch[1]), text});
+        }else if(yrsMatch){
+          contracts.push({customer:x?.name || 'Customer', endYear:`${yrsMatch[1]}Y`, text});
         }
       });
       return contracts.slice(0,4);
@@ -874,7 +904,7 @@ function getList(type){
       return 60;
     }
     function inferPeerRows(symbol, profile){
-      const peers = profile?.competition?.peers || [];
+      const peers = Array.isArray(profile?.competition?.peers) ? profile.competition.peers : [];
       const mainPE = parsePercent(profile?.financial_summary?.pe);
       const mainGrowth = parsePercent(profile?.financial_summary?.growth);
       const rows = [{
@@ -883,12 +913,14 @@ function getList(type){
         note:'主分析標的'
       }];
       peers.forEach(p => {
-        const pe = parsePercent(p?.comparison);
+        const text = `${p?.comparison || ''} ${p?.position || ''}`;
+        const pe = parsePercent(text.match(/PE\s*(\d+(?:\.\d+)?)/i)?.[0] || text);
+        const growth = parsePercent(text.match(/(?:成長|growth|年增)\s*\+?(\d+(?:\.\d+)?)%/i)?.[0] || '');
         rows.push({
           symbol: p?.name || '--',
           role: p?.position || '--',
           pe: pe,
-          growth: null,
+          growth: growth,
           model: p?.comparison || '--',
           note: p?.position || '--'
         });
@@ -1401,6 +1433,16 @@ function getList(type){
 
       const m7 = getM7(symbol);
       enrichProfileWithM7(profile, m7, symbol, u);
+      profile.symbol = profile.symbol || symbol;
+      profile.name = profile.name || m7?.name || u?.name || symbol;
+      profile.basic_info = profile.basic_info || {};
+      profile.business_model = profile.business_model || {summary:'--', segments:[]};
+      profile.customer_analysis = profile.customer_analysis || {summary:'--', key_customers:[]};
+      profile.competition = profile.competition || {summary:'--', peers:[]};
+      profile.financial_summary = profile.financial_summary || {};
+      profile.risk_opportunity = profile.risk_opportunity || {risk:[], opportunity:[]};
+      profile.valuation_and_timing = profile.valuation_and_timing || {technical_view:{}};
+      profile.valuation_and_timing.technical_view = profile.valuation_and_timing.technical_view || {};
 
       const revMix = buildRevenueMix(profile);
       const cusMix = buildCustomerMix(profile);
@@ -1416,9 +1458,13 @@ function getList(type){
       const timing = (profile?.valuation_and_timing?.technical_view?.conclusion || profile?.valuation_and_timing?.buy_strategy || '等待').includes('不追') ? 'WAIT' : ((profile?.valuation_and_timing?.buy_strategy || '').includes('收') ? 'ACCUMULATE' : 'WAIT');
       const fcn = /FCN 可做|適合 FCN|FCN 底層標的|可做名單/.test(JSON.stringify(profile)) ? 'LIMITED' : 'AVOID';
       const summaryText = profile?.company_overview || profile?.final_view || '--';
-      const topCustomer = /約\s*(\d+(?:\.\d+)?)%/.exec(JSON.stringify(profile?.customer_analysis?.key_customers?.[0] || ''));
+      const firstCustomerText = JSON.stringify(profile?.customer_analysis?.key_customers?.[0] || '');
+      const topCustomer = /(?:約|佔總收入|占總收入|佔比|占比|佔|占)\s*(\d+(?:\.\d+)?)%/.exec(firstCustomerText);
       const topCustomerPct = topCustomer ? Number(topCustomer[1]) : (profile?.symbol === 'AVGO' ? 20 : null);
-      const top3Pct = /top-3[^\d]*(\d+(?:\.\d+)?)%/i.exec(JSON.stringify(profile)) ? Number(/top-3[^\d]*(\d+(?:\.\d+)?)%/i.exec(JSON.stringify(profile))[1]) : (/top-5[^\d]*(\d+(?:\.\d+)?)%/i.exec(JSON.stringify(profile)) ? Number(/top-5[^\d]*(\d+(?:\.\d+)?)%/i.exec(JSON.stringify(profile))[1]) : null);
+      const profileTextForPct = JSON.stringify(profile || {});
+      const top3Match = /(?:top-3|前三大|前 3 大)[^\d]*(\d+(?:\.\d+)?)%/i.exec(profileTextForPct);
+      const top5Match = /(?:top-5|前五大|前 5 大)[^\d]*(\d+(?:\.\d+)?)%/i.exec(profileTextForPct);
+      const top3Pct = top3Match ? Number(top3Match[1]) : (top5Match ? Number(top5Match[1]) : null);
 
       const segmentsHtml = revMix.map((x,idx) => `
         <div class="segment-item">
@@ -1703,7 +1749,7 @@ function getList(type){
           <section class="panel panel-body">
             <div class="panel-head"><h3>4. 財務品質</h3><div class="panel-sub">Revenue / growth / margin / FCF / quality</div></div>
             <div class="kpi-row">
-              <div class="mini-kpi"><div class="k">Revenue</div><div class="v">${kpiRevenue != null ? fmt(kpiRevenue,2) : '--'}</div><div class="d">資料中的營收規模</div></div>
+              <div class="mini-kpi"><div class="k">Revenue</div><div class="v">${esc(profile?.financial_summary?.revenue || (kpiRevenue != null ? fmt(kpiRevenue,2) : '--'))}</div><div class="d">資料中的營收規模</div></div>
               <div class="mini-kpi"><div class="k">Growth</div><div class="v">${kpiGrowth != null ? fmt(kpiGrowth,1) + '%' : '--'}</div><div class="d">YoY 成長</div></div>
               <div class="mini-kpi"><div class="k">Net Margin</div><div class="v">${kpiNetMargin != null ? fmt(kpiNetMargin,1) + '%' : '--'}</div><div class="d">獲利率</div></div>
               <div class="mini-kpi"><div class="k">FCF Margin</div><div class="v">${kpiFcfMargin != null ? fmt(kpiFcfMargin,1) + '%' : '--'}</div><div class="d">現金轉換率</div></div>
