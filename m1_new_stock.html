@@ -1530,6 +1530,7 @@ function getList(type){
       const m7Fair = toNum(m7?.regression_fair_price_now);
       const todayPrice = toNum(m7?.regression_actual_price_now) ?? toNum(priceNow);
       const m7Gap = (m7Fair != null && m7Fair !== 0 && todayPrice != null) ? ((todayPrice - m7Fair) / m7Fair * 100) : null;
+      const fairGap = (m7Fair != null && m7Fair !== 0 && todayPrice != null) ? ((m7Fair - todayPrice) / m7Fair * 100) : null;
       const nemoFair = toNum(nemo?.nemo_fair_price);
       const nemoGap = (nemoFair != null && nemoFair !== 0 && todayPrice != null) ? ((todayPrice - nemoFair) / nemoFair * 100) : null;
       const m7Dir = m7Gap == null ? null : (m7Gap < -10 ? 'under' : (m7Gap > 10 ? 'over' : 'fair'));
@@ -1552,73 +1553,65 @@ function getList(type){
         debt_ratio: nemo?.data_points?.debt_ratio ?? '--'
       };
       const headerM7Summary = m7 ? `M7 v2 ${fmt(m7?.m7_v2_score,2)} | Trend ${fmt(m7?.trend_score,2)} | Valuation ${fmt(m7?.valuation_score,2)}` : 'M7 data not available';
+      const trendAnnual = toNum(m7?.trend_linear_annualized_pct) ?? toNum(m7?.trend_ma_annualized_pct);
+      const structureR2 = toNum(m7?.structure_r2) ?? toNum(m7?.best_structure_r2);
+      const trendState = trendAnnual == null ? '資料不足' : (trendAnnual > 8 ? '上升' : (trendAnnual < -5 ? '下降' : '震盪'));
+      const structureState = structureR2 == null ? '結構待確認' : (structureR2 >= 0.9 ? '高穩定' : (structureR2 >= 0.75 ? '中等穩定' : '穩定度偏弱'));
+      const trendNarrative = trendAnnual == null && structureR2 == null
+        ? '趨勢與結構資料不足，先保持觀察。'
+        : `長期趨勢年化 ${trendAnnual == null ? '--' : pct(trendAnnual,0)}，結構 R²=${structureR2 == null ? '--' : fmt(structureR2,2)}，屬於${structureState}${trendState !== '資料不足' ? trendState + '趨勢' : ''}。`;
+      const histP25 = toNum(m7?.historical_p25_multiple);
+      const histMedian = toNum(m7?.historical_median_multiple);
+      const histP75 = toNum(m7?.historical_p75_multiple);
+      const currentMultiple = toNum(m7?.current_regression_multiple);
+      const valuationPos = currentMultiple == null || histP25 == null || histP75 == null ? '資料不足' : (currentMultiple < histP25 ? '偏低' : (currentMultiple > histP75 ? '偏高' : '正常'));
+      const valuationHeat = fairGap == null ? '待確認' : (fairGap >= 0 ? '未過熱' : (fairGap <= -20 ? '過熱' : '略熱'));
+      const valuationLabel = fairGap == null ? '合理' : (fairGap >= 10 ? '低估' : (fairGap <= -10 ? '高估' : '合理'));
+      const valuationNarrative = `目前價格${fairGap == null ? '與合理價關係待確認' : (fairGap >= 0 ? `低於合理價約 ${pct(fairGap,1)}` : `高於合理價約 ${pct(Math.abs(fairGap),1)}`)}，處於歷史${valuationPos}區，${valuationHeat === '未過熱' ? '未出現過熱現象' : `市場${valuationHeat}`}。`;
+      const m7Score = n(m7?.m7_v2_score, null);
+      const todayClass = m7Score == null ? 'WATCH' : (m7Score >= 8 ? 'STRONG' : (m7Score >= 6 ? 'OK / WATCH' : 'AVOID'));
+      const todayNarrative = `M7 綜合評分 ${m7Score == null ? '--' : fmt(m7Score,2)}，屬於${todayClass === 'STRONG' ? '可進場區間（偏強）' : (todayClass === 'OK / WATCH' ? '可做但需觀察區間' : '應避免進場區間')}。`;
+      const trendLabel = trendState === '上升' ? '強' : (trendState === '震盪' ? '普通' : (trendState === '下降' ? '差' : '普通'));
+      const todayLabel = todayClass === 'STRONG' ? '可做' : (todayClass === 'OK / WATCH' ? '觀望' : '避免');
+      const conviction = (trendLabel === '強' && valuationLabel === '低估' && todayLabel === '可做') ? '中高信心機會' : ((trendLabel === '差' || todayLabel === '避免') ? '低信心機會' : '中性機會');
+      const finalInsight = `趨勢${trendLabel}、估值${valuationLabel}、當前${todayLabel} → 屬於${conviction}`;
       const cockpitSections = [
-        buildCollapsible({
-          key:'final-decision',
-          title:'Final Decision / 最終決策',
-          summary:`Pool30 ${pool30Decision} | FCN ${fcnDecision} | Timing ${timingDecision} | ${finalDecision}`,
-          expanded:true,
-          content:`
-            <div class="final-grid">
-              <div class="final-card"><div class="k">Pool30</div><div class="v">${esc(pool30Decision)}</div><div class="r">以既有 M1 判讀 + M7 gap 回扣。</div></div>
-              <div class="final-card"><div class="k">FCN</div><div class="v">${esc(fcnDecision)}</div><div class="r">由估值區間與風險承擔決定。</div></div>
-              <div class="final-card"><div class="k">Timing</div><div class="v">${esc(timingDecision)}</div><div class="r">依 fair gap 判定偏甜/合理/偏熱。</div></div>
-              <div class="final-card"><div class="k">Final</div><div class="v">${esc(finalDecision)}</div><div class="r">${sameDirection === false ? '⚠️ M7 與 Nemotron 分歧' : 'M7 與 Nemotron 同向，conviction 提高'}</div></div>
-            </div>
-            <div class="section-note">主要原因：1) M7 gap ${m7Gap == null ? '--' : pct(m7Gap,1)}。2) M7 v2 ${fmt(m7?.m7_v2_score,2)}。3) Nemo gap ${nemoGap == null ? '--' : pct(nemoGap,1)}。</div>
-          `
-        }),
-        buildCollapsible({
-          key:'valuation-panel',
-          title:'Valuation + Fair Price / 估值與合理價',
-          summary:m7 ? `Best Fit ${m7?.regression_valuation_model || '--'} | Gap ${m7Gap == null ? '--' : pct(m7Gap,1)} | ${gapJudgement(m7Gap)}` : 'M7 data not available',
-          expanded:true,
-          content: m7 ? `
-            <div class="section-note">Best Fit Model: ${esc(m7?.regression_valuation_model || '--')} (R² = ${fmt(m7?.regression_valuation_r2,2)})</div>
-            <div class="section-note">Confidence: ${esc(r2Confidence(m7?.regression_valuation_r2))}</div>
-            <div class="kpi-row">
-              <div class="mini-kpi"><div class="k">Fair Price</div><div class="v">${money(m7Fair,2)}</div><div class="d">regression_fair_price_now</div></div>
-              <div class="mini-kpi"><div class="k">Today Price</div><div class="v">${money(todayPrice,2)}</div><div class="d">regression_actual_price_now</div></div>
-              <div class="mini-kpi"><div class="k">Gap</div><div class="v">${m7Gap == null ? '--' : pct(m7Gap,1)}</div><div class="d">(price-fair)/fair</div></div>
-              <div class="mini-kpi"><div class="k">Judgement</div><div class="v">${gapJudgement(m7Gap)}</div><div class="d">低估/合理/偏貴</div></div>
-            </div>
-          ` : `<div class="section-note">M7 data not available</div>`
-        }),
-        buildCollapsible({
-          key:'nemo-valuation',
-          title:'Nemotron AI Valuation / AI 合理價',
-          summary:nemo ? `Nemo fair ${money(nemoFair,2)} | gap ${nemoGap == null ? '--' : pct(nemoGap,1)}` : 'Nemotron data not available',
-          content:nemo ? `<div class="section-note">nemo_fair_price: ${money(nemoFair,2)}</div><div class="section-note">nemo_fair_price_reason: ${esc(nemo?.nemo_fair_price_reason || '--')}</div><div class="section-note">nemo_confidence: ${esc(nemo?.nemo_confidence || '--')}</div><div class="section-note">AI judgement: ${gapJudgement(nemoGap)}</div>` : `<div class="section-note">Nemotron valuation 尚未建立</div>`
-        }),
+        `<section class="panel panel-body">
+          <div class="panel-head"><h3>Investment Decision Cockpit / 投資決策中樞</h3><div class="panel-sub">唯一決策來源：M7 + 價格 + 歷史位置</div></div>
+          <div class="section-note"><b>Trend & Structure 判斷</b></div>
+          <div class="kpi-row">
+            <div class="mini-kpi"><div class="k">trend_score</div><div class="v">${fmt(m7?.trend_score,2)}</div></div>
+            <div class="mini-kpi"><div class="k">structure_score</div><div class="v">${fmt(m7?.structure_score,2)}</div></div>
+            <div class="mini-kpi"><div class="k">trend_linear_annualized_pct</div><div class="v">${trendAnnual == null ? '--' : pct(trendAnnual,1)}</div></div>
+            <div class="mini-kpi"><div class="k">trend_ma_annualized_pct</div><div class="v">${m7?.trend_ma_annualized_pct == null ? '--' : pct(m7?.trend_ma_annualized_pct,1)}</div></div>
+            <div class="mini-kpi"><div class="k">structure_r2</div><div class="v">${structureR2 == null ? '--' : fmt(structureR2,2)}</div></div>
+            <div class="mini-kpi"><div class="k">best_structure_model</div><div class="v">${esc(m7?.best_structure_model || '--')}</div></div>
+          </div>
+          <div class="section-note">${trendNarrative}</div>
+          <div class="section-note"><b>Valuation & Price Reality</b></div>
+          <div class="kpi-row">
+            <div class="mini-kpi"><div class="k">regression_fair_price_now</div><div class="v">${money(m7Fair,2)}</div></div>
+            <div class="mini-kpi"><div class="k">regression_actual_price_now</div><div class="v">${money(todayPrice,2)}</div></div>
+            <div class="mini-kpi"><div class="k">gap %</div><div class="v">${fairGap == null ? '--' : pct(fairGap,1)}</div><div class="d">(fair-price)/fair</div></div>
+            <div class="mini-kpi"><div class="k">historical p25 / median / p75</div><div class="v">${histP25 == null ? '--' : fmt(histP25,2)} / ${histMedian == null ? '--' : fmt(histMedian,2)} / ${histP75 == null ? '--' : fmt(histP75,2)}</div></div>
+            <div class="mini-kpi"><div class="k">current_regression_multiple</div><div class="v">${currentMultiple == null ? '--' : fmt(currentMultiple,2)}</div></div>
+          </div>
+          <div class="section-note">${valuationNarrative}</div>
+          <div class="section-note"><b>M7 Today Decision</b></div>
+          <div class="kpi-row">
+            <div class="mini-kpi"><div class="k">m7_v2_score</div><div class="v">${fmt(m7?.m7_v2_score,2)}</div></div>
+            <div class="mini-kpi"><div class="k">timing_score</div><div class="v">${fmt(m7?.timing_score,2)}</div></div>
+            <div class="mini-kpi"><div class="k">money_score</div><div class="v">${fmt(m7?.money_score,2)}</div></div>
+            <div class="mini-kpi"><div class="k">Decision</div><div class="v">${todayClass}</div></div>
+          </div>
+          <div class="section-note">${todayNarrative}</div>
+          <div class="section-note"><b>Final Insight</b>：${finalInsight}</div>
+        </section>`,
         buildCollapsible({
           key:'m7-quant',
           title:'M7 Quant Layer / M7 量化層',
           summary:headerM7Summary,
           content:m7 ? `<div class="kpi-row">${['m7_v2_score','m7_raw_score','m7_effective_score','valuation_score','trend_score','structure_score','timing_score','money_score'].map(k=>`<div class="mini-kpi"><div class="k">${k}</div><div class="v">${fmt(m7?.[k],2)}</div></div>`).join('')}</div><div class="section-note">Trend Model: ${esc(m7?.trend_formula || '--')}</div><div class="section-note">Trend Reliability: ${esc(m7?.trend_reliability || '--')}</div><div class="section-note">Structure Best Fit: ${esc(m7?.best_structure_model || '--')} (R² = ${fmt(m7?.best_structure_r2,2)})</div>` : `<div class="section-note">M7 data not available</div>`
-        }),
-        buildCollapsible({
-          key:'evidence',
-          title:'M1 Evidence Layer / 數據證據層',
-          summary:'Nemotron data_points 優先，M7 feature_snapshot 補值',
-          content:`<div class="kpi-row">${Object.entries(evidence).map(([k,v])=>`<div class="mini-kpi"><div class="k">${k}</div><div class="v">${esc(String(v ?? '--'))}</div></div>`).join('')}</div><div class="section-note">Evidence implication：對 Pool30 ${pool30Decision}；對 FCN ${fcnDecision}；對 Timing ${timingDecision}。</div>`
-        }),
-        buildCollapsible({
-          key:'charts',
-          title:'Chart Layer / 圖形面板',
-          summary:'Revenue/GM/FCF/EPS/Valuation Band + Competitor Comparison',
-          content:`<div class="viz-grid"><div class="viz-card"><h4>Revenue trend</h4><div class="small-note">資料欄位已預留，等待 data/m1 evidence history feed</div></div><div class="viz-card"><h4>Gross margin trend</h4><div class="small-note">資料欄位已預留，等待 data/m1 evidence history feed</div></div><div class="viz-card"><h4>FCF trend</h4><div class="small-note">資料欄位已預留，等待 data/m1 evidence history feed</div></div><div class="viz-card"><h4>EPS trend</h4><div class="small-note">資料欄位已預留，等待 data/m1 evidence history feed</div></div><div class="viz-card"><h4>Valuation band</h4><div class="small-note">Current: ${money(todayPrice,2)} | M7 fair: ${money(m7Fair,2)} | Nemo fair: ${money(nemoFair,2)}</div></div><div class="viz-card"><h4>Competitor comparison table</h4><div class="small-note">資料欄位已預留，等待 data/m1 evidence history feed</div></div></div>`
-        }),
-        buildCollapsible({
-          key:'deep-comp',
-          title:'Deep Competition Analysis / 深度競爭分析',
-          summary:'每個 peer 含 valuation / profitability / growth / business difference / threat / implication',
-          content:`<div class="comp-card"><div class="t"><b>Peer 1: ${esc(peerRows[1]?.symbol || 'Peer A')}</b></div><div class="m">Valuation: PE ${Number.isFinite(peerRows[1]?.pe)?fmt(peerRows[1]?.pe,1):'--'} / FWD PE ${esc(String(evidence.forward_pe))} / PEG ${esc(String(m7?.feature_snapshot?.valuation?.peg ?? '--'))}</div><div class="m">Profitability: GM ${esc(String(evidence.gross_margin))} / OPM ${esc(String(evidence.operating_margin))}</div><div class="m">Growth: Revenue ${esc(String(evidence.revenue_growth))} / EPS ${esc(String(evidence.eps_growth))}</div><div class="m">Business difference: ${esc(peerRows[1]?.model || '--')}</div><div class="m">Threat: Medium</div><div class="m">Implication: 對 pool30 形成估值比較壓力，FCN 需等 gap 回到甜蜜區。</div></div><div class="comp-card"><div class="t"><b>Peer 2: ${esc(peerRows[2]?.symbol || 'Peer B')}</b></div><div class="m">Valuation: PE ${Number.isFinite(peerRows[2]?.pe)?fmt(peerRows[2]?.pe,1):'--'} / FWD PE -- / PEG --</div><div class="m">Profitability: GM -- / OPM --</div><div class="m">Growth: Revenue ${Number.isFinite(peerRows[2]?.growth)?fmt(peerRows[2]?.growth,1)+'%':'--'} / EPS --</div><div class="m">Business difference: ${esc(peerRows[2]?.model || '--')}</div><div class="m">Threat: Medium</div><div class="m">Implication: 若同賽道估值更低，會壓縮本標的 FCN 進場優先序。</div></div><div class="comp-card"><div class="t"><b>Peer 3: ${esc(peerRows[3]?.symbol || 'Peer C')}</b></div><div class="m">Valuation: PE ${Number.isFinite(peerRows[3]?.pe)?fmt(peerRows[3]?.pe,1):'--'} / FWD PE -- / PEG --</div><div class="m">Profitability: GM -- / OPM --</div><div class="m">Growth: Revenue ${Number.isFinite(peerRows[3]?.growth)?fmt(peerRows[3]?.growth,1)+'%':'--'} / EPS --</div><div class="m">Business difference: ${esc(peerRows[3]?.model || '--')}</div><div class="m">Threat: Low</div><div class="m">Implication: 對 pool30 影響較低，但 timing 評估可作市場熱度對照。</div></div>`
-        }),
-        buildCollapsible({
-          key:'m1-research',
-          title:'M1 Research Card / 文字研究卡',
-          summary:'保留既有文字研究內容，作為決策論述底稿',
-          content:`<div class="section-note">company_positioning: ${esc((profile?.__raw_light?.company_positioning || []).join(' | ') || profile?.company_overview || '--')}</div><div class="section-note">customer_analysis: ${esc(profile?.__raw_light?.customer_analysis || profile?.customer_analysis?.summary || '--')}</div><div class="section-note">competition: ${esc(profile?.__raw_light?.competition || profile?.competition?.summary || '--')}</div><div class="section-note">financial_quality: ${esc(profile?.__raw_light?.financial_quality || profile?.financial_summary?.growth || '--')}</div><div class="section-note">risk_opportunity: ${esc(profile?.__raw_light?.risk_opportunity || profile?.risk_opportunity?.risk?.[0] || '--')}</div><div class="section-note">valuation: ${esc(profile?.__raw_light?.market_view || profile?.valuation_and_timing?.valuation_view || '--')}</div><div class="section-note">fcn_view: ${esc(profile?.__raw_light?.fcn_view || profile?.final_view || '--')}</div><div class="section-note">final_decision: ${esc(profile?.__raw_light?.final_decision || profile?.final_view || '--')}</div>`
         })
       ].join('');
 
