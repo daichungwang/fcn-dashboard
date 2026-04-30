@@ -781,6 +781,127 @@
 },
 "final_view": "META 可以進 pool30 核心，但因 VR/AR 長期燒錢，FCN 僅適合中等保守條件，不如 GOOG、MSFT 穩。Timing：回檔買，不追。"
 },
+"SNDK": {
+"symbol": "SNDK",
+"name": "Sandisk Corporation",
+"type": "research_raw",
+"company_overview": "Sandisk 是 NAND Flash 與 SSD 公司，2025 年從 Western Digital 分拆上市；FY2025 營收 73.55 億美元、YoY +10%，但 GAAP 淨利仍為虧損，代表它不是穩定型 core，而是記憶體循環反轉股。",
+"basic_info": {
+"founded": "1988；2025 年從 Western Digital 分拆為獨立上市公司",
+"headquarters": "Milpitas, California, USA",
+"industry": "NAND Flash / SSD / Data Center Storage",
+"market_cap": "約 1,660 億美元；股價約 1,064 美元"
+},
+"business_model": {
+"summary": "Sandisk 主要靠 NAND 晶片、Client SSD、Enterprise SSD、Consumer storage 出貨賺錢；FY2026 Q2 營收 30.25 億美元、QoQ +31%，顯示目前定價循環正在上行。",
+"segments": [
+"Data Center / Enterprise SSD：FY2026 Q2 datacenter revenue QoQ +64%，受 AI infrastructure builders 採用推動，是目前估值重估的核心。",
+"Client：FY2025 Q3 client revenue 9.27 億美元，仍大於 cloud revenue 1.97 億美元，代表 PC / OEM 需求仍是基本盤。",
+"Consumer：FY2025 Q3 consumer revenue 5.71 億美元，YoY 約 -0.3%，成長性低於 datacenter，但可提供品牌與通路現金流。"
+]
+},
+"customer_analysis": {
+"summary": "FY2026 Q2 前十大客戶占營收 44%，六個月占比 40%，且單一客戶未超過 10%；集中度中等，但資料中心客戶導入速度會直接影響估值。",
+"key_customers": [
+{
+"name": "Hyperscaler customer A",
+"role": "AI infrastructure SSD buyer",
+"importance": "公司揭露 datacenter revenue QoQ +64%，並提到 AI infrastructure builders 採用；但未公開單一客戶名稱，單一客戶低於 10%。"
+},
+{
+"name": "Hyperscaler customer B",
+"role": "qualification customer",
+"importance": "FY2026 Q1 公司表示 2 家 hyperscalers 正在 qualification，另有第 3 家 hyperscaler 與 top storage OEM 規劃 CY2026。"
+},
+{
+"name": "Top storage OEM",
+"role": "enterprise / client storage channel",
+"importance": "公司揭露 CY2026 規劃導入 top storage OEM；前十大客戶 40%~44% 代表 OEM 客戶仍影響營收穩定性。"
+}
+],
+"conclusion": "可進 stock pool 觀察，但因具名客戶揭露不足、前十大客戶仍占 40% 以上，不適合直接放入 pool30 core。"
+},
+"why_this_company": [
+"FY2026 Q2 營收 30.25 億美元、QoQ +31%，比 FY2025 單季 16~19 億美元區間明顯跳升，代表 NAND 定價循環轉強。",
+"FY2026 Q2 GAAP EPS 5.15 美元、non-GAAP EPS 6.20 美元，較 FY2025 Q4 GAAP EPS -0.16 美元明顯反轉。",
+"公司給 FY2026 Q3 revenue guidance 44~48 億美元、gross margin 64.9%~66.9%，若達標，獲利彈性會遠高於 FY2025 30.1% gross margin。"
+],
+"market_view": "市場正在 pricing AI storage 與 NAND tight supply：FY2026 Q2 revenue YoY +61%、datacenter QoQ +64%，但市場也在擔心記憶體循環高點，因 FY2025 公司仍有 -1.2 億美元 free cash flow 與 GAAP 虧損紀錄。",
+"financial_summary": {
+"revenue": "FY2025 revenue 73.55 億美元；FY2026 Q2 revenue 30.25 億美元",
+"growth": "FY2025 YoY +10%；FY2026 Q2 YoY +61%、QoQ +31%",
+"net_margin": "TTM net margin 約 -11.66%；FY2026 Q2 GAAP net income 8.03 億美元，單季淨利率約 26.5%",
+"fcf_margin": "FY2025 FCF 約 -1.2 億美元，FCF margin 約 -1.6%；FY2026 Q2 FCF 約 8.43 億美元，單季 FCF margin 約 27.9%",
+"eps": "TTM EPS 約 -7.60；FY2026 Q2 GAAP EPS 5.15、non-GAAP EPS 6.20",
+"pe": "TTM PE 為負值約 -140；若用 FY2026 Q3 guidance EPS 12~14 美元年化，估值約 19~22 倍，但循環股不能只看單季年化",
+"dividend_yield": "0%",
+"beta": "新分拆上市，beta 參考價值低；股價自 2025 分拆後波動極大，單日成交量約 1,135 萬股"
+},
+"competition": {
+"summary": "SNDK 的比較對象是 MU、WDC、STX；SNDK TTM PE 為負，MU 約 24.5 倍、WDC 約 41.5 倍、STX 約 72.8 倍，表示 SNDK 估值完全建立在 FY2026 獲利反轉，而不是過去 12 個月獲利。",
+"peers": [
+{
+"name": "Micron Technology",
+"position": "DRAM + NAND peer",
+"comparison": "MU PE 約 24.5 倍且市值約 5,921 億美元；SNDK 市值約 1,660 億美元但 TTM PE 為負，SNDK 彈性較大、財務穩定度較低。"
+},
+{
+"name": "Western Digital",
+"position": "Storage / HDD / NAND related peer",
+"comparison": "WDC PE 約 41.5 倍、市值約 1,399 億美元；SNDK 市值約 1,660 億美元，代表市場已給 SNDK 更高 AI NAND 反轉期待。"
+},
+{
+"name": "Seagate",
+"position": "HDD / mass storage peer",
+"comparison": "STX PE 約 72.8 倍、市值約 1,467 億美元；SNDK 與 STX 都受 AI storage 需求重估，但 SNDK 更依賴 NAND pricing cycle。"
+}
+],
+"conclusion": "SNDK 比 MU 更純 NAND、比 STX 更偏 flash，但因 TTM 仍虧損，不適合用 core 估值方式處理。"
+},
+"valuation_and_timing": {
+"valuation_view": "股價約 1,064 美元、市值約 1,660 億美元、TTM PE 約 -140；若用 FY2026 Q3 non-GAAP EPS guidance 12~14 美元單季年化，forward run-rate PE 約 19~22 倍，但這是高景氣單季估算，不可當長期常態。",
+"buy_strategy": "不追高；只有在 FY2026 Q3 revenue 44~48 億美元與 gross margin 65% 左右確認後，才考慮小比例納入 stock pool；若股價回落 15%~25% 且 guidance 未下修，才有較好的風險報酬。",
+"sweet_zone": "sweet zone：股價低於 850 美元，或 forward run-rate PE 低於 18 倍，且 Q3 gross margin guidance 維持 64% 以上；若跌破 750 美元但 EPS guidance 下修，不能視為甜點。",
+"technical_view": {
+"mid_trend": "中期趨勢偏熱：股價約 1,064 美元，已遠高於 2025 分拆初期約 36 美元區間，屬高波動趨勢股。",
+"short_term": "短線不適合追價：單日區間約 1,047.85~1,101.94 美元，日內振幅約 5.2%，FCN 敲入風險高。",
+"structure": "結構屬記憶體循環反轉，不是穩定複利；FY2025 gross margin 30.1%，FY2026 Q3 guidance 64.9%~66.9%，落差太大代表循環敏感度高。",
+"conclusion": "技術與估值都不適合重倉；只適合 event-driven / cycle trade，不適合 core holding。"
+}
+},
+"pool30_fit": {
+"stock_pool": true,
+"pool30": false,
+"category": "speculative",
+"reason": "SNDK 有 AI storage 與 NAND 上行週期，但 FY2025 FCF -1.2 億美元、TTM net margin -11.66%、TTM PE 為負，品質與穩定度不足以進 pool30。",
+"upgrade_condition": [
+"連續 2 季 revenue > 40 億美元且 gross margin > 60%，證明 FY2026 Q3 guidance 不是單季高點。",
+"連續 2 季 FCF margin > 15%，且前十大客戶占比維持低於 45%，降低循環與客戶集中風險。"
+]
+},
+"risk_opportunity": {
+"risk": [
+"記憶體循環風險：FY2025 gross margin 30.1%，FY2026 Q3 guidance 升到 64.9%~66.9%，若 NAND 價格反轉，獲利可能快速下修。",
+"估值風險：市值約 1,660 億美元、TTM PE 為負，市場已提前反映 FY2026 EPS 大幅改善，miss guidance 可能造成 20% 以上修正。",
+"客戶與產品導入風險：前十大客戶占 FY2026 Q2 營收 44%，雖單一客戶低於 10%，但 hyperscaler qualification 延後會影響 datacenter QoQ +64% 的延續性。"
+],
+"opportunity": [
+"AI storage demand：FY2026 Q2 datacenter revenue QoQ +64%，若 AI server SSD attach rate 提升，SNDK 可取得高 ASP 訂單。",
+"獲利槓桿：FY2026 Q2 FCF 8.43 億美元、FCF margin 約 27.9%，若 Q3 revenue 達 44~48 億美元，現金流會快速改善。",
+"供需改善：公司 FY2026 Q3 gross margin guidance 64.9%~66.9%，若 NAND tight supply 維持 2~3 季，EPS 可重新定價。"
+]
+},
+"final_view": "SNDK 可列入 M1 stock pool 的 speculative / cycle watch，但不進 pool30；投資判斷不是公司好不好，而是 NAND 週期與 AI datacenter SSD 導入能否撐過 2 個季度。FCN 不建議目前做，除非 KI 設在 55% 以下、天期短於 3 個月、票息足以補償單日 5% 以上波動。"
+},
+"quality_check": {
+"completeness": 9,
+"specificity": 9,
+"data_support": 9,
+"decision_usefulness": 9,
+"fcn_alignment": 8,
+"total_score": 8.8,
+"fail_reasons": []
+},  
 "AAPL": {
 "symbol": "AAPL",
 "name": "Apple Inc.",
