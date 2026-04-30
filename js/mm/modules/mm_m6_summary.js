@@ -1,0 +1,1 @@
+(function(){function render(){const e=MMUI.q('b2-m6-summary'); if(!e) return; e.innerHTML=`<div class='metric'><span>Stock exposure</span><b>--</b></div><div class='metric'><span>Safe / tracking / trim</span><b>-- / -- / --</b></div><div class='metric'><span>Watch / sell</span><b>-- / --</b></div><a href='m7.html'><button>Go module</button></a>`;} window.MMModuleM6={render};})();
