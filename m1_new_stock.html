@@ -235,6 +235,8 @@
     .headline-box .t{margin-top:8px;line-height:1.85;color:#523c15}
 
     .empty{padding:54px 24px;text-align:center;color:var(--muted);font-size:16px}
+    .collapsible-content.is-collapsed{display:none}
+    .collapse-btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;font-size:12px;font-weight:800}
 
     @media (max-width:1360px){
       .page-grid,.two-col,.viz-grid,.risk-opp,.header-grid{grid-template-columns:1fr}
@@ -413,6 +415,7 @@
       profileMode: 'auto',
       candidate80: [],
       pool30List: [],
+      m7Scores: {},
       progressStats: null
     };
 
@@ -600,6 +603,8 @@
       return 'warn';
     }
     function yn(v){ return v === true ? 'YES' : v === false ? 'NO' : (v || '--'); }
+    function getM7(symbol){ return state.m7Scores[up(symbol)] || null; }
+    function gapJudgement(g){ if(!Number.isFinite(g)) return '--'; if(g < -10) return '低估'; if(g > 10) return '偏貴'; return '合理'; }
 
     function parseFinancialNumber(text){
       if(text == null) return null;
@@ -1535,13 +1540,14 @@
     }
 
     async function init(){
-      const [universe, market, deepProfiles, lightProfiles, candidate80, pool30Json] = await Promise.all([
+      const [universe, market, deepProfiles, lightProfiles, candidate80, pool30Json, m7Scores] = await Promise.all([
         fetchJson('data/m1/universe_150.json'),
         fetchJson('data/m1/m1_market_runtime.json'),
         fetchJson('data/m1/m1_stock_profile.json'),
         fetchJson('data/m1/m1_stock_profile_all.json'),
         fetchJson('data/m1/m1_candidate_80.json'),
-        fetchJson('data/pool30.json')
+        fetchJson('data/pool30.json'),
+        fetchJson('data/m7_sandbox/m7_v2_scores.json')
       ]);
 
       state.universe = asArray(universe);
@@ -1551,6 +1557,7 @@
       state.profiles = { ...state.lightProfiles, ...state.deepProfiles };
       state.candidate80 = candidate80 || [];
       state.pool30List = normalizeSymbolListFromAny(pool30Json);
+      state.m7Scores = (m7Scores && typeof m7Scores==='object') ? m7Scores : {};
       buildUniverseMap();
       renderResearchProgress();
 
