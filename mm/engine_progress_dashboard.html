@@ -1,265 +1,312 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>MM Dashboard v2</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MM Dashboard v2 — Decision Cockpit</title>
 <style>
 :root{
-  --bg:#f5f7fb;
-  --card:#fff;
-  --line:#d9e2ef;
-  --text:#111827;
-  --muted:#667085;
-  --blue:#2563eb;
-  --shadow:0 8px 24px rgba(15,23,42,.06);
-  --radius:16px;
+  --bg:#eff4f9;
+  --bg2:#f8fbfe;
+  --panel:#ffffff;
+  --ink:#1d2a36;
+  --muted:#6c7c8d;
+  --line:#d9e4ef;
+  --brand:#11283f;
+  --brand2:#214b73;
+  --blue:#2f80ed;
+  --good:#188b58;
+  --good-bg:#eaf8f1;
+  --warn:#b9770e;
+  --warn-bg:#fff4df;
+  --bad:#be3f3f;
+  --bad-bg:#fff0f0;
+  --shadow:0 12px 30px rgba(16,24,40,.08);
+  --radius:20px;
 }
-
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 body{
   margin:0;
-  background:var(--bg);
-  color:var(--text);
-  font:14px -apple-system,BlinkMacSystemFont,"Segoe UI",Arial;
+  font-family:"Segoe UI","Noto Sans TC",Arial,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
 }
-
-.app{
-  max-width:1600px;
-  margin:0 auto;
-  padding:16px;
-}
-
-.hero{
-  background:linear-gradient(135deg,#0f172a,#1e3a8a);
-  color:#fff;
-  border-radius:22px;
-  padding:18px 22px;
-  margin-bottom:16px;
-}
-
-.section{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  margin-bottom:14px;
-}
-
-.section summary{
-  cursor:pointer;
-  padding:14px 18px;
-  font-size:18px;
-  font-weight:800;
-}
-
-.section-body{
-  padding:16px;
-}
-
-/* ===== 核心 layout ===== */
-
-.main-grid{
-  display:grid;
-  grid-template-columns: 380px 1fr;
-  gap:16px;
-}
-
-/* B 左側 */
-.left-panel{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
-
-/* C1 右側 */
-.right-panel{
-  display:flex;
-  flex-direction:column;
-}
-
-/* B 卡片 */
-.module-card{
+a{color:#214b73;font-weight:800;text-decoration:none}
+a:hover{text-decoration:underline}
+button,input,select{
+  font-family:inherit;
   border:1px solid var(--line);
   border-radius:12px;
-  padding:12px;
   background:#fff;
+  color:var(--ink);
+  padding:8px 11px;
+  font-weight:800;
 }
-
-/* C1 主卡 */
-.cockpit-card{
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:16px;
-  background:#fff;
+button{cursor:pointer;box-shadow:0 4px 12px rgba(16,24,40,.05)}
+button:hover{background:#f4f9ff;border-color:#bfd7ef}
+.app{max-width:1680px;margin:0 auto;padding:18px 18px 42px}
+.hero{
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);
+  color:#fff;border-radius:28px;padding:24px 26px;box-shadow:var(--shadow);margin-bottom:16px;
 }
-
-/* 小卡 */
-.metric-box{
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:10px;
-  font-size:12px;
+.hero-top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap}
+.hero h1{margin:0;font-size:32px;letter-spacing:.2px}
+.hero p{margin:8px 0 0;color:rgba(255,255,255,.86);line-height:1.65;max-width:900px}
+.hero-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.hero-links a,.pill-btn{
+  color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
+  padding:8px 12px;border-radius:999px;font-size:12px;font-weight:900;text-decoration:none;
 }
-
-.metric-grid{
-  display:grid;
-  grid-template-columns: repeat(3,1fr);
-  gap:10px;
-  margin-top:10px;
+.badge,.pill{
+  display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:999px;border:1px solid var(--line);
+  font-size:11px;font-weight:900;background:#fff;color:var(--muted)
 }
-
-/* 連結按鈕 */
-.link-row{
-  margin-top:10px;
+.badge.ok,.pill.ok{background:var(--good-bg);color:var(--good);border-color:#ccead9}
+.badge.warn,.pill.warn{background:var(--warn-bg);color:var(--warn);border-color:#f1dfb5}
+.warn-badge{margin-top:10px}
+#mm-debug-panel{
+  position:fixed;right:18px;top:18px;width:310px;background:#111827;color:#fff;border-radius:14px;padding:11px 12px;
+  z-index:9999;font-size:12px;box-shadow:0 14px 32px rgba(0,0,0,.2)
 }
-
-.link-row a{
-  margin-right:8px;
+#ui-check-toggle{position:fixed;right:18px;top:266px;z-index:9999;background:#fff;color:#11283f}
+.section{
+  background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+  margin-bottom:16px;overflow:hidden;
 }
-
+.section>summary{
+  cursor:pointer;list-style:none;padding:16px 18px;font-size:18px;font-weight:900;border-bottom:1px solid transparent;
+}
+.section[open]>summary{border-bottom-color:var(--line)}
+.section>summary::-webkit-details-marker{display:none}
+.section>summary:before{content:"▶";display:inline-block;margin-right:8px;transition:transform .15s ease;color:#1a3658}
+.section[open]>summary:before{transform:rotate(90deg)}
+.section-body{padding:16px}
+/* A */
+#top-dashboard.top-grid{display:grid;grid-template-columns:repeat(6,minmax(150px,1fr));gap:12px}
+.module-card{
+  border:1px solid var(--line);border-radius:16px;background:#fff;padding:14px;box-shadow:0 6px 18px rgba(16,24,40,.04)
+}
+.module-card h3{margin:0 0 10px;font-size:15px;color:#102a43}
+.metric{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px dashed #e8eef5;font-size:12px}
+.metric:last-child{border-bottom:0}
+.metric b{font-variant-numeric:tabular-nums}
+/* required location: B left, C1 right */
+.main-workspace{display:grid;grid-template-columns:330px minmax(0,1fr);gap:16px;align-items:start;margin-bottom:16px}
+.left-summary,.right-cockpit{min-width:0}
+.left-summary .section-body{padding:12px}
+.b-stack{display:flex;flex-direction:column;gap:12px}
+.b-card{
+  border:1px solid var(--line);border-radius:16px;background:#fff;padding:13px 14px;box-shadow:0 6px 18px rgba(16,24,40,.04);
+}
+.b-card.b4{border-color:#bfd7ef;background:linear-gradient(180deg,#fff,#f8fbff)}
+.b-head{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}
+.b-title{font-weight:900;color:#11283f;font-size:15px}
+.b-sub{font-size:11px;color:var(--muted);margin-top:2px}
+.b-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+.b-actions a{font-size:11px;border:1px solid var(--line);border-radius:999px;padding:5px 8px;background:#f8fbff}
+/* C1 card shell */
+.c1-shell{border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:0 8px 22px rgba(16,24,40,.05);overflow:hidden}
+.c1-head{
+  padding:18px 20px;background:linear-gradient(135deg,#143452,#214b73);color:#fff;display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap
+}
+.c1-head h2{margin:0;font-size:24px}.c1-head p{margin:6px 0 0;color:rgba(255,255,255,.82);line-height:1.5}
+.c1-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.c1-links a{color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:999px;padding:7px 10px;font-size:12px;text-decoration:none}
+.c1-body{padding:16px 18px}
+/* Style generated C1 output to look closer to m1_new_stock top card */
+#c1-stock-cockpit .search-row{display:grid;grid-template-columns:130px 1fr auto auto auto;gap:8px;margin-bottom:12px}
+#c1-stock-cockpit select,#c1-stock-cockpit input{height:40px}
+#c1-stock-cockpit .module-card:first-of-type{
+  border-radius:18px;background:#fff;border:1px solid #e4edf6;padding:18px;box-shadow:0 8px 18px rgba(16,24,40,.04);margin-bottom:12px;
+}
+#c1-stock-cockpit .module-card:first-of-type b{font-size:22px;color:#11283f}
+#c1-stock-cockpit .module-card{border-radius:16px;margin-bottom:10px}
+#c1-stock-cockpit .metric{font-size:13px}
+#c1-stock-cockpit details{border:1px solid #e4edf6;border-radius:14px;background:#f9fbfe;margin:8px 0;padding:8px 10px}
+#c1-stock-cockpit details summary{cursor:pointer;font-weight:900}
+/* Static C1 visual guide boxes if module data is sparse */
+.c1-guide{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}
+.price-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:10px}
+.score-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.mini-kpi,.score-box{
+  padding:12px;border-radius:15px;background:#f8fbff;border:1px solid #e4edf6;min-height:72px
+}
+.mini-kpi .k,.score-box .k{font-size:11px;color:var(--muted);font-weight:800}.mini-kpi .v,.score-box .v{font-size:20px;font-weight:900;margin-top:4px}.mini-kpi .d,.score-box .d{font-size:11px;color:var(--muted);margin-top:3px}
+/* C2 */
+#c2-all-stock-radar .search-row{display:grid;grid-template-columns:160px 160px 160px 1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:900px}th,td{border-bottom:1px solid #e8eef5;padding:8px;font-size:12px;white-space:nowrap}th{background:#f8fafc;color:#40566e;text-align:left}
+/* D */
+.legacy-grid{display:grid;gap:12px}
+.legacy-grid details{border:1px solid var(--line);border-radius:14px;background:#fff;padding:10px}
+.legacy-grid summary{cursor:pointer;font-weight:900}
+/* UI Check */
+.ui-check #b4-m7-summary,.ui-check #c1-stock-cockpit,.ui-check #c2-all-stock-radar{outline:3px solid #ef4444;outline-offset:4px;border-radius:12px}
+@media(max-width:1250px){
+  .main-workspace{grid-template-columns:1fr}.left-summary{order:1}.right-cockpit{order:2}#top-dashboard.top-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:760px){
+  .app{padding:12px}.hero{border-radius:20px}.hero h1{font-size:26px}.price-strip,.score-grid,#top-dashboard.top-grid{grid-template-columns:1fr 1fr}.c1-guide{grid-template-columns:1fr}#c1-stock-cockpit .search-row,#c2-all-stock-radar .search-row{grid-template-columns:1fr}
+  #mm-debug-panel{position:static;width:auto;margin-bottom:10px}#ui-check-toggle{position:static;margin-bottom:10px}
+}
 </style>
 </head>
-
 <body>
-
-<div class="app">
-
-<!-- A -->
-<div class="hero">
-  <h1>MM Dashboard v2 — Decision Cockpit</h1>
-  <div>核心決策中心（M1 / M2 / M3 / M6 / M7）</div>
-
-  <div class="link-row">
-    <a href="../m1.html">M1</a>
-    <a href="../m2.html">M2</a>
-    <a href="../m7_basket.html">M3</a>
-    <a href="../m6.html">M6</a>
-    <a href="./m7.html">M7</a>
-    <a href="./formula_test.html">Formula</a>
-  </div>
-</div>
-
-<!-- B + C1 -->
-<details class="section" open>
-<summary>B + C1 Decision Workspace</summary>
-
-<div class="section-body main-grid">
-
-  <!-- B 左 -->
-  <div class="left-panel">
-
-    <div class="module-card">
-      <h3>B1 M2</h3>
-      <div id="b1-m2-summary"></div>
-      <a href="../m2.html">Go M2</a>
-    </div>
-
-    <div class="module-card">
-      <h3>B2 M6</h3>
-      <div id="b2-m6-summary"></div>
-      <a href="../m6.html">Go M6</a>
-    </div>
-
-    <div class="module-card">
-      <h3>B3 M3</h3>
-      <div id="b3-m3-summary"></div>
-      <a href="../m7_basket.html">Go M3</a>
-    </div>
-
-    <div class="module-card">
-      <h3>B4 M7</h3>
-      <div id="b4-m7-summary"></div>
-      <a href="./m7.html">Go M7</a>
-    </div>
-
-    <div class="module-card">
-      <h3>B5 M1</h3>
-      <div id="b5-m1-summary"></div>
-      <a href="../m1.html">Go M1</a>
-    </div>
-
-  </div>
-
-  <!-- C1 右 -->
-  <div class="right-panel">
-
-    <div class="cockpit-card">
-
-      <h2>C1 Single Stock Cockpit</h2>
-
-      <!-- 主資訊 -->
-      <div id="c1-stock-cockpit"></div>
-
-      <!-- 🔥 這裡直接先放你要的骨架 -->
-      <div class="metric-grid">
-
-        <div class="metric-box">Today Price</div>
-        <div class="metric-box">Δ%</div>
-        <div class="metric-box">1W / 1M</div>
-
-        <div class="metric-box">3M / 12M</div>
-        <div class="metric-box">Regression Price</div>
-        <div class="metric-box">Confidence</div>
-
-        <div class="metric-box">Price vs Regression</div>
-        <div class="metric-box">Historical Position</div>
-        <div class="metric-box">Since Dec Position</div>
-
+<div id="mm-debug-panel">Loading...</div>
+<button id="ui-check-toggle" type="button">UI Check Mode</button>
+<div class="app" id="mm-app">
+  <section class="hero">
+    <div class="hero-top">
+      <div>
+        <h1>MM Dashboard v2 — Portfolio Operating Cockpit</h1>
+        <p>Display-first decision cockpit：只呈現各模組最上層 Summary、單股決策摘要與全股票雷達；細節回 M1/M2/M3/M6/M7。</p>
+        <div id="mm-warning-badge" class="warn-badge"></div>
       </div>
-
-      <!-- 右側評分（先用 grid 模擬） -->
-      <div class="metric-grid">
-
-        <div class="metric-box">M1 vs Sub vs Pool30</div>
-        <div class="metric-box">M7 vs Sub vs Pool30</div>
-        <div class="metric-box">Valuation</div>
-
-        <div class="metric-box">Trend</div>
-        <div class="metric-box">Structure</div>
-        <div class="metric-box">Money</div>
-
-      </div>
-
-      <!-- 連結 -->
-      <div class="link-row">
-        <a href="../m1_new_stock.html">Open Research</a>
+      <nav class="hero-links" aria-label="Module links">
         <a href="../m1.html">M1</a>
-        <a href="./m7.html">M7</a>
         <a href="../m2.html">M2</a>
+        <a href="../m7_basket.html">M3 Basket</a>
         <a href="../m6.html">M6</a>
-      </div>
-
+        <a href="./m7.html">M7</a>
+        <a href="./formula_test.html">Formula Test</a>
+      </nav>
     </div>
+  </section>
 
+  <!-- A full width top -->
+  <details class="section">
+    <summary>A. Top Dashboard / 模組入口</summary>
+    <div class="section-body">
+      <div id="top-dashboard" class="top-grid"></div>
+    </div>
+  </details>
+
+  <!-- Below A: B left + C1 right -->
+  <div class="main-workspace">
+    <details class="section left-summary">
+      <summary>B. Module Summary / 模組 Summary 牆</summary>
+      <div class="section-body">
+        <div class="b-stack">
+          <section class="b-card">
+            <div class="b-head"><div><div class="b-title">B1 M2 FCN Dashboard</div><div class="b-sub">m2.html「1. 全貌 Summary」</div></div><span class="badge ok">Summary</span></div>
+            <div id="b1-m2-summary"></div>
+            <div class="b-actions"><a href="../m2.html">Go M2</a></div>
+          </section>
+          <section class="b-card">
+            <div class="b-head"><div><div class="b-title">B2 M6 Stocks Dashboard</div><div class="b-sub">股票曝險摘要</div></div><span class="badge warn">Watch</span></div>
+            <div id="b2-m6-summary"></div>
+            <div class="b-actions"><a href="../m6.html">Go M6</a></div>
+          </section>
+          <section class="b-card">
+            <div class="b-head"><div><div class="b-title">B3 M3 Basket Dashboard</div><div class="b-sub">今日股票結構 / 達成率</div></div><span class="badge warn">Basket</span></div>
+            <div id="b3-m3-summary"></div>
+            <div class="b-actions"><a href="../m7_basket.html">Go Basket</a></div>
+          </section>
+          <section class="b-card b4">
+            <div class="b-head"><div><div class="b-title">B4 M7 FCN Stocks Evaluation</div><div class="b-sub">M7 Summary Cards / Formula linkage</div></div><span class="badge ok">Core</span></div>
+            <div id="b4-m7-summary"></div>
+            <div class="b-actions"><a href="./m7.html">Go M7</a><a href="./formula_test.html">Formula Test</a></div>
+          </section>
+          <section class="b-card">
+            <div class="b-head"><div><div class="b-title">B5 M1 Stocks Evaluation</div><div class="b-sub">m1.html「1. Dashboard」</div></div><span class="badge ok">M1</span></div>
+            <div id="b5-m1-summary"></div>
+            <div class="b-actions"><a href="../m1.html">Go M1</a><a href="../m1_new_stock.html">Research</a><a href="../m1_test.html">M1 Test</a></div>
+          </section>
+        </div>
+      </div>
+    </details>
+
+    <details class="section right-cockpit">
+      <summary>C1. Single Stock Cockpit / 單股決策卡</summary>
+      <div class="section-body">
+        <section class="c1-shell">
+          <div class="c1-head">
+            <div>
+              <h2>Single Stock Cockpit</h2>
+              <p>預設 NVDA；用 m1_new_stock.html 的專業公司卡風格，濃縮顯示價格、M1/M7、曝險與一句話結論。</p>
+            </div>
+            <div class="c1-links">
+              <a href="../m1_new_stock.html">M1 Research</a>
+              <a href="../m1.html">M1</a>
+              <a href="./m7.html">M7</a>
+              <a href="../m2.html">M2</a>
+              <a href="../m6.html">M6</a>
+            </div>
+          </div>
+          <div class="c1-body">
+            <div id="c1-stock-cockpit">Loading C1...</div>
+            <div class="c1-guide" aria-label="C1 visual guide">
+              <div>
+                <div class="price-strip">
+                  <div class="mini-kpi"><div class="k">Today Price</div><div class="v">--</div><div class="d">現價</div></div>
+                  <div class="mini-kpi"><div class="k">Delta %</div><div class="v">--</div><div class="d">今日變化</div></div>
+                  <div class="mini-kpi"><div class="k">1W / 1M</div><div class="v">-- / --</div><div class="d">短期</div></div>
+                  <div class="mini-kpi"><div class="k">3M / 12M</div><div class="v">-- / --</div><div class="d">中長期</div></div>
+                  <div class="mini-kpi"><div class="k">Regression</div><div class="v">--</div><div class="d">信心水準 --</div></div>
+                </div>
+              </div>
+              <div class="score-grid">
+                <div class="score-box"><div class="k">M1 vs Sub / Pool30</div><div class="v">--</div><div class="d">quality</div></div>
+                <div class="score-box"><div class="k">M7 vs Sub / Pool30</div><div class="v">--</div><div class="d">today</div></div>
+                <div class="score-box"><div class="k">Valuation</div><div class="v">--</div><div class="d">relative</div></div>
+                <div class="score-box"><div class="k">Trend</div><div class="v">--</div><div class="d">relative</div></div>
+                <div class="score-box"><div class="k">Structure</div><div class="v">--</div><div class="d">relative</div></div>
+                <div class="score-box"><div class="k">Money</div><div class="v">--</div><div class="d">relative</div></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </details>
   </div>
 
-</div>
-</details>
+  <!-- C2 full width below B + C1 -->
+  <details class="section">
+    <summary>C2. All Stocks Radar / 全股票雷達</summary>
+    <div class="section-body">
+      <div id="c2-all-stock-radar">Loading C2...</div>
+    </div>
+  </details>
 
-<!-- C2 -->
-<details class="section">
-<summary>C2 All Stocks Radar</summary>
-<div class="section-body">
-  <div id="c2-all-stock-radar"></div>
+  <!-- D full width bottom -->
+  <details class="section">
+    <summary>D. Governance / 系統治理</summary>
+    <div class="section-body legacy-grid">
+      <details>
+        <summary>D1 Stocks Display / legacy compatibility</summary>
+        <div class="section-body">
+          <input id="stock-table-search" placeholder="Search" />
+          <select id="stock-table-sort"></select>
+          <select id="stock-table-category"></select>
+          <button id="stock-table-refresh" type="button">Refresh</button>
+          <div class="table-wrap"><table id="stocks-display-table"><tbody id="stocks-display-tbody"></tbody></table></div>
+        </div>
+      </details>
+      <details>
+        <summary>D2 Blueprint</summary>
+        <div class="section-body"><div id="m7-formula-registry"></div><div id="param-controller"></div><div id="m7-readiness"></div></div>
+      </details>
+      <details>
+        <summary>D3 Ops Memory</summary>
+        <div class="section-body">
+          <div id="active-build-context"></div><div id="handoff-memory"></div><div id="risk-list"></div><div id="milestone-list"></div><div id="overview"></div>
+          <table><tbody id="engine-table"></tbody></table><table><tbody id="data-table"></tbody></table><table><tbody id="formula-table"></tbody></table><table><tbody id="module-table"></tbody></table>
+        </div>
+      </details>
+    </div>
+  </details>
 </div>
-</details>
 
-<!-- D -->
-<details class="section">
-<summary>D Governance</summary>
-<div class="section-body">
-  <div id="overview"></div>
-</div>
-</details>
-
-</div>
-
-<!-- JS（暫時保留原本，不動） -->
+<script src="../js/mm/modules/mm_parameter_brain.js"></script>
+<script src="../js/mm/modules/mm_stock_explainability.js"></script>
+<script src="../js/mm/modules/mm_ranking_impact.js"></script>
+<script src="../js/mm/modules/mm_stock_table.js"></script>
+<script src="../js/mm/modules/mm_blueprint.js"></script>
+<script src="../js/mm/modules/mm_ops_memory.js"></script>
 <script src="../js/mm/core/mm_data_loader.js"></script>
 <script src="../js/mm/core/mm_state_manager.js"></script>
 <script src="../js/mm/core/mm_ui_helpers.js"></script>
-
 <script src="../js/mm/modules/mm_top_dashboard.js"></script>
 <script src="../js/mm/modules/mm_m2_summary.js"></script>
 <script src="../js/mm/modules/mm_m6_summary.js"></script>
@@ -267,8 +314,8 @@ body{
 <script src="../js/mm/modules/mm_m7_summary.js"></script>
 <script src="../js/mm/modules/mm_m1_summary.js"></script>
 <script src="../js/mm/modules/mm_stock_cockpit.js"></script>
+<script src="../js/mm/modules/mm_alert_engine.js"></script>
 <script src="../js/mm/modules/mm_all_stock_radar.js"></script>
 <script src="../js/mm/modules/mm_dashboard_app.js"></script>
-
 </body>
 </html>
