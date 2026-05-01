@@ -1,5 +1,38 @@
-import { calcEarningsPower } from "./eps_engine_v1.js";
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>M1 Competitive Test</title>
+</head>
+<body>
+  <h1>M1 Competitive Test</h1>
+  <pre id="output">Loading...</pre>
 
-const result = calcEarningsPower(stockData);
+  <script type="module">
+    import { calcEarningsPower } from "./js/m1/eps_engine_v1.js";
 
-console.log(result);
+    const stockData = {
+      eps_history: [
+        { fiscal_year: 2019, eps: 0.92 },
+        { fiscal_year: 2020, eps: 1.13 },
+        { fiscal_year: 2021, eps: 2.50 },
+        { fiscal_year: 2022, eps: 3.85 },
+        { fiscal_year: 2023, eps: 1.74 },
+        { fiscal_year: 2024, eps: 11.93 }
+      ],
+      eps_forward: [
+        { fiscal_year: 2025, eps_estimate: 24.0 },
+        { fiscal_year: 2026, eps_estimate: 8.34 },
+        { fiscal_year: 2027, eps_estimate: 11.24 }
+      ]
+    };
+
+    const result = calcEarningsPower(stockData);
+
+    document.getElementById("output").textContent =
+      JSON.stringify(result, null, 2);
+
+    console.log(result);
+  </script>
+</body>
+</html>
