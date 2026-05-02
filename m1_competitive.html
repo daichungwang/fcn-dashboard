@@ -203,26 +203,26 @@
       <div class="kpi"><div class="label">Total Symbols</div><div id="kpiTotal" class="value">--</div><div class="note">m7_v2_scores rows count</div></div>
       <div class="kpi"><div class="label">OK Calculated</div><div id="kpiOk" class="value">--</div><div class="note">有 eps_engine.cc_score</div></div>
       <div class="kpi"><div class="label">Average CC</div><div id="kpiAvg" class="value">--</div><div class="note">只計算 status=ok</div></div>
-      <div class="kpi"><div class="label">High Trust A/B</div><div id="kpiTrust" class="value">--</div><div class="note">A full EPS + B forward blend</div></div>
+      <div class="kpi"><div class="label">A / B Coverage</div><div id="kpiTrust" class="value">--</div><div class="note">A: history≥3 & forward≥2；B: history≥3 & forward≥1</div></div>
       <div class="kpi"><div class="label">Global Low R²</div><div id="kpiGlobalLow" class="value">--</div><div class="note">global_model_r2 &lt; 0.10 需警示</div></div>
     </section>
 
     <section class="explain-grid">
       <div class="explain-card">
-        <h3><span class="grade-dot grade-a">A</span>full_m7_eps / actual_history_plus_eps_regression</h3>
-        <p>高可信：有公司 EPS history，並能做公司層 EPS regression。這類資料最適合進入 M1 / CC scoring。</p>
+        <h3><span class="grade-dot grade-a">A</span>history EPS ≥3 + forward EPS ≥2</h3>
+        <p>高可信：至少 3 年歷史 EPS（例如 2024 / 2023 / 2022...），且至少 2 年 forward EPS（2025 / 2026 / 2027 任兩年）。</p>
       </div>
       <div class="explain-card">
-        <h3><span class="grade-dot grade-b">B</span>forward_provided_no_count_blend</h3>
-        <p>中高可信：有 forward EPS，但 analyst_count 缺失；可用，但 UI 必須提醒樣本數不足。</p>
+        <h3><span class="grade-dot grade-b">B</span>history EPS ≥3 + forward EPS ≥1</h3>
+        <p>中高可信：至少 3 年歷史 EPS，且至少 1 年 forward EPS；可以進模型，但 forward 覆蓋不足要提示。</p>
       </div>
       <div class="explain-card">
-        <h3><span class="grade-dot grade-c">C</span>global_eps_regression_imputed</h3>
-        <p>低可信：使用 global model 推估。若 global_model_r2 約 0.05，代表解釋力很低，只能當最後 fallback。</p>
+        <h3><span class="grade-dot grade-c">C</span>history EPS ≥1 + forward EPS ≥1</h3>
+        <p>低可信：只有部分 EPS 資料，至少有 1 筆歷史 EPS 與 1 筆 forward EPS；可顯示但不應當成完整模型。</p>
       </div>
       <div class="explain-card">
-        <h3><span class="grade-dot grade-d">D</span>etf_global_proxy</h3>
-        <p>只是 proxy：ETF 沒有公司 EPS，本頁只把它視為替代參考，不應解讀成公司獲利能力。</p>
+        <h3><span class="grade-dot grade-d">D</span>無 history EPS</h3>
+        <p>無公司歷史 EPS：只能使用 fallback / proxy / global model；ETF 也歸入 D，不能視為公司獲利能力。</p>
       </div>
     </section>
 
@@ -243,7 +243,8 @@
               <th>Quality</th>
               <th>EPS YoY Stability</th>
               <th>EPS R²</th>
-              <th>EPS Samples</th>
+              <th>History EPS</th>
+              <th>Forward EPS</th>
               <th>Global R²</th>
               <th>Global Samples</th>
               <th>EPS Source / Status</th>
@@ -251,7 +252,7 @@
             </tr>
           </thead>
           <tbody id="resultBody">
-            <tr><td colspan="17" class="muted">Loading...</td></tr>
+            <tr><td colspan="18" class="muted">Loading...</td></tr>
           </tbody>
         </table>
       </div>
@@ -316,31 +317,52 @@
       return null;
     }
 
+    function numOrNull(v) {
+      if (v === null || v === undefined || v === "") return null;
+      const n = Number(v);
+      return Number.isFinite(n) ? n : null;
+    }
+
+    function countForwardEPS(eps) {
+      const candidates = [eps?.eps_2025, eps?.eps_2026, eps?.eps_2027];
+      return candidates.filter(v => {
+        const n = numOrNull(v);
+        return n !== null;
+      }).length;
+    }
+
+    function getHistoryEPSCount(eps) {
+      return Number(numOrNull(pick(
+        eps?.history_eps_count,
+        eps?.eps_history_count,
+        eps?.eps_regression_sample_count,
+        eps?.regression_sample_count
+      )) || 0);
+    }
+
     function classifyEPS(eps) {
       const source = String(pick(eps?.eps_source, eps?.source, eps?.eps_status, "") || "").toLowerCase();
-      const status = String(eps?.eps_status || "").toLowerCase();
       const quoteType = String(eps?.quote_type || eps?.quoteType || "").toLowerCase();
+      const historyCount = getHistoryEPSCount(eps);
+      const forwardCount = countForwardEPS(eps);
 
+      // ETF / proxy 沒有公司 EPS，直接視為 D。
       if (source.includes("etf_global_proxy") || source.includes("etf_proxy") || source.includes("proxy_etf") || quoteType === "etf") {
         return "D";
       }
-      if (source.includes("full_m7_eps") || source.includes("actual_history_plus_eps_regression") || source.includes("company_eps_history") || source.includes("company_regression")) {
-        return "A";
-      }
-      if (source.includes("forward_provided_no_count_blend") || source.includes("forward") || status.includes("forward")) {
-        return "B";
-      }
-      if (source.includes("global_eps_regression_imputed") || source.includes("global")) {
-        return "C";
-      }
-      return "UNKNOWN";
+
+      // 振宇定義：A/B/C/D 只看 EPS coverage，不看 R² / quality / consistency。
+      if (historyCount >= 3 && forwardCount >= 2) return "A";
+      if (historyCount >= 3 && forwardCount >= 1) return "B";
+      if (historyCount >= 1 && forwardCount >= 1) return "C";
+      return "D";
     }
 
     function gradeLabel(grade) {
       if (grade === "A") return "A 高可信";
       if (grade === "B") return "B 中高可信";
       if (grade === "C") return "C 低可信";
-      if (grade === "D") return "D ETF Proxy";
+      if (grade === "D") return "D 無 history EPS";
       return "UNKNOWN";
     }
 
@@ -363,10 +385,10 @@
         warnings.push("⚠️ Global model R² < 0.10：global fallback 解釋力很低，不可直接相信");
       }
       if (grade === "C") {
-        warnings.push("⚠️ 使用 global_eps_regression_imputed：低可信，只能當最後 fallback");
+        warnings.push("C：history EPS ≥1 且 forward EPS ≥1，資料不完整，低可信");
       }
       if (grade === "D") {
-        warnings.push("ETF / Proxy：不是公司 EPS，不可視為公司獲利能力");
+        warnings.push("D：無 history EPS；若為 ETF / proxy，不可視為公司獲利能力");
       }
       if (String(eps?.eps_source || "").includes("no_count")) {
         warnings.push("forward EPS 有值，但 analyst_count 缺失");
@@ -390,6 +412,8 @@
           const confidence = eps?.confidence || "";
           const status = hasScore ? "ok" : "no_eps_engine";
           const grade = classifyEPS(eps || {});
+          const historyEpsCount = getHistoryEPSCount(eps || {});
+          const forwardEpsCount = countForwardEPS(eps || {});
           const warnings = normalizeWarnings(eps || {}, grade);
 
           const consistency10 = score01To10(pick(eps?.consistency, eps?.middle_consistency));
@@ -413,7 +437,8 @@
             eps_source: eps?.eps_source || eps?.source || "",
             eps_regression_model: eps?.eps_regression_model || eps?.regression_model || "",
             eps_regression_r2: pick(eps?.eps_regression_r2, eps?.regression_r2),
-            eps_regression_sample_count: pick(eps?.eps_regression_sample_count, eps?.regression_sample_count),
+            eps_regression_sample_count: historyEpsCount,
+            forward_eps_count: forwardEpsCount,
             global_model_source: eps?.global_model_source || "",
             global_model_sample_count: eps?.global_model_sample_count,
             global_model_r2: eps?.global_model_r2,
@@ -477,7 +502,7 @@
 
     function renderTable() {
       if (!state.filtered.length) {
-        $("resultBody").innerHTML = `<tr><td colspan="17" class="muted">No results</td></tr>`;
+        $("resultBody").innerHTML = `<tr><td colspan="18" class="muted">No results</td></tr>`;
         return;
       }
 
@@ -505,6 +530,7 @@
             <td>${fmtPctLike(c.eps_yoy_stability)}</td>
             <td>${fmt(r.eps_regression_r2)}<span class="subline">${r.eps_regression_model || "--"}</span></td>
             <td>${fmt(r.eps_regression_sample_count, 0)}</td>
+            <td>${fmt(r.forward_eps_count, 0)}</td>
             <td>${fmt(r.global_model_r2)}<span class="subline">${r.global_model_source || "--"}</span></td>
             <td>${fmt(r.global_model_sample_count, 0)}<span class="subline">yrs ${fmt(r.annual_price_years_used, 0)}</span></td>
             <td><span class="pill ${statusClass(r.status, r.confidence, r.grade)}">${statusText}</span><span class="subline">${source}</span><span class="subline">confidence: ${r.confidence || "--"}</span><span class="subline">${epsLine}</span></td>
@@ -521,6 +547,12 @@
         scope: state.rawPayload?.scope || null,
         count: state.results.length,
         filtered_count: state.filtered.length,
+        grade_definition: {
+          A: "history EPS >= 3 and forward EPS >= 2",
+          B: "history EPS >= 3 and forward EPS >= 1",
+          C: "history EPS >= 1 and forward EPS >= 1",
+          D: "no history EPS"
+        },
         grade_counts: state.results.reduce((acc, x) => {
           acc[x.grade] = (acc[x.grade] || 0) + 1;
           return acc;
@@ -538,12 +570,12 @@
 
     async function init() {
       try {
-        $("resultBody").innerHTML = `<tr><td colspan="17" class="muted">Loading ${DATA_URL}...</td></tr>`;
+        $("resultBody").innerHTML = `<tr><td colspan="18" class="muted">Loading ${DATA_URL}...</td></tr>`;
         state.rawPayload = await loadM7Data();
         calculate();
       } catch (err) {
         console.error(err);
-        $("resultBody").innerHTML = `<tr><td colspan="17" class="error">${err.message}</td></tr>`;
+        $("resultBody").innerHTML = `<tr><td colspan="18" class="error">${err.message}</td></tr>`;
         $("debugOutput").textContent = `${err.stack || err.message}\n\n請確認：\n1. data/m7_sandbox/m7_v2_scores.json 已存在\n2. build_m7_v2_scores.py 已產出 eps_engine 欄位\n3. GitHub Pages 已更新到最新版本\n4. 需透過 GitHub Pages / local server 開啟，不能直接用 file://`;
       }
     }
@@ -563,3 +595,4 @@
   </script>
 </body>
 </html>
+
