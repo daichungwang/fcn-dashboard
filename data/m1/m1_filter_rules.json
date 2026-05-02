@@ -1,37 +1,38 @@
 {
-  "version": "m1_filter_rules_v1",
-  "updated_at": "2026-04-20T21:10:00+08:00",
   "source": "m1_test.html",
+  "version": "m1_filter_rules_v2_5",
+  "updated_at": "2026-05-02T14:47:48.509Z",
+  "formula": "M1_raw = 0.45*C2P + 0.30*CC + 0.25*M7n; M1_score = normalize_to_max_10",
   "rules": {
     "core": {
-      "preset": "loose",
-      "strong": 9.25,
-      "pass": 8.55,
-      "watch": 8.01
+      "preset": "strict",
+      "strong": 9.0,
+      "pass": 8.1,
+      "watch": 8
     },
     "growth": {
       "preset": "medium",
-      "strong": 8.42,
-      "pass": 8.12,
-      "watch": 7.87
+      "strong": 7.5,
+      "pass": 7.2,
+      "watch": 7.0
     },
     "income": {
-      "preset": "strict",
-      "strong": 6.99,
-      "pass": 6.83,
-      "watch": 6.53
+      "preset": "medium",
+      "strong": 6.6,
+      "pass": 6.5,
+      "watch": 5.9
     },
     "defensive": {
       "preset": "strict",
-      "strong": 5.54,
-      "pass": 5.39,
-      "watch": 5.09
+      "strong": 7.17,
+      "pass": 7.05,
+      "watch": 6.75
     },
     "speculative": {
-      "preset": "loose",
-      "strong": 5.69,
-      "pass": 5.45,
-      "watch": 5.15
+      "preset": "strict",
+      "strong": 7.5,
+      "pass": 7,
+      "watch": -0.3
     }
   }
 }
