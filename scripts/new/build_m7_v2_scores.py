@@ -825,6 +825,31 @@ def build_feature_row(symbol: str, bundle: InputBundle) -> dict[str, Any]:
             "data_warning": m.get("data_warning"),
             "missing_price_refs": m.get("missing_price_refs") if isinstance(m.get("missing_price_refs"), list) else [],
         },
+        "runtime_fundamentals": {
+            "trailing_eps": safe_num(m.get("trailing_eps"), None),
+            "forward_eps": safe_num(m.get("forward_eps"), None),
+            "trailing_pe": safe_num(m.get("trailing_pe"), None),
+            "forward_pe": safe_num(m.get("forward_pe"), None),
+            "earnings_growth": safe_num(m.get("earnings_growth"), None),
+            "revenue_growth": safe_num(m.get("revenue_growth"), None),
+            "market_cap": safe_num(m.get("market_cap"), None),
+            "enterprise_value": safe_num(m.get("enterprise_value"), None),
+            "beta": safe_num(m.get("beta"), None),
+            "sector": m.get("sector"),
+            "industry": m.get("industry"),
+            "quote_type": m.get("quote_type"),
+            "dividend_yield": safe_num(m.get("dividend_yield"), None),
+            "payout_ratio": safe_num(m.get("payout_ratio"), None),
+            "profit_margins": safe_num(m.get("profit_margins"), None),
+            "gross_margins": safe_num(m.get("gross_margins"), None),
+            "operating_margins": safe_num(m.get("operating_margins"), None),
+            "return_on_equity": safe_num(m.get("return_on_equity"), None),
+            "debt_to_equity": safe_num(m.get("debt_to_equity"), None),
+            "free_cashflow": safe_num(m.get("free_cashflow"), None),
+            "operating_cashflow": safe_num(m.get("operating_cashflow"), None),
+            "fundamental_source": m.get("fundamental_source"),
+            "fundamental_note": m.get("fundamental_note"),
+        },
         "exposure": {
             "ratio": exposure_ratio,
             "danger": exposure_danger,
@@ -2234,6 +2259,162 @@ def _predict_eps_from_global_model(
     }
 
 
+
+def _score_linear(value: Any, lo: float, hi: float, fallback: float | None = None) -> float | None:
+    x = safe_num(value, None)
+    if x is None:
+        return fallback
+    if hi <= lo:
+        return fallback
+    return clamp((x - lo) / (hi - lo) * 10.0, 0.0, 10.0)
+
+
+def _score_inverse(value: Any, lo: float, hi: float, fallback: float | None = None) -> float | None:
+    x = safe_num(value, None)
+    if x is None:
+        return fallback
+    if hi <= lo:
+        return fallback
+    return clamp((hi - x) / (hi - lo) * 10.0, 0.0, 10.0)
+
+
+def _weighted_available(parts: list[tuple[float, float | None]]) -> float | None:
+    usable = [(w, v) for w, v in parts if v is not None and math.isfinite(v)]
+    if not usable:
+        return None
+    sw = sum(w for w, _ in usable)
+    if sw <= 0:
+        return None
+    return sum(w * v for w, v in usable) / sw
+
+
+def _has_runtime_fundamental(rt: dict[str, Any]) -> bool:
+    if not isinstance(rt, dict):
+        return False
+    quote_type = str(rt.get("quote_type") or "").upper()
+    if quote_type == "ETF":
+        return False
+    core_fields = [
+        rt.get("trailing_eps"),
+        rt.get("forward_eps"),
+        rt.get("forward_pe"),
+        rt.get("revenue_growth"),
+        rt.get("profit_margins"),
+        rt.get("gross_margins"),
+        rt.get("operating_margins"),
+        rt.get("return_on_equity"),
+        rt.get("free_cashflow"),
+        rt.get("operating_cashflow"),
+        rt.get("market_cap"),
+    ]
+    return sum(1 for v in core_fields if safe_num(v, None) is not None) >= 4
+
+
+def compute_runtime_cc_score(rt: dict[str, Any]) -> dict[str, Any] | None:
+    """
+    Runtime fundamental fallback for companies without structured EPS history/forward series.
+
+    Policy:
+      - Use only when eps_history_ai is not sufficient.
+      - Do not replace structured EPS engine when history EPS exists.
+      - Do not use for ETFs.
+    """
+    if not _has_runtime_fundamental(rt):
+        return None
+
+    trailing_eps = safe_num(rt.get("trailing_eps"), None)
+    forward_eps = safe_num(rt.get("forward_eps"), None)
+    forward_pe = safe_num(rt.get("forward_pe"), None)
+    trailing_pe = safe_num(rt.get("trailing_pe"), None)
+    earnings_growth = safe_num(rt.get("earnings_growth"), None)
+    revenue_growth = safe_num(rt.get("revenue_growth"), None)
+    market_cap = safe_num(rt.get("market_cap"), None)
+    profit_margins = safe_num(rt.get("profit_margins"), None)
+    gross_margins = safe_num(rt.get("gross_margins"), None)
+    operating_margins = safe_num(rt.get("operating_margins"), None)
+    return_on_equity = safe_num(rt.get("return_on_equity"), None)
+    debt_to_equity = safe_num(rt.get("debt_to_equity"), None)
+    free_cashflow = safe_num(rt.get("free_cashflow"), None)
+    operating_cashflow = safe_num(rt.get("operating_cashflow"), None)
+
+    # 1) Profitability: margins + ROE. Bounds are intentionally broad and cross-sector friendly.
+    profitability = _weighted_available([
+        (0.30, _score_linear(profit_margins, 0.00, 0.35)),
+        (0.25, _score_linear(gross_margins, 0.20, 0.75)),
+        (0.25, _score_linear(operating_margins, 0.00, 0.35)),
+        (0.20, _score_linear(return_on_equity, 0.00, 0.60)),
+    ])
+
+    # 2) Forward EPS value: positive forward EPS + reasonable forward PE + EPS improvement.
+    forward_profit_score = _score_future_profit(forward_eps) if forward_eps is not None else None
+    forward_pe_score = _score_inverse(forward_pe, 5.0, 60.0)
+    if trailing_eps is not None and trailing_eps > 0 and forward_eps is not None and forward_eps > 0:
+        implied_eps_growth = forward_eps / trailing_eps - 1.0
+    else:
+        implied_eps_growth = None
+    implied_eps_growth_score = _growth_to_score(implied_eps_growth)
+    forward_eps_value = _weighted_available([
+        (0.40, forward_profit_score),
+        (0.35, forward_pe_score),
+        (0.25, implied_eps_growth_score),
+    ])
+
+    # 3) Growth: earnings growth if available, otherwise revenue growth carries the layer.
+    growth = _weighted_available([
+        (0.55, _growth_to_score(earnings_growth)),
+        (0.45, _growth_to_score(revenue_growth)),
+    ])
+
+    # 4) Cashflow: FCF/market cap and OCF/market cap. Negative FCF is allowed to score low.
+    fcf_yield = (free_cashflow / market_cap) if free_cashflow is not None and market_cap and market_cap > 0 else None
+    ocf_yield = (operating_cashflow / market_cap) if operating_cashflow is not None and market_cap and market_cap > 0 else None
+    cashflow = _weighted_available([
+        (0.55, _score_linear(fcf_yield, -0.02, 0.08)),
+        (0.45, _score_linear(ocf_yield, 0.00, 0.12)),
+    ])
+
+    # 5) Balance sheet: lower debt-to-equity is better. If unavailable, keep neutral.
+    balance_sheet = _score_inverse(debt_to_equity, 0.0, 250.0, fallback=5.999)
+
+    component_parts = [
+        (0.30, profitability),
+        (0.25, forward_eps_value),
+        (0.20, growth),
+        (0.15, cashflow),
+        (0.10, balance_sheet),
+    ]
+    cc = _weighted_available(component_parts)
+    if cc is None:
+        return None
+    cc = clamp(cc, 0.0, 10.0)
+
+    coverage_fields = [
+        trailing_eps, forward_eps, forward_pe, earnings_growth, revenue_growth,
+        profit_margins, gross_margins, operating_margins, return_on_equity,
+        debt_to_equity, free_cashflow, operating_cashflow, market_cap,
+    ]
+    coverage_count = sum(1 for v in coverage_fields if v is not None)
+    confidence = "medium" if coverage_count >= 8 else "low"
+
+    return {
+        "cc_score": round2(cc),
+        "runtime_cc_score": round2(cc),
+        "runtime_cc_breakdown": {
+            "profitability": round2(profitability) if profitability is not None else None,
+            "forward_eps_value": round2(forward_eps_value) if forward_eps_value is not None else None,
+            "growth": round2(growth) if growth is not None else None,
+            "cashflow": round2(cashflow) if cashflow is not None else None,
+            "balance_sheet": round2(balance_sheet) if balance_sheet is not None else None,
+            "fcf_yield": round(fcf_yield, 4) if fcf_yield is not None else None,
+            "ocf_yield": round(ocf_yield, 4) if ocf_yield is not None else None,
+            "implied_eps_growth": round(implied_eps_growth, 4) if implied_eps_growth is not None else None,
+        },
+        "runtime_fundamental_fields_used": coverage_count,
+        "runtime_fundamental_source": rt.get("fundamental_source") or "market_runtime",
+        "runtime_fundamental_note": rt.get("fundamental_note"),
+        "confidence": confidence,
+    }
+
 def compute_eps_engine_v26(feature: dict[str, Any], trend: dict[str, Any] | None = None, structure: dict[str, Any] | None = None, global_eps_model: dict[str, Any] | None = None) -> dict[str, Any]:
     """
     M1 Competitive CC Engine - regression version.
@@ -2253,6 +2434,8 @@ def compute_eps_engine_v26(feature: dict[str, Any], trend: dict[str, Any] | None
     valuation = feature.get("valuation", {}) if isinstance(feature.get("valuation"), dict) else {}
     category_sub = str(valuation.get("category_sub") or "")
     is_etf_or_skip = "ETF" in category_sub.upper() or bool(eps_info.get("skip_eps"))
+    runtime_fundamentals = feature.get("runtime_fundamentals", {}) if isinstance(feature.get("runtime_fundamentals"), dict) else {}
+    has_runtime_fundamental = _has_runtime_fundamental(runtime_fundamentals)
 
     weekly_prices = feature.get("weekly_prices", []) if isinstance(feature.get("weekly_prices"), list) else []
     annual_price_by_year = _annual_avg_price_by_year_from_weekly(weekly_prices, latest_complete_year=2025)
@@ -2289,7 +2472,13 @@ def compute_eps_engine_v26(feature: dict[str, Any], trend: dict[str, Any] | None
     model_eps_2027 = _predict_eps_with_best_model(eps_model, 2027, price_2027)
 
     global_projection = None
-    if (model_eps_2026 is None or model_eps_2027 is None or is_etf_or_skip) and global_eps_model:
+    # Layer order:
+    #   1) structured EPS history/forward series
+    #   2) market_runtime fundamentals fallback
+    #   3) global/category EPS regression fallback
+    # If there is no structured EPS history but runtime fundamentals are available, avoid global projection.
+    allow_global_projection = not (len(eps_values) < 3 and has_runtime_fundamental and not is_etf_or_skip)
+    if allow_global_projection and (model_eps_2026 is None or model_eps_2027 is None or is_etf_or_skip) and global_eps_model:
         global_projection = _predict_eps_from_global_model(feature, annual_price_by_year, price_model, global_eps_model)
         if model_eps_2025 is None or is_etf_or_skip:
             model_eps_2025 = global_projection.get("eps_2025")
@@ -2351,7 +2540,20 @@ def compute_eps_engine_v26(feature: dict[str, Any], trend: dict[str, Any] | None
         quality_flags,
     )
 
-    if not has_model:
+    growth_payload: dict[str, Any] = {}
+    runtime_cc_payload = None
+    if (not has_history) and has_runtime_fundamental and not is_etf_or_skip:
+        runtime_cc_payload = compute_runtime_cc_score(runtime_fundamentals)
+
+    if runtime_cc_payload is not None:
+        cc_score = safe_num(runtime_cc_payload.get("cc_score"), 5.999)
+        future_profit_score = safe_num(runtime_cc_payload.get("runtime_cc_breakdown", {}).get("forward_eps_value"), 5.999)
+        growth_score = safe_num(runtime_cc_payload.get("runtime_cc_breakdown", {}).get("growth"), 5.999)
+        eps_status = "runtime_fundamental_fallback"
+        eps_source = "market_runtime_fundamentals"
+        confidence = runtime_cc_payload.get("confidence") or "medium"
+        warnings.append("runtime_fundamental_fallback_used")
+    elif not has_model:
         cc_score = 5.999
         future_profit_score = 5.999
         growth_score = 5.999
@@ -2379,6 +2581,14 @@ def compute_eps_engine_v26(feature: dict[str, Any], trend: dict[str, Any] | None
 
     return {
         "cc_score": round2(cc_score),
+        "cc_source": eps_status,
+        "cc_confidence": confidence,
+        "cc_method": "eps_engine" if eps_status == "actual_history_plus_eps_regression" else ("runtime_fundamental" if eps_status == "runtime_fundamental_fallback" else "global_or_neutral_fallback"),
+        "runtime_cc_score": runtime_cc_payload.get("runtime_cc_score") if isinstance(runtime_cc_payload, dict) else None,
+        "runtime_cc_breakdown": runtime_cc_payload.get("runtime_cc_breakdown") if isinstance(runtime_cc_payload, dict) else None,
+        "runtime_fundamental_fields_used": runtime_cc_payload.get("runtime_fundamental_fields_used") if isinstance(runtime_cc_payload, dict) else None,
+        "runtime_fundamental_source": runtime_cc_payload.get("runtime_fundamental_source") if isinstance(runtime_cc_payload, dict) else None,
+        "runtime_fundamental_note": runtime_cc_payload.get("runtime_fundamental_note") if isinstance(runtime_cc_payload, dict) else None,
         "future_profit_score": round2(future_profit_score),
         "future_growth_score": round2(growth_score),
         "future_growth_rate": round(safe_num(growth_payload.get("weighted_forward_growth"), 0.0), 4) if has_model and growth_payload.get("weighted_forward_growth") is not None else None,
@@ -2746,7 +2956,7 @@ def main() -> int:
                 "score_source": (
                     "full_m7_eps"
                     if (weekly_count >= 52 and norm_sym in eps_rows)
-                    else "fallback_or_partial"
+                    else ("runtime_fundamental_fallback" if eps_engine.get("eps_status") == "runtime_fundamental_fallback" else "fallback_or_partial")
                 ),
             }
 
@@ -2988,3 +3198,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
