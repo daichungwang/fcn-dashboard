@@ -222,9 +222,22 @@
     function calculate() {
       const strictAnalystCount = $("strictAnalyst").checked;
 
-      state.results = EarningsEngine
-        .batchCompetitive(state.rawPayload, { strictAnalystCount })
-        .sort((a, b) => (b.competitive_score ?? -999) - (a.competitive_score ?? -999));
+    state.results = state.rawPayload
+  .map(x => ({
+    symbol: x.symbol,
+    name: x.name,
+    competitive_score: x.eps_engine?.cc_score,
+    earnings_power_score: x.eps_engine?.cc_score,
+    status: x.eps_engine?.eps_status || "no_data",
+    components: {
+      future_profit: x.eps_engine?.future_profit ? 10 : 0,
+      future_growth: x.eps_engine?.future_growth ? 10 : 0,
+      short_consistency: x.eps_engine?.consistency,
+      middle_consistency: x.eps_engine?.consistency,
+      quality: x.eps_engine?.quality
+    }
+  }))
+  .sort((a, b) => (b.competitive_score ?? -999) - (a.competitive_score ?? -999));
 
       applyFilters();
     }
