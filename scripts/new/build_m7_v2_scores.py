@@ -406,6 +406,11 @@ M7_PARAM_CONFIG = load_optional_json(
     Path("configs/mm/m7_v2_parameter_config.json"),
     DEFAULT_M7_PARAM_CONFIG,
 )
+
+# -------------------------
+# EPS Engine add-on input (safe optional)
+# -------------------------
+EPS_HISTORY_DATA = load_optional_json(Path("data/m1/eps_history_ai.json"), {})
 UNIVERSE_ROWS = load_json(Path("data/m1/universe_150.json"))
 UNIVERSE_BY_SYMBOL = {
     str(row.get("symbol", "")).upper(): row
@@ -1564,6 +1569,346 @@ def compute_exposure_penalty(feature: dict[str, Any]) -> dict[str, Any]:
     return {"penalty": max(0.0, penalty), "tags": tags}
 
 
+
+# -------------------------
+# EPS Engine v2.6 add-on (non-breaking)
+# -------------------------
+def _eps_data_rows() -> dict[str, Any]:
+    """Return EPS records by symbol. Supports {meta,data} and flat dict formats."""
+    raw = EPS_HISTORY_DATA
+    if isinstance(raw, dict) and isinstance(raw.get("data"), dict):
+        return {normalize_symbol(k): v for k, v in raw.get("data", {}).items() if isinstance(v, dict)}
+    if isinstance(raw, dict):
+        return {normalize_symbol(k): v for k, v in raw.items() if isinstance(v, dict)}
+    return {}
+
+
+def _extract_eps_history(eps_info: dict[str, Any]) -> list[dict[str, float]]:
+    rows = eps_info.get("eps_history", []) if isinstance(eps_info, dict) else []
+    out: list[dict[str, float]] = []
+    if isinstance(rows, list):
+        for r in rows:
+            if isinstance(r, dict):
+                yr = safe_num(r.get("fiscal_year", r.get("year")), None)
+                eps = safe_num(r.get("eps", r.get("diluted_eps", r.get("eps_actual"))), None)
+                if yr is not None and eps is not None:
+                    out.append({"fiscal_year": int(yr), "eps": eps})
+            else:
+                eps = safe_num(r, None)
+                if eps is not None:
+                    out.append({"fiscal_year": len(out), "eps": eps})
+    return sorted(out, key=lambda x: x["fiscal_year"])
+
+
+def _extract_forward_eps(eps_info: dict[str, Any]) -> dict[int, dict[str, Any]]:
+    rows = eps_info.get("eps_forward", []) if isinstance(eps_info, dict) else []
+    out: dict[int, dict[str, Any]] = {}
+    if isinstance(rows, dict):
+        for k, v in rows.items():
+            yr = safe_num(k, None)
+            if yr is None:
+                continue
+            if isinstance(v, dict):
+                eps = safe_num(v.get("eps_estimate", v.get("eps", v.get("value"))), None)
+                analyst_count = safe_num(v.get("analyst_count"), None)
+            else:
+                eps = safe_num(v, None)
+                analyst_count = None
+            out[int(yr)] = {"eps": eps, "analyst_count": analyst_count}
+    elif isinstance(rows, list):
+        for r in rows:
+            if not isinstance(r, dict):
+                continue
+            yr = safe_num(r.get("fiscal_year", r.get("year")), None)
+            eps = safe_num(r.get("eps_estimate", r.get("eps", r.get("value"))), None)
+            analyst_count = safe_num(r.get("analyst_count", r.get("analysts")), None)
+            if yr is not None:
+                out[int(yr)] = {"eps": eps, "analyst_count": analyst_count}
+    return out
+
+
+def _annual_avg_prices_from_weekly(weekly_prices: list[Any]) -> list[float]:
+    vals = [safe_num(x, None) for x in weekly_prices if safe_num(x, None) is not None and safe_num(x, 0.0) > 0]
+    annual: list[float] = []
+    for i in range(0, len(vals), 52):
+        chunk = vals[i:i + 52]
+        if len(chunk) >= 20:
+            annual.append(sum(chunk) / len(chunk))
+    return annual
+
+
+def _linear_fit_predict(y_values: list[float], future_index: int) -> tuple[float | None, float | None]:
+    y = [safe_num(v, None) for v in y_values if safe_num(v, None) is not None]
+    n = len(y)
+    if n < 2:
+        return None, None
+    x = list(range(n))
+    mx = sum(x) / n
+    my = sum(y) / n
+    den = sum((xi - mx) ** 2 for xi in x)
+    if den == 0:
+        return None, None
+    slope = sum((x[i] - mx) * (y[i] - my) for i in range(n)) / den
+    intercept = my - slope * mx
+    fitted = [intercept + slope * xi for xi in x]
+    ss_tot = sum((yi - my) ** 2 for yi in y)
+    ss_res = sum((y[i] - fitted[i]) ** 2 for i in range(n))
+    r2 = 1.0 if ss_tot <= 1e-12 else clamp(1.0 - ss_res / ss_tot, 0.0, 1.0)
+    return intercept + slope * future_index, r2
+
+
+def _score_future_profit(eps_2026: float | None) -> float:
+    e = safe_num(eps_2026, None)
+    if e is None or e <= 0:
+        return 0.0
+    # EPS level score: neutral around EPS=1, gradually rewards large absolute earning power.
+    return clamp(5.0 + math.log(max(e, 0.01)) * 1.8, 0.0, 10.0)
+
+
+def _score_growth(eps_2026: float | None, eps_2027: float | None) -> float:
+    e26 = safe_num(eps_2026, None)
+    e27 = safe_num(eps_2027, None)
+    if e26 is None or e27 is None or e26 <= 0:
+        return 5.999
+    growth = e27 / e26 - 1.0
+    return clamp(5.0 + growth * 10.0, 0.0, 10.0)
+
+
+def _score_consistency(eps_values: list[float]) -> float:
+    vals = [safe_num(v, None) for v in eps_values if safe_num(v, None) is not None]
+    if len(vals) < 3:
+        return 5.999
+    _, r2v = _linear_fit_predict(vals, len(vals))
+    if r2v is None:
+        return 5.999
+    negatives_penalty = 1.0 if any(v <= 0 for v in vals) else 0.0
+    return clamp(r2v * 10.0 - negatives_penalty, 0.0, 10.0)
+
+
+def _score_quality(eps_values: list[float], model_r2: float | None, flags: list[Any]) -> float:
+    vals = [safe_num(v, None) for v in eps_values if safe_num(v, None) is not None]
+    base = safe_num(model_r2, None)
+    if base is None:
+        base = 0.60 if len(vals) >= 3 else 0.5999
+    score = clamp(base * 10.0, 0.0, 10.0)
+    flag_set = {str(x).lower() for x in flags} if isinstance(flags, list) else set()
+    if any(v <= 0 for v in vals):
+        score -= 1.0
+    if "volatile" in flag_set or "high_volatility" in flag_set:
+        score -= 1.0
+    if "cyclical" in flag_set:
+        score -= 0.5
+    if "adjusted_eps" in flag_set:
+        score -= 0.5
+    return clamp(score, 0.0, 10.0)
+
+
+def compute_eps_engine_v26(feature: dict[str, Any], trend: dict[str, Any] | None = None, structure: dict[str, Any] | None = None) -> dict[str, Any]:
+    """
+    EPS Engine v2.6 add-on.
+
+    Design rules:
+    - Non-breaking: only returns a payload; it does not alter M7 valuation/trend/structure/money outputs.
+    - Primary data: EPS history from data/m1/eps_history_ai.json + M7 weekly_prices / valuation PE.
+    - Uses M7 weekly_prices to build annual average prices, then aligns them with annual EPS.
+    - Uses PE = annual_price / EPS to estimate stock-specific PE when enough history exists.
+    - Uses M7 fair PE / anchor PE as valuation prior.
+    - Analyst forward EPS is blended only when analyst_count >= 5; otherwise model EPS is used.
+    - If no usable EPS model exists, CC defaults to 5.999 per governance rule.
+    """
+    symbol = normalize_symbol(feature.get("symbol"))
+    eps_info = _eps_data_rows().get(symbol, {})
+    valuation = feature.get("valuation", {}) if isinstance(feature.get("valuation"), dict) else {}
+    weekly_prices = feature.get("weekly_prices", []) if isinstance(feature.get("weekly_prices"), list) else []
+    eps_history_rows = _extract_eps_history(eps_info)
+    forward_map = _extract_forward_eps(eps_info)
+    quality_flags = eps_info.get("quality_flag", []) if isinstance(eps_info, dict) else []
+
+    # ETF / known no-EPS handling. Universe type is not always carried into feature, so use PE availability too.
+    category_sub = str(valuation.get("category_sub") or "")
+    if "ETF" in category_sub.upper() or bool(eps_info.get("skip_eps")):
+        return {
+            "cc_score": 5.999,
+            "future_profit_score": 5.999,
+            "future_growth_score": 5.999,
+            "middle_consistency_score": 5.999,
+            "quality_score": 5.999,
+            "eps_2025": None,
+            "eps_2026": None,
+            "eps_2027": None,
+            "model_eps_2026": None,
+            "model_eps_2027": None,
+            "analyst_eps_2026": None,
+            "analyst_eps_2027": None,
+            "pe_model": None,
+            "price_model_2026": None,
+            "price_model_2027": None,
+            "model_r2": None,
+            "eps_status": "etf_or_skip_eps",
+            "eps_source": "neutral_fallback",
+            "confidence": "low",
+            "warnings": ["eps_not_applicable"],
+        }
+
+    fair_pe = safe_num(valuation.get("regression_fair_pe"), safe_num(valuation.get("individual_fair_pe"), None))
+    current_forward_pe = safe_num(valuation.get("forward_pe"), None)
+    base_anchor = safe_num(valuation.get("base_anchor"), safe_num(valuation.get("anchor_pe"), None))
+    anchor_adjusted = None
+    if base_anchor is not None and base_anchor > 0:
+        anchor_adjusted = base_anchor * safe_num(valuation.get("market_multiplier"), 1.0) * safe_num(valuation.get("industry_multiplier"), 1.0) * safe_num(valuation.get("archetype_multiplier"), 1.0)
+        anchor_adjusted = clamp(anchor_adjusted, 1.0, 120.0)
+
+    # M7 valuation fair PE is the prior; current PE is secondary; adjusted anchor is fallback.
+    pe_prior_parts: list[tuple[float, float]] = []
+    if fair_pe is not None and fair_pe > 0:
+        pe_prior_parts.append((0.55, fair_pe))
+    if current_forward_pe is not None and current_forward_pe > 0:
+        pe_prior_parts.append((0.25, current_forward_pe))
+    if anchor_adjusted is not None and anchor_adjusted > 0:
+        pe_prior_parts.append((0.20, anchor_adjusted))
+    if pe_prior_parts:
+        wsum = sum(w for w, _ in pe_prior_parts)
+        pe_prior = sum(w * v for w, v in pe_prior_parts) / max(wsum, 1e-9)
+    else:
+        pe_prior = None
+
+    annual_prices = _annual_avg_prices_from_weekly(weekly_prices)
+    eps_values = [r["eps"] for r in eps_history_rows]
+    paired_pe: list[float] = []
+    if annual_prices and eps_values:
+        n = min(len(annual_prices), len(eps_values))
+        # Align latest annual prices with latest EPS history because exact week dates are not stored in M7 output.
+        aligned_prices = annual_prices[-n:]
+        aligned_eps = eps_values[-n:]
+        for p, e in zip(aligned_prices, aligned_eps):
+            if p is not None and p > 0 and e is not None and e > 0:
+                pe = p / e
+                if math.isfinite(pe) and 0 < pe <= 300:
+                    paired_pe.append(pe)
+
+    pe_regression_2026 = None
+    pe_regression_2027 = None
+    pe_model_r2 = None
+    if len(paired_pe) >= 3:
+        pe_regression_2026, pe_model_r2 = _linear_fit_predict(paired_pe, len(paired_pe) + 1)
+        pe_regression_2027, _ = _linear_fit_predict(paired_pe, len(paired_pe) + 2)
+
+    # Combine historical PE model with M7 valuation prior.
+    def combine_pe(model_pe: float | None) -> float | None:
+        parts: list[tuple[float, float]] = []
+        if model_pe is not None and model_pe > 0 and math.isfinite(model_pe):
+            parts.append((0.50, clamp(model_pe, 1.0, 120.0)))
+        if pe_prior is not None and pe_prior > 0:
+            parts.append((0.50 if parts else 1.0, pe_prior))
+        if not parts:
+            return None
+        wsum = sum(w for w, _ in parts)
+        return clamp(sum(w * v for w, v in parts) / max(wsum, 1e-9), 1.0, 120.0)
+
+    pe_2026 = combine_pe(pe_regression_2026)
+    pe_2027 = combine_pe(pe_regression_2027 if pe_regression_2027 is not None else pe_regression_2026)
+
+    price_now = safe_num(valuation.get("regression_actual_price_now"), None)
+    if price_now is None and annual_prices:
+        price_now = annual_prices[-1]
+    trend_pct = safe_num((trend or {}).get("linear_annualized_pct"), safe_num(feature.get("returns", {}).get("12m"), 0.0))
+    trend_rate = clamp(trend_pct / 100.0, -0.80, 1.50)
+    price_2026 = price_now * ((1.0 + trend_rate) ** 1) if price_now is not None else None
+    price_2027 = price_now * ((1.0 + trend_rate) ** 2) if price_now is not None else None
+
+    model_eps_2026 = price_2026 / pe_2026 if price_2026 is not None and pe_2026 is not None and pe_2026 > 0 else None
+    model_eps_2027 = price_2027 / pe_2027 if price_2027 is not None and pe_2027 is not None and pe_2027 > 0 else None
+
+    analyst_2025 = forward_map.get(2025, {}).get("eps")
+    analyst_2026 = forward_map.get(2026, {}).get("eps")
+    analyst_2027 = forward_map.get(2027, {}).get("eps")
+    analyst_count_2026 = forward_map.get(2026, {}).get("analyst_count")
+    analyst_count_2027 = forward_map.get(2027, {}).get("analyst_count")
+
+    def blend_eps(analyst_eps: float | None, model_eps: float | None, analyst_count: float | None) -> tuple[float | None, str]:
+        ae = safe_num(analyst_eps, None)
+        me = safe_num(model_eps, None)
+        ac = safe_num(analyst_count, None)
+        if ae is not None and ae > 0 and ac is not None and ac >= 5 and me is not None and me > 0:
+            return 0.65 * ae + 0.35 * me, "analyst_model_blend"
+        if ae is not None and ae > 0 and ac is not None and ac >= 5:
+            return ae, "analyst_only"
+        if me is not None and me > 0:
+            return me, "model_only"
+        if ae is not None and ae > 0:
+            return ae, "analyst_low_count"
+        return None, "missing"
+
+    eps_2026, src_2026 = blend_eps(analyst_2026, model_eps_2026, analyst_count_2026)
+    eps_2027, src_2027 = blend_eps(analyst_2027, model_eps_2027, analyst_count_2027)
+
+    has_history = len(eps_values) >= 3
+    has_model = eps_2026 is not None and eps_2027 is not None
+    warnings: list[str] = []
+    if not has_history:
+        warnings.append("eps_history_less_than_3")
+    if pe_prior is None:
+        warnings.append("missing_m7_pe_prior")
+    if pe_model_r2 is None and len(paired_pe) < 3:
+        warnings.append("pe_history_regression_insufficient")
+    if src_2026 in {"analyst_low_count", "missing"} or src_2027 in {"analyst_low_count", "missing"}:
+        warnings.append("forward_eps_low_confidence_or_missing")
+
+    if not has_model:
+        cc_score = 5.999
+        future_profit_score = 5.999
+        growth_score = 5.999
+        consistency_score = _score_consistency(eps_values)
+        quality_score = _score_quality(eps_values, pe_model_r2, quality_flags)
+        eps_status = "neutral_fallback_no_forward_model"
+        eps_source = "neutral_fallback"
+        confidence = "low"
+    else:
+        future_profit_score = _score_future_profit(eps_2026)
+        growth_score = _score_growth(eps_2026, eps_2027)
+        consistency_score = _score_consistency(eps_values)
+        quality_score = _score_quality(eps_values, pe_model_r2, quality_flags)
+        cc_score = 0.30 * future_profit_score + 0.30 * growth_score + 0.20 * consistency_score + 0.20 * quality_score
+        cc_score = clamp(cc_score, 0.0, 10.0)
+        if has_history and len(paired_pe) >= 3:
+            eps_status = "actual_history_plus_m7_pe_model"
+            confidence = "high" if safe_num(pe_model_r2, 0.0) >= 0.60 else "medium"
+        elif has_history:
+            eps_status = "actual_history_plus_m7_pe_prior"
+            confidence = "medium"
+        else:
+            eps_status = "imputed_from_m7_price_pe"
+            confidence = "medium" if pe_prior is not None else "low"
+        eps_source = f"2026:{src_2026};2027:{src_2027}"
+
+    return {
+        "cc_score": round2(cc_score),
+        "future_profit_score": round2(future_profit_score),
+        "future_growth_score": round2(growth_score),
+        "middle_consistency_score": round2(consistency_score),
+        "quality_score": round2(quality_score),
+        "eps_2025": round2(analyst_2025) if analyst_2025 is not None else None,
+        "eps_2026": round2(eps_2026) if eps_2026 is not None else None,
+        "eps_2027": round2(eps_2027) if eps_2027 is not None else None,
+        "model_eps_2026": round2(model_eps_2026) if model_eps_2026 is not None else None,
+        "model_eps_2027": round2(model_eps_2027) if model_eps_2027 is not None else None,
+        "analyst_eps_2026": round2(analyst_2026) if analyst_2026 is not None else None,
+        "analyst_eps_2027": round2(analyst_2027) if analyst_2027 is not None else None,
+        "analyst_count_2026": analyst_count_2026,
+        "analyst_count_2027": analyst_count_2027,
+        "pe_model_2026": round2(pe_2026) if pe_2026 is not None else None,
+        "pe_model_2027": round2(pe_2027) if pe_2027 is not None else None,
+        "pe_prior": round2(pe_prior) if pe_prior is not None else None,
+        "pe_history_r2": round2(pe_model_r2) if pe_model_r2 is not None else None,
+        "price_model_2026": round2(price_2026) if price_2026 is not None else None,
+        "price_model_2027": round2(price_2027) if price_2027 is not None else None,
+        "eps_status": eps_status,
+        "eps_source": eps_source,
+        "confidence": confidence,
+        "warnings": warnings,
+    }
+
+
 def compute_overheat_penalty(timing_raw: float) -> float:
     pts = curve_params["overheat_penalty_curve"]["snapshot"]["points"]
     return max(0.0, piecewise(pts, timing_raw))
@@ -1858,9 +2203,12 @@ def main() -> int:
             m7_effective_score = m7_raw_score if m7_v2_fallback_to_raw else m7_v2_score
             m7_effective_score_source = "m7_raw_score" if m7_v2_fallback_to_raw else "m7_v2_score"
 
+            eps_engine = compute_eps_engine_v26(feature, trend, structure)
+
             rows_out.append({
                 "symbol": sym,
                 "name": feature["name"],
+                "eps_engine": eps_engine,
                 "category": feature["category"],
                 "subsector": feature["subsector"],
                 "category_sub": feature["valuation"].get("category_sub"),
