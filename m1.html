@@ -979,17 +979,34 @@
 
     function epsCoverageFromEngine(eps) {
       if (!eps || typeof eps !== "object") {
-        return { grade: "D", historyCount: 0, forwardCount: 0 };
+        return { grade: "D", historyCount: 0, forwardCount: 0, label: "Global / ETF / Proxy" };
       }
       const historyCount = Number(eps.eps_regression_sample_count || 0);
       const forwardCount = [eps.eps_2025, eps.eps_2026, eps.eps_2027]
         .filter(v => Number.isFinite(Number(v))).length;
-      let grade = "D";
-      if (historyCount >= 3 && forwardCount >= 2) grade = "A";
-      else if (historyCount >= 3 && forwardCount >= 1) grade = "B";
-      else if (historyCount >= 1 && forwardCount >= 1) grade = "C";
-      else grade = "D";
-      return { grade, historyCount, forwardCount };
+
+      // Preferred: rank is produced by build_m7_v2_scores.py.
+      // Final definition:
+      // A = Full EPS, B = Partial EPS, C = Runtime Fundamental Fallback, D = Global / ETF / Proxy.
+      const rankFromEngine = String(eps.cc_rank || eps.eps_coverage_rank || "").toUpperCase();
+      let grade = ["A", "B", "C", "D"].includes(rankFromEngine) ? rankFromEngine : "D";
+
+      // Backward compatible fallback for older m7_v2_scores.json files.
+      if (!rankFromEngine) {
+        const source = String(eps.cc_source || eps.eps_status || "");
+        if (source === "runtime_fundamental_fallback") grade = "C";
+        else if (source === "actual_history_plus_eps_regression" && historyCount >= 3 && forwardCount >= 2) grade = "A";
+        else if (historyCount >= 1 || forwardCount >= 1 || source === "eps_regression_partial") grade = "B";
+        else grade = "D";
+      }
+
+      const labelMap = {
+        A: "Full EPS",
+        B: "Partial EPS",
+        C: "Runtime Fundamental",
+        D: "Global / ETF / Proxy"
+      };
+      return { grade, historyCount, forwardCount, label: labelMap[grade] || "Global / ETF / Proxy" };
     }
 
     function computeNewM1(row) {
@@ -1149,6 +1166,10 @@
           runtime_fundamental_source: eps.runtime_fundamental_source || null,
           m7_v2_score: n(m7row?.m7_v2_score, null),
           eps_coverage_grade: coverage.grade,
+          eps_coverage_label: coverage.label,
+          cc_rank: coverage.grade,
+          cc_rank_label: eps.cc_rank_label || coverage.label,
+          cc_rank_detail: eps.cc_rank_detail || null,
           eps_history_count: coverage.historyCount,
           eps_forward_count: coverage.forwardCount,
           eps_future_profit_score: n(eps.future_profit_score, null),
@@ -1439,10 +1460,10 @@
       const pct = (v) => total ? `${fmt((v / total) * 100, 1)}%` : "0.0%";
       const cards = [
         { label: "原始總池", value: `${total}`, sub: "data/m7_sandbox/m7_v2_scores.json", cls: "" },
-        { label: "Rank A", value: `${counts.A} / ${total}`, sub: `${pct(counts.A)} ｜ history EPS ≥3 + forward EPS ≥2`, cls: "eps-rank-a" },
-        { label: "Rank B", value: `${counts.B} / ${total}`, sub: `${pct(counts.B)} ｜ history EPS ≥3 + forward EPS ≥1`, cls: "eps-rank-b" },
-        { label: "Rank C", value: `${counts.C} / ${total}`, sub: `${pct(counts.C)} ｜ history EPS ≥1 + forward EPS ≥1`, cls: "eps-rank-c" },
-        { label: "Rank D", value: `${counts.D} / ${total}`, sub: `${pct(counts.D)} ｜ 無 company EPS history / ETF / fallback`, cls: "eps-rank-d" },
+        { label: "Rank A", value: `${counts.A} / ${total}`, sub: `${pct(counts.A)} ｜ Full EPS：history + forward + regression`, cls: "eps-rank-a" },
+        { label: "Rank B", value: `${counts.B} / ${total}`, sub: `${pct(counts.B)} ｜ Partial EPS：資料部分完整`, cls: "eps-rank-b" },
+        { label: "Rank C", value: `${counts.C} / ${total}`, sub: `${pct(counts.C)} ｜ Runtime：market_runtime fundamentals`, cls: "eps-rank-c" },
+        { label: "Rank D", value: `${counts.D} / ${total}`, sub: `${pct(counts.D)} ｜ Global / ETF / Proxy / neutral fallback`, cls: "eps-rank-d" },
       ];
       const box = $("epsCoverageGrid");
       if (!box) return;
@@ -2092,7 +2113,7 @@ timing 判斷
               <div class="detail-card"><div class="k">CC Source / Confidence</div><div class="v">${escapeHtml(row.cc_source || "-")} / ${escapeHtml(row.cc_confidence || "-")}</div></div>
               <div class="detail-card"><div class="k">M7n｜M7_v2 Score (25%)</div><div class="v" style="${scoreColor(row.breakdown?.m7_v2_score)}">${fmt(row.breakdown?.m7_v2_score)}</div></div>
               <div class="detail-card"><div class="k">Raw M1 → Norm M1</div><div class="v">${fmt(row.raw_m1_score)} → ${fmt(row.M1_score)}</div></div>
-              <div class="detail-card"><div class="k">EPS Coverage</div><div class="v">Rank ${escapeHtml(row.eps_coverage_grade || "D")} ｜ H${row.eps_history_count ?? 0} / F${row.eps_forward_count ?? 0}</div></div>
+              <div class="detail-card"><div class="k">CC Rank / EPS Coverage</div><div class="v">Rank ${escapeHtml(row.eps_coverage_grade || "D")} ｜ ${escapeHtml(row.cc_rank_label || row.eps_coverage_label || "-")}<br>H${row.eps_history_count ?? 0} / F${row.eps_forward_count ?? 0}</div></div>
               <div class="detail-card"><div class="k">Forward Growth / Profit</div><div class="v">${fmt(row.eps_future_growth_score)} / ${fmt(row.eps_future_profit_score)}</div></div>
               <div class="detail-card"><div class="k">EPS Consistency / Quality</div><div class="v">${fmt(row.eps_consistency_score)} / ${fmt(row.eps_quality_score)}</div></div>
               <div class="detail-card"><div class="k">Runtime CC Breakdown</div><div class="v">${row.runtime_cc_breakdown ? `Profit ${fmt(row.runtime_cc_breakdown.profitability)} ｜ Value ${fmt(row.runtime_cc_breakdown.forward_eps_value)} ｜ Growth ${fmt(row.runtime_cc_breakdown.growth)} ｜ CF ${fmt(row.runtime_cc_breakdown.cashflow)} ｜ Debt ${fmt(row.runtime_cc_breakdown.balance_sheet)}` : "-"}</div></div>
