@@ -405,10 +405,10 @@
     <div class="hero">
       <div class="hero-top">
         <div>
-          <h1>M1 Test Dashboard｜Rule Calibration Console</h1>
+          <h1>M1 Test Dashboard｜Rule Calibration Console v2.5</h1>
           <div class="sub">
             調整五大類 <b>strict / medium / loose / custom</b> 與 <b>strong / pass / watch</b> 門檻，<br>
-            即時觀察 <b>AI 推薦數、五大類推薦數、受影響股票</b> 的 Before / After 變化。<br>
+            本頁已同步新版 M1：<b>M1_raw = 0.45*C2P + 0.30*CC + 0.25*M7n</b>，並 normalize to max 10。<br>
             確認合理後，再將規則輸出給正式版 m1。
           </div>
         </div>
@@ -487,7 +487,7 @@
       <div class="category-summary-grid" id="categorySummaryGrid"></div>
       <div class="helper">
         Before = 預設正式規則；After = 你目前在左側 Rule Card 調整後的試算結果。<br>
-        AI 推薦 = STRONG + PASS。
+        新版 M1 = 0.45*C2P + 0.30*CC + 0.25*M7n，且每次試算 normalize to max 10。AI 推薦 = STRONG + PASS。
       </div>
     </div>
 
@@ -564,9 +564,9 @@
                   <th>變動</th>
                   <th>原因</th>
                   <th>M1</th>
-                  <th>Capex</th>
-                  <th>M3</th>
-                  <th>M7</th>
+                  <th>C2P</th>
+                  <th>CC</th>
+                  <th>M7n</th>
                   <th>vs p50</th>
                 </tr>
               </thead>
@@ -591,6 +591,7 @@
       candidateRaw: [],
       pool30Raw: [],
       fundamentalMap: {},
+      m7ScoreMap: {},
       candidatePrepared: [],
       candidateScoredBase: [],
       candidateScoredPreview: [],
@@ -618,6 +619,58 @@
     function fmt(v, digits = 2) {
       const x = Number(v);
       return Number.isFinite(x) ? x.toFixed(digits) : "-";
+    }
+
+    function normalizeM7Scores(raw) {
+      const rows = Array.isArray(raw) ? raw : (Array.isArray(raw?.rows) ? raw.rows : []);
+      const out = {};
+      rows.forEach(r => {
+        const sym = String(r?.symbol || "").toUpperCase().trim();
+        if (sym) out[sym] = r;
+      });
+      return out;
+    }
+
+    function getM7Row(symbol) {
+      return state.m7ScoreMap?.[String(symbol || "").toUpperCase().trim()] || null;
+    }
+
+    function computeNewM1(row) {
+      const c2p = n(row.capex_score ?? row.breakdown?.capex_score, 5.999);
+      const cc = n(row.competitive_score, 5.999);
+      const m7n = n(row.m7_v2_score, 5.999);
+      const raw = 0.45 * c2p + 0.30 * cc + 0.25 * m7n;
+      return {
+        raw_m1_score: +raw.toFixed(2),
+        M1_score: +Math.max(0, Math.min(10, raw)).toFixed(2),
+        breakdown: {
+          capex_score: c2p,
+          competitive_score: cc,
+          m7_v2_score: m7n,
+          m3_score: null,
+          m7_score: m7n
+        }
+      };
+    }
+
+    function applyNewM1Formula(rows) {
+      const computed = rows.map(row => {
+        const s = computeNewM1(row);
+        return { ...row, ...s };
+      });
+
+      const maxRaw = Math.max(...computed.map(r => n(r.raw_m1_score, 0)));
+      computed.forEach(row => {
+        if (!Number.isFinite(row.raw_m1_score) || maxRaw <= 0) {
+          row.M1_score = 0;
+        } else {
+          row.M1_score = +(row.raw_m1_score / maxRaw * 10).toFixed(2);
+        }
+      });
+
+      computed.sort((a, b) => n(b.M1_score, -999) - n(a.M1_score, -999));
+      computed.forEach((row, idx) => { row.rank = idx + 1; });
+      return computed;
     }
 
     function escapeHtml(str) {
@@ -710,6 +763,9 @@
         const pure = n(row.m7_lite_score, null);
         const event = calcEventProxy(row);
 
+        const m7row = getM7Row(symbol);
+        const eps = m7row?.eps_engine || {};
+
         return {
           ...row,
           symbol,
@@ -722,7 +778,14 @@
           event_stock_score: event,
           valuation_score: n(row.valuation_score, null),
           trend_score: n(row.trend_score, null),
-          quality_score: n(row.quality_score, null)
+          quality_score: n(row.quality_score, null),
+          competitive_score: n(eps.cc_score, null),
+          competitive_raw_score: n(eps.cc_raw_score ?? eps.cc_score, null),
+          m7_v2_score: n(m7row?.m7_v2_score, null),
+          eps_future_profit_score: n(eps.future_profit_score, null),
+          eps_future_growth_score: n(eps.future_growth_score, null),
+          eps_consistency_score: n(eps.middle_consistency_score ?? eps.consistency, null),
+          eps_quality_score: n(eps.quality_score ?? eps.quality, null)
         };
       });
     }
@@ -850,9 +913,10 @@
           reason_after: Array.isArray(a?.filter_reason) ? a.filter_reason.join(" / ") : "",
           rank: a?.rank ?? b?.rank ?? 9999,
           m1: a?.M1_score ?? b?.M1_score ?? null,
-          capex: a?.breakdown?.capex_score ?? b?.breakdown?.capex_score ?? null,
-          m3: a?.breakdown?.m3_score ?? b?.breakdown?.m3_score ?? null,
-          m7: a?.breakdown?.m7_score ?? b?.breakdown?.m7_score ?? null,
+          c2p: a?.breakdown?.capex_score ?? b?.breakdown?.capex_score ?? null,
+          cc: a?.breakdown?.competitive_score ?? b?.breakdown?.competitive_score ?? null,
+          m7n: a?.breakdown?.m7_v2_score ?? b?.breakdown?.m7_v2_score ?? null,
+          raw_m1: a?.raw_m1_score ?? b?.raw_m1_score ?? null,
           vs_p50: (() => {
             const rule = state.filterConfigPreview[row.category];
             const score = a?.M1_score;
@@ -970,7 +1034,7 @@
       const downCount = state.impactedRows.filter(x => x.direction === "DOWN").length;
 
       $("deltaAiMain").textContent = `${beforeAi} → ${afterAi} (${delta >= 0 ? "+" : ""}${delta})`;
-      $("deltaAiDesc").textContent = `AI 推薦 = STRONG + PASS`;
+      $("deltaAiDesc").textContent = `AI 推薦 = STRONG + PASS；使用新版 M1 normalized score`;
 
       $("deltaChangedMain").textContent = `${changedCount}`;
       $("deltaChangedDesc").textContent = `升級 ${upCount} ｜ 降級 ${downCount}`;
@@ -1069,9 +1133,9 @@
           <td class="${row.direction === 'UP' ? 'ok' : row.direction === 'DOWN' ? 'bad' : 'muted'}">${row.direction}</td>
           <td>${escapeHtml(row.reason_after || "-")}</td>
           <td>${fmt(row.m1)}</td>
-          <td>${fmt(row.capex)}</td>
-          <td>${fmt(row.m3)}</td>
-          <td>${fmt(row.m7)}</td>
+          <td>${fmt(row.c2p)}</td>
+          <td>${fmt(row.cc)}</td>
+          <td>${fmt(row.m7n)}</td>
           <td>${row.vs_p50 !== null ? `${row.vs_p50 >= 0 ? "+" : ""}${fmt(row.vs_p50)}` : "-"}</td>
         </tr>
       `).join("");
@@ -1150,11 +1214,18 @@
         };
       });
 
-      const blob = new Blob([JSON.stringify(out, null, 2)], { type: "application/json;charset=utf-8" });
+      const payload = {
+        source: "m1_test.html",
+        version: "m1_filter_rules_v2_5",
+        updated_at: new Date().toISOString(),
+        formula: "M1_raw = 0.45*C2P + 0.30*CC + 0.25*M7n; M1_score = normalize_to_max_10",
+        rules: out
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = "m1_filter_rules_preview.json";
+      a.download = "m1_filter_rules.json";
       document.body.appendChild(a);
       a.click();
       a.remove();
@@ -1173,7 +1244,14 @@
       });
 
       try {
-        await navigator.clipboard.writeText(JSON.stringify(out, null, 2));
+        const payload = {
+          source: "m1_test.html",
+          version: "m1_filter_rules_v2_5",
+          updated_at: new Date().toISOString(),
+          formula: "M1_raw = 0.45*C2P + 0.30*CC + 0.25*M7n; M1_score = normalize_to_max_10",
+          rules: out
+        };
+        await navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
         alert("已複製規則 JSON");
       } catch (e) {
         alert("複製失敗，請改用匯出檔案。");
@@ -1189,28 +1267,27 @@
 
     async function loadAll() {
       try {
-        const [universeRaw, candidateRaw, pool30Raw, fundamentalMap] = await Promise.all([
+        const [universeRaw, candidateRaw, pool30Raw, fundamentalMap, m7ScoresRaw] = await Promise.all([
           fetchJSON("data/m1/universe_150.json").catch(() => []),
           fetchJSON("data/m1/m1_candidate_80.json"),
           fetchJSON("data/pool30.json"),
-          fetchJSON("data/m1/m1_fundamental_map.json")
+          fetchJSON("data/m1/m1_fundamental_map.json"),
+          fetchJSON("data/m7_sandbox/m7_v2_scores.json").catch(() => ({ rows: [] }))
         ]);
 
         state.universeRaw = Array.isArray(universeRaw) ? universeRaw : [];
         state.candidateRaw = Array.isArray(candidateRaw) ? candidateRaw : [];
         state.pool30Raw = Array.isArray(pool30Raw) ? pool30Raw : [];
         state.fundamentalMap = fundamentalMap || {};
+        state.m7ScoreMap = normalizeM7Scores(m7ScoresRaw);
 
         state.candidatePrepared = prepareRows(state.candidateRaw, state.fundamentalMap);
 
         const pool30Set = new Set(state.pool30Raw.map(x => String(x.symbol || "").toUpperCase().trim()));
         const pool30Prepared = state.candidatePrepared.filter(x => pool30Set.has(x.symbol));
 
-        const candidateEngine = runM1Engine(state.candidatePrepared);
-        const pool30Engine = runM1Engine(pool30Prepared);
-
-        const candidateScored = mergeEngineOutput(state.candidatePrepared, candidateEngine);
-        const pool30Scored = mergeEngineOutput(pool30Prepared, pool30Engine);
+        const candidateScored = applyNewM1Formula(state.candidatePrepared);
+        const pool30Scored = applyNewM1Formula(pool30Prepared);
 
         state.pool30Rules = buildPool30Rules(pool30Scored);
         state.filterConfigBase = buildDefaultFilterConfig(state.pool30Rules);
@@ -1271,3 +1348,4 @@
   </script>
 </body>
 </html>
+
