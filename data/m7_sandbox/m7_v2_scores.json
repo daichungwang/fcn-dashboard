@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-02T14:09:23.991537+00:00",
+  "generated_at": "2026-05-02T14:37:44.323614+00:00",
   "scope": {
     "scenarios": [
       "M7_RAW",
@@ -16,6 +16,11 @@
       "name": "VanEck Semiconductor ETF",
       "eps_engine": {
         "cc_score": 7.26,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "etf_global_proxy",
         "cc_confidence": "medium",
         "cc_method": "global_or_neutral_fallback",
@@ -82,7 +87,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "income",
       "subsector": "SEMI_ETF",
@@ -1288,6 +1294,11 @@
       "name": "Google",
       "eps_engine": {
         "cc_score": 8.55,
+        "cc_rank": "A",
+        "eps_coverage_rank": "A",
+        "cc_rank_label": "Full EPS",
+        "cc_rank_detail": "eps_history_regression_plus_forward_eps",
+        "cc_rank_confidence_floor": "high",
         "cc_source": "actual_history_plus_eps_regression",
         "cc_confidence": "high",
         "cc_method": "eps_engine",
@@ -1356,7 +1367,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": true,
-        "score_source": "full_m7_eps"
+        "score_source": "full_m7_eps",
+        "cc_rank": "A"
       },
       "category": "core",
       "subsector": "SEARCH_CLOUD",
@@ -2565,6 +2577,11 @@
       "name": "Apple",
       "eps_engine": {
         "cc_score": 7.02,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -2640,7 +2657,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "core",
       "subsector": "DEVICE",
@@ -3849,6 +3867,11 @@
       "name": "NVIDIA",
       "eps_engine": {
         "cc_score": 8.88,
+        "cc_rank": "A",
+        "eps_coverage_rank": "A",
+        "cc_rank_label": "Full EPS",
+        "cc_rank_detail": "eps_history_regression_plus_forward_eps",
+        "cc_rank_confidence_floor": "high",
         "cc_source": "actual_history_plus_eps_regression",
         "cc_confidence": "high",
         "cc_method": "eps_engine",
@@ -3918,7 +3941,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": true,
-        "score_source": "full_m7_eps"
+        "score_source": "full_m7_eps",
+        "cc_rank": "A"
       },
       "category": "core",
       "subsector": "GPU",
@@ -5127,6 +5151,11 @@
       "name": "Invesco QQQ",
       "eps_engine": {
         "cc_score": 7.09,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "etf_global_proxy",
         "cc_confidence": "medium",
         "cc_method": "global_or_neutral_fallback",
@@ -5193,7 +5222,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "income",
       "subsector": "NASDAQ_ETF",
@@ -6399,6 +6429,11 @@
       "name": "TSMC",
       "eps_engine": {
         "cc_score": 9.32,
+        "cc_rank": "A",
+        "eps_coverage_rank": "A",
+        "cc_rank_label": "Full EPS",
+        "cc_rank_detail": "eps_history_regression_plus_forward_eps",
+        "cc_rank_confidence_floor": "high",
         "cc_source": "actual_history_plus_eps_regression",
         "cc_confidence": "high",
         "cc_method": "eps_engine",
@@ -6468,7 +6503,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": true,
-        "score_source": "full_m7_eps"
+        "score_source": "full_m7_eps",
+        "cc_rank": "A"
       },
       "category": "core",
       "subsector": "FOUNDRY",
@@ -7677,6 +7713,11 @@
       "name": "Oracle",
       "eps_engine": {
         "cc_score": 8.95,
+        "cc_rank": "A",
+        "eps_coverage_rank": "A",
+        "cc_rank_label": "Full EPS",
+        "cc_rank_detail": "eps_history_regression_plus_forward_eps",
+        "cc_rank_confidence_floor": "high",
         "cc_source": "actual_history_plus_eps_regression",
         "cc_confidence": "high",
         "cc_method": "eps_engine",
@@ -7746,7 +7787,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": true,
-        "score_source": "full_m7_eps"
+        "score_source": "full_m7_eps",
+        "cc_rank": "A"
       },
       "category": "core",
       "subsector": "DATABASE_CLOUD",
@@ -8955,6 +8997,11 @@
       "name": "Credo",
       "eps_engine": {
         "cc_score": 7.61,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -9030,7 +9077,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 222,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "speculative",
       "subsector": "CONNECTIVITY",
@@ -9639,6 +9687,11 @@
       "name": "AMD",
       "eps_engine": {
         "cc_score": 6.85,
+        "cc_rank": "A",
+        "eps_coverage_rank": "A",
+        "cc_rank_label": "Full EPS",
+        "cc_rank_detail": "eps_history_regression_plus_forward_eps",
+        "cc_rank_confidence_floor": "high",
         "cc_source": "actual_history_plus_eps_regression",
         "cc_confidence": "medium",
         "cc_method": "eps_engine",
@@ -9710,7 +9763,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": true,
-        "score_source": "full_m7_eps"
+        "score_source": "full_m7_eps",
+        "cc_rank": "A"
       },
       "category": "core",
       "subsector": "CPU_GPU",
@@ -10919,6 +10973,11 @@
       "name": "Broadcom",
       "eps_engine": {
         "cc_score": 7.42,
+        "cc_rank": "A",
+        "eps_coverage_rank": "A",
+        "cc_rank_label": "Full EPS",
+        "cc_rank_detail": "eps_history_regression_plus_forward_eps",
+        "cc_rank_confidence_floor": "high",
         "cc_source": "actual_history_plus_eps_regression",
         "cc_confidence": "high",
         "cc_method": "eps_engine",
@@ -10990,7 +11049,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": true,
-        "score_source": "full_m7_eps"
+        "score_source": "full_m7_eps",
+        "cc_rank": "A"
       },
       "category": "core",
       "subsector": "ASIC",
@@ -12199,6 +12259,11 @@
       "name": "UnitedHealth",
       "eps_engine": {
         "cc_score": 4.85,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -12274,7 +12339,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "defensive",
       "subsector": "HEALTHCARE",
@@ -13483,6 +13549,11 @@
       "name": "Target",
       "eps_engine": {
         "cc_score": 4.44,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -13558,7 +13629,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "defensive",
       "subsector": "RETAIL",
@@ -14767,6 +14839,11 @@
       "name": "Marvell",
       "eps_engine": {
         "cc_score": 6.79,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -14842,7 +14919,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "core",
       "subsector": "NETWORKING",
@@ -16051,6 +16129,11 @@
       "name": "Meta",
       "eps_engine": {
         "cc_score": 9.24,
+        "cc_rank": "A",
+        "eps_coverage_rank": "A",
+        "cc_rank_label": "Full EPS",
+        "cc_rank_detail": "eps_history_regression_plus_forward_eps",
+        "cc_rank_confidence_floor": "high",
         "cc_source": "actual_history_plus_eps_regression",
         "cc_confidence": "high",
         "cc_method": "eps_engine",
@@ -16120,7 +16203,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": true,
-        "score_source": "full_m7_eps"
+        "score_source": "full_m7_eps",
+        "cc_rank": "A"
       },
       "category": "core",
       "subsector": "ADS_SOCIAL",
@@ -17329,6 +17413,11 @@
       "name": "Microsoft",
       "eps_engine": {
         "cc_score": 8.79,
+        "cc_rank": "A",
+        "eps_coverage_rank": "A",
+        "cc_rank_label": "Full EPS",
+        "cc_rank_detail": "eps_history_regression_plus_forward_eps",
+        "cc_rank_confidence_floor": "high",
         "cc_source": "actual_history_plus_eps_regression",
         "cc_confidence": "high",
         "cc_method": "eps_engine",
@@ -17398,7 +17487,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": true,
-        "score_source": "full_m7_eps"
+        "score_source": "full_m7_eps",
+        "cc_rank": "A"
       },
       "category": "core",
       "subsector": "CLOUD",
@@ -18607,6 +18697,11 @@
       "name": "Micron",
       "eps_engine": {
         "cc_score": 8.49,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -18682,7 +18777,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "core",
       "subsector": "MEMORY",
@@ -19891,6 +19987,11 @@
       "name": "ROKU",
       "eps_engine": {
         "cc_score": 5.05,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -19967,7 +20068,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -20128,6 +20230,11 @@
       "name": "Amazon",
       "eps_engine": {
         "cc_score": 7.73,
+        "cc_rank": "A",
+        "eps_coverage_rank": "A",
+        "cc_rank_label": "Full EPS",
+        "cc_rank_detail": "eps_history_regression_plus_forward_eps",
+        "cc_rank_confidence_floor": "high",
         "cc_source": "actual_history_plus_eps_regression",
         "cc_confidence": "high",
         "cc_method": "eps_engine",
@@ -20197,7 +20304,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": true,
-        "score_source": "full_m7_eps"
+        "score_source": "full_m7_eps",
+        "cc_rank": "A"
       },
       "category": "core",
       "subsector": "CLOUD_ECOM",
@@ -21406,6 +21514,11 @@
       "name": "RIOT",
       "eps_engine": {
         "cc_score": 3.24,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -21482,7 +21595,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -21643,6 +21757,11 @@
       "name": "CAT",
       "eps_engine": {
         "cc_score": 5.72,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -21719,7 +21838,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -21880,6 +22000,11 @@
       "name": "CRM",
       "eps_engine": {
         "cc_score": 7.79,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -21956,7 +22081,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -22117,6 +22243,11 @@
       "name": "NVO",
       "eps_engine": {
         "cc_score": 6.54,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -22193,7 +22324,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -22354,6 +22486,11 @@
       "name": "Astera Labs",
       "eps_engine": {
         "cc_score": 6.79,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -22430,7 +22567,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 110,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "speculative",
       "subsector": "CONNECTIVITY",
@@ -22815,6 +22953,11 @@
       "name": "Palantir",
       "eps_engine": {
         "cc_score": 7.1,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -22890,7 +23033,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 291,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "speculative",
       "subsector": "ANALYTICS",
@@ -23637,6 +23781,11 @@
       "name": "Applied Materials",
       "eps_engine": {
         "cc_score": 6.81,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -23712,7 +23861,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "core",
       "subsector": "SEMI_EQUIP",
@@ -24921,6 +25071,11 @@
       "name": "WMT",
       "eps_engine": {
         "cc_score": 3.82,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -24997,7 +25152,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -25158,6 +25314,11 @@
       "name": "SBUX",
       "eps_engine": {
         "cc_score": 4.53,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -25234,7 +25395,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -25395,6 +25557,11 @@
       "name": "LRCX",
       "eps_engine": {
         "cc_score": 7.59,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -25471,7 +25638,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -25632,6 +25800,11 @@
       "name": "NET",
       "eps_engine": {
         "cc_score": 3.49,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -25708,7 +25881,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -25869,6 +26043,11 @@
       "name": "VOLT",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -25937,7 +26116,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -26098,6 +26278,11 @@
       "name": "Regeneron",
       "eps_engine": {
         "cc_score": 6.82,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -26173,7 +26358,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "defensive",
       "subsector": "BIOPHARMA",
@@ -27382,6 +27568,11 @@
       "name": "XLE",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -27450,7 +27641,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -27611,6 +27803,11 @@
       "name": "ZS",
       "eps_engine": {
         "cc_score": 5.33,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -27687,7 +27884,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -27848,6 +28046,11 @@
       "name": "SoFi",
       "eps_engine": {
         "cc_score": 7.28,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -27923,7 +28126,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 277,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "speculative",
       "subsector": "LENDING",
@@ -28642,6 +28846,11 @@
       "name": "Costco",
       "eps_engine": {
         "cc_score": 5.2,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -28717,7 +28926,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "defensive",
       "subsector": "RETAIL",
@@ -29926,6 +30136,11 @@
       "name": "IWM",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -29994,7 +30209,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -30155,6 +30371,11 @@
       "name": "QCOM",
       "eps_engine": {
         "cc_score": 7.0,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -30231,7 +30452,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -30392,6 +30614,11 @@
       "name": "ADBE",
       "eps_engine": {
         "cc_score": 8.7,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -30468,7 +30695,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -30629,6 +30857,11 @@
       "name": "ON",
       "eps_engine": {
         "cc_score": 4.61,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -30705,7 +30938,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -30866,6 +31100,11 @@
       "name": "TTD",
       "eps_engine": {
         "cc_score": 7.21,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -30942,7 +31181,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -31103,6 +31343,11 @@
       "name": "MS",
       "eps_engine": {
         "cc_score": 7.62,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -31179,7 +31424,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -31340,6 +31586,11 @@
       "name": "Tesla",
       "eps_engine": {
         "cc_score": 3.95,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -31415,7 +31666,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "speculative",
       "subsector": "EV",
@@ -32624,6 +32876,11 @@
       "name": "DOCU",
       "eps_engine": {
         "cc_score": 7.22,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -32700,7 +32957,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -32861,6 +33119,11 @@
       "name": "GS",
       "eps_engine": {
         "cc_score": 7.31,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -32937,7 +33200,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -33098,6 +33362,11 @@
       "name": "PYPL",
       "eps_engine": {
         "cc_score": 6.83,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -33174,7 +33443,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -33335,6 +33605,11 @@
       "name": "KO",
       "eps_engine": {
         "cc_score": 6.56,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -33411,7 +33686,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -33572,6 +33848,11 @@
       "name": "NOW",
       "eps_engine": {
         "cc_score": 6.53,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -33648,7 +33929,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -33809,6 +34091,11 @@
       "name": "DAL",
       "eps_engine": {
         "cc_score": 5.88,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -33885,7 +34172,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -34046,6 +34334,11 @@
       "name": "JPM",
       "eps_engine": {
         "cc_score": 6.99,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -34122,7 +34415,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -34283,6 +34577,11 @@
       "name": "NEE",
       "eps_engine": {
         "cc_score": 6.09,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -34359,7 +34658,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -34520,6 +34820,11 @@
       "name": "SNOW",
       "eps_engine": {
         "cc_score": 4.23,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -34596,7 +34901,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -34757,6 +35063,11 @@
       "name": "DDOG",
       "eps_engine": {
         "cc_score": 4.65,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -34833,7 +35144,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -34994,6 +35306,11 @@
       "name": "FDX",
       "eps_engine": {
         "cc_score": 5.17,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -35070,7 +35387,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -35231,6 +35549,11 @@
       "name": "ARM",
       "eps_engine": {
         "cc_score": 5.15,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -35306,7 +35629,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 137,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "core",
       "subsector": "CPU_IP",
@@ -35745,6 +36069,11 @@
       "name": "PEP",
       "eps_engine": {
         "cc_score": 6.06,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -35821,7 +36150,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -35982,6 +36312,11 @@
       "name": "PLD",
       "eps_engine": {
         "cc_score": 6.97,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -36058,7 +36393,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -36219,6 +36555,11 @@
       "name": "OKTA",
       "eps_engine": {
         "cc_score": 6.88,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -36295,7 +36636,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -36456,6 +36798,11 @@
       "name": "SPY",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -36524,7 +36871,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -36685,6 +37033,11 @@
       "name": "JNJ",
       "eps_engine": {
         "cc_score": 6.38,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -36761,7 +37114,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -36922,6 +37276,11 @@
       "name": "TXN",
       "eps_engine": {
         "cc_score": 7.09,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -36998,7 +37357,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -37159,6 +37519,11 @@
       "name": "AIPO",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -37227,7 +37592,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -37388,6 +37754,11 @@
       "name": "ISRG",
       "eps_engine": {
         "cc_score": 6.7,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -37464,7 +37835,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -37625,6 +37997,11 @@
       "name": "HCA",
       "eps_engine": {
         "cc_score": 6.18,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -37701,7 +38078,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -37862,6 +38240,11 @@
       "name": "ZAP",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -37930,7 +38313,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -38091,6 +38475,11 @@
       "name": "ETN",
       "eps_engine": {
         "cc_score": 6.07,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -38167,7 +38556,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -38328,6 +38718,11 @@
       "name": "VRTX",
       "eps_engine": {
         "cc_score": 7.61,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -38404,7 +38799,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -38565,6 +38961,11 @@
       "name": "Coinbase",
       "eps_engine": {
         "cc_score": 5.37,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -38640,7 +39041,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 263,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "speculative",
       "subsector": "EXCHANGE",
@@ -39331,6 +39733,11 @@
       "name": "XOM",
       "eps_engine": {
         "cc_score": 5.05,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -39407,7 +39814,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -39568,6 +39976,11 @@
       "name": "DHR",
       "eps_engine": {
         "cc_score": 6.22,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -39644,7 +40057,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -39805,6 +40219,11 @@
       "name": "LCID",
       "eps_engine": {
         "cc_score": 3.38,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -39881,7 +40300,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -40042,6 +40462,11 @@
       "name": "Nike",
       "eps_engine": {
         "cc_score": 3.98,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -40117,7 +40542,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "core",
       "subsector": "APPAREL",
@@ -41326,6 +41752,11 @@
       "name": "DIA",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -41394,7 +41825,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -41555,6 +41987,11 @@
       "name": "PFE",
       "eps_engine": {
         "cc_score": 6.58,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -41631,7 +42068,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -41792,6 +42230,11 @@
       "name": "LLY",
       "eps_engine": {
         "cc_score": 8.87,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -41868,7 +42311,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -42029,6 +42473,11 @@
       "name": "CEG",
       "eps_engine": {
         "cc_score": 4.82,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -42105,7 +42554,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -42266,6 +42716,11 @@
       "name": "V",
       "eps_engine": {
         "cc_score": 8.26,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -42342,7 +42797,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -42503,6 +42959,11 @@
       "name": "ABNB",
       "eps_engine": {
         "cc_score": 6.28,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -42579,7 +43040,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -42740,6 +43202,11 @@
       "name": "PDD",
       "eps_engine": {
         "cc_score": 7.52,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -42816,7 +43283,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -42977,6 +43445,11 @@
       "name": "TWLO",
       "eps_engine": {
         "cc_score": 5.98,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -43053,7 +43526,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -43214,6 +43688,11 @@
       "name": "PANW",
       "eps_engine": {
         "cc_score": 6.33,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -43290,7 +43769,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -43451,6 +43931,11 @@
       "name": "ZM",
       "eps_engine": {
         "cc_score": 7.48,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -43527,7 +44012,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -43688,6 +44174,11 @@
       "name": "Estee Lauder",
       "eps_engine": {
         "cc_score": 3.9,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -43763,7 +44254,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "core",
       "subsector": "BEAUTY",
@@ -44972,6 +45464,11 @@
       "name": "CVX",
       "eps_engine": {
         "cc_score": 5.5,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -45048,7 +45545,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -45209,6 +45707,11 @@
       "name": "KLAC",
       "eps_engine": {
         "cc_score": 7.04,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -45285,7 +45788,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -45446,6 +45950,11 @@
       "name": "SNAP",
       "eps_engine": {
         "cc_score": 4.94,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -45522,7 +46031,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -45683,6 +46193,11 @@
       "name": "XLF",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -45751,7 +46266,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -45912,6 +46428,11 @@
       "name": "UAL",
       "eps_engine": {
         "cc_score": 6.25,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -45988,7 +46509,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -46149,6 +46671,11 @@
       "name": "ASML",
       "eps_engine": {
         "cc_score": 7.38,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -46225,7 +46752,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -46386,6 +46914,11 @@
       "name": "WYNN",
       "eps_engine": {
         "cc_score": 5.69,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -46462,7 +46995,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -46623,6 +47157,11 @@
       "name": "OXY",
       "eps_engine": {
         "cc_score": 6.72,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -46699,7 +47238,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -46860,6 +47400,11 @@
       "name": "COP",
       "eps_engine": {
         "cc_score": 5.85,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -46936,7 +47481,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -47097,6 +47643,11 @@
       "name": "iShares iBoxx Investment Grade Corporate Bond ETF",
       "eps_engine": {
         "cc_score": 6.84,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "etf_global_proxy",
         "cc_confidence": "medium",
         "cc_method": "global_or_neutral_fallback",
@@ -47163,7 +47714,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "income",
       "subsector": "BOND_ETF",
@@ -48369,6 +48921,11 @@
       "name": "BLK",
       "eps_engine": {
         "cc_score": 8.55,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -48445,7 +49002,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -48606,6 +49164,11 @@
       "name": "MARA",
       "eps_engine": {
         "cc_score": 3.05,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -48682,7 +49245,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -48843,6 +49407,11 @@
       "name": "DIS",
       "eps_engine": {
         "cc_score": 5.14,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -48919,7 +49488,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -49080,6 +49650,11 @@
       "name": "LIN",
       "eps_engine": {
         "cc_score": 6.38,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -49156,7 +49731,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -49317,6 +49893,11 @@
       "name": "ELV",
       "eps_engine": {
         "cc_score": 5.02,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -49393,7 +49974,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -49554,6 +50136,11 @@
       "name": "BABA",
       "eps_engine": {
         "cc_score": 4.91,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -49630,7 +50217,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -49791,6 +50379,11 @@
       "name": "CRWD",
       "eps_engine": {
         "cc_score": 4.7,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -49867,7 +50460,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -50028,6 +50622,11 @@
       "name": "GE",
       "eps_engine": {
         "cc_score": 5.19,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -50104,7 +50703,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -50265,6 +50865,11 @@
       "name": "SHOP",
       "eps_engine": {
         "cc_score": 4.9,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -50341,7 +50946,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -50502,6 +51108,11 @@
       "name": "UPS",
       "eps_engine": {
         "cc_score": 4.62,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -50578,7 +51189,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -50739,6 +51351,11 @@
       "name": "BA",
       "eps_engine": {
         "cc_score": 3.83,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -50815,7 +51432,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -50976,6 +51594,11 @@
       "name": "DE",
       "eps_engine": {
         "cc_score": 4.13,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -51052,7 +51675,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -51213,6 +51837,11 @@
       "name": "XLU",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -51281,7 +51910,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -51442,6 +52072,11 @@
       "name": "AXP",
       "eps_engine": {
         "cc_score": 6.76,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -51518,7 +52153,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -51679,6 +52315,11 @@
       "name": "MDB",
       "eps_engine": {
         "cc_score": 4.91,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -51755,7 +52396,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -51916,6 +52558,11 @@
       "name": "SO",
       "eps_engine": {
         "cc_score": 4.65,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -51992,7 +52639,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -52153,6 +52801,11 @@
       "name": "PH",
       "eps_engine": {
         "cc_score": 5.55,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -52229,7 +52882,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -52390,6 +53044,11 @@
       "name": "VPU",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -52458,7 +53117,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -52619,6 +53279,11 @@
       "name": "APD",
       "eps_engine": {
         "cc_score": 5.53,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -52695,7 +53360,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -52856,6 +53522,11 @@
       "name": "American Airlines",
       "eps_engine": {
         "cc_score": 5.51,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -52931,7 +53602,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "cyclical_high_beta",
       "subsector": "AIRLINE",
@@ -54140,6 +54812,11 @@
       "name": "NFLX",
       "eps_engine": {
         "cc_score": 7.6,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -54216,7 +54893,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": true,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -54377,6 +55055,11 @@
       "name": "XLP",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -54445,7 +55128,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -54606,6 +55290,11 @@
       "name": "SCHW",
       "eps_engine": {
         "cc_score": 8.5,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -54682,7 +55371,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -54843,6 +55533,11 @@
       "name": "Las Vegas Sands",
       "eps_engine": {
         "cc_score": 7.25,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -54918,7 +55613,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "cyclical_high_beta",
       "subsector": "CASINO",
@@ -56127,6 +56823,11 @@
       "name": "TMO",
       "eps_engine": {
         "cc_score": 5.94,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -56203,7 +56904,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -56364,6 +57066,11 @@
       "name": "HOOD",
       "eps_engine": {
         "cc_score": 6.31,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -56440,7 +57147,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -56601,6 +57309,11 @@
       "name": "UBER",
       "eps_engine": {
         "cc_score": 5.61,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -56677,7 +57390,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -56838,6 +57552,11 @@
       "name": "XLV",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -56906,7 +57625,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -57067,6 +57787,11 @@
       "name": "VST",
       "eps_engine": {
         "cc_score": 4.42,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -57143,7 +57868,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -57304,6 +58030,11 @@
       "name": "DUK",
       "eps_engine": {
         "cc_score": 5.15,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -57380,7 +58111,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -57541,6 +58273,11 @@
       "name": "CI",
       "eps_engine": {
         "cc_score": 6.34,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -57617,7 +58354,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -57778,6 +58516,11 @@
       "name": "MA",
       "eps_engine": {
         "cc_score": 7.45,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -57854,7 +58597,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -58015,6 +58759,11 @@
       "name": "AMT",
       "eps_engine": {
         "cc_score": 6.74,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -58091,7 +58840,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -58252,6 +59002,11 @@
       "name": "PG",
       "eps_engine": {
         "cc_score": 5.86,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -58328,7 +59083,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -58489,6 +59245,11 @@
       "name": "ABBV",
       "eps_engine": {
         "cc_score": 6.7,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -58565,7 +59326,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -58726,6 +59488,11 @@
       "name": "O",
       "eps_engine": {
         "cc_score": 6.86,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -58802,7 +59569,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -58963,6 +59731,11 @@
       "name": "SQ",
       "eps_engine": {
         "cc_score": 6.0,
+        "cc_rank": "D",
+        "eps_coverage_rank": "D",
+        "cc_rank_label": "Global / ETF / Proxy",
+        "cc_rank_detail": "global_or_etf_or_neutral_fallback",
+        "cc_rank_confidence_floor": "low",
         "cc_source": "neutral_fallback_no_eps_regression_model",
         "cc_confidence": "low",
         "cc_method": "global_or_neutral_fallback",
@@ -59030,7 +59803,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "fallback_or_partial"
+        "score_source": "global_or_proxy_fallback",
+        "cc_rank": "D"
       },
       "category": "unknown",
       "subsector": "",
@@ -59191,6 +59965,11 @@
       "name": "BKNG",
       "eps_engine": {
         "cc_score": 7.99,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -59267,7 +60046,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -59428,6 +60208,11 @@
       "name": "HD",
       "eps_engine": {
         "cc_score": 4.36,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -59504,7 +60289,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -59665,6 +60451,11 @@
       "name": "BMY",
       "eps_engine": {
         "cc_score": 6.83,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -59741,7 +60532,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -59902,6 +60694,11 @@
       "name": "MCD",
       "eps_engine": {
         "cc_score": 7.14,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -59978,7 +60775,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -60139,6 +60937,11 @@
       "name": "MDT",
       "eps_engine": {
         "cc_score": 6.03,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -60215,7 +61018,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -60376,6 +61180,11 @@
       "name": "ECL",
       "eps_engine": {
         "cc_score": 5.89,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -60452,7 +61261,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -60613,6 +61423,11 @@
       "name": "MMM",
       "eps_engine": {
         "cc_score": 4.99,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -60689,7 +61504,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -60850,6 +61666,11 @@
       "name": "LOW",
       "eps_engine": {
         "cc_score": 5.08,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -60926,7 +61747,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -61087,6 +61909,11 @@
       "name": "RIVN",
       "eps_engine": {
         "cc_score": 3.02,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -61163,7 +61990,8 @@
         "has_weekly_prices": false,
         "weekly_price_count": 0,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "unknown",
       "subsector": "",
@@ -61324,6 +62152,11 @@
       "name": "Carnival",
       "eps_engine": {
         "cc_score": 5.74,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -61399,7 +62232,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "cyclical_high_beta",
       "subsector": "CRUISE",
@@ -62608,6 +63442,11 @@
       "name": "Intel",
       "eps_engine": {
         "cc_score": 3.42,
+        "cc_rank": "C",
+        "eps_coverage_rank": "C",
+        "cc_rank_label": "Runtime Fundamental Fallback",
+        "cc_rank_detail": "market_runtime_fundamentals_used_when_structured_eps_is_incomplete",
+        "cc_rank_confidence_floor": "medium",
         "cc_source": "runtime_fundamental_fallback",
         "cc_confidence": "medium",
         "cc_method": "runtime_fundamental",
@@ -62683,7 +63522,8 @@
         "has_weekly_prices": true,
         "weekly_price_count": 522,
         "has_eps_data": false,
-        "score_source": "runtime_fundamental_fallback"
+        "score_source": "runtime_fundamental_fallback",
+        "cc_rank": "C"
       },
       "category": "core",
       "subsector": "CPU",
