@@ -1893,17 +1893,79 @@ def _score_growth(eps_2026: float | None, eps_2027: float | None) -> float:
     return clamp(5.0 + growth * 10.0, 0.0, 10.0)
 
 
-def _score_consistency(eps_values: list[float]) -> float:
-    vals = [safe_num(v, None) for v in eps_values if safe_num(v, None) is not None]
-    if len(vals) < 3:
-        return 5.999
-    years = list(range(len(vals)))
-    model = _fit_eps_regression_models(years, [float(i + 1) for i in years], vals)
-    r2v = safe_num(model.get("best_r2"), None)
+def _eps_yoy_stability_score(eps_values: list[float]) -> float:
+    """
+    EPS YoY stability score for M1 Competitive middle_consistency.
+
+    Meaning:
+      - Measures whether annual EPS growth is stable, not whether growth is high.
+      - Growth level is already captured by future_growth_score.
+
+    Formula:
+      yoy[i] = (eps[i] - eps[i-1]) / abs(eps[i-1])
+      yoy is clipped to [-2, +2] to avoid small-base explosions.
+      volatility = population std(yoy)
+      stability = 10 * (1 - volatility / 1.0), clipped to 0..10
+
+    Governance:
+      - <5 EPS observations: neutral fallback 6.0
+      - Any non-positive EPS: halve stability because the earnings line is not clean.
+    """
+    vals = [safe_num(v, None) for v in eps_values if safe_num(v, None) is not None and math.isfinite(safe_num(v, 0.0))]
+    if len(vals) < 5:
+        return 6.0
+
+    yoy: list[float] = []
+    for i in range(1, len(vals)):
+        prev = vals[i - 1]
+        cur = vals[i]
+        if prev is None or abs(prev) <= 1e-9:
+            continue
+        g = (cur - prev) / abs(prev)
+        yoy.append(clamp(g, -2.0, 2.0))
+
+    if not yoy:
+        return 6.0
+
+    mean_yoy = sum(yoy) / len(yoy)
+    volatility = (sum((g - mean_yoy) ** 2 for g in yoy) / len(yoy)) ** 0.5
+    stability = clamp(10.0 * (1.0 - volatility / 1.0), 0.0, 10.0)
+
+    if any(v <= 0 for v in vals):
+        stability *= 0.5
+
+    return clamp(stability, 0.0, 10.0)
+
+
+def _score_consistency(eps_values: list[float], eps_model_r2: float | None = None) -> float:
+    """
+    Middle Consistency for M1 Competitive / CC score.
+
+    This must not be a fixed fallback. For stocks with enough EPS history:
+      consistency = 0.70 * EPS regression R² * 10
+                  + 0.30 * EPS YoY stability score
+
+    For ETF / no EPS / insufficient EPS history, keep neutral 6.0.
+    """
+    vals = [safe_num(v, None) for v in eps_values if safe_num(v, None) is not None and math.isfinite(safe_num(v, 0.0))]
+    if len(vals) < 5:
+        return 6.0
+
+    r2v = safe_num(eps_model_r2, None)
     if r2v is None:
-        return 5.999
+        # Fallback: if caller did not pass the chosen EPS regression R², compute a simple internal EPS trend fit.
+        years = list(range(len(vals)))
+        model = _fit_eps_regression_models(years, [float(i + 1) for i in years], vals)
+        r2v = safe_num(model.get("best_r2"), None)
+
+    if r2v is None:
+        return 6.0
+
+    r2_score = clamp(r2v, 0.0, 1.0) * 10.0
+    stability_score = _eps_yoy_stability_score(vals)
     negatives_penalty = 1.0 if any(v <= 0 for v in vals) else 0.0
-    return clamp(r2v * 10.0 - negatives_penalty, 0.0, 10.0)
+
+    return clamp(0.70 * r2_score + 0.30 * stability_score - negatives_penalty, 0.0, 10.0)
 
 
 def _score_quality_from_eps_regression(
@@ -2193,7 +2255,8 @@ def compute_eps_engine_v26(feature: dict[str, Any], trend: dict[str, Any] | None
     if src_2026 in {"forward_provided_low_count", "missing"} or src_2027 in {"forward_provided_low_count", "missing"}:
         warnings.append("forward_eps_low_confidence_or_missing")
 
-    consistency_score = _score_consistency(eps_values)
+    eps_yoy_stability_score = _eps_yoy_stability_score(eps_values)
+    consistency_score = _score_consistency(eps_values, safe_num(eps_model.get("best_r2"), None))
     quality_score = _score_quality_from_eps_regression(
         eps_values,
         safe_num(eps_model.get("best_r2"), None),
@@ -2232,10 +2295,12 @@ def compute_eps_engine_v26(feature: dict[str, Any], trend: dict[str, Any] | None
         "future_profit_score": round2(future_profit_score),
         "future_growth_score": round2(growth_score),
         "middle_consistency_score": round2(consistency_score),
+        "eps_yoy_stability_score": round2(eps_yoy_stability_score),
         "quality_score": round2(quality_score),
         "future_profit": round2(future_profit_score),
         "future_growth": round2(growth_score),
         "consistency": round2(consistency_score),
+        "eps_yoy_stability": round2(eps_yoy_stability_score),
         "quality": round2(quality_score),
         "eps_2025": round2(eps_2025) if eps_2025 is not None else None,
         "eps_2026": round2(eps_2026) if eps_2026 is not None else None,
