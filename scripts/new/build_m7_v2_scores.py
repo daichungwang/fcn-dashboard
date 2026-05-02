@@ -2310,6 +2310,57 @@ def _has_runtime_fundamental(rt: dict[str, Any]) -> bool:
     return sum(1 for v in core_fields if safe_num(v, None) is not None) >= 4
 
 
+
+def derive_cc_rank(eps_status: str | None, eps_sample_count: int | float | None, forward_count: int | float | None, is_etf_or_skip: bool = False) -> dict[str, Any]:
+    """
+    Rank A/B/C/D for M1 Dashboard 1.5.
+
+    Final definition:
+      A = normal EPS mode: structured EPS history + forward EPS are sufficient.
+      B = partial EPS mode: structured EPS exists but is not complete enough for A.
+      C = market_runtime fundamental fallback.
+      D = global / ETF / proxy / neutral fallback.
+
+    Rank is a confidence/source grade for CC, not an investment recommendation.
+    """
+    status = str(eps_status or "").strip()
+    sample = int(safe_num(eps_sample_count, 0) or 0)
+    fwd = int(safe_num(forward_count, 0) or 0)
+
+    if is_etf_or_skip or status in {"etf_global_proxy", "global_eps_regression_imputed", "neutral_fallback_no_eps_regression_model"}:
+        rank = "D"
+        label = "Global / ETF / Proxy"
+        detail = "global_or_etf_or_neutral_fallback"
+        confidence = "low"
+    elif status == "runtime_fundamental_fallback":
+        rank = "C"
+        label = "Runtime Fundamental Fallback"
+        detail = "market_runtime_fundamentals_used_when_structured_eps_is_incomplete"
+        confidence = "medium"
+    elif status == "actual_history_plus_eps_regression" and sample >= 3 and fwd >= 2:
+        rank = "A"
+        label = "Full EPS"
+        detail = "eps_history_regression_plus_forward_eps"
+        confidence = "high"
+    elif sample >= 1 or fwd >= 1 or status in {"actual_history_plus_eps_regression", "eps_regression_partial"}:
+        rank = "B"
+        label = "Partial EPS"
+        detail = "partial_structured_eps_or_forward_eps"
+        confidence = "medium"
+    else:
+        rank = "D"
+        label = "Global / ETF / Proxy"
+        detail = "no_structured_eps_and_no_runtime_fundamental_fallback"
+        confidence = "low"
+
+    return {
+        "cc_rank": rank,
+        "eps_coverage_rank": rank,
+        "cc_rank_label": label,
+        "cc_rank_detail": detail,
+        "cc_rank_confidence_floor": confidence,
+    }
+
 def compute_runtime_cc_score(rt: dict[str, Any]) -> dict[str, Any] | None:
     """
     Runtime fundamental fallback for companies without structured EPS history/forward series.
@@ -2579,8 +2630,21 @@ def compute_eps_engine_v26(feature: dict[str, Any], trend: dict[str, Any] | None
         if global_projection is not None:
             eps_source += f";global:{global_projection.get('source')}"
 
+    forward_count = sum(1 for v in [eps_2025, eps_2026, eps_2027] if safe_num(v, None) is not None)
+    rank_payload = derive_cc_rank(
+        eps_status,
+        eps_model.get("sample_count"),
+        forward_count,
+        is_etf_or_skip=is_etf_or_skip,
+    )
+
     return {
         "cc_score": round2(cc_score),
+        "cc_rank": rank_payload.get("cc_rank"),
+        "eps_coverage_rank": rank_payload.get("eps_coverage_rank"),
+        "cc_rank_label": rank_payload.get("cc_rank_label"),
+        "cc_rank_detail": rank_payload.get("cc_rank_detail"),
+        "cc_rank_confidence_floor": rank_payload.get("cc_rank_confidence_floor"),
         "cc_source": eps_status,
         "cc_confidence": confidence,
         "cc_method": "eps_engine" if eps_status == "actual_history_plus_eps_regression" else ("runtime_fundamental" if eps_status == "runtime_fundamental_fallback" else "global_or_neutral_fallback"),
@@ -2955,9 +3019,10 @@ def main() -> int:
                 "has_eps_data": norm_sym in eps_rows,
                 "score_source": (
                     "full_m7_eps"
-                    if (weekly_count >= 52 and norm_sym in eps_rows)
-                    else ("runtime_fundamental_fallback" if eps_engine.get("eps_status") == "runtime_fundamental_fallback" else "fallback_or_partial")
+                    if eps_engine.get("cc_rank") == "A"
+                    else ("partial_eps" if eps_engine.get("cc_rank") == "B" else ("runtime_fundamental_fallback" if eps_engine.get("cc_rank") == "C" else "global_or_proxy_fallback"))
                 ),
+                "cc_rank": eps_engine.get("cc_rank"),
             }
 
             rows_out.append({
