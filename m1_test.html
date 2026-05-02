@@ -566,6 +566,8 @@
                   <th>M1</th>
                   <th>C2P</th>
                   <th>CC</th>
+                  <th>Rank</th>
+                  <th>Source</th>
                   <th>M7n</th>
                   <th>vs p50</th>
                 </tr>
@@ -633,6 +635,31 @@
 
     function getM7Row(symbol) {
       return state.m7ScoreMap?.[String(symbol || "").toUpperCase().trim()] || null;
+    }
+
+    function epsCoverageFromEngine(eps) {
+      if (!eps || typeof eps !== "object") {
+        return { grade: "D", label: "Global / ETF / Proxy", historyCount: 0, forwardCount: 0 };
+      }
+      const historyCount = Number(eps.eps_regression_sample_count || 0);
+      const forwardCount = [eps.eps_2025, eps.eps_2026, eps.eps_2027]
+        .filter(v => Number.isFinite(Number(v))).length;
+      const rankFromEngine = String(eps.cc_rank || eps.eps_coverage_rank || "").toUpperCase();
+      let grade = ["A", "B", "C", "D"].includes(rankFromEngine) ? rankFromEngine : "D";
+      if (!rankFromEngine) {
+        const source = String(eps.cc_source || eps.eps_status || "");
+        if (source === "runtime_fundamental_fallback") grade = "C";
+        else if (source === "actual_history_plus_eps_regression" && historyCount >= 3 && forwardCount >= 2) grade = "A";
+        else if (historyCount >= 1 || forwardCount >= 1 || source === "eps_regression_partial") grade = "B";
+        else grade = "D";
+      }
+      const labelMap = {
+        A: "Full EPS",
+        B: "Partial EPS",
+        C: "Runtime Fundamental",
+        D: "Global / ETF / Proxy"
+      };
+      return { grade, label: labelMap[grade] || "Global / ETF / Proxy", historyCount, forwardCount };
     }
 
     function computeNewM1(row) {
@@ -765,6 +792,7 @@
 
         const m7row = getM7Row(symbol);
         const eps = m7row?.eps_engine || {};
+        const coverage = epsCoverageFromEngine(eps);
 
         return {
           ...row,
@@ -781,6 +809,12 @@
           quality_score: n(row.quality_score, null),
           competitive_score: n(eps.cc_score, null),
           competitive_raw_score: n(eps.cc_raw_score ?? eps.cc_score, null),
+          cc_rank: coverage.grade,
+          cc_rank_label: eps.cc_rank_label || coverage.label,
+          cc_source: eps.cc_source || eps.eps_status || null,
+          cc_confidence: eps.cc_confidence || eps.confidence || null,
+          eps_history_count: coverage.historyCount,
+          eps_forward_count: coverage.forwardCount,
           m7_v2_score: n(m7row?.m7_v2_score, null),
           eps_future_profit_score: n(eps.future_profit_score, null),
           eps_future_growth_score: n(eps.future_growth_score, null),
@@ -915,6 +949,8 @@
           m1: a?.M1_score ?? b?.M1_score ?? null,
           c2p: a?.breakdown?.capex_score ?? b?.breakdown?.capex_score ?? null,
           cc: a?.breakdown?.competitive_score ?? b?.breakdown?.competitive_score ?? null,
+          cc_rank: row.cc_rank || "D",
+          cc_source: row.cc_source || row.cc_rank_label || "-",
           m7n: a?.breakdown?.m7_v2_score ?? b?.breakdown?.m7_v2_score ?? null,
           raw_m1: a?.raw_m1_score ?? b?.raw_m1_score ?? null,
           vs_p50: (() => {
@@ -1135,6 +1171,8 @@
           <td>${fmt(row.m1)}</td>
           <td>${fmt(row.c2p)}</td>
           <td>${fmt(row.cc)}</td>
+          <td><span class="chip gray">${escapeHtml(row.cc_rank || "D")}</span></td>
+          <td>${escapeHtml(row.cc_source || "-")}</td>
           <td>${fmt(row.m7n)}</td>
           <td>${row.vs_p50 !== null ? `${row.vs_p50 >= 0 ? "+" : ""}${fmt(row.vs_p50)}` : "-"}</td>
         </tr>
@@ -1143,7 +1181,7 @@
       if (!rows.length) {
         $("impactTbody").innerHTML = `
           <tr>
-            <td colspan="12" class="muted">目前沒有符合條件的股票。</td>
+            <td colspan="14" class="muted">目前沒有符合條件的股票。</td>
           </tr>
         `;
       }
