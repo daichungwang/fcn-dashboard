@@ -1,534 +1,2087 @@
 {
   "meta": {
-    "version": "m1_eps_final_v4",
+    "version": "m1_eps_final_v5_merged_to_eps_history_ai",
     "ready_for": "M1 regression + competitive_score",
-    "structure": "yearly_object_format"
+    "structure": "yearly_object_format",
+    "merge_rule": "eps_history_ai priority; append symbols only when missing from m1_eps_governance_clean",
+    "source_base": "eps_history_ai.json",
+    "source_append": "m1_eps_governance_clean.json",
+    "existing_symbols_preserved": true
   },
   "data": {
-
     "NVDA": {
       "eps_history": [
-        {"fiscal_year": 2019, "eps": 0.92},
-        {"fiscal_year": 2020, "eps": 1.13},
-        {"fiscal_year": 2021, "eps": 2.50},
-        {"fiscal_year": 2022, "eps": 3.85},
-        {"fiscal_year": 2023, "eps": 1.74},
-        {"fiscal_year": 2024, "eps": 11.93}
+        {
+          "fiscal_year": 2019,
+          "eps": 0.92
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 1.13
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 2.5
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 3.85
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 1.74
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 11.93
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 4.77},
-        {"fiscal_year": 2026, "eps_estimate": 6.23},
-        {"fiscal_year": 2027, "eps_estimate": 8.34}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 24.0
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 8.34
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 11.24
+        }
       ],
-      "quality_flag": ["high_volatility", "ai_cycle"]
+      "quality_flag": [
+        "high_volatility",
+        "ai_cycle"
+      ]
     },
-
     "MSFT": {
       "eps_history": [
-        {"fiscal_year": 2019, "eps": 5.06},
-        {"fiscal_year": 2020, "eps": 5.76},
-        {"fiscal_year": 2021, "eps": 8.05},
-        {"fiscal_year": 2022, "eps": 9.65},
-        {"fiscal_year": 2023, "eps": 9.68},
-        {"fiscal_year": 2024, "eps": 11.80}
+        {
+          "fiscal_year": 2019,
+          "eps": 5.06
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 5.76
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 8.05
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 9.65
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 9.68
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 11.8
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 13.50},
-        {"fiscal_year": 2026, "eps_estimate": 17.03},
-        {"fiscal_year": 2027, "eps_estimate": 19.30}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 13.5
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 17.03
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 19.3
+        }
       ],
-      "quality_flag": ["stable"]
+      "quality_flag": [
+        "stable"
+      ]
     },
-
     "AVGO": {
       "eps_history": [
-        {"fiscal_year": 2019, "eps": 22.64},
-        {"fiscal_year": 2020, "eps": 23.89},
-        {"fiscal_year": 2021, "eps": 25.34},
-        {"fiscal_year": 2022, "eps": 34.41},
-        {"fiscal_year": 2023, "eps": 39.50},
-        {"fiscal_year": 2024, "eps": 42.00}
+        {
+          "fiscal_year": 2019,
+          "eps": 22.64
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 23.89
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 25.34
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 34.41
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 39.5
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 42.0
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 45.00},
-        {"fiscal_year": 2026, "eps_estimate": 11.50},
-        {"fiscal_year": 2027, "eps_estimate": 17.98}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 45.0
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 11.5
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 17.98
+        }
       ],
-      "quality_flag": ["adjusted_eps"]
+      "quality_flag": [
+        "adjusted_eps"
+      ]
     },
-     "AAPL": {
+    "TSM": {
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 2.43
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 3.44
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 4.45
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 6.57
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 6.32
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 6.9
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 7.5
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 15.45
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 19.29
+        }
+      ],
+      "quality_flag": [
+        "cyclical"
+      ]
+    },
+    "AMD": {
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 0.3
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 0.32
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 2.06
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 0.84
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 0.53
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 1.2
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 2.5
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 6.75
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 11.05
+        }
+      ],
+      "quality_flag": [
+        "volatile"
+      ]
+    },
+    "AMZN": {
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 2.17
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 2.54
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 3.39
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": -0.27
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 2.9
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 4.2
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 6.5
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 8.55
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 9.8
+        }
+      ],
+      "quality_flag": [
+        "negative_eps",
+        "recovery"
+      ]
+    },
+    "GOOG": {
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 11.88
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 12.09
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 13.61
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 11.87
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 12.0
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 12.0
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 12.69
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 13.89
+        }
+      ],
+      "quality_flag": [
+        "stable"
+      ]
+    },
+    "META": {
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 6.43
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 10.09
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 13.77
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 8.59
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 14.87
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 16.5
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 18.5
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 30.93
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 36.06
+        }
+      ],
+      "quality_flag": [
+        "rebound"
+      ]
+    },
+    "ORCL": {
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 3.07
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 3.21
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 3.37
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 3.06
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 3.15
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 3.8
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 4.2
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 7.46
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 8.03
+        }
+      ],
+      "quality_flag": [
+        "slow_growth"
+      ]
+    },
+    "NFLX": {
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 4.13
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 6.08
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 11.24
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 9.95
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 12.03
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 14.5
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 16.0
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 3.61
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 3.84
+        }
+      ],
+      "quality_flag": [
+        "volatile"
+      ]
+    },
+    "AAPL": {
       "symbol": "AAPL",
       "name": "Apple Inc.",
       "type": "STOCK",
       "skip_eps": false,
       "eps_basis": "diluted_eps",
       "eps_history": [
-        {"fiscal_year": 2019, "eps": 2.97},
-        {"fiscal_year": 2020, "eps": 3.28},
-        {"fiscal_year": 2021, "eps": 5.61},
-        {"fiscal_year": 2022, "eps": 6.11},
-        {"fiscal_year": 2023, "eps": 6.13},
-        {"fiscal_year": 2024, "eps": 6.56}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 7.0, "analyst_count": 35},
-        {"fiscal_year": 2026, "eps_estimate": 7.8, "analyst_count": 33},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-        ],
-        
-         "quality_flag": [],
-      "source_note": "Apple filings + consensus estimates"
-    },
-
-    "TSM": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 2.43},
-        {"fiscal_year": 2020, "eps": 3.44},
-        {"fiscal_year": 2021, "eps": 4.45},
-        {"fiscal_year": 2022, "eps": 6.57},
-        {"fiscal_year": 2023, "eps": 6.32},
-        {"fiscal_year": 2024, "eps": 6.90}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 7.50},
-        {"fiscal_year": 2026, "eps_estimate": 15.45},
-        {"fiscal_year": 2027, "eps_estimate": 19.29}
-      ],
-      "quality_flag": ["cyclical"]
-    },
-
-    "AMD": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 0.30},
-        {"fiscal_year": 2020, "eps": 0.32},
-        {"fiscal_year": 2021, "eps": 2.06},
-        {"fiscal_year": 2022, "eps": 0.84},
-        {"fiscal_year": 2023, "eps": 0.53},
-        {"fiscal_year": 2024, "eps": 1.20}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 2.50},
-        {"fiscal_year": 2026, "eps_estimate": 6.75},
-        {"fiscal_year": 2027, "eps_estimate": 11.05}
-      ],
-      "quality_flag": ["volatile"]
-    },
-
-    "AMZN": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 2.17},
-        {"fiscal_year": 2020, "eps": 2.54},
-        {"fiscal_year": 2021, "eps": 3.39},
-        {"fiscal_year": 2022, "eps": -0.27},
-        {"fiscal_year": 2023, "eps": 2.90},
-        {"fiscal_year": 2024, "eps": 4.20}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 6.50},
-        {"fiscal_year": 2026, "eps_estimate": 8.55},
-        {"fiscal_year": 2027, "eps_estimate": 9.80}
-      ],
-      "quality_flag": ["negative_eps", "recovery"]
-    },
-
-    "GOOG": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 11.88},
-        {"fiscal_year": 2020, "eps": 12.09},
-        {"fiscal_year": 2021, "eps": 13.61},
-        {"fiscal_year": 2022, "eps": 11.87},
-        {"fiscal_year": 2023, "eps": 12.00}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 12.00},
-        {"fiscal_year": 2026, "eps_estimate": 12.69},
-        {"fiscal_year": 2027, "eps_estimate": 13.89}
-      ],
-      "quality_flag": ["stable"]
-    },
-
-    "META": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 6.43},
-        {"fiscal_year": 2020, "eps": 10.09},
-        {"fiscal_year": 2021, "eps": 13.77},
-        {"fiscal_year": 2022, "eps": 8.59},
-        {"fiscal_year": 2023, "eps": 14.87},
-        {"fiscal_year": 2024, "eps": 16.50}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 18.50},
-        {"fiscal_year": 2026, "eps_estimate": 30.93},
-        {"fiscal_year": 2027, "eps_estimate": 36.06}
-      ],
-      "quality_flag": ["rebound"]
-    },
-
-    "ORCL": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 3.07},
-        {"fiscal_year": 2020, "eps": 3.21},
-        {"fiscal_year": 2021, "eps": 3.37},
-        {"fiscal_year": 2022, "eps": 3.06},
-        {"fiscal_year": 2023, "eps": 3.15},
-        {"fiscal_year": 2024, "eps": 3.80}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 4.20},
-        {"fiscal_year": 2026, "eps_estimate": 7.46},
-        {"fiscal_year": 2027, "eps_estimate": 8.03}
-      ],
-      "quality_flag": ["slow_growth"]
-    },
-          "ADBE": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 7.87},
-        {"fiscal_year": 2020, "eps": 10.10},
-        {"fiscal_year": 2021, "eps": 12.48},
-        {"fiscal_year": 2022, "eps": 13.72},
-        {"fiscal_year": 2023, "eps": 15.80},
-        {"fiscal_year": 2024, "eps": 16.90}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 18.5, "analyst_count": 28},
-        {"fiscal_year": 2026, "eps_estimate": 20.3, "analyst_count": 25},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-        "quality_flag": ["cyclical"]
-    },
-    "CRM": {
-       "eps_history": [
-        {"fiscal_year": 2019, "eps": 2.58},
-        {"fiscal_year": 2020, "eps": 2.93},
-        {"fiscal_year": 2021, "eps": 4.38},
-        {"fiscal_year": 2022, "eps": 4.78},
-        {"fiscal_year": 2023, "eps": 5.24},
-        {"fiscal_year": 2024, "eps": 8.20}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 9.3, "analyst_count": 30},
-        {"fiscal_year": 2026, "eps_estimate": 10.8, "analyst_count": 28},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-   "quality_flag": ["cyclical"]
-    },
-    "NOW": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 3.18},
-        {"fiscal_year": 2020, "eps": 4.18},
-        {"fiscal_year": 2021, "eps": 6.10},
-        {"fiscal_year": 2022, "eps": 7.40},
-        {"fiscal_year": 2023, "eps": 9.90},
-        {"fiscal_year": 2024, "eps": 11.20}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 13.0, "analyst_count": 25},
-        {"fiscal_year": 2026, "eps_estimate": 15.2, "analyst_count": 23},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-    "quality_flag": ["adjusted_eps"],
-       },
-    "MRVL": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 1.10},
-        {"fiscal_year": 2020, "eps": 0.94},
-        {"fiscal_year": 2021, "eps": 1.49},
-        {"fiscal_year": 2022, "eps": 1.61},
-        {"fiscal_year": 2023, "eps": 1.50},
-        {"fiscal_year": 2024, "eps": 1.70}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 2.2, "analyst_count": 28},
-        {"fiscal_year": 2026, "eps_estimate": 2.8, "analyst_count": 25},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-     "quality_flag": ["adjusted_eps", "cyclical"],
+        {
+          "fiscal_year": 2019,
+          "eps": 2.97
         },
-
-    "AMAT": {
-       "eps_history": [
-        {"fiscal_year": 2019, "eps": 3.06},
-        {"fiscal_year": 2020, "eps": 3.72},
-        {"fiscal_year": 2021, "eps": 6.65},
-        {"fiscal_year": 2022, "eps": 8.10},
-        {"fiscal_year": 2023, "eps": 8.40},
-        {"fiscal_year": 2024, "eps": 8.90}
+        {
+          "fiscal_year": 2020,
+          "eps": 3.28
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 5.61
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 6.11
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 6.13
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 6.56
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 9.5, "analyst_count": 27},
-        {"fiscal_year": 2026, "eps_estimate": 10.4, "analyst_count": 25},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 7.0,
+          "analyst_count": 35
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 7.8,
+          "analyst_count": 33
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
       ],
-     "quality_flag": ["cyclical"],
-       },
-    "LRCX": {
-         "eps_history": [
-        {"fiscal_year": 2019, "eps": 14.00},
-        {"fiscal_year": 2020, "eps": 18.24},
-        {"fiscal_year": 2021, "eps": 29.38},
-        {"fiscal_year": 2022, "eps": 37.30},
-        {"fiscal_year": 2023, "eps": 28.51},
-        {"fiscal_year": 2024, "eps": 29.10}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 32.0, "analyst_count": 26},
-        {"fiscal_year": 2026, "eps_estimate": 36.5, "analyst_count": 24},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-      "quality_flag": ["cyclical"],
-    },
-    "KLAC": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 9.02},
-        {"fiscal_year": 2020, "eps": 10.71},
-        {"fiscal_year": 2021, "eps": 14.22},
-        {"fiscal_year": 2022, "eps": 22.43},
-        {"fiscal_year": 2023, "eps": 21.14},
-        {"fiscal_year": 2024, "eps": 22.70}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 24.5, "analyst_count": 22},
-        {"fiscal_year": 2026, "eps_estimate": 27.2, "analyst_count": 20},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-       "quality_flag": ["cyclical"],
-     },
-    "ASML": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 6.13},
-        {"fiscal_year": 2020, "eps": 8.49},
-        {"fiscal_year": 2021, "eps": 14.36},
-        {"fiscal_year": 2022, "eps": 17.73},
-        {"fiscal_year": 2023, "eps": 19.13},
-        {"fiscal_year": 2024, "eps": 20.50}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 23.5, "analyst_count": 25},
-        {"fiscal_year": 2026, "eps_estimate": 27.8, "analyst_count": 23},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-      "quality_flag": ["cyclical"],
-    },
-    "ON": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 0.96},
-        {"fiscal_year": 2020, "eps": 0.86},
-        {"fiscal_year": 2021, "eps": 2.52},
-        {"fiscal_year": 2022, "eps": 3.85},
-        {"fiscal_year": 2023, "eps": 3.39},
-        {"fiscal_year": 2024, "eps": 3.20}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 3.6, "analyst_count": 22},
-        {"fiscal_year": 2026, "eps_estimate": 4.2, "analyst_count": 20},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-      "quality_flag": ["cyclical", "high_volatility"],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 6.56,
+        "ttm_eps": 6.56
       },
-    "ARM": {
-   
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [],
+      "source_note": "Apple filings + consensus estimates",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "ADBE": {
+      "symbol": "ADBE",
+      "name": "Adobe Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "adjusted_eps",
       "eps_history": [
-        {"fiscal_year": 2019, "eps": 0.28},
-        {"fiscal_year": 2020, "eps": 0.30},
-        {"fiscal_year": 2021, "eps": 0.35},
-        {"fiscal_year": 2022, "eps": 0.29},
-        {"fiscal_year": 2023, "eps": 0.40},
-        {"fiscal_year": 2024, "eps": 0.52}
+        {
+          "fiscal_year": 2019,
+          "eps": 7.87
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 10.1
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 12.48
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 13.72
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 15.8
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 16.9
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 0.75, "analyst_count": 20},
-        {"fiscal_year": 2026, "eps_estimate": 1.05, "analyst_count": 18},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 18.5,
+          "analyst_count": 28
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 20.3,
+          "analyst_count": 25
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 16.9,
+        "ttm_eps": 16.9
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [
+          "using adjusted EPS"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "adjusted_eps"
+      ],
+      "source_note": "Adobe reports + consensus (non-GAAP EPS)",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback; adjusted EPS used"
+      }
+    },
+    "AMAT": {
+      "symbol": "AMAT",
+      "name": "Applied Materials, Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 3.06
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 3.72
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 6.65
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 8.1
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 8.4
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 8.9
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 9.5,
+          "analyst_count": 27
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 10.4,
+          "analyst_count": 25
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 8.9,
+        "ttm_eps": 8.9
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "cyclical"
+      ],
+      "source_note": "Applied Materials filings + analyst estimates",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "ARM": {
+      "symbol": "ARM",
+      "name": "Arm Holdings plc",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "adjusted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 0.28
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 0.3
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 0.35
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 0.29
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 0.4
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 0.52
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 0.75,
+          "analyst_count": 20
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 1.05,
+          "analyst_count": 18
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
       ],
       "eps_current": {
         "latest_fiscal_year": 2024,
         "latest_eps": 0.52,
         "ttm_eps": 0.52
       },
-     "quality_flag": ["adjusted_eps"],
-     },
-
-    "MU": {
-       "eps_history": [
-        {"fiscal_year": 2019, "eps": 6.35},
-        {"fiscal_year": 2020, "eps": 2.83},
-        {"fiscal_year": 2021, "eps": 6.06},
-        {"fiscal_year": 2022, "eps": 8.35},
-        {"fiscal_year": 2023, "eps": -1.58},
-        {"fiscal_year": 2024, "eps": -0.10}
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "medium",
+        "warning": [
+          "adjusted EPS used"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "adjusted_eps"
       ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 4.5, "analyst_count": 30},
-        {"fiscal_year": 2026, "eps_estimate": 7.2, "analyst_count": 28},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-      "quality_flag": ["negative_eps", "cyclical", "rebound"],
+      "source_note": "Arm reports + consensus estimates",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback; adjusted EPS used"
+      }
+    },
+    "ASML": {
+      "symbol": "ASML",
+      "name": "ASML Holding N.V.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 6.13
         },
-    "PLTR": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": -0.24},
-        {"fiscal_year": 2020, "eps": -0.16},
-        {"fiscal_year": 2021, "eps": -0.18},
-        {"fiscal_year": 2022, "eps": 0.01},
-        {"fiscal_year": 2023, "eps": 0.09},
-        {"fiscal_year": 2024, "eps": 0.15}
+        {
+          "fiscal_year": 2020,
+          "eps": 8.49
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 14.36
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 17.73
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 19.13
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 20.5
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 0.22, "analyst_count": 25},
-        {"fiscal_year": 2026, "eps_estimate": 0.30, "analyst_count": 23},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 23.5,
+          "analyst_count": 25
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 27.8,
+          "analyst_count": 23
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
       ],
-       "quality_flag": ["rebound"],
-    },
-    "SNOW": {
-       "eps_history": [
-        {"fiscal_year": 2019, "eps": -0.70},
-        {"fiscal_year": 2020, "eps": -0.90},
-        {"fiscal_year": 2021, "eps": -0.63},
-        {"fiscal_year": 2022, "eps": -0.40},
-        {"fiscal_year": 2023, "eps": 0.15},
-        {"fiscal_year": 2024, "eps": 0.50}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 0.85, "analyst_count": 30},
-        {"fiscal_year": 2026, "eps_estimate": 1.20, "analyst_count": 28},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-      "quality_flag": ["adjusted_eps", "rebound"],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 20.5,
+        "ttm_eps": 20.5
       },
-    "TSLA": {
-        "eps_history": [
-        {"fiscal_year": 2019, "eps": -0.98},
-        {"fiscal_year": 2020, "eps": 0.64},
-        {"fiscal_year": 2021, "eps": 2.26},
-        {"fiscal_year": 2022, "eps": 4.07},
-        {"fiscal_year": 2023, "eps": 3.12},
-        {"fiscal_year": 2024, "eps": 2.80}
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [
+          "ADR vs local share differences"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "cyclical"
       ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 3.5, "analyst_count": 40},
-        {"fiscal_year": 2026, "eps_estimate": 4.8, "analyst_count": 35},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-          "quality_flag": ["high_volatility"],
-       },
+      "source_note": "ASML reports + consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
     "COIN": {
+      "symbol": "COIN",
+      "name": "Coinbase Global, Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
       "eps_history": [
-        {"fiscal_year": 2019, "eps": 6.42},
-        {"fiscal_year": 2020, "eps": 12.60},
-        {"fiscal_year": 2021, "eps": 14.50},
-        {"fiscal_year": 2022, "eps": -11.83},
-        {"fiscal_year": 2023, "eps": 3.95},
-        {"fiscal_year": 2024, "eps": 5.20}
+        {
+          "fiscal_year": 2019,
+          "eps": 6.42
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 12.6
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 14.5
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": -11.83
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 3.95
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 5.2
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 6.0, "analyst_count": 22},
-        {"fiscal_year": 2026, "eps_estimate": 7.5, "analyst_count": 20},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 6.0,
+          "analyst_count": 22
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 7.5,
+          "analyst_count": 20
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
       ],
-        "quality_flag": ["high_volatility", "cyclical"],
-         },
-    "XOM": {
-       "eps_history": [
-        {"fiscal_year": 2019, "eps": 3.36},
-        {"fiscal_year": 2020, "eps": -5.25},
-        {"fiscal_year": 2021, "eps": 5.39},
-        {"fiscal_year": 2022, "eps": 13.26},
-        {"fiscal_year": 2023, "eps": 9.12},
-        {"fiscal_year": 2024, "eps": 8.50}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 8.0, "analyst_count": 28},
-        {"fiscal_year": 2026, "eps_estimate": 7.8, "analyst_count": 25},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-       "confidence": "high",
-        "warning": []
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 5.2,
+        "ttm_eps": 5.2
       },
-      "quality_flag": ["cyclical", "high_volatility"],
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "medium",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "high_volatility",
+        "cyclical"
+      ],
+      "source_note": "Coinbase filings + analyst consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
     },
-    "JPM": {
-  
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 10.72},
-        {"fiscal_year": 2020, "eps": 8.88},
-        {"fiscal_year": 2021, "eps": 15.36},
-        {"fiscal_year": 2022, "eps": 11.95},
-        {"fiscal_year": 2023, "eps": 16.23},
-        {"fiscal_year": 2024, "eps": 17.50}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 18.0, "analyst_count": 30},
-        {"fiscal_year": 2026, "eps_estimate": 19.2, "analyst_count": 28},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
-     "quality_flag": [],
-      },
-   
     "COST": {
-        "eps_history": [
-        {"fiscal_year": 2019, "eps": 8.26},
-        {"fiscal_year": 2020, "eps": 9.02},
-        {"fiscal_year": 2021, "eps": 11.27},
-        {"fiscal_year": 2022, "eps": 13.14},
-        {"fiscal_year": 2023, "eps": 14.16},
-        {"fiscal_year": 2024, "eps": 15.60}
+      "symbol": "COST",
+      "name": "Costco Wholesale Corporation",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 8.26
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 9.02
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 11.27
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 13.14
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 14.16
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 15.6
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 17.2, "analyst_count": 30},
-        {"fiscal_year": 2026, "eps_estimate": 18.8, "analyst_count": 28},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 17.2,
+          "analyst_count": 30
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 18.8,
+          "analyst_count": 28
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
       ],
-       "quality_flag": [],
-       },
-    "WMT": {
-        "eps_history": [
-        {"fiscal_year": 2019, "eps": 4.75},
-        {"fiscal_year": 2020, "eps": 5.19},
-        {"fiscal_year": 2021, "eps": 4.75},
-        {"fiscal_year": 2022, "eps": 6.29},
-        {"fiscal_year": 2023, "eps": 6.29},
-        {"fiscal_year": 2024, "eps": 6.80}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 7.4, "analyst_count": 28},
-        {"fiscal_year": 2026, "eps_estimate": 8.0, "analyst_count": 26},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
-      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 15.6,
+        "ttm_eps": 15.6
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
       "quality_flag": [],
+      "source_note": "Costco filings + consensus estimates",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "CRM": {
+      "symbol": "CRM",
+      "name": "Salesforce, Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "adjusted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 2.58
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 2.93
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 4.38
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 4.78
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 5.24
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 8.2
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 9.3,
+          "analyst_count": 30
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 10.8,
+          "analyst_count": 28
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 8.2,
+        "ttm_eps": 8.2
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "medium",
+        "warning": [
+          "using adjusted EPS"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "adjusted_eps"
+      ],
+      "source_note": "Salesforce reports + analyst consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback; adjusted EPS used"
+      }
     },
     "JNJ": {
+      "symbol": "JNJ",
+      "name": "Johnson & Johnson",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "adjusted_eps",
       "eps_history": [
-        {"fiscal_year": 2019, "eps": 8.68},
-        {"fiscal_year": 2020, "eps": 8.03},
-        {"fiscal_year": 2021, "eps": 9.80},
-        {"fiscal_year": 2022, "eps": 10.15},
-        {"fiscal_year": 2023, "eps": 10.65},
-        {"fiscal_year": 2024, "eps": 11.10}
+        {
+          "fiscal_year": 2019,
+          "eps": 8.68
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 8.03
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 9.8
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 10.15
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 10.65
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 11.1
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 11.8, "analyst_count": 25},
-        {"fiscal_year": 2026, "eps_estimate": 12.6, "analyst_count": 23},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 11.8,
+          "analyst_count": 25
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 12.6,
+          "analyst_count": 23
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
       ],
-        "quality_flag": ["adjusted_eps"],
-     },
-    "V": {
-      "symbol": "V",
-        "eps_history": [
-        {"fiscal_year": 2019, "eps": 5.32},
-        {"fiscal_year": 2020, "eps": 5.04},
-        {"fiscal_year": 2021, "eps": 5.63},
-        {"fiscal_year": 2022, "eps": 7.38},
-        {"fiscal_year": 2023, "eps": 8.28},
-        {"fiscal_year": 2024, "eps": 8.95}
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 11.1,
+        "ttm_eps": 11.1
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [
+          "adjusted EPS used"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "adjusted_eps"
+      ],
+      "source_note": "JNJ filings + consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback; adjusted EPS used"
+      }
+    },
+    "JPM": {
+      "symbol": "JPM",
+      "name": "JPMorgan Chase & Co.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 10.72
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 8.88
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 15.36
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 11.95
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 16.23
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 17.5
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 9.8, "analyst_count": 32},
-        {"fiscal_year": 2026, "eps_estimate": 10.9, "analyst_count": 30},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 18.0,
+          "analyst_count": 30
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 19.2,
+          "analyst_count": 28
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
       ],
-            "quality_flag": ["high_volatility"],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 17.5,
+        "ttm_eps": 17.5
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [],
+      "source_note": "JPMorgan filings + analyst consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "KLAC": {
+      "symbol": "KLAC",
+      "name": "KLA Corporation",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 9.02
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 10.71
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 14.22
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 22.43
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 21.14
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 22.7
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 24.5,
+          "analyst_count": 22
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 27.2,
+          "analyst_count": 20
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 22.7,
+        "ttm_eps": 22.7
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "cyclical"
+      ],
+      "source_note": "KLA filings + analyst estimates",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "KO": {
+      "symbol": "KO",
+      "name": "The Coca-Cola Company",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 2.07
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 1.79
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 2.25
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 2.19
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 2.47
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 2.46
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 3.04,
+          "analyst_count": null
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 3.23,
+          "analyst_count": 4
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 2.46,
+        "ttm_eps": 3.18
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 0,
+        "confidence": "medium",
+        "warning": [
+          "forward EPS analyst_count < 5"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 0,
+        "history_years_strict": 6
+      },
+      "quality_flag": [],
+      "source_note": "Macrotrends EPS history; MarketBeat consensus EPS",
+      "engine_flags": {
+        "use_in_competition": false,
+        "sandbox_ready": false,
+        "engine_ready_v3": false,
+        "quality_level": "C",
+        "history_years": 6,
+        "valid_forward_years": 0,
+        "valid_forward_year_list": [],
+        "reason": "valid forward EPS years with analyst_count >= 5 < 2"
+      }
+    },
+    "LRCX": {
+      "symbol": "LRCX",
+      "name": "Lam Research Corporation",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 14.0
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 18.24
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 29.38
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 37.3
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 28.51
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 29.1
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 32.0,
+          "analyst_count": 26
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 36.5,
+          "analyst_count": 24
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 29.1,
+        "ttm_eps": 29.1
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "cyclical"
+      ],
+      "source_note": "Lam Research filings + analyst consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "MRVL": {
+      "symbol": "MRVL",
+      "name": "Marvell Technology, Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "adjusted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 1.1
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 0.94
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 1.49
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 1.61
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 1.5
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 1.7
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 2.2,
+          "analyst_count": 28
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 2.8,
+          "analyst_count": 25
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 1.7,
+        "ttm_eps": 1.7
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "medium",
+        "warning": [
+          "adjusted EPS used"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "adjusted_eps",
+        "cyclical"
+      ],
+      "source_note": "Marvell reports + consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback; adjusted EPS used"
+      }
+    },
+    "MU": {
+      "symbol": "MU",
+      "name": "Micron Technology, Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 6.35
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 2.83
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 6.06
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 8.35
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": -1.58
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": -0.1
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 4.5,
+          "analyst_count": 30
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 7.2,
+          "analyst_count": 28
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": -0.1,
+        "ttm_eps": -0.1
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "medium",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "negative_eps",
+        "cyclical",
+        "rebound"
+      ],
+      "source_note": "Micron filings + analyst estimates",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "NOW": {
+      "symbol": "NOW",
+      "name": "ServiceNow, Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "adjusted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 3.18
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 4.18
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 6.1
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 7.4
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 9.9
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 11.2
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 13.0,
+          "analyst_count": 25
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 15.2,
+          "analyst_count": 23
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 11.2,
+        "ttm_eps": 11.2
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "medium",
+        "warning": [
+          "adjusted EPS used"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "adjusted_eps"
+      ],
+      "source_note": "ServiceNow filings + analyst estimates",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback; adjusted EPS used"
+      }
+    },
+    "ON": {
+      "symbol": "ON",
+      "name": "ON Semiconductor Corporation",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 0.96
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 0.86
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 2.52
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 3.85
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 3.39
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 3.2
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 3.6,
+          "analyst_count": 22
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 4.2,
+          "analyst_count": 20
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 3.2,
+        "ttm_eps": 3.2
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "medium",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "cyclical",
+        "high_volatility"
+      ],
+      "source_note": "ON Semi filings + analyst consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "PEP": {
+      "symbol": "PEP",
+      "name": "PepsiCo, Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 5.2
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 5.12
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 5.49
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 6.42
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 6.56
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 6.95
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 6.0,
+          "analyst_count": null
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 8.11,
+          "analyst_count": 4
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 6.95,
+        "ttm_eps": 6.37
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 0,
+        "confidence": "medium",
+        "warning": [
+          "forward EPS analyst_count < 5"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 0,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "high_volatility"
+      ],
+      "source_note": "Macrotrends EPS history; MarketBeat consensus EPS",
+      "engine_flags": {
+        "use_in_competition": false,
+        "sandbox_ready": false,
+        "engine_ready_v3": false,
+        "quality_level": "C",
+        "history_years": 6,
+        "valid_forward_years": 0,
+        "valid_forward_year_list": [],
+        "reason": "valid forward EPS years with analyst_count >= 5 < 2"
+      }
+    },
+    "PFE": {
+      "symbol": "PFE",
+      "name": "Pfizer Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 2.82
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 1.63
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 3.85
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 5.47
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 0.37
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 1.41
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 1.36,
+          "analyst_count": null
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": null,
+          "analyst_count": null
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 1.41,
+        "ttm_eps": 1.36
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 0,
+        "confidence": "medium",
+        "warning": [
+          "forward EPS analyst_count not confirmed"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 0,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "high_volatility",
+        "rebound"
+      ],
+      "source_note": "Macrotrends EPS history; ChartMill/Seeking Alpha",
+      "engine_flags": {
+        "use_in_competition": false,
+        "sandbox_ready": false,
+        "engine_ready_v3": false,
+        "quality_level": "C",
+        "history_years": 6,
+        "valid_forward_years": 0,
+        "valid_forward_year_list": [],
+        "reason": "valid forward EPS years with analyst_count >= 5 < 2"
+      }
+    },
+    "PG": {
+      "symbol": "PG",
+      "name": "Procter & Gamble Company",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 4.22
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 4.96
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 5.5
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 5.81
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 5.9
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 6.02
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 6.51,
+          "analyst_count": null
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 6.84,
+          "analyst_count": null
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 6.02,
+        "ttm_eps": 6.84
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 0,
+        "confidence": "medium",
+        "warning": [
+          "forward EPS analyst_count not confirmed"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 0,
+        "history_years_strict": 6
+      },
+      "quality_flag": [],
+      "source_note": "Macrotrends EPS history; ChartMill/AlphaQuery quarterly EPS",
+      "engine_flags": {
+        "use_in_competition": false,
+        "sandbox_ready": false,
+        "engine_ready_v3": false,
+        "quality_level": "C",
+        "history_years": 6,
+        "valid_forward_years": 0,
+        "valid_forward_year_list": [],
+        "reason": "valid forward EPS years with analyst_count >= 5 < 2"
+      }
     },
     "PLD": {
       "symbol": "PLD",
@@ -537,100 +2090,774 @@
       "skip_eps": false,
       "eps_basis": "diluted_eps",
       "eps_history": [
-        {"fiscal_year": 2019, "eps": 3.31},
-        {"fiscal_year": 2020, "eps": 2.77},
-        {"fiscal_year": 2021, "eps": 3.60},
-        {"fiscal_year": 2022, "eps": 5.16},
-        {"fiscal_year": 2023, "eps": 5.20},
-        {"fiscal_year": 2024, "eps": 5.50}
+        {
+          "fiscal_year": 2019,
+          "eps": 3.31
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 2.77
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 3.6
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 5.16
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 5.2
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 5.5
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 5.8, "analyst_count": 20},
-        {"fiscal_year": 2026, "eps_estimate": 6.2, "analyst_count": 18},
-        {"fiscal_year": 2027, "eps_estimate": null, "analyst_count": null}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 5.8,
+          "analyst_count": 20
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 6.2,
+          "analyst_count": 18
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
       ],
-         "quality_flag": ["high_volatility"],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 5.5,
+        "ttm_eps": 5.5
       },
-     "TGT": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 5.51},
-        {"fiscal_year": 2020, "eps": 6.36},
-        {"fiscal_year": 2021, "eps": 8.64},
-        {"fiscal_year": 2022, "eps": 14.1},
-        {"fiscal_year": 2023, "eps": 5.98},
-        {"fiscal_year": 2024, "eps": 8.94}
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "medium",
+        "warning": [
+          "REIT EPS not ideal metric"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "high_volatility"
       ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 8.86},
-        {"fiscal_year": 2026, "eps_estimate": 8.13},
-        {"fiscal_year": 2027, "eps_estimate": 7.91}
-      ],
-      "quality_flag": ["high_volatility"]
-},
- "PG": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 4.22},
-        {"fiscal_year": 2020, "eps": 4.96},
-        {"fiscal_year": 2021, "eps": 5.5},
-        {"fiscal_year": 2022, "eps": 5.81},
-        {"fiscal_year": 2023, "eps": 5.9},
-        {"fiscal_year": 2024, "eps": 6.02}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 6.51},
-        {"fiscal_year": 2026, "eps_estimate": 6.84},
-        {"fiscal_year": 2027, "eps_estimate": NULL}
-      ],
-      "quality_flag": ["high_volatility"]
-},
- "PEP": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 5.2},
-        {"fiscal_year": 2020, "eps": 5.12},
-        {"fiscal_year": 2021, "eps": 5.49},
-        {"fiscal_year": 2022, "eps": 6.42},
-        {"fiscal_year": 2023, "eps": 6.56},
-        {"fiscal_year": 2024, "eps": 6.95}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 7},
-        {"fiscal_year": 2026, "eps_estimate": 8},
-        {"fiscal_year": 2027, "eps_estimate": 8.01}
-      ],
-      "quality_flag": ["high_volatility"]
-},
- "PFE": {
-      "eps_history": [
-        {"fiscal_year": 2019, "eps": 2.82},
-        {"fiscal_year": 2020, "eps": 1.63},
-        {"fiscal_year": 2021, "eps": 3.85},
-        {"fiscal_year": 2022, "eps": 5.47},
-        {"fiscal_year": 2023, "eps": 0.37},
-        {"fiscal_year": 2024, "eps": 1.41}
-      ],
-      "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 1.4},
-        {"fiscal_year": 2026, "eps_estimate": 1.4},
-        {"fiscal_year": 2027, "eps_estimate": 1.4}
-      ],
-      "quality_flag": ["high_volatility"]
+      "source_note": "Prologis filings + consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
     },
-    "NFLX": {
+    "PLTR": {
+      "symbol": "PLTR",
+      "name": "Palantir Technologies Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
       "eps_history": [
-        {"fiscal_year": 2019, "eps": 4.13},
-        {"fiscal_year": 2020, "eps": 6.08},
-        {"fiscal_year": 2021, "eps": 11.24},
-        {"fiscal_year": 2022, "eps": 9.95},
-        {"fiscal_year": 2023, "eps": 12.03},
-        {"fiscal_year": 2024, "eps": 14.50}
+        {
+          "fiscal_year": 2019,
+          "eps": -0.24
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": -0.16
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": -0.18
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 0.01
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 0.09
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 0.15
+        }
       ],
       "eps_forward": [
-        {"fiscal_year": 2025, "eps_estimate": 16.00},
-        {"fiscal_year": 2026, "eps_estimate": 3.61},
-        {"fiscal_year": 2027, "eps_estimate": 3.84}
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 0.22,
+          "analyst_count": 25
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 0.3,
+          "analyst_count": 23
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
       ],
-      "quality_flag": ["volatile"]
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 0.15,
+        "ttm_eps": 0.15
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "medium",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "rebound"
+      ],
+      "source_note": "Palantir filings + analyst consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "QQQ": {
+      "symbol": "QQQ",
+      "name": "Invesco QQQ Trust",
+      "type": "ETF",
+      "skip_eps": true,
+      "eps_basis": "not_applicable",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": null
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": null
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": null
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": null
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": null
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": null
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": null,
+          "analyst_count": null
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": null,
+          "analyst_count": null
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": null,
+        "latest_eps": null,
+        "ttm_eps": null
+      },
+      "data_quality": {
+        "history_years": 0,
+        "has_forward_eps": false,
+        "forward_years_with_analyst_count_ge_5": 0,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 0,
+        "history_years_strict": 0
+      },
+      "quality_flag": [
+        "not_applicable"
+      ],
+      "source_note": "ETF - EPS not applicable",
+      "engine_flags": {
+        "use_in_competition": false,
+        "sandbox_ready": false,
+        "engine_ready_v3": false,
+        "quality_level": "NA",
+        "history_years": 0,
+        "valid_forward_years": 0,
+        "valid_forward_year_list": [],
+        "reason": "ETF/no single-company EPS"
+      }
+    },
+    "SNOW": {
+      "symbol": "SNOW",
+      "name": "Snowflake Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "adjusted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": -0.7
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": -0.9
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": -0.63
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": -0.4
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 0.15
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 0.5
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 0.85,
+          "analyst_count": 30
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 1.2,
+          "analyst_count": 28
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 0.5,
+        "ttm_eps": 0.5
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "medium",
+        "warning": [
+          "adjusted EPS used"
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "adjusted_eps",
+        "rebound"
+      ],
+      "source_note": "Snowflake filings + analyst estimates",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback; adjusted EPS used"
+      }
+    },
+    "TGT": {
+      "symbol": "TGT",
+      "name": "Target Corporation",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 5.51
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 6.36
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 8.64
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 14.1
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 5.98
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 8.94
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 8.86,
+          "analyst_count": 16
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 8.13,
+          "analyst_count": 16
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 7.91,
+          "analyst_count": 12
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 8.94,
+        "ttm_eps": 8.94
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "high_volatility"
+      ],
+      "source_note": "Macrotrends, MarketBeat consensus EPS data",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
+    },
+    "TSLA": {
+      "symbol": "TSLA",
+      "name": "Tesla, Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": -0.98
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 0.64
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 2.26
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 4.07
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 3.12
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 2.8
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 3.5,
+          "analyst_count": 40
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 4.8,
+          "analyst_count": 35
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 2.8,
+        "ttm_eps": 2.8
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "high_volatility"
+      ],
+      "source_note": "Tesla filings + consensus estimates",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "V": {
+      "symbol": "V",
+      "name": "Visa Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 5.32
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 5.04
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 5.63
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 7.38
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 8.28
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 8.95
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 9.8,
+          "analyst_count": 32
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 10.9,
+          "analyst_count": 30
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 8.95,
+        "ttm_eps": 8.95
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [],
+      "source_note": "Visa filings + consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "WMT": {
+      "symbol": "WMT",
+      "name": "Walmart Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 4.75
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": 5.19
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 4.75
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 6.29
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 6.29
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 6.8
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 7.4,
+          "analyst_count": 28
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 8.0,
+          "analyst_count": 26
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 6.8,
+        "ttm_eps": 6.8
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [],
+      "source_note": "Walmart filings + analyst consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
+    },
+    "XOM": {
+      "symbol": "XOM",
+      "name": "Exxon Mobil Corporation",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 3.36
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": -5.25
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": 5.39
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 13.26
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 9.12
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 8.5
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 8.0,
+          "analyst_count": 28
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 7.8,
+          "analyst_count": 25
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": null,
+          "analyst_count": null
+        }
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 8.5,
+        "ttm_eps": 8.5
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 2,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "history_years_strict": 6
+      },
+      "quality_flag": [
+        "cyclical",
+        "high_volatility"
+      ],
+      "source_note": "Exxon filings + consensus",
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 6,
+        "valid_forward_years": 2,
+        "valid_forward_year_list": [
+          2025,
+          2026
+        ],
+        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+      }
     }
-
+  },
+  "summary": {
+    "base_symbols": 10,
+    "governance_symbols": 37,
+    "added_symbols": 29,
+    "total_symbols": 39,
+    "added_symbol_list": [
+      "AAPL",
+      "ADBE",
+      "AMAT",
+      "ARM",
+      "ASML",
+      "COIN",
+      "COST",
+      "CRM",
+      "JNJ",
+      "JPM",
+      "KLAC",
+      "KO",
+      "LRCX",
+      "MRVL",
+      "MU",
+      "NOW",
+      "ON",
+      "PEP",
+      "PFE",
+      "PG",
+      "PLD",
+      "PLTR",
+      "QQQ",
+      "SNOW",
+      "TGT",
+      "TSLA",
+      "V",
+      "WMT",
+      "XOM"
+    ],
+    "skipped_existing_from_governance": [
+      "AMD",
+      "AMZN",
+      "AVGO",
+      "GOOG",
+      "META",
+      "MSFT",
+      "NVDA",
+      "TSM"
+    ]
   }
 }
