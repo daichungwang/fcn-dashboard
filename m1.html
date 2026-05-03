@@ -724,7 +724,7 @@
     <div class="hero">
       <div class="hero-top">
         <div>
-          <h1>M1 Review Console v2.5</h1>
+          <h1>M1 Review Console v2.5 Market Runtime Price Fix</h1>
           <div class="sub">
             <b>L1：</b>五大分類卡片，只先看 AI 推薦重點與關鍵數據，方便人工初篩。<br>
             <b>L2 / L3 / L4：</b>右側逐層展開，看 rule、看市場、做人為覆核與備註。<br>
@@ -829,7 +829,7 @@
         <div class="rule-wrap">
           <div class="formula-box">
             <b>2.1 M1 公式簡介</b><br>
-            M1_raw = 0.45 × C2P + 0.30 × CC + 0.25 × M7n<br>
+            M1_raw = 0.45 × C2P + 0.35 × CC + 0.2 × M7n<br>
             C2P = Capex to Profit<br>
             CC = Competitive Score（eps_engine.cc_score，由 build_m7_v2_scores.py 產出）<br>
             M7n = M7_v2 Score（data/m7_sandbox/m7_v2_scores.json）<br>
@@ -879,6 +879,7 @@
       fundamentalMap: {},
       competitiveCards: {},
       m7ScoreMap: {},
+      marketRuntimeMap: {},
       candidatePrepared: [],
       pool30Prepared: [],
       candidateScored: [],
@@ -977,43 +978,55 @@
       return state.m7ScoreMap?.[String(symbol || "").toUpperCase().trim()] || null;
     }
 
+    function normalizeMarketRuntime(raw) {
+      const source = raw?.rows && typeof raw.rows === "object" ? raw.rows : raw;
+      const out = {};
+      if (!source || typeof source !== "object") return out;
+      Object.entries(source).forEach(([k, v]) => {
+        if (!v || typeof v !== "object") return;
+        const sym = String(v.symbol || k || "").toUpperCase().trim();
+        if (sym) out[sym] = v;
+      });
+      return out;
+    }
+
+    function getMarketRuntime(symbol) {
+      return state.marketRuntimeMap?.[String(symbol || "").toUpperCase().trim()] || null;
+    }
+
+    function normalizeRuntimeDailyReturn(rt) {
+      if (!rt || typeof rt !== "object") return null;
+      // update_market_runtime.py stores ret_d1 as decimal daily return; prefer it for UI.
+      let v = n(rt.ret_d1, null);
+      if (v !== null) return v;
+
+      // Some legacy runtime files store ret_1d as percent points, others as decimal.
+      // Keep UI stable by converting large absolute values to decimal form.
+      v = n(rt.ret_1d, null);
+      if (v === null) return null;
+      return Math.abs(v) > 1 ? v / 100 : v;
+    }
+
     function epsCoverageFromEngine(eps) {
       if (!eps || typeof eps !== "object") {
-        return { grade: "D", historyCount: 0, forwardCount: 0, label: "Global / ETF / Proxy" };
+        return { grade: "D", historyCount: 0, forwardCount: 0 };
       }
       const historyCount = Number(eps.eps_regression_sample_count || 0);
       const forwardCount = [eps.eps_2025, eps.eps_2026, eps.eps_2027]
         .filter(v => Number.isFinite(Number(v))).length;
-
-      // Preferred: rank is produced by build_m7_v2_scores.py.
-      // Final definition:
-      // A = Full EPS, B = Partial EPS, C = Runtime Fundamental Fallback, D = Global / ETF / Proxy.
-      const rankFromEngine = String(eps.cc_rank || eps.eps_coverage_rank || "").toUpperCase();
-      let grade = ["A", "B", "C", "D"].includes(rankFromEngine) ? rankFromEngine : "D";
-
-      // Backward compatible fallback for older m7_v2_scores.json files.
-      if (!rankFromEngine) {
-        const source = String(eps.cc_source || eps.eps_status || "");
-        if (source === "runtime_fundamental_fallback") grade = "C";
-        else if (source === "actual_history_plus_eps_regression" && historyCount >= 3 && forwardCount >= 2) grade = "A";
-        else if (historyCount >= 1 || forwardCount >= 1 || source === "eps_regression_partial") grade = "B";
-        else grade = "D";
-      }
-
-      const labelMap = {
-        A: "Full EPS",
-        B: "Partial EPS",
-        C: "Runtime Fundamental",
-        D: "Global / ETF / Proxy"
-      };
-      return { grade, historyCount, forwardCount, label: labelMap[grade] || "Global / ETF / Proxy" };
+      let grade = "D";
+      if (historyCount >= 3 && forwardCount >= 2) grade = "A";
+      else if (historyCount >= 3 && forwardCount >= 1) grade = "B";
+      else if (historyCount >= 1 && forwardCount >= 1) grade = "C";
+      else grade = "D";
+      return { grade, historyCount, forwardCount };
     }
 
     function computeNewM1(row) {
       const c2p = n(row.capex_score ?? row.breakdown?.capex_score, 5.999);
       const cc = n(row.competitive_score, 5.999);
       const m7n = n(row.m7_v2_score, n(row.breakdown?.m7_score, 5.999));
-      const raw = 0.45 * c2p + 0.30 * cc + 0.25 * m7n;
+      const raw = 0.45 * c2p + 0.35 * cc + 0.2 * m7n;
       return {
         raw_m1_score: +raw.toFixed(2),
         M1_score: +Math.max(0, Math.min(10, raw)).toFixed(2),
@@ -1031,18 +1044,7 @@
       const computed = rows.map(row => {
         const s = computeNewM1(row);
         return { ...row, ...s };
-      });
-
-      const maxRaw = Math.max(...computed.map(r => n(r.raw_m1_score, 0)));
-      computed.forEach(row => {
-        if (!Number.isFinite(row.raw_m1_score) || maxRaw <= 0) {
-          row.M1_score = 0;
-        } else {
-          row.M1_score = +(row.raw_m1_score / maxRaw * 10).toFixed(2);
-        }
-      });
-
-      computed.sort((a, b) => n(b.M1_score, -999) - n(a.M1_score, -999));
+      }).sort((a, b) => n(b.M1_score, -999) - n(a.M1_score, -999));
       computed.forEach((row, idx) => { row.rank = idx + 1; });
       return computed;
     }
@@ -1138,6 +1140,7 @@
         const event = calcEventProxy(row);
 
         const m7row = getM7Row(symbol);
+        const rt = getMarketRuntime(symbol);
         const eps = m7row?.eps_engine || {};
         const coverage = epsCoverageFromEngine(eps);
         const m7Returns = m7row?.feature_snapshot?.returns || {};
@@ -1157,19 +1160,8 @@
           quality_score: n(row.quality_score, null),
           competitive_score: n(eps.cc_score, null),
           competitive_raw_score: n(eps.cc_raw_score ?? eps.cc_score, null),
-          cc_source: eps.cc_source || eps.eps_status || null,
-          cc_confidence: eps.cc_confidence || eps.confidence || null,
-          cc_method: eps.cc_method || null,
-          runtime_cc_score: n(eps.runtime_cc_score, null),
-          runtime_cc_breakdown: eps.runtime_cc_breakdown || null,
-          runtime_fundamental_fields_used: eps.runtime_fundamental_fields_used ?? null,
-          runtime_fundamental_source: eps.runtime_fundamental_source || null,
           m7_v2_score: n(m7row?.m7_v2_score, null),
           eps_coverage_grade: coverage.grade,
-          eps_coverage_label: coverage.label,
-          cc_rank: coverage.grade,
-          cc_rank_label: eps.cc_rank_label || coverage.label,
-          cc_rank_detail: eps.cc_rank_detail || null,
           eps_history_count: coverage.historyCount,
           eps_forward_count: coverage.forwardCount,
           eps_future_profit_score: n(eps.future_profit_score, null),
@@ -1178,8 +1170,10 @@
           eps_quality_score: n(eps.quality_score ?? eps.quality, null),
           eps_future_growth_rate: n(eps.future_growth_rate, null),
           eps_warnings: Array.isArray(eps.warnings) ? eps.warnings : [],
-          price_now: n(m7row?.regression_actual_price_now ?? m7row?.price_now ?? row.price_now ?? row.price, null),
-          ret_1d: n(m7Returns["1d"] ?? m7row?.ret_1d ?? row.ret_1d, row.ret_1d),
+          // UI market snapshot must use data/market_runtime.json as source of truth.
+          // m7_v2_scores may contain regression_actual_price_now / annual bucket prices, which are not today's quote.
+          price_now: n(rt?.price_now ?? m7row?.price_now ?? row.price_now ?? row.price ?? m7row?.regression_actual_price_now, null),
+          ret_1d: n(normalizeRuntimeDailyReturn(rt) ?? m7Returns["1d"] ?? m7row?.ret_d1 ?? m7row?.ret_1d ?? row.ret_1d, row.ret_1d),
           capex_ratio_prev_y: n(f.capex_ratio_prev_y, null),
           revenue_growth_q: n(f.revenue_growth_q, null),
           operating_income_growth_q: n(f.operating_income_growth_q, null),
@@ -1460,10 +1454,10 @@
       const pct = (v) => total ? `${fmt((v / total) * 100, 1)}%` : "0.0%";
       const cards = [
         { label: "原始總池", value: `${total}`, sub: "data/m7_sandbox/m7_v2_scores.json", cls: "" },
-        { label: "Rank A", value: `${counts.A} / ${total}`, sub: `${pct(counts.A)} ｜ Full EPS：history + forward + regression`, cls: "eps-rank-a" },
-        { label: "Rank B", value: `${counts.B} / ${total}`, sub: `${pct(counts.B)} ｜ Partial EPS：資料部分完整`, cls: "eps-rank-b" },
-        { label: "Rank C", value: `${counts.C} / ${total}`, sub: `${pct(counts.C)} ｜ Runtime：market_runtime fundamentals`, cls: "eps-rank-c" },
-        { label: "Rank D", value: `${counts.D} / ${total}`, sub: `${pct(counts.D)} ｜ Global / ETF / Proxy / neutral fallback`, cls: "eps-rank-d" },
+        { label: "Rank A", value: `${counts.A} / ${total}`, sub: `${pct(counts.A)} ｜ history EPS ≥3 + forward EPS ≥2`, cls: "eps-rank-a" },
+        { label: "Rank B", value: `${counts.B} / ${total}`, sub: `${pct(counts.B)} ｜ history EPS ≥3 + forward EPS ≥1`, cls: "eps-rank-b" },
+        { label: "Rank C", value: `${counts.C} / ${total}`, sub: `${pct(counts.C)} ｜ history EPS ≥1 + forward EPS ≥1`, cls: "eps-rank-c" },
+        { label: "Rank D", value: `${counts.D} / ${total}`, sub: `${pct(counts.D)} ｜ 無 company EPS history / ETF / fallback`, cls: "eps-rank-d" },
       ];
       const box = $("epsCoverageGrid");
       if (!box) return;
@@ -2110,13 +2104,10 @@ timing 判斷
               <div class="detail-card"><div class="k">Raw M1</div><div class="v">${fmt(row.raw_m1_score)}</div></div>
               <div class="detail-card"><div class="k">C2P｜Capex_to_Profit (45%)</div><div class="v" style="${scoreColor(row.breakdown?.capex_score)}">${fmt(row.breakdown?.capex_score)}</div></div>
               <div class="detail-card"><div class="k">CC｜Competitive Score (30%)</div><div class="v" style="${scoreColor(row.breakdown?.competitive_score)}">${fmt(row.breakdown?.competitive_score)}</div></div>
-              <div class="detail-card"><div class="k">CC Source / Confidence</div><div class="v">${escapeHtml(row.cc_source || "-")} / ${escapeHtml(row.cc_confidence || "-")}</div></div>
               <div class="detail-card"><div class="k">M7n｜M7_v2 Score (25%)</div><div class="v" style="${scoreColor(row.breakdown?.m7_v2_score)}">${fmt(row.breakdown?.m7_v2_score)}</div></div>
-              <div class="detail-card"><div class="k">Raw M1 → Norm M1</div><div class="v">${fmt(row.raw_m1_score)} → ${fmt(row.M1_score)}</div></div>
-              <div class="detail-card"><div class="k">CC Rank / EPS Coverage</div><div class="v">Rank ${escapeHtml(row.eps_coverage_grade || "D")} ｜ ${escapeHtml(row.cc_rank_label || row.eps_coverage_label || "-")}<br>H${row.eps_history_count ?? 0} / F${row.eps_forward_count ?? 0}</div></div>
+              <div class="detail-card"><div class="k">EPS Coverage</div><div class="v">Rank ${escapeHtml(row.eps_coverage_grade || "D")} ｜ H${row.eps_history_count ?? 0} / F${row.eps_forward_count ?? 0}</div></div>
               <div class="detail-card"><div class="k">Forward Growth / Profit</div><div class="v">${fmt(row.eps_future_growth_score)} / ${fmt(row.eps_future_profit_score)}</div></div>
               <div class="detail-card"><div class="k">EPS Consistency / Quality</div><div class="v">${fmt(row.eps_consistency_score)} / ${fmt(row.eps_quality_score)}</div></div>
-              <div class="detail-card"><div class="k">Runtime CC Breakdown</div><div class="v">${row.runtime_cc_breakdown ? `Profit ${fmt(row.runtime_cc_breakdown.profitability)} ｜ Value ${fmt(row.runtime_cc_breakdown.forward_eps_value)} ｜ Growth ${fmt(row.runtime_cc_breakdown.growth)} ｜ CF ${fmt(row.runtime_cc_breakdown.cashflow)} ｜ Debt ${fmt(row.runtime_cc_breakdown.balance_sheet)}` : "-"}</div></div>
               <div class="detail-card"><div class="k">正式規則</div><div class="v">strong ${fmt(cfg.strong)} ｜ pass ${fmt(cfg.pass)} ｜ watch ${fmt(cfg.watch)}</div></div>
               <div class="detail-card"><div class="k">vs p50</div><div class="v">${Number.isFinite(row.M1_score) && Number.isFinite(cfg.pass) ? `${row.M1_score - cfg.pass >= 0 ? "+" : ""}${fmt(row.M1_score - cfg.pass)}` : "-"}</div></div>
               <div class="detail-card"><div class="k">p75 對比</div><div class="v">${Number.isFinite(row.M1_score) && Number.isFinite(cfg.strong) && cfg.strong !== 0 ? `${((((row.M1_score / cfg.strong) - 1) * 100) >= 0 ? "+" : "") + fmt((((row.M1_score / cfg.strong) - 1) * 100))}%` : "-"}</div></div>
@@ -2399,13 +2390,14 @@ function exportPool30() {
       try {
         state.reviewMap = loadReviewMap();
 
-        const [universeRaw, candidateRaw, pool30Raw, fundamentalMap, competitiveCards, m7ScoresRaw] = await Promise.all([
+        const [universeRaw, candidateRaw, pool30Raw, fundamentalMap, competitiveCards, m7ScoresRaw, marketRuntimeRaw] = await Promise.all([
           fetchJSON("data/m1/universe_150.json").catch(() => []),
           fetchJSON("data/m1/m1_candidate_80.json"),
           fetchJSON("data/pool30.json"),
           fetchJSON("data/m1/m1_fundamental_map.json"),
           fetchJSON("data/m1/competitive_cards.json").catch(() => ({})),
-          fetchJSON("data/m7_sandbox/m7_v2_scores.json").catch(() => ({ rows: [] }))
+          fetchJSON("data/m7_sandbox/m7_v2_scores.json").catch(() => ({ rows: [] })),
+          fetchJSON("data/market_runtime.json").catch(() => ({}))
         ]);
 
         state.universeRaw = Array.isArray(universeRaw) ? universeRaw : [];
@@ -2414,6 +2406,7 @@ function exportPool30() {
         state.fundamentalMap = fundamentalMap || {};
         state.competitiveCards = competitiveCards || {};
         state.m7ScoreMap = normalizeM7Scores(m7ScoresRaw);
+        state.marketRuntimeMap = normalizeMarketRuntime(marketRuntimeRaw);
 
         state.candidatePrepared = prepareRows(state.candidateRaw, state.fundamentalMap);
 
