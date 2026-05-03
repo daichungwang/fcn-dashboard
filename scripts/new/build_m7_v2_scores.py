@@ -1436,6 +1436,24 @@ def compute_regression_valuation_band(feature: dict[str, Any], structure: dict[s
     # avoid pathological PE anchors from extreme fits; still keep source/quality visible
     fair_pe_capped = clamp(safe_num(fair_pe, current_forward_pe), 1.0, 120.0)
 
+    regression_price_models_now = {}
+    for model_name, model_payload in models.items():
+        fitted_log_values = model_payload.get("fitted", []) if isinstance(model_payload, dict) else []
+        model_price_now = None
+        if fitted_log_values:
+            try:
+                model_price_now = math.exp(fitted_log_values[-1])
+            except OverflowError:
+                model_price_now = None
+        regression_price_models_now[model_name] = {
+            "fair_price_now": round2(model_price_now) if model_price_now is not None else None,
+            "actual_price_now": round2(current_price) if current_price is not None else None,
+            "gap_to_actual": round(safe_num((model_price_now / current_price - 1.0), 0.0), 4) if model_price_now is not None and current_price and current_price > 0 else None,
+            "r2": round2(model_payload.get("r2")) if isinstance(model_payload, dict) and model_payload.get("r2") is not None else None,
+            "coeffs": model_payload.get("coeffs") if isinstance(model_payload, dict) else None,
+            "is_preferred": model_name == preferred,
+        }
+
     return {
         "individual_fair_pe": round2(fair_pe_capped),
         "regression_fair_pe": round2(fair_pe_capped),
@@ -1453,6 +1471,11 @@ def compute_regression_valuation_band(feature: dict[str, Any], structure: dict[s
         "valuation_heat_brake_rule": heat_rule,
         "regression_fair_price_now": round2(current_fair_price) if current_fair_price is not None else None,
         "regression_actual_price_now": round2(current_price) if current_price is not None else None,
+        "regression_price_models_now": regression_price_models_now,
+        "m7_price_models_now": regression_price_models_now,
+        "m7_linear_fair_price": regression_price_models_now.get("linear", {}).get("fair_price_now"),
+        "m7_quadratic_fair_price": regression_price_models_now.get("quadratic", {}).get("fair_price_now"),
+        "m7_logarithmic_fair_price": regression_price_models_now.get("logarithmic", {}).get("fair_price_now"),
         "regression_valuation_model": preferred,
         "regression_valuation_r2": round2(models[preferred].get("r2")) if models[preferred].get("r2") is not None else None,
         "regression_valuation_history_weeks": history_weeks,
@@ -1930,6 +1953,84 @@ def _predict_price_with_best_model(price_model: dict[str, Any], year: int) -> fl
         return clamp(math.exp(pred_log), 0.01, 100000.0)
     except OverflowError:
         return None
+
+
+def _predict_price_with_named_model(price_model: dict[str, Any], model_name: str, year: int) -> float | None:
+    """Predict price from a specific annual price regression model, not only the best model."""
+    model = (price_model.get("models") or {}).get(model_name, {})
+    coeffs = model.get("coeffs")
+    base_year = safe_num(price_model.get("base_year"), None)
+    if coeffs is None or base_year is None:
+        return None
+
+    t = float(int(year) - int(base_year))
+    if model_name == "price_linear_time":
+        row = [1.0, t]
+    elif model_name == "price_quadratic_time":
+        row = [1.0, t, t * t]
+    elif model_name == "price_log_time":
+        lt = _safe_log_positive(t + 1.0)
+        if lt is None:
+            return None
+        row = [1.0, lt]
+    else:
+        return None
+
+    pred_log = _predict_from_coeffs(coeffs, row)
+    if pred_log is None:
+        return None
+    try:
+        return clamp(math.exp(pred_log), 0.01, 100000.0)
+    except OverflowError:
+        return None
+
+
+def _price_model_forecast_all(price_model: dict[str, Any], years: list[int] | None = None) -> dict[str, Any]:
+    """
+    Structured annual price regression output for M6.
+
+    This is the formal producer for:
+      - M1/M6 annual price model linear / quadratic / log
+      - individual model R²
+      - model-specific forecast prices
+
+    M6 should read this output instead of inventing model prices.
+    """
+    if years is None:
+        years = [2025, 2026, 2027]
+
+    name_map = {
+        "price_linear_time": "linear",
+        "price_quadratic_time": "quadratic",
+        "price_log_time": "logarithmic",
+    }
+
+    models_out: dict[str, Any] = {}
+    models = price_model.get("models") or {}
+    for raw_name, short_name in name_map.items():
+        model = models.get(raw_name, {}) if isinstance(models, dict) else {}
+        prices = {
+            str(y): round2(_predict_price_with_named_model(price_model, raw_name, y))
+            if _predict_price_with_named_model(price_model, raw_name, y) is not None
+            else None
+            for y in years
+        }
+        models_out[short_name] = {
+            "model_name": raw_name,
+            "r2": round2(model.get("r2")) if model.get("r2") is not None else None,
+            "coeffs": model.get("coeffs"),
+            "prices": prices,
+            "available": any(v is not None for v in prices.values()),
+        }
+
+    return {
+        "best_model": price_model.get("best_model"),
+        "best_r2": round2(price_model.get("best_r2")) if price_model.get("best_r2") is not None else None,
+        "base_year": price_model.get("base_year"),
+        "sample_count": price_model.get("sample_count"),
+        "models": models_out,
+        "purpose": "annual_price_regression_outputs_for_m6_forecast_debug",
+    }
 
 
 def _linear_fit_predict(y_values: list[float], future_index: int) -> tuple[float | None, float | None]:
@@ -3102,6 +3203,11 @@ def main() -> int:
                 "historical_p75_multiple": regression_valuation.get("historical_p75_multiple"),
                 "regression_fair_price_now": regression_valuation.get("regression_fair_price_now"),
                 "regression_actual_price_now": regression_valuation.get("regression_actual_price_now"),
+                "regression_price_models_now": regression_valuation.get("regression_price_models_now"),
+                "m7_price_models_now": regression_valuation.get("m7_price_models_now"),
+                "m7_linear_fair_price": regression_valuation.get("m7_linear_fair_price"),
+                "m7_quadratic_fair_price": regression_valuation.get("m7_quadratic_fair_price"),
+                "m7_logarithmic_fair_price": regression_valuation.get("m7_logarithmic_fair_price"),
                 "regression_valuation_model": regression_valuation.get("regression_valuation_model"),
                 "regression_valuation_r2": regression_valuation.get("regression_valuation_r2"),
                 "regression_valuation_history_weeks": regression_valuation.get("regression_valuation_history_weeks"),
@@ -3251,6 +3357,7 @@ def main() -> int:
             "generated_at": now_iso(),
             "scope": {
                 "scenarios": ["M7_RAW", "M7_V2", "M7_EFFECTIVE", "M7_FINAL"],
+                "price_model_outputs": ["regression_price_models_now", "m7_price_models_now", "eps_engine.price_model_forecast_all"],
                 "symbol_count": len(rows_out),
                 "global_eps_model_sample_count": global_eps_model.get("global_sample_count"),
             },
