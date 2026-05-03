@@ -620,6 +620,162 @@
       padding:8px 0;
     }
 
+    .forecast-debug-panel{
+      background:linear-gradient(180deg,#f8fbff 0%, #ffffff 100%);
+      border:1px solid #d7e7fb;
+      border-radius:18px;
+      padding:14px;
+      margin-bottom:14px;
+    }
+
+    .forecast-debug-head{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      margin-bottom:12px;
+    }
+
+    .forecast-debug-title{
+      font-size:18px;
+      font-weight:900;
+      color:#0f172a;
+    }
+
+    .forecast-debug-sub{
+      font-size:12px;
+      color:#64748b;
+      line-height:1.55;
+      margin-top:4px;
+    }
+
+    .forecast-result-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-bottom:12px;
+    }
+
+    .forecast-result-card{
+      background:#ffffff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:12px;
+    }
+
+    .forecast-result-card .result-title{
+      font-size:13px;
+      font-weight:900;
+      color:#334155;
+      margin-bottom:8px;
+    }
+
+    .forecast-result-card .result-main{
+      font-size:24px;
+      font-weight:900;
+      color:#0f172a;
+      line-height:1.15;
+    }
+
+    .forecast-result-card .result-sub{
+      font-size:12px;
+      color:#64748b;
+      line-height:1.55;
+      margin-top:6px;
+    }
+
+    .forecast-model-table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:12px;
+      margin-top:10px;
+    }
+
+    .forecast-model-table th,
+    .forecast-model-table td{
+      border-bottom:1px solid #eef2f7;
+      padding:8px 6px;
+      text-align:left;
+      vertical-align:top;
+    }
+
+    .forecast-model-table th{
+      background:#f8fbff;
+      color:#475569;
+      font-weight:900;
+    }
+
+    .forecast-model-table .m1-row{
+      background:#eff6ff;
+    }
+
+    .forecast-model-table .m7-row{
+      background:#f0fdf4;
+    }
+
+    .forecast-bar{
+      position:relative;
+      height:88px;
+      border-radius:16px;
+      border:1px solid #dbe7f0;
+      background:linear-gradient(180deg,#ffffff 0%, #f8fbff 100%);
+      margin:12px 0;
+      overflow:hidden;
+    }
+
+    .forecast-bar-line{
+      position:absolute;
+      left:18px;
+      right:18px;
+      top:44px;
+      height:6px;
+      border-radius:999px;
+      background:#dbeafe;
+    }
+
+    .forecast-marker{
+      position:absolute;
+      top:0;
+      width:1px;
+      height:88px;
+      background:#94a3b8;
+    }
+
+    .forecast-marker .marker-label{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      white-space:nowrap;
+      font-size:10px;
+      font-weight:900;
+      padding:2px 5px;
+      border-radius:999px;
+      border:1px solid #dbe7f0;
+      background:#ffffff;
+    }
+
+    .forecast-marker.m1 .marker-label{top:8px;color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+    .forecast-marker.m7 .marker-label{bottom:8px;color:#166534;background:#f0fdf4;border-color:#bbf7d0}
+    .forecast-marker.today{
+      width:3px;
+      background:#111827;
+    }
+    .forecast-marker.today .marker-label{
+      top:33px;
+      color:#111827;
+      background:#ffffff;
+      border-color:#111827;
+    }
+
+    .forecast-small-note{
+      font-size:12px;
+      color:#64748b;
+      line-height:1.6;
+      margin-top:8px;
+      white-space:pre-wrap;
+    }
+
+
     @media (max-width: 980px){
       .toolbar{grid-template-columns:1fr}
       .summary-card,.list-panel,.detail-panel{grid-column:1/-1}
@@ -705,6 +861,7 @@
     let selectedSymbol = "";
     let sellRecordsRaw = [];
     let sellSummary = [];
+    let priceForecastDebug = null;
 
     async function loadJson(url){
       const res = await fetch(url, { cache: "no-store" });
@@ -1200,6 +1357,171 @@ ${safeText(stock.final_note || "-")}
       `;
     }
 
+    function fmtPct(value, digits = 2){
+      const n = Number(value);
+      if (!Number.isFinite(n)) return "-";
+      return `${(n * 100).toFixed(digits)}%`;
+    }
+
+    function getForecastDebugForSymbol(symbol){
+      const rows = Array.isArray(priceForecastDebug?.rows) ? priceForecastDebug.rows : [];
+      return rows.find(x => x.symbol === symbol) || null;
+    }
+
+    function renderForecastBar(row){
+      if (!row || !row.available) {
+        return `<div class="empty">沒有可畫的 forecast debug 資料。</div>`;
+      }
+
+      const models = Array.isArray(row.model_points) ? row.model_points.filter(x => x.available && Number.isFinite(Number(x.fair_price))) : [];
+      const prices = [
+        Number(row.price_now),
+        ...models.map(x => Number(x.fair_price))
+      ].filter(Number.isFinite);
+
+      if (!prices.length) {
+        return `<div class="empty">沒有 six-model fair price 資料。</div>`;
+      }
+
+      const min = Math.min(...prices) * 0.95;
+      const max = Math.max(...prices) * 1.05;
+      const pos = (v) => {
+        const n = Number(v);
+        if (!Number.isFinite(n) || max === min) return 50;
+        return 18 + ((n - min) / (max - min)) * 64;
+      };
+
+      return `
+        <div class="forecast-bar">
+          <div class="forecast-bar-line"></div>
+          ${models.map(m => `
+            <div class="forecast-marker ${m.module === "M1" ? "m1" : "m7"}" style="left:${pos(m.fair_price)}%;">
+              <div class="marker-label">${safeText(m.label)}</div>
+            </div>
+          `).join("")}
+          <div class="forecast-marker today" style="left:${pos(row.price_now)}%;">
+            <div class="marker-label">TODAY</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderForecastDebugPanel(stock){
+      const row = getForecastDebugForSymbol(stock.symbol);
+      if (!row) {
+        return `
+          <div class="forecast-debug-panel">
+            <div class="forecast-debug-title">M6 Price Forecast Debug</div>
+            <div class="empty">尚未找到 ${safeText(stock.symbol)} 的 data/m6/price_forecast_debug.json 資料。</div>
+          </div>
+        `;
+      }
+
+      if (!row.available) {
+        return `
+          <div class="forecast-debug-panel">
+            <div class="forecast-debug-title">M6 Price Forecast Debug</div>
+            <div class="empty">${safeText(stock.symbol)}：${safeText(row.missing_reason || "missing data")}</div>
+          </div>
+        `;
+      }
+
+      const resultA = row.result_a_direct_adjusted_price_avg || {};
+      const resultB = row.result_b_return_based_formula || {};
+      const forecast = resultB.forecast || {};
+      const models = Array.isArray(row.model_points) ? row.model_points : [];
+      const debugStats = row.debug_stats || {};
+      const warnings = Array.isArray(row.warnings) ? row.warnings : [];
+
+      return `
+        <div class="forecast-debug-panel">
+          <div class="forecast-debug-head">
+            <div>
+              <div class="forecast-debug-title">M6 Price Forecast Debug / 六模型檢查版</div>
+              <div class="forecast-debug-sub">
+                先輸出大資料做檢查：A = 6價格 × 6調整因子；B = return-based 公式。確認合理後再回歸 M6/MM。
+              </div>
+            </div>
+            <span class="badge blue">DEBUG</span>
+          </div>
+
+          ${renderForecastBar(row)}
+
+          <div class="forecast-result-grid">
+            <div class="forecast-result-card">
+              <div class="result-title">Result A｜直接調整價格平均</div>
+              <div class="result-main">$${fmtNum(resultA.price)}</div>
+              <div class="result-sub">
+                Return vs Today：${fmtPct(resultA.return_vs_today)}<br>
+                公式：avg(fair_price_i × abs(today / fair_price_i))
+              </div>
+            </div>
+
+            <div class="forecast-result-card">
+              <div class="result-title">Result B｜Return-based 公式</div>
+              <div class="result-main">$${fmtNum(resultB.fair_implied_price)}</div>
+              <div class="result-sub">
+                Fair Expected Return：${fmtPct(resultB.fair_expected_return)}<br>
+                公式：Σ(gap_i × confidence_weight_i) / Σ(weight_i)
+              </div>
+            </div>
+          </div>
+
+          <div class="forecast-result-grid">
+            <div class="forecast-result-card">
+              <div class="result-title">明日 / 一周 / 一個月</div>
+              <div class="result-sub">
+                明日：${fmtPct(forecast["1d"]?.forecast_return)} → $${fmtNum(forecast["1d"]?.forecast_price)}<br>
+                一周：${fmtPct(forecast["1w"]?.forecast_return)} → $${fmtNum(forecast["1w"]?.forecast_price)}<br>
+                一個月：${fmtPct(forecast["1m"]?.forecast_return)} → $${fmtNum(forecast["1m"]?.forecast_price)}
+              </div>
+            </div>
+            <div class="forecast-result-card">
+              <div class="result-title">Debug Stats</div>
+              <div class="result-sub">
+                Models：${debugStats.available_model_count ?? "-"} available / ${debugStats.missing_model_count ?? "-"} missing<br>
+                Fair Band：$${fmtNum(debugStats.fair_price_low)} / $${fmtNum(debugStats.fair_price_mid_simple)} / $${fmtNum(debugStats.fair_price_high)}<br>
+                Weight Sum：${fmtNum(debugStats.confidence_weight_sum, 4)}
+              </div>
+            </div>
+          </div>
+
+          <table class="forecast-model-table">
+            <thead>
+              <tr>
+                <th>Model</th>
+                <th>Fair Price</th>
+                <th>調整因子 abs(today/model)</th>
+                <th>調整後價格 A</th>
+                <th>Gap Return</th>
+                <th>R²</th>
+                <th>Confidence Weight</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${models.map(m => `
+                <tr class="${m.module === "M1" ? "m1-row" : "m7-row"}">
+                  <td><b>${safeText(m.label)}</b><br><span class="small">${safeText(m.module)} / ${safeText(m.model)}</span></td>
+                  <td>$${fmtNum(m.fair_price)}</td>
+                  <td>${fmtNum(m.user_adjustment_factor_abs_today_over_model, 4)}</td>
+                  <td>$${fmtNum(m.adjusted_price_user_formula)}</td>
+                  <td>${fmtPct(m.gap_return)}</td>
+                  <td>${fmtNum(m.model_r2, 4)}</td>
+                  <td>${fmtNum(m.confidence_weight, 4)}</td>
+                  <td>${m.available ? "OK" : safeText(m.missing_reason || "missing")}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+
+          <div class="forecast-small-note">
+Warnings：${warnings.length ? warnings.join(" / ") : "none"}
+          </div>
+        </div>
+      `;
+    }
+
     function renderDetail(stock){
       const panel = document.getElementById("detailPanel");
 
@@ -1320,6 +1642,7 @@ ${safeText(stock.final_note || "-")}
         ${renderSectionBox("sec_trading", "市場評論 / 技術提醒", renderTradingPanel(marketComment), true)}
         ${renderSectionBox("sec_m3", "M3 Market Comment", renderM3MarketCommentBlock(stock), true)}
         ${renderSectionBox("sec_chart", "價格區間圖", chartHtml, true)}
+        ${renderSectionBox("sec_forecast_debug", "M6 Price Forecast Debug / 六模型推估檢查", renderForecastDebugPanel(stock), false)}
         ${renderSectionBox("sec_positions", "多部位展開", detailPositionsHtml, true)}
         ${(stock.exposure_alert && stock.exposure_alert.text) ? renderSectionBox("sec_exposure", "曝險警示", `
           <div class="mini warn-card">
@@ -1375,6 +1698,8 @@ ${safeText(stock.final_note || "-")}
 
         sellRecordsRaw = await loadJson("./data/m6/sell_records.json").catch(() => []);
         sellSummary = buildSellSummary(Array.isArray(sellRecordsRaw) ? sellRecordsRaw : []);
+
+        priceForecastDebug = await loadJson("./data/m6/price_forecast_debug.json").catch(() => null);
 
         window.vm = vm;
         window.stocks = vm.aggregates;
