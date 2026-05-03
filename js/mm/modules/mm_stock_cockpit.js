@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MM × M1 Integration — C1 Single Stock Cockpit / Decision Engine + Chart + Runtime Normalization + Profile Adapter + Right Position Forecast Layout
+   MM × M1 Integration — C1 Single Stock Cockpit / Decision Engine + Chart + Runtime Normalization + Profile Adapter + Right Position Forecast Layout + M1 Scores JSON
    File: js/mm/modules/mm_stock_cockpit.js
 
    Goal:
@@ -278,6 +278,7 @@
       data.pool30,
       data.m1Universe,
       data.m1Candidate,
+      data.m1Scores,
       data.m1Competitive,
       data.m7Scores,
       data.m2Exposure,
@@ -312,43 +313,171 @@
   function getM1(symbol) {
     const sym = normalizeSymbol(symbol);
 
+    // Priority source:
+    // data/m1/m1_scores.json is the official normalized M1 output.
+    // It is produced by scripts/build_m1_scores.py and aligned with m1_test.html:
+    // M1_raw = 0.45*C2P + 0.30*CC + 0.25*M7n
+    // M1_score = M1_raw / max(M1_raw) * 10
+    const m1ScoreRow = bySymbol(STATE.data.m1Scores, sym) || {};
+
     const comp = bySymbol(STATE.data.m1Competitive, sym) || {};
     const cand = bySymbol(STATE.data.m1Candidate, sym) || {};
     const uni = bySymbol(STATE.data.m1Universe, sym) || {};
     const pool = bySymbol(STATE.data.pool30, sym) || {};
 
-    const inCandidate = !!Object.keys(cand).length;
+    const inCandidate = !!Object.keys(cand).length || !!Object.keys(m1ScoreRow).length;
     const inUniverse = !!Object.keys(uni).length;
-    const inPool30 = !!Object.keys(pool).length;
+    const inPool30 = !!Object.keys(pool).length || Boolean(m1ScoreRow.in_pool30);
 
-    return {
+    const merged = {
       ...uni,
       ...cand,
       ...comp,
       ...pool,
+      ...m1ScoreRow
+    };
+
+    return {
+      ...merged,
       symbol: sym,
       in_universe: inUniverse,
       in_candidate: inCandidate,
       in_pool30: inPool30,
+
+      // Official M1 score first.
       m1_score: firstNum(
-        pool.m1_score, comp.m1_score, cand.m1_score, uni.m1_score,
-        pool.m1_competitive_score, comp.m1_competitive_score, cand.m1_competitive_score, uni.m1_competitive_score,
-        pool.m1_final_score, comp.m1_final_score, cand.m1_final_score, uni.m1_final_score,
-        pool.final_score, comp.final_score, cand.final_score, uni.final_score,
-        pool.total_score, comp.total_score, cand.total_score, uni.total_score,
-        pool.competitive_score, comp.competitive_score, cand.competitive_score, uni.competitive_score,
-        pool.score, comp.score, cand.score, uni.score
+        m1ScoreRow.M1_score,
+        m1ScoreRow.m1_score,
+        m1ScoreRow.score,
+
+        pool.M1_score,
+        comp.M1_score,
+        cand.M1_score,
+        uni.M1_score,
+
+        pool.m1_score,
+        comp.m1_score,
+        cand.m1_score,
+        uni.m1_score,
+
+        pool.m1_competitive_score,
+        comp.m1_competitive_score,
+        cand.m1_competitive_score,
+        uni.m1_competitive_score,
+
+        pool.m1_final_score,
+        comp.m1_final_score,
+        cand.m1_final_score,
+        uni.m1_final_score,
+
+        pool.final_score,
+        comp.final_score,
+        cand.final_score,
+        uni.final_score,
+
+        pool.total_score,
+        comp.total_score,
+        cand.total_score,
+        uni.total_score,
+
+        pool.competitive_score,
+        comp.competitive_score,
+        cand.competitive_score,
+        uni.competitive_score,
+
+        pool.score,
+        comp.score,
+        cand.score,
+        uni.score
       ),
-      m1_source: Object.keys(pool).length ? "pool30" :
+
+      raw_m1_score: firstNum(
+        m1ScoreRow.raw_m1_score,
+        m1ScoreRow.M1_raw,
+        m1ScoreRow.m1_raw,
+        pool.raw_m1_score,
+        comp.raw_m1_score,
+        cand.raw_m1_score,
+        uni.raw_m1_score
+      ),
+
+      m1_source: Object.keys(m1ScoreRow).length ? "m1_scores" :
+                 Object.keys(pool).length ? "pool30" :
                  Object.keys(comp).length ? "m1_competitive" :
                  Object.keys(cand).length ? "candidate" :
                  Object.keys(uni).length ? "universe" : "missing",
-      category: pool.category || comp.category || cand.category || uni.category || "",
-      category_sub: pool.category_sub || comp.category_sub || cand.category_sub || uni.category_sub || "",
-      filter_result: pool.filter_result || comp.filter_result || cand.filter_result || uni.filter_result || "",
+
+      category:
+        m1ScoreRow.category ||
+        pool.category ||
+        comp.category ||
+        cand.category ||
+        uni.category ||
+        "",
+
+      category_sub:
+        m1ScoreRow.category_sub ||
+        m1ScoreRow.subsector ||
+        pool.category_sub ||
+        comp.category_sub ||
+        cand.category_sub ||
+        uni.category_sub ||
+        pool.subsector ||
+        comp.subsector ||
+        cand.subsector ||
+        uni.subsector ||
+        "",
+
+      filter_result:
+        m1ScoreRow.filter_result ||
+        pool.filter_result ||
+        comp.filter_result ||
+        cand.filter_result ||
+        uni.filter_result ||
+        "",
+
+      rank: firstNum(
+        m1ScoreRow.rank,
+        pool.rank,
+        comp.rank,
+        cand.rank,
+        uni.rank
+      ),
+
+      breakdown:
+        m1ScoreRow.breakdown ||
+        pool.breakdown ||
+        comp.breakdown ||
+        cand.breakdown ||
+        uni.breakdown ||
+        {},
+
       ai_recommend: Boolean(
-        pool.ai_recommend || comp.ai_recommend || cand.ai_recommend ||
-        String(pool.filter_result || comp.filter_result || cand.filter_result || "").toUpperCase().includes("AI")
+        m1ScoreRow.ai_recommend ||
+        pool.ai_recommend ||
+        comp.ai_recommend ||
+        cand.ai_recommend ||
+        String(
+          m1ScoreRow.filter_result ||
+          pool.filter_result ||
+          comp.filter_result ||
+          cand.filter_result ||
+          ""
+        ).toUpperCase().includes("STRONG") ||
+        String(
+          m1ScoreRow.filter_result ||
+          pool.filter_result ||
+          comp.filter_result ||
+          cand.filter_result ||
+          ""
+        ).toUpperCase().includes("PASS") ||
+        String(
+          m1ScoreRow.filter_result ||
+          pool.filter_result ||
+          comp.filter_result ||
+          cand.filter_result ||
+          ""
+        ).toUpperCase().includes("AI")
       )
     };
   }
@@ -1133,7 +1262,7 @@
   function renderScoreGrid(d) {
     return `
       <div class="score-grid">
-        <div class="score-box"><div class="k">M1 Score</div><div class="v">${fmtNum(d.m1Score, 2)}</div><div class="d">${d.m1.in_pool30 ? "Pool30" : d.m1.in_candidate ? "Candidate" : d.m1.in_universe ? "Universe" : "待入 Universe"}</div></div>
+        <div class="score-box"><div class="k">M1 Score</div><div class="v">${fmtNum(d.m1Score, 2)}</div><div class="d">${d.m1.in_pool30 ? "Pool30" : d.m1.in_candidate ? "Candidate" : d.m1.in_universe ? "Universe" : "待入 Universe"} ｜ ${esc(d.m1.m1_source || "missing")}</div></div>
         <div class="score-box"><div class="k">M7 Score</div><div class="v">${fmtNum(d.m7Score, 2)}</div><div class="d">valuation + trend + structure</div></div>
         <div class="score-box"><div class="k">Valuation</div><div class="v">${fmtNum(d.valuationScore, 2)}</div><div class="d">gap：${d.valuationGapPct === null ? "--" : fmtPct(d.valuationGapPct)}</div></div>
         <div class="score-box"><div class="k">Trend</div><div class="v">${fmtNum(d.trendScore, 2)}</div><div class="d">R²：${fmtNum(d.r2, 2)}</div></div>
@@ -1245,7 +1374,7 @@
       <details open>
         <summary>L4 M1 Score + CC Source / 股票品質與資料可信度</summary>
         <div class="mm-detail-grid">
-          <div class="mini-kpi"><div class="k">M1 Score</div><div class="v">${fmtNum(d.m1Score, 2)}</div><div class="d">Source：${esc(d.m1.m1_source || "missing")}</div></div>
+          <div class="mini-kpi"><div class="k">M1 Score</div><div class="v">${fmtNum(d.m1Score, 2)}</div><div class="d">Source：${esc(d.m1.m1_source || "missing")} ｜ Rank：${d.m1.rank ?? "--"} ｜ Raw：${fmtNum(d.m1.raw_m1_score, 2)}</div></div>
           <div class="mini-kpi"><div class="k">Pool Status</div><div class="v">${esc(d.m1.in_pool30 ? "Pool30" : d.m1.in_candidate ? "Candidate" : d.m1.in_universe ? "Universe" : "Not in Universe")}</div><div class="d">AI → Candidate → Pool30 funnel</div></div>
           <div class="mini-kpi"><div class="k">Category</div><div class="v">${esc(firstVal(d.m1.category, "--"))}</div><div class="d">${esc(firstVal(d.m1.category_sub, "--"))}</div></div>
           <div class="mini-kpi"><div class="k">CC Source</div><div class="v">${esc(d.cc.text)}</div><div class="d">${esc(d.cc.note)}</div></div>
