@@ -29,6 +29,7 @@
     pool30: "/fcn-dashboard/data/pool30.json",
     m1Universe: "/fcn-dashboard/data/m1/universe_150.json",
     m1Candidate: "/fcn-dashboard/data/m1/m1_candidate_80.json",
+    m1Scores: "/fcn-dashboard/data/m1/m1_scores.json",
     m1Competitive: "/fcn-dashboard/data/m1/m1_competitive.json",
     epsHistory: "/fcn-dashboard/data/m1/eps_history_ai.json",
     m7Scores: "/fcn-dashboard/data/m7_sandbox/m7_v2_scores.json",
