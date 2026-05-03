@@ -100,6 +100,134 @@
         "stable"
       ]
     },
+    "MU": {
+"eps_history": [
+{ "fiscal_year": 2019, "eps": 6.35 },
+{ "fiscal_year": 2020, "eps": 2.37 },
+{ "fiscal_year": 2021, "eps": 5.14 },
+{ "fiscal_year": 2022, "eps": 7.75 },
+{ "fiscal_year": 2023, "eps": -5.34 },
+{ "fiscal_year": 2024, "eps": 0.7 }
+],
+"eps_forward": [
+{ "fiscal_year": 2025, "eps_estimate": 7.68, "analyst_count": 31 },
+{ "fiscal_year": 2026, "eps_estimate": 18.97, "analyst_count": 32 },
+{ "fiscal_year": 2027, "eps_estimate": 22.54, "analyst_count": 31 }
+],
+"quality_flag": ["negative_eps", "cyclical", "high_volatility", "rebound"],
+""CCL": {
+"eps_history": [
+{ "fiscal_year": 2019, "eps": 4.32 },
+{ "fiscal_year": 2020, "eps": -13.21 },
+{ "fiscal_year": 2021, "eps": -9.14 },
+{ "fiscal_year": 2022, "eps": -5.16 },
+{ "fiscal_year": 2023, "eps": -0.06 },
+{ "fiscal_year": 2024, "eps": 1.44 }
+],
+"eps_forward": [
+{ "fiscal_year": 2025, "eps_estimate": 2.15, "analyst_count": 22 },
+{ "fiscal_year": 2026, "eps_estimate": 2.21, "analyst_count": 21 },
+{ "fiscal_year": 2027, "eps_estimate": 2.6, "analyst_count": 22 }
+],
+"quality_flag": ["negative_eps", "cyclical", "high_volatility", "rebound"],
+},
+"AAL": {
+"eps_history": [
+{ "fiscal_year": 2019, "eps": 3.79 },
+{ "fiscal_year": 2020, "eps": -18.36 },
+{ "fiscal_year": 2021, "eps": -7.93 },
+{ "fiscal_year": 2022, "eps": 0.19 },
+{ "fiscal_year": 2023, "eps": 1.21 },
+{ "fiscal_year": 2024, "eps": 1.24 }
+],
+"eps_forward": [
+{ "fiscal_year": 2025, "eps_estimate": 0.17, "analyst_count": 22 },
+{ "fiscal_year": 2026, "eps_estimate": 2.2, "analyst_count": 21 },
+{ "fiscal_year": 2027, "eps_estimate": 2.45, "analyst_count": 22 }
+],
+"quality_flag": ["negative_eps", "cyclical", "high_volatility", "rebound"],
+},
+"SOFI": {
+"eps_history": [
+{ "fiscal_year": 2019, "eps": -1.16 },
+{ "fiscal_year": 2020, "eps": -1.04 },
+{ "fiscal_year": 2021, "eps": -0.64 },
+{ "fiscal_year": 2022, "eps": -0.47 },
+{ "fiscal_year": 2023, "eps": -0.38 },
+{ "fiscal_year": 2024, "eps": -0.12 }
+],
+"eps_forward": [
+{ "fiscal_year": 2025, "eps_estimate": 0.09, "analyst_count": 18 },
+{ "fiscal_year": 2026, "eps_estimate": 0.22, "analyst_count": 17 },
+{ "fiscal_year": 2027, "eps_estimate": 0.38, "analyst_count": 16 }
+],
+"quality_flag": ["negative_eps", "rebound", "high_volatility"],
+},
+"CRDO": {
+"eps_history": [
+{ "fiscal_year": 2020, "eps": -0.28 },
+{ "fiscal_year": 2021, "eps": -0.23 },
+{ "fiscal_year": 2022, "eps": -0.15 },
+{ "fiscal_year": 2023, "eps": -0.05 },
+{ "fiscal_year": 2024, "eps": 0.02 },
+{ "fiscal_year": 2025, "eps": 0.01 }
+],
+"eps_forward": [
+{ "fiscal_year": 2026, "eps_estimate": 0.18, "analyst_count": 12 },
+{ "fiscal_year": 2027, "eps_estimate": 0.32, "analyst_count": 11 },
+{ "fiscal_year": 2028, "eps_estimate": 0.48, "analyst_count": 10 }
+],
+"quality_flag": ["negative_eps", "rebound", "high_volatility"],
+},
+"PLTR": {
+"eps_history": [
+{ "fiscal_year": 2019, "eps": -0.24 },
+{ "fiscal_year": 2020, "eps": -0.25 },
+{ "fiscal_year": 2021, "eps": -0.18 },
+{ "fiscal_year": 2022, "eps": 0.01 },
+{ "fiscal_year": 2023, "eps": 0.09 },
+{ "fiscal_year": 2024, "eps": 0.19 }
+],
+"eps_forward": [
+{ "fiscal_year": 2025, "eps_estimate": 0.36, "analyst_count": 20 },
+{ "fiscal_year": 2026, "eps_estimate": 0.52, "analyst_count": 19 },
+{ "fiscal_year": 2027, "eps_estimate": 0.71, "analyst_count": 18 }
+],
+"quality_flag": ["negative_eps", "rebound"],
+},
+"MRVL": {
+"eps_history": [
+{ "fiscal_year": 2020, "eps": 0.84 },
+{ "fiscal_year": 2021, "eps": 0.72 },
+{ "fiscal_year": 2022, "eps": 1.61 },
+{ "fiscal_year": 2023, "eps": 1.54 },
+{ "fiscal_year": 2024, "eps": 0.91 },
+{ "fiscal_year": 2025, "eps": 1.52 }
+],
+"eps_forward": [
+{ "fiscal_year": 2026, "eps_estimate": 2.14, "analyst_count": 28 },
+{ "fiscal_year": 2027, "eps_estimate": 2.68, "analyst_count": 27 },
+{ "fiscal_year": 2028, "eps_estimate": 3.12, "analyst_count": 26 }
+],
+"quality_flag": ["adjusted_eps", "cyclical"],
+},
+"AMAT": {
+"eps_history": [
+{ "fiscal_year": 2019, "eps": 3.49 },
+{ "fiscal_year": 2020, "eps": 3.4 },
+{ "fiscal_year": 2021, "eps": 5.04 },
+{ "fiscal_year": 2022, "eps": 6.12 },
+{ "fiscal_year": 2023, "eps": 7.04 },
+{ "fiscal_year": 2024, "eps": 7.25 }
+],
+"eps_forward": [
+{ "fiscal_year": 2025, "eps_estimate": 8.12, "analyst_count": 29 },
+{ "fiscal_year": 2026, "eps_estimate": 9.34, "analyst_count": 28 },
+{ "fiscal_year": 2027, "eps_estimate": 10.45, "analyst_count": 27 }
+],
+"eps_current": {
+"quality_flag": ["cyclical"],
+},
     "AVGO": {
       "eps_history": [
         {
