@@ -539,10 +539,18 @@ def main() -> None:
     runtime_raw = read_json(PATH_MARKET_RUNTIME, {})
     positions_raw = read_json(PATH_M6_POSITIONS, [])
 
-    m1_map = symbol_map(m1_raw)
-    m7_map = symbol_map(m7_raw)
+m1_map = symbol_map(m1_raw)
+m7_map = symbol_map(m7_raw)
+
+if isinstance(runtime_raw, dict) and isinstance(runtime_raw.get("rows"), dict):
+    runtime_map = {
+        str(k).upper(): v
+        for k, v in runtime_raw["rows"].items()
+    }
+else:
     runtime_map = symbol_map(runtime_raw)
-    pos_map = symbol_map(positions_raw)
+
+pos_map = symbol_map(positions_raw)
 
     all_symbols = set(m1_map) | set(m7_map) | set(runtime_map) | set(pos_map)
 
