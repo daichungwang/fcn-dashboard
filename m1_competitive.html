@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>M1 Competitive Score / EPS Engine v2.8</title>
+  <title>M1 Competitive Score / EPS Engine v2.9</title>
   <style>
     :root {
       --bg: #f6f7fb;
@@ -75,6 +75,44 @@
       gap: 14px;
       margin: 18px 0;
     }
+    .dashboard-grid {
+      grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+      align-items: stretch;
+    }
+    .section-title {
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin:18px 0 8px;
+    }
+    .section-title h2 { margin:0; font-size:18px; }
+    .section-title .hint { color:var(--muted); font-size:12px; line-height:1.45; }
+    .analysis-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap:12px;
+      margin-top:10px;
+    }
+    .stat-card {
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fff;
+      padding:14px;
+    }
+    .stat-card .topline { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+    .stat-card .big { font-size:24px; font-weight:900; margin-top:8px; }
+    .stat-card .mini { color:var(--muted); font-size:12px; line-height:1.55; margin-top:6px; }
+    .priority-wrap { max-height:360px; overflow:auto; border:1px solid var(--line); border-radius:16px; margin-top:10px; }
+    .priority-table { font-size:12px; }
+    .priority-table th, .priority-table td { padding:9px 8px; }
+    .priority-table th:nth-child(1), .priority-table td:nth-child(1),
+    .priority-table th:nth-child(2), .priority-table td:nth-child(2),
+    .priority-table th:nth-child(3), .priority-table td:nth-child(3),
+    .priority-table th:nth-child(4), .priority-table td:nth-child(4),
+    .priority-table th:nth-child(7), .priority-table td:nth-child(7) { text-align:left; }
+    .candidate-pill { background:#eef2ff; color:#3730a3; border-radius:999px; padding:3px 7px; font-weight:800; font-size:11px; }
+    .all-pill { background:#f3f4f6; color:#4b5563; border-radius:999px; padding:3px 7px; font-weight:800; font-size:11px; }
     .kpi, .card {
       background: var(--card);
       border: 1px solid var(--line);
@@ -168,7 +206,7 @@
 <body>
   <div class="wrap">
     <section class="hero">
-      <h1>M1 Competitive Score / EPS Engine v2.8</h1>
+      <h1>M1 Competitive Score / EPS Engine v2.9</h1>
       <p>本頁直接讀取 M7 產出的 <b>eps_engine.cc_score</b>，重點顯示 CC Engine 的資料來源、可信度與 fallback 層級。新版 Rank A/B/C/D 以 <b>CC 來源可信度</b> 為主：正常 EPS → partial EPS → runtime fundamentals → global / ETF / proxy。</p>
       <span class="path">Source: ./data/m7_sandbox/m7_v2_scores.json</span>
     </section>
@@ -189,8 +227,8 @@
           <option value="all">全部可信等級</option>
           <option value="A">A 正常 EPS</option>
           <option value="B">B Partial EPS</option>
-          <option value="C">C Runtime Fallback</option>
-          <option value="D">D Global / ETF / Proxy</option>
+          <option value="C">C Runtime</option>
+          <option value="D">D Global/ETF</option>
           <option value="UNKNOWN">UNKNOWN</option>
         </select>
       </div>
@@ -199,18 +237,24 @@
       </div>
     </section>
 
-    <section class="grid">
-      <div class="kpi"><div class="label">Total Symbols</div><div id="kpiTotal" class="value">--</div><div class="note">m7_v2_scores rows count</div></div>
-      <div class="kpi"><div class="label">OK Calculated</div><div id="kpiOk" class="value">--</div><div class="note">有 eps_engine.cc_score</div></div>
-      <div class="kpi"><div class="label">Average CC</div><div id="kpiAvg" class="value">--</div><div class="note">只計算 status=ok</div></div>
-      <div class="kpi"><div class="label">A / B Coverage</div><div id="kpiTrust" class="value">--</div><div class="note">A/B = EPS 模型可信來源；C = runtime fallback</div></div>
-      <div class="kpi"><div class="label">Global Low R²</div><div id="kpiGlobalLow" class="value">--</div><div class="note">global_model_r2 &lt; 0.10 需警示</div></div>
+    <div class="section-title">
+      <h2>1. Dashboard / Coverage Analysis</h2>
+      <div class="hint">All = m7_v2_scores 全部股票；Candidate = M1 candidate_80。資料來源：m7 score / market runtime / candidate list。</div>
+    </div>
+    <section class="grid dashboard-grid">
+      <div class="kpi"><div class="label">OK Calculated / Total Symbols</div><div id="kpiOkTotal" class="value">--</div><div class="note">有 eps_engine.cc_score / 全部 symbols</div></div>
+      <div class="kpi"><div class="label">完整資料 A / All</div><div id="kpiFullAll" class="value">--</div><div class="note">正常 EPS 模式：history + forward + regression</div></div>
+      <div class="kpi"><div class="label">完整資料 A / Candidate</div><div id="kpiFullCandidate" class="value">--</div><div class="note">Candidate pool 中 Rank A 覆蓋率</div></div>
+      <div class="kpi"><div class="label">A/B Coverage / All</div><div id="kpiABAll" class="value">--</div><div class="note">A+B：EPS 模型可信來源</div></div>
+      <div class="kpi"><div class="label">A/B Coverage / Candidate</div><div id="kpiABCandidate" class="value">--</div><div class="note">Candidate 中 EPS 模型可信來源</div></div>
+      <div class="kpi"><div class="label">C Runtime / Candidate</div><div id="kpiCCandidate" class="value">--</div><div class="note">Candidate 中使用 market_runtime fundamentals</div></div>
+      <div class="kpi"><div class="label">D Fallback / Candidate</div><div id="kpiDCandidate" class="value">--</div><div class="note">Candidate 中 global / ETF / proxy / neutral fallback</div></div>
     </section>
 
     <section class="explain-grid">
       <div class="explain-card">
         <h3><span class="grade-dot grade-a">A</span>正常 EPS 模式</h3>
-        <p>高可信：資料齊全，使用 EPS history + forward EPS / EPS regression 產生 CC；可直接進 M1 排序。</p>
+        <p>高可信：公司 EPS history + forward EPS / EPS regression 產生 CC；可直接進 M1 排序。</p>
       </div>
       <div class="explain-card">
         <h3><span class="grade-dot grade-b">B</span>Partial EPS 模式</h3>
@@ -218,11 +262,42 @@
       </div>
       <div class="explain-card">
         <h3><span class="grade-dot grade-c">C</span>Runtime Fundamental Fallback</h3>
-        <p>中可信：EPS 結構資料不足，改用 market_runtime 的 trailing_eps / forward_eps / PE / margin / FCF / ROE / debt 等欄位補 CC。</p>
+        <p>中可信：EPS 結構資料不足，改用 market_runtime 的 PE / margin / FCF / ROE / debt 等欄位補 CC。</p>
       </div>
       <div class="explain-card">
         <h3><span class="grade-dot grade-d">D</span>Global / ETF / Proxy</h3>
         <p>低可信：沒有足夠 EPS，也沒有足夠 runtime fundamentals；或 ETF / global proxy。只能參考，不可視為公司 EPS。</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-title" style="margin-top:0;">
+        <h2>2. Rank A/B/C/D CC Score 離散度</h2>
+        <div class="hint">顯示各 Rank 的 CC 平均分、std（標準差）與 candidate 覆蓋。std 越大，代表同級內差異越大。</div>
+      </div>
+      <div id="rankStatsGrid" class="analysis-grid"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-title" style="margin-top:0;">
+        <h2>3. 待補資料區（最優先）</h2>
+        <div id="prioritySummary" class="hint">--</div>
+      </div>
+      <div class="priority-wrap">
+        <table class="priority-table">
+          <thead>
+            <tr>
+              <th>Priority</th>
+              <th>Symbol</th>
+              <th>Pool</th>
+              <th>Rank</th>
+              <th>CC</th>
+              <th>Source</th>
+              <th>建議補資料</th>
+            </tr>
+          </thead>
+          <tbody id="priorityBody"><tr><td colspan="7" class="muted">Loading...</td></tr></tbody>
+        </table>
       </div>
     </section>
 
@@ -243,8 +318,7 @@
               <th>Quality</th>
               <th>EPS YoY Stability</th>
               <th>EPS R²</th>
-              <th>History EPS</th>
-              <th>Forward EPS</th>
+              <th>EPS Samples</th>
               <th>Global R²</th>
               <th>Global Samples</th>
               <th>EPS Source / Status</th>
@@ -252,7 +326,7 @@
             </tr>
           </thead>
           <tbody id="resultBody">
-            <tr><td colspan="18" class="muted">Loading...</td></tr>
+            <tr><td colspan="17" class="muted">Loading...</td></tr>
           </tbody>
         </table>
       </div>
@@ -266,9 +340,15 @@
 
   <script type="module">
     const DATA_URL = "./data/m7_sandbox/m7_v2_scores.json";
+    const MARKET_RUNTIME_URL = "./data/market_runtime.json";
+    const CANDIDATE_URL = "./data/m1/m1_candidate_80.json";
 
     const state = {
       rawPayload: null,
+      marketRuntime: {},
+      candidatePayload: null,
+      candidateSymbols: new Set(),
+      candidateLoadNote: "",
       results: [],
       filtered: []
     };
@@ -317,58 +397,19 @@
       return null;
     }
 
-    function numOrNull(v) {
-      if (v === null || v === undefined || v === "") return null;
-      const n = Number(v);
-      return Number.isFinite(n) ? n : null;
-    }
+    function classifyEPS(eps, row = {}) {
+      const directRank = String(pick(eps?.cc_rank, eps?.eps_coverage_rank, row?.competitive_scope?.cc_rank, "") || "").toUpperCase();
+      if (["A", "B", "C", "D"].includes(directRank)) return directRank;
 
-    function countForwardEPS(eps) {
-      const candidates = [eps?.eps_2025, eps?.eps_2026, eps?.eps_2027];
-      return candidates.filter(v => {
-        const n = numOrNull(v);
-        return n !== null;
-      }).length;
-    }
+      const source = String(pick(eps?.cc_source, eps?.eps_source, eps?.source, eps?.eps_status, row?.competitive_scope?.score_source, "") || "").toLowerCase();
+      const status = String(eps?.eps_status || "").toLowerCase();
+      const quoteType = String(pick(eps?.quote_type, eps?.quoteType, row?.quote_type, "") || "").toLowerCase();
 
-    function getHistoryEPSCount(eps) {
-      return Number(numOrNull(pick(
-        eps?.history_eps_count,
-        eps?.eps_history_count,
-        eps?.eps_regression_sample_count,
-        eps?.regression_sample_count
-      )) || 0);
-    }
-
-    function classifyEPS(eps) {
-      const explicitRank = String(pick(eps?.cc_rank, eps?.eps_coverage_grade, eps?.coverage_grade, "") || "").toUpperCase();
-      if (["A", "B", "C", "D"].includes(explicitRank)) return explicitRank;
-
-      const sourceText = String([
-        eps?.cc_source,
-        eps?.cc_method,
-        eps?.eps_source,
-        eps?.source,
-        eps?.eps_status,
-        eps?.runtime_fundamental_source,
-        eps?.global_model_source
-      ].filter(Boolean).join(" ")).toLowerCase();
-      const quoteType = String(eps?.quote_type || eps?.quoteType || "").toLowerCase();
-      const historyCount = getHistoryEPSCount(eps);
-      const forwardCount = countForwardEPS(eps);
-
-      // New definition: rank by CC source credibility.
-      if (quoteType === "etf" || sourceText.includes("etf") || sourceText.includes("proxy")) return "D";
-      if (sourceText.includes("runtime_fundamental")) return "C";
-      if (sourceText.includes("global") || sourceText.includes("neutral_fallback") || sourceText.includes("fallback_or_partial")) return "D";
-      if (sourceText.includes("partial") || sourceText.includes("forward_provided_no_count") || sourceText.includes("no_count")) return "B";
-      if (sourceText.includes("full_m7_eps") || sourceText.includes("actual_history_plus_eps_regression") || sourceText.includes("full_eps")) return "A";
-
-      // Backward-compatible fallback for older files.
-      if (historyCount >= 3 && forwardCount >= 2) return "A";
-      if (historyCount >= 3 && forwardCount >= 1) return "B";
-      if (historyCount >= 1 && forwardCount >= 1) return "C";
-      return "D";
+      if (source.includes("etf") || source.includes("proxy") || source.includes("global") || source.includes("neutral") || quoteType === "etf") return "D";
+      if (source.includes("runtime_fundamental")) return "C";
+      if (source.includes("partial") || source.includes("forward_provided_no_count_blend") || status.includes("partial")) return "B";
+      if (source.includes("full_m7_eps") || source.includes("actual_history_plus_eps_regression") || source.includes("company_eps_history") || source.includes("company_regression")) return "A";
+      return "UNKNOWN";
     }
 
     function gradeLabel(grade) {
@@ -397,16 +438,13 @@
       if (Number.isFinite(globalR2) && globalR2 < 0.10) {
         warnings.push("⚠️ Global model R² < 0.10：global fallback 解釋力很低，不可直接相信");
       }
-      if (grade === "B") {
-        warnings.push("B：Partial EPS；forward coverage 或 analyst_count 不完整，需看 warning");
-      }
       if (grade === "C") {
-        warnings.push("C：使用 market_runtime fundamental fallback；中可信，但不是 EPS regression");
+        warnings.push("Runtime fallback：使用 market_runtime fundamentals 補 CC，需補 EPS history / forward EPS 提升可信度");
       }
       if (grade === "D") {
-        warnings.push("D：Global / ETF / proxy；低可信，不可視為公司 EPS");
+        warnings.push("Global / ETF / Proxy：不是完整公司 EPS，只能參考");
       }
-      if (String(eps?.eps_source || eps?.cc_source || "").includes("no_count")) {
+      if (String(eps?.eps_source || "").includes("no_count")) {
         warnings.push("forward EPS 有值，但 analyst_count 缺失");
       }
       return [...new Set(warnings)].filter(Boolean);
@@ -418,6 +456,45 @@
       return await res.json();
     }
 
+    async function loadOptionalJson(url, fallback) {
+      try {
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) return fallback;
+        return await res.json();
+      } catch (err) {
+        return fallback;
+      }
+    }
+
+    function buildCandidateSymbols(payload) {
+      const rows = rowsFromPayload(payload);
+      const symbols = new Set();
+      rows.forEach(row => {
+        if (!row || typeof row !== "object") return;
+        const sym = normalizeSymbol(row.symbol || row.ticker || row.股號 || row.name);
+        if (sym) symbols.add(sym);
+      });
+      return symbols;
+    }
+
+    function normalizeSymbol(x) {
+      return String(x || "").trim().toUpperCase();
+    }
+
+    function pctText(n, d) {
+      const denom = Number(d);
+      if (!Number.isFinite(denom) || denom <= 0) return `${n}/0 --`;
+      return `${n}/${denom} ${(Number(n) / denom * 100).toFixed(1)}%`;
+    }
+
+    function avgStd(values) {
+      const arr = values.map(Number).filter(Number.isFinite);
+      if (!arr.length) return { avg: null, std: null, n: 0 };
+      const avg = arr.reduce((a, b) => a + b, 0) / arr.length;
+      const variance = arr.reduce((sum, x) => sum + (x - avg) ** 2, 0) / arr.length;
+      return { avg, std: Math.sqrt(variance), n: arr.length };
+    }
+
     function calculate() {
       const rows = rowsFromPayload(state.rawPayload);
 
@@ -425,11 +502,11 @@
         .map(x => {
           const eps = x.eps_engine || x.eps || null;
           const hasScore = Number.isFinite(Number(eps?.cc_score));
-          const confidence = eps?.cc_confidence || eps?.confidence || "";
+          const confidence = pick(eps?.cc_confidence, eps?.confidence, "") || "";
           const status = hasScore ? "ok" : "no_eps_engine";
-          const grade = classifyEPS(eps || {});
-          const historyEpsCount = getHistoryEPSCount(eps || {});
-          const forwardEpsCount = countForwardEPS(eps || {});
+          const grade = classifyEPS(eps || {}, x);
+          const symbol = normalizeSymbol(x.symbol);
+          const isCandidate = state.candidateSymbols.has(symbol);
           const warnings = normalizeWarnings(eps || {}, grade);
 
           const consistency10 = score01To10(pick(eps?.consistency, eps?.middle_consistency));
@@ -439,6 +516,7 @@
           return {
             symbol: x.symbol,
             name: x.name || x.company_name,
+            is_candidate: isCandidate,
             category: x.category,
             category_sub: x.category_sub || x.subsector || x.sub_category,
             competitive_score: hasScore ? Number(eps.cc_score) : null,
@@ -448,23 +526,16 @@
             confidence,
             grade,
             warnings,
-            has_eps_data: Boolean(eps?.has_eps_data),
-            eps_status: eps?.cc_source || eps?.eps_status || "",
-            eps_source: eps?.cc_method || eps?.eps_source || eps?.source || eps?.cc_source || "",
+            has_eps_data: Boolean(pick(eps?.has_eps_data, x?.competitive_scope?.has_eps_data, false)),
+            eps_status: eps?.eps_status || eps?.cc_source || "",
+            eps_source: eps?.eps_source || eps?.cc_source || eps?.source || x?.competitive_scope?.score_source || "",
             eps_regression_model: eps?.eps_regression_model || eps?.regression_model || "",
             eps_regression_r2: pick(eps?.eps_regression_r2, eps?.regression_r2),
-            eps_regression_sample_count: historyEpsCount,
-            forward_eps_count: forwardEpsCount,
+            eps_regression_sample_count: pick(eps?.eps_regression_sample_count, eps?.regression_sample_count),
             global_model_source: eps?.global_model_source || "",
             global_model_sample_count: eps?.global_model_sample_count,
             global_model_r2: eps?.global_model_r2,
             annual_price_years_used: eps?.annual_price_years_used,
-            cc_source: eps?.cc_source || "",
-            cc_confidence: eps?.cc_confidence || "",
-            cc_method: eps?.cc_method || "",
-            runtime_cc_score: eps?.runtime_cc_score,
-            runtime_cc_breakdown: eps?.runtime_cc_breakdown,
-            runtime_fundamental_fields_used: eps?.runtime_fundamental_fields_used,
             components: {
               future_profit: eps?.future_profit === true ? 10 : eps?.future_profit === false ? 0 : score01To10(eps?.future_profit),
               future_growth: eps?.future_growth === true ? 10 : eps?.future_growth === false ? 0 : score01To10(eps?.future_growth),
@@ -511,20 +582,99 @@
     function renderKPIs() {
       const total = state.results.length;
       const ok = state.results.filter(x => x.status === "ok" && Number.isFinite(Number(x.competitive_score)));
-      const avg = ok.length ? ok.reduce((sum, x) => sum + Number(x.competitive_score), 0) / ok.length : null;
-      const highTrust = state.results.filter(x => ["A", "B"].includes(x.grade)).length;
-      const globalLow = state.results.filter(x => Number.isFinite(Number(x.global_model_r2)) && Number(x.global_model_r2) < 0.10).length;
+      const candidates = state.results.filter(x => x.is_candidate);
+      const candidateTotal = state.candidateSymbols.size || candidates.length;
 
-      $("kpiTotal").textContent = total;
-      $("kpiOk").textContent = ok.length;
-      $("kpiAvg").textContent = fmt(avg);
-      $("kpiTrust").textContent = highTrust;
-      $("kpiGlobalLow").textContent = globalLow;
+      const count = (arr, g) => arr.filter(x => x.grade === g).length;
+      const countAB = arr => arr.filter(x => ["A", "B"].includes(x.grade)).length;
+
+      const fullAll = count(state.results, "A");
+      const fullCandidate = count(candidates, "A");
+      const abAll = countAB(state.results);
+      const abCandidate = countAB(candidates);
+      const cCandidate = count(candidates, "C");
+      const dCandidate = count(candidates, "D");
+
+      $("kpiOkTotal").textContent = pctText(ok.length, total);
+      $("kpiFullAll").textContent = pctText(fullAll, total);
+      $("kpiFullCandidate").textContent = pctText(fullCandidate, candidateTotal);
+      $("kpiABAll").textContent = pctText(abAll, total);
+      $("kpiABCandidate").textContent = pctText(abCandidate, candidateTotal);
+      $("kpiCCandidate").textContent = pctText(cCandidate, candidateTotal);
+      $("kpiDCandidate").textContent = pctText(dCandidate, candidateTotal);
+    }
+
+    function renderRankStats() {
+      const labels = {
+        A: "正常 EPS",
+        B: "Partial EPS",
+        C: "Runtime fundamentals",
+        D: "Global / ETF / Proxy",
+        UNKNOWN: "Unknown"
+      };
+      const grades = ["A", "B", "C", "D", "UNKNOWN"];
+      const html = grades.map(g => {
+        const rows = state.results.filter(x => x.grade === g);
+        const candRows = rows.filter(x => x.is_candidate);
+        const stats = avgStd(rows.map(x => x.competitive_score));
+        if (!rows.length && g === "UNKNOWN") return "";
+        return `
+          <div class="stat-card">
+            <div class="topline"><div><span class="grade-dot ${gradeClass(g)}">${g === "UNKNOWN" ? "?" : g}</span><b>${labels[g]}</b></div><span class="muted">n=${rows.length}</span></div>
+            <div class="big">${fmt(stats.avg)} <span class="muted" style="font-size:13px;">avg CC</span></div>
+            <div class="mini">std / 離散度：<b>${fmt(stats.std)}</b><br>Candidate：${candRows.length}/${state.candidateSymbols.size || "--"}<br>範圍：${fmt(Math.min(...rows.map(x => Number(x.competitive_score)).filter(Number.isFinite)))} ~ ${fmt(Math.max(...rows.map(x => Number(x.competitive_score)).filter(Number.isFinite)))}</div>
+          </div>
+        `;
+      }).join("");
+      $("rankStatsGrid").innerHTML = html || `<div class="muted">No rank stats</div>`;
+    }
+
+    function priorityReason(r) {
+      if (r.grade === "D") return "補 EPS history >=3 + forward EPS >=2；若為 ETF，請明確標記 proxy，不進公司 EPS。";
+      if (r.grade === "C") return "補 eps_history_ai：history EPS >=3、forward EPS >=2/3、analyst_count；讓 runtime 回到正常 EPS 模式。";
+      if (r.grade === "B") return "補 analyst_count、2027 forward EPS 或缺失年度，提升到 Rank A。";
+      if (r.grade === "UNKNOWN") return "檢查 eps_engine.cc_rank / cc_source / eps_status 是否有輸出。";
+      return "--";
+    }
+
+    function priorityScore(r) {
+      const poolWeight = r.is_candidate ? 0 : 100;
+      const gradeWeight = { D: 1, C: 2, B: 3, UNKNOWN: 4, A: 99 }[r.grade] ?? 50;
+      const cc = Number.isFinite(Number(r.competitive_score)) ? -Number(r.competitive_score) / 100 : 0;
+      return poolWeight + gradeWeight + cc;
+    }
+
+    function renderPriority() {
+      const targets = state.results
+        .filter(r => ["B", "C", "D", "UNKNOWN"].includes(r.grade))
+        .sort((a, b) => priorityScore(a) - priorityScore(b))
+        .slice(0, 40);
+
+      const candidateTargets = targets.filter(x => x.is_candidate).length;
+      const totalCandidateMissing = state.results.filter(r => r.is_candidate && ["B", "C", "D", "UNKNOWN"].includes(r.grade)).length;
+      $("prioritySummary").textContent = `最優先：先補 Candidate 中的 D/C/B；目前 Candidate 待補 ${totalCandidateMissing} 檔。本表顯示前 ${targets.length} 檔。${state.candidateLoadNote || ""}`;
+
+      if (!targets.length) {
+        $("priorityBody").innerHTML = `<tr><td colspan="7" class="muted">目前沒有待補資料</td></tr>`;
+        return;
+      }
+
+      $("priorityBody").innerHTML = targets.map((r, idx) => `
+        <tr>
+          <td><b>${idx + 1}</b></td>
+          <td><b>${r.symbol || "--"}</b><span class="subline">${normalizeName(r)}</span></td>
+          <td>${r.is_candidate ? `<span class="candidate-pill">Candidate</span>` : `<span class="all-pill">All</span>`}</td>
+          <td><span class="grade-dot ${gradeClass(r.grade)}">${r.grade === "UNKNOWN" ? "?" : r.grade}</span><span class="subline">${gradeLabel(r.grade)}</span></td>
+          <td>${fmt(r.competitive_score)}</td>
+          <td>${r.eps_source || r.eps_status || "--"}<span class="subline">confidence: ${r.confidence || "--"}</span></td>
+          <td>${priorityReason(r)}</td>
+        </tr>
+      `).join("");
     }
 
     function renderTable() {
       if (!state.filtered.length) {
-        $("resultBody").innerHTML = `<tr><td colspan="18" class="muted">No results</td></tr>`;
+        $("resultBody").innerHTML = `<tr><td colspan="17" class="muted">No results</td></tr>`;
         return;
       }
 
@@ -552,10 +702,9 @@
             <td>${fmtPctLike(c.eps_yoy_stability)}</td>
             <td>${fmt(r.eps_regression_r2)}<span class="subline">${r.eps_regression_model || "--"}</span></td>
             <td>${fmt(r.eps_regression_sample_count, 0)}</td>
-            <td>${fmt(r.forward_eps_count, 0)}</td>
             <td>${fmt(r.global_model_r2)}<span class="subline">${r.global_model_source || "--"}</span></td>
             <td>${fmt(r.global_model_sample_count, 0)}<span class="subline">yrs ${fmt(r.annual_price_years_used, 0)}</span></td>
-            <td><span class="pill ${statusClass(r.status, r.confidence, r.grade)}">${statusText}</span><span class="subline">${source}</span><span class="subline">confidence: ${r.confidence || "--"}</span><span class="subline">runtime: ${r.runtime_cc_score !== undefined && r.runtime_cc_score !== null ? fmt(r.runtime_cc_score) : "--"}</span><span class="subline">${epsLine}</span></td>
+            <td><span class="pill ${statusClass(r.status, r.confidence, r.grade)}">${statusText}</span><span class="subline">${source}</span><span class="subline">confidence: ${r.confidence || "--"}</span><span class="subline">${epsLine}</span></td>
             <td>${warningHtml}</td>
           </tr>
         `;
@@ -569,12 +718,8 @@
         scope: state.rawPayload?.scope || null,
         count: state.results.length,
         filtered_count: state.filtered.length,
-        grade_definition: {
-          A: "normal EPS mode: full EPS / actual history plus EPS regression",
-          B: "partial EPS mode: EPS usable but incomplete forward or analyst count",
-          C: "runtime fundamental fallback: market_runtime fundamentals used for CC",
-          D: "global / ETF / proxy / neutral fallback"
-        },
+        candidate_count: state.candidateSymbols.size,
+        candidate_load_note: state.candidateLoadNote,
         grade_counts: state.results.reduce((acc, x) => {
           acc[x.grade] = (acc[x.grade] || 0) + 1;
           return acc;
@@ -586,18 +731,29 @@
 
     function render() {
       renderKPIs();
+      renderRankStats();
+      renderPriority();
       renderTable();
       renderDebug();
     }
 
     async function init() {
       try {
-        $("resultBody").innerHTML = `<tr><td colspan="18" class="muted">Loading ${DATA_URL}...</td></tr>`;
-        state.rawPayload = await loadM7Data();
+        $("resultBody").innerHTML = `<tr><td colspan="17" class="muted">Loading ${DATA_URL}...</td></tr>`;
+        const [m7Payload, marketPayload, candidatePayload] = await Promise.all([
+          loadM7Data(),
+          loadOptionalJson(MARKET_RUNTIME_URL, {}),
+          loadOptionalJson(CANDIDATE_URL, null)
+        ]);
+        state.rawPayload = m7Payload;
+        state.marketRuntime = marketPayload || {};
+        state.candidatePayload = candidatePayload;
+        state.candidateSymbols = buildCandidateSymbols(candidatePayload);
+        state.candidateLoadNote = state.candidateSymbols.size ? `Candidate loaded: ${state.candidateSymbols.size}` : "Candidate file 未載入或無 symbol，Candidate 指標可能為 0。";
         calculate();
       } catch (err) {
         console.error(err);
-        $("resultBody").innerHTML = `<tr><td colspan="18" class="error">${err.message}</td></tr>`;
+        $("resultBody").innerHTML = `<tr><td colspan="17" class="error">${err.message}</td></tr>`;
         $("debugOutput").textContent = `${err.stack || err.message}\n\n請確認：\n1. data/m7_sandbox/m7_v2_scores.json 已存在\n2. build_m7_v2_scores.py 已產出 eps_engine 欄位\n3. GitHub Pages 已更新到最新版本\n4. 需透過 GitHub Pages / local server 開啟，不能直接用 file://`;
       }
     }
