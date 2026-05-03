@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MM × M1 Integration — C1 Single Stock Cockpit / Decision Engine + Chart + Runtime Normalization + Profile Adapter + Right Position Forecast Layout + M1 Scores JSON
+   MM × M1 Integration — C1 Single Stock Cockpit / Decision Engine + Chart + Runtime Normalization + Profile Adapter + Right Position Forecast Layout + M1 Scores JSON + CC Quality UI
    File: js/mm/modules/mm_stock_cockpit.js
 
    Goal:
@@ -539,12 +539,73 @@
   ----------------------------- */
 
   function buildCCSource(symbol, m1, m7, runtime, eps) {
-    const epsOk = hasEPSData(eps);
+    // Priority: official m1_scores.json quality fields.
+    // CC is data credibility, not just data existence.
+    const officialGrade = String(
+      m1.eps_coverage_grade ||
+      m1.cc_rank ||
+      m1.cc_grade ||
+      ""
+    ).toUpperCase();
+
+    const officialLayer = String(
+      m1.eps_layer ||
+      m1.eps_rank_label ||
+      m1.eps_cc_source ||
+      ""
+    );
+
+    const officialFlags = Array.isArray(m1.eps_quality_flags) ? m1.eps_quality_flags : [];
+    const officialMissing = Array.isArray(m1.missing_fields) ? m1.missing_fields : [];
+
     const runtimeOk = hasRuntimeData(runtime);
     const globalOk = hasGlobalOrFundamental(runtime, m7, m1);
 
+    if (["A", "B", "C", "D"].includes(officialGrade)) {
+      const epsOk = officialGrade === "A" || officialGrade === "B";
+      const epsLabel = officialLayer || (
+        officialGrade === "A" ? "Full EPS" :
+        officialGrade === "B" ? "Partial EPS" :
+        officialGrade === "C" ? "Fallback / Runtime Fundamental" :
+        "Missing / Proxy"
+      );
+
+      const missing = [];
+      if (officialGrade === "C") missing.push("EPS fallback / partial");
+      if (officialGrade === "D") missing.push("EPS missing / proxy");
+      if (!runtimeOk) missing.push("runtime");
+      if (!globalOk) missing.push("global/fundamental");
+      officialMissing.forEach(x => {
+        if (x && !missing.includes(x)) missing.push(x);
+      });
+
+      const scoreMap = { A: 1.0, B: 0.8, C: 0.6, D: 0.3 };
+
+      return {
+        grade: officialGrade,
+        score: scoreMap[officialGrade],
+        epsOk,
+        runtimeOk,
+        globalOk,
+        missing,
+        text: `CC-${officialGrade}`,
+        note: `${epsLabel}${officialFlags.length ? "｜" + officialFlags.join(" / ") : ""}`,
+        eps_status: epsLabel,
+        eps_layer: officialLayer,
+        eps_quality_flags: officialFlags
+      };
+    }
+
+    // Fallback for older data: use a conservative existence-based check.
+    const epsStatus = classifyEPSFallback(eps);
+    const epsOk = epsStatus.grade === "A" || epsStatus.grade === "B";
+
     let score = 0;
-    if (epsOk) score += 0.34;
+    if (epsStatus.grade === "A") score += 0.34;
+    else if (epsStatus.grade === "B") score += 0.27;
+    else if (epsStatus.grade === "C") score += 0.18;
+    else score += 0.05;
+
     if (runtimeOk) score += 0.33;
     if (globalOk) score += 0.33;
 
@@ -554,7 +615,7 @@
     else if (score >= 0.50) grade = "C";
 
     const missing = [];
-    if (!epsOk) missing.push("EPS");
+    if (!epsOk) missing.push(epsStatus.label);
     if (!runtimeOk) missing.push("runtime");
     if (!globalOk) missing.push("global/fundamental");
 
@@ -566,17 +627,48 @@
       globalOk,
       missing,
       text: `CC-${grade}`,
-      note: missing.length ? `待補：${missing.join(" / ")}` : "EPS + runtime + global 資料完整"
+      note: missing.length ? `待補：${missing.join(" / ")}` : "EPS + runtime + global 資料完整",
+      eps_status: epsStatus.label,
+      eps_layer: epsStatus.layer,
+      eps_quality_flags: epsStatus.flags
     };
   }
 
-  function hasEPSData(eps) {
-    if (!eps || !Object.keys(eps).length) return false;
+  function classifyEPSFallback(eps) {
+    if (!eps || !Object.keys(eps).length) {
+      return { grade: "D", label: "EPS Missing / Proxy", layer: "missing", flags: ["missing_eps"] };
+    }
+
     const hist = eps.history || eps.historical_eps || eps.annual_eps || eps.eps_history || [];
     const fwd = eps.forward || eps.forward_eps || eps.estimates || eps.eps_forward || [];
-    if (Array.isArray(hist) && hist.length >= 3) return true;
-    if (Array.isArray(fwd) && fwd.length >= 1) return true;
-    return Boolean(eps.eps_basis || eps.future_profit || eps.future_growth);
+    const h = Array.isArray(hist) ? hist.length : 0;
+    const f = Array.isArray(fwd) ? fwd.length : 0;
+
+    const status = String(eps.eps_status || eps.cc_source || eps.source || "").toLowerCase();
+    const flags = [];
+
+    if (status.includes("fallback") || status.includes("proxy") || status.includes("global")) flags.push("fallback_or_proxy");
+    if (h < 3) flags.push("eps_history_lt_3");
+    if (f < 2) flags.push("eps_forward_lt_2");
+
+    if (status.includes("runtime_fundamental_fallback")) {
+      return { grade: "C", label: "Runtime Fundamental Fallback", layer: "fallback", flags };
+    }
+    if (status.includes("proxy") || status.includes("global")) {
+      return { grade: "D", label: "EPS Proxy / Global", layer: "proxy", flags };
+    }
+    if (h >= 3 && f >= 2) {
+      return { grade: "A", label: "Full EPS", layer: "full", flags };
+    }
+    if (h >= 1 || f >= 1 || eps.eps_basis || eps.future_profit || eps.future_growth) {
+      return { grade: "B", label: "Partial EPS", layer: "partial", flags };
+    }
+    return { grade: "D", label: "EPS Missing / Proxy", layer: "missing", flags };
+  }
+
+  function hasEPSData(eps) {
+    const c = classifyEPSFallback(eps);
+    return c.grade === "A" || c.grade === "B";
   }
 
   function hasRuntimeData(runtime) {
@@ -1363,9 +1455,11 @@
 
   function renderL4(d) {
     const ccRows = [
-      ["EPS", d.cc.epsOk ? "OK" : "Missing"],
+      ["EPS Quality", d.cc.eps_status || (d.cc.epsOk ? "Full / Partial EPS" : "Fallback / Missing")],
       ["Runtime", d.cc.runtimeOk ? "OK" : "Missing"],
       ["Global / Fundamental", d.cc.globalOk ? "OK" : "Missing"],
+      ["Quality Flags", Array.isArray(d.cc.eps_quality_flags) && d.cc.eps_quality_flags.length ? d.cc.eps_quality_flags.join(" / ") : "--"],
+      ["Missing / Watch", d.cc.missing && d.cc.missing.length ? d.cc.missing.join(" / ") : "--"],
       ["CC Grade", d.cc.text],
       ["Coverage Score", fmtPct(d.cc.score)]
     ].map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("");
@@ -1377,7 +1471,7 @@
           <div class="mini-kpi"><div class="k">M1 Score</div><div class="v">${fmtNum(d.m1Score, 2)}</div><div class="d">Source：${esc(d.m1.m1_source || "missing")} ｜ Rank：${d.m1.rank ?? "--"} ｜ Raw：${fmtNum(d.m1.raw_m1_score, 2)}</div></div>
           <div class="mini-kpi"><div class="k">Pool Status</div><div class="v">${esc(d.m1.in_pool30 ? "Pool30" : d.m1.in_candidate ? "Candidate" : d.m1.in_universe ? "Universe" : "Not in Universe")}</div><div class="d">AI → Candidate → Pool30 funnel</div></div>
           <div class="mini-kpi"><div class="k">Category</div><div class="v">${esc(firstVal(d.m1.category, "--"))}</div><div class="d">${esc(firstVal(d.m1.category_sub, "--"))}</div></div>
-          <div class="mini-kpi"><div class="k">CC Source</div><div class="v">${esc(d.cc.text)}</div><div class="d">${esc(d.cc.note)}</div></div>
+          <div class="mini-kpi"><div class="k">CC Source</div><div class="v">${esc(d.cc.text)}</div><div class="d">${esc(d.cc.eps_status || d.cc.note)}${d.cc.missing && d.cc.missing.length ? "｜" + esc(d.cc.missing.join(" / ")) : ""}</div></div>
         </div>
         <div class="table-wrap mm-small-table">
           <table>
@@ -1583,4 +1677,6 @@
   });
 
 })();
+
+
 
