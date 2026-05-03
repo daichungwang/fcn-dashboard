@@ -781,7 +781,10 @@ function fmtPct(v, digits = 1, dash = "--") {
 
           <div class="price-strip">
             <div class="mini-kpi"><div class="k">Today Price</div><div class="v">${fmtNum(d.price, 2)}</div><div class="d">現價 / runtime</div></div>
-            <div class="mini-kpi"><div class="k">Δ%</div><div class="v ${retClass(ret1d)}">${fmtPct(ret1d)}</div><div class="d">今日變化</div></div>
+            <div class="d">
+  今日變化 (runtime)
+  ${Math.abs(ret1d) > 0.3 ? "⚠️" : ""}
+</div>
             <div class="mini-kpi"><div class="k">1W / 1M</div><div class="v">${fmtPct(ret1w)} / ${fmtPct(ret1m)}</div><div class="d">短期表現</div></div>
             <div class="mini-kpi"><div class="k">3M / 12M</div><div class="v">${fmtPct(ret3m)} / ${fmtPct(ret12m)}</div><div class="d">中長期表現</div></div>
             <div class="mini-kpi"><div class="k">Volume / Position</div><div class="v">${volumeRatio === null ? "--" : fmtNum(volumeRatio, 2) + "x"}</div><div class="d">12M position：${pos12m === null ? "--" : fmtPct(pos12m)}</div></div>
