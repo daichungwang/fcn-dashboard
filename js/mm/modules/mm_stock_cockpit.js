@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MM × M1 Integration — C1 Single Stock Cockpit / Decision Engine
+   MM × M1 Integration — C1 Single Stock Cockpit / Decision Engine + Chart
    File: js/mm/modules/mm_stock_cockpit.js
 
    Goal:
@@ -7,7 +7,7 @@
    - No heavy model logic.
    - Do not modify M1 / M7 / runtime pipeline.
    - Render C1 with L0~L4:
-     L0 Stock identity + price strip
+     L0 Stock identity + price strip + price chart
      L1 Visual decision engine
      L2 M2 risk breakdown
      L3 M7 valuation / trend
@@ -25,15 +25,18 @@
   const DEFAULT_SYMBOL = "NVDA";
 
   const PATHS = {
-  marketRuntime: "/fcn-dashboard/data/market_runtime.json",
-  m7Scores: "/fcn-dashboard/data/m7_sandbox/m7_v2_scores.json",
-  m1Candidate: "/fcn-dashboard/data/m1/m1_candidate_80.json",
-  m1Universe: "/fcn-dashboard/data/m1/universe_150.json",
-  m1Competitive: "/fcn-dashboard/data/m1/m1_competitive.json",
-  m2Exposure: "/fcn-dashboard/data/m7/m2_stock_exposure.json",
-  fcnPool: "/fcn-dashboard/data/fcn_pool.json",
-  epsHistory: "/fcn-dashboard/data/m1/eps_history_ai.json"
-};
+    marketRuntime: "/fcn-dashboard/data/market_runtime.json",
+    pool30: "/fcn-dashboard/data/pool30.json",
+    m1Universe: "/fcn-dashboard/data/m1/universe_150.json",
+    m1Candidate: "/fcn-dashboard/data/m1/m1_candidate_80.json",
+    m1Competitive: "/fcn-dashboard/data/m1/m1_competitive.json",
+    epsHistory: "/fcn-dashboard/data/m1/eps_history_ai.json",
+    m7Scores: "/fcn-dashboard/data/m7_sandbox/m7_v2_scores.json",
+    m2Exposure: "/fcn-dashboard/data/m7/m2_stock_exposure.json",
+    fcnPool: "/fcn-dashboard/data/fcn_pool.json",
+    profileAll: "/fcn-dashboard/data/m1/m1_stock_profile_all.json",
+    profileDeep: "/fcn-dashboard/data/m1/m1_stock_profile.json"
+  };
 
   const STATE = {
     initialized: false,
@@ -90,6 +93,53 @@
     return String(v || "").trim().toUpperCase();
   }
 
+  function objectLooksLikeStock(v) {
+    return !!(
+      v &&
+      typeof v === "object" &&
+      !Array.isArray(v) &&
+      (
+        v.symbol || v.ticker || v.underlying ||
+        v.price || v.last_price || v.close || v.current_price ||
+        v.m1_score || v.m7_score || v.m7_v2_score ||
+        v.valuation_score || v.trend_score
+      )
+    );
+  }
+
+  function collectStockObjects(raw, out = [], depth = 0, parentKey = "") {
+    if (!raw || depth > 5) return out;
+
+    if (Array.isArray(raw)) {
+      raw.forEach(v => collectStockObjects(v, out, depth + 1, parentKey));
+      return out;
+    }
+
+    if (typeof raw !== "object") return out;
+
+    if (objectLooksLikeStock(raw)) {
+      const s = raw.symbol || raw.ticker || raw.underlying || parentKey;
+      out.push({ symbol: s, ...raw });
+    }
+
+    Object.entries(raw).forEach(([k, v]) => {
+      if (!v || typeof v !== "object") return;
+
+      if (Array.isArray(v)) {
+        v.forEach(item => collectStockObjects(item, out, depth + 1, k));
+      } else {
+        const keyIsSymbol = /^[A-Z0-9.\-]{1,8}$/.test(String(k).toUpperCase());
+        if (keyIsSymbol && objectLooksLikeStock(v)) {
+          out.push({ symbol: v.symbol || v.ticker || k, ...v });
+        } else {
+          collectStockObjects(v, out, depth + 1, k);
+        }
+      }
+    });
+
+    return out;
+  }
+
   function asArray(raw) {
     if (!raw) return [];
     if (Array.isArray(raw)) return raw;
@@ -97,13 +147,13 @@
     if (Array.isArray(raw.items)) return raw.items;
     if (Array.isArray(raw.stocks)) return raw.stocks;
     if (Array.isArray(raw.results)) return raw.results;
-
-    if (typeof raw === "object") {
-      return Object.entries(raw)
-        .filter(([k, v]) => v && typeof v === "object")
-        .map(([k, v]) => ({ symbol: v.symbol || k, ...v }));
+    if (Array.isArray(raw.scores)) return raw.scores;
+    if (Array.isArray(raw.rows)) return raw.rows;
+    if (raw.data && typeof raw.data === "object") {
+      const nested = asArray(raw.data);
+      if (nested.length) return nested;
     }
-    return [];
+    return collectStockObjects(raw);
   }
 
   function bySymbol(raw, symbol) {
@@ -111,7 +161,7 @@
     if (!raw) return null;
 
     if (Array.isArray(raw)) {
-      return raw.find(x => normalizeSymbol(x.symbol || x.ticker) === sym) || null;
+      return raw.find(x => normalizeSymbol(x.symbol || x.ticker || x.underlying) === sym) || null;
     }
 
     if (raw[sym]) {
@@ -121,16 +171,30 @@
       return { symbol: sym, value: raw[sym] };
     }
 
+    if (raw.data && raw.data[sym]) {
+      return { symbol: sym, ...raw.data[sym] };
+    }
+    if (raw.stocks && raw.stocks[sym]) {
+      return { symbol: sym, ...raw.stocks[sym] };
+    }
+    if (raw.scores && raw.scores[sym]) {
+      return { symbol: sym, ...raw.scores[sym] };
+    }
+
     const arr = asArray(raw);
-    return arr.find(x => normalizeSymbol(x.symbol || x.ticker) === sym) || null;
+    return arr.find(x => normalizeSymbol(x.symbol || x.ticker || x.underlying) === sym) || null;
   }
 
   async function fetchJson(path) {
     try {
       const res = await fetch(path, { cache: "no-store" });
-      if (!res.ok) return null;
+      if (!res.ok) {
+        console.warn("[MMStockCockpit] JSON load failed", res.status, path);
+        return null;
+      }
       return await res.json();
     } catch (e) {
+      console.warn("[MMStockCockpit] JSON load error", path, e);
       return null;
     }
   }
@@ -725,12 +789,90 @@
               <span>Confidence：${d.r2 === null ? "--" : "R² " + fmtNum(d.r2, 2)}</span>
             </div>
           </div>
+
+          ${renderPriceChart(d)}
         </div>
 
         <div>
           ${renderFinalBox(d)}
           ${renderScoreGrid(d)}
         </div>
+      </div>
+    `;
+  }
+
+  function tradingViewSymbol(symbol, runtime = {}, m1 = {}, m7 = {}) {
+    const sym = normalizeSymbol(symbol);
+    const exchange = String(
+      runtime.exchange ||
+      runtime.market ||
+      m1.exchange ||
+      m7.exchange ||
+      ""
+    ).toUpperCase();
+
+    if (exchange.includes("NYSE")) return `NYSE:${sym}`;
+    if (exchange.includes("AMEX")) return `AMEX:${sym}`;
+    if (exchange.includes("NASDAQ")) return `NASDAQ:${sym}`;
+
+    const nyse = new Set([
+      "TSM","ORCL","CRM","NOW","SNOW","DDOG","PLD","LLY","HPQ","NKE","GEV","VST",
+      "AAL","CCL","BAC","C","JPM","SOFI"
+    ]);
+
+    if (sym.includes(".")) return sym;
+    return `${nyse.has(sym) ? "NYSE" : "NASDAQ"}:${sym}`;
+  }
+
+  function renderPriceChart(d) {
+    const tvSymbol = tradingViewSymbol(d.symbol, d.runtime, d.m1, d.m7);
+    const chartUrl =
+      "https://s.tradingview.com/widgetembed/?" +
+      [
+        "hideideas=1",
+        "overrides=%7B%7D",
+        "enabled_features=%5B%5D",
+        "disabled_features=%5B%5D",
+        "locale=zh_TW",
+        "utm_source=daichungwang-wq.github.io",
+        "utm_medium=widget",
+        "utm_campaign=chart",
+        "utm_term=" + encodeURIComponent(tvSymbol),
+        "symbol=" + encodeURIComponent(tvSymbol),
+        "interval=D",
+        "range=12M",
+        "hidesidetoolbar=1",
+        "symboledit=0",
+        "saveimage=0",
+        "toolbarbg=f1f3f6",
+        "studies=%5B%5D",
+        "theme=light",
+        "style=1",
+        "timezone=Asia%2FTaipei",
+        "withdateranges=1",
+        "hidevolume=0",
+        "allow_symbol_change=0",
+        "details=0",
+        "calendar=0",
+        "hotlist=0"
+      ].join("&");
+
+    return `
+      <div class="mm-price-chart">
+        <div class="mm-chart-head">
+          <div>
+            <div class="mm-chart-title">Price Chart / 股價圖</div>
+            <div class="mm-chart-sub">${esc(tvSymbol)} · 12M daily chart · TradingView widget</div>
+          </div>
+          <a class="btn" target="_blank" rel="noopener" href="https://www.tradingview.com/chart/?symbol=${encodeURIComponent(tvSymbol)}">Open Chart</a>
+        </div>
+        <iframe
+          title="${esc(d.symbol)} price chart"
+          src="${chartUrl}"
+          loading="lazy"
+          referrerpolicy="origin"
+          style="width:100%;height:320px;border:0;border-radius:16px;background:#fff;"
+        ></iframe>
       </div>
     `;
   }
@@ -918,6 +1060,13 @@
         .mm-final-v span{font-size:14px;margin-left:6px}
         .mm-final-d,.mm-final-side-d{font-size:12px;line-height:1.55;color:#334155;margin-top:6px;font-weight:750}
         .mm-final-side{background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.75);border-radius:14px;padding:10px}
+        .mm-price-chart{
+          margin-top:14px;border:1px solid #dfeaf5;border-radius:18px;
+          background:#fff;padding:12px;box-shadow:0 8px 20px rgba(16,24,40,.035)
+        }
+        .mm-chart-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}
+        .mm-chart-title{font-size:14px;font-weight:1000}
+        .mm-chart-sub{font-size:11px;color:var(--muted);margin-top:3px;font-weight:750}
         .mm-decision-engine{
           margin-top:18px;border:1px solid #dfeaf5;border-radius:20px;
           background:linear-gradient(180deg,#fbfdff,#f6f9fd);padding:14px
@@ -1035,3 +1184,4 @@
   });
 
 })();
+
