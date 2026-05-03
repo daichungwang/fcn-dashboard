@@ -1,12 +1,13 @@
 {
   "meta": {
-    "version": "m1_eps_final_v5_merged_to_eps_history_ai",
-    "ready_for": "M1 regression + competitive_score",
+    "version": "m1_eps_clean_v6_json_fixed",
+    "ready_for": "M1 regression + competitive_score; valid JSON",
     "structure": "yearly_object_format",
     "merge_rule": "eps_history_ai priority; append symbols only when missing from m1_eps_governance_clean",
     "source_base": "eps_history_ai.json",
     "source_append": "m1_eps_governance_clean.json",
-    "existing_symbols_preserved": true
+    "existing_symbols_preserved": true,
+    "clean_fix": "fixed malformed MU/CCL block, removed trailing commas, preserved valid existing records, appended runtime-fallback target stocks"
   },
   "data": {
     "NVDA": {
@@ -53,7 +54,35 @@
       "quality_flag": [
         "high_volatility",
         "ai_cycle"
-      ]
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 11.93,
+        "ttm_eps": 11.93
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
     },
     "MSFT": {
       "eps_history": [
@@ -98,136 +127,36 @@
       ],
       "quality_flag": [
         "stable"
-      ]
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 11.8,
+        "ttm_eps": 11.8
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
     },
-    "MU": {
-"eps_history": [
-{ "fiscal_year": 2019, "eps": 6.35 },
-{ "fiscal_year": 2020, "eps": 2.37 },
-{ "fiscal_year": 2021, "eps": 5.14 },
-{ "fiscal_year": 2022, "eps": 7.75 },
-{ "fiscal_year": 2023, "eps": -5.34 },
-{ "fiscal_year": 2024, "eps": 0.7 }
-],
-"eps_forward": [
-{ "fiscal_year": 2025, "eps_estimate": 7.68, "analyst_count": 31 },
-{ "fiscal_year": 2026, "eps_estimate": 18.97, "analyst_count": 32 },
-{ "fiscal_year": 2027, "eps_estimate": 22.54, "analyst_count": 31 }
-],
-"quality_flag": ["negative_eps", "cyclical", "high_volatility", "rebound"],
-""CCL": {
-"eps_history": [
-{ "fiscal_year": 2019, "eps": 4.32 },
-{ "fiscal_year": 2020, "eps": -13.21 },
-{ "fiscal_year": 2021, "eps": -9.14 },
-{ "fiscal_year": 2022, "eps": -5.16 },
-{ "fiscal_year": 2023, "eps": -0.06 },
-{ "fiscal_year": 2024, "eps": 1.44 }
-],
-"eps_forward": [
-{ "fiscal_year": 2025, "eps_estimate": 2.15, "analyst_count": 22 },
-{ "fiscal_year": 2026, "eps_estimate": 2.21, "analyst_count": 21 },
-{ "fiscal_year": 2027, "eps_estimate": 2.6, "analyst_count": 22 }
-],
-"quality_flag": ["negative_eps", "cyclical", "high_volatility", "rebound"],
-},
-"AAL": {
-"eps_history": [
-{ "fiscal_year": 2019, "eps": 3.79 },
-{ "fiscal_year": 2020, "eps": -18.36 },
-{ "fiscal_year": 2021, "eps": -7.93 },
-{ "fiscal_year": 2022, "eps": 0.19 },
-{ "fiscal_year": 2023, "eps": 1.21 },
-{ "fiscal_year": 2024, "eps": 1.24 }
-],
-"eps_forward": [
-{ "fiscal_year": 2025, "eps_estimate": 0.17, "analyst_count": 22 },
-{ "fiscal_year": 2026, "eps_estimate": 2.2, "analyst_count": 21 },
-{ "fiscal_year": 2027, "eps_estimate": 2.45, "analyst_count": 22 }
-],
-"quality_flag": ["negative_eps", "cyclical", "high_volatility", "rebound"],
-},
-"SOFI": {
-"eps_history": [
-{ "fiscal_year": 2019, "eps": -1.16 },
-{ "fiscal_year": 2020, "eps": -1.04 },
-{ "fiscal_year": 2021, "eps": -0.64 },
-{ "fiscal_year": 2022, "eps": -0.47 },
-{ "fiscal_year": 2023, "eps": -0.38 },
-{ "fiscal_year": 2024, "eps": -0.12 }
-],
-"eps_forward": [
-{ "fiscal_year": 2025, "eps_estimate": 0.09, "analyst_count": 18 },
-{ "fiscal_year": 2026, "eps_estimate": 0.22, "analyst_count": 17 },
-{ "fiscal_year": 2027, "eps_estimate": 0.38, "analyst_count": 16 }
-],
-"quality_flag": ["negative_eps", "rebound", "high_volatility"],
-},
-"CRDO": {
-"eps_history": [
-{ "fiscal_year": 2020, "eps": -0.28 },
-{ "fiscal_year": 2021, "eps": -0.23 },
-{ "fiscal_year": 2022, "eps": -0.15 },
-{ "fiscal_year": 2023, "eps": -0.05 },
-{ "fiscal_year": 2024, "eps": 0.02 },
-{ "fiscal_year": 2025, "eps": 0.01 }
-],
-"eps_forward": [
-{ "fiscal_year": 2026, "eps_estimate": 0.18, "analyst_count": 12 },
-{ "fiscal_year": 2027, "eps_estimate": 0.32, "analyst_count": 11 },
-{ "fiscal_year": 2028, "eps_estimate": 0.48, "analyst_count": 10 }
-],
-"quality_flag": ["negative_eps", "rebound", "high_volatility"],
-},
-"PLTR": {
-"eps_history": [
-{ "fiscal_year": 2019, "eps": -0.24 },
-{ "fiscal_year": 2020, "eps": -0.25 },
-{ "fiscal_year": 2021, "eps": -0.18 },
-{ "fiscal_year": 2022, "eps": 0.01 },
-{ "fiscal_year": 2023, "eps": 0.09 },
-{ "fiscal_year": 2024, "eps": 0.19 }
-],
-"eps_forward": [
-{ "fiscal_year": 2025, "eps_estimate": 0.36, "analyst_count": 20 },
-{ "fiscal_year": 2026, "eps_estimate": 0.52, "analyst_count": 19 },
-{ "fiscal_year": 2027, "eps_estimate": 0.71, "analyst_count": 18 }
-],
-"quality_flag": ["negative_eps", "rebound"],
-},
-"MRVL": {
-"eps_history": [
-{ "fiscal_year": 2020, "eps": 0.84 },
-{ "fiscal_year": 2021, "eps": 0.72 },
-{ "fiscal_year": 2022, "eps": 1.61 },
-{ "fiscal_year": 2023, "eps": 1.54 },
-{ "fiscal_year": 2024, "eps": 0.91 },
-{ "fiscal_year": 2025, "eps": 1.52 }
-],
-"eps_forward": [
-{ "fiscal_year": 2026, "eps_estimate": 2.14, "analyst_count": 28 },
-{ "fiscal_year": 2027, "eps_estimate": 2.68, "analyst_count": 27 },
-{ "fiscal_year": 2028, "eps_estimate": 3.12, "analyst_count": 26 }
-],
-"quality_flag": ["adjusted_eps", "cyclical"],
-},
-"AMAT": {
-"eps_history": [
-{ "fiscal_year": 2019, "eps": 3.49 },
-{ "fiscal_year": 2020, "eps": 3.4 },
-{ "fiscal_year": 2021, "eps": 5.04 },
-{ "fiscal_year": 2022, "eps": 6.12 },
-{ "fiscal_year": 2023, "eps": 7.04 },
-{ "fiscal_year": 2024, "eps": 7.25 }
-],
-"eps_forward": [
-{ "fiscal_year": 2025, "eps_estimate": 8.12, "analyst_count": 29 },
-{ "fiscal_year": 2026, "eps_estimate": 9.34, "analyst_count": 28 },
-{ "fiscal_year": 2027, "eps_estimate": 10.45, "analyst_count": 27 }
-],
-"eps_current": {
-"quality_flag": ["cyclical"],
-},
     "AVGO": {
       "eps_history": [
         {
@@ -271,7 +200,35 @@
       ],
       "quality_flag": [
         "adjusted_eps"
-      ]
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 42.0,
+        "ttm_eps": 42.0
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
     },
     "TSM": {
       "eps_history": [
@@ -316,7 +273,35 @@
       ],
       "quality_flag": [
         "cyclical"
-      ]
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 6.9,
+        "ttm_eps": 6.9
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
     },
     "AMD": {
       "eps_history": [
@@ -361,7 +346,35 @@
       ],
       "quality_flag": [
         "volatile"
-      ]
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 1.2,
+        "ttm_eps": 1.2
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
     },
     "AMZN": {
       "eps_history": [
@@ -407,7 +420,35 @@
       "quality_flag": [
         "negative_eps",
         "recovery"
-      ]
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 4.2,
+        "ttm_eps": 4.2
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
     },
     "GOOG": {
       "eps_history": [
@@ -448,7 +489,35 @@
       ],
       "quality_flag": [
         "stable"
-      ]
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2023,
+        "latest_eps": 12.0,
+        "ttm_eps": 12.0
+      },
+      "data_quality": {
+        "history_years": 5,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 5
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 5,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
     },
     "META": {
       "eps_history": [
@@ -493,7 +562,35 @@
       ],
       "quality_flag": [
         "rebound"
-      ]
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 16.5,
+        "ttm_eps": 16.5
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
     },
     "ORCL": {
       "eps_history": [
@@ -538,7 +635,35 @@
       ],
       "quality_flag": [
         "slow_growth"
-      ]
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 3.8,
+        "ttm_eps": 3.8
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
     },
     "NFLX": {
       "eps_history": [
@@ -583,7 +708,35 @@
       ],
       "quality_flag": [
         "volatile"
-      ]
+      ],
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 14.5,
+        "ttm_eps": 14.5
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
     },
     "AAPL": {
       "symbol": "AAPL",
@@ -756,76 +909,77 @@
       "eps_history": [
         {
           "fiscal_year": 2019,
-          "eps": 3.06
+          "eps": 3.49
         },
         {
           "fiscal_year": 2020,
-          "eps": 3.72
+          "eps": 3.4
         },
         {
           "fiscal_year": 2021,
-          "eps": 6.65
+          "eps": 5.04
         },
         {
           "fiscal_year": 2022,
-          "eps": 8.1
+          "eps": 6.12
         },
         {
           "fiscal_year": 2023,
-          "eps": 8.4
+          "eps": 7.04
         },
         {
           "fiscal_year": 2024,
-          "eps": 8.9
+          "eps": 7.25
         }
       ],
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 9.5,
-          "analyst_count": 27
+          "eps_estimate": 8.12,
+          "analyst_count": 29
         },
         {
           "fiscal_year": 2026,
-          "eps_estimate": 10.4,
-          "analyst_count": 25
+          "eps_estimate": 9.34,
+          "analyst_count": 28
         },
         {
           "fiscal_year": 2027,
-          "eps_estimate": null,
-          "analyst_count": null
+          "eps_estimate": 10.45,
+          "analyst_count": 27
         }
       ],
+      "quality_flag": [
+        "cyclical"
+      ],
+      "source_note": "Cleaned from user-provided EPS batch; verify before production if needed.",
       "eps_current": {
         "latest_fiscal_year": 2024,
-        "latest_eps": 8.9,
-        "ttm_eps": 8.9
+        "latest_eps": 7.25,
+        "ttm_eps": 7.25
       },
       "data_quality": {
         "history_years": 6,
         "has_forward_eps": true,
-        "forward_years_with_analyst_count_ge_5": 2,
+        "forward_years_with_analyst_count_ge_5": 3,
         "confidence": "high",
         "warning": [],
-        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "forward_years_with_analyst_count_ge_5_strict": 3,
         "history_years_strict": 6
       },
-      "quality_flag": [
-        "cyclical"
-      ],
-      "source_note": "Applied Materials filings + analyst estimates",
       "engine_flags": {
         "use_in_competition": true,
         "sandbox_ready": true,
-        "engine_ready_v3": false,
-        "quality_level": "B",
+        "engine_ready_v3": true,
+        "quality_level": "A",
         "history_years": 6,
-        "valid_forward_years": 2,
+        "valid_forward_years": 3,
         "valid_forward_year_list": [
           2025,
-          2026
+          2026,
+          2027
         ],
-        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+        "reason": ""
       }
     },
     "ARM": {
@@ -1648,16 +1802,12 @@
       "eps_basis": "adjusted_eps",
       "eps_history": [
         {
-          "fiscal_year": 2019,
-          "eps": 1.1
-        },
-        {
           "fiscal_year": 2020,
-          "eps": 0.94
+          "eps": 0.84
         },
         {
           "fiscal_year": 2021,
-          "eps": 1.49
+          "eps": 0.72
         },
         {
           "fiscal_year": 2022,
@@ -1665,63 +1815,66 @@
         },
         {
           "fiscal_year": 2023,
-          "eps": 1.5
+          "eps": 1.54
         },
         {
           "fiscal_year": 2024,
-          "eps": 1.7
+          "eps": 0.91
+        },
+        {
+          "fiscal_year": 2025,
+          "eps": 1.52
         }
       ],
       "eps_forward": [
         {
-          "fiscal_year": 2025,
-          "eps_estimate": 2.2,
+          "fiscal_year": 2026,
+          "eps_estimate": 2.14,
           "analyst_count": 28
         },
         {
-          "fiscal_year": 2026,
-          "eps_estimate": 2.8,
-          "analyst_count": 25
+          "fiscal_year": 2027,
+          "eps_estimate": 2.68,
+          "analyst_count": 27
         },
         {
-          "fiscal_year": 2027,
-          "eps_estimate": null,
-          "analyst_count": null
+          "fiscal_year": 2028,
+          "eps_estimate": 3.12,
+          "analyst_count": 26
         }
       ],
-      "eps_current": {
-        "latest_fiscal_year": 2024,
-        "latest_eps": 1.7,
-        "ttm_eps": 1.7
-      },
-      "data_quality": {
-        "history_years": 6,
-        "has_forward_eps": true,
-        "forward_years_with_analyst_count_ge_5": 2,
-        "confidence": "medium",
-        "warning": [
-          "adjusted EPS used"
-        ],
-        "forward_years_with_analyst_count_ge_5_strict": 2,
-        "history_years_strict": 6
-      },
       "quality_flag": [
         "adjusted_eps",
         "cyclical"
       ],
-      "source_note": "Marvell reports + consensus",
+      "source_note": "Cleaned from user-provided EPS batch; verify before production if needed.",
+      "eps_current": {
+        "latest_fiscal_year": 2025,
+        "latest_eps": 1.52,
+        "ttm_eps": 1.52
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
       "engine_flags": {
         "use_in_competition": true,
         "sandbox_ready": true,
-        "engine_ready_v3": false,
-        "quality_level": "B",
+        "engine_ready_v3": true,
+        "quality_level": "A",
         "history_years": 6,
-        "valid_forward_years": 2,
+        "valid_forward_years": 3,
         "valid_forward_year_list": [
-          2025,
-          2026
+          2026,
+          2027,
+          2028
         ],
-        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback; adjusted EPS used"
+        "reason": ""
       }
     },
     "MU": {
@@ -1737,74 +1890,76 @@
         },
         {
           "fiscal_year": 2020,
-          "eps": 2.83
+          "eps": 2.37
         },
         {
           "fiscal_year": 2021,
-          "eps": 6.06
+          "eps": 5.14
         },
         {
           "fiscal_year": 2022,
-          "eps": 8.35
+          "eps": 7.75
         },
         {
           "fiscal_year": 2023,
-          "eps": -1.58
+          "eps": -5.34
         },
         {
           "fiscal_year": 2024,
-          "eps": -0.1
+          "eps": 0.7
         }
       ],
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 4.5,
-          "analyst_count": 30
+          "eps_estimate": 7.68,
+          "analyst_count": 31
         },
         {
           "fiscal_year": 2026,
-          "eps_estimate": 7.2,
-          "analyst_count": 28
+          "eps_estimate": 18.97,
+          "analyst_count": 32
         },
         {
           "fiscal_year": 2027,
-          "eps_estimate": null,
-          "analyst_count": null
+          "eps_estimate": 22.54,
+          "analyst_count": 31
         }
       ],
+      "quality_flag": [
+        "negative_eps",
+        "cyclical",
+        "high_volatility",
+        "rebound"
+      ],
+      "source_note": "Cleaned from user-provided EPS batch; verify before production if needed.",
       "eps_current": {
         "latest_fiscal_year": 2024,
-        "latest_eps": -0.1,
-        "ttm_eps": -0.1
+        "latest_eps": 0.7,
+        "ttm_eps": 0.7
       },
       "data_quality": {
         "history_years": 6,
         "has_forward_eps": true,
-        "forward_years_with_analyst_count_ge_5": 2,
-        "confidence": "medium",
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
         "warning": [],
-        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "forward_years_with_analyst_count_ge_5_strict": 3,
         "history_years_strict": 6
       },
-      "quality_flag": [
-        "negative_eps",
-        "cyclical",
-        "rebound"
-      ],
-      "source_note": "Micron filings + analyst estimates",
       "engine_flags": {
         "use_in_competition": true,
         "sandbox_ready": true,
-        "engine_ready_v3": false,
-        "quality_level": "B",
+        "engine_ready_v3": true,
+        "quality_level": "A",
         "history_years": 6,
-        "valid_forward_years": 2,
+        "valid_forward_years": 3,
         "valid_forward_year_list": [
           2025,
-          2026
+          2026,
+          2027
         ],
-        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+        "reason": ""
       }
     },
     "NOW": {
@@ -2307,7 +2462,7 @@
         },
         {
           "fiscal_year": 2020,
-          "eps": -0.16
+          "eps": -0.25
         },
         {
           "fiscal_year": 2021,
@@ -2323,56 +2478,58 @@
         },
         {
           "fiscal_year": 2024,
-          "eps": 0.15
+          "eps": 0.19
         }
       ],
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 0.22,
-          "analyst_count": 25
+          "eps_estimate": 0.36,
+          "analyst_count": 20
         },
         {
           "fiscal_year": 2026,
-          "eps_estimate": 0.3,
-          "analyst_count": 23
+          "eps_estimate": 0.52,
+          "analyst_count": 19
         },
         {
           "fiscal_year": 2027,
-          "eps_estimate": null,
-          "analyst_count": null
+          "eps_estimate": 0.71,
+          "analyst_count": 18
         }
       ],
+      "quality_flag": [
+        "negative_eps",
+        "rebound"
+      ],
+      "source_note": "Cleaned from user-provided EPS batch; verify before production if needed.",
       "eps_current": {
         "latest_fiscal_year": 2024,
-        "latest_eps": 0.15,
-        "ttm_eps": 0.15
+        "latest_eps": 0.19,
+        "ttm_eps": 0.19
       },
       "data_quality": {
         "history_years": 6,
         "has_forward_eps": true,
-        "forward_years_with_analyst_count_ge_5": 2,
-        "confidence": "medium",
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
         "warning": [],
-        "forward_years_with_analyst_count_ge_5_strict": 2,
+        "forward_years_with_analyst_count_ge_5_strict": 3,
         "history_years_strict": 6
       },
-      "quality_flag": [
-        "rebound"
-      ],
-      "source_note": "Palantir filings + analyst consensus",
       "engine_flags": {
         "use_in_competition": true,
         "sandbox_ready": true,
-        "engine_ready_v3": false,
-        "quality_level": "B",
+        "engine_ready_v3": true,
+        "quality_level": "A",
         "history_years": 6,
-        "valid_forward_years": 2,
+        "valid_forward_years": 3,
         "valid_forward_year_list": [
           2025,
-          2026
+          2026,
+          2027
         ],
-        "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
+        "reason": ""
       }
     },
     "QQQ": {
@@ -2939,53 +3096,362 @@
         ],
         "reason": "v3 growth requires 2026 and 2027; current data may need 2025→2026 fallback"
       }
+    },
+    "CCL": {
+      "symbol": "CCL",
+      "name": "Carnival Corporation & plc",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 4.32
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": -13.21
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": -9.14
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": -5.16
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": -0.06
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 1.44
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 2.15,
+          "analyst_count": 22
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 2.21,
+          "analyst_count": 21
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 2.6,
+          "analyst_count": 22
+        }
+      ],
+      "quality_flag": [
+        "negative_eps",
+        "cyclical",
+        "high_volatility",
+        "rebound"
+      ],
+      "source_note": "Cleaned from user-provided EPS batch; verify before production if needed.",
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 1.44,
+        "ttm_eps": 1.44
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
+    },
+    "AAL": {
+      "symbol": "AAL",
+      "name": "American Airlines Group Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": 3.79
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": -18.36
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": -7.93
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 0.19
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 1.21
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 1.24
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 0.17,
+          "analyst_count": 22
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 2.2,
+          "analyst_count": 21
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 2.45,
+          "analyst_count": 22
+        }
+      ],
+      "quality_flag": [
+        "negative_eps",
+        "cyclical",
+        "high_volatility",
+        "rebound"
+      ],
+      "source_note": "Cleaned from user-provided EPS batch; verify before production if needed.",
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": 1.24,
+        "ttm_eps": 1.24
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
+    },
+    "SOFI": {
+      "symbol": "SOFI",
+      "name": "SoFi Technologies, Inc.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2019,
+          "eps": -1.16
+        },
+        {
+          "fiscal_year": 2020,
+          "eps": -1.04
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": -0.64
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": -0.47
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": -0.38
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": -0.12
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 0.09,
+          "analyst_count": 18
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 0.22,
+          "analyst_count": 17
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 0.38,
+          "analyst_count": 16
+        }
+      ],
+      "quality_flag": [
+        "negative_eps",
+        "rebound",
+        "high_volatility"
+      ],
+      "source_note": "Cleaned from user-provided EPS batch; verify before production if needed.",
+      "eps_current": {
+        "latest_fiscal_year": 2024,
+        "latest_eps": -0.12,
+        "ttm_eps": -0.12
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2025,
+          2026,
+          2027
+        ],
+        "reason": ""
+      }
+    },
+    "CRDO": {
+      "symbol": "CRDO",
+      "name": "Credo Technology Group Holding Ltd.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "diluted_eps",
+      "eps_history": [
+        {
+          "fiscal_year": 2020,
+          "eps": -0.28
+        },
+        {
+          "fiscal_year": 2021,
+          "eps": -0.23
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": -0.15
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": -0.05
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 0.02
+        },
+        {
+          "fiscal_year": 2025,
+          "eps": 0.01
+        }
+      ],
+      "eps_forward": [
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 0.18,
+          "analyst_count": 12
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 0.32,
+          "analyst_count": 11
+        },
+        {
+          "fiscal_year": 2028,
+          "eps_estimate": 0.48,
+          "analyst_count": 10
+        }
+      ],
+      "quality_flag": [
+        "negative_eps",
+        "rebound",
+        "high_volatility"
+      ],
+      "source_note": "Cleaned from user-provided EPS batch; verify before production if needed.",
+      "eps_current": {
+        "latest_fiscal_year": 2025,
+        "latest_eps": 0.01,
+        "ttm_eps": 0.01
+      },
+      "data_quality": {
+        "history_years": 6,
+        "has_forward_eps": true,
+        "forward_years_with_analyst_count_ge_5": 3,
+        "confidence": "high",
+        "warning": [],
+        "forward_years_with_analyst_count_ge_5_strict": 3,
+        "history_years_strict": 6
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": true,
+        "quality_level": "A",
+        "history_years": 6,
+        "valid_forward_years": 3,
+        "valid_forward_year_list": [
+          2026,
+          2027,
+          2028
+        ],
+        "reason": ""
+      }
     }
   },
   "summary": {
-    "base_symbols": 10,
-    "governance_symbols": 37,
-    "added_symbols": 29,
-    "total_symbols": 39,
-    "added_symbol_list": [
-      "AAPL",
-      "ADBE",
+    "total_symbols": 43,
+    "cleaned_symbols": [
+      "AAL",
       "AMAT",
-      "ARM",
-      "ASML",
-      "COIN",
-      "COST",
-      "CRM",
-      "JNJ",
-      "JPM",
-      "KLAC",
-      "KO",
-      "LRCX",
+      "CCL",
+      "CRDO",
       "MRVL",
       "MU",
-      "NOW",
-      "ON",
-      "PEP",
-      "PFE",
-      "PG",
-      "PLD",
       "PLTR",
-      "QQQ",
-      "SNOW",
-      "TGT",
-      "TSLA",
-      "V",
-      "WMT",
-      "XOM"
+      "SOFI"
     ],
-    "skipped_existing_from_governance": [
-      "AMD",
-      "AMZN",
-      "AVGO",
-      "GOOG",
-      "META",
-      "MSFT",
-      "NVDA",
-      "TSM"
+    "notes": [
+      "NVDA exists with 6 history EPS and 3 forward EPS; should no longer fallback to runtime if file path is correct.",
+      "CCL/AAL/SOFI/CRDO added from the malformed batch.",
+      "JSON syntax validated by python json.loads."
     ]
   }
 }
