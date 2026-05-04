@@ -876,20 +876,20 @@
 
 
   const FCN_CAP_RULES = {
-    core: 50000,
-    growth: 30000,
-    defensive: 30000,
-    defense: 30000,
-    income: 20000,
-    incoming: 20000,
-    speculative: 3000
+    core: 500000,
+    growth: 300000,
+    defensive: 300000,
+    defense: 300000,
+    income: 200000,
+    incoming: 200000,
+    speculative: 30000
   };
 
   const FCN_CAP_EXCEPTIONS = {
-    NVDA: 70000,
-    TSM: 70000,
-    SMH: 70000,
-    GOOG: 70000
+    NVDA: 700000,
+    TSM: 700000,
+    SMH: 700000,
+    GOOG: 700000
   };
 
   function getFcnBaseCap(d) {
