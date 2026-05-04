@@ -56,8 +56,9 @@ def price_models(series,h):
     out={}
 
     for name,d in [("linear",1),("quadratic",2)]:
-        c=polyfit(xs,ys,d)
-        if not c: continue
+        c = polyfit(xs, ys, d)
+        if c is None:
+            continue
         pred=[predict(c,x) for x in xs]
         out[name]={
             "today":predict(c,0),
