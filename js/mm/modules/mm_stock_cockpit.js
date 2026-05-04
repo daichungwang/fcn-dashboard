@@ -2009,26 +2009,133 @@
     `;
   }
 
+
+  function fcnRowHasSymbol(row, symbol) {
+    const sym = normalizeSymbol(symbol);
+    const basket = Array.isArray(row && row.basket) ? row.basket.map(normalizeSymbol) : [];
+    return basket.includes(sym) || normalizeSymbol(row && (row.symbol || row.ticker || row.underlying)) === sym;
+  }
+
+  function getRowBroker(row) {
+    return String((row && (row.tw_bank || row.broker || row.account || row.bank)) || "未分類").trim() || "未分類";
+  }
+
+  function getRowCurrentPrice(symbol) {
+    const runtime = getRuntime(symbol);
+    return firstNum(runtime.price, runtime.last_price, runtime.close, runtime.current_price, runtime.price_now);
+  }
+
+  function getRowStockRisk(row, symbol) {
+    const sym = normalizeSymbol(symbol);
+    const entry = firstNum(row && row.entry_prices && row.entry_prices[sym]);
+    const now = getRowCurrentPrice(sym);
+    const kiPct = firstNum(row && row.ki);
+    const strikePct = firstNum(row && row.strike);
+    const kiPrice = entry !== null && kiPct !== null ? entry * kiPct / 100 : null;
+    const strikePrice = entry !== null && strikePct !== null ? entry * strikePct / 100 : null;
+    const distKi = now !== null && kiPrice ? ((now - kiPrice) / kiPrice) * 100 : null;
+    const distStrike = now !== null && strikePrice ? ((now - strikePrice) / strikePrice) * 100 : null;
+
+    if (now !== null && kiPrice !== null && now < kiPrice) {
+      return { bucket: "danger", label: "積極處理", dist_to_ki_pct: distKi, dist_to_strike_pct: distStrike };
+    }
+    if (now !== null && strikePrice !== null && now < strikePrice) {
+      return { bucket: "watch", label: "持續追蹤", dist_to_ki_pct: distKi, dist_to_strike_pct: distStrike };
+    }
+    return { bucket: "healthy", label: "健康", dist_to_ki_pct: distKi, dist_to_strike_pct: distStrike };
+  }
+
+  function isMaturityZoneRow(row) {
+    const days = daysToDate(row && (row.maturity_time || row.exit_time));
+    return days !== null && days >= 0 && days <= 10;
+  }
+
+  function addBrokerBucket(target, bucket, amount) {
+    if (!target[bucket]) target[bucket] = { amount: 0, count: 0 };
+    target[bucket].amount += amount;
+    target[bucket].count += 1;
+  }
+
+  function buildBrokerRiskBreakdown(rows, symbol) {
+    const out = {};
+    rows.forEach(row => {
+      if (!fcnRowHasSymbol(row, symbol)) return;
+      const broker = getRowBroker(row);
+      const amount = getFHAmt(row);
+      const risk = getRowStockRisk(row, symbol);
+      if (!out[broker]) {
+        out[broker] = {
+          broker,
+          amount: 0,
+          count: 0,
+          maturity: { amount: 0, count: 0 },
+          danger: { amount: 0, count: 0 },
+          watch: { amount: 0, count: 0 },
+          healthy: { amount: 0, count: 0 }
+        };
+      }
+      out[broker].amount += amount;
+      out[broker].count += 1;
+      if (isMaturityZoneRow(row)) addBrokerBucket(out[broker], "maturity", amount);
+      addBrokerBucket(out[broker], risk.bucket, amount);
+    });
+    return Object.values(out).sort((a, b) => b.amount - a.amount);
+  }
+
+  function fmtAmtCount(obj) {
+    const amount = obj && safeNum(obj.amount, 0) || 0;
+    const count = obj && safeNum(obj.count, 0) || 0;
+    return `<b>${fmtUsd(amount, 0)}</b><br><span>${fmtNum(count, 0)} 筆</span>`;
+  }
+
+  function renderLayerActions(actions = []) {
+    if (!actions.length) return "";
+    return `<span class="mm-layer-actions">${actions.map(a => `<a class="btn" href="${esc(a.href)}" onclick="event.stopPropagation()">${esc(a.label)}</a>`).join("")}</span>`;
+  }
+
+  function m1StatusText(d) {
+    if (d.m1.in_pool30) return "Pool30";
+    if (d.m1.in_candidate) return "Candidate";
+    if (d.m1.in_universe) return "Universe";
+    return "Not in Universe";
+  }
+
+  function renderCcPill(label, value, status = "ok") {
+    return `<div class="mm-cc-pill ${status}"><span>${esc(label)}</span><b>${esc(value)}</b></div>`;
+  }
+
   function renderL2(d) {
-    const brokers = d.m2.broker_breakdown || {};
     const plan = buildFcnAllocationPlan(d);
     const rows = Array.isArray(d.m2.active_fcn_rows) ? d.m2.active_fcn_rows : [];
-    const brokerRows = Object.keys(brokers).length
-      ? Object.entries(brokers).map(([k, v]) => `<tr><td>${esc(k)}</td><td>${fmtUsd(v, 0)}</td></tr>`).join("")
-      : `<tr><td colspan="2">No broker breakdown</td></tr>`;
+    const brokerBreakdown = buildBrokerRiskBreakdown(rows, d.symbol);
+
+    const brokerRows = brokerBreakdown.length
+      ? brokerBreakdown.map(x => `
+          <tr>
+            <td><b>${esc(x.broker)}</b></td>
+            <td>${fmtAmtCount(x)}</td>
+            <td>${fmtAmtCount(x.maturity)}</td>
+            <td>${fmtAmtCount(x.danger)}</td>
+            <td>${fmtAmtCount(x.watch)}</td>
+            <td>${fmtAmtCount(x.healthy)}</td>
+          </tr>
+        `).join("")
+      : `<tr><td colspan="6">No broker breakdown</td></tr>`;
 
     const fcnRows = rows.length
       ? rows.map(x => {
-          const bank = x.tw_bank || x.broker || x.bank || "--";
+          const bank = getRowBroker(x);
           const basket = Array.isArray(x.basket) ? x.basket.join(" / ") : "--";
+          const risk = getRowStockRisk(x, d.symbol);
+          const maturity = isMaturityZoneRow(x) ? "到期專區" : "一般";
           return `
             <tr>
               <td><b>${esc(x.fcn_id || "--")}</b><br><span>${esc(bank)}</span></td>
               <td>${fmtUsd(getFHAmt(x), 0)}</td>
+              <td>${esc(risk.label)}<br><span>KI ${risk.dist_to_ki_pct === null ? "--" : fmtPctPoint(risk.dist_to_ki_pct, 1)} / Strike ${risk.dist_to_strike_pct === null ? "--" : fmtPctPoint(risk.dist_to_strike_pct, 1)}</span></td>
+              <td>${esc(maturity)}</td>
               <td>${esc(basket)}</td>
               <td>${esc(firstVal(x.rate, "--"))}%</td>
-              <td>KI ${esc(firstVal(x.ki, "--"))}% / Strike ${esc(firstVal(x.strike, "--"))}%</td>
-              <td>${esc(x.maturity_time || "--")}</td>
             </tr>
           `;
         }).join("")
@@ -2038,9 +2145,7 @@
       <details open class="mm-m2-risk-detail">
         <summary>
           <span>L2 M2 Risk Breakdown / FCN 曝險風險</span>
-          <span class="mm-summary-actions">
-            <a class="btn" href="../m2.html" onclick="event.stopPropagation()">Go M2</a>
-          </span>
+          ${renderLayerActions([{ label: "Go M2", href: "../m2.html" }])}
         </summary>
         <div class="mm-detail-grid">
           <div class="mini-kpi"><div class="k">Active FCN Amount</div><div class="v">${fmtUsd(d.m2.fcn_amount_usd, 0)}</div><div class="d">同底層 active FCN 名目金額</div></div>
@@ -2057,9 +2162,18 @@
 
         <details class="mm-m2-subdetail" open>
           <summary>Broker Breakdown / 銀行拆分</summary>
-          <div class="table-wrap mm-small-table">
+          <div class="table-wrap mm-small-table mm-broker-risk-table">
             <table>
-              <thead><tr><th>Broker / Account</th><th>Amount</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>Broker</th>
+                  <th>Amount / FCN筆數</th>
+                  <th>到期專區</th>
+                  <th>積極處理</th>
+                  <th>持續追蹤</th>
+                  <th>健康</th>
+                </tr>
+              </thead>
               <tbody>${brokerRows}</tbody>
             </table>
           </div>
@@ -2069,7 +2183,7 @@
           <summary>Related FCN List / 相關 FCN 清單</summary>
           <div class="table-wrap mm-small-table">
             <table>
-              <thead><tr><th>FCN</th><th>Amount</th><th>Basket</th><th>Rate</th><th>Protection</th><th>Maturity</th></tr></thead>
+              <thead><tr><th>FCN</th><th>Amount</th><th>Risk</th><th>Maturity</th><th>Basket</th><th>Rate</th></tr></thead>
               <tbody>${fcnRows}</tbody>
             </table>
           </div>
@@ -2081,7 +2195,7 @@
   function renderL3(d) {
     return `
       <details open>
-        <summary>L3 M7 Valuation / Trend / Structure</summary>
+        <summary><span>L3 M7 Valuation / Trend / Structure</span>${renderLayerActions([{ label: "Go M7", href: "./m7.html" }, { label: "Formula Test", href: "./formula_test.html" }])}</summary>
         <div class="mm-detail-grid">
           <div class="mini-kpi"><div class="k">Fair Price</div><div class="v">${fmtNum(d.fairPrice, 2)}</div><div class="d">regression / anchor</div></div>
           <div class="mini-kpi"><div class="k">Valuation Gap</div><div class="v ${gapClass(d.valuationGapPct)}">${d.valuationGapPct === null ? "--" : fmtPct(d.valuationGapPct)}</div><div class="d">price vs fair price</div></div>
@@ -2102,30 +2216,65 @@
 
   function renderL4(d) {
     const ccRows = [
-      ["EPS Quality", d.cc.eps_status || (d.cc.epsOk ? "Full / Partial EPS" : "Fallback / Missing")],
-      ["Runtime", d.cc.runtimeOk ? "OK" : "Missing"],
-      ["Global / Fundamental", d.cc.globalOk ? "OK" : "Missing"],
-      ["Quality Flags", Array.isArray(d.cc.eps_quality_flags) && d.cc.eps_quality_flags.length ? d.cc.eps_quality_flags.join(" / ") : "--"],
-      ["Missing / Watch", d.cc.missing && d.cc.missing.length ? d.cc.missing.join(" / ") : "--"],
-      ["CC Grade", d.cc.text],
-      ["Coverage Score", fmtPct(d.cc.score)]
-    ].map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join("");
+      ["EPS Quality", d.cc.eps_status || (d.cc.epsOk ? "Full / Partial EPS" : "Fallback / Missing"), d.cc.epsOk ? "ok" : "warn"],
+      ["Runtime", d.cc.runtimeOk ? "OK" : "Missing", d.cc.runtimeOk ? "ok" : "bad"],
+      ["Global / Fundamental", d.cc.globalOk ? "OK" : "Missing", d.cc.globalOk ? "ok" : "warn"],
+      ["Quality Flags", Array.isArray(d.cc.eps_quality_flags) && d.cc.eps_quality_flags.length ? d.cc.eps_quality_flags.join(" / ") : "--", "neutral"],
+      ["Missing / Watch", d.cc.missing && d.cc.missing.length ? d.cc.missing.join(" / ") : "--", d.cc.missing && d.cc.missing.length ? "warn" : "ok"],
+      ["CC Grade", d.cc.text, ccClass(d.cc.grade)],
+      ["Coverage Score", fmtPct(d.cc.score), d.cc.score >= 0.8 ? "ok" : d.cc.score >= 0.5 ? "warn" : "bad"]
+    ].map(([k, v, cls]) => `<tr><td>${esc(k)}</td><td><span class="mm-status-text ${esc(cls)}">${esc(v)}</span></td></tr>`).join("");
+
+    const status = m1StatusText(d);
+    const scoreStatus = d.m1Score !== null && d.m1Score >= 8 ? "ok" : d.m1Score !== null && d.m1Score >= 7 ? "warn" : "bad";
+    const ccStatus = ccClass(d.cc.grade);
 
     return `
-      <details open>
-        <summary>L4 M1 Score + CC Source / 股票品質與資料可信度</summary>
-        <div class="mm-detail-grid">
-          <div class="mini-kpi"><div class="k">M1 Score</div><div class="v">${fmtNum(d.m1Score, 2)}</div><div class="d">Source：${esc(d.m1.m1_source || "missing")} ｜ Rank：${d.m1.rank ?? "--"} ｜ Raw：${fmtNum(d.m1.raw_m1_score, 2)}</div></div>
-          <div class="mini-kpi"><div class="k">Pool Status</div><div class="v">${esc(d.m1.in_pool30 ? "Pool30" : d.m1.in_candidate ? "Candidate" : d.m1.in_universe ? "Universe" : "Not in Universe")}</div><div class="d">AI → Candidate → Pool30 funnel</div></div>
-          <div class="mini-kpi"><div class="k">Category</div><div class="v">${esc(firstVal(d.m1.category, "--"))}</div><div class="d">${esc(firstVal(d.m1.category_sub, "--"))}</div></div>
-          <div class="mini-kpi"><div class="k">CC Source</div><div class="v">${esc(d.cc.text)}</div><div class="d">${esc(d.cc.eps_status || d.cc.note)}${d.cc.missing && d.cc.missing.length ? "｜" + esc(d.cc.missing.join(" / ")) : ""}</div></div>
+      <details open class="mm-l4-quality-detail">
+        <summary>
+          <span>L4 M1 Score + CC Source / 股票品質與資料可信度</span>
+          ${renderLayerActions([
+            { label: "M1", href: "../m1.html" },
+            { label: "M1 Test", href: "../m1_test.html" },
+            { label: "Research", href: `../m1_new_stock.html?symbol=${encodeURIComponent(d.symbol)}` },
+            { label: "M1 Competitive", href: "../m1_competitive.html" }
+          ])}
+        </summary>
+
+        <div class="mm-l4-hero">
+          <div class="mm-l4-score-card ${scoreStatus}">
+            <div class="mm-l4-k">M1 Quality</div>
+            <div class="mm-l4-big">${fmtNum(d.m1Score, 2)}</div>
+            <div class="mm-l4-sub">${esc(status)}｜Source：${esc(d.m1.m1_source || "missing")}｜Rank：${d.m1.rank ?? "--"}</div>
+          </div>
+          <div class="mm-l4-score-card ${ccStatus}">
+            <div class="mm-l4-k">CC Source</div>
+            <div class="mm-l4-big">${esc(d.cc.text)}</div>
+            <div class="mm-l4-sub">${esc(d.cc.eps_status || d.cc.note)}${d.cc.missing && d.cc.missing.length ? "｜" + esc(d.cc.missing.join(" / ")) : ""}</div>
+          </div>
+          <div class="mm-l4-score-card neutral">
+            <div class="mm-l4-k">Category</div>
+            <div class="mm-l4-big small">${esc(firstVal(d.m1.category, "--"))}</div>
+            <div class="mm-l4-sub">${esc(firstVal(d.m1.category_sub, "--"))}</div>
+          </div>
         </div>
-        <div class="table-wrap mm-small-table">
-          <table>
-            <thead><tr><th>Source Layer</th><th>Status</th></tr></thead>
-            <tbody>${ccRows}</tbody>
-          </table>
+
+        <div class="mm-l4-pill-row">
+          ${renderCcPill("EPS", d.cc.eps_status || "--", d.cc.epsOk ? "ok" : "warn")}
+          ${renderCcPill("Runtime", d.cc.runtimeOk ? "OK" : "Missing", d.cc.runtimeOk ? "ok" : "bad")}
+          ${renderCcPill("Global", d.cc.globalOk ? "OK" : "Missing", d.cc.globalOk ? "ok" : "warn")}
+          ${renderCcPill("Coverage", fmtPct(d.cc.score), d.cc.score >= 0.8 ? "ok" : d.cc.score >= 0.5 ? "warn" : "bad")}
         </div>
+
+        <details class="mm-m2-subdetail">
+          <summary>Source Layer Detail / 資料來源明細</summary>
+          <div class="table-wrap mm-small-table mm-l4-source-table">
+            <table>
+              <thead><tr><th>Source Layer</th><th>Status</th></tr></thead>
+              <tbody>${ccRows}</tbody>
+            </table>
+          </div>
+        </details>
       </details>
     `;
   }
@@ -2305,6 +2454,37 @@
         .mm-m2-analysis-box span{color:var(--muted);font-weight:800}
         .mm-m2-subdetail{margin-top:10px;border:1px solid #e4edf6;border-radius:12px;background:#fff;padding:8px 10px}
         .mm-m2-subdetail summary{cursor:pointer;font-size:12px;font-weight:900;color:#475467}
+
+        .c1-details details>summary{display:flex;justify-content:space-between;align-items:center;gap:10px}
+        .mm-layer-actions{display:inline-flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+        .mm-layer-actions .btn{font-size:11px;padding:6px 9px;border-radius:10px;background:#fff}
+        .mm-broker-risk-table table{min-width:760px}
+        .mm-broker-risk-table td span{font-size:11px;color:var(--muted);font-weight:800}
+        .mm-broker-risk-table th:nth-child(4),.mm-broker-risk-table td:nth-child(4){background:#fff7f7}
+        .mm-broker-risk-table th:nth-child(5),.mm-broker-risk-table td:nth-child(5){background:#fffdf2}
+        .mm-broker-risk-table th:nth-child(6),.mm-broker-risk-table td:nth-child(6){background:#f7fff9}
+        .mm-l4-quality-detail{background:linear-gradient(180deg,#f9fbff,#ffffff)!important}
+        .mm-l4-hero{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0}
+        .mm-l4-score-card{border:1px solid #e4edf6;border-radius:16px;background:#fff;padding:14px;box-shadow:0 8px 18px rgba(16,24,40,.035)}
+        .mm-l4-score-card.ok{background:var(--good-bg);border-color:#ccead9}
+        .mm-l4-score-card.warn{background:var(--warn-bg);border-color:#f1dfb5}
+        .mm-l4-score-card.bad{background:var(--bad-bg);border-color:#f0cfcf}
+        .mm-l4-score-card.neutral{background:#f8fbff;border-color:#dfeaf5}
+        .mm-l4-k{font-size:11px;color:var(--muted);font-weight:1000;text-transform:uppercase;letter-spacing:.02em}
+        .mm-l4-big{font-size:30px;font-weight:1000;line-height:1.05;margin-top:7px;color:#0f172a}
+        .mm-l4-big.small{font-size:20px;line-height:1.2;word-break:break-word}
+        .mm-l4-sub{font-size:12px;line-height:1.5;color:#334155;font-weight:750;margin-top:7px}
+        .mm-l4-pill-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+        .mm-cc-pill{border:1px solid #e4edf6;border-radius:14px;background:#fff;padding:10px}
+        .mm-cc-pill span{display:block;font-size:11px;color:var(--muted);font-weight:900;margin-bottom:4px}
+        .mm-cc-pill b{font-size:14px;color:#0f172a}
+        .mm-cc-pill.ok{background:var(--good-bg);border-color:#ccead9}
+        .mm-cc-pill.warn{background:var(--warn-bg);border-color:#f1dfb5}
+        .mm-cc-pill.bad{background:var(--bad-bg);border-color:#f0cfcf}
+        .mm-status-text.ok{color:var(--good);font-weight:1000}
+        .mm-status-text.warn{color:var(--warn);font-weight:1000}
+        .mm-status-text.bad{color:var(--bad);font-weight:1000}
+        .mm-status-text.neutral{color:#475467;font-weight:900}
         .mm-pos{color:var(--good)!important}
         .mm-neg{color:var(--bad)!important}
         @media(max-width:1180px){
@@ -2315,6 +2495,7 @@
           .mm-forecast-grid{grid-template-columns:1fr}
           .mm-forecast-basis-box,.mm-forecast-detail-grid{grid-template-columns:1fr}
           .mm-m6-forecast-bar-foot{grid-template-columns:1fr 1fr}
+          .mm-l4-hero,.mm-l4-pill-row{grid-template-columns:1fr}
         }
         @media(max-width:720px){
           .mm-engine-flow,.mm-detail-grid,.mm-trace{grid-template-columns:1fr}
