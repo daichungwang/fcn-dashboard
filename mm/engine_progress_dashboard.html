@@ -340,6 +340,76 @@ th{background:#f8fafc}
   opacity:.75;
 }
 
+
+/* A. Macro Context / A5 System Status */
+.a-macro-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(180px,1fr));
+  gap:12px;
+}
+.mm-a-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 8px 22px rgba(16,24,40,.045);
+  overflow:hidden;
+}
+.mm-a-card summary{
+  list-style:none;
+  cursor:pointer;
+  padding:13px 14px;
+  font-weight:900;
+  border-bottom:1px solid #eef3f8;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.mm-a-card summary::-webkit-details-marker{display:none}
+.mm-a-card summary:after{content:"▸";color:var(--muted);font-weight:900}
+.mm-a-card[open] summary:after{content:"▾"}
+.mm-a-card-body{padding:12px 14px}
+.mm-a-lines{display:grid;gap:6px}
+.mm-a-line{display:flex;justify-content:space-between;gap:8px;font-size:12px;line-height:1.45}
+.mm-a-line span:first-child{color:var(--muted);font-weight:800}
+.mm-a-line b{font-weight:900}
+.mm-a-note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:8px}
+.mm-a-detail{display:grid;gap:7px;margin-top:10px;padding-top:10px;border-top:1px dashed #e6eef6}
+.mm-status-pill{
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:999px;padding:4px 8px;font-size:11px;font-weight:900;white-space:nowrap;
+  border:1px solid #d0d5dd;background:#f8fafc;color:#334155;
+}
+.mm-status-pill.green{background:#eaf8f1;color:#188b58;border-color:#ccead9}
+.mm-status-pill.yellow{background:#fff4df;color:#b9770e;border-color:#f1dfb5}
+.mm-status-pill.red{background:#fff0f0;color:#be3f3f;border-color:#f0cfcf}
+.mm-status-pill.gray{background:#f2f4f7;color:#667085;border-color:#d0d5dd}
+.mm-a5-confidence{
+  margin-bottom:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  font-weight:900;
+  font-size:13px;
+}
+.mm-a5-confidence.green{background:#eaf8f1;color:#188b58;border:1px solid #ccead9}
+.mm-a5-confidence.yellow{background:#fff4df;color:#b9770e;border:1px solid #f1dfb5}
+.mm-a5-confidence.red{background:#fff0f0;color:#be3f3f;border:1px solid #f0cfcf}
+.mm-a5-module{
+  border:1px solid #e6eef6;
+  border-radius:14px;
+  padding:10px;
+  background:#fbfdff;
+  margin-top:8px;
+}
+.mm-a5-module-title{display:flex;justify-content:space-between;gap:8px;align-items:center;font-weight:900;margin-bottom:6px}
+.mm-a5-module-note{font-size:12px;color:#475569;line-height:1.55}
+.mm-a5-module.green{border-color:#ccead9;background:#f7fffb}
+.mm-a5-module.yellow{border-color:#f1dfb5;background:#fffaf0}
+.mm-a5-module.red{border-color:#f0cfcf;background:#fff7f7}
+.mm-a5-module.gray{border-color:#d0d5dd;background:#f8fafc}
+@media(max-width:1260px){.a-macro-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.a-macro-grid{grid-template-columns:1fr}}
+
 /* responsive */
 @media(max-width:1260px){
   .main-workspace{grid-template-columns:1fr}
@@ -383,10 +453,84 @@ th{background:#f8fafc}
   </section>
 
   <!-- A -->
-  <details class="section">
-    <summary>A. Top Dashboard / 模組入口</summary>
+  <details class="section" open>
+    <summary>A. Macro Context / 投資前 10 秒必看區</summary>
     <div class="section-body">
-      <div id="top-dashboard" class="a-grid"></div>
+      <div class="a-macro-grid">
+        <details class="mm-a-card">
+          <summary><span>A1 全球股市</span><span class="mm-status-pill gray">Market Pulse</span></summary>
+          <div class="mm-a-card-body">
+            <div class="mm-a-lines">
+              <div class="mm-a-line"><span>美股（S&P500）</span><b>↑ +0.8%</b></div>
+              <div class="mm-a-line"><span>NASDAQ</span><b>↑ +1.2%</b></div>
+              <div class="mm-a-line"><span>費半 / SMH</span><b>↑ +2.1%</b></div>
+              <div class="mm-a-line"><span>道瓊</span><b>↑ +0.4%</b></div>
+              <div class="mm-a-line"><span>台股</span><b>↓ -0.3%</b></div>
+            </div>
+            <div class="mm-a-detail">
+              <div class="mm-a-note">其他市場：歐洲、日本、中國、香港等可後續接資料後放在展開區。</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="mm-a-card">
+          <summary><span>A2 總經指標</span><span class="mm-status-pill yellow">Macro</span></summary>
+          <div class="mm-a-card-body">
+            <div class="mm-a-lines">
+              <div class="mm-a-line"><span>VIX</span><b>待接資料</b></div>
+              <div class="mm-a-line"><span>10Y Yield</span><b>待接資料</b></div>
+              <div class="mm-a-line"><span>USD/TWD</span><b>待接資料</b></div>
+              <div class="mm-a-line"><span>USD/JPY</span><b>待接資料</b></div>
+            </div>
+            <div class="mm-a-detail">
+              <div class="mm-a-note">展開後放：2Y / 10Y、DXY、MOVE、HY/IG spread、其他匯率。</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="mm-a-card">
+          <summary><span>A3 收支 / 現金流</span><span class="mm-status-pill gray">M9</span></summary>
+          <div class="mm-a-card-body">
+            <div class="mm-a-lines">
+              <div class="mm-a-line"><span>月收入</span><b>待接 M9</b></div>
+              <div class="mm-a-line"><span>月支出</span><b>待接 M9</b></div>
+              <div class="mm-a-line"><span>淨流</span><b>待接 M9</b></div>
+            </div>
+            <div class="mm-a-detail">
+              <div class="mm-a-note">展開後放：FCN利息、股息、房貸、生活費、現金水位與可投資餘額。</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="mm-a-card">
+          <summary><span>A4 AI Agent 任務</span><span class="mm-status-pill yellow">Roadmap</span></summary>
+          <div class="mm-a-card-body">
+            <div class="mm-a-lines">
+              <div class="mm-a-line"><span>Priority 1</span><b>M2 風險監控</b></div>
+              <div class="mm-a-line"><span>Priority 2</span><b>M7 估值重算</b></div>
+              <div class="mm-a-line"><span>Priority 3</span><b>M6 timing 判斷</b></div>
+            </div>
+            <div class="mm-a-detail">
+              <div class="mm-a-note">後續可放：自動 alert、news 摘要、analyst consensus、FCN 結構建議。</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="mm-a-card" open>
+          <summary><span>A5 M&M 開發進度</span><span id="a5-confidence-pill" class="mm-status-pill yellow">Medium</span></summary>
+          <div class="mm-a-card-body" id="a5-system-status">
+            <div class="mm-a5-confidence yellow">系統可信度：🟡 Medium（可用但需人工判斷）</div>
+            <div class="mm-a-lines">
+              <div class="mm-a-line"><span>M1</span><b>資料不足</b></div>
+              <div class="mm-a-line"><span>M2</span><b>開發中</b></div>
+              <div class="mm-a-line"><span>M6</span><b>未完成</b></div>
+              <div class="mm-a-line"><span>M7</span><b>V2 測試中</b></div>
+              <div class="mm-a-line"><span>MM</span><b>整合中</b></div>
+            </div>
+          </div>
+        </details>
+      </div>
+      <div id="top-dashboard" class="a-grid" style="display:none"></div>
     </div>
   </details>
 
@@ -574,6 +718,83 @@ th{background:#f8fafc}
   </details>
 
 </div>
+
+<script>
+(function(){
+  const A5_DEFAULT_MODULES = {
+    M1: { status: "partial", note: "程式開發完成；EPS / fundamental / 研究卡資料仍未全部到位，需顯示資料卡完成率與選股完成率。" },
+    M2: { status: "partial", note: "fcn_pool 可用；FCN 風險、worst-of、risk score 與 MM double-check 邏輯仍在整合。" },
+    M6: { status: "not_ready", note: "問題最多；目前只放一小部分展示，timing / allocation / 決策資訊尚未完整，不可完全作為決策依據。" },
+    M7: { status: "testing", note: "舊 M7 已完成；新 M7V2 開發接近完成，但評選與校準尚未 finalize。" },
+    MM: { status: "partial", note: "C1 cockpit 已成型；A 區 Macro Context、L1 decision engine、M2/M6/M7 整合仍在優化。" }
+  };
+
+  function colorOf(status){
+    if(status === "ready") return "green";
+    if(status === "testing") return "yellow";
+    if(status === "partial") return "gray";
+    if(status === "not_ready") return "red";
+    return "gray";
+  }
+  function labelOf(status){
+    if(status === "ready") return "Ready";
+    if(status === "testing") return "Testing";
+    if(status === "partial") return "Partial";
+    if(status === "not_ready") return "Not Ready";
+    return "Unknown";
+  }
+  function computeConfidence(modules){
+    const scores = { ready:1, testing:.6, partial:.4, not_ready:.1 };
+    const vals = Object.values(modules || {});
+    const ratio = vals.length ? vals.reduce((s,m)=>s+(scores[m.status] ?? .2),0)/vals.length : .3;
+    if(ratio >= .8) return { color:"green", label:"🟢 High（可依系統執行）", short:"High" };
+    if(ratio >= .5) return { color:"yellow", label:"🟡 Medium（可用但需人工判斷）", short:"Medium" };
+    return { color:"red", label:"🔴 Low（不可依賴）", short:"Low" };
+  }
+  function renderA5SystemStatus(data){
+    const modules = Object.assign({}, A5_DEFAULT_MODULES, data && data.modules ? data.modules : data || {});
+    const confidence = computeConfidence(modules);
+    const el = document.getElementById("a5-system-status");
+    const pill = document.getElementById("a5-confidence-pill");
+    if(pill){
+      pill.className = `mm-status-pill ${confidence.color}`;
+      pill.textContent = confidence.short;
+    }
+    if(!el) return;
+    el.innerHTML = `
+      <div class="mm-a5-confidence ${confidence.color}">系統可信度：${confidence.label}</div>
+      <div class="mm-a-lines">
+        ${Object.entries(modules).map(([name,m])=>`
+          <div class="mm-a-line"><span>${name}</span><b>${m.note ? m.note.split(/[；。]/)[0] : labelOf(m.status)}</b></div>
+        `).join("")}
+      </div>
+      <div class="mm-a-detail">
+        ${Object.entries(modules).map(([name,m])=>`
+          <div class="mm-a5-module ${colorOf(m.status)}">
+            <div class="mm-a5-module-title">
+              <span>${name}</span>
+              <span class="mm-status-pill ${colorOf(m.status)}">${labelOf(m.status)}</span>
+            </div>
+            <div class="mm-a5-module-note">${m.note || ""}</div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+  window.renderA5SystemStatus = renderA5SystemStatus;
+  document.addEventListener("DOMContentLoaded", function(){
+    renderA5SystemStatus(A5_DEFAULT_MODULES);
+    fetch("../data/mm/engine_progress_dashboard.json", { cache:"no-store" })
+      .then(r => r.ok ? r.json() : null)
+      .then(json => {
+        if(!json) return;
+        const modules = json.a5_modules || json.system_status || json.modules;
+        if(modules) renderA5SystemStatus(modules);
+      })
+      .catch(()=>{});
+  });
+})();
+</script>
 
 <!-- Existing modules retained -->
 <script src="../js/mm/modules/mm_parameter_brain.js"></script>
