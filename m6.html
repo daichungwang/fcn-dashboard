@@ -1420,7 +1420,7 @@ ${safeText(stock.final_note || "-")}
       return `<span class="badge ${cls}">${safeText(label)}</span>`;
     }
 
-    function renderForecastBar    function renderForecastBar(row){
+    function renderForecastBar(row){
       if (!row) {
         return `<div class="empty">沒有可畫的 forecast debug 資料。</div>`;
       }
@@ -1472,7 +1472,7 @@ ${safeText(stock.final_note || "-")}
       `;
     }
 
-    function renderForecastDebugPanel    function renderForecastDebugPanel(stock){
+    function renderForecastDebugPanel(stock){
       const row = getForecastDebugForSymbol(stock.symbol);
       if (!row) {
         return `
@@ -1609,7 +1609,7 @@ Warnings：${warnings.length ? warnings.join(" / ") : "none"}
       `;
     }
 
-    function renderDetail    function renderDetail(stock){
+    function renderDetail(stock){
       const panel = document.getElementById("detailPanel");
 
       if (!stock) {
