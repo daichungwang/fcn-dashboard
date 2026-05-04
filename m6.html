@@ -1394,144 +1394,191 @@ ${safeText(stock.final_note || "-")}
     }
 
     function getForecastDebugForSymbol(symbol){
-      const rows = Array.isArray(priceForecastDebug?.rows) ? priceForecastDebug.rows : [];
-      return rows.find(x => x.symbol === symbol) || null;
+      const rows =
+        Array.isArray(priceForecastDebug?.data) ? priceForecastDebug.data :
+        Array.isArray(priceForecastDebug?.rows) ? priceForecastDebug.rows :
+        [];
+      return rows.find(x => String(x.symbol || "").toUpperCase() === String(symbol || "").toUpperCase()) || null;
     }
 
-    function renderForecastBar(row){
-      if (!row || !row.available) {
+    function getForecastFinal(row, horizon){
+      return row?.forecast?.[horizon]?.final || {};
+    }
+
+    function getForecastBeforeDecision(row, horizon){
+      return row?.forecast?.[horizon]?.price_weighted_before_decision || {};
+    }
+
+    function getDecisionAdjustment(row, horizon){
+      return row?.forecast?.[horizon]?.decision_adjustment || {};
+    }
+
+    function formatDecisionBadge(row){
+      const label = row?.decision_label || row?.flat?.decision_label || row?.decision_mode || "-";
+      const mode = row?.decision_mode || row?.flat?.decision_mode || "";
+      const cls = mode === "B" ? "green" : "yellow";
+      return `<span class="badge ${cls}">${safeText(label)}</span>`;
+    }
+
+    function renderForecastBar    function renderForecastBar(row){
+      if (!row) {
         return `<div class="empty">沒有可畫的 forecast debug 資料。</div>`;
       }
 
-      const models = Array.isArray(row.model_points) ? row.model_points.filter(x => x.available && Number.isFinite(Number(x.fair_price))) : [];
-      const m7Actual = Number(row.m7_actual_price_now);
-      const prices = [
-        Number(row.price_now),
-        ...(Number.isFinite(m7Actual) ? [m7Actual] : []),
-        ...models.map(x => Number(x.fair_price))
-      ].filter(Number.isFinite);
+      const today = Number(row.today_price);
+      const f1d = Number(getForecastFinal(row, "1d")?.weighted_price_final);
+      const f1w = Number(getForecastFinal(row, "1w")?.weighted_price_final);
+      const f1m = Number(getForecastFinal(row, "1m")?.weighted_price_final);
+      const before1m = Number(getForecastBeforeDecision(row, "1m")?.weighted_price);
 
+      const prices = [today, f1d, f1w, f1m, before1m].filter(Number.isFinite);
       if (!prices.length) {
-        return `<div class="empty">沒有 six-model fair price 資料。</div>`;
+        return `<div class="empty">沒有可畫的 M6 prediction 資料。</div>`;
       }
 
-      const min = Math.min(...prices) * 0.95;
-      const max = Math.max(...prices) * 1.05;
+      const min = Math.min(...prices) * 0.98;
+      const max = Math.max(...prices) * 1.02;
+
       const pos = (v) => {
         const n = Number(v);
         if (!Number.isFinite(n) || max === min) return 50;
         return 18 + ((n - min) / (max - min)) * 64;
       };
 
+      const marker = (label, value, cls, top = true) => {
+        if (!Number.isFinite(Number(value))) return "";
+        return `
+          <div class="forecast-marker ${cls}" style="left:${pos(value)}%;">
+            <div class="marker-label" style="${top ? "top:8px;" : "bottom:8px;"}">${safeText(label)}</div>
+          </div>
+        `;
+      };
+
       return `
         <div class="forecast-bar">
           <div class="forecast-bar-line"></div>
-          ${models.map(m => `
-            <div class="forecast-marker ${m.module === "M1" ? "m1" : "m7"}" style="left:${pos(m.fair_price)}%;">
-              <div class="marker-label">${safeText(m.label)}</div>
-            </div>
-          `).join("")}
-          ${Number.isFinite(m7Actual) ? `
-            <div class="forecast-marker" style="left:${pos(m7Actual)}%;background:#f97316;">
-              <div class="marker-label" style="top:60px;color:#9a3412;background:#fff7ed;border-color:#fed7aa;">M7 ACTUAL</div>
+          ${marker("1D", f1d, "m7", true)}
+          ${marker("1W", f1w, "m1", false)}
+          ${marker("1M", f1m, "m7", true)}
+          ${Number.isFinite(before1m) ? `
+            <div class="forecast-marker" style="left:${pos(before1m)}%;background:#f97316;">
+              <div class="marker-label" style="bottom:8px;color:#9a3412;background:#fff7ed;border-color:#fed7aa;">Before</div>
             </div>
           ` : ""}
-          <div class="forecast-marker today" style="left:${pos(row.price_now)}%;">
+          <div class="forecast-marker today" style="left:${pos(today)}%;">
             <div class="marker-label">TODAY</div>
           </div>
         </div>
       `;
     }
 
-    function renderForecastDebugPanel(stock){
+    function renderForecastDebugPanel    function renderForecastDebugPanel(stock){
       const row = getForecastDebugForSymbol(stock.symbol);
       if (!row) {
         return `
           <div class="forecast-debug-panel">
-            <div class="forecast-debug-title">M6 Price Forecast Debug</div>
+            <div class="forecast-debug-title">M6 Price Forecast / v9.1</div>
             <div class="empty">尚未找到 ${safeText(stock.symbol)} 的 data/m6/price_forecast_debug.json 資料。</div>
           </div>
         `;
       }
 
-      if (!row.available) {
-        return `
-          <div class="forecast-debug-panel">
-            <div class="forecast-debug-title">M6 Price Forecast Debug</div>
-            <div class="empty">${safeText(stock.symbol)}：${safeText(row.missing_reason || "missing data")}</div>
-          </div>
-        `;
-      }
+      const timing = row.timing_structure || {};
+      const f1d = getForecastFinal(row, "1d");
+      const f1w = getForecastFinal(row, "1w");
+      const f1m = getForecastFinal(row, "1m");
+      const b1d = getForecastBeforeDecision(row, "1d");
+      const b1w = getForecastBeforeDecision(row, "1w");
+      const b1m = getForecastBeforeDecision(row, "1m");
+      const d1d = getDecisionAdjustment(row, "1d");
+      const d1w = getDecisionAdjustment(row, "1w");
+      const d1m = getDecisionAdjustment(row, "1m");
 
-      const resultA = row.result_a_direct_adjusted_price_avg || {};
-      const resultB = row.result_b_return_based_formula || {};
-      const forecast = resultB.forecast || {};
-      const models = Array.isArray(row.model_points) ? row.model_points : [];
-      const debugStats = row.debug_stats || {};
-      const warnings = Array.isArray(row.warnings) ? row.warnings : [];
+      const oneMonthModels = row.forecast?.["1m"]?.price_models || {};
+      const fitSummary = row.debug?.price_fit_summary || {};
+      const warnings = Array.isArray(row.debug?.warnings) ? row.debug.warnings : [];
+
+      const modelRows = ["linear", "quadratic", "log"].map(model => {
+        const m = oneMonthModels[model] || {};
+        const fit = fitSummary[model] || {};
+        return `
+          <tr class="m7-row">
+            <td><b>${safeText(model)}</b><br><span class="small">Pure price / 1M</span></td>
+            <td>$${fmtNum(m.raw_today_price)}</td>
+            <td>$${fmtNum(m.raw_future_price)}</td>
+            <td>${fmtNum(m.today_adjustment_factor, 6)}</td>
+            <td>$${fmtNum(m.adjusted_price)}</td>
+            <td>${fmtNum(m.adjusted_upside_pct)}%</td>
+            <td>${fmtNum(m.r2 ?? fit.r2, 4)}</td>
+            <td>${safeText(m.status || fit.status || "-")}</td>
+          </tr>
+        `;
+      }).join("");
 
       return `
         <div class="forecast-debug-panel">
           <div class="forecast-debug-head">
             <div>
-              <div class="forecast-debug-title">M6 Price Forecast Debug / 六模型檢查版</div>
+              <div class="forecast-debug-title">M6 Price Forecast / v9.1 決策版</div>
               <div class="forecast-debug-sub">
-                先輸出大資料做檢查：A = 6價格 × 6調整因子；B = return-based 公式。確認合理後再回歸 M6/MM。
+                讀取 data/m6/price_forecast_debug.json。這版使用 pure price 三模型，先做 today-bias adjustment，再用 timing A/B decision 修正 final price。
               </div>
             </div>
-            <span class="badge blue">DEBUG</span>
+            ${formatDecisionBadge(row)}
           </div>
 
           ${renderForecastBar(row)}
 
           <div class="forecast-basis-box">
             <div class="forecast-basis-item">
-              <div class="k">Runtime Today Price / 今日價格基準</div>
-              <div class="v">$${fmtNum(row.price_now)}</div>
-              <div class="d">Forecast gap / return 一律用 runtime today price 當 denominator。</div>
+              <div class="k">Today Price / 今日價格</div>
+              <div class="v">$${fmtNum(row.today_price)}</div>
+              <div class="d">M6 所有 upside 都以 today_price 為基準。</div>
             </div>
             <div class="forecast-basis-item">
-              <div class="k">M7 Actual Price / M7回歸用價格</div>
-              <div class="v">$${fmtNum(row.m7_actual_price_now)}</div>
-              <div class="d">這是 M7 weekly series 的最新價格，通常是 last week close，不等於今日即時價。</div>
+              <div class="k">Decision Mode / 短線狀態</div>
+              <div class="v">${safeText(row.decision_label || row.decision_mode || "-")}</div>
+              <div class="d">Direction：${safeText(row.short_direction || "-")}；A=盤整/不明，B=短線方向明確。</div>
             </div>
           </div>
 
           <div class="forecast-result-grid">
             <div class="forecast-result-card">
-              <div class="result-title">Result A｜直接調整價格平均</div>
-              <div class="result-main">$${fmtNum(resultA.price)}</div>
+              <div class="result-title">1D Tomorrow</div>
+              <div class="result-main">$${fmtNum(f1d.weighted_price_final)}</div>
               <div class="result-sub">
-                Return vs Today：${fmtPct(resultA.return_vs_today)}<br>
-                公式：avg(fair_price_i × abs(runtime_today / fair_price_i))
+                Upside：${fmtNum(f1d.weighted_upside_pct_final)}%<br>
+                Before decision：$${fmtNum(b1d.weighted_price)}<br>
+                Rule：${safeText(d1d.mode || "-")} / ${safeText(d1d.direction || "-")}
               </div>
             </div>
-
             <div class="forecast-result-card">
-              <div class="result-title">Result B｜Return-based 公式</div>
-              <div class="result-main">$${fmtNum(resultB.fair_implied_price)}</div>
+              <div class="result-title">1W One Week</div>
+              <div class="result-main">$${fmtNum(f1w.weighted_price_final)}</div>
               <div class="result-sub">
-                Fair Expected Return：${fmtPct(resultB.fair_expected_return)}<br>
-                公式：Σ((fair_i - runtime_today)/runtime_today × confidence_weight_i) / Σ(weight_i)
+                Upside：${fmtNum(f1w.weighted_upside_pct_final)}%<br>
+                Before decision：$${fmtNum(b1w.weighted_price)}<br>
+                Rule：${safeText(d1w.mode || "-")} / ${safeText(d1w.direction || "-")}
               </div>
             </div>
           </div>
 
           <div class="forecast-result-grid">
             <div class="forecast-result-card">
-              <div class="result-title">明日 / 一周 / 一個月</div>
+              <div class="result-title">1M One Month</div>
+              <div class="result-main">$${fmtNum(f1m.weighted_price_final)}</div>
               <div class="result-sub">
-                明日：${fmtPct(forecast["1d"]?.forecast_return)} → $${fmtNum(forecast["1d"]?.forecast_price)}<br>
-                一周：${fmtPct(forecast["1w"]?.forecast_return)} → $${fmtNum(forecast["1w"]?.forecast_price)}<br>
-                一個月：${fmtPct(forecast["1m"]?.forecast_return)} → $${fmtNum(forecast["1m"]?.forecast_price)}
+                Upside：${fmtNum(f1m.weighted_upside_pct_final)}%<br>
+                Before decision：$${fmtNum(b1m.weighted_price)}<br>
+                After decision：$${fmtNum(d1m.after_price)}
               </div>
             </div>
             <div class="forecast-result-card">
-              <div class="result-title">Debug Stats</div>
+              <div class="result-title">Timing Structure</div>
               <div class="result-sub">
-                Models：${debugStats.available_model_count ?? "-"} available / ${debugStats.missing_model_count ?? "-"} missing<br>
-                Fair Band：$${fmtNum(debugStats.fair_price_low)} / $${fmtNum(debugStats.fair_price_mid_simple)} / $${fmtNum(debugStats.fair_price_high)}<br>
-                Weight Sum：${fmtNum(debugStats.confidence_weight_sum, 4)}
+                1D / 1W / 1M raw：${fmtNum(timing.raw_returns?.ret_1d_pct)}% / ${fmtNum(timing.raw_returns?.ret_1w_pct)}% / ${fmtNum(timing.raw_returns?.ret_1m_pct)}%<br>
+                Daily norm：${fmtNum(timing.daily_normalized_returns?.ret_1d_daily_pct, 4)}% / ${fmtNum(timing.daily_normalized_returns?.ret_1w_daily_pct, 4)}% / ${fmtNum(timing.daily_normalized_returns?.ret_1m_daily_pct, 4)}%<br>
+                Consistency：${fmtNum(timing.consistency_ratio, 4)}；Dispersion：${fmtNum(timing.dispersion, 6)}；Same sign：${safeText(timing.same_sign)}
               </div>
             </div>
           </div>
@@ -1540,41 +1587,29 @@ ${safeText(stock.final_note || "-")}
             <thead>
               <tr>
                 <th>Model</th>
-                <th>Fair Price</th>
-                <th>M7 Actual / Basis</th>
-                <th>調整因子 abs(runtime today/model)</th>
-                <th>調整後價格 A</th>
-                <th>Gap Return vs Runtime Today</th>
+                <th>Raw Today</th>
+                <th>Raw Future 1M</th>
+                <th>Today Bias Factor</th>
+                <th>Adjusted 1M</th>
+                <th>Adj Upside</th>
                 <th>R²</th>
-                <th>Confidence Weight</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              ${models.map(m => `
-                <tr class="${m.module === "M1" ? "m1-row" : "m7-row"}">
-                  <td><b>${safeText(m.label)}</b><br><span class="small">${safeText(m.module)} / ${safeText(m.model)}</span></td>
-                  <td>$${fmtNum(m.fair_price)}</td>
-                  <td>$${fmtNum(m.model_actual_price)}<br><span class="small">${safeText(m.model_actual_price_basis || "-")}</span></td>
-                  <td>${fmtNum(m.user_adjustment_factor_abs_today_over_model, 4)}</td>
-                  <td>$${fmtNum(m.adjusted_price_user_formula)}</td>
-                  <td>${fmtPct(m.gap_return)}</td>
-                  <td>${fmtNum(m.model_r2, 4)}</td>
-                  <td>${fmtNum(m.confidence_weight, 4)}</td>
-                  <td>${m.available ? "OK" : safeText(m.missing_reason || "missing")}</td>
-                </tr>
-              `).join("")}
+              ${modelRows}
             </tbody>
           </table>
 
           <div class="forecast-small-note">
+Decision Rule：${safeText(timing.rule || "-")}
 Warnings：${warnings.length ? warnings.join(" / ") : "none"}
           </div>
         </div>
       `;
     }
 
-    function renderDetail(stock){
+    function renderDetail    function renderDetail(stock){
       const panel = document.getElementById("detailPanel");
 
       if (!stock) {
@@ -1694,7 +1729,7 @@ Warnings：${warnings.length ? warnings.join(" / ") : "none"}
         ${renderSectionBox("sec_trading", "市場評論 / 技術提醒", renderTradingPanel(marketComment), true)}
         ${renderSectionBox("sec_m3", "M3 Market Comment", renderM3MarketCommentBlock(stock), true)}
         ${renderSectionBox("sec_chart", "價格區間圖", chartHtml, true)}
-        ${renderSectionBox("sec_forecast_debug", "M6 Price Forecast Debug / 六模型推估檢查", renderForecastDebugPanel(stock), false)}
+        ${renderSectionBox("sec_forecast_debug", "M6 Price Forecast / v9.1 決策推估", renderForecastDebugPanel(stock), false)}
         ${renderSectionBox("sec_positions", "多部位展開", detailPositionsHtml, true)}
         ${(stock.exposure_alert && stock.exposure_alert.text) ? renderSectionBox("sec_exposure", "曝險警示", `
           <div class="mini warn-card">
