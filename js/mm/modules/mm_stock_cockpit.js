@@ -36,7 +36,8 @@
     m2Exposure: "/fcn-dashboard/data/m7/m2_stock_exposure.json",
     fcnPool: "/fcn-dashboard/data/fcn_pool.json",
     profileAll: "/fcn-dashboard/data/m1/m1_stock_profile_all.json",
-    profileDeep: "/fcn-dashboard/data/m1/m1_stock_profile.json"
+    profileDeep: "/fcn-dashboard/data/m1/m1_stock_profile.json",
+m6Forecast: "/fcn-dashboard/data/m6/price_forecast_debug.json"
   };
 
   const STATE = {
