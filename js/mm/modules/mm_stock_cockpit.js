@@ -1208,8 +1208,7 @@ function buildOneLineDecision(d){
     const cat = firstVal(d.m1.category, d.m7.category, d.runtime.category, "--");
     const sub = firstVal(d.m1.category_sub, d.m7.category_sub, d.runtime.category_sub, d.m7.subsector, "--");
 
-    const oneLine = narrative.oneLine;
-
+    const oneLine = buildOneLineDecision(d) || narrative.oneLine;
     const rawRet1d = firstNum(d.runtime.ret_1d, d.runtime.change_pct, d.runtime.day_change_pct);
     const rawRet1w = firstNum(d.runtime.ret_1w, d.runtime.return_1w);
     const rawRet1m = firstNum(d.runtime.ret_1m, d.runtime.return_1m);
