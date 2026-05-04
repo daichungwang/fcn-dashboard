@@ -100,7 +100,7 @@ def eps_models(eps_list,price_today,h):
     # linear / quadratic
     for name,d in [("linear",1),("quadratic",2)]:
         c=polyfit(years,eps,d)
-        if not c: continue
+        if c is None:
         e_today=predict(c,years[-1])
         e_future=predict(c,years[-1]+1)
         models[name]={
