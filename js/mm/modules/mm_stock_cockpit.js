@@ -1361,40 +1361,44 @@ function buildOneLineDecision(d){
       </div>
     `;
   }
+function renderForecastPlaceholder(d) {
 
-  function renderForecastPlaceholder(d) {
+  const m6 = d.m6;
+
+  if (!m6){
+    return `<div class="mm-forecast-panel">No M6 data</div>`;
+  }
+
+  const f1d = m6.forecast?.["1d"]?.final || {};
+  const f1w = m6.forecast?.["1w"]?.final || {};
+  const f1m = m6.forecast?.["1m"]?.final || {};
+
+  function row(title, f){
     return `
-      <div class="mm-forecast-panel">
-        <div class="mm-forecast-head">
-          <div>
-            <div class="mm-forecast-title">Price Forecast / 價格預測</div>
-            <div class="mm-forecast-sub">M6 model placeholder：先保留版位，暫不在 MM 做 heavy logic</div>
-          </div>
-          <span class="pill warn">Pending M6</span>
-        </div>
-        <div class="mm-forecast-grid">
-          <div class="mm-forecast-card">
-            <div class="k">明日</div>
-            <div class="v">--</div>
-            <div class="d">forecast price / delta</div>
-          </div>
-          <div class="mm-forecast-card">
-            <div class="k">一周</div>
-            <div class="v">--</div>
-            <div class="d">forecast price / delta</div>
-          </div>
-          <div class="mm-forecast-card">
-            <div class="k">一個月</div>
-            <div class="v">--</div>
-            <div class="d">forecast price / delta</div>
-          </div>
-        </div>
-        <div class="mm-forecast-note">
-          預留資料來源：data/m6/price_forecast.json。未來由 M6 產生 raw forecast × 暴力修正權重後，MM C1 只讀取顯示。
+      <div class="mm-forecast-card">
+        <div class="k">${title}</div>
+        <div class="v">$${fmtNum(f.weighted_price_final)}</div>
+        <div class="d">
+          ${f.weighted_upside_pct_final>0?"+":""}${fmtNum(f.weighted_upside_pct_final,1)}%
         </div>
       </div>
     `;
   }
+
+  return `
+    <div class="mm-forecast-panel">
+      <div class="mm-forecast-head">
+        <div>M6 Forecast</div>
+        <div>${m6.decision_mode} / ${m6.short_direction}</div>
+      </div>
+      <div class="mm-forecast-grid">
+        ${row("1D",f1d)}
+        ${row("1W",f1w)}
+        ${row("1M",f1m)}
+      </div>
+    </div>
+  `;
+}
 
   function renderFinalBox(d) {
     return `
