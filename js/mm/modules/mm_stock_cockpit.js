@@ -745,85 +745,139 @@
     );
   }
 
-  function buildOneLineDecision(d) {
+  function classifyFcnTiming(d) {
     const m6 = d.m6;
+    const up1m = getM6OneMonthUpside(m6);
+    const mode = m6 ? (m6.decision_mode || (m6.flat && m6.flat.decision_mode) || "") : "";
+    const dir = m6 ? (m6.short_direction || (m6.flat && m6.flat.short_direction) || "") : "";
+
+    if (!m6) {
+      return {
+        key: "missing",
+        label: "M6資料不足",
+        allocation: "0%",
+        tone: "warn",
+        action: "先列候選，等待價格預測後再決定投入比例。"
+      };
+    }
+
+    if (dir === "down" || (up1m !== null && up1m < -2)) {
+      return {
+        key: "pullback",
+        label: "短線回檔 / 甜甜價",
+        allocation: "70%~100%",
+        tone: "ok",
+        action: "可分批布局FCN，投入比例可提高，但仍需確認strike與票息。"
+      };
+    }
+
+    if (mode === "A" || (up1m !== null && Math.abs(up1m) < 1)) {
+      return {
+        key: "flat",
+        label: "短線盤整",
+        allocation: "50%~70%",
+        tone: "warn",
+        action: "可做中等配置FCN，以收息為主，不急著加滿。"
+      };
+    }
+
+    if (dir === "up" && up1m !== null && up1m > 5) {
+      return {
+        key: "strong_up",
+        label: "短線急速上行",
+        allocation: "0%~20%",
+        tone: "bad",
+        action: "不追價，降低配置或僅做保守低strike FCN。"
+      };
+    }
+
+    if (dir === "up" && up1m !== null && up1m > 1) {
+      return {
+        key: "mild_up",
+        label: "短線溫和上行",
+        allocation: "30%~50%",
+        tone: "warn",
+        action: "可小幅配置FCN，避免追高，strike需保守。"
+      };
+    }
+
+    if (dir === "up") {
+      return {
+        key: "up",
+        label: "短線偏上",
+        allocation: "30%~50%",
+        tone: "warn",
+        action: "可保守配置FCN，但不建議追價。"
+      };
+    }
+
+    return {
+      key: "neutral",
+      label: "短線中性",
+      allocation: "40%~60%",
+      tone: "warn",
+      action: "可候選觀察，等待更明確價格區間。"
+    };
+  }
+
+  function buildM1Text(d) {
     const m1 = d.m1Score;
-    const m7 = d.m7Score;
+    if (m1 === null) return "M1體質資料不足";
+    if (m1 >= 8) return "M1體質佳";
+    if (m1 >= 7) return "M1體質可";
+    return "M1體質偏弱";
+  }
+
+  function buildM7Text(d) {
+    const valuationGap = d.valuationGapPct;
+    if (valuationGap === null) return "M7估值資料不足";
+    if (valuationGap >= 20) return "M7估值偏高";
+    if (valuationGap >= 10) return "M7估值略高";
+    if (valuationGap <= -10) return "M7估值有折價";
+    return "M7估值合理";
+  }
+
+  function buildM2Text(d) {
+    const exposurePct = firstNum(d.m2.concentration_pct, d.m2.exposure_pct, d.m2.weight_pct);
+    const activeCount = firstNum(d.m2.active_fcn_count);
+    if (exposurePct !== null && exposurePct >= 20) return "M2曝險過高";
+    if (exposurePct !== null && exposurePct >= 10) return "M2曝險偏高";
+    if (activeCount !== null && activeCount >= 3) return "M2同底層檔數偏多";
+    return "M2曝險合理";
+  }
+
+  function buildFcnAction(d) {
+    const m1 = d.m1Score;
     const valuationGap = d.valuationGapPct;
     const trendScore = d.trendScore;
     const exposurePct = firstNum(d.m2.concentration_pct, d.m2.exposure_pct, d.m2.weight_pct);
-    const activeCount = firstNum(d.m2.active_fcn_count);
+    const timing = classifyFcnTiming(d);
 
-    const m1Text =
-      m1 === null ? "M1體質資料不足" :
-      m1 >= 8 ? "M1體質佳" :
-      m1 >= 7 ? "M1體質可" :
-      "M1體質偏弱";
+    if (m1 !== null && m1 < 6.5) return "不適合作為新FCN底層。";
+    if (trendScore !== null && trendScore < 5.5) return "FCN暫停新增，避免接到下行趨勢。";
+    if (exposurePct !== null && exposurePct >= 20) return "暫停新增FCN，先控管同底層集中度。";
+    if (valuationGap !== null && valuationGap >= 20) return "估值偏高，不追價；若要做FCN，僅低比例與低strike。";
+    if (exposurePct !== null && exposurePct >= 10) return "曝險偏高，不加碼同底層；僅保守低比例FCN。";
+    if (valuationGap !== null && valuationGap >= 10 && timing.key === "pullback") return "估值略高，回檔可分批，但strike仍需保守。";
+    return timing.action;
+  }
 
-    const m7Text =
-      valuationGap === null ? "M7估值資料不足" :
-      valuationGap >= 20 ? "M7估值偏高" :
-      valuationGap >= 10 ? "M7估值略高" :
-      valuationGap <= -10 ? "M7估值有折價" :
-      "M7估值合理";
+  function buildOneLineDecision(d) {
+    const m1Text = buildM1Text(d);
+    const m7Text = buildM7Text(d);
+    const m2Text = buildM2Text(d);
+    const timing = classifyFcnTiming(d);
+    const action = buildFcnAction(d);
 
-    const m2Text =
-      exposurePct !== null && exposurePct >= 20 ? "M2曝險過高" :
-      exposurePct !== null && exposurePct >= 10 ? "M2曝險偏高" :
-      activeCount !== null && activeCount >= 3 ? "M2同底層檔數偏多" :
-      "M2曝險合理";
-
-    if (m1 !== null && m1 < 6.5) {
-      return `${d.symbol}｜${m1Text}，${m7Text}，${m2Text}；不適合作為新FCN底層。`;
+    if (d.m1Score !== null && d.m1Score < 6.5) {
+      return `${d.symbol}｜${m1Text}，${m7Text}，${m2Text}；${action}`;
     }
 
-    if (trendScore !== null && trendScore < 5.5) {
-      return `${d.symbol}｜${m1Text}，${m7Text}，M7長趨勢偏弱，${m2Text}；FCN暫停新增，避免接到下行趨勢。`;
+    if (d.trendScore !== null && d.trendScore < 5.5) {
+      return `${d.symbol}｜${m1Text}，${m7Text}，M7長趨勢偏弱，${m2Text}；${action}`;
     }
 
-    if (exposurePct !== null && exposurePct >= 20) {
-      return `${d.symbol}｜${m1Text}，${m7Text}，${m2Text}；暫停新增FCN，先控管同底層集中度。`;
-    }
-
-    if (!m6) {
-      return `${d.symbol}｜${m1Text}，${m7Text}，尚無M6 timing資料，${m2Text}；先列候選，等待價格預測後再決定投入比例。`;
-    }
-
-    const mode = m6.decision_mode || (m6.flat && m6.flat.decision_mode) || "";
-    const dir = m6.short_direction || (m6.flat && m6.flat.short_direction) || "";
-    const up1m = getM6OneMonthUpside(m6);
-
-    let m6Text = "M6短線資料不足";
-    let action = "先觀察，不急著新增FCN。";
-
-    if (dir === "down" || (up1m !== null && up1m < -2)) {
-      m6Text = "M6短線回檔形成甜甜價";
-      action = "可分批布局FCN，投入比例可提高，但仍需確認strike與票息。";
-    } else if (mode === "A" || (up1m !== null && Math.abs(up1m) < 1)) {
-      m6Text = "M6短線盤整";
-      action = "可做中等配置FCN，以收息為主，不急著加滿。";
-    } else if (dir === "up" && up1m !== null && up1m > 5) {
-      m6Text = "M6短線急速上行";
-      action = "不追價，降低配置或僅做保守低strike FCN。";
-    } else if (dir === "up" && up1m !== null && up1m > 1) {
-      m6Text = "M6短線溫和上行";
-      action = "可小幅配置FCN，避免追高，strike需保守。";
-    } else if (dir === "up") {
-      m6Text = "M6短線偏上";
-      action = "可保守配置FCN，但不建議追價。";
-    }
-
-    if (valuationGap !== null && valuationGap >= 20) {
-      action = "估值偏高，不追價；若要做FCN，僅低比例與低strike。";
-    } else if (valuationGap !== null && valuationGap >= 10 && action.includes("提高")) {
-      action = "估值略高，回檔可分批，但strike仍需保守。";
-    }
-
-    if (exposurePct !== null && exposurePct >= 10 && !action.includes("暫停")) {
-      action = "曝險偏高，不加碼同底層；僅保守低比例FCN。";
-    }
-
-    return `${d.symbol}｜${m1Text}，${m7Text}，${m6Text}，${m2Text}；${action}`;
+    return `${d.symbol}｜${m1Text}，${m7Text}，M6${timing.label}，${m2Text}；${action}`;
   }
 
   /* -----------------------------
@@ -1447,11 +1501,6 @@
             </div>
             <span class="pill warn">No M6</span>
           </div>
-          <div class="mm-forecast-grid">
-            <div class="mm-forecast-card"><div class="k">明日</div><div class="v">--</div><div class="d">等待 M6 engine</div></div>
-            <div class="mm-forecast-card"><div class="k">一周</div><div class="v">--</div><div class="d">等待 M6 engine</div></div>
-            <div class="mm-forecast-card"><div class="k">一個月</div><div class="v">--</div><div class="d">等待 M6 engine</div></div>
-          </div>
           <div class="mm-forecast-note">請先執行 scripts/m6/build_price_forecast_debug.py 產生 data/m6/price_forecast_debug.json。</div>
         </div>
       `;
@@ -1470,8 +1519,8 @@
     const mode = m6.decision_mode || (m6.flat && m6.flat.decision_mode) || "--";
     const label = m6.decision_label || (m6.flat && m6.flat.decision_label) || mode;
     const direction = m6.short_direction || (m6.flat && m6.flat.short_direction) || "--";
-    const tone = mode === "B" ? "ok" : "warn";
     const timing = m6.timing_structure || {};
+    const fcnTiming = classifyFcnTiming(d);
 
     function forecastCard(title, finalObj, beforeObj, adjObj) {
       const price = firstNum(finalObj.weighted_price_final);
@@ -1495,47 +1544,73 @@
     }
 
     return `
-      <div class="mm-forecast-panel">
+      <div class="mm-forecast-panel mm-forecast-panel-large">
         <div class="mm-forecast-head">
           <div>
-            <div class="mm-forecast-title">M6 Price Forecast / 價格預測</div>
-            <div class="mm-forecast-sub">v9.1：pure price 三模型 + timing A/B + decision price adjustment</div>
+            <div class="mm-forecast-title">M6 Price Forecast / FCN Allocation</div>
+            <div class="mm-forecast-sub">v9.1：pure price 三模型 + timing A/B；MM 將 timing 轉成 FCN 投入比例。</div>
           </div>
-          <span class="pill ${tone}">${esc(label)} / ${esc(direction)}</span>
+          <span class="pill ${fcnTiming.tone}">${esc(fcnTiming.label)} / ${esc(fcnTiming.allocation)}</span>
         </div>
+
+        <div class="mm-allocation-hero ${fcnTiming.tone}">
+          <div>
+            <div class="mm-allocation-k">Suggested FCN Allocation</div>
+            <div class="mm-allocation-v">${esc(fcnTiming.allocation)}</div>
+            <div class="mm-allocation-d">${esc(buildFcnAction(d))}</div>
+          </div>
+          <div class="mm-allocation-side">
+            <div class="mm-allocation-k">M6 Timing</div>
+            <div class="mm-allocation-side-v">${esc(label)} / ${esc(direction)}</div>
+            <div class="mm-allocation-d">FCN邏輯：下跌是甜甜價，上漲過快反而不追。</div>
+          </div>
+        </div>
+
         <div class="mm-forecast-grid">
           ${forecastCard("明日 1D", f1d, b1d, a1d)}
           ${forecastCard("一周 1W", f1w, b1w, a1w)}
           ${forecastCard("一個月 1M", f1m, b1m, a1m)}
         </div>
+
         <div class="mm-forecast-note">
-          <b>FCN Decision Note / 價格預測一句話：</b>${esc(buildOneLineDecision(d))}<br>
-          Timing raw 1D/1W/1M：
-          ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1d_pct, 2)}% /
-          ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1w_pct, 2)}% /
-          ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1m_pct, 2)}%；
-          daily normalized：
-          ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1d_daily_pct, 3)}% /
-          ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1w_daily_pct, 3)}% /
-          ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1m_daily_pct, 3)}%；
-          consistency=${fmtNum(timing.consistency_ratio, 3)}，
-          dispersion=${fmtNum(timing.dispersion, 5)}。
+          <b>FCN Decision Note / 價格預測一句話：</b>${esc(buildOneLineDecision(d))}
         </div>
+
+        <details class="mm-forecast-detail">
+          <summary>回歸線 / Timing 明細說明（展開）</summary>
+          <div class="mm-forecast-note">
+            Timing raw 1D/1W/1M：
+            ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1d_pct, 2)}% /
+            ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1w_pct, 2)}% /
+            ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1m_pct, 2)}%；
+            daily normalized：
+            ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1d_daily_pct, 3)}% /
+            ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1w_daily_pct, 3)}% /
+            ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1m_daily_pct, 3)}%；
+            consistency=${fmtNum(timing.consistency_ratio, 3)}，
+            dispersion=${fmtNum(timing.dispersion, 5)}。
+          </div>
+        </details>
       </div>
     `;
   }
 
   function renderFinalBox(d) {
+    const timing = classifyFcnTiming(d);
+    const oneLine = buildOneLineDecision(d);
+    const action = buildFcnAction(d);
+    const tone = timing.tone || d.final.status || "warn";
+
     return `
-      <div class="mm-final-decision ${d.final.status}">
+      <div class="mm-final-decision ${tone}">
         <div>
-          <div class="mm-final-k">FINAL DECISION</div>
-          <div class="mm-final-v">${esc(d.final.label)} <span>${esc(d.final.zh)}</span></div>
-          <div class="mm-final-d">${esc(d.final.reason)}</div>
+          <div class="mm-final-k">FINAL DECISION / FCN 決策一句話</div>
+          <div class="mm-final-v">FCN <span>${esc(timing.allocation)}</span></div>
+          <div class="mm-final-d">${esc(oneLine)}</div>
         </div>
         <div class="mm-final-side">
-          <div class="mm-final-side-k">FCN View</div>
-          <div class="mm-final-side-d">${esc(d.final.fcn)}</div>
+          <div class="mm-final-side-k">FCN View / Timing Allocation</div>
+          <div class="mm-final-side-d">${esc(action)}</div>
         </div>
       </div>
     `;
@@ -1732,6 +1807,27 @@
         .mm-forecast-card .v{font-size:20px;font-weight:1000;margin-top:5px}
         .mm-forecast-card .d{font-size:11px;color:var(--muted);line-height:1.35;margin-top:4px}
         .mm-forecast-note{font-size:11px;color:#475467;line-height:1.5;margin-top:9px;background:#f8fafc;border:1px dashed #d8e4ef;border-radius:12px;padding:8px}
+        .mm-forecast-panel-large{padding:15px}
+        .mm-allocation-hero{
+          display:grid;grid-template-columns:1.05fr .95fr;gap:10px;
+          border:1px solid #dfeaf5;border-radius:16px;padding:12px;margin:8px 0 12px;
+          background:#f8fbff
+        }
+        .mm-allocation-hero.ok{background:var(--good-bg);border-color:#ccead9}
+        .mm-allocation-hero.warn{background:var(--warn-bg);border-color:#f1dfb5}
+        .mm-allocation-hero.bad{background:var(--bad-bg);border-color:#f0cfcf}
+        .mm-allocation-k{font-size:11px;color:var(--muted);font-weight:900}
+        .mm-allocation-v{font-size:28px;font-weight:1000;margin-top:4px}
+        .mm-allocation-d{font-size:12px;line-height:1.55;color:#334155;margin-top:6px;font-weight:750}
+        .mm-allocation-side{
+          background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.75);border-radius:14px;padding:10px
+        }
+        .mm-allocation-side-v{font-size:17px;font-weight:1000;margin-top:4px}
+        .mm-forecast-detail{
+          margin-top:9px;border:1px solid #e4edf6;border-radius:12px;background:#fff;padding:8px 10px
+        }
+        .mm-forecast-detail summary{cursor:pointer;font-size:12px;font-weight:900;color:#475467}
+        .mm-forecast-detail .mm-forecast-note{margin-top:8px}
         .mm-decision-engine{
           margin-top:18px;border:1px solid #dfeaf5;border-radius:20px;
           background:linear-gradient(180deg,#fbfdff,#f6f9fd);padding:14px
