@@ -1,5 +1,5 @@
 /* ==========================================================================
-   MM × M1 Integration — C1 Single Stock Cockpit / Decision Engine + Chart + Runtime Normalization + Profile Adapter + Right Position Forecast Layout + M1 Scores JSON + CC Quality UI
+   MM × M1 × M2 × M6 Integration — C1 Single Stock Cockpit / FCN Amount Allocation + Price Forecast UI
    File: js/mm/modules/mm_stock_cockpit.js
 
    Goal:
@@ -37,7 +37,8 @@
     fcnPool: "/fcn-dashboard/data/fcn_pool.json",
     profileAll: "/fcn-dashboard/data/m1/m1_stock_profile_all.json",
     profileDeep: "/fcn-dashboard/data/m1/m1_stock_profile.json",
-    m6Forecast: "/fcn-dashboard/data/m6/price_forecast_debug.json"
+    m6Forecast: "/fcn-dashboard/data/m6/price_forecast_debug.json",
+    m6Positions: "/fcn-dashboard/data/m6/positions.json"
   };
 
   const STATE = {
@@ -285,7 +286,8 @@
       data.m2Exposure,
       data.profileAll,
       data.profileDeep,
-      data.m6Forecast
+      data.m6Forecast,
+      data.m6Positions
     ].forEach(src => {
       asArray(src).forEach(x => {
         const s = normalizeSymbol(x.symbol || x.ticker);
@@ -511,22 +513,75 @@
   function getM2Exposure(symbol) {
     const direct = bySymbol(STATE.data.m2Exposure, symbol) || {};
     const sym = normalizeSymbol(symbol);
-    const fcnRows = asArray(STATE.data.fcnPool).filter(x => normalizeSymbol(x.symbol || x.ticker || x.underlying) === sym);
 
-    const amount = sum(fcnRows.map(x => firstNum(x.amount_usd, x.notional_usd, x.principal_usd, x.amount, 0)));
+    const fcnRows = asArray(STATE.data.fcnPool).filter(x => {
+      const status = String(x.status || "").toLowerCase();
+      const isActive = status !== "closed" && status !== "exit" && status !== "matured" && x.has_position !== false;
+      const basket = Array.isArray(x.basket) ? x.basket.map(normalizeSymbol) : [];
+      const directSym = normalizeSymbol(x.symbol || x.ticker || x.underlying);
+      return isActive && (directSym === sym || basket.includes(sym));
+    });
+
+    const amount = sum(fcnRows.map(x => firstNum(
+      x.fcn_amount_usd,
+      x.amount_usd,
+      x.notional_usd,
+      x.principal_usd,
+      x.amt,
+      x.amount,
+      0
+    )));
+
     const activeCount = fcnRows.length;
     const brokers = {};
     fcnRows.forEach(x => {
-      const b = x.broker || x.bank || x.account || "Unknown";
-      brokers[b] = (brokers[b] || 0) + firstNum(x.amount_usd, x.notional_usd, x.principal_usd, x.amount, 0);
+      const b = x.tw_bank || x.broker || x.bank || x.account || "Unknown";
+      brokers[b] = (brokers[b] || 0) + firstNum(
+        x.fcn_amount_usd,
+        x.amount_usd,
+        x.notional_usd,
+        x.principal_usd,
+        x.amt,
+        x.amount,
+        0
+      );
     });
 
     return {
       ...direct,
-      fcn_amount_usd: firstNum(direct.fcn_amount_usd, direct.amount_usd, amount),
-      active_fcn_count: firstNum(direct.active_fcn_count, direct.count, activeCount),
+      fcn_amount_usd: amount,
+      active_fcn_count: activeCount,
       concentration_pct: firstNum(direct.concentration_pct, direct.exposure_pct, direct.weight_pct),
-      broker_breakdown: direct.broker_breakdown || brokers
+      broker_breakdown: direct.broker_breakdown || brokers,
+      active_fcn_rows: fcnRows
+    };
+  }
+
+  function getM6StockInventory(symbol, price = null) {
+    const sym = normalizeSymbol(symbol);
+    const rows = asArray(STATE.data.m6Positions).filter(x => normalizeSymbol(x.symbol || x.ticker || x.underlying) === sym);
+
+    const amount = sum(rows.map(x => {
+      const directAmount = firstNum(
+        x.market_value_usd,
+        x.market_value,
+        x.current_value_usd,
+        x.current_value,
+        x.value_usd,
+        x.amount_usd,
+        x.position_amount_usd,
+        x.position_value
+      );
+      if (directAmount !== null) return directAmount;
+      const qty = firstNum(x.quantity, x.qty, x.shares, x.units);
+      const px = firstNum(x.current, x.current_price, x.price, x.last_price, price);
+      return qty !== null && px !== null ? qty * px : 0;
+    }));
+
+    return {
+      amount_usd: amount,
+      position_count: rows.length,
+      rows
     };
   }
 
@@ -846,20 +901,84 @@
     return "M2曝險合理";
   }
 
+
+  const FCN_CAP_RULES = {
+    core: 50000,
+    growth: 30000,
+    defensive: 30000,
+    defense: 30000,
+    income: 20000,
+    incoming: 20000,
+    speculative: 3000
+  };
+
+  const FCN_CAP_EXCEPTIONS = {
+    NVDA: 70000,
+    TSM: 70000,
+    SMH: 70000,
+    GOOG: 70000
+  };
+
+  function getFcnBaseCap(d) {
+    const sym = normalizeSymbol(d.symbol);
+    if (FCN_CAP_EXCEPTIONS[sym]) {
+      return { amount: FCN_CAP_EXCEPTIONS[sym], reason: "例外上限" };
+    }
+
+    const category = String(firstVal(d.m1.category, d.m7.category, d.runtime.category, "") || "").toLowerCase();
+    const amount = FCN_CAP_RULES[category] || FCN_CAP_RULES.core;
+    return { amount, reason: category || "core/default" };
+  }
+
+  function fmtUsd(v, digits = 0) {
+    const n = safeNum(v);
+    if (n === null) return "--";
+    return `USD ${n.toLocaleString(undefined, { minimumFractionDigits: digits, maximumFractionDigits: digits })}`;
+  }
+
+  function buildFcnAllocationPlan(d) {
+    const cap = getFcnBaseCap(d);
+    const timing = classifyFcnTiming(d);
+    const m2Invested = firstNum(d.m2.fcn_amount_usd, 0) || 0;
+    const m6Inventory = firstNum(d.m6Inventory && d.m6Inventory.amount_usd, 0) || 0;
+    const availableRaw = cap.amount - m2Invested - m6Inventory;
+    const available = Math.max(0, availableRaw);
+    const overLimit = availableRaw < 0;
+
+    return {
+      cap_amount: cap.amount,
+      cap_reason: cap.reason,
+      timing_strength: timing.allocation,
+      timing_label: timing.label,
+      timing_tone: timing.tone,
+      m2_invested: m2Invested,
+      m6_inventory: m6Inventory,
+      available_raw: availableRaw,
+      available,
+      over_limit: overLimit,
+      available_text: fmtUsd(available, 0),
+      cap_text: fmtUsd(cap.amount, 0),
+      invested_text: fmtUsd(m2Invested, 0),
+      inventory_text: fmtUsd(m6Inventory, 0)
+    };
+  }
+
   function buildFcnAction(d) {
     const m1 = d.m1Score;
     const valuationGap = d.valuationGapPct;
     const trendScore = d.trendScore;
     const exposurePct = firstNum(d.m2.concentration_pct, d.m2.exposure_pct, d.m2.weight_pct);
-    const timing = classifyFcnTiming(d);
+    const plan = buildFcnAllocationPlan(d);
 
     if (m1 !== null && m1 < 6.5) return "不適合作為新FCN底層。";
     if (trendScore !== null && trendScore < 5.5) return "FCN暫停新增，避免接到下行趨勢。";
+    if (plan.over_limit) return `已超過單股可投資上限，暫停加碼；目前超出 ${fmtUsd(Math.abs(plan.available_raw), 0)}。`;
+    if (plan.available <= 0) return "可再加碼額度為 0，先不新增同底層FCN。";
     if (exposurePct !== null && exposurePct >= 20) return "暫停新增FCN，先控管同底層集中度。";
-    if (valuationGap !== null && valuationGap >= 20) return "估值偏高，不追價；若要做FCN，僅低比例與低strike。";
-    if (exposurePct !== null && exposurePct >= 10) return "曝險偏高，不加碼同底層；僅保守低比例FCN。";
-    if (valuationGap !== null && valuationGap >= 10 && timing.key === "pullback") return "估值略高，回檔可分批，但strike仍需保守。";
-    return timing.action;
+    if (valuationGap !== null && valuationGap >= 20) return `估值偏高，不追價；若要做FCN，僅在 ${plan.available_text} 內低比例與低strike。`;
+    if (exposurePct !== null && exposurePct >= 10) return `曝險偏高，不加碼同底層；僅在 ${plan.available_text} 內保守低比例FCN。`;
+    if (valuationGap !== null && valuationGap >= 10) return `估值略高，可再加碼額度 ${plan.available_text}，但strike仍需保守。`;
+    return `可再加碼額度 ${plan.available_text}；投資強度參考 ${plan.timing_strength}，仍需確認strike與票息。`;
   }
 
   function buildDecisionCoreLine(d) {
@@ -895,6 +1014,8 @@
     const eps = getEPS(symbol);
     const m2 = getM2Exposure(symbol);
     const m6 = getM6(symbol);
+    const priceForInventory = firstNum(runtime.price, runtime.last_price, runtime.close, runtime.current_price, runtime.price_now);
+    const m6Inventory = getM6StockInventory(symbol, priceForInventory);
     const cc = buildCCSource(symbol, m1, m7, runtime, eps);
 
     const price = firstNum(runtime.price, runtime.last_price, runtime.close, runtime.current_price, runtime.price_now);
@@ -999,6 +1120,7 @@
       eps,
       m2,
       m6,
+      m6Inventory,
       cc,
       price,
       fairPrice,
@@ -1671,14 +1793,14 @@
 
         <div class="mm-allocation-hero ${fcnTiming.tone}">
           <div>
-            <div class="mm-allocation-k">Suggested FCN Allocation</div>
-            <div class="mm-allocation-v">${esc(fcnTiming.allocation)}</div>
-            <div class="mm-allocation-d">${esc(buildFcnAction(d))}</div>
+            <div class="mm-allocation-k">Suggested FCN Add Amount / 可再加碼金額</div>
+            <div class="mm-allocation-v">${esc(buildFcnAllocationPlan(d).available_text)}</div>
+            <div class="mm-allocation-d">上限 ${esc(buildFcnAllocationPlan(d).cap_text)} − M2已投資 ${esc(buildFcnAllocationPlan(d).invested_text)} − M6庫存 ${esc(buildFcnAllocationPlan(d).inventory_text)}</div>
           </div>
           <div class="mm-allocation-side">
-            <div class="mm-allocation-k">M6 Timing</div>
-            <div class="mm-allocation-side-v">${esc(label)} / ${esc(direction)}</div>
-            <div class="mm-allocation-d">FCN邏輯：下跌是甜甜價，上漲過快反而不追。</div>
+            <div class="mm-allocation-k">M6 Timing / 投資金額強度</div>
+            <div class="mm-allocation-side-v">${esc(fcnTiming.label)} / ${esc(fcnTiming.allocation)}</div>
+            <div class="mm-allocation-d">M6：${esc(label)} / ${esc(direction)}；下跌是甜甜價，上漲過快反而不追。</div>
           </div>
         </div>
 
@@ -1739,20 +1861,26 @@
 
   function renderFinalBox(d) {
     const timing = classifyFcnTiming(d);
+    const plan = buildFcnAllocationPlan(d);
     const oneLine = buildDecisionCoreLine(d);
     const action = buildFcnAction(d);
-    const tone = timing.tone || d.final.status || "warn";
+    const tone = plan.over_limit ? "bad" : (plan.available <= 0 ? "warn" : timing.tone || d.final.status || "warn");
 
     return `
       <div class="mm-final-decision ${tone}">
         <div>
           <div class="mm-final-k">FINAL DECISION / FCN 決策一句話</div>
-          <div class="mm-final-v">FCN <span>${esc(timing.allocation)}</span></div>
+          <div class="mm-final-v">${esc(plan.cap_text)} <span>可投資FCN總金額</span></div>
           <div class="mm-final-d">${esc(oneLine)}</div>
         </div>
         <div class="mm-final-side">
-          <div class="mm-final-side-k">FCN View / Timing Allocation</div>
-          <div class="mm-final-side-d">${esc(action)}</div>
+          <div class="mm-final-side-k">FCN View / 可再加碼</div>
+          <div class="mm-final-side-d">
+            ${esc(action)}<br>
+            <span style="font-size:11px;color:var(--muted);font-weight:900;">
+              投資強度：${esc(plan.timing_strength)}｜M2已投資：${esc(plan.invested_text)}｜M6庫存：${esc(plan.inventory_text)}
+            </span>
+          </div>
         </div>
       </div>
     `;
@@ -1923,7 +2051,7 @@
         .mm-final-decision.warn{background:var(--warn-bg);border-color:#f1dfb5}
         .mm-final-decision.bad{background:var(--bad-bg);border-color:#f0cfcf}
         .mm-final-k,.mm-final-side-k{font-size:11px;color:var(--muted);font-weight:900}
-        .mm-final-v{font-size:28px;font-weight:1000;margin-top:4px}
+        .mm-final-v{font-size:26px;font-weight:1000;margin-top:4px;line-height:1.1}
         .mm-final-v span{font-size:14px;margin-left:6px}
         .mm-final-d,.mm-final-side-d{font-size:12px;line-height:1.55;color:#334155;margin-top:6px;font-weight:750}
         .mm-final-side{background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.75);border-radius:14px;padding:10px}
@@ -1959,7 +2087,7 @@
         .mm-allocation-hero.warn{background:var(--warn-bg);border-color:#f1dfb5}
         .mm-allocation-hero.bad{background:var(--bad-bg);border-color:#f0cfcf}
         .mm-allocation-k{font-size:11px;color:var(--muted);font-weight:900}
-        .mm-allocation-v{font-size:28px;font-weight:1000;margin-top:4px}
+        .mm-allocation-v{font-size:28px;font-weight:1000;margin-top:4px;line-height:1.08}
         .mm-allocation-d{font-size:12px;line-height:1.55;color:#334155;margin-top:6px;font-weight:750}
         .mm-allocation-side{
           background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.75);border-radius:14px;padding:10px
