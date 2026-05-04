@@ -311,6 +311,19 @@ m6Forecast: "/fcn-dashboard/data/m6/price_forecast_debug.json"
     return item || {};
   }
 
+    function getM6(symbol) {
+  const raw = STATE.data.m6Forecast;
+  const sym = normalizeSymbol(symbol);
+  if (!raw) return null;
+
+  const rows = Array.isArray(raw.data)
+    ? raw.data
+    : Array.isArray(raw.rows)
+    ? raw.rows
+    : asArray(raw);
+
+  return rows.find(x => normalizeSymbol(x.symbol || x.ticker) === sym) || null;
+}
   function getM1(symbol) {
     const sym = normalizeSymbol(symbol);
 
