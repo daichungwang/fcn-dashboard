@@ -862,22 +862,25 @@
     return timing.action;
   }
 
-  function buildOneLineDecision(d) {
+  function buildDecisionCoreLine(d) {
     const m1Text = buildM1Text(d);
     const m7Text = buildM7Text(d);
     const m2Text = buildM2Text(d);
     const timing = classifyFcnTiming(d);
-    const action = buildFcnAction(d);
 
     if (d.m1Score !== null && d.m1Score < 6.5) {
-      return `${d.symbol}｜${m1Text}，${m7Text}，${m2Text}；${action}`;
+      return `${d.symbol}｜${m1Text}，${m7Text}，${m2Text}。`;
     }
 
     if (d.trendScore !== null && d.trendScore < 5.5) {
-      return `${d.symbol}｜${m1Text}，${m7Text}，M7長趨勢偏弱，${m2Text}；${action}`;
+      return `${d.symbol}｜${m1Text}，${m7Text}，M7長趨勢偏弱，${m2Text}。`;
     }
 
-    return `${d.symbol}｜${m1Text}，${m7Text}，M6${timing.label}，${m2Text}；${action}`;
+    return `${d.symbol}｜${m1Text}，${m7Text}，M6${timing.label}，${m2Text}。`;
+  }
+
+  function buildOneLineDecision(d) {
+    return `${buildDecisionCoreLine(d).replace(/[。.]$/, "")}；${buildFcnAction(d)}`;
   }
 
   /* -----------------------------
@@ -1386,7 +1389,7 @@
         <div class="mm-right-decision-stack">
           ${renderFinalBox(d)}
           ${renderForecastPlaceholder(d)}
-          ${renderPositionPanel(d, rangePos)}
+          ${renderM6ForecastBar(d)}
         </div>
       </div>
     `;
@@ -1468,22 +1471,135 @@
     `;
   }
 
-  function renderPositionPanel(d, rangePos) {
+  function getM6PriceRange(m6) {
+    if (!m6) return null;
+
+    const today = firstNum(m6.today_price, m6.price, m6.current_price);
+    const f1d = firstNum(getM6Final(m6, "1d").weighted_price_final);
+    const f1w = firstNum(getM6Final(m6, "1w").weighted_price_final);
+    const f1m = firstNum(getM6Final(m6, "1m").weighted_price_final);
+    const before1m = firstNum(getM6BeforeDecision(m6, "1m").weighted_price);
+
+    const prices = [today, f1d, f1w, f1m, before1m].filter(v => v !== null);
+    if (!prices.length) return null;
+
+    const min = Math.min(...prices) * 0.98;
+    const max = Math.max(...prices) * 1.02;
+
+    function pos(v) {
+      const n = safeNum(v);
+      if (n === null || max === min) return 50;
+      return 18 + ((n - min) / (max - min)) * 64;
+    }
+
+    return { today, f1d, f1w, f1m, before1m, min, max, pos };
+  }
+
+  function renderM6ForecastBar(d) {
+    const m6 = d.m6;
+    const r = getM6PriceRange(m6);
+
+    if (!r) {
+      return renderPositionPanelFallback(d);
+    }
+
+    function marker(label, value, cls, labelPos = "top") {
+      if (safeNum(value) === null) return "";
+      const labelStyle = labelPos === "bottom" ? "bottom:8px;" : "top:8px;";
+      return `
+        <div class="mm-m6-forecast-marker ${cls}" style="left:${r.pos(value)}%;">
+          <div class="mm-m6-marker-label" style="${labelStyle}">${esc(label)}</div>
+        </div>
+      `;
+    }
+
+    return `
+      <div class="mm-m6-forecast-bar-wrap">
+        <div class="mm-m6-forecast-bar-title">
+          <span>M6 Forecast Bar / Price Forecast Position</span>
+          <span>Before → 1D / 1W / 1M → Today</span>
+        </div>
+        <div class="mm-m6-forecast-bar">
+          <div class="mm-m6-forecast-line"></div>
+          ${marker("1D", r.f1d, "m7", "top")}
+          ${marker("1W", r.f1w, "m1", "bottom")}
+          ${marker("1M", r.f1m, "m7", "top")}
+          ${safeNum(r.before1m) !== null ? `
+            <div class="mm-m6-forecast-marker before" style="left:${r.pos(r.before1m)}%;">
+              <div class="mm-m6-marker-label" style="bottom:8px;">Before</div>
+            </div>
+          ` : ""}
+          <div class="mm-m6-forecast-marker today" style="left:${r.pos(r.today)}%;">
+            <div class="mm-m6-marker-label">TODAY</div>
+          </div>
+        </div>
+        <div class="mm-m6-forecast-bar-foot">
+          <span>Today：${r.today === null ? "--" : "$" + fmtNum(r.today, 2)}</span>
+          <span>1D：${r.f1d === null ? "--" : "$" + fmtNum(r.f1d, 2)}</span>
+          <span>1W：${r.f1w === null ? "--" : "$" + fmtNum(r.f1w, 2)}</span>
+          <span>1M：${r.f1m === null ? "--" : "$" + fmtNum(r.f1m, 2)}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderPositionPanelFallback(d) {
     return `
       <div class="range-wrap mm-right-position-panel">
         <div class="range-top">
-          <span>Today price vs Regression / Historical Position</span>
-          <span>Low → Current → High</span>
-        </div>
-        <div class="range-bar">
-          <div class="range-fill" style="width:${rangePos}%"></div>
-          <div class="range-pin" style="left:${rangePos}%"></div>
+          <span>Regression Reference / fallback</span>
+          <span>Fair → Current</span>
         </div>
         <div class="range-label">
           <span>Fair / Regression：${fmtNum(d.fairPrice, 2)}</span>
           <span>Valuation Gap：${d.valuationGapPct === null ? "--" : fmtPct(d.valuationGapPct)}</span>
           <span>Confidence：${d.r2 === null ? "--" : "R² " + fmtNum(d.r2, 2)}</span>
         </div>
+      </div>
+    `;
+  }
+
+
+  function renderM6ModelTable(m6) {
+    const oneMonthModels = m6 && m6.forecast && m6.forecast["1m"] && m6.forecast["1m"].price_models
+      ? m6.forecast["1m"].price_models
+      : {};
+    const fitSummary = m6 && m6.debug && m6.debug.price_fit_summary ? m6.debug.price_fit_summary : {};
+
+    const modelRows = ["linear", "quadratic", "log"].map(model => {
+      const row = oneMonthModels[model] || {};
+      const fit = fitSummary[model] || {};
+      return `
+        <tr>
+          <td><b>${esc(model)}</b><br><span>Pure price / 1M</span></td>
+          <td>${safeNum(row.raw_today_price) === null ? "--" : "$" + fmtNum(row.raw_today_price, 2)}</td>
+          <td>${safeNum(row.raw_future_price) === null ? "--" : "$" + fmtNum(row.raw_future_price, 2)}</td>
+          <td>${fmtNum(row.today_adjustment_factor, 6)}</td>
+          <td>${safeNum(row.adjusted_price) === null ? "--" : "$" + fmtNum(row.adjusted_price, 2)}</td>
+          <td>${safeNum(row.adjusted_upside_pct) === null ? "--" : fmtNum(row.adjusted_upside_pct, 2) + "%"}</td>
+          <td>${fmtNum(firstNum(row.r2, fit.r2), 4)}</td>
+          <td>${esc(row.status || fit.status || "--")}</td>
+        </tr>
+      `;
+    }).join("");
+
+    return `
+      <div class="mm-forecast-table-wrap">
+        <table class="mm-forecast-model-table">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Raw Today</th>
+              <th>Raw Future 1M</th>
+              <th>Today Bias Factor</th>
+              <th>Adjusted 1M</th>
+              <th>Adj Upside</th>
+              <th>R²</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>${modelRows}</tbody>
+        </table>
       </div>
     `;
   }
@@ -1573,23 +1689,49 @@
         </div>
 
         <div class="mm-forecast-note">
-          <b>FCN Decision Note / 價格預測一句話：</b>${esc(buildOneLineDecision(d))}
+          <b>FCN Decision Note / 價格預測一句話：</b>${esc(buildDecisionCoreLine(d))} <b>FCN View：</b>${esc(buildFcnAction(d))}
         </div>
 
         <details class="mm-forecast-detail">
           <summary>回歸線 / Timing 明細說明（展開）</summary>
-          <div class="mm-forecast-note">
-            Timing raw 1D/1W/1M：
-            ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1d_pct, 2)}% /
-            ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1w_pct, 2)}% /
-            ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1m_pct, 2)}%；
-            daily normalized：
-            ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1d_daily_pct, 3)}% /
-            ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1w_daily_pct, 3)}% /
-            ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1m_daily_pct, 3)}%；
-            consistency=${fmtNum(timing.consistency_ratio, 3)}，
-            dispersion=${fmtNum(timing.dispersion, 5)}。
+          <div class="mm-forecast-basis-box">
+            <div class="mm-forecast-basis-item">
+              <div class="k">Today Price / 今日價格</div>
+              <div class="v">$${fmtNum(m6.today_price)}</div>
+              <div class="d">M6 所有 upside 都以 today_price 為基準。</div>
+            </div>
+            <div class="mm-forecast-basis-item">
+              <div class="k">Decision Mode / 短線狀態</div>
+              <div class="v">${esc(label)}</div>
+              <div class="d">Direction：${esc(direction)}；A=盤整/不明，B=短線方向明確。</div>
+            </div>
           </div>
+
+          <div class="mm-forecast-detail-grid">
+            <div class="mm-forecast-detail-card">
+              <div class="result-title">Timing Structure</div>
+              <div class="result-sub">
+                1D / 1W / 1M raw：${fmtNum(timing.raw_returns && timing.raw_returns.ret_1d_pct, 2)}% /
+                ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1w_pct, 2)}% /
+                ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1m_pct, 2)}%<br>
+                Daily norm：${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1d_daily_pct, 4)}% /
+                ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1w_daily_pct, 4)}% /
+                ${fmtNum(timing.daily_normalized_returns && timing.daily_normalized_returns.ret_1m_daily_pct, 4)}%<br>
+                Consistency：${fmtNum(timing.consistency_ratio, 4)}；
+                Dispersion：${fmtNum(timing.dispersion, 6)}；
+                Same sign：${esc(timing.same_sign)}
+              </div>
+            </div>
+            <div class="mm-forecast-detail-card">
+              <div class="result-title">Decision Rule</div>
+              <div class="result-sub">
+                ${esc(timing.rule || "M6 timing rule missing")}<br>
+                MM FCN rule：下跌或回檔時提高 allocation；急漲時不追價。
+              </div>
+            </div>
+          </div>
+
+          ${renderM6ModelTable(m6)}
         </details>
       </div>
     `;
@@ -1597,7 +1739,7 @@
 
   function renderFinalBox(d) {
     const timing = classifyFcnTiming(d);
-    const oneLine = buildOneLineDecision(d);
+    const oneLine = buildDecisionCoreLine(d);
     const action = buildFcnAction(d);
     const tone = timing.tone || d.final.status || "warn";
 
@@ -1828,6 +1970,59 @@
         }
         .mm-forecast-detail summary{cursor:pointer;font-size:12px;font-weight:900;color:#475467}
         .mm-forecast-detail .mm-forecast-note{margin-top:8px}
+
+        .mm-m6-forecast-bar-wrap{
+          border:1px solid #dbe7f0;border-radius:18px;background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);
+          padding:12px;margin-top:0;box-shadow:0 8px 20px rgba(16,24,40,.035)
+        }
+        .mm-m6-forecast-bar-title{
+          display:flex;justify-content:space-between;gap:10px;
+          font-size:12px;color:var(--muted);font-weight:900;margin-bottom:8px
+        }
+        .mm-m6-forecast-bar{
+          position:relative;height:88px;border-radius:16px;border:1px solid #dbe7f0;
+          background:linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);overflow:hidden
+        }
+        .mm-m6-forecast-line{
+          position:absolute;left:18px;right:18px;top:44px;height:6px;border-radius:999px;background:#dbeafe
+        }
+        .mm-m6-forecast-marker{
+          position:absolute;top:0;width:1px;height:88px;background:#94a3b8
+        }
+        .mm-m6-forecast-marker .mm-m6-marker-label{
+          position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;
+          font-size:10px;font-weight:1000;padding:2px 6px;border-radius:999px;border:1px solid #dbe7f0;background:#fff
+        }
+        .mm-m6-forecast-marker.m1 .mm-m6-marker-label{color:#1d4ed8;background:#eff6ff;border-color:#bfdbfe}
+        .mm-m6-forecast-marker.m7 .mm-m6-marker-label{color:#166534;background:#f0fdf4;border-color:#bbf7d0}
+        .mm-m6-forecast-marker.before{background:#f97316}
+        .mm-m6-forecast-marker.before .mm-m6-marker-label{color:#9a3412;background:#fff7ed;border-color:#fed7aa}
+        .mm-m6-forecast-marker.today{width:3px;background:#111827}
+        .mm-m6-forecast-marker.today .mm-m6-marker-label{top:33px;color:#111827;background:#fff;border-color:#111827}
+        .mm-m6-forecast-bar-foot{
+          display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;
+          font-size:11px;color:var(--muted);font-weight:850
+        }
+        .mm-forecast-basis-box{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0 12px}
+        .mm-forecast-basis-item,.mm-forecast-detail-card{
+          border:1px solid #dbe7f0;border-radius:14px;padding:10px;background:#fff
+        }
+        .mm-forecast-basis-item .k{font-size:11px;color:var(--muted);font-weight:900;margin-bottom:4px}
+        .mm-forecast-basis-item .v{font-size:18px;color:#0f172a;font-weight:1000}
+        .mm-forecast-basis-item .d,.mm-forecast-detail-card .result-sub{
+          font-size:11px;color:var(--muted);line-height:1.55;margin-top:4px
+        }
+        .mm-forecast-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+        .mm-forecast-detail-card .result-title{font-size:13px;font-weight:1000;color:#334155;margin-bottom:6px}
+        .mm-forecast-table-wrap{overflow:auto;border:1px solid #e4edf6;border-radius:12px;background:#fff}
+        .mm-forecast-model-table{width:100%;border-collapse:collapse;font-size:11px;min-width:760px}
+        .mm-forecast-model-table th,.mm-forecast-model-table td{
+          border-bottom:1px solid #eef2f7;padding:7px 6px;text-align:left;vertical-align:top
+        }
+        .mm-forecast-model-table th{background:#f8fbff;color:var(--muted);font-weight:1000}
+        .mm-forecast-model-table tbody tr{background:#f0fdf4}
+        .mm-forecast-model-table span{color:var(--muted);font-size:10px}
+
         .mm-decision-engine{
           margin-top:18px;border:1px solid #dfeaf5;border-radius:20px;
           background:linear-gradient(180deg,#fbfdff,#f6f9fd);padding:14px
@@ -1871,6 +2066,8 @@
           .mm-trace{grid-template-columns:repeat(3,1fr)}
           .mm-final-decision{grid-template-columns:1fr}
           .mm-forecast-grid{grid-template-columns:1fr}
+          .mm-forecast-basis-box,.mm-forecast-detail-grid{grid-template-columns:1fr}
+          .mm-m6-forecast-bar-foot{grid-template-columns:1fr 1fr}
         }
         @media(max-width:720px){
           .mm-engine-flow,.mm-detail-grid,.mm-trace{grid-template-columns:1fr}
