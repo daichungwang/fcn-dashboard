@@ -749,58 +749,81 @@
     const m6 = d.m6;
     const m1 = d.m1Score;
     const m7 = d.m7Score;
-    const valGap = d.valuationGapPct;
+    const valuationGap = d.valuationGapPct;
+    const trendScore = d.trendScore;
     const exposurePct = firstNum(d.m2.concentration_pct, d.m2.exposure_pct, d.m2.weight_pct);
+    const activeCount = firstNum(d.m2.active_fcn_count);
+
+    const m1Text =
+      m1 === null ? "M1體質資料不足" :
+      m1 >= 8 ? "M1體質佳" :
+      m1 >= 7 ? "M1體質可" :
+      "M1體質偏弱";
+
+    const m7Text =
+      valuationGap === null ? "M7估值資料不足" :
+      valuationGap >= 20 ? "M7估值偏高" :
+      valuationGap >= 10 ? "M7估值略高" :
+      valuationGap <= -10 ? "M7估值有折價" :
+      "M7估值合理";
+
+    const m2Text =
+      exposurePct !== null && exposurePct >= 20 ? "M2曝險過高" :
+      exposurePct !== null && exposurePct >= 10 ? "M2曝險偏高" :
+      activeCount !== null && activeCount >= 3 ? "M2同底層檔數偏多" :
+      "M2曝險合理";
+
+    if (m1 !== null && m1 < 6.5) {
+      return `${d.symbol}｜${m1Text}，${m7Text}，${m2Text}；不適合作為新FCN底層。`;
+    }
+
+    if (trendScore !== null && trendScore < 5.5) {
+      return `${d.symbol}｜${m1Text}，${m7Text}，M7長趨勢偏弱，${m2Text}；FCN暫停新增，避免接到下行趨勢。`;
+    }
+
+    if (exposurePct !== null && exposurePct >= 20) {
+      return `${d.symbol}｜${m1Text}，${m7Text}，${m2Text}；暫停新增FCN，先控管同底層集中度。`;
+    }
 
     if (!m6) {
-      if (m1 !== null && m1 >= 8) {
-        return `${d.symbol}｜M1品質達標，但尚無M6短線預測；先以估值與曝險控管。`;
-      }
-      return `${d.symbol}｜尚無M6短線預測；先維持觀察，避免只用單一分數決策。`;
+      return `${d.symbol}｜${m1Text}，${m7Text}，尚無M6 timing資料，${m2Text}；先列候選，等待價格預測後再決定投入比例。`;
     }
 
     const mode = m6.decision_mode || (m6.flat && m6.flat.decision_mode) || "";
-    const label = m6.decision_label || (m6.flat && m6.flat.decision_label) || mode || "M6";
     const dir = m6.short_direction || (m6.flat && m6.flat.short_direction) || "";
     const up1m = getM6OneMonthUpside(m6);
-    const upText = up1m === null ? "--" : `${up1m >= 0 ? "+" : ""}${fmtNum(up1m, 1)}%`;
-    const m6Tag = `${label} ${upText}`;
 
-    if (mode === "B" && dir === "up") {
-      if (m1 !== null && m1 >= 8 && valGap !== null && valGap > 15) {
-        return `${d.symbol}｜${m6Tag}，短線轉強但估值偏高；可順勢觀察，不追高，FCN需拉低strike。`;
-      }
-      if (exposurePct !== null && exposurePct >= 15) {
-        return `${d.symbol}｜${m6Tag}，短線方向向上但同底層曝險偏高；可續抱，暫不加碼FCN。`;
-      }
-      return `${d.symbol}｜${m6Tag}，短線方向明確向上；可順勢觀察進場點，避免追價。`;
+    let m6Text = "M6短線資料不足";
+    let action = "先觀察，不急著新增FCN。";
+
+    if (dir === "down" || (up1m !== null && up1m < -2)) {
+      m6Text = "M6短線回檔形成甜甜價";
+      action = "可分批布局FCN，投入比例可提高，但仍需確認strike與票息。";
+    } else if (mode === "A" || (up1m !== null && Math.abs(up1m) < 1)) {
+      m6Text = "M6短線盤整";
+      action = "可做中等配置FCN，以收息為主，不急著加滿。";
+    } else if (dir === "up" && up1m !== null && up1m > 5) {
+      m6Text = "M6短線急速上行";
+      action = "不追價，降低配置或僅做保守低strike FCN。";
+    } else if (dir === "up" && up1m !== null && up1m > 1) {
+      m6Text = "M6短線溫和上行";
+      action = "可小幅配置FCN，避免追高，strike需保守。";
+    } else if (dir === "up") {
+      m6Text = "M6短線偏上";
+      action = "可保守配置FCN，但不建議追價。";
     }
 
-    if (mode === "B" && dir === "down") {
-      if (m1 !== null && m1 >= 8) {
-        return `${d.symbol}｜${m6Tag}，長期品質仍可，但短線轉弱；等待回檔完成再評估。`;
-      }
-      return `${d.symbol}｜${m6Tag}，短線轉弱，先防守，不建議新進或做高strike FCN。`;
+    if (valuationGap !== null && valuationGap >= 20) {
+      action = "估值偏高，不追價；若要做FCN，僅低比例與低strike。";
+    } else if (valuationGap !== null && valuationGap >= 10 && action.includes("提高")) {
+      action = "估值略高，回檔可分批，但strike仍需保守。";
     }
 
-    if (mode === "A") {
-      if (up1m !== null && Math.abs(up1m) < 1) {
-        return `${d.symbol}｜A盤整 ${upText}，短線方向不明；等待突破或回檔，不急著動作。`;
-      }
-      if (up1m !== null && up1m > 2) {
-        return `${d.symbol}｜A盤整但1M偏多 ${upText}；可分批觀察，不用追高。`;
-      }
-      if (up1m !== null && up1m < -2) {
-        return `${d.symbol}｜A盤整但1M偏弱 ${upText}；先看支撐，不急著接。`;
-      }
-      return `${d.symbol}｜A盤整，短線沒有明確方向；以區間與風控為主。`;
+    if (exposurePct !== null && exposurePct >= 10 && !action.includes("暫停")) {
+      action = "曝險偏高，不加碼同底層；僅保守低比例FCN。";
     }
 
-    if (m1 !== null && m1 >= 8 && m7 !== null && m7 >= 7) {
-      return `${d.symbol}｜M1/M7分數佳，但M6訊號不完整；可列候選，等短線確認。`;
-    }
-
-    return `${d.symbol}｜訊號未形成一致結論；先觀察，等待M1/M7/M6同步。`;
+    return `${d.symbol}｜${m1Text}，${m7Text}，${m6Text}，${m2Text}；${action}`;
   }
 
   /* -----------------------------
@@ -1257,7 +1280,7 @@
     const cat = firstVal(d.m1.category, d.m7.category, d.runtime.category, "--");
     const sub = firstVal(d.m1.category_sub, d.m7.category_sub, d.runtime.category_sub, d.m7.subsector, "--");
 
-    const oneLine = buildOneLineDecision(d) || narrative.oneLine;
+    const oneLine = narrative.oneLine;
 
     const rawRet1d = firstNum(d.runtime.ret_1d, d.runtime.change_pct, d.runtime.day_change_pct);
     const rawRet1w = firstNum(d.runtime.ret_1w, d.runtime.return_1w);
@@ -1308,9 +1331,8 @@
 
         <div class="mm-right-decision-stack">
           ${renderFinalBox(d)}
-          ${renderScoreGrid(d)}
-          ${renderPositionPanel(d, rangePos)}
           ${renderForecastPlaceholder(d)}
+          ${renderPositionPanel(d, rangePos)}
         </div>
       </div>
     `;
@@ -1487,6 +1509,7 @@
           ${forecastCard("一個月 1M", f1m, b1m, a1m)}
         </div>
         <div class="mm-forecast-note">
+          <b>FCN Decision Note / 價格預測一句話：</b>${esc(buildOneLineDecision(d))}<br>
           Timing raw 1D/1W/1M：
           ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1d_pct, 2)}% /
           ${fmtNum(timing.raw_returns && timing.raw_returns.ret_1w_pct, 2)}% /
@@ -1825,6 +1848,35 @@
     populateSymbolSelect();
     bindSearch();
     render(STATE.activeSymbol);
+  }
+
+
+  /* -----------------------------
+     MMUI compatibility guard
+     Some versions of mm_dashboard_app.js call MMUI.updateDebugPanel().
+     This module should not crash if that optional debug panel is absent.
+  ----------------------------- */
+
+  window.MMUI = window.MMUI || {};
+
+  if (typeof window.MMUI.updateDebugPanel !== "function") {
+    window.MMUI.updateDebugPanel = function updateDebugPanelSafe() {
+      return null;
+    };
+  }
+
+  if (typeof window.MMUI.setText !== "function") {
+    window.MMUI.setText = function setTextSafe(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value == null ? "" : String(value);
+    };
+  }
+
+  if (typeof window.MMUI.setHTML !== "function") {
+    window.MMUI.setHTML = function setHTMLSafe(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = value == null ? "" : String(value);
+    };
   }
 
   window.MMStockCockpit = {
