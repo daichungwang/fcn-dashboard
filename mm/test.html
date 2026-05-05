@@ -134,7 +134,7 @@ const mock = [
   {symbol:"PLTR",category:"growth",priority_score:85,ret_1d:3,ret_2d:5,ret_1w:10,ret_2w:8,ma_slope:9,m2_util:0.4,m6_timing:"sideways",amt_signal:0.9,max_addable_amt:30000,allow_fcn:true}
 ];
 
-const res = runMMFilter({stocks: mock});
+const res = await runMMFilterFull({stocks: mock});
 
 // =====================
 // SUMMARY
@@ -228,6 +228,35 @@ function renderStock(s){
 }
 
 </script>
+<script type="module">
 
+import { runMMFilterFull } from "../js/mm/modules/mm_filter.js";
+
+const mock = [
+  {
+    symbol:"NVDA",
+    category:"core",
+    priority_score:90,
+    ret_1d:1,
+    ret_2d:2,
+    ret_1w:5,
+    ret_2w:3,
+    ma_slope:6,
+    m2_util:0.7,
+    m6_timing:"sideways",
+    amt_signal:0.8,
+    max_addable_amt:50000,
+    allow_fcn:true
+  }
+];
+
+const res = await runMMFilterFull({
+  stocks: mock,
+  market_orders: []
+});
+
+console.log(res);
+
+</script>
 </body>
 </html>
