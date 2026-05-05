@@ -1966,28 +1966,262 @@
     `;
   }
 
+
+  function getWorstOfSymbol(row) {
+    const basket = Array.isArray(row && row.basket) ? row.basket.map(normalizeSymbol) : [];
+    let worstSymbol = "";
+    let worstDist = Infinity;
+
+    basket.forEach(sym => {
+      const risk = getRowStockRisk(row, sym);
+      const dist = safeNum(risk.dist_to_ki_pct, null);
+      if (dist !== null && dist < worstDist) {
+        worstDist = dist;
+        worstSymbol = sym;
+      }
+    });
+
+    return {
+      symbol: worstSymbol,
+      dist_to_ki_pct: Number.isFinite(worstDist) ? worstDist : null
+    };
+  }
+
+  function utilizationStatus(utilPct) {
+    const u = safeNum(utilPct, 0) || 0;
+    if (u >= 100) return { label: "Over / Critical", status: "bad", note: "已達或超過單股上限，屬 critical anomaly。" };
+    if (u > 90) return { label: "Too Hot", status: "bad", note: "投資水位過熱，不追滿，等待到期或提早出場釋放額度。" };
+    if (u > 70) return { label: "High", status: "warn", note: "投資水位偏高，新單需保守。" };
+    if (u >= 50) return { label: "Normal", status: "ok", note: "投資水位正常，可依 M6 timing 決定節奏。" };
+    if (u < 30) return { label: "Low", status: "ok", note: "投資水位低，若 M1/M7/M6 支持可提高配置彈性。" };
+    return { label: "Normal Low", status: "ok", note: "投資水位偏低到正常。" };
+  }
+
+  function riskStatusFromPressure(pressure) {
+    const p = safeNum(pressure, 0) || 0;
+    if (p >= 80) return { label: "Critical", status: "bad" };
+    if (p >= 60) return { label: "High Risk", status: "bad" };
+    if (p >= 40) return { label: "Risk", status: "warn" };
+    if (p >= 20) return { label: "Watch", status: "warn" };
+    return { label: "Safe", status: "ok" };
+  }
+
+  function buildM2L1Metrics(d) {
+    const rows = getActiveFcnRows().filter(row => fcnRowHasSymbol(row, d.symbol));
+    const cap = getFcnBaseCap(d).amount || 0;
+    const totalAmt = sum(rows.map(getFHAmt));
+    const totalCount = rows.length;
+
+    let dangerAmt = 0, dangerCount = 0;
+    let watchAmt = 0, watchCount = 0;
+    let healthyAmt = 0, healthyCount = 0;
+    let worstCount = 0, worstAmt = 0;
+    let nearestKi = null;
+    let nearestStrike = null;
+
+    rows.forEach(row => {
+      const amount = getFHAmt(row);
+      const risk = getRowStockRisk(row, d.symbol);
+      const worst = getWorstOfSymbol(row);
+
+      if (worst.symbol === d.symbol) {
+        worstCount += 1;
+        worstAmt += amount;
+      }
+
+      if (risk.bucket === "danger") {
+        dangerCount += 1;
+        dangerAmt += amount;
+      } else if (risk.bucket === "watch") {
+        watchCount += 1;
+        watchAmt += amount;
+      } else {
+        healthyCount += 1;
+        healthyAmt += amount;
+      }
+
+      if (risk.dist_to_ki_pct !== null && (nearestKi === null || risk.dist_to_ki_pct < nearestKi)) nearestKi = risk.dist_to_ki_pct;
+      if (risk.dist_to_strike_pct !== null && (nearestStrike === null || risk.dist_to_strike_pct < nearestStrike)) nearestStrike = risk.dist_to_strike_pct;
+    });
+
+    const riskWeightedAmt = dangerAmt + watchAmt * 0.5;
+    const riskWeightedAmtRatio = totalAmt > 0 ? riskWeightedAmt / totalAmt : 0;
+    const worstRatio = totalCount > 0 ? worstCount / totalCount : 0;
+    const distanceFactor = nearestKi === null ? 0.25 : nearestKi <= 0 ? 1 : nearestKi <= 10 ? 0.9 : nearestKi <= 20 ? 0.7 : nearestKi <= 30 ? 0.5 : 0.3;
+    const pressure = clamp((worstRatio * 0.45 + riskWeightedAmtRatio * 0.45 + (distanceFactor * 0.10)) * 100, 0, 100);
+    const riskStatus = riskStatusFromPressure(pressure);
+
+    const utilPct = cap > 0 ? (totalAmt / cap) * 100 : 0;
+    const utilStatus = utilizationStatus(utilPct);
+
+    return {
+      rows,
+      cap,
+      total_amt: totalAmt,
+      total_count: totalCount,
+      danger_amt: dangerAmt,
+      danger_count: dangerCount,
+      watch_amt: watchAmt,
+      watch_count: watchCount,
+      healthy_amt: healthyAmt,
+      healthy_count: healthyCount,
+      worst_count: worstCount,
+      worst_amt: worstAmt,
+      nearest_ki_pct: nearestKi,
+      nearest_strike_pct: nearestStrike,
+      worst_pressure_pct: pressure,
+      worst_status: riskStatus,
+      utilization_pct: utilPct,
+      utilization_status: utilStatus
+    };
+  }
+
+  function orderLabelForDecision(plan) {
+    const raw = String(plan.daily_suggested && plan.daily_suggested.bucket_label || "標準單");
+    if (raw.includes("保守") || raw.includes("試單")) return "保守單";
+    if (raw.includes("最大") || raw.includes("積極")) return "積極單";
+    if (raw.includes("不下單")) return "不下單";
+    return "標準單";
+  }
+
+  function buildDecisionOutputText(d, m2Metric, plan) {
+    const orderLabel = orderLabelForDecision(plan);
+    const headline = plan.daily_suggested && plan.daily_suggested.amount > 0
+      ? `可列 FCN 候選，但今日只做「${orderLabel}」`
+      : "列入觀察，但今日不新增同底層 FCN";
+
+    const util = m2Metric.utilization_pct;
+    const utilText = util === null ? "--" : `${fmtNum(util, 1)}%（${m2Metric.utilization_status.label}）`;
+    const m6Timing = classifyFcnTiming(d);
+    const mainLine = `${d.symbol}｜${buildM1Text(d)}，${buildM7Text(d)}，M6${m6Timing.label}。`;
+    const caution = `但 M2 投資水位已達 ${utilText}，因此不追滿。`;
+
+    return {
+      headline,
+      order_label: orderLabel,
+      main_line: mainLine,
+      caution,
+      strategy: "低 strike + 收息優先",
+      news_placeholder: "News Outlook：預留 analyst latest update / stock news / macro AI trend 接口。"
+    };
+  }
+
+  function buildL1Factors(d) {
+    const m2Metric = buildM2L1Metrics(d);
+    const plan = buildFcnAllocationPlan(d);
+    const qualityLevel = getScoreLevel(d.m1Score, 8, 7);
+    const valuationLevel = getValuationLevel(d.valuationGapPct, d.valuationScore);
+    const trendLevel = getTrendLevel(d.trendScore, d.r2);
+
+    return [
+      {
+        key: "M1 Quality",
+        zh: "股票品質",
+        value: d.m1Score === null ? "--" : fmtNum(d.m1Score, 2),
+        detail: qualityLevel.detail,
+        status: qualityLevel.status,
+        bar: scoreToBar(d.m1Score),
+        source: "M1"
+      },
+      {
+        key: "Valuation",
+        zh: "估值位置",
+        value: d.valuationGapPct === null ? (d.valuationScore === null ? "--" : fmtNum(d.valuationScore, 2)) : fmtPct(d.valuationGapPct),
+        detail: valuationLevel.detail,
+        status: valuationLevel.status,
+        bar: valuationToBar(d.valuationGapPct, d.valuationScore),
+        source: "M7"
+      },
+      {
+        key: "Trend",
+        zh: "趨勢品質",
+        value: d.trendScore === null ? "--" : fmtNum(d.trendScore, 2),
+        detail: trendLevel.detail,
+        status: trendLevel.status,
+        bar: scoreToBar(d.trendScore),
+        source: "M7"
+      },
+      {
+        key: "M2 Worst-of Risk",
+        zh: "Worst-of 壓力",
+        value: `${m2Metric.worst_count}/${m2Metric.total_count}`,
+        detail: `積極處理 ${m2Metric.danger_count}檔 / ${fmtUsd(m2Metric.danger_amt, 0)}；持續追蹤 ${m2Metric.watch_count}檔 / ${fmtUsd(m2Metric.watch_amt, 0)}；最近KI ${m2Metric.nearest_ki_pct === null ? "--" : fmtPctPoint(m2Metric.nearest_ki_pct, 1)}`,
+        status: m2Metric.worst_status.status,
+        bar: m2Metric.worst_pressure_pct,
+        source: "M2"
+      },
+      {
+        key: "M2 Utilization",
+        zh: "投資水位",
+        value: fmtPctPoint(m2Metric.utilization_pct, 1),
+        detail: `已投資 ${fmtUsd(m2Metric.total_amt, 0)} / 上限 ${fmtUsd(m2Metric.cap, 0)}；${m2Metric.utilization_status.note}`,
+        status: m2Metric.utilization_status.status,
+        bar: m2Metric.utilization_pct,
+        source: "M2"
+      },
+      {
+        key: "CC Source",
+        zh: "資料可信度",
+        value: d.cc.text,
+        detail: d.cc.note,
+        status: d.cc.grade === "A" || d.cc.grade === "B" ? "ok" : d.cc.grade === "C" ? "warn" : "bad",
+        bar: Math.round(d.cc.score * 100),
+        source: "CC"
+      }
+    ];
+  }
+
+  function renderDecisionOutput(d) {
+    const m2Metric = buildM2L1Metrics(d);
+    const plan = buildFcnAllocationPlan(d);
+    const out = buildDecisionOutputText(d, m2Metric, plan);
+    const tone = plan.daily_suggested && plan.daily_suggested.amount <= 0 ? "warn" : m2Metric.utilization_status.status;
+
+    return `
+      <details class="mm-engine-result ${tone} mm-decision-output" open>
+        <summary>
+          <span>
+            <b>Decision Output</b>
+            <em>${esc(out.headline)}</em>
+          </span>
+          <i>展開 / 收合</i>
+        </summary>
+        <div class="mm-decision-output-body">
+          <p>${esc(out.main_line)}</p>
+          <p>${esc(out.caution)}</p>
+          <div class="mm-decision-action-list">
+            <div>👉 今日建議：<b>${esc(plan.daily_text)}</b>（${esc(out.order_label)}）</div>
+            <div>👉 剩餘額度：<b>${esc(plan.available_text)}</b></div>
+            <div>👉 策略：<b>${esc(out.strategy)}</b></div>
+          </div>
+          <details class="mm-news-outlook">
+            <summary>News Outlook / Analyst / Macro AI Trend（預留）</summary>
+            <div>${esc(out.news_placeholder)}</div>
+          </details>
+        </div>
+      </details>
+    `;
+  }
+
   function renderL1(d) {
+    const l1Factors = buildL1Factors(d);
     return `
       <section class="mm-decision-engine">
         <div class="mm-layer-title">
           <div>
             <h3>L1 Decision Engine / 圖像化決策引擎</h3>
-            <p>不是文字卡：用 M1、M7、M2、CC 四層訊號組合出 final decision。</p>
+            <p>M1 / M7 / M2 / CC 分層輸入；M2 拆成 Worst-of Risk 與 Utilization，最後輸出可執行的 FCN 決策。</p>
           </div>
           <span class="pill ${d.final.status}">${esc(d.final.label)}</span>
         </div>
 
-        <div class="mm-engine-flow">
-          ${d.factors.map(renderFactor).join("")}
+        <div class="mm-engine-flow mm-engine-flow-six">
+          ${l1Factors.map(renderFactor).join("")}
         </div>
 
         <div class="mm-engine-arrow">→</div>
 
-        <div class="mm-engine-result ${d.final.status}">
-          <div class="mm-engine-result-k">Decision Output</div>
-          <div class="mm-engine-result-v">${esc(d.final.zh)}</div>
-          <div class="mm-engine-result-d">${esc(d.final.reason)}</div>
-        </div>
+        ${renderDecisionOutput(d)}
       </section>
     `;
   }
@@ -2017,7 +2251,27 @@
   }
 
   function getRowBroker(row) {
-    return String((row && (row.tw_bank || row.broker || row.account || row.bank)) || "未分類").trim() || "未分類";
+    const raw = String(
+      (row && (
+        row.tw_bank ||
+        row.broker ||
+        row.broker_name ||
+        row.bank_name ||
+        row.source_bank ||
+        row.custodian ||
+        row.account ||
+        row.bank ||
+        "未分類"
+      )) || "未分類"
+    ).trim();
+
+    const lower = raw.toLowerCase();
+    const fcnId = String(row && row.fcn_id || "");
+
+    if (raw.includes("富邦") || lower.includes("fubon") || fcnId.includes("富邦")) return "富邦";
+    if (raw.includes("永豐") || lower.includes("sinopac") || lower.includes("sino pac") || fcnId.includes("永豐")) return "永豐";
+
+    return raw || "未分類";
   }
 
   function getRowCurrentPrice(symbol) {
@@ -2106,7 +2360,7 @@
 
   function renderL2(d) {
     const plan = buildFcnAllocationPlan(d);
-    const rows = Array.isArray(d.m2.active_fcn_rows) ? d.m2.active_fcn_rows : [];
+    const rows = getActiveFcnRows().filter(row => fcnRowHasSymbol(row, d.symbol));
     const brokerBreakdown = buildBrokerRiskBreakdown(rows, d.symbol);
 
     const brokerRows = brokerBreakdown.length
@@ -2419,7 +2673,7 @@
         .mm-layer-title{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}
         .mm-layer-title h3{margin:0;font-size:17px}
         .mm-layer-title p{margin:5px 0 0;color:var(--muted);font-size:12px;line-height:1.5}
-        .mm-engine-flow{display:grid;grid-template-columns:repeat(5,minmax(140px,1fr));gap:10px}
+        .mm-engine-flow{display:grid;grid-template-columns:repeat(6,minmax(130px,1fr));gap:10px}
         .mm-factor{border:1px solid #e4edf6;border-radius:16px;background:#fff;padding:12px;min-height:154px}
         .mm-factor.ok{border-color:#ccead9;background:#fbfffd}
         .mm-factor.warn{border-color:#f1dfb5;background:#fffdf8}
@@ -2440,6 +2694,21 @@
         .mm-engine-result-k{font-size:11px;color:var(--muted);font-weight:900}
         .mm-engine-result-v{font-size:20px;font-weight:1000;margin-top:4px}
         .mm-engine-result-d{font-size:12px;line-height:1.55;margin-top:5px;font-weight:750}
+        .mm-decision-output{padding:0;overflow:hidden}
+        .mm-decision-output summary{
+          cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center;
+          padding:13px;font-weight:900
+        }
+        .mm-decision-output summary::-webkit-details-marker{display:none}
+        .mm-decision-output summary span{display:flex;flex-direction:column;gap:4px}
+        .mm-decision-output summary em{font-style:normal;font-size:18px;color:#0f172a}
+        .mm-decision-output summary i{font-style:normal;font-size:11px;color:var(--muted);border:1px solid #d8e4ef;border-radius:999px;padding:4px 8px;background:#fff}
+        .mm-decision-output-body{padding:0 13px 13px;font-size:13px;line-height:1.7;font-weight:750;color:#334155}
+        .mm-decision-output-body p{margin:7px 0}
+        .mm-decision-action-list{margin-top:8px;border:1px dashed #d8e4ef;border-radius:14px;background:rgba(255,255,255,.72);padding:10px;line-height:1.75}
+        .mm-news-outlook{margin-top:10px;border:1px solid #e4edf6;border-radius:12px;background:#fff;padding:8px 10px}
+        .mm-news-outlook summary{padding:0;display:block;font-size:12px;color:#475467}
+        .mm-news-outlook div{margin-top:8px;font-size:12px;color:var(--muted)}
         .mm-c1-layers{padding:0 18px 18px}
         .mm-detail-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}
         .mm-small-table table{min-width:420px}
@@ -2620,3 +2889,4 @@
   });
 
 })();
+
