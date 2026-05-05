@@ -114,7 +114,15 @@ h2 {
 <h2>All Stocks</h2>
 <table class="table" id="table"></table>
 
-<script src="../js/mm/modules/mm_filter.js"></script>
+<script type="module">
+import { runMMFilterFull } from "../js/mm/modules/mm_filter.js";
+
+const res = await runMMFilterFull({
+  stocks: window.mock || []
+});
+
+console.log(res);
+</script>
 
 <script>
 
