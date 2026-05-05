@@ -1,5 +1,5 @@
 // ==========================================
-// MM FILTER ENGINE v4 MODULE (SANDBOX)
+// MM FILTER ENGINE v4.1 MODULE (SANDBOX / M7 v2 canonical)
 // Path: js/mm/modules/mm_filter.js
 // Purpose: C1 Output -> Filter / Pool / Basket / Allocation v0 / M8 / Market Order Match
 // Notes:
@@ -130,7 +130,7 @@ export async function runMMFilterFull(input = {}) {
   const summary = buildSummary({ stocks, pools, category_map, baskets, allocation, market_match });
 
   return {
-    version: "mm_filter_v4_module_sandbox",
+    version: "mm_filter_v4_1_module_sandbox_m7_v2_canonical",
     generated_at: new Date().toISOString(),
     summary,
     pools,
@@ -172,24 +172,44 @@ export function normalizeStocks(rows) {
         "unknown"
       );
 
-      const priorityScore = firstFinite([
-        row.priority_score,
-        row.c1_priority_score,
-        row.today_score,
-        row.m7_today_score,
+      // M7 source rule:
+      // Primary source must be data/m7_sandbox/m7_v2_scores.json.
+      // Therefore m7_v2_score / m7_effective_score must win over legacy m7_score.
+      // Legacy m7_score is only fallback when v2 fields are missing.
+      const m7Score = firstFinite([
+        row.m7_effective_score,
+        row.m7_v2_score,
+        row.m7_v2_score_unclamped,
         row.m7_score,
+        row.m7_raw_score,
+        row.today_score,
         row.total,
         row["today_score"],
         row["排名分數"]
       ], 0);
 
-      const m7Score = firstFinite([
-        row.m7_score,
+      const m7ScoreSource =
+        row.m7_effective_score_source ||
+        (Number.isFinite(Number(row.m7_effective_score)) ? "m7_effective_score" :
+          Number.isFinite(Number(row.m7_v2_score)) ? "m7_v2_score" :
+          Number.isFinite(Number(row.m7_score)) ? "legacy_m7_score" :
+          "fallback");
+
+      const priorityScore = firstFinite([
+        row.priority_score,
+        row.c1_priority_score,
+        row.today_priority_score,
+        row.m7_today_score,
+        row.m7_effective_score,
         row.m7_v2_score,
+        row.m7_v2_score_unclamped,
+        row.m7_score,
+        row.m7_raw_score,
         row.today_score,
         row.total,
-        row["today_score"]
-      ], priorityScore);
+        row["today_score"],
+        row["排名分數"]
+      ], m7Score);
 
       const m1Score = firstFinite([
         row.m1_score,
@@ -233,7 +253,16 @@ export function normalizeStocks(rows) {
         // Scores
         priority_score: round2(priorityScore),
         m1_score: m1Score === null ? null : round2(m1Score),
+
+        // M7 v2 canonical fields
         m7_score: round2(m7Score),
+        m7_v2_score: nullableNumber(row.m7_v2_score),
+        m7_raw_score: nullableNumber(row.m7_raw_score),
+        m7_effective_score: nullableNumber(row.m7_effective_score),
+        m7_score_source: m7ScoreSource,
+        m7_v2_formula: row.m7_v2_formula || null,
+        m7_v2_fallback_to_raw: row.m7_v2_fallback_to_raw === true,
+
         valuation_score: nullableNumber(row.valuation_score),
         trend_score: nullableNumber(row.trend_score),
         structure_score: nullableNumber(row.structure_score),
@@ -891,6 +920,9 @@ function buildSummary({ stocks, pools, category_map, baskets, allocation, market
       c1_ready: stocks.length,
       with_m1_score: stocks.filter(s => s.m1_score !== null).length,
       with_m7_score: stocks.filter(s => s.m7_score !== null).length,
+      with_m7_v2_score: stocks.filter(s => s.m7_v2_score !== null).length,
+      m7_v2_primary: stocks.filter(s => s.m7_score_source === "m7_v2_score" || s.m7_score_source === "m7_effective_score").length,
+      legacy_m7_fallback: stocks.filter(s => s.m7_score_source === "legacy_m7_score").length,
       with_amount: stocks.filter(s => num(s.max_addable_amt) > 0).length
     },
 
