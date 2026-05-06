@@ -902,6 +902,126 @@
 "total_score": 8.8,
 "fail_reasons": []
 },  
+"NKE": {
+"symbol": "NKE",
+"name": "NIKE, Inc.",
+"type": "research_raw",
+"company_overview": "Nike 是全球運動鞋服品牌，FY2025 營收 463.09 億美元、年減 10%，目前不是高成長股，而是品牌修復與庫存折扣改善股；投資判斷重點在毛利率能否從 FY2025 的 42.7% 回升，而不是單純看品牌知名度。",
+"basic_info": {
+"founded": "1964",
+"headquarters": "Beaverton, Oregon, USA",
+"industry": "Athletic footwear, apparel and sports equipment",
+"market_cap": "約 640 億美元"
+},
+"business_model": {
+"summary": "Nike 主要靠 NIKE Brand 鞋服、Direct-to-consumer 與批發通路賺錢；FY2025 NIKE Brand 營收 447 億美元、Converse 17 億美元，Direct 收入 188 億美元、年減 13%，批發收入 259 億美元、年減 7%。",
+"segments": [
+"Footwear 是核心品類，FY2026 上半年 NIKE Brand footwear 匯率中性年減 2%，代表主力鞋款仍在去庫存與折扣壓力中。",
+"Apparel 在 FY2026 上半年匯率中性年增 5%，但 ASP 下降約 2 個百分點，表示成長品質仍受折扣影響。",
+"NIKE Direct FY2026 上半年收入 91 億美元、年減 6%，其中 Digital 年減 13%，短期不適合用高 DTC 成長股估值看待。"
+]
+},
+"customer_analysis": {
+"summary": "Nike 客戶不集中，FY2025 沒有單一客戶占合併營收 10% 以上；但美國前三大客戶占美國銷售約 25%，非美國前三大客戶占非美國銷售約 16%，所以批發通路談判力仍會影響毛利率。",
+"key_customers": [
+{
+"name": "Foot Locker",
+"role": "全球運動鞋零售通路",
+"importance": "Nike 未揭露單一客戶營收占比，但 FY2025 美國前三大客戶合計占美國銷售約 25%，Foot Locker 屬於需追蹤的批發通路代表。"
+},
+{
+"name": "DICK'S Sporting Goods",
+"role": "美國大型體育用品零售商",
+"importance": "美國市場占 Nike FY2025 總營收約 43%，DICK'S Sporting Goods 這類大型零售商會影響美國批發補貨節奏。"
+},
+{
+"name": "JD Sports",
+"role": "歐洲與全球運動鞋服零售通路",
+"importance": "Nike 非美國銷售占 FY2025 總營收約 57%，JD Sports 這類國際通路會影響 EMEA 與海外批發恢復速度。"
+}
+],
+"conclusion": "客戶集中度低於單一 10% 門檻是優點，但前三大美國客戶占美國銷售 25%，若批發補貨轉弱，NKE 的 FCN 票息可能上升但股價穩定度會下降。"
+},
+"why_this_company": [
+"Nike FY2025 仍有 463.09 億美元營收與 92 億美元現金加短投，代表品牌仍有現金流底盤，不是財務危機股。",
+"FY2025 股利連續調升 23 年，forward dividend yield 約 3.8%，適合放入 stock_pool 觀察但不適合直接升為 Pool30 核心。",
+"FY2026 Q2 營收 124 億美元、年增 1%，顯示營收跌幅暫時止血，但 EPS 0.53 美元仍年減約 32%，修復尚未完成。"
+],
+"market_view": "市場目前不是在 pricing 高成長，而是在 pricing 轉型止血：FY2025 營收年減 10%、EPS 年減 42%，FY2026 Q2 營收只年增 1%；市場擔心的是關稅、折扣與中國區壓力，其中 Greater China FY2026 Q2 匯率中性年減 16%、Digital 年減 36%。",
+"financial_summary": {
+"revenue": "FY2025 revenue 463.09 億美元",
+"growth": "FY2025 YoY -10%；FY2026 Q2 revenue 124 億美元、YoY +1%",
+"net_margin": "FY2025 net income 32 億美元，net margin 約 6.9%",
+"fcf_margin": "FY2025 free cash flow 約 33 億美元，FCF margin 約 7.1%",
+"eps": "FY2025 diluted EPS 2.16 美元，YoY -42%；FY2026 Q2 diluted EPS 0.53 美元，YoY -32%",
+"pe": "TTM PE 約 28.5x；normalized PE 約 29.4x",
+"dividend_yield": "Forward dividend yield 約 3.8%",
+"beta": "約 1.2"
+},
+"competition": {
+"summary": "Nike 的問題不是品牌消失，而是成長與毛利率落後市場期待；FY2025 gross margin 42.7%、年降 190 bps，若與高成長運動品牌相比，估值仍不能給太高溢價。",
+"peers": [
+{
+"name": "Adidas",
+"position": "全球運動鞋服直接競爭者",
+"comparison": "Adidas 與 Nike 同屬全球鞋服品牌，但 Nike FY2025 營收 463 億美元，規模仍大；問題是 Nike FY2025 EPS 年減 42%，估值需要打折。"
+},
+{
+"name": "On Holding",
+"position": "高成長跑鞋品牌",
+"comparison": "On 的市場定價偏高成長，Nike 目前 FY2026 Q2 營收僅 +1%，所以 Nike 不能用新興高成長品牌倍數評價。"
+},
+{
+"name": "Deckers / Hoka",
+"position": "跑鞋與舒適鞋競爭者",
+"comparison": "Hoka 在跑鞋細分市場搶成長，Nike Greater China FY2026 Q2 footwear 年減 20%，顯示部分核心鞋類需求正在被競爭品牌分流。"
+}
+],
+"conclusion": "NKE 可放 stock_pool 觀察，但在 EPS -42%、毛利率 -190 bps 修復前，不應給 core Pool30 權重。"
+},
+"valuation_and_timing": {
+"valuation_view": "NKE 目前 TTM PE 約 28.5x、normalized PE 約 29.4x，對 FY2025 EPS 年減 42% 的公司不便宜；合理看法是等待 EPS 修復而非追高。",
+"buy_strategy": "不建議一次買滿；若股價回到 PE 22x-24x 或 FY2026 單季營收連續 2 季正成長且 gross margin 停止下滑，再考慮分批。",
+"sweet_zone": "甜甜價條件：股價低於 40 美元，或 forward PE 低於 24x，且中國區跌幅從 -16% 收斂到 -5% 以內。",
+"technical_view": {
+"mid_trend": "中期仍屬修復盤，FY2025 營收 -10% 與 EPS -42% 代表基本面尚未反轉。",
+"short_term": "短線可觀察 FY2026 Q2 營收 +1% 是否延續；若下一季又轉負，股價容易再測低點。",
+"structure": "股價約 43 美元、市值約 640 億美元，已反映部分壞消息，但 PE 約 28.5x 仍未到深度價值區。",
+"conclusion": "timing 判斷為 watch，不是 buy；適合等毛利率與中國區數據改善後再提高配置。"
+}
+},
+"pool30_fit": {
+"stock_pool": true,
+"pool30": false,
+"category": "defensive",
+"reason": "NKE 有 463 億美元營收、3.8% 股息率與全球品牌底盤，可進 stock_pool；但 FY2025 EPS -42%、Direct -13%、Digital -20%，目前不符合 Pool30 的成長與穩定條件。",
+"upgrade_condition": [
+"FY2026 單季營收連續 2 季 YoY 轉正，且 gross margin 年減幅度收斂到 100 bps 以內。",
+"Greater China 從 FY2026 Q2 的 -16% 收斂到 -5% 以內，Digital 跌幅從 -36% 收斂到 -10% 以內。"
+]
+},
+"risk_opportunity": {
+"risk": [
+"毛利率壓力明確：FY2025 gross margin 42.7%、年降 190 bps，FY2026 上半年又因關稅與 ASP 下降再壓縮 310 bps。",
+"中國區拖累明顯：FY2026 Q2 Greater China 匯率中性年減 16%，Digital 年減 36%，代表品牌熱度與通路流量都有問題。",
+"估值不便宜：TTM PE 約 28.5x，但 FY2025 EPS 年減 42%，若 EPS 修復慢，股價彈性會被壓抑。"
+],
+"opportunity": [
+"若毛利率從 FY2025 的 42.7% 回升到 44% 以上，每 100 bps 毛利改善都可能明顯推升營業利益率。",
+"北美 FY2026 上半年匯率中性收入 +7%，批發 +18%，若補貨週期延續，營收可先止跌。",
+"股息率約 3.8% 與 23 年連續提高股利，讓 NKE 在低價區有防守型資金支撐。"
+]
+},
+"final_view": "NKE 目前是可觀察的 defensive / turnaround stock，不是 Pool30 核心股；FCN 可以等 strike 壓低到 35-38 美元區間再評估，現階段不適合用高 KI 或高 strike 追票息。",
+"quality_check": {
+"completeness": 9,
+"specificity": 9,
+"data_support": 9,
+"decision_usefulness": 9,
+"fcn_alignment": 8,
+"total_score": 8.8,
+"fail_reasons": []
+},  
 "AAPL": {
 "symbol": "AAPL",
 "name": "Apple Inc.",
