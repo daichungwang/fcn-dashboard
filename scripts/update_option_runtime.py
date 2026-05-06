@@ -20,12 +20,13 @@ Coverage logic v2:
   3. data/m7_sandbox/m7_v2_scores.json high-score supplement
   4. DEFAULT_SYMBOLS fallback
 
-Important fix v4:
+Important fix v5:
   Keep raw spot as primary truth.
   Do NOT auto divide MU 640 by 10.
   Fix the real problem: ATM IV selection.
   Use liquidity-aware / IV-sanity / strike-tolerance selection.
   If no good ATM IV exists, fallback to liquid chain median IV, then 25D proxy IV.
+  IVScore uses non-linear FCN market curve so IV has comparable impact.
 
 Pilot source:
   yfinance option chain.
@@ -545,11 +546,32 @@ def liquid_median_valid_iv(calls, puts, spot: Optional[float] = None) -> Optiona
 
 
 def score_iv(iv: Optional[float]) -> float:
+    """
+    Convert raw IV into 0~10 IVScore for FCN rate-pressure use.
+
+    v5 curve:
+      IV is decimal:
+        0.05 = 5%
+        0.10 = 10%
+        0.20 = 20%
+        0.40 = 40%
+        0.60 = 60%
+
+      Approx output:
+        1%  -> 0.39
+        5%  -> 1.81
+        10% -> 3.30
+        20% -> 5.51
+        40% -> 7.98
+        60% -> 9.09
+    """
     if iv is None:
         return 0.0
 
-    # 0.5% -> 0, 50%+ -> 10
-    return round(clamp((iv - 0.005) / 0.495 * 10.0, 0.0, 10.0), 2)
+    iv_pct = iv * 100.0
+    score = 10.0 * (1.0 - math.exp(-iv_pct / 25.0))
+
+    return round(clamp(score, 0.0, 10.0), 2)
 
 
 def score_skew(put_skew: Optional[float]) -> float:
@@ -890,7 +912,7 @@ def build_runtime(symbols: Optional[List[str]] = None) -> Dict[str, Any]:
             "coverage": coverage_meta,
             "purpose": "FCN rate pressure: IV + skew + demand",
             "rate_pressure_formula": "0.45*iv_score + 0.30*skew_score + 0.20*demand_score + 0.05*event_score",
-            "important_fix": "raw spot preserved + liquidity-aware ATM IV selection + chain median fallback",
+            "important_fix": "raw spot preserved + liquidity-aware ATM IV selection + non-linear IVScore curve + chain median fallback",
         },
         "data": rows,
     }
@@ -917,4 +939,3 @@ def main(argv: List[str]) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main(sys.argv))
-
