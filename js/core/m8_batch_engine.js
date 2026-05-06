@@ -478,6 +478,8 @@ function calcRatePressureAdj(stockList = []) {
   const items = (stockList || [])
     .map(stock => ({
       symbol: getSymbol(stock),
+      // Internal scale is 0~100 for basket aggregation.
+      // Display can divide by 10 to show 0~10.
       rate_pressure_score: calcStockRatePressureScore(stock),
       iv_score: getOptionField(stock, "iv_score", null),
       skew_score: getOptionField(stock, "skew_score", null),
@@ -492,19 +494,48 @@ function calcRatePressureAdj(stockList = []) {
     return {
       rate_pressure_adj: 0,
       rate_pressure_score_basket: 0,
+      rate_pressure_score_basket_0_10: 0,
+      rate_pressure_worst: 0,
+      rate_pressure_second: 0,
+      rate_pressure_avg: 0,
       rate_pressure_stocks: [],
       rate_pressure_source: "missing"
     };
   }
 
-  const RP = avg(items.map(x => x.rate_pressure_score));
-  const adj = 3 / (1 + Math.exp(-(RP - 50) / 10));
+  // Market version basket score:
+  // FCN basket is driven by the highest pressure stock, but the average and
+  // second-highest pressure also matter.
+  const sorted = [...items].sort((a, b) => b.rate_pressure_score - a.rate_pressure_score);
+  const worst = sorted[0]?.rate_pressure_score || 0;
+  const second = sorted[1]?.rate_pressure_score || worst;
+  const avgRP = avg(items.map(x => x.rate_pressure_score));
+
+  const RP = (
+    0.50 * worst +
+    0.30 * avgRP +
+    0.20 * second
+  );
+
+  // Convert 0~100 internal score back to 0~10 for the yield curve.
+  const RP10 = RP / 10;
+
+  // Market curve v2:
+  // - max impact = +2.5%
+  // - center = 5 on 0~10 scale
+  // - slope = 1.5
+  // This makes MU / high-IV baskets more visible than the old conservative avg curve.
+  const adj = 2.5 / (1 + Math.exp(-(RP10 - 5) / 1.5));
 
   return {
     rate_pressure_adj: adj,
     rate_pressure_score_basket: RP,
+    rate_pressure_score_basket_0_10: RP10,
+    rate_pressure_worst: worst,
+    rate_pressure_second: second,
+    rate_pressure_avg: avgRP,
     rate_pressure_stocks: items,
-    rate_pressure_source: "option_runtime"
+    rate_pressure_source: "option_runtime_market_curve_v2"
   };
 }
 
@@ -575,7 +606,7 @@ export function getM8Blueprint() {
       "Tenor：1–3慢、3–10加速、10–12放緩（max=2）",
       "BasketVol = 0.5×s1 + 0.3×s2 + 0.2×avgSwing",
       "VolAdj 採平滑函數",
-      "HighRateBrake 強化，用來抑制極端高利率失真",
+      "RatePressureAdj 改用 market curve v2；HighRateBrake 保留用來抑制極端高利率失真",
       "Anchor-based Yield Proxy：以當次輸入最高 M7_v2 品質股票當 anchor"
     ],
     formulas: {
@@ -594,7 +625,7 @@ export function getM8Blueprint() {
       vol_adj: "分段平滑函數",
       brake: "HighRateBrake: 18以下不煞，18~22二次煞，22~26強二次煞，26以上線性強煞",
       final_yield: "FairYield = Base + BasketPremium + TailAdj + StructureTotal + VolAdj + RatePressureAdj - HighRateBrake(PreRate)",
-      rate_pressure: "RatePressureAdj = 3 / (1 + exp(-(RP-50)/10)); RP 來自 option_runtime rate_pressure_score",
+      rate_pressure: "BasketRP = 0.50×worst + 0.30×avg + 0.20×secondWorst；RatePressureAdj = 2.5 / (1 + exp(-((BasketRP/10)-5)/1.5))",
       anchor_proxy: "anchor + target 的 pair_fair_yield 與 normalized_proxy"
     },
     parameters: {
@@ -717,6 +748,10 @@ export async function runM8Case({
     vol_adj: round2(volAdj),
     rate_pressure_adj: round2(ratePressureAdj),
     rate_pressure_score_basket: round2(ratePressure.rate_pressure_score_basket),
+    rate_pressure_score_basket_0_10: round2(ratePressure.rate_pressure_score_basket_0_10),
+    rate_pressure_worst: round2(ratePressure.rate_pressure_worst),
+    rate_pressure_second: round2(ratePressure.rate_pressure_second),
+    rate_pressure_avg: round2(ratePressure.rate_pressure_avg),
     rate_pressure_source: ratePressure.rate_pressure_source,
     rate_pressure_stocks: ratePressure.rate_pressure_stocks.map(x => ({
       ...x,
