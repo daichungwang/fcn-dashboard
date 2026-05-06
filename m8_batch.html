@@ -528,6 +528,74 @@
 
     <section class="card blueprint-card">
       <div class="bp-header">
+        <h2 style="margin:0;">M8 Market Runtime Dashboard</h2>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="k">Symbols</div>
+            <div class="v" id="rtSymbolCount">-</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="k">Avg RP</div>
+            <div class="v" id="rtAvgRP">-</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="k">High RP</div>
+            <div class="v" id="rtHighRP">-</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="k">Avg IV%</div>
+            <div class="v" id="rtAvgIV">-</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="k">Extreme Skew</div>
+            <div class="v" id="rtHighSkew">-</div>
+          </div>
+        </div>
+
+        <div class="split-3" style="margin-bottom:12px;">
+          <div class="form-group">
+            <label>Symbol Filter</label>
+            <input id="runtimeFilterSymbol" type="text" placeholder="NVDA" />
+          </div>
+
+          <div class="form-group">
+            <label>Driver Filter</label>
+            <select id="runtimeFilterDriver">
+              <option value="">ALL</option>
+              <option value="IV_DRIVEN">IV_DRIVEN</option>
+              <option value="SKEW_DRIVEN">SKEW_DRIVEN</option>
+              <option value="DEMAND_DRIVEN">DEMAND_DRIVEN</option>
+              <option value="LOW_PRESSURE">LOW_PRESSURE</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Sort</label>
+            <select id="runtimeSort">
+              <option value="rp_desc">RP High → Low</option>
+              <option value="iv_desc">IV High → Low</option>
+              <option value="skew_desc">Skew High → Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sticky-box">
+          <div id="runtimeDashboardTable" style="padding:12px;">
+            尚未載入
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="card blueprint-card">      <div class="bp-header">
         <h2 style="margin:0;">M8 Blueprint（完整邏輯 / 公式 / 參數）</h2>
         <button id="toggleBlueprintBtn" class="btn-secondary" type="button">一鍵展開</button>
       </div>
@@ -957,8 +1025,14 @@
           <td>${s.source || ""}</td>
           <td>${fmt(s.m7_v2_score)}</td>
           <td>${fmt(s.rate_pressure_score)}</td>
+          <td>${fmt(s.rate_pressure_score_0_100)}</td>
           <td>${fmt(s.iv_30d_atm_pct)}</td>
+          <td>${fmt(s.iv_score)}</td>
           <td>${fmt(s.put_skew_30d_vol_points)}</td>
+          <td>${fmt(s.skew_score)}</td>
+          <td>${fmt(s.demand_score)}</td>
+          <td>${s.rate_driver_label || ""}</td>
+          <td>${s.data_warning || ""}</td>
           <td>${s.sector || ""}</td>
           <td>${s.subsector || ""}</td>
           <td>${s.risk || ""}</td>
@@ -1084,9 +1158,15 @@
               <th>Symbol</th>
               <th>Source</th>
               <th>M7_v2</th>
-              <th>RatePressure</th>
+              <th>RP Score</th>
+              <th>RP(100)</th>
               <th>IV%</th>
+              <th>IV Score</th>
               <th>Skew</th>
+              <th>Skew Score</th>
+              <th>Demand</th>
+              <th>Driver</th>
+              <th>Warning</th>
               <th>Sector</th>
               <th>Subsector</th>
               <th>Risk</th>
@@ -1096,7 +1176,7 @@
             </tr>
           </thead>
           <tbody>
-            ${stockRows || `<tr><td colspan="13">無資料</td></tr>`}
+            ${stockRows || `<tr><td colspan="18">無資料</td></tr>`}
           </tbody>
         </table>
 
@@ -1164,7 +1244,7 @@
             <div class="label">Rate Pressure 計算結果</div>
             <div class="mono">Source = ${r.rate_pressure_source || "missing"}</div>
             <div class="mono">Basket RP = ${fmt(r.rate_pressure_score_basket)}，RatePressureAdj = ${fmt(r.rate_pressure_adj)}</div>
-            <div class="mono">股票明細：${Array.isArray(r.rate_pressure_stocks) ? r.rate_pressure_stocks.map(x => `${x.symbol}:RP=${fmt(x.rate_pressure_score)} IV=${fmt(x.iv_30d_atm_pct)} Skew=${fmt(x.put_skew_30d_vol_points)}`).join(" | ") : "-"}</div>
+            <div class="mono">股票明細：${Array.isArray(r.rate_pressure_stocks) ? r.rate_pressure_stocks.map(x => `${x.symbol} RP=${fmt(x.rate_pressure_score)} | IV=${fmt(x.iv_30d_atm_pct)} | Skew=${fmt(x.put_skew_30d_vol_points)} | Demand=${fmt(x.demand_score)} | Driver=${x.rate_driver_label || "-"} | Formula=${x.rate_pressure_formula_text || "-"}`).join("\n") : "-"}</div>
           </div>
         </div>
       `;
@@ -1578,6 +1658,7 @@
       refreshInquiryNo();
       renderHistory();
       renderBasketCompare();
+      loadRuntimeDashboard();
       clearResult();
     }
 
@@ -1786,6 +1867,95 @@
       renderBasketCompare(parseSymbols($("symbols").value));
     }
 
+    
+    async function loadRuntimeDashboard() {
+      try {
+        const res = await fetch("./data/options/option_runtime.json");
+        const json = await res.json();
+
+        const rows = Object.values(json.data || {}).filter(x => x && x.status === "ok");
+
+        const avg = (arr) => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0;
+
+        const avgRP = avg(rows.map(x => Number(x.rate_pressure_score || 0)));
+        const avgIV = avg(rows.map(x => Number(x.iv_30d_atm_pct || 0)));
+
+        $("rtSymbolCount").textContent = rows.length;
+        $("rtAvgRP").textContent = fmt(avgRP);
+        $("rtAvgIV").textContent = fmt(avgIV);
+
+        $("rtHighRP").textContent =
+          rows.filter(x => Number(x.rate_pressure_score || 0) >= 5).length;
+
+        $("rtHighSkew").textContent =
+          rows.filter(x => Number(x.put_skew_30d_vol_points || 0) >= 5).length;
+
+        function renderTable() {
+          const symbolFilter = ($("runtimeFilterSymbol").value || "").toUpperCase();
+          const driverFilter = $("runtimeFilterDriver").value || "";
+          const sortMode = $("runtimeSort").value || "rp_desc";
+
+          let data = rows.filter(x => {
+            const symOk = !symbolFilter || String(x.symbol || "").includes(symbolFilter);
+            const drvOk = !driverFilter || x.rate_driver_label === driverFilter;
+            return symOk && drvOk;
+          });
+
+          if (sortMode === "rp_desc") {
+            data.sort((a,b)=>(b.rate_pressure_score||0)-(a.rate_pressure_score||0));
+          } else if (sortMode === "iv_desc") {
+            data.sort((a,b)=>(b.iv_30d_atm_pct||0)-(a.iv_30d_atm_pct||0));
+          } else if (sortMode === "skew_desc") {
+            data.sort((a,b)=>(b.put_skew_30d_vol_points||0)-(a.put_skew_30d_vol_points||0));
+          }
+
+          $("runtimeDashboardTable").innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>IV%</th>
+                  <th>IV Score</th>
+                  <th>Skew</th>
+                  <th>Skew Score</th>
+                  <th>Demand</th>
+                  <th>RP</th>
+                  <th>Driver</th>
+                  <th>Warning</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map(x => `
+                  <tr>
+                    <td>${x.symbol || ""}</td>
+                    <td>${fmt(x.iv_30d_atm_pct)}</td>
+                    <td>${fmt(x.iv_score)}</td>
+                    <td>${fmt(x.put_skew_30d_vol_points)}</td>
+                    <td>${fmt(x.skew_score)}</td>
+                    <td>${fmt(x.demand_score)}</td>
+                    <td>${fmt(x.rate_pressure_score)}</td>
+                    <td>${x.rate_driver_label || ""}</td>
+                    <td>${x.data_warning || ""}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          `;
+        }
+
+        renderTable();
+
+        ["runtimeFilterSymbol","runtimeFilterDriver","runtimeSort"].forEach(id => {
+          $(id).addEventListener("input", renderTable);
+          $(id).addEventListener("change", renderTable);
+        });
+
+      } catch (err) {
+        console.error("runtime dashboard failed", err);
+      }
+    }
+
+
     function clearResult() {
       currentEditingInquiryNo = null;
       refreshInquiryNo();
@@ -1836,4 +2006,5 @@
 </body>
 </html>
 ```
+
 
