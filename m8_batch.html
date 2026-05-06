@@ -122,7 +122,7 @@
 
     .summary-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 12px;
       margin-bottom: 16px;
     }
@@ -690,6 +690,10 @@
           fair_yield: fairYield,
           basket_vol: basketVol,
           vol_adj: num(result.vol_adj),
+          rate_pressure_adj: num(result.rate_pressure_adj),
+          rate_pressure_score_basket: num(result.rate_pressure_score_basket),
+          rate_pressure_source: result.rate_pressure_source || "",
+          rate_pressure_stocks: result.rate_pressure_stocks || [],
           pricing_delta: num(result.pricing_delta),
           pricing_view: result.pricing_view || "",
           edge: edge,
@@ -951,6 +955,10 @@
           <td>${idx + 1}</td>
           <td>${s.symbol || ""}</td>
           <td>${s.source || ""}</td>
+          <td>${fmt(s.m7_v2_score)}</td>
+          <td>${fmt(s.rate_pressure_score)}</td>
+          <td>${fmt(s.iv_30d_atm_pct)}</td>
+          <td>${fmt(s.put_skew_30d_vol_points)}</td>
           <td>${s.sector || ""}</td>
           <td>${s.subsector || ""}</td>
           <td>${s.risk || ""}</td>
@@ -1011,6 +1019,7 @@
           </div>
           <div class="summary-box"><div class="k">Pricing Delta</div><div class="v">${fmt(r.pricing_delta)}%</div></div>
           <div class="summary-box"><div class="k">BasketVol / VolAdj</div><div class="v">${fmt(r.basket_vol)} / ${fmt(r.vol_adj)}%</div></div>
+          <div class="summary-box"><div class="k">RatePressureAdj</div><div class="v">${fmt(r.rate_pressure_adj)}%</div><div class="small-note">RP ${fmt(r.rate_pressure_score_basket)}</div></div>
         </div>
 
         <div class="section-title">案例摘要</div>
@@ -1040,6 +1049,7 @@
               <th>StructureTotal</th>
               <th>BasketVol</th>
               <th>VolAdj</th>
+              <th>RatePressureAdj</th>
               <th>PreRate</th>
               <th>HighRateBrake</th>
               <th>FairYield</th>
@@ -1058,6 +1068,7 @@
               <td>${fmt(r.structure_total)}</td>
               <td>${fmt(r.basket_vol)}</td>
               <td>${fmt(r.vol_adj)}</td>
+              <td>${fmt(r.rate_pressure_adj)}</td>
               <td>${fmt(r.pre_rate)}</td>
               <td>${fmt(r.high_rate_brake)}</td>
               <td>${fmt(r.fair_yield)}</td>
@@ -1072,6 +1083,10 @@
               <th>#</th>
               <th>Symbol</th>
               <th>Source</th>
+              <th>M7_v2</th>
+              <th>RatePressure</th>
+              <th>IV%</th>
+              <th>Skew</th>
               <th>Sector</th>
               <th>Subsector</th>
               <th>Risk</th>
@@ -1081,7 +1096,7 @@
             </tr>
           </thead>
           <tbody>
-            ${stockRows || `<tr><td colspan="9">無資料</td></tr>`}
+            ${stockRows || `<tr><td colspan="13">無資料</td></tr>`}
           </tbody>
         </table>
 
@@ -1143,6 +1158,13 @@
             <div class="mono">公式：${volAdjExplain.formula}</div>
             <div class="mono">代入：${volAdjExplain.substitution}</div>
             <div class="mono">VolAdj = ${fmt(r.vol_adj)}</div>
+          </div>
+
+          <div class="row">
+            <div class="label">Rate Pressure 計算結果</div>
+            <div class="mono">Source = ${r.rate_pressure_source || "missing"}</div>
+            <div class="mono">Basket RP = ${fmt(r.rate_pressure_score_basket)}，RatePressureAdj = ${fmt(r.rate_pressure_adj)}</div>
+            <div class="mono">股票明細：${Array.isArray(r.rate_pressure_stocks) ? r.rate_pressure_stocks.map(x => `${x.symbol}:RP=${fmt(x.rate_pressure_score)} IV=${fmt(x.iv_30d_atm_pct)} Skew=${fmt(x.put_skew_30d_vol_points)}`).join(" | ") : "-"}</div>
           </div>
         </div>
       `;
@@ -1480,6 +1502,8 @@
         "fair_yield",
         "basket_vol",
         "vol_adj",
+        "rate_pressure_adj",
+        "rate_pressure_score_basket",
         "pricing_view",
         "pricing_delta",
         "edge",
@@ -1512,6 +1536,8 @@
           csvEscape(r.engine?.fair_yield ?? ""),
           csvEscape(r.engine?.basket_vol ?? ""),
           csvEscape(r.engine?.vol_adj ?? ""),
+          csvEscape(r.engine?.rate_pressure_adj ?? ""),
+          csvEscape(r.engine?.rate_pressure_score_basket ?? ""),
           csvEscape(r.engine?.pricing_view ?? ""),
           csvEscape(r.engine?.pricing_delta ?? ""),
           csvEscape(r.engine?.edge ?? ""),
