@@ -46,8 +46,7 @@ async function loadM7V2() {
 
 async function loadOptionRuntime() {
   const paths = [
-    "data/options/option_runtime.json",
-    "data/option_runtime.json"
+    "data/options/option_runtime.json"
   ];
 
   for (const path of paths) {
