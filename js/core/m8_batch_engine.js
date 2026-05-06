@@ -1,11 +1,14 @@
 // ==========================================
-// M8 Engine VNext FINAL + Anchor-based Yield Proxy
-// 振宇 FCN 系統｜M8 定價模型（正式接回 M7 today_score 版）
+// M8 Engine VNext FINAL v2 + Rate Pressure + Anchor-based Yield Proxy
+// 振宇 FCN 系統｜M8 定價模型（市場化 Fair Yield 版）
 // 說明：
-// 1. 主讀 data/m7/m7_fundamental_data.json 取得 price / ret / swing_days
-// 2. 再讀 data/m7/m7_new_stock_today.json 取得 M7 真正的 today_score
-// 3. 只有在 M7 today_score 找不到時，才 fallback 用現有欄位推估
-// 4. 新增 anchor-based yield proxy：自動找輸入 basket 中 today_score 最高者當 anchor
+// 1. 主讀 data/m7_sandbox/m7_v2_scores.json 取得 M7_v2 score（品質主來源）
+// 2. 兼容 data/m7/m7_fundamental_data.json 取得 ret / swing_days / price 等 runtime 欄位
+// 3. 兼容 data/m7/m7_new_stock_today.json 作 fallback
+// 4. 新增 data/options/option_runtime.json：rate_pressure_score / IV / skew / demand
+// 5. 修正 Type：EKI < AKI < DACN
+// 6. 新增市場化 BW / Tail / Strike / KI / Tenor / Brake 公式
+// 7. Anchor-based Yield Proxy：以當次輸入最高 M7_v2 品質股票當 anchor
 // Proprietary System - All Rights Reserved
 // Unauthorized copying or commercial use is prohibited
 // All rights reserved by Gaya.Wang
@@ -21,6 +24,42 @@ async function loadM7Today() {
   const res = await fetch("data/m7/m7_new_stock_today.json");
   if (!res.ok) throw new Error("無法讀取 M7 today 檔案");
   return await res.json();
+}
+
+async function loadM7V2() {
+  const paths = [
+    "data/m7_sandbox/m7_v2_scores.json",
+    "data/m7_v2_scores.json"
+  ];
+
+  for (const path of paths) {
+    try {
+      const res = await fetch(path);
+      if (res.ok) return await res.json();
+    } catch (err) {
+      // try next path
+    }
+  }
+
+  throw new Error("無法讀取 M7 v2 score 檔案");
+}
+
+async function loadOptionRuntime() {
+  const paths = [
+    "data/options/option_runtime.json",
+    "data/option_runtime.json"
+  ];
+
+  for (const path of paths) {
+    try {
+      const res = await fetch(path);
+      if (res.ok) return await res.json();
+    } catch (err) {
+      // option runtime is optional for pilot; try next path
+    }
+  }
+
+  return { meta: { status: "missing" }, data: {} };
 }
 
 /**
@@ -66,6 +105,15 @@ function safeUpper(x) {
 // ------------------------------------------
 function allM7Stocks(m7json) {
   if (Array.isArray(m7json)) return m7json;
+  if (!m7json || typeof m7json !== "object") return [];
+
+  if (Array.isArray(m7json.rows)) return m7json.rows;
+  if (Array.isArray(m7json.data)) return m7json.data;
+  if (Array.isArray(m7json.stocks)) return m7json.stocks;
+
+  if (m7json.data && typeof m7json.data === "object") {
+    return Object.values(m7json.data);
+  }
 
   return [
     ...(m7json?.aggressive_recommend || []),
@@ -120,26 +168,52 @@ function findTodayStock(m7TodayJson, symbol) {
   return stocks.find(s => getSymbol(s) === safeUpper(symbol)) || null;
 }
 
+function findM7V2Stock(m7V2Json, symbol) {
+  const stocks = allM7Stocks(m7V2Json);
+  return stocks.find(s => getSymbol(s) === safeUpper(symbol)) || null;
+}
+
+function findOptionRuntime(optionRuntimeJson, symbol) {
+  const sym = safeUpper(symbol);
+  const data = optionRuntimeJson?.data || optionRuntimeJson || {};
+
+  if (data?.[sym]) return data[sym];
+
+  if (Array.isArray(data)) {
+    return data.find(s => safeUpper(s?.symbol) === sym) || null;
+  }
+
+  return null;
+}
+
 /**
  * 把 fundamental 與 m7_new_stock_today 合併
  * 規則：
  * - today_score 以 m7_new_stock_today.json 為主
  * - fundamental 提供 ret / swing_days / price 等資料
  */
-function mergeStockData(fundamentalStock, todayStock, symbol) {
-  if (!fundamentalStock && !todayStock && FALLBACK_STOCKS[symbol]) {
+function mergeStockData(fundamentalStock, todayStock, m7V2Stock, optionStock, symbol) {
+  if (!fundamentalStock && !todayStock && !m7V2Stock && FALLBACK_STOCKS[symbol]) {
     return FALLBACK_STOCKS[symbol];
   }
 
-  if (!fundamentalStock && !todayStock) {
+  if (!fundamentalStock && !todayStock && !m7V2Stock) {
     throw new Error(`M7 找不到股票: ${symbol}`);
   }
+
+  const sources = [];
+  if (m7V2Stock) sources.push("m7_v2");
+  if (todayStock) sources.push("m7_today");
+  if (fundamentalStock) sources.push("fundamental");
+  if (optionStock) sources.push("option_runtime");
 
   return {
     ...(fundamentalStock || {}),
     ...(todayStock || {}),
+    ...(m7V2Stock || {}),
+    option_runtime: optionStock || null,
     symbol: safeUpper(symbol),
-    _source: todayStock ? "m7_today+fundamental" : "fundamental_only"
+    _source: sources.length ? sources.join("+") : "fallback"
   };
 }
 
@@ -207,7 +281,28 @@ function deriveTodayScore(stock) {
   return Math.max(20, Math.min(95, round2(base)));
 }
 
-function getTodayScore(stock) {
+function getM7V2Score(stock) {
+  const candidates = [
+    stock?.m7_v2_score,
+    stock?.m7_effective_score,
+    stock?.m7_final_score,
+    stock?.m7_raw_score
+  ];
+
+  for (const v of candidates) {
+    if (v !== undefined && v !== null && v !== "") {
+      const n = toNum(v, 0);
+      if (n > 0) return n > 20 ? n / 10 : n;
+    }
+  }
+
+  return null;
+}
+
+function getM8QualityScore(stock) {
+  const m7v2 = getM7V2Score(stock);
+  if (m7v2 !== null) return Math.max(0, Math.min(100, round2(m7v2 * 10)));
+
   if (stock?.today_score !== undefined && stock?.today_score !== null && stock?.today_score !== "") {
     return toNum(stock.today_score, 0);
   }
@@ -219,6 +314,12 @@ function getTodayScore(stock) {
   return deriveTodayScore(stock);
 }
 
+function getTodayScore(stock) {
+  // Backward-compatible name: M8 now treats this as the quality score.
+  // Priority source is M7_v2 score; legacy today_score is fallback only.
+  return getM8QualityScore(stock);
+}
+
 // ------------------------------------------
 // 弱點 / BW / Tail
 // ------------------------------------------
@@ -227,30 +328,34 @@ function calcWeaknesses(scores) {
 }
 
 /**
- * BW = 0.5 * worst + 0.5 * avg
+ * BW = 0.55*worst + 0.30*avg + 0.15*secondWorst
  */
 function calcBW(weaknesses) {
   const sorted = [...weaknesses].sort((a, b) => b - a);
   const worst = sorted[0] || 0;
+  const secondWorst = sorted[1] || worst;
   const avgWeak = avg(weaknesses);
-  return 0.5 * worst + 0.5 * avgWeak;
+
+  return 0.55 * worst + 0.30 * avgWeak + 0.15 * secondWorst;
 }
 
 /**
- * TailAdj = 0.05 * (worst - avg)
+ * TailAdj = 0.06*(worst-avg) + 0.03*(secondWorst-avg)
  */
 function calcTailAdj(weaknesses) {
   const sorted = [...weaknesses].sort((a, b) => b - a);
   const worst = sorted[0] || 0;
+  const secondWorst = sorted[1] || worst;
   const avgWeak = avg(weaknesses);
-  return 0.05 * (worst - avgWeak);
+
+  return 0.06 * (worst - avgWeak) + 0.03 * (secondWorst - avgWeak);
 }
 
 /**
- * BasketPremium = 0.15*BW + 0.0008*BW^2
+ * BasketPremium = 0.12*BW + 0.0012*BW^2
  */
 function calcBasketPremium(BW) {
-  return 0.15 * BW + 0.0008 * BW * BW;
+  return 0.12 * BW + 0.0012 * BW * BW;
 }
 
 // ------------------------------------------
@@ -258,7 +363,8 @@ function calcBasketPremium(BW) {
 // ------------------------------------------
 function calcKIAdj(KI) {
   KI = toNum(KI);
-  return 0.08 * (KI - 55) + 0.0002 * Math.pow(KI - 55, 2);
+  const k = KI - 55;
+  return 0.025 * k + 0.00008 * k * k;
 }
 
 function calcTenorAdj(T) {
@@ -266,26 +372,28 @@ function calcTenorAdj(T) {
   let x = 0;
 
   if (T <= 3) {
-    x = 0.2 * (T - 1);
+    x = 0.18 * T;
   } else if (T <= 9) {
-    x = 0.4 + 0.1 * (T - 3) + 0.025 * Math.pow(T - 3, 2);
+    x = 0.54 + 0.24 * (T - 3);
   } else {
-    x = 1.85 + 0.05 * (T - 9);
+    x = 1.98 + 0.06 * (T - 9);
   }
 
-  return Math.min(2, x);
+  return Math.min(2.2, x);
 }
 
 function calcStrikeAdj(strike) {
   strike = toNum(strike);
-  return 0.5 + 0.08 * (strike - 55) + 0.001 * Math.pow(strike - 55, 2);
+  const x = strike - 55;
+  return 0.45 + 0.06 * x + 0.0018 * x * x;
 }
 
 function calcTypeAdj(type) {
   const t = String(type || "").toUpperCase();
-  if (t === "DACN") return 0.5;
-  if (t === "AKI") return 1;
-  return 0; // EKI
+  if (t === "EKI") return 0.0;
+  if (t === "AKI") return 0.7;
+  if (t === "DACN") return 1.5;
+  return 0.0;
 }
 
 // ------------------------------------------
@@ -323,20 +431,81 @@ function calcVolAdj(basketVol) {
   basketVol = toNum(basketVol);
   let x;
 
-  if (basketVol <= 2.0) {
-    x = -0.1 + 0.35 * basketVol;
-  } else if (basketVol <= 4.0) {
-    const d = basketVol - 2.0;
-    x = 0.6 + 0.7 * d + 0.3 * d * d;
-  } else if (basketVol <= 6.0) {
-    const d = basketVol - 4.0;
-    x = 3.2 + 0.85 * d + 0.3 * d * d;
+  if (basketVol < 1.5) {
+    x = 0.25 * basketVol;
+  } else if (basketVol < 3.0) {
+    x = 0.4 + 0.55 * (basketVol - 1.5);
   } else {
-    const d = basketVol - 6.0;
-    x = 6.4 + 0.45 * d - 0.04 * d * d;
+    x = 1.225 + 0.28 * (basketVol - 3.0);
   }
 
-  return Math.max(-0.5, Math.min(10.0, x));
+  return Math.max(0.0, Math.min(10.0, x));
+}
+
+// ------------------------------------------
+// Rate Pressure 模組（Option Runtime）
+// ------------------------------------------
+function getOptionField(stock, key, def = null) {
+  if (stock?.option_runtime && stock.option_runtime[key] !== undefined && stock.option_runtime[key] !== null) {
+    return stock.option_runtime[key];
+  }
+  if (stock?.[key] !== undefined && stock?.[key] !== null) return stock[key];
+  return def;
+}
+
+function calcStockRatePressureScore(stock) {
+  const direct = getOptionField(stock, "rate_pressure_score", null);
+  if (direct !== null && direct !== "") {
+    const n = toNum(direct, 0);
+    return n <= 10 ? n * 10 : n;
+  }
+
+  const ivScore = getOptionField(stock, "iv_score", null);
+  const skewScore = getOptionField(stock, "skew_score", null);
+  const demandScore = getOptionField(stock, "demand_score", null);
+
+  const hasAny = ivScore !== null || skewScore !== null || demandScore !== null;
+  if (!hasAny) return null;
+
+  return (
+    0.45 * toNum(ivScore, 0) * 10 +
+    0.30 * toNum(skewScore, 0) * 10 +
+    0.20 * toNum(demandScore, 0) * 10
+  );
+}
+
+function calcRatePressureAdj(stockList = []) {
+  const items = (stockList || [])
+    .map(stock => ({
+      symbol: getSymbol(stock),
+      rate_pressure_score: calcStockRatePressureScore(stock),
+      iv_score: getOptionField(stock, "iv_score", null),
+      skew_score: getOptionField(stock, "skew_score", null),
+      demand_score: getOptionField(stock, "demand_score", null),
+      iv_30d_atm_pct: getOptionField(stock, "iv_30d_atm_pct", null),
+      put_skew_30d_vol_points: getOptionField(stock, "put_skew_30d_vol_points", null),
+      data_source: stock?.option_runtime?.data_source || null
+    }))
+    .filter(x => x.rate_pressure_score !== null && Number.isFinite(x.rate_pressure_score));
+
+  if (!items.length) {
+    return {
+      rate_pressure_adj: 0,
+      rate_pressure_score_basket: 0,
+      rate_pressure_stocks: [],
+      rate_pressure_source: "missing"
+    };
+  }
+
+  const RP = avg(items.map(x => x.rate_pressure_score));
+  const adj = 3 / (1 + Math.exp(-(RP - 50) / 10));
+
+  return {
+    rate_pressure_adj: adj,
+    rate_pressure_score_basket: RP,
+    rate_pressure_stocks: items,
+    rate_pressure_source: "option_runtime"
+  };
 }
 
 // ------------------------------------------
@@ -345,10 +514,10 @@ function calcVolAdj(basketVol) {
 function calcHighRateBrake(preRate) {
   preRate = toNum(preRate);
 
-  if (preRate <= 18) return 0;
-  if (preRate <= 22) return 0.15 * (preRate - 18);
-  if (preRate <= 26) return 0.6 + 0.30 * (preRate - 22);
-  return 1.8 + 0.45 * (preRate - 26);
+  if (preRate < 18) return 0;
+  if (preRate < 22) return 0.18 * Math.pow(preRate - 18, 2);
+  if (preRate < 26) return 2.88 + 0.42 * Math.pow(preRate - 22, 2);
+  return 9 + 0.9 * (preRate - 26);
 }
 
 // ------------------------------------------
@@ -387,54 +556,57 @@ function pricingView(diff) {
 // ------------------------------------------
 export function getM8Blueprint() {
   return {
-    version: "M8 VNext FINAL",
+    version: "M8 VNext FINAL v2",
     data_source: {
       fundamental: "data/m7/m7_fundamental_data.json",
-      m7_today: "data/m7/m7_new_stock_today.json"
+      m7_today: "data/m7/m7_new_stock_today.json",
+      m7_v2: "data/m7_sandbox/m7_v2_scores.json",
+      option_runtime: "data/options/option_runtime.json"
     },
     summary: [
-      "M8 主讀 m7_fundamental_data.json",
-      "today_score 優先讀 m7_new_stock_today.json",
-      "只有找不到 today_score 才 fallback 推估",
-      "BW = 0.5 × worst + 0.5 × avg",
-      "BasketPremium = 0.15×BW + 0.0008×BW²",
-      "TailAdj = 0.05 × (worst - avg)",
+      "M8 主讀 m7_v2_scores.json 作為品質主來源，fundamental 作 runtime fallback",
+      "M7_v2 score 優先；today_score 只作 fallback",
+      "只有找不到 M7_v2 / today_score 才 fallback 推估",
+      "BW = 0.55×worst + 0.30×avg + 0.15×secondWorst",
+      "BasketPremium = 0.12×BW + 0.0012×BW²",
+      "TailAdj = 0.06×(worst-avg)+0.03×(secondWorst-avg)",
       "Strike > KI，Strike 為主要風險",
-      "Type：EKI=0，DACN=0.5，AKI=1",
+      "Type：EKI=0，AKI=0.7，DACN=1.5",
       "Tenor：1–3慢、3–10加速、10–12放緩（max=2）",
       "BasketVol = 0.5×s1 + 0.3×s2 + 0.2×avgSwing",
       "VolAdj 採平滑函數",
-      "HighRateBrake 用來抑制極端高利率失真",
-      "Anchor-based Yield Proxy：以當次輸入最高 today_score 股票當 anchor"
+      "HighRateBrake 強化，用來抑制極端高利率失真",
+      "Anchor-based Yield Proxy：以當次輸入最高 M7_v2 品質股票當 anchor"
     ],
     formulas: {
-      today_score: "優先使用 m7_new_stock_today.json 的 today_score；缺值才 fallback 推估",
+      today_score: "M7_v2 score×10 為品質主分數；缺值才 fallback today_score / derived_today_score",
       derived_today_score: "today_score(推估) = quality_score + risk_penalty + trend_score + volatility_penalty",
       weaknesses: "weakness = 100 - today_score",
-      BW: "BW = 0.5 × worst + 0.5 × avg",
-      basket_premium: "BasketPremium = 0.15×BW + 0.0008×BW²",
-      tail_adj: "TailAdj = 0.05 × (worst - avg)",
-      ki_adj: "KIAdj = 0.08×(KI-55) + 0.0002×(KI-55)^2",
-      tenor_adj: "1–3慢、3–9加速、9–12放緩，max=2",
-      strike_adj: "StrikeAdj = 0.5 + 0.08×(Strike-55) + 0.001×(Strike-55)^2",
-      type_adj: "EKI=0, DACN=0.5, AKI=1",
+      BW: "BW = 0.55×worst + 0.30×avg + 0.15×secondWorst",
+      basket_premium: "BasketPremium = 0.12×BW + 0.0012×BW²",
+      tail_adj: "TailAdj = 0.06×(worst-avg)+0.03×(secondWorst-avg)",
+      ki_adj: "KIAdj = 0.025×(KI-55) + 0.00008×(KI-55)^2",
+      tenor_adj: "1–3慢、3–9加速、9–12放緩，max=2.2",
+      strike_adj: "StrikeAdj = 0.45 + 0.06×(Strike-55) + 0.0018×(Strike-55)^2",
+      type_adj: "EKI=0, AKI=0.7, DACN=1.5",
       short_swing: "ShortSwing = 0.35*d0 + 0.25*d1 + 0.15*d2 + 0.10*d3 + 0.08*d4 + 0.07*d5",
       basket_vol: "BasketVol = 0.5×s1 + 0.3×s2 + 0.2×avgSwing",
       vol_adj: "分段平滑函數",
-      brake: "HighRateBrake: 18以下不煞，18~22輕煞，22~26加強，26以上強煞",
-      final_yield: "FairYield = Base + BasketPremium + TailAdj + StructureTotal + VolAdj - HighRateBrake(PreRate)",
+      brake: "HighRateBrake: 18以下不煞，18~22二次煞，22~26強二次煞，26以上線性強煞",
+      final_yield: "FairYield = Base + BasketPremium + TailAdj + StructureTotal + VolAdj + RatePressureAdj - HighRateBrake(PreRate)",
+      rate_pressure: "RatePressureAdj = 3 / (1 + exp(-(RP-50)/10)); RP 來自 option_runtime rate_pressure_score",
       anchor_proxy: "anchor + target 的 pair_fair_yield 與 normalized_proxy"
     },
     parameters: {
       base: 6,
-      type_map: { EKI: 0, DACN: 0.5, AKI: 1 },
+      type_map: { EKI: 0, AKI: 0.7, DACN: 1.5 },
       tenor: {
         short: "1–3 月慢速",
         mid: "3–10 月加速",
         long: "10–12 月放緩",
-        max: 2
+        max: 2.2
       },
-      today_score_source: "m7_new_stock_today.json 優先，fundamental fallback",
+      today_score_source: "m7_v2_score × 10 優先，today_score / fundamental fallback",
       vol_note: "VolImpact = VolAdj，不再外掛 ResonanceAdj"
     }
   };
@@ -456,16 +628,20 @@ export async function runM8Case({
     throw new Error(`${caseName}: basket 只支援 2~5 檔`);
   }
 
-  const [m7Fundamental, m7Today] = await Promise.all([
+  const [m7Fundamental, m7Today, m7V2, optionRuntime] = await Promise.all([
     loadM7Fundamental(),
-    loadM7Today()
+    loadM7Today(),
+    loadM7V2(),
+    loadOptionRuntime()
   ]);
 
   const stocks = symbols.map(sym => {
     const symbol = safeUpper(sym);
     const fundamentalStock = findFundamentalStock(m7Fundamental, symbol);
     const todayStock = findTodayStock(m7Today, symbol);
-    return mergeStockData(fundamentalStock, todayStock, symbol);
+    const m7V2Stock = findM7V2Stock(m7V2, symbol);
+    const optionStock = findOptionRuntime(optionRuntime, symbol);
+    return mergeStockData(fundamentalStock, todayStock, m7V2Stock, optionStock, symbol);
   });
 
   const scores = stocks.map(getTodayScore);
@@ -482,13 +658,16 @@ export async function runM8Case({
   const volAdj = calcVolAdj(basketVol);
 
   const base = 6;
+  const ratePressure = calcRatePressureAdj(stocks);
+  const ratePressureAdj = ratePressure.rate_pressure_adj;
 
   const preRate =
     base +
     basketPremium +
     structure.structure_total +
     tailAdj +
-    volAdj;
+    volAdj +
+    ratePressureAdj;
 
   const highRateBrake = calcHighRateBrake(preRate);
   const fairYield = preRate - highRateBrake;
@@ -517,7 +696,13 @@ export async function runM8Case({
       sector: getSector(s),
       subsector: getSubsector(s),
       risk: getRiskLevel(s),
-      today_score: round2(getTodayScore(s))
+      m7_v2_score: round2(getM7V2Score(s) || 0),
+      quality_score: round2(getTodayScore(s)),
+      today_score: round2(getTodayScore(s)),
+      rate_pressure_score: round2(calcStockRatePressureScore(s) !== null ? calcStockRatePressureScore(s) / 10 : 0),
+      iv_30d_atm_pct: round2(getOptionField(s, "iv_30d_atm_pct", 0)),
+      put_skew_30d_vol_points: round2(getOptionField(s, "put_skew_30d_vol_points", 0)),
+      demand_score: round2(getOptionField(s, "demand_score", 0))
     })),
 
     scores: scores.map(round2),
@@ -530,6 +715,14 @@ export async function runM8Case({
     short_swings: shortSwings.map(round2),
     basket_vol: round2(basketVol),
     vol_adj: round2(volAdj),
+    rate_pressure_adj: round2(ratePressureAdj),
+    rate_pressure_score_basket: round2(ratePressure.rate_pressure_score_basket),
+    rate_pressure_source: ratePressure.rate_pressure_source,
+    rate_pressure_stocks: ratePressure.rate_pressure_stocks.map(x => ({
+      ...x,
+      rate_pressure_score: round2(x.rate_pressure_score / 10),
+      rate_pressure_score_0_100: round2(x.rate_pressure_score)
+    })),
 
     market_yield: round2(marketYield),
     base: round2(base),
@@ -567,9 +760,11 @@ export async function runM8AnchorProxy({
     throw new Error("Anchor Proxy 至少需要 2 檔股票");
   }
 
-  const [m7Fundamental, m7Today] = await Promise.all([
+  const [m7Fundamental, m7Today, m7V2, optionRuntime] = await Promise.all([
     loadM7Fundamental(),
-    loadM7Today()
+    loadM7Today(),
+    loadM7V2(),
+    loadOptionRuntime()
   ]);
 
   const cleanedSymbols = [...new Set(symbols.map(safeUpper).filter(Boolean))];
@@ -581,12 +776,15 @@ export async function runM8AnchorProxy({
   const enriched = cleanedSymbols.map(symbol => {
     const fundamentalStock = findFundamentalStock(m7Fundamental, symbol);
     const todayStock = findTodayStock(m7Today, symbol);
-    const merged = mergeStockData(fundamentalStock, todayStock, symbol);
+    const m7V2Stock = findM7V2Stock(m7V2, symbol);
+    const optionStock = findOptionRuntime(optionRuntime, symbol);
+    const merged = mergeStockData(fundamentalStock, todayStock, m7V2Stock, optionStock, symbol);
 
     return {
       symbol,
       name: getName(merged),
       today_score: round2(getTodayScore(merged)),
+      m7_v2_score: round2(getM7V2Score(merged) || 0),
       source: merged._source || "m7"
     };
   });
