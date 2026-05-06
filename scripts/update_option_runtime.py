@@ -15,10 +15,16 @@ Concept:
     IV + skew + demand
 
 Coverage logic v2:
-  1. data/m1/universe_150.json  -> main coverage universe
-  2. data/pool30.json           -> active pool supplement
+  1. data/m1/universe_150.json
+  2. data/pool30.json
   3. data/m7_sandbox/m7_v2_scores.json high-score supplement
   4. DEFAULT_SYMBOLS fallback
+
+Important fix v3:
+  Spot / option strike scale normalization.
+  Some data sources may return price scale inconsistent with option strikes
+  e.g. MU spot=640 while option strikes are around 60~70.
+  If spot is outside option strike range, adjust by /10 or *10 before ATM lookup.
 
 Pilot source:
   yfinance option chain.
@@ -157,7 +163,6 @@ def rows_from_json(obj: Any) -> List[Dict[str, Any]]:
                     out.append(merged)
             return out
 
-    # If object itself looks like symbol -> row mapping
     out = []
     for sym, row in obj.items():
         if isinstance(row, dict):
@@ -169,9 +174,6 @@ def rows_from_json(obj: Any) -> List[Dict[str, Any]]:
 
 
 def get_m7_score(row: Dict[str, Any]) -> Optional[float]:
-    """
-    Support current and historical M7 v2 field names.
-    """
     keys = [
         "m7_v2_score",
         "m7_effective_score",
@@ -185,7 +187,6 @@ def get_m7_score(row: Dict[str, Any]) -> Optional[float]:
         if v is not None:
             return v
 
-    # Sometimes nested
     for parent_key in ["m7", "scores", "result"]:
         parent = row.get(parent_key)
         if isinstance(parent, dict):
@@ -208,8 +209,6 @@ def extract_symbols() -> Tuple[List[str], Dict[str, Any]]:
       2. pool30: active pool supplement
       3. M7 v2 high-score supplement
       4. DEFAULT_SYMBOLS fallback
-
-    This function returns (symbols, coverage_meta).
     """
     symbols: List[str] = []
     source_counts = {
@@ -219,9 +218,6 @@ def extract_symbols() -> Tuple[List[str], Dict[str, Any]]:
         "default": 0,
     }
 
-    # ==================================================
-    # 1. Universe 150 main coverage
-    # ==================================================
     universe = load_json(UNIVERSE150_PATH)
     universe_rows = rows_from_json(universe)
 
@@ -231,9 +227,6 @@ def extract_symbols() -> Tuple[List[str], Dict[str, Any]]:
             add_symbol(symbols, sym)
             source_counts["universe_150"] += 1
 
-    # ==================================================
-    # 2. Pool30 supplement
-    # ==================================================
     pool = load_json(POOL30_PATH)
     pool_rows = rows_from_json(pool)
 
@@ -243,9 +236,6 @@ def extract_symbols() -> Tuple[List[str], Dict[str, Any]]:
             add_symbol(symbols, sym)
             source_counts["pool30"] += 1
 
-    # ==================================================
-    # 3. M7 v2 high-score supplement
-    # ==================================================
     m7 = load_json(M7_PATH)
     m7_rows = rows_from_json(m7)
 
@@ -256,23 +246,15 @@ def extract_symbols() -> Tuple[List[str], Dict[str, Any]]:
 
         score = get_m7_score(row)
 
-        # Only supplement high-quality names if score exists.
-        # If M7 file shape has no score, do not flood from unknown rows.
         if score is not None and score >= 8:
             add_symbol(symbols, sym)
             source_counts["m7_high_score"] += 1
 
-    # ==================================================
-    # 4. Fallback
-    # ==================================================
     if not symbols:
         for sym in DEFAULT_SYMBOLS:
             add_symbol(symbols, sym)
             source_counts["default"] += 1
 
-    # ==================================================
-    # Dedupe, preserve order
-    # ==================================================
     seen = set()
     out: List[str] = []
 
@@ -330,26 +312,114 @@ def nearest_expiry(options: List[str], target_days: int = 30) -> Optional[str]:
     return best
 
 
+def get_strike_range(calls, puts) -> Tuple[Optional[float], Optional[float]]:
+    strikes = []
+
+    for df in [calls, puts]:
+        if df is None or len(df) == 0 or "strike" not in df.columns:
+            continue
+
+        for x in df["strike"].tolist():
+            v = safe_float(x)
+            if v is not None and v > 0:
+                strikes.append(v)
+
+    if not strikes:
+        return None, None
+
+    return min(strikes), max(strikes)
+
+
+def normalize_spot_to_strike_scale(
+    raw_spot: Optional[float],
+    min_strike: Optional[float],
+    max_strike: Optional[float],
+) -> Tuple[Optional[float], Dict[str, Any]]:
+    """
+    Fix scale mismatch:
+      raw_spot 640 but strikes 50~80  -> spot / 10
+      raw_spot 6.4 but strikes 50~80  -> spot * 10
+
+    We only apply conservative x10 / /10 adjustments.
+    """
+    debug = {
+        "spot_raw": round_or_none(raw_spot, 6),
+        "spot_adjusted": round_or_none(raw_spot, 6),
+        "min_strike": round_or_none(min_strike, 6),
+        "max_strike": round_or_none(max_strike, 6),
+        "adjustment": "none",
+        "reason": None,
+    }
+
+    if raw_spot is None or raw_spot <= 0:
+        debug["reason"] = "invalid_raw_spot"
+        return raw_spot, debug
+
+    if min_strike is None or max_strike is None or min_strike <= 0 or max_strike <= 0:
+        debug["reason"] = "missing_strike_range"
+        return raw_spot, debug
+
+    spot = raw_spot
+
+    # Case A: spot is far above option strike range.
+    # Example: MU raw 640 vs strikes around 60~70.
+    if spot > max_strike * 1.5:
+        candidate = spot / 10.0
+
+        if min_strike * 0.5 <= candidate <= max_strike * 1.5:
+            spot = candidate
+            debug["adjustment"] = "divide_by_10"
+            debug["reason"] = "raw_spot_above_strike_range"
+
+    # Case B: spot is far below option strike range.
+    elif spot < min_strike / 1.5:
+        candidate = spot * 10.0
+
+        if min_strike * 0.5 <= candidate <= max_strike * 1.5:
+            spot = candidate
+            debug["adjustment"] = "multiply_by_10"
+            debug["reason"] = "raw_spot_below_strike_range"
+
+    debug["spot_adjusted"] = round_or_none(spot, 6)
+    return spot, debug
+
+
+def valid_iv(v: Optional[float]) -> bool:
+    """
+    Basic IV sanity check.
+    0.0002 means 0.02%, almost always broken for equity options.
+    6.0 means 600%, possible but suspicious; keep broad upper bound.
+    """
+    return v is not None and 0.01 <= v <= 6.0
+
+
+def median_valid_iv(calls, puts) -> Optional[float]:
+    vals = []
+
+    for df in [calls, puts]:
+        if df is None or len(df) == 0 or "impliedVolatility" not in df.columns:
+            continue
+
+        for x in df["impliedVolatility"].tolist():
+            v = safe_float(x)
+            if valid_iv(v):
+                vals.append(v)
+
+    if not vals:
+        return None
+
+    return statistics.median(vals)
+
+
 def score_iv(iv: Optional[float]) -> float:
-    """
-    IV score 0~10.
-    IV input is decimal, e.g. 0.55 = 55%.
-    """
     if iv is None:
         return 0.0
 
-    # v1 mapping:
-    # 10% -> 0
-    # 75%+ -> 10
+    # 10% -> 0, 75%+ -> 10
     return round(clamp((iv - 0.10) / 0.65 * 10.0, 0.0, 10.0), 2)
 
 
 def score_skew(put_skew: Optional[float]) -> float:
-    """
-    Put skew score 0~10.
-    put_skew input is decimal IV difference, e.g. 0.08 = 8 vol points.
-    Negative skew means downside fear is not elevated, so score floors at 0.
-    """
     if put_skew is None:
         return 0.0
 
@@ -357,10 +427,6 @@ def score_skew(put_skew: Optional[float]) -> float:
 
 
 def score_demand(pcr_vol: Optional[float], pcr_oi: Optional[float]) -> float:
-    """
-    Demand proxy 0~10.
-    Higher put/call ratios suggest more downside protection demand.
-    """
     vals = []
 
     if pcr_vol is not None:
@@ -381,13 +447,6 @@ def weighted_rate_pressure(
     demand_score: float,
     event_score: float = 0.0,
 ) -> float:
-    """
-    Pilot v1:
-      rate_pressure_score = 0.45*IV + 0.30*Skew + 0.20*Demand + 0.05*Event
-
-    Important:
-      This is option-runtime pressure, not final M8 fair-yield.
-    """
     return round(
         0.45 * iv_score +
         0.30 * skew_score +
@@ -398,15 +457,6 @@ def weighted_rate_pressure(
 
 
 def nearest_by_moneyness(df, option_type: str, spot: float):
-    """
-    yfinance chain usually does not include Greeks/delta.
-    Use moneyness proxy:
-      ATM: strike nearest spot
-      25-delta-ish put: strike around 90% spot
-      25-delta-ish call: strike around 110% spot
-
-    Production version should use real delta from Tradier / Polygon / Nasdaq Data Link.
-    """
     if df is None or len(df) == 0:
         return None
 
@@ -442,6 +492,24 @@ def sum_numeric(df, col: str) -> Optional[float]:
     return total if ok else None
 
 
+def classify_rate_driver(iv_score: float, skew_score: float, demand_score: float) -> str:
+    scores = {
+        "IV_DRIVEN": iv_score,
+        "SKEW_DRIVEN": skew_score,
+        "DEMAND_DRIVEN": demand_score,
+    }
+
+    top_label, top_score = max(scores.items(), key=lambda kv: kv[1])
+
+    if top_score < 3:
+        return "LOW_PRESSURE"
+
+    if iv_score >= 8 and iv_score >= skew_score and iv_score >= demand_score:
+        return "IV_DRIVEN"
+
+    return top_label
+
+
 # ==================================================
 # Fetch option data
 # ==================================================
@@ -467,9 +535,9 @@ def fetch_option_chain_yfinance(symbol: str) -> Dict[str, Any]:
                 "warning": "no_price_history",
             }
 
-        spot = safe_float(hist["Close"].iloc[-1])
+        raw_spot = safe_float(hist["Close"].iloc[-1])
 
-        if spot is None:
+        if raw_spot is None:
             return {
                 "symbol": symbol,
                 "status": "error",
@@ -485,13 +553,17 @@ def fetch_option_chain_yfinance(symbol: str) -> Dict[str, Any]:
                 "symbol": symbol,
                 "status": "error",
                 "data_source": "yfinance",
-                "spot": round_or_none(spot, 4),
+                "spot": round_or_none(raw_spot, 4),
+                "spot_raw": round_or_none(raw_spot, 4),
                 "warning": "no_option_expiry",
             }
 
         chain = ticker.option_chain(expiry)
         calls = chain.calls
         puts = chain.puts
+
+        min_strike, max_strike = get_strike_range(calls, puts)
+        spot, spot_scale_debug = normalize_spot_to_strike_scale(raw_spot, min_strike, max_strike)
 
         atm_call = nearest_by_moneyness(calls, "atm", spot)
         atm_put = nearest_by_moneyness(puts, "atm", spot)
@@ -503,15 +575,31 @@ def fetch_option_chain_yfinance(symbol: str) -> Dict[str, Any]:
         put_25_iv = safe_float(put_25.get("impliedVolatility")) if put_25 is not None else None
         call_25_iv = safe_float(call_25.get("impliedVolatility")) if call_25 is not None else None
 
-        iv_vals = [v for v in [atm_call_iv, atm_put_iv] if v is not None]
+        iv_vals = [v for v in [atm_call_iv, atm_put_iv] if valid_iv(v)]
         iv_30d_atm = statistics.mean(iv_vals) if iv_vals else None
+        iv_source = "atm_call_put_avg"
+
+        # Fallback if ATM IV is broken.
+        if not valid_iv(iv_30d_atm):
+            chain_median_iv = median_valid_iv(calls, puts)
+            if valid_iv(chain_median_iv):
+                iv_30d_atm = chain_median_iv
+                iv_source = "chain_median_iv"
+            else:
+                fallback_vals = [v for v in [put_25_iv, call_25_iv] if valid_iv(v)]
+                if fallback_vals:
+                    iv_30d_atm = statistics.mean(fallback_vals)
+                    iv_source = "put_call_25d_proxy_avg"
+                else:
+                    iv_30d_atm = None
+                    iv_source = "missing_or_invalid"
 
         put_skew_30d = None
-        if put_25_iv is not None and iv_30d_atm is not None:
+        if valid_iv(put_25_iv) and valid_iv(iv_30d_atm):
             put_skew_30d = put_25_iv - iv_30d_atm
 
         call_skew_30d = None
-        if call_25_iv is not None and iv_30d_atm is not None:
+        if valid_iv(call_25_iv) and valid_iv(iv_30d_atm):
             call_skew_30d = call_25_iv - iv_30d_atm
 
         put_volume = sum_numeric(puts, "volume")
@@ -533,6 +621,12 @@ def fetch_option_chain_yfinance(symbol: str) -> Dict[str, Any]:
         event_s = 0.0
         rate_s = weighted_rate_pressure(iv_s, skew_s, demand_s, event_s)
 
+        data_warning = None
+        if spot_scale_debug.get("adjustment") != "none":
+            data_warning = "spot_strike_scale_adjusted"
+        elif iv_source != "atm_call_put_avg":
+            data_warning = "atm_iv_fallback_used"
+
         return {
             "symbol": symbol,
             "status": "ok",
@@ -541,10 +635,17 @@ def fetch_option_chain_yfinance(symbol: str) -> Dict[str, Any]:
             "updated_at": datetime.now(timezone.utc).isoformat(),
 
             "spot": round_or_none(spot, 4),
+            "spot_raw": round_or_none(raw_spot, 4),
+            "spot_scale_adjustment": spot_scale_debug.get("adjustment"),
+
             "expiry_used": expiry,
 
             "iv_30d_atm": round_or_none(iv_30d_atm, 6),
             "iv_30d_atm_pct": round_or_none(iv_30d_atm * 100 if iv_30d_atm is not None else None, 2),
+            "iv_source": iv_source,
+
+            "atm_call_iv": round_or_none(atm_call_iv, 6),
+            "atm_put_iv": round_or_none(atm_put_iv, 6),
 
             "put_25d_iv": round_or_none(put_25_iv, 6),
             "call_25d_iv": round_or_none(call_25_iv, 6),
@@ -570,13 +671,19 @@ def fetch_option_chain_yfinance(symbol: str) -> Dict[str, Any]:
             "rate_pressure_score": rate_s,
 
             "rate_pressure_formula": "0.45*iv_score + 0.30*skew_score + 0.20*demand_score + 0.05*event_score",
-
             "rate_driver_label": classify_rate_driver(iv_s, skew_s, demand_s),
 
+            "data_warning": data_warning,
+
             "debug": {
-                "atm_method": "nearest strike to spot",
-                "put_25d_proxy_method": "nearest strike to 90% spot",
-                "call_25d_proxy_method": "nearest strike to 110% spot",
+                "atm_method": "nearest strike to adjusted spot",
+                "put_25d_proxy_method": "nearest strike to 90% adjusted spot",
+                "call_25d_proxy_method": "nearest strike to 110% adjusted spot",
+                "spot_scale": spot_scale_debug,
+                "strike_range": {
+                    "min": round_or_none(min_strike, 4),
+                    "max": round_or_none(max_strike, 4),
+                },
                 "warning": "pilot proxy: not real 25-delta; use production options API for Greeks",
             },
         }
@@ -589,28 +696,6 @@ def fetch_option_chain_yfinance(symbol: str) -> Dict[str, Any]:
             "updated_at": datetime.now(timezone.utc).isoformat(),
             "warning": str(exc),
         }
-
-
-def classify_rate_driver(iv_score: float, skew_score: float, demand_score: float) -> str:
-    """
-    Explain why option premium / FCN pressure is elevated.
-    """
-    scores = {
-        "IV_DRIVEN": iv_score,
-        "SKEW_DRIVEN": skew_score,
-        "DEMAND_DRIVEN": demand_score,
-    }
-
-    top_label, top_score = max(scores.items(), key=lambda kv: kv[1])
-
-    if top_score < 3:
-        return "LOW_PRESSURE"
-
-    # If IV is extremely high, label it clearly even if other signals exist.
-    if iv_score >= 8 and iv_score >= skew_score and iv_score >= demand_score:
-        return "IV_DRIVEN"
-
-    return top_label
 
 
 # ==================================================
@@ -632,6 +717,7 @@ def build_runtime(symbols: Optional[List[str]] = None) -> Dict[str, Any]:
     rows: Dict[str, Any] = {}
     ok_count = 0
     error_count = 0
+    warning_count = 0
 
     for sym in symbols:
         sym = normalize_symbol(sym)
@@ -647,6 +733,9 @@ def build_runtime(symbols: Optional[List[str]] = None) -> Dict[str, Any]:
         else:
             error_count += 1
 
+        if row.get("data_warning"):
+            warning_count += 1
+
     return {
         "meta": {
             "generated_at": datetime.now(timezone.utc).isoformat(),
@@ -655,9 +744,11 @@ def build_runtime(symbols: Optional[List[str]] = None) -> Dict[str, Any]:
             "symbol_count": len(rows),
             "ok_count": ok_count,
             "error_count": error_count,
+            "warning_count": warning_count,
             "coverage": coverage_meta,
             "purpose": "FCN rate pressure: IV + skew + demand",
             "rate_pressure_formula": "0.45*iv_score + 0.30*skew_score + 0.20*demand_score + 0.05*event_score",
+            "important_fix": "spot/option-strike scale normalization + ATM IV fallback",
         },
         "data": rows,
     }
@@ -667,8 +758,6 @@ def main(argv: List[str]) -> int:
     symbols = None
 
     if len(argv) > 1:
-        # Example:
-        #   python scripts/update_option_runtime.py NVDA MU TSM
         symbols = [normalize_symbol(x) for x in argv[1:] if normalize_symbol(x)]
 
     runtime = build_runtime(symbols)
