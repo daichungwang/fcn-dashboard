@@ -595,6 +595,84 @@
     </section>
 
 
+
+    <section class="card blueprint-card">
+      <div class="bp-header">
+        <h2 style="margin:0;">M8 All Stocks Pool / Option Runtime 全市場池</h2>
+        <span class="muted">檢查 IV / Skew / Demand / RP 的 scale 與排序是否合理</span>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="summary-grid">
+          <div class="summary-box"><div class="k">Symbols</div><div class="v" id="allPoolSymbolCount">-</div></div>
+          <div class="summary-box"><div class="k">Avg IVScore</div><div class="v" id="allPoolAvgIVScore">-</div></div>
+          <div class="summary-box"><div class="k">Avg SkewScore</div><div class="v" id="allPoolAvgSkewScore">-</div></div>
+          <div class="summary-box"><div class="k">Avg Demand</div><div class="v" id="allPoolAvgDemand">-</div></div>
+          <div class="summary-box"><div class="k">Avg RP</div><div class="v" id="allPoolAvgRP">-</div></div>
+        </div>
+
+        <div class="split-3" style="margin-bottom:12px;">
+          <div class="form-group">
+            <label>Symbol Filter</label>
+            <input id="allPoolFilterSymbol" type="text" placeholder="NVDA / MU / AAPL" />
+          </div>
+          <div class="form-group">
+            <label>Driver Filter</label>
+            <select id="allPoolFilterDriver">
+              <option value="">ALL</option>
+              <option value="IV_DRIVEN">IV_DRIVEN</option>
+              <option value="SKEW_DRIVEN">SKEW_DRIVEN</option>
+              <option value="DEMAND_DRIVEN">DEMAND_DRIVEN</option>
+              <option value="LOW_PRESSURE">LOW_PRESSURE</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Sort</label>
+            <select id="allPoolSort">
+              <option value="rp_desc">RP High → Low</option>
+              <option value="ivscore_desc">IV Score High → Low</option>
+              <option value="iv_desc">IV% High → Low</option>
+              <option value="skewscore_desc">Skew Score High → Low</option>
+              <option value="demand_desc">Demand High → Low</option>
+              <option value="symbol_asc">Symbol A → Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="split-3" style="margin-bottom:12px;">
+          <div class="form-group">
+            <label>Min IV Score</label>
+            <input id="allPoolMinIVScore" type="number" step="0.1" value="0" />
+          </div>
+          <div class="form-group">
+            <label>Min RP</label>
+            <input id="allPoolMinRP" type="number" step="0.1" value="0" />
+          </div>
+          <div class="form-group">
+            <label>Warning Filter</label>
+            <select id="allPoolWarningFilter">
+              <option value="">ALL</option>
+              <option value="with_warning">With warning</option>
+              <option value="no_warning">No warning</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="explain-box">
+          <div class="label">Rate Pressure Formula</div>
+          <div class="mono">RP = 0.45 × IVScore + 0.30 × SkewScore + 0.20 × DemandScore + 0.05 × EventScore</div>
+          <div class="small-note">
+            這張表不是做單結果，而是檢查全市場 option_runtime.json 的 IVScore / SkewScore / DemandScore 是否同量級。
+          </div>
+        </div>
+
+        <div class="sticky-box" style="margin-top:12px; max-height:520px;">
+          <div id="allStocksPoolTable" style="padding:12px;">尚未載入</div>
+        </div>
+      </div>
+    </section>
+
+
     <section class="card blueprint-card">      <div class="bp-header">
         <h2 style="margin:0;">M8 Blueprint（完整邏輯 / 公式 / 參數）</h2>
         <button id="toggleBlueprintBtn" class="btn-secondary" type="button">一鍵展開</button>
@@ -1659,6 +1737,7 @@
       renderHistory();
       renderBasketCompare();
       loadRuntimeDashboard();
+      loadAllStocksPool();
       clearResult();
     }
 
@@ -1956,6 +2035,114 @@
     }
 
 
+
+    async function loadAllStocksPool() {
+      try {
+        const res = await fetch("./data/options/option_runtime.json");
+        const json = await res.json();
+        const rows = Object.values(json.data || {}).filter(x => x && x.status === "ok");
+        const avg = (arr) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
+
+        function updateSummary(data) {
+          $("allPoolSymbolCount").textContent = data.length;
+          $("allPoolAvgIVScore").textContent = fmt(avg(data.map(x => Number(x.iv_score || 0))));
+          $("allPoolAvgSkewScore").textContent = fmt(avg(data.map(x => Number(x.skew_score || 0))));
+          $("allPoolAvgDemand").textContent = fmt(avg(data.map(x => Number(x.demand_score || 0))));
+          $("allPoolAvgRP").textContent = fmt(avg(data.map(x => Number(x.rate_pressure_score || 0))));
+        }
+
+        function renderTable() {
+          const symbolFilter = ($("allPoolFilterSymbol").value || "").trim().toUpperCase();
+          const driverFilter = $("allPoolFilterDriver").value || "";
+          const sortMode = $("allPoolSort").value || "rp_desc";
+          const minIVScore = Number($("allPoolMinIVScore").value || 0);
+          const minRP = Number($("allPoolMinRP").value || 0);
+          const warningFilter = $("allPoolWarningFilter").value || "";
+
+          let data = rows.filter(x => {
+            const symbol = String(x.symbol || "").toUpperCase();
+            const warning = String(x.data_warning || "");
+            const passSymbol = !symbolFilter || symbol.includes(symbolFilter);
+            const passDriver = !driverFilter || x.rate_driver_label === driverFilter;
+            const passIV = Number(x.iv_score || 0) >= minIVScore;
+            const passRP = Number(x.rate_pressure_score || 0) >= minRP;
+            const passWarning =
+              !warningFilter ||
+              (warningFilter === "with_warning" && warning) ||
+              (warningFilter === "no_warning" && !warning);
+            return passSymbol && passDriver && passIV && passRP && passWarning;
+          });
+
+          if (sortMode === "rp_desc") data.sort((a, b) => Number(b.rate_pressure_score || 0) - Number(a.rate_pressure_score || 0));
+          else if (sortMode === "ivscore_desc") data.sort((a, b) => Number(b.iv_score || 0) - Number(a.iv_score || 0));
+          else if (sortMode === "iv_desc") data.sort((a, b) => Number(b.iv_30d_atm_pct || 0) - Number(a.iv_30d_atm_pct || 0));
+          else if (sortMode === "skewscore_desc") data.sort((a, b) => Number(b.skew_score || 0) - Number(a.skew_score || 0));
+          else if (sortMode === "demand_desc") data.sort((a, b) => Number(b.demand_score || 0) - Number(a.demand_score || 0));
+          else if (sortMode === "symbol_asc") data.sort((a, b) => String(a.symbol || "").localeCompare(String(b.symbol || "")));
+
+          updateSummary(data);
+
+          $("allStocksPoolTable").innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Symbol</th>
+                  <th>Spot</th>
+                  <th>IV%</th>
+                  <th>IV Score</th>
+                  <th>Skew</th>
+                  <th>Skew Score</th>
+                  <th>Demand</th>
+                  <th>Event</th>
+                  <th>RP</th>
+                  <th>Driver</th>
+                  <th>IV Source</th>
+                  <th>Warning</th>
+                  <th>Expiry</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map((x, idx) => `
+                  <tr>
+                    <td>${idx + 1}</td>
+                    <td>${x.symbol || ""}</td>
+                    <td>${fmt(x.spot)}</td>
+                    <td>${fmt(x.iv_30d_atm_pct)}</td>
+                    <td>${fmt(x.iv_score)}</td>
+                    <td>${fmt(x.put_skew_30d_vol_points)}</td>
+                    <td>${fmt(x.skew_score)}</td>
+                    <td>${fmt(x.demand_score)}</td>
+                    <td>${fmt(x.event_score)}</td>
+                    <td>${fmt(x.rate_pressure_score)}</td>
+                    <td>${x.rate_driver_label || ""}</td>
+                    <td>${x.iv_source || ""}</td>
+                    <td>${x.data_warning || ""}</td>
+                    <td>${x.expiry_used || ""}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          `;
+        }
+
+        renderTable();
+
+        ["allPoolFilterSymbol", "allPoolFilterDriver", "allPoolSort", "allPoolMinIVScore", "allPoolMinRP", "allPoolWarningFilter"].forEach(id => {
+          const el = $(id);
+          if (el) {
+            el.addEventListener("input", renderTable);
+            el.addEventListener("change", renderTable);
+          }
+        });
+      } catch (err) {
+        console.error("all stocks pool failed", err);
+        const box = $("allStocksPoolTable");
+        if (box) box.innerHTML = `<div style="color:#b42318;">載入失敗：${err.message || err}</div>`;
+      }
+    }
+
+
     function clearResult() {
       currentEditingInquiryNo = null;
       refreshInquiryNo();
@@ -2006,5 +2193,3 @@
 </body>
 </html>
 ```
-
-
