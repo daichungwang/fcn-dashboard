@@ -125,6 +125,7 @@
   </details>
 </div>
 
+<script src="./js/mm/modules/mm_fcn_risk_taxonomy_engine_vfinal.js?v=20260507_risk_v1"></script>
 <script src="./js/mm/modules/mm_fcn_simulating_allocating_engine_v2.js?v=20260507_2"></script>
 <script type="module">
 import { runMMFilterFull } from "./js/mm/modules/mm_filter.js";
@@ -391,29 +392,61 @@ async function runV2Classification({filterResult, smartResult, marketHistory}){
   if(!window.MMFCNEngineV2 || typeof window.MMFCNEngineV2.processMarketRecords !== "function"){
     throw new Error("MMFCNEngineV2 not loaded or processMarketRecords missing. 請確認 js/mm/modules/mm_fcn_simulating_allocating_engine_v2.js 已上傳且路徑正確。");
   }
+  if(!window.MMFcnRiskTaxonomyEngine || typeof window.MMFcnRiskTaxonomyEngine.processRecords !== "function"){
+    throw new Error("MMFcnRiskTaxonomyEngine not loaded. 請確認 js/mm/modules/mm_fcn_risk_taxonomy_engine_vfinal.js 已上傳且路徑正確。");
+  }
 
+  // vFinal taxonomy layer: Structure Risk + Basket Pool + Time Label + Validity
+  const taxonomyRecords = window.MMFcnRiskTaxonomyEngine.processRecords(allRecords);
+
+  // Keep original v2 engine for the existing 6 Final Label cards, then merge taxonomy fields for detail / apple-to-apple.
   const processed = window.MMFCNEngineV2.processMarketRecords(allRecords, {
     filterResult,
     render_options: { showDetailsDefault: false }
   });
 
+  const mergedRecords = (processed.records || []).map((row, idx)=>{
+    const t = taxonomyRecords[idx] || {};
+    return {
+      ...row,
+      taxonomy_final_label: t.final_label,
+      taxonomy_final_label_no_time: t.final_label_no_time,
+      taxonomy_basket_pool: t.basket_pool,
+      taxonomy_structure_risk: t.structure_risk,
+      taxonomy_structure_risk_zh: t.structure_risk_zh,
+      taxonomy_strike_risk: t.strike_risk,
+      taxonomy_ki_risk: t.ki_risk,
+      taxonomy_time_label: t.time_label,
+      taxonomy_validity: t.validity,
+      taxonomy_effective_strike: t.effective_strike,
+      taxonomy_effective_ki: t.effective_ki,
+      taxonomy_compression_applied: t.compression_applied,
+      taxonomy_risk_note: t.risk_note
+    };
+  });
+
   return {
     ...processed,
+    records: mergedRecords,
+    taxonomyRecords,
+    taxonomyStats: window.MMFcnRiskTaxonomyEngine.buildSegmentStats(taxonomyRecords),
     marketRecords,
     simulationRecords,
     allRecords,
-    apple_to_apple: buildAppleToAppleRows(processed.records || [])
+    apple_to_apple: buildAppleToAppleRows(mergedRecords || [])
   };
 }
 
 function buildAppleToAppleRows(records){
   const groups = {};
   (records || []).forEach(r=>{
+    const finalLabel = r.taxonomy_final_label_no_time || r.final_label || "未分類";
+    const timeLabel = r.taxonomy_time_label || tenorBucket(r.tenor);
     const key = [
-      r.final_label || "未分類",
-      r.basket_style || "unknown",
-      r.structure_adj || "unknown",
-      tenorBucket(r.tenor),
+      finalLabel,
+      r.taxonomy_basket_pool || r.basket_style || "unknown",
+      r.taxonomy_structure_risk_zh || r.taxonomy_structure_risk || r.structure_adj || "unknown",
+      timeLabel,
       r.barrier_type || r.type || "AKI"
     ].join("__");
     if(!groups[key]) groups[key] = [];
@@ -428,10 +461,10 @@ function buildAppleToAppleRows(records){
     const fairMean = avgLocal(fairArr);
     const deltaMean = avgLocal(deltaArr);
     return {
-      final_label: first.final_label || "未分類",
-      basket_style: first.basket_style || "unknown",
-      structure_adj: first.structure_adj || "unknown",
-      tenor_bucket: tenorBucket(first.tenor),
+      final_label: first.taxonomy_final_label_no_time || first.final_label || "未分類",
+      basket_style: first.taxonomy_basket_pool || first.basket_style || "unknown",
+      structure_adj: first.taxonomy_structure_risk_zh || first.taxonomy_structure_risk || first.structure_adj || "unknown",
+      tenor_bucket: first.taxonomy_time_label || tenorBucket(first.tenor),
       barrier_type: first.barrier_type || first.type || "AKI",
       count: rows.length,
       market_mean: marketMean,
@@ -440,7 +473,7 @@ function buildAppleToAppleRows(records){
       delta_cv: cvLocal(deltaArr),
       regime: classifyRegimeLocal(deltaMean)
     };
-  }).sort((a,b)=>String(a.final_label).localeCompare(String(b.final_label), "zh-Hant") || b.count-a.count);
+  }).sort((a,b)=>String(a.final_label).localeCompare(String(b.final_label), "zh-Hant") || String(a.tenor_bucket).localeCompare(String(b.tenor_bucket), "zh-Hant") || b.count-a.count);
 }
 
 function tenorBucket(t){
@@ -650,17 +683,21 @@ function firstNum(values){
 
 function renderClassificationTable(id, rows){
   document.getElementById(id).innerHTML = `<tr>
-    <th>Source</th><th>ID</th><th>Symbols</th><th>H/W/S</th><th>Basket Style</th><th>Worst-of</th><th>Adj</th><th>Final Label</th><th>Market</th><th>Fair(M8)</th><th>Delta</th><th>Definition</th>
+    <th>Source</th><th>ID</th><th>Symbols</th><th>H/W/S</th>
+    <th>Basket Pool</th><th>Structure Risk</th><th>Time</th><th>Validity</th><th>Taxonomy Label</th>
+    <th>Strike Risk</th><th>KI Risk</th><th>Effective S/KI</th>
+    <th>Market</th><th>Fair(M8)</th><th>Delta</th><th>Risk Note</th>
   </tr>${(rows||[]).map(r=>`<tr>
     <td>${r.source_type}</td><td>${r.id}</td><td>${(r.symbols||[]).join("/")}</td><td>${r.highlight_count}/${r.watch_count}/${r.simulation_count}</td>
-    <td>${r.basket_style}</td><td>${r.worst_of_quality || r.worst_of || "-"}</td><td>${r.structure_adj}</td><td><b>${r.final_label}</b></td>
-    <td>${pct(r.market_coupon)}</td><td>${pct(r.fair_yield)}</td><td>${pct(r.delta_pct)}</td><td>${r.definition || ""}</td>
+    <td>${r.taxonomy_basket_pool || "-"}</td><td>${r.taxonomy_structure_risk_zh || r.taxonomy_structure_risk || "-"}</td><td>${r.taxonomy_time_label || "-"}</td><td><b>${r.taxonomy_validity || "-"}</b></td><td><b>${r.taxonomy_final_label || r.final_label}</b></td>
+    <td>${r.taxonomy_strike_risk || "-"}</td><td>${r.taxonomy_ki_risk || "-"}</td><td>${fmtNullable(r.taxonomy_effective_strike)} / ${fmtNullable(r.taxonomy_effective_ki)}${r.taxonomy_compression_applied ? " ⚠" : ""}</td>
+    <td>${pct(r.market_coupon)}</td><td>${pct(r.fair_yield)}</td><td>${pct(r.delta_pct)}</td><td>${r.taxonomy_risk_note || r.definition || ""}</td>
   </tr>`).join("")}`;
 }
 
 function renderAppleToAppleTable(rows){
   document.getElementById("apple-to-apple-table").innerHTML = `<tr>
-    <th>Final Label</th><th>Basket</th><th>Adj</th><th>Tenor</th><th>Type</th><th>Count</th><th>Market</th><th>Fair(M8)</th><th>Delta</th><th>Delta CV</th><th>Regime</th>
+    <th>Taxonomy Segment</th><th>Basket Pool</th><th>Structure Risk</th><th>Time</th><th>Type</th><th>Count</th><th>Market</th><th>Fair(M8)</th><th>Delta</th><th>Delta CV</th><th>Regime</th>
   </tr>${(rows||[]).map(r=>`<tr>
     <td><b>${r.final_label}</b></td><td>${r.basket_style}</td><td>${r.structure_adj}</td><td>${r.tenor_bucket}</td><td>${r.barrier_type}</td><td>${r.count}</td>
     <td>${pct(r.market_mean)}</td><td>${pct(r.fair_mean)}</td><td>${pct(r.delta_mean)}</td><td>${fmtNullable(r.delta_cv)}</td><td>${r.regime}</td>
@@ -682,3 +719,4 @@ main();
 </script>
 </body>
 </html>
+
