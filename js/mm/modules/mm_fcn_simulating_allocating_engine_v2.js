@@ -260,7 +260,9 @@ window.MMFCNEngineV2 = (() => {
       ...composition,
       basket_style: basketStyle,
       worst_of: worstOf,
+      worst_of_quality: worstOf,
       structure_adj: structureAdj,
+      adj: structureAdj,
       final_label: finalLabel,
       definition: buildDefinition({ finalLabel, basketStyle, worstOf, adj: structureAdj, composition }),
       delta_pct,
@@ -293,11 +295,17 @@ window.MMFCNEngineV2 = (() => {
         count: rows.length,
         market_rate_mean: mean(market),
         market_rate_cv: cv(market),
+        market_mean: mean(market),
+        coupon_cv: cv(market),
+        market_best: rows.length ? Math.max(...clean(market)) : null,
         best_market_rate: rows.length ? Math.max(...clean(market)) : null,
         fair_rate_mean: mean(fair),
         fair_rate_cv: cv(fair),
+        fair_mean: mean(fair),
         delta_mean_pct: mean(deltaPct),
         delta_cv_pct: cv(deltaPct),
+        delta_mean: mean(deltaPct),
+        delta_cv: cv(deltaPct),
         delta_mean_pp: mean(deltaPp),
         strike_mean: mean(strike),
         strike_cv: cv(strike),
@@ -305,7 +313,10 @@ window.MMFCNEngineV2 = (() => {
         ki_cv: cv(ki),
         period_mean: mean(tenor),
         period_cv: cv(tenor),
-        top_symbols: topSymbols(rows, 3),
+        tenor_mean: mean(tenor),
+        tenor_cv: cv(tenor),
+        top_symbol_objects: topSymbols(rows, 3),
+        top_symbols: topSymbols(rows, 3).map(x => x.symbol),
         records: rows
       };
     });
@@ -316,7 +327,7 @@ window.MMFCNEngineV2 = (() => {
     const open = options.showDetailsDefault ? "open" : "";
     return `<div class="final-label-grid">${FINAL_LABELS.map(label => {
       const s = stats[label] || {};
-      const top = arr(s.top_symbols).map(x => x.symbol).join(" / ") || "-";
+      const top = arr(s.top_symbols).map(x => typeof x === "string" ? x : x.symbol).join(" / ") || "-";
       const isCons = label === "保守單";
       return `<div class="final-label-card">
         <div class="final-label-title">${label}</div>
@@ -397,6 +408,74 @@ window.MMFCNEngineV2 = (() => {
     return processMarketRecords(records, context);
   }
 
+
+
+  function getBarrierType(record = {}) {
+    return String(record.barrier_type || record.type || record.structure?.type || "AKI").toUpperCase();
+  }
+
+  function getTenorBucket(record = {}) {
+    const t = Number(record.tenor ?? getTenor(record));
+    if (!Number.isFinite(t)) return "unknown";
+    if (t <= 6) return "0-6M";
+    if (t <= 9) return "6-9M";
+    if (t <= 12) return "9-12M";
+    return "12M+";
+  }
+
+  function buildAppleToAppleStats(records = []) {
+    const groups = {};
+    arr(records).forEach(r => {
+      const key = [
+        r.final_label || "unknown",
+        r.basket_style || "unknown",
+        r.structure_adj || "unknown",
+        getTenorBucket(r),
+        getBarrierType(r)
+      ].join("__");
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(r);
+    });
+
+    return Object.entries(groups).map(([key, rows]) => {
+      const [finalLabel, basketStyle, structureAdj, tenorBucket, barrierType] = key.split("__");
+      const market = rows.map(r => r.market_coupon);
+      const fair = rows.map(r => r.fair_yield);
+      const delta = rows.map(r => r.delta_pct);
+      const deltaMean = mean(delta);
+      return {
+        key,
+        final_label: finalLabel,
+        basket_style: basketStyle,
+        structure_adj: structureAdj,
+        tenor_bucket: tenorBucket,
+        barrier_type: barrierType,
+        count: rows.length,
+        market_mean: mean(market),
+        fair_mean: mean(fair),
+        delta_mean: deltaMean,
+        delta_cv: cv(delta),
+        regime: classifyMarketRegime(deltaMean),
+        records: rows
+      };
+    }).sort((a, b) => (b.count || 0) - (a.count || 0));
+  }
+
+  function process(records = [], context = {}) {
+    const poolMap = context.poolMap || buildPoolMapFromFilterResult(context.filterResult || {});
+    const enriched = arr(records).map(r => classifyRecord(r, { ...context, poolMap }));
+    const stats = buildSegmentStats(enriched);
+    const appleToApple = buildAppleToAppleStats(enriched);
+    return {
+      records: enriched,
+      stats,
+      apple_to_apple: appleToApple,
+      cards_html: renderFinalLabelCards(stats, context.render_options || {}),
+      table_html: renderClassificationTable(enriched),
+      style_html: getStyleTag()
+    };
+  }
+
   return {
     FINAL_LABELS,
     FINAL_LABEL_DEFINITIONS,
@@ -406,6 +485,8 @@ window.MMFCNEngineV2 = (() => {
     classifyStructureAdj,
     buildFinalLabel,
     buildSegmentStats,
+    buildAppleToAppleStats,
+    process,
     processMarketRecords,
     processSimulationRuns,
     renderFinalLabelCards,
