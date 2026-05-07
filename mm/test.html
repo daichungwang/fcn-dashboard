@@ -387,9 +387,12 @@ async function runV2Classification({filterResult, smartResult, marketHistory}){
   const marketRecords = await buildMarketClassificationRecords({marketHistory, filterResult});
   const simulationRecords = buildSimulationClassificationRecords({smartResult});
   const allRecords = [...marketRecords, ...simulationRecords];
-  const result = await window.MMFCNEngineV2.processMarketRecords(allRecords);
-  return { marketRecords, simulationRecords, allRecords, ...output };
-}
+ const v2Result = window.MMFCNEngineV2.processMarketRecords(
+  marketRecords,
+  {
+    filterResult
+  }
+);
 
 async function buildMarketClassificationRecords({marketHistory, filterResult}){
   const records = marketHistory?.records || [];
