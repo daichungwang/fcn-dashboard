@@ -1,5 +1,5 @@
 // ==========================================
-// MM FILTER ENGINE v3.9 FULL MODULE (M7 gate + C1 Decision Output + M6 Market Attractive ordering)
+// MM FILTER ENGINE v4.0 FULL MODULE (M7 gate + C1 Decision Output + M6 Market Attractive ordering)
 // Path: js/mm/modules/mm_filter.js
 // Purpose: M7 allow FCN -> C1-L1 Decision Output status/amount/strategy -> Category -> M6 Market Attractive ordering -> Basket / Allocation / M8 / Market Match
 // Notes:
@@ -233,7 +233,7 @@ export async function runMMFilterFull(input = {}) {
   const summary = buildSummary({ stocks, pools, category_map, baskets, allocation, market_match });
 
   return {
-    version: "mm_filter_v3_9_m7_5_5_pool_amount_independent",
+    version: "mm_filter_v4_0_simulation_m7_5_5_no_legacy_reject",
     generated_at: new Date().toISOString(),
     summary,
     pools,
@@ -1106,7 +1106,7 @@ function classifyPools(stocks, options = {}) {
     const rejectReasons = getRejectReasons(s, { m2RejectCut, m7SimulationCut });
 
     // v3.7 pool meaning:
-    // - Reject is hard reject only: allow_fcn=false / explicit reject / M7<=5 / M2 hard limit / extreme vol with high M2.
+    // - Reject is hard reject only: allow_fcn=false / explicit reject / M7<=5.5 / M2 hard limit / extreme vol with high M2.
     // - Simulation is no longer a garbage bucket. It is ONLY the FCN simulation operation base pool.
     // - Amount=0 is still display-only and must not hard reject a stock.
     if (rejectReasons.length) {
@@ -1115,7 +1115,7 @@ function classifyPools(stocks, options = {}) {
         pool: "reject",
         reject_reasons: rejectReasons,
         reject_level: "hard_reject",
-        pool_condition: `Hard reject: allow_fcn=false, explicit reject, M7 <= ${m7SimulationCut}, M2 hard limit, or extreme vol with high M2. Amount=0 alone is not reject.`
+        pool_condition: `Hard reject: M7 <= ${m7SimulationCut}, M2 hard limit, or extreme vol with high M2. Legacy reject_reason/amount=0 do not block Simulation when M7 > threshold.`
       });
       continue;
     }
@@ -1164,7 +1164,7 @@ function classifyPools(stocks, options = {}) {
         reject_reasons: [],
         amount_status: amountNote,
         why_not: watchReasons,
-        pool_condition: `Simulation only: FCN simulation operation base pool; M7 score > ${m7SimulationCut}; M6 market attractive sorts order. Amount=0 is display-only, not admission control.`,
+        pool_condition: `Simulation only: FCN simulation operation base pool; M7 score > ${m7SimulationCut}; M6 market attractive sorts order.`,
         c1_decision_source_used: c1Tier !== "unknown"
       });
       continue;
@@ -1186,8 +1186,8 @@ function classifyPools(stocks, options = {}) {
     value: {
       highlight: `M7 score >= ${m7HighlightCut} OR C1 tier=add; amount can be 0 but remains visible.`,
       watch: `M7 score >= ${m7PassCut} but < ${m7HighlightCut}, OR C1 tier=standard/watch.`,
-      simulation: `M7 score > ${m7SimulationCut}; ONLY for FCN simulation operation; sorted by M6 market attractive score. Amount=0 is NOT an admission filter.`,
-      reject: `Hard reject only: allow_fcn=false / explicit reject / M7 <= ${m7SimulationCut} / M2 >= ${Math.round(m2RejectCut * 100)}% / extreme vol with high M2. Amount=0 is NOT reject.`
+      simulation: `M7 score > ${m7SimulationCut}; ONLY for FCN simulation operation; sorted by M6 market attractive score.`,
+      reject: `Hard reject only: M7 <= ${m7SimulationCut} / M2 >= ${Math.round(m2RejectCut * 100)}% / extreme vol with high M2. Legacy reject_reason and amount=0 are display-only when M7 > threshold.`
     },
     enumerable: false,
     configurable: true
@@ -1195,19 +1195,35 @@ function classifyPools(stocks, options = {}) {
   return pools;
 }
 
-function getRejectReasons(s, { m2RejectCut, m7SimulationCut = 5 }) {
+function getRejectReasons(s, { m2RejectCut, m7SimulationCut = 5.5 }) {
   const reasons = [];
-  if (!s.allow_fcn) reasons.push("allow_fcn=false");
-  if (s.reject_reason) reasons.push(String(s.reject_reason));
+  const m7Score = num(s.m7_score);
 
-  // v3.9: Simulation pool is M7 > 5.5.
-  // Therefore M7 <= 5.5 is the hard reject threshold; 5.5 < M7 < 6 can enter simulation for FCN tests.
-  if (num(s.m7_score) <= m7SimulationCut) reasons.push(`m7_score<=${m7SimulationCut}`);
+  // v4.0 rule:
+  // Pool Review is quality-first. Historical/source reject_reason or amount=0 must not block
+  // a stock with M7 > simulation threshold from entering Simulation.
+  // Only true hard blockers remain hard reject.
+  const explicitNoFcn =
+    s.allow_fcn === false ||
+    s.is_blocked === true ||
+    s.isRejected === true ||
+    s.isRejected === "true";
+
+  if (explicitNoFcn && m7Score <= m7SimulationCut) {
+    reasons.push("explicit_no_fcn_and_m7_below_simulation_cut");
+  }
+
+  // M7 <= 5.5 is the hard quality reject threshold.
+  if (m7Score <= m7SimulationCut) {
+    reasons.push(`m7_score<=${m7SimulationCut}`);
+  }
 
   if (s.m2_util >= m2RejectCut) reasons.push(`m2_util>=${Math.round(m2RejectCut * 100)}%`);
   if (s.vol_band === "extreme" && s.m2_util >= 0.8) reasons.push("extreme_vol_with_high_m2");
+
+  // Legacy/source reject_reason is now informational only when M7 > 5.5.
+  // It is preserved on the row but does not force Reject in Pool Review.
   // max_addable_amt <= 0 is NOT reject here.
-  // It is an amount status displayed in the pool, so high-M7 names with no room remain visible.
   return reasons;
 }
 
@@ -1397,8 +1413,6 @@ function buildConservativeSpecial(stocks) {
   const companions = stocks
     .filter(s =>
       preferred.has(s.symbol) &&
-      s.allow_fcn &&
-      s.max_addable_amt > 0 &&
       s.vol_band !== "extreme"
     )
     .sort((a, b) => {
@@ -1419,7 +1433,6 @@ function buildAggressiveMixFromPools(pools = {}) {
   ]);
 
   const eligible = base.filter(s =>
-    s.allow_fcn &&
     s.vol_band !== "extreme"
   );
 
@@ -1928,5 +1941,4 @@ function volBandRank(band) {
 function money(v) {
   return `USD ${Math.round(num(v)).toLocaleString()}`;
 }
-
 
