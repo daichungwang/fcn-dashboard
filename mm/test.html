@@ -387,7 +387,7 @@ async function runV2Classification({filterResult, smartResult, marketHistory}){
   const marketRecords = await buildMarketClassificationRecords({marketHistory, filterResult});
   const simulationRecords = buildSimulationClassificationRecords({smartResult});
   const allRecords = [...marketRecords, ...simulationRecords];
-  const result = await window.MMFCNSimAllocEngine.process(allRecords);
+  const result = await window.MMFCNEngineV2.processMarketRecords(allRecords);
   return { marketRecords, simulationRecords, allRecords, ...output };
 }
 
