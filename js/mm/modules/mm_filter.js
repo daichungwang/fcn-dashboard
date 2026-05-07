@@ -194,27 +194,46 @@ export async function runMMFilterFull(input = {}) {
   // 3. Category
   const category_map = buildCategoryMap(stocks);
 
-  // 4. Basket build + M8
-  const baskets = await buildAllBaskets({ pools, category_map, stocks, options });
+  // 4. Legacy basket build + M8
+  // v3.8: MM/test.html now uses the new MM FCN Simulating & Allocating Engine
+  // for smart basket construction. Legacy basket generation can be disabled
+  // to avoid duplicate/conflicting outputs in sandbox.
+  const legacyBasketsEnabled = options.disable_legacy_baskets !== true;
+  const baskets = legacyBasketsEnabled
+    ? await buildAllBaskets({ pools, category_map, stocks, options })
+    : [];
 
-  // 5. Allocation v0
-  const allocation = allocateBasketsV0({
-    baskets,
-    stocks,
-    totalCapacity: options.total_today_capacity
-  });
+  // 5. Legacy Allocation v0
+  const legacyAllocationEnabled = options.disable_legacy_allocation !== true;
+  const allocation = legacyAllocationEnabled
+    ? allocateBasketsV0({
+        baskets,
+        stocks,
+        totalCapacity: options.total_today_capacity
+      })
+    : {
+        total_capacity: Number.isFinite(Number(options.total_today_capacity)) ? Number(options.total_today_capacity) : 0,
+        allocated: 0,
+        remaining: Number.isFinite(Number(options.total_today_capacity)) ? Number(options.total_today_capacity) : 0,
+        rows: [],
+        disabled: true,
+        reason: "Legacy allocation disabled; use MM FCN Simulating & Allocating Engine result."
+      };
 
-  // 6. Market order match + M8
-  const market_match = await runMarketOrderMatch({
-    orders: marketOrders,
-    stocks
-  });
+  // 6. Legacy Market order match + M8
+  const legacyMarketMatchEnabled = options.disable_legacy_market_match !== true;
+  const market_match = legacyMarketMatchEnabled
+    ? await runMarketOrderMatch({
+        orders: marketOrders,
+        stocks
+      })
+    : [];
 
   // 7. Summary
   const summary = buildSummary({ stocks, pools, category_map, baskets, allocation, market_match });
 
   return {
-    version: "mm_filter_v3_7_simulation_hybrid_aggressive_fix",
+    version: "mm_filter_v3_8_legacy_disabled_for_smart_sim",
     generated_at: new Date().toISOString(),
     summary,
     pools,
