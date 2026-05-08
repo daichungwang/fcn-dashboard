@@ -4,38 +4,405 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <base href="../">
-<title>M8 Calibration Dashboard v1</title>
+<title>M8 Calibration Dashboard v2</title>
 <style>
-:root{--bg:#0f1115;--panel:#181c24;--panel2:#202634;--line:#30384a;--text:#f4f7fb;--muted:#aab5c8;--blue:#4da3ff;--green:#34d399;--yellow:#fbbf24;--red:#f87171}
-*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}.app{max-width:1500px;margin:0 auto;padding:24px}.hero{background:linear-gradient(135deg,#10233f,#1d4ed8);border-radius:24px;padding:24px 28px;margin-bottom:20px}.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;color:#dbeafe;font-weight:700}.section{background:var(--panel);border:1px solid var(--line);border-radius:18px;margin:18px 0;overflow:hidden}.section summary{cursor:pointer;padding:16px 20px;font-size:20px;font-weight:900;border-bottom:1px solid var(--line)}.section-body{padding:18px}.grid{display:grid;gap:14px}.kpi-grid{grid-template-columns:repeat(6,minmax(130px,1fr))}.card{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:14px}.kpi-title{font-size:12px;color:var(--muted);font-weight:800}.kpi-value{font-size:24px;font-weight:900;margin-top:6px}.small{font-size:12px;color:var(--muted);line-height:1.55}.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}button,select,input{background:#111827;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 10px}button{cursor:pointer;font-weight:900}button.primary{background:#1d4ed8;border-color:#60a5fa}.table-wrap{overflow:auto;max-height:650px;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;background:var(--panel2)}th,td{border-bottom:1px solid var(--line);padding:8px;font-size:12px;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#111827;z-index:1}.badge{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid var(--line)}.good{background:rgba(52,211,153,.12);color:var(--green)}.warn{background:rgba(251,191,36,.12);color:var(--yellow)}.bad{background:rgba(248,113,113,.12);color:var(--red)}.info{background:rgba(77,163,255,.12);color:var(--blue)}pre{background:#090b10;border:1px solid var(--line);border-radius:14px;padding:12px;overflow:auto;max-height:520px}.error{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.5);color:#fecaca;border-radius:14px;padding:12px;margin:12px 0}@media(max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.kpi-grid{grid-template-columns:1fr}}
+:root{--bg:#0f1115;--panel:#181c24;--panel2:#202634;--line:#30384a;--text:#f4f7fb;--muted:#aab5c8;--blue:#4da3ff;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--purple:#c084fc}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}.app{max-width:1600px;margin:0 auto;padding:24px}.hero{background:linear-gradient(135deg,#10233f,#1d4ed8);border-radius:24px;padding:24px 28px;margin-bottom:20px}.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;color:#dbeafe;font-weight:700}.section{background:var(--panel);border:1px solid var(--line);border-radius:18px;margin:18px 0;overflow:hidden}.section summary{cursor:pointer;padding:16px 20px;font-size:20px;font-weight:900;border-bottom:1px solid var(--line)}.section-body{padding:18px}.grid{display:grid;gap:14px}.kpi-grid{grid-template-columns:repeat(6,minmax(130px,1fr))}.card{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:14px}.kpi-title{font-size:12px;color:var(--muted);font-weight:800}.kpi-value{font-size:24px;font-weight:900;margin-top:6px}.small{font-size:12px;color:var(--muted);line-height:1.55}.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}button,select,input{background:#111827;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 10px}button{cursor:pointer;font-weight:900}button.primary{background:#1d4ed8;border-color:#60a5fa}.table-wrap{overflow:auto;max-height:680px;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;background:var(--panel2)}th,td{border-bottom:1px solid var(--line);padding:8px;font-size:12px;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#111827;z-index:1}.badge{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid var(--line)}.good{background:rgba(52,211,153,.12);color:var(--green)}.warn{background:rgba(251,191,36,.12);color:var(--yellow)}.bad{background:rgba(248,113,113,.12);color:var(--red)}.info{background:rgba(77,163,255,.12);color:var(--blue)}.pref{background:rgba(192,132,252,.12);color:var(--purple)}pre{background:#090b10;border:1px solid var(--line);border-radius:14px;padding:12px;overflow:auto;max-height:520px}.error{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.5);color:#fecaca;border-radius:14px;padding:12px;margin:12px 0}.note{background:#111827;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}.muted{color:var(--muted)}@media(max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.kpi-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="hero"><h1>M8 Calibration Dashboard v1</h1><p>FCN Pool + Old Pool → M8 Decomposition → Market Rate Gap → Brake Calibration Dataset</p></div>
+  <div class="hero">
+    <h1>M8 Calibration Dashboard v2</h1>
+    <p>FCN Pool + Old Pool + Market FCN History → My Preference Rate vs Market Normal Rate → Brake Calibration</p>
+  </div>
+
   <div id="error"></div>
-  <details class="section" open><summary>1. Control / 產生 Calibration Dataset</summary><div class="section-body"><div class="controls"><button id="runBtn" class="primary">Run Calibration</button><button id="downloadBtn">Download Dataset JSON</button><button id="downloadRegBtn">Download Regression Rows JSON</button><input id="maxRows" type="number" min="1" placeholder="Max rows optional"/></div><div class="small">第一版只讀 data/fcn_pool.json + data/fcn_pool_old.json，不改 M8、不回寫 production。跑完後會顯示 market_rate、pre_rate、brake、fair_yield、pricing_gap。</div></div></details>
-  <details class="section" open><summary>2. Summary / 校正總覽</summary><div class="section-body"><div id="summary" class="grid kpi-grid"></div></div></details>
-  <details class="section" open><summary>3. Brake Diagnostics / HighRateBrake 診斷</summary><div class="section-body"><div id="diagnostics" class="grid kpi-grid"></div></div></details>
-  <details class="section" open><summary>4. Calibration Rows / 明細</summary><div class="section-body"><div class="controls"><input id="search" placeholder="Search FCN / symbol"/><select id="gapFilter"><option value="">All gaps</option><option value="market_much_higher">market_much_higher</option><option value="market_higher">market_higher</option><option value="near_fair">near_fair</option><option value="market_lower">market_lower</option><option value="market_much_lower">market_much_lower</option></select><select id="brakeFilter"><option value="">All brake</option><option value="none">none</option><option value="light">light</option><option value="medium">medium</option><option value="heavy">heavy</option><option value="extreme">extreme</option></select></div><div class="table-wrap"><table id="rowsTable"></table></div></div></details>
-  <details class="section"><summary>5. Regression Rows / 回歸用資料</summary><div class="section-body"><div class="table-wrap"><table id="regTable"></table></div></div></details>
-  <details class="section"><summary>6. Debug JSON</summary><div class="section-body"><pre id="debug"></pre></div></details>
+
+  <details class="section" open>
+    <summary>1. Control / 產生 Calibration Dataset</summary>
+    <div class="section-body">
+      <div class="controls">
+        <button id="runBtn" class="primary">Run Calibration</button>
+        <button id="downloadBtn">Download Dataset JSON</button>
+        <button id="downloadRegBtn">Download Regression Rows JSON</button>
+        <input id="maxRows" type="number" min="1" placeholder="Max rows optional"/>
+      </div>
+      <div class="small">
+        v2 讀取三個來源：data/fcn_pool.json + data/fcn_pool_old.json + data/mm/market_fcn_history.json。<br/>
+        輸出雙軌：<b>My Preference Rate</b>（你的 M8 偏好模型）與 <b>Market Normal Rate</b>（市場正常報價基準）。
+      </div>
+      <div class="note small">
+        若目前 engine 尚未提供 market_normal_rate，本頁會先保留欄位並用 fallback 顯示，等 engine 接上 calibration normal curve 後即可自動吃欄位。
+      </div>
+    </div>
+  </details>
+
+  <details class="section" open>
+    <summary>2. Source Summary / 資料來源總覽</summary>
+    <div class="section-body"><div id="sourceSummary" class="grid kpi-grid"></div></div>
+  </details>
+
+  <details class="section" open>
+    <summary>3. Rate Summary / 雙軌 Rate 總覽</summary>
+    <div class="section-body"><div id="summary" class="grid kpi-grid"></div></div>
+  </details>
+
+  <details class="section" open>
+    <summary>4. Brake Diagnostics / HighRateBrake 診斷</summary>
+    <div class="section-body"><div id="diagnostics" class="grid kpi-grid"></div></div>
+  </details>
+
+  <details class="section" open>
+    <summary>5. Calibration Rows / 明細</summary>
+    <div class="section-body">
+      <div class="controls">
+        <input id="search" placeholder="Search FCN / symbol / bank"/>
+        <select id="sourceFilter">
+          <option value="">All sources</option>
+          <option value="current_pool">current_pool</option>
+          <option value="old_pool">old_pool</option>
+          <option value="market_history">market_history</option>
+        </select>
+        <select id="gapFilter">
+          <option value="">All gaps</option>
+          <option value="market_much_higher">market_much_higher</option>
+          <option value="market_higher">market_higher</option>
+          <option value="near_fair">near_fair</option>
+          <option value="market_lower">market_lower</option>
+          <option value="market_much_lower">market_much_lower</option>
+        </select>
+        <select id="brakeFilter">
+          <option value="">All brake</option>
+          <option value="none">none</option>
+          <option value="light">light</option>
+          <option value="medium">medium</option>
+          <option value="heavy">heavy</option>
+          <option value="extreme">extreme</option>
+        </select>
+      </div>
+      <div class="table-wrap"><table id="rowsTable"></table></div>
+    </div>
+  </details>
+
+  <details class="section">
+    <summary>6. Regression Rows / 回歸用資料</summary>
+    <div class="section-body"><div class="table-wrap"><table id="regTable"></table></div></div>
+  </details>
+
+  <details class="section">
+    <summary>7. Debug JSON</summary>
+    <div class="section-body"><pre id="debug"></pre></div>
+  </details>
 </div>
+
 <script type="module">
-import {buildM8CalibrationDataset, buildCalibrationRegressionRows, downloadCalibrationJson} from "./js/mm/modules/m8_calibration_engine_v1.js";
+import {
+  buildM8CalibrationDataset,
+  buildCalibrationRegressionRows,
+  downloadCalibrationJson
+} from "./js/mm/modules/m8_calibration_engine_v1.js";
+
+const CURRENT_POOL_PATH = "./data/fcn_pool.json";
+const OLD_POOL_PATH = "./data/fcn_pool_old.json";
+const MARKET_HISTORY_PATH = "./data/mm/market_fcn_history.json";
+
 let DATASET=null, REG_ROWS=[];
+
 document.getElementById("runBtn").addEventListener("click", run);
-document.getElementById("downloadBtn").addEventListener("click",()=>{if(!DATASET)return alert("Please run calibration first.");downloadCalibrationJson(DATASET,"m8_calibration_dataset.json")});
-document.getElementById("downloadRegBtn").addEventListener("click",()=>{if(!REG_ROWS.length)return alert("Please run calibration first.");downloadCalibrationJson(REG_ROWS,"m8_calibration_regression_rows.json")});
-["search","gapFilter","brakeFilter"].forEach(id=>document.getElementById(id).addEventListener("input",renderRows));
-async function run(){try{document.getElementById("error").innerHTML="";const btn=document.getElementById("runBtn");btn.disabled=true;btn.textContent="Running...";const maxRowsRaw=document.getElementById("maxRows").value;DATASET=await buildM8CalibrationDataset({current_path:"./data/fcn_pool.json",old_path:"./data/fcn_pool_old.json",max_rows:maxRowsRaw?Number(maxRowsRaw):undefined});REG_ROWS=buildCalibrationRegressionRows(DATASET);window.__M8_CALIBRATION_DATASET__=DATASET;window.__M8_CALIBRATION_REG_ROWS__=REG_ROWS;renderAll();btn.disabled=false;btn.textContent="Run Calibration"}catch(err){console.error(err);document.getElementById("error").innerHTML=`<div class="error"><b>Run failed：</b>${escapeHtml(err.message||String(err))}</div>`;const btn=document.getElementById("runBtn");btn.disabled=false;btn.textContent="Run Calibration"}}
-function renderAll(){renderSummary();renderDiagnostics();renderRows();renderRegRows();document.getElementById("debug").textContent=JSON.stringify(DATASET,null,2)}
-function renderSummary(){const m=DATASET?.meta||{};const cards=[["Valid Rows",m.valid_rows],["Invalid Rows",m.invalid_rows],["Market Mean",pct(m.market_rate_mean)],["Fair Mean",pct(m.fair_yield_mean)],["PreRate Mean",pct(m.pre_rate_mean)],["Gap Mean",pct(m.pricing_gap_mean)]];document.getElementById("summary").innerHTML=cards.map(([t,v])=>`<div class="card"><div class="kpi-title">${t}</div><div class="kpi-value">${v??"-"}</div></div>`).join("")}
-function renderDiagnostics(){const rows=(DATASET?.rows||[]).filter(r=>r.status==="ok");const heavy=rows.filter(r=>["heavy","extreme"].includes(r.brake_level));const marketHigher=rows.filter(r=>["market_higher","market_much_higher"].includes(r.pricing_gap_label));const brakeTooHeavy=rows.filter(r=>Number(r.brake_gap)>3);const cards=[["Heavy Brake Rows",heavy.length],["Market > Fair Rows",marketHigher.length],["Brake Gap > 3",brakeTooHeavy.length],["Avg Brake Gap",pct(avg(rows.map(r=>r.brake_gap)))],["Avg Implied Brake",pct(avg(rows.map(r=>r.implied_market_brake)))],["Avg M8 Brake",pct(avg(rows.map(r=>r.m8_features?.high_rate_brake)))]];document.getElementById("diagnostics").innerHTML=cards.map(([t,v])=>`<div class="card"><div class="kpi-title">${t}</div><div class="kpi-value">${v??"-"}</div></div>`).join("")}
-function renderRows(){const q=document.getElementById("search").value.trim().toUpperCase(),gap=document.getElementById("gapFilter").value,brake=document.getElementById("brakeFilter").value;let rows=(DATASET?.rows||[]).filter(r=>r.status==="ok");rows=rows.filter(r=>{const text=[r.fcn_id,...(r.symbols||[])].join(" ").toUpperCase();return(!q||text.includes(q))&&(!gap||r.pricing_gap_label===gap)&&(!brake||r.brake_level===brake)});rows.sort((a,b)=>Math.abs(Number(b.brake_gap||0))-Math.abs(Number(a.brake_gap||0)));document.getElementById("rowsTable").innerHTML=`<tr><th>FCN</th><th>Date</th><th>Symbols</th><th>Type</th><th>S/KI/T</th><th>Market</th><th>PreRate</th><th>M8 Brake</th><th>Implied Brake</th><th>Brake Gap</th><th>Fair</th><th>Pricing Gap</th><th>Gap Label</th><th>Brake Level</th><th>BasketPrem</th><th>Tail</th><th>Vol</th><th>RP</th><th>BW</th></tr>${rows.map(r=>{const f=r.m8_features||{};return`<tr><td><b>${escapeHtml(r.fcn_id)}</b></td><td>${escapeHtml(r.date)}</td><td>${(r.symbols||[]).join("/")}</td><td>${r.type}</td><td>${fmt(r.strike)} / ${fmt(r.ki)} / ${fmt(r.tenor)}M</td><td>${pct(r.market_rate)}</td><td>${pct(f.pre_rate)}</td><td>${pct(f.high_rate_brake)}</td><td>${pct(r.implied_market_brake)}</td><td>${pct(r.brake_gap)}</td><td>${pct(f.fair_yield)}</td><td>${pct(r.pricing_gap)}</td><td>${badge(r.pricing_gap_label)}</td><td>${badge(r.brake_level)}</td><td>${fmt(f.basket_premium)}</td><td>${fmt(f.tail_adj)}</td><td>${fmt(f.vol_adj)}</td><td>${fmt(f.rate_pressure_adj)}</td><td>${fmt(f.BW)}</td></tr>`}).join("")}`}
-function renderRegRows(){const rows=REG_ROWS.slice(0,300);document.getElementById("regTable").innerHTML=`<tr><th>FCN</th><th>Market</th><th>Fair</th><th>PreRate</th><th>Gap</th><th>BrakeGap</th><th>BasketPremium</th><th>Tail</th><th>KI</th><th>Tenor</th><th>Strike</th><th>Type</th><th>Vol</th><th>RP</th><th>Brake</th></tr>${rows.map(r=>`<tr><td><b>${escapeHtml(r.fcn_id)}</b></td><td>${pct(r.market_rate)}</td><td>${pct(r.fair_yield)}</td><td>${pct(r.pre_rate)}</td><td>${pct(r.pricing_gap)}</td><td>${pct(r.brake_gap)}</td><td>${fmt(r.basket_premium)}</td><td>${fmt(r.tail_adj)}</td><td>${fmt(r.ki_adj)}</td><td>${fmt(r.tenor_adj)}</td><td>${fmt(r.strike_adj)}</td><td>${fmt(r.type_adj)}</td><td>${fmt(r.vol_adj)}</td><td>${fmt(r.rate_pressure_adj)}</td><td>${fmt(r.high_rate_brake)}</td></tr>`).join("")}`}
-function badge(v){const s=String(v||"");let cls="info";if(s.includes("much")||s.includes("heavy")||s.includes("extreme"))cls="bad";else if(s.includes("near")||s==="none"||s==="light")cls="good";else if(s.includes("higher")||s.includes("medium"))cls="warn";return`<span class="badge ${cls}">${escapeHtml(s)}</span>`}
-function avg(xs){const c=xs.map(Number).filter(Number.isFinite);return c.length?c.reduce((a,b)=>a+b,0)/c.length:null}function fmt(v){const n=Number(v);return Number.isFinite(n)?n.toFixed(2):"-"}function pct(v){const n=Number(v);return Number.isFinite(n)?n.toFixed(2)+"%":"-"}function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+document.getElementById("downloadBtn").addEventListener("click",()=>{
+  if(!DATASET)return alert("Please run calibration first.");
+  downloadCalibrationJson(DATASET,"m8_calibration_dataset_v2.json");
+});
+document.getElementById("downloadRegBtn").addEventListener("click",()=>{
+  if(!REG_ROWS.length)return alert("Please run calibration first.");
+  downloadCalibrationJson(REG_ROWS,"m8_calibration_regression_rows_v2.json");
+});
+["search","sourceFilter","gapFilter","brakeFilter"].forEach(id=>document.getElementById(id).addEventListener("input",renderRows));
+
+async function run(){
+  try{
+    document.getElementById("error").innerHTML="";
+    const btn=document.getElementById("runBtn");
+    btn.disabled=true;btn.textContent="Running...";
+    const maxRowsRaw=document.getElementById("maxRows").value;
+
+    DATASET=await buildM8CalibrationDataset({
+      current_path: CURRENT_POOL_PATH,
+      old_path: OLD_POOL_PATH,
+      market_history_path: MARKET_HISTORY_PATH,
+      max_rows: maxRowsRaw?Number(maxRowsRaw):undefined
+    });
+
+    DATASET = enrichDualTrackDataset(DATASET);
+    REG_ROWS=buildCalibrationRegressionRows(DATASET);
+
+    window.__M8_CALIBRATION_DATASET__=DATASET;
+    window.__M8_CALIBRATION_REG_ROWS__=REG_ROWS;
+
+    renderAll();
+    btn.disabled=false;btn.textContent="Run Calibration";
+  }catch(err){
+    console.error(err);
+    document.getElementById("error").innerHTML=`<div class="error"><b>Run failed：</b>${escapeHtml(err.message||String(err))}</div>`;
+    const btn=document.getElementById("runBtn");
+    btn.disabled=false;btn.textContent="Run Calibration";
+  }
+}
+
+/**
+ * v2 display compatibility layer.
+ * Engine 若已產出雙軌欄位，直接使用。
+ * Engine 若還沒產出，先補欄位避免畫面空白。
+ */
+function enrichDualTrackDataset(dataset){
+  const ds = dataset || {meta:{},rows:[]};
+  ds.rows = (ds.rows || []).map(row=>{
+    const r = {...row};
+    const f = r.m8_features || {};
+
+    r.source_type = r.source_type || inferSourceType(r);
+    r.market_coupon = pickNum(r.market_coupon, r.market_rate, r.coupon_pct);
+
+    // 1. My Preference Rate：你的 M8 偏好模型 rate
+    r.my_pre_rate = pickNum(r.my_pre_rate, f.my_pre_rate, f.pre_rate);
+    r.my_brake = pickNum(r.my_brake, f.my_brake, f.high_rate_brake);
+    r.my_preference_rate = pickNum(r.my_preference_rate, r.my_fair_rate, f.my_fair_rate, f.fair_yield);
+    r.gap_vs_my = pickNum(r.gap_vs_my, Number.isFinite(r.market_coupon)&&Number.isFinite(r.my_preference_rate)?r.market_coupon-r.my_preference_rate:null);
+
+    // 2. Market Normal Rate：市場正常報價基準
+    // 正式版應由 fcn_pool + fcn_pool_old + market_fcn_history 的 calibration normal curve 產出。
+    // fallback：若 engine 尚未產出，先用 market_rate 當 anchor，避免畫面無值。
+    r.market_normal_rate = pickNum(r.market_normal_rate, f.market_normal_rate, r.normal_rate, r.market_rate);
+    r.market_implied_brake = pickNum(r.market_implied_brake, r.implied_market_brake, Number.isFinite(r.my_pre_rate)&&Number.isFinite(r.market_coupon)?r.my_pre_rate-r.market_coupon:null);
+    r.market_brake_ratio = pickNum(r.market_brake_ratio, Number.isFinite(r.market_implied_brake)&&Number.isFinite(r.my_pre_rate)&&r.my_pre_rate!==0?r.market_implied_brake/r.my_pre_rate*100:null);
+    r.gap_vs_market = pickNum(r.gap_vs_market, Number.isFinite(r.market_coupon)&&Number.isFinite(r.market_normal_rate)?r.market_coupon-r.market_normal_rate:null);
+    r.preference_vs_market_gap = pickNum(r.preference_vs_market_gap, Number.isFinite(r.my_preference_rate)&&Number.isFinite(r.market_normal_rate)?r.my_preference_rate-r.market_normal_rate:null);
+
+    r.market_normal_label = r.market_normal_label || labelGap(r.gap_vs_market);
+    r.my_preference_label = r.my_preference_label || labelGap(r.gap_vs_my);
+
+    return r;
+  });
+
+  const ok = ds.rows.filter(r=>r.status==="ok");
+  const sourceCounts = countBy(ok, r=>r.source_type||"unknown");
+  ds.meta = {
+    ...(ds.meta||{}),
+    source_counts: sourceCounts,
+    current_pool_rows: sourceCounts.current_pool||0,
+    old_pool_rows: sourceCounts.old_pool||0,
+    market_history_rows: sourceCounts.market_history||0,
+    total_calibration_rows: ok.length,
+    my_preference_rate_mean: avg(ok.map(r=>r.my_preference_rate)),
+    market_normal_rate_mean: avg(ok.map(r=>r.market_normal_rate)),
+    gap_vs_my_mean: avg(ok.map(r=>r.gap_vs_my)),
+    gap_vs_market_mean: avg(ok.map(r=>r.gap_vs_market)),
+    preference_vs_market_gap_mean: avg(ok.map(r=>r.preference_vs_market_gap)),
+    market_brake_ratio_mean: avg(ok.map(r=>r.market_brake_ratio))
+  };
+  return ds;
+}
+
+function inferSourceType(r){
+  const id = String(r.fcn_id||r.record_id||"");
+  if(id.startsWith("MKT_")) return "market_history";
+  if(String(r.source||"").includes("old")) return "old_pool";
+  if(String(r.source_type||"").includes("old")) return "old_pool";
+  return "current_pool";
+}
+
+function renderAll(){
+  renderSourceSummary();
+  renderSummary();
+  renderDiagnostics();
+  renderRows();
+  renderRegRows();
+  document.getElementById("debug").textContent=JSON.stringify(DATASET,null,2);
+}
+
+function renderSourceSummary(){
+  const m=DATASET?.meta||{};
+  const cards=[
+    ["Current Pool Rows",m.current_pool_rows],
+    ["Old Pool Rows",m.old_pool_rows],
+    ["Market Quote Rows",m.market_history_rows],
+    ["Total Calibration Rows",m.total_calibration_rows],
+    ["Valid Rows",m.valid_rows],
+    ["Invalid Rows",m.invalid_rows]
+  ];
+  document.getElementById("sourceSummary").innerHTML=cards.map(([t,v])=>`<div class="card"><div class="kpi-title">${t}</div><div class="kpi-value">${v??"-"}</div></div>`).join("");
+}
+
+function renderSummary(){
+  const m=DATASET?.meta||{};
+  const cards=[
+    ["Market Coupon Mean",pct(m.market_rate_mean)],
+    ["My Preference Mean",pct(m.my_preference_rate_mean)],
+    ["Market Normal Mean",pct(m.market_normal_rate_mean)],
+    ["Gap vs My Mean",pct(m.gap_vs_my_mean)],
+    ["Gap vs Market Mean",pct(m.gap_vs_market_mean)],
+    ["My - Market Gap",pct(m.preference_vs_market_gap_mean)]
+  ];
+  document.getElementById("summary").innerHTML=cards.map(([t,v])=>`<div class="card"><div class="kpi-title">${t}</div><div class="kpi-value">${v??"-"}</div></div>`).join("");
+}
+
+function renderDiagnostics(){
+  const rows=(DATASET?.rows||[]).filter(r=>r.status==="ok");
+  const heavy=rows.filter(r=>["heavy","extreme"].includes(r.brake_level));
+  const marketHigher=rows.filter(r=>["market_higher","market_much_higher"].includes(r.pricing_gap_label));
+  const brakeTooHeavy=rows.filter(r=>Number(r.brake_gap)>3);
+  const cards=[
+    ["Heavy Brake Rows",heavy.length],
+    ["Market > Fair Rows",marketHigher.length],
+    ["Brake Gap > 3",brakeTooHeavy.length],
+    ["Avg Brake Gap",pct(avg(rows.map(r=>r.brake_gap)))],
+    ["Avg Implied Brake",pct(avg(rows.map(r=>r.market_implied_brake)))],
+    ["Avg Brake Ratio",pct(avg(rows.map(r=>r.market_brake_ratio)))]
+  ];
+  document.getElementById("diagnostics").innerHTML=cards.map(([t,v])=>`<div class="card"><div class="kpi-title">${t}</div><div class="kpi-value">${v??"-"}</div></div>`).join("");
+}
+
+function renderRows(){
+  const q=document.getElementById("search").value.trim().toUpperCase();
+  const source=document.getElementById("sourceFilter").value;
+  const gap=document.getElementById("gapFilter").value;
+  const brake=document.getElementById("brakeFilter").value;
+
+  let rows=(DATASET?.rows||[]).filter(r=>r.status==="ok");
+  rows=rows.filter(r=>{
+    const text=[
+      r.fcn_id,r.record_id,r.bank,r.pricing_type,r.source_type,...(r.symbols||[])
+    ].join(" ").toUpperCase();
+    return(!q||text.includes(q))&&
+      (!source||r.source_type===source)&&
+      (!gap||r.pricing_gap_label===gap)&&
+      (!brake||r.brake_level===brake);
+  });
+  rows.sort((a,b)=>Math.abs(Number(b.preference_vs_market_gap||0))-Math.abs(Number(a.preference_vs_market_gap||0)));
+
+  document.getElementById("rowsTable").innerHTML=
+`<tr>
+<th>FCN</th><th>Source</th><th>Bank</th><th>Date</th><th>Symbols</th><th>Type</th><th>S/KI/T</th>
+<th>Market Coupon</th>
+<th>My PreRate</th><th>My Brake</th><th>My Preference Rate</th><th>Gap vs My</th><th>My Label</th>
+<th>Market Normal Rate</th><th>Market Implied Brake</th><th>Market Brake Ratio</th><th>Gap vs Market</th><th>Market Label</th>
+<th>My - Market</th>
+<th>Old Fair</th><th>Old Gap</th><th>Brake Level</th>
+<th>BasketPrem</th><th>Tail</th><th>Vol</th><th>RP</th><th>BW</th>
+</tr>${rows.map(r=>{
+  const f=r.m8_features||{};
+  return `<tr>
+<td><b>${escapeHtml(r.fcn_id||r.record_id)}</b></td>
+<td>${badge(r.source_type||"-")}</td>
+<td>${escapeHtml(r.bank||"-")}</td>
+<td>${escapeHtml(r.date||r.issue_date||"-")}</td>
+<td>${(r.symbols||[]).join("/")}</td>
+<td>${escapeHtml(r.type||r.barrier_type||"-")}</td>
+<td>${fmt(r.strike)} / ${fmt(r.ki)} / ${fmt(r.tenor||r.tenor_month)}M</td>
+<td>${pct(r.market_coupon)}</td>
+<td>${pct(r.my_pre_rate)}</td>
+<td>${pct(r.my_brake)}</td>
+<td>${pct(r.my_preference_rate)}</td>
+<td>${pct(r.gap_vs_my)}</td>
+<td>${badge(r.my_preference_label)}</td>
+<td>${pct(r.market_normal_rate)}</td>
+<td>${pct(r.market_implied_brake)}</td>
+<td>${pct(r.market_brake_ratio)}</td>
+<td>${pct(r.gap_vs_market)}</td>
+<td>${badge(r.market_normal_label)}</td>
+<td>${pct(r.preference_vs_market_gap)}</td>
+<td>${pct(f.fair_yield)}</td>
+<td>${pct(r.pricing_gap)}</td>
+<td>${badge(r.brake_level)}</td>
+<td>${fmt(f.basket_premium)}</td>
+<td>${fmt(f.tail_adj)}</td>
+<td>${fmt(f.vol_adj)}</td>
+<td>${fmt(f.rate_pressure_adj)}</td>
+<td>${fmt(f.BW)}</td>
+</tr>`;
+}).join("")}`;
+}
+
+function renderRegRows(){
+  const rows=REG_ROWS.slice(0,300);
+  document.getElementById("regTable").innerHTML=
+`<tr>
+<th>FCN</th><th>Source</th><th>Market Coupon</th><th>My Preference</th><th>Market Normal</th>
+<th>Gap vs My</th><th>Gap vs Market</th><th>My - Market</th>
+<th>PreRate</th><th>BrakeGap</th><th>BasketPremium</th><th>Tail</th><th>KI</th><th>Tenor</th><th>Strike</th><th>Type</th><th>Vol</th><th>RP</th><th>Brake</th>
+</tr>${rows.map(r=>`<tr>
+<td><b>${escapeHtml(r.fcn_id)}</b></td>
+<td>${escapeHtml(r.source_type||"-")}</td>
+<td>${pct(r.market_coupon ?? r.market_rate)}</td>
+<td>${pct(r.my_preference_rate ?? r.fair_yield)}</td>
+<td>${pct(r.market_normal_rate)}</td>
+<td>${pct(r.gap_vs_my ?? r.pricing_gap)}</td>
+<td>${pct(r.gap_vs_market)}</td>
+<td>${pct(r.preference_vs_market_gap)}</td>
+<td>${pct(r.pre_rate)}</td>
+<td>${pct(r.brake_gap)}</td>
+<td>${fmt(r.basket_premium)}</td>
+<td>${fmt(r.tail_adj)}</td>
+<td>${fmt(r.ki_adj)}</td>
+<td>${fmt(r.tenor_adj)}</td>
+<td>${fmt(r.strike_adj)}</td>
+<td>${fmt(r.type_adj)}</td>
+<td>${fmt(r.vol_adj)}</td>
+<td>${fmt(r.rate_pressure_adj)}</td>
+<td>${fmt(r.high_rate_brake)}</td>
+</tr>`).join("")}`;
+}
+
+function labelGap(v){
+  const n=Number(v);
+  if(!Number.isFinite(n)) return "unknown";
+  if(n>=3) return "market_much_higher";
+  if(n>=1) return "market_higher";
+  if(n<=-3) return "market_much_lower";
+  if(n<=-1) return "market_lower";
+  return "near_fair";
+}
+
+function badge(v){
+  const s=String(v||"");
+  let cls="info";
+  if(s.includes("much")||s.includes("heavy")||s.includes("extreme"))cls="bad";
+  else if(s.includes("near")||s==="none"||s==="light")cls="good";
+  else if(s.includes("higher")||s.includes("medium"))cls="warn";
+  else if(s.includes("preference")||s.includes("my"))cls="pref";
+  return`<span class="badge ${cls}">${escapeHtml(s)}</span>`;
+}
+
+function countBy(xs,fn){
+  return xs.reduce((acc,x)=>{
+    const k=fn(x);
+    acc[k]=(acc[k]||0)+1;
+    return acc;
+  },{});
+}
+function pickNum(...values){
+  for(const v of values){
+    const n=Number(v);
+    if(Number.isFinite(n)) return n;
+  }
+  return null;
+}
+function avg(xs){
+  const c=xs.map(Number).filter(Number.isFinite);
+  return c.length?c.reduce((a,b)=>a+b,0)/c.length:null;
+}
+function fmt(v){
+  const n=Number(v);
+  return Number.isFinite(n)?n.toFixed(2):"-";
+}
+function pct(v){
+  const n=Number(v);
+  return Number.isFinite(n)?n.toFixed(2)+"%":"-";
+}
+function escapeHtml(s){
+  return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
 </script>
 </body>
 </html>
