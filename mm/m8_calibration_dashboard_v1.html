@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <base href="../">
-<title>M8 Calibration Dashboard v2</title>
+<title>M8 Template Calibration Dashboard v2</title>
 <style>
 :root{--bg:#0f1115;--panel:#181c24;--panel2:#202634;--line:#30384a;--text:#f4f7fb;--muted:#aab5c8;--blue:#4da3ff;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--purple:#c084fc}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}.app{max-width:1600px;margin:0 auto;padding:24px}.hero{background:linear-gradient(135deg,#10233f,#1d4ed8);border-radius:24px;padding:24px 28px;margin-bottom:20px}.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;color:#dbeafe;font-weight:700}.section{background:var(--panel);border:1px solid var(--line);border-radius:18px;margin:18px 0;overflow:hidden}.section summary{cursor:pointer;padding:16px 20px;font-size:20px;font-weight:900;border-bottom:1px solid var(--line)}.section-body{padding:18px}.grid{display:grid;gap:14px}.kpi-grid{grid-template-columns:repeat(6,minmax(130px,1fr))}.card{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:14px}.kpi-title{font-size:12px;color:var(--muted);font-weight:800}.kpi-value{font-size:24px;font-weight:900;margin-top:6px}.small{font-size:12px;color:var(--muted);line-height:1.55}.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}button,select,input{background:#111827;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 10px}button{cursor:pointer;font-weight:900}button.primary{background:#1d4ed8;border-color:#60a5fa}.table-wrap{overflow:auto;max-height:680px;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;background:var(--panel2)}th,td{border-bottom:1px solid var(--line);padding:8px;font-size:12px;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#111827;z-index:1}.badge{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid var(--line)}.good{background:rgba(52,211,153,.12);color:var(--green)}.warn{background:rgba(251,191,36,.12);color:var(--yellow)}.bad{background:rgba(248,113,113,.12);color:var(--red)}.info{background:rgba(77,163,255,.12);color:var(--blue)}.pref{background:rgba(192,132,252,.12);color:var(--purple)}pre{background:#090b10;border:1px solid var(--line);border-radius:14px;padding:12px;overflow:auto;max-height:520px}.error{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.5);color:#fecaca;border-radius:14px;padding:12px;margin:12px 0}.note{background:#111827;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}.muted{color:var(--muted)}@media(max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.kpi-grid{grid-template-columns:1fr}}
@@ -13,8 +13,8 @@
 <body>
 <div class="app">
   <div class="hero">
-    <h1>M8 Calibration Dashboard v2</h1>
-    <p>FCN Pool + Old Pool + Market FCN History → My Preference Rate vs Market Normal Rate → Brake Calibration</p>
+    <h1>M8 Template Calibration Dashboard v2</h1>
+    <p>FCN Pool + Old Pool + Market FCN History → 6大模板 + Risk/Time/EKI → My Preference vs Market Normal</p>
   </div>
 
   <div id="error"></div>
@@ -44,17 +44,22 @@
   </details>
 
   <details class="section" open>
-    <summary>3. Rate Summary / 雙軌 Rate 總覽</summary>
+    <summary>3. Template Summary / 6大模板分布</summary>
+    <div class="section-body"><div id="templateSummary" class="grid kpi-grid"></div></div>
+  </details>
+
+  <details class="section" open>
+    <summary>4. Rate Summary / 雙軌 Rate 總覽</summary>
     <div class="section-body"><div id="summary" class="grid kpi-grid"></div></div>
   </details>
 
   <details class="section" open>
-    <summary>4. Brake Diagnostics / HighRateBrake 診斷</summary>
+    <summary>5. Brake Diagnostics / HighRateBrake 診斷</summary>
     <div class="section-body"><div id="diagnostics" class="grid kpi-grid"></div></div>
   </details>
 
   <details class="section" open>
-    <summary>5. Calibration Rows / 明細</summary>
+    <summary>6. Calibration Rows / 明細</summary>
     <div class="section-body">
       <div class="controls">
         <input id="search" placeholder="Search FCN / symbol / bank"/>
@@ -63,6 +68,15 @@
           <option value="current_pool">current_pool</option>
           <option value="old_pool">old_pool</option>
           <option value="market_history">market_history</option>
+        </select>
+        <select id="templateFilter">
+          <option value="">All templates</option>
+          <option value="A">A AI Core Institutional</option>
+          <option value="B">B Memory / Semi Tactical</option>
+          <option value="C">C TSLA Momentum Core</option>
+          <option value="D">D Speculative Momentum</option>
+          <option value="E">E Defensive / Stabilizer</option>
+          <option value="F">F Others / M7 Basket Driven</option>
         </select>
         <select id="gapFilter">
           <option value="">All gaps</option>
@@ -86,12 +100,12 @@
   </details>
 
   <details class="section">
-    <summary>6. Regression Rows / 回歸用資料</summary>
+    <summary>7. Regression Rows / 回歸用資料</summary>
     <div class="section-body"><div class="table-wrap"><table id="regTable"></table></div></div>
   </details>
 
   <details class="section">
-    <summary>7. Debug JSON</summary>
+    <summary>8. Debug JSON</summary>
     <div class="section-body"><pre id="debug"></pre></div>
   </details>
 </div>
@@ -118,7 +132,7 @@ document.getElementById("downloadRegBtn").addEventListener("click",()=>{
   if(!REG_ROWS.length)return alert("Please run calibration first.");
   downloadCalibrationJson(REG_ROWS,"m8_calibration_regression_rows_v2.json");
 });
-["search","sourceFilter","gapFilter","brakeFilter"].forEach(id=>document.getElementById(id).addEventListener("input",renderRows));
+["search","sourceFilter","templateFilter","gapFilter","brakeFilter"].forEach(id=>document.getElementById(id).addEventListener("input",renderRows));
 
 async function run(){
   try{
@@ -162,6 +176,10 @@ function enrichDualTrackDataset(dataset){
     const f = r.m8_features || {};
 
     r.source_type = r.source_type || inferSourceType(r);
+    r.basket_display = r.basket_display || (r.symbols||[]).join(", ");
+    r.basket_template = r.basket_template || "F";
+    r.basket_template_name = r.basket_template_name || "OTHERS_M7_BASKET_DRIVEN";
+    r.basket_template_label = r.basket_template_label || (r.basket_template + "_" + r.basket_template_name);
     r.market_coupon = pickNum(r.market_coupon, r.market_rate, r.coupon_pct);
 
     // 1. My Preference Rate：你的 M8 偏好模型 rate
@@ -214,6 +232,7 @@ function inferSourceType(r){
 
 function renderAll(){
   renderSourceSummary();
+  renderTemplateSummary();
   renderSummary();
   renderDiagnostics();
   renderRows();
@@ -232,6 +251,17 @@ function renderSourceSummary(){
     ["Invalid Rows",m.invalid_rows]
   ];
   document.getElementById("sourceSummary").innerHTML=cards.map(([t,v])=>`<div class="card"><div class="kpi-title">${t}</div><div class="kpi-value">${v??"-"}</div></div>`).join("");
+}
+
+function renderTemplateSummary(){
+  const rows=(DATASET?.rows||[]).filter(r=>r.status==="ok");
+  const groups=countBy(rows,r=>r.basket_template_label||"F_OTHERS_M7_BASKET_DRIVEN");
+  const order=["A_AI_CORE_INSTITUTIONAL","B_MEMORY_SEMI_TACTICAL","C_TSLA_MOMENTUM_CORE","D_SPECULATIVE_MOMENTUM","E_DEFENSIVE_STABILIZER","F_OTHERS_M7_BASKET_DRIVEN"];
+  const cards=order.map(k=>{
+    const rs=rows.filter(r=>(r.basket_template_label||"F_OTHERS_M7_BASKET_DRIVEN")===k);
+    return [k, groups[k]||0, avg(rs.map(r=>r.market_coupon))];
+  });
+  document.getElementById("templateSummary").innerHTML=cards.map(([t,c,a])=>`<div class="card"><div class="kpi-title">${escapeHtml(t)}</div><div class="kpi-value">${c}</div><div class="small">Avg Coupon: ${pct(a)}</div></div>`).join("");
 }
 
 function renderSummary(){
@@ -266,6 +296,7 @@ function renderDiagnostics(){
 function renderRows(){
   const q=document.getElementById("search").value.trim().toUpperCase();
   const source=document.getElementById("sourceFilter").value;
+  const template=document.getElementById("templateFilter").value;
   const gap=document.getElementById("gapFilter").value;
   const brake=document.getElementById("brakeFilter").value;
 
@@ -276,6 +307,7 @@ function renderRows(){
     ].join(" ").toUpperCase();
     return(!q||text.includes(q))&&
       (!source||r.source_type===source)&&
+      (!template||r.basket_template===template)&&
       (!gap||r.pricing_gap_label===gap)&&
       (!brake||r.brake_level===brake);
   });
@@ -283,7 +315,7 @@ function renderRows(){
 
   document.getElementById("rowsTable").innerHTML=
 `<tr>
-<th>FCN</th><th>Source</th><th>Bank</th><th>Date</th><th>Symbols</th><th>Type</th><th>S/KI/T</th>
+<th>FCN</th><th>Source</th><th>Template</th><th>Basket</th><th>Core2</th><th>Core3</th><th>Risk</th><th>Tenor</th><th>Structure</th><th>Bank</th><th>Date</th><th>Type</th><th>S/KI/T</th>
 <th>Market Coupon</th>
 <th>My PreRate</th><th>My Brake</th><th>My Preference Rate</th><th>Gap vs My</th><th>My Label</th>
 <th>Market Normal Rate</th><th>Market Implied Brake</th><th>Market Brake Ratio</th><th>Gap vs Market</th><th>Market Label</th>
@@ -295,9 +327,15 @@ function renderRows(){
   return `<tr>
 <td><b>${escapeHtml(r.fcn_id||r.record_id)}</b></td>
 <td>${badge(r.source_type||"-")}</td>
+<td>${badge((r.basket_template||"F")+" "+(r.basket_template_name||"OTHERS"))}</td>
+<td>${escapeHtml(r.basket_display||(r.symbols||[]).join(", "))}</td>
+<td>${escapeHtml(r.core_dna_2||"-")}</td>
+<td>${escapeHtml(r.core_dna_3||"-")}</td>
+<td>${escapeHtml(r.risk_template||"-")}</td>
+<td>${escapeHtml(r.tenor_template||"-")}</td>
+<td>${escapeHtml(r.structure_template||r.type||"-")}</td>
 <td>${escapeHtml(r.bank||"-")}</td>
 <td>${escapeHtml(r.date||r.issue_date||"-")}</td>
-<td>${(r.symbols||[]).join("/")}</td>
 <td>${escapeHtml(r.type||r.barrier_type||"-")}</td>
 <td>${fmt(r.strike)} / ${fmt(r.ki)} / ${fmt(r.tenor||r.tenor_month)}M</td>
 <td>${pct(r.market_coupon)}</td>
@@ -328,12 +366,19 @@ function renderRegRows(){
   const rows=REG_ROWS.slice(0,300);
   document.getElementById("regTable").innerHTML=
 `<tr>
-<th>FCN</th><th>Source</th><th>Market Coupon</th><th>My Preference</th><th>Market Normal</th>
+<th>FCN</th><th>Source</th><th>Template</th><th>Basket</th><th>Core2</th><th>Core3</th><th>Risk</th><th>TenorTpl</th><th>Structure</th><th>Market Coupon</th><th>My Preference</th><th>Market Normal</th>
 <th>Gap vs My</th><th>Gap vs Market</th><th>My - Market</th>
 <th>PreRate</th><th>BrakeGap</th><th>BasketPremium</th><th>Tail</th><th>KI</th><th>Tenor</th><th>Strike</th><th>Type</th><th>Vol</th><th>RP</th><th>Brake</th>
 </tr>${rows.map(r=>`<tr>
 <td><b>${escapeHtml(r.fcn_id)}</b></td>
 <td>${escapeHtml(r.source_type||"-")}</td>
+<td>${escapeHtml(r.basket_template_label||"-")}</td>
+<td>${escapeHtml(r.basket_display||r.basket_symbols_key||"-")}</td>
+<td>${escapeHtml(r.core_dna_2||"-")}</td>
+<td>${escapeHtml(r.core_dna_3||"-")}</td>
+<td>${escapeHtml(r.risk_template||"-")}</td>
+<td>${escapeHtml(r.tenor_template||"-")}</td>
+<td>${escapeHtml(r.structure_template||"-")}</td>
 <td>${pct(r.market_coupon ?? r.market_rate)}</td>
 <td>${pct(r.my_preference_rate ?? r.fair_yield)}</td>
 <td>${pct(r.market_normal_rate)}</td>
@@ -406,3 +451,4 @@ function escapeHtml(s){
 </script>
 </body>
 </html>
+
