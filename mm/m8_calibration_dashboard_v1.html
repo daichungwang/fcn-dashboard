@@ -151,8 +151,36 @@
     </div>
   </details>
 
+  <details class="section" open>
+    <summary>14. Template × Risk Matrix / 6模板 × 9風險區塊</summary>
+    <div class="section-body">
+      <div class="note small">
+        先看 Count 與 Density。count >= 5 才建議作為 local curve；count < 5 需 fallback 到 Template 或 Risk 大類。
+      </div>
+      <div class="table-wrap"><table id="templateRiskTable"></table></div>
+    </div>
+  </details>
+
+  <details class="section" open>
+    <summary>15. Template × Risk × Tenor Matrix / 6模板 × 9風險 × 4時間</summary>
+    <div class="section-body">
+      <div class="note small">
+        這是 6 × 9 × 4 的 market block density。用來判斷哪些區塊有市場、哪些需要合併或 fallback。
+      </div>
+      <div class="table-wrap"><table id="templateRiskTenorTable"></table></div>
+    </div>
+  </details>
+
+  <details class="section" open>
+    <summary>16. Learning Recommendation / 學習與合併建議</summary>
+    <div class="section-body">
+      <div id="learningSummary" class="grid kpi-grid"></div>
+      <div class="table-wrap" style="margin-top:12px"><table id="templateDensityTable"></table></div>
+    </div>
+  </details>
+
   <details class="section">
-    <summary>14. Debug JSON</summary>
+    <summary>17. Debug JSON</summary>
     <div class="section-body"><pre id="debug"></pre></div>
   </details>
 </div>
@@ -390,7 +418,9 @@ function renderRows(){
 <td>${escapeHtml(r.core_dna_2||"-")}</td>
 <td>${escapeHtml(r.core_dna_3||"-")}</td>
 <td>${escapeHtml(r.risk_template||"-")}</td>
+<td>${escapeHtml(r.risk_zone_label||r.risk_zone_9||"-")}</td>
 <td>${escapeHtml(r.tenor_template||"-")}</td>
+<td>${escapeHtml(r.tenor_group_label||r.tenor_group_4||"-")}</td>
 <td>${escapeHtml(r.structure_template||r.type||"-")}</td>
 <td>${escapeHtml(r.bank||"-")}</td>
 <td>${escapeHtml(r.date||r.issue_date||"-")}</td>
@@ -424,7 +454,7 @@ function renderRegRows(){
   const rows=REG_ROWS.slice(0,300);
   document.getElementById("regTable").innerHTML=
 `<tr>
-<th>FCN</th><th>Source</th><th>Template</th><th>Basket</th><th>Core2</th><th>Core3</th><th>Risk</th><th>TenorTpl</th><th>Structure</th>
+<th>FCN</th><th>Source</th><th>Template</th><th>Basket</th><th>Core2</th><th>Core3</th><th>Risk</th><th>Risk9</th><th>TenorTpl</th><th>Tenor4</th><th>Structure</th>
 <th>Market Coupon</th><th>Old Fair</th><th>New Fair</th><th>Gap vs Old</th><th>Gap vs New</th>
 <th>Template Base</th><th>Risk Adj</th><th>Tenor Adj</th><th>Structure Adj</th><th>M7 Overlay</th>
 <th>Market Normal</th><th>PreRate</th><th>BrakeGap</th><th>BasketPremium</th><th>Tail</th><th>KI</th><th>Tenor</th><th>Strike</th><th>Type</th><th>Vol</th><th>RP</th><th>Brake</th>
@@ -436,7 +466,9 @@ function renderRegRows(){
 <td>${escapeHtml(r.core_dna_2||"-")}</td>
 <td>${escapeHtml(r.core_dna_3||"-")}</td>
 <td>${escapeHtml(r.risk_template||"-")}</td>
+<td>${escapeHtml(r.risk_zone_label||r.risk_zone_9||"-")}</td>
 <td>${escapeHtml(r.tenor_template||"-")}</td>
+<td>${escapeHtml(r.tenor_group_label||r.tenor_group_4||"-")}</td>
 <td>${escapeHtml(r.structure_template||"-")}</td>
 <td>${pct(r.market_coupon ?? r.market_rate)}</td>
 <td>${pct(r.fair_yield ?? r.my_preference_rate)}</td>
@@ -465,7 +497,7 @@ function renderRegRows(){
 
 function renderRegressionDashboard(){
   if(!REGRESSION){
-    ["regRelationshipSummary","regTemplateTable","riskSurfaceTable","tenorCurveTable","structureCurveTable","dnaTable"].forEach(id=>{
+    ["regRelationshipSummary","regTemplateTable","riskSurfaceTable","tenorCurveTable","structureCurveTable","dnaTable","templateRiskTable","templateRiskTenorTable","learningSummary","templateDensityTable"].forEach(id=>{
       const el=document.getElementById(id);
       if(el) el.innerHTML="";
     });
@@ -484,21 +516,29 @@ function renderRegressionDashboard(){
   ]);
 
   renderRegressionTable("riskSurfaceTable", REGRESSION.risk_surface, [
-    ["Risk Template","risk_template"],
+    ["Risk Zone 9","risk_zone_label"],
+    ["Risk Code","risk_zone_9"],
     ["Count","count"],
     ["Avg Coupon","avg_coupon","pct"],
     ["Median Coupon","median_coupon","pct"],
     ["Avg Old Fair","avg_old_fair_rate","pct"],
-    ["Avg Implied Brake","avg_market_implied_brake","pct"]
+    ["Avg New Fair","avg_new_fair_rate","pct"],
+    ["Avg Gap New","avg_gap_vs_new","pct"],
+    ["Avg Implied Brake","avg_market_implied_brake","pct"],
+    ["Raw Examples","raw_risk_examples"]
   ]);
 
   renderRegressionTable("tenorCurveTable", REGRESSION.tenor_curve, [
-    ["Tenor Template","tenor_template"],
+    ["Tenor Group 4","tenor_group_label"],
+    ["Tenor Code","tenor_group_4"],
     ["Count","count"],
     ["Avg Coupon","avg_coupon","pct"],
     ["Median Coupon","median_coupon","pct"],
     ["Avg Old Fair","avg_old_fair_rate","pct"],
-    ["Avg Implied Brake","avg_market_implied_brake","pct"]
+    ["Avg New Fair","avg_new_fair_rate","pct"],
+    ["Avg Gap New","avg_gap_vs_new","pct"],
+    ["Avg Implied Brake","avg_market_implied_brake","pct"],
+    ["Raw Examples","raw_tenor_examples"]
   ]);
 
   renderRegressionTable("structureCurveTable", REGRESSION.structure_curve, [
@@ -517,6 +557,62 @@ function renderRegressionDashboard(){
     ["Median Coupon","median_coupon","pct"],
     ["Avg Old Fair","avg_old_fair_rate","pct"],
     ["Avg Implied Brake","avg_market_implied_brake","pct"]
+  ]);
+
+  renderRegressionTable("templateRiskTable", REGRESSION.template_risk_matrix || [], [
+    ["Template","template_label"],
+    ["Risk Zone","risk_zone_label"],
+    ["Risk Code","risk_zone_9"],
+    ["Count","count"],
+    ["Density","density_level"],
+    ["Use Local?","should_use_for_local_curve"],
+    ["Avg Coupon","avg_coupon","pct"],
+    ["Median Coupon","median_coupon","pct"],
+    ["Avg Old Fair","avg_old_fair_rate","pct"],
+    ["Avg New Fair","avg_new_fair_rate","pct"],
+    ["Avg Gap New","avg_gap_vs_new","pct"],
+    ["Avg Brake","avg_market_implied_brake","pct"]
+  ]);
+
+  renderRegressionTable("templateRiskTenorTable", REGRESSION.template_risk_tenor_matrix || [], [
+    ["Template","template_label"],
+    ["Risk Zone","risk_zone_label"],
+    ["Tenor","tenor_group_label"],
+    ["Count","count"],
+    ["Density","density_level"],
+    ["Use Local?","should_use_for_local_curve"],
+    ["Avg Coupon","avg_coupon","pct"],
+    ["Median Coupon","median_coupon","pct"],
+    ["Avg Old Fair","avg_old_fair_rate","pct"],
+    ["Avg New Fair","avg_new_fair_rate","pct"],
+    ["Avg Gap New","avg_gap_vs_new","pct"],
+    ["Avg Brake","avg_market_implied_brake","pct"]
+  ]);
+
+  renderLearningRecommendation();
+}
+
+function renderLearningRecommendation(){
+  const lr = REGRESSION?.learning_recommendation || {};
+  const cards = [
+    ["Rows Used", lr.total_rows],
+    ["Usable Template×Risk", lr.usable_template_risk_blocks],
+    ["Thin Template×Risk", lr.thin_template_risk_blocks],
+    ["Usable T×R×Tenor", lr.usable_template_risk_tenor_blocks],
+    ["Thin T×R×Tenor", lr.thin_template_risk_tenor_blocks],
+    ["Min Local Count", lr.min_count_for_local_curve]
+  ];
+  const box = document.getElementById("learningSummary");
+  if(box){
+    box.innerHTML = cards.map(([t,v])=>`<div class="card"><div class="kpi-title">${escapeHtml(t)}</div><div class="kpi-value">${v??"-"}</div></div>`).join("");
+  }
+  renderRegressionTable("templateDensityTable", lr.template_density || [], [
+    ["Template","template"],
+    ["Count","count"],
+    ["Risk Zones","active_risk_zones"],
+    ["Tenor Groups","active_tenor_groups"],
+    ["Avg Coupon","avg_coupon","pct"],
+    ["Avg Brake","avg_implied_brake","pct"]
   ]);
 }
 
@@ -597,4 +693,6 @@ function escapeHtml(s){
 </script>
 </body>
 </html>
+
+
 
