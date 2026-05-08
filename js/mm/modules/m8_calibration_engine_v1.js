@@ -9,7 +9,7 @@
 
 import { runM8Case } from "../../core/m8_batch_engine.js";
 
-export const M8_CALIBRATION_VERSION = "m8_calibration_engine_v1_fixed_20260508";
+export const M8_CALIBRATION_VERSION = "m8_template_calibration_engine_v2_20260508";
 
 function toNum(v, d = null) {
   const n = Number(v);
@@ -75,6 +75,223 @@ function classifyPricingGap(gap) {
   return "market_much_lower";
 }
 
+// ============================================================================
+// TEMPLATE / RISK / TENOR CLASSIFICATION v2
+// ============================================================================
+
+function normSymbol(s) {
+  const x = safeUpper(s);
+  if (x === "GOOGL") return "GOOG";
+  return x;
+}
+
+function normalizeSymbols(symbols) {
+  return [...new Set(arr(symbols).map(normSymbol).filter(Boolean))].sort();
+}
+
+function hasSymbol(set, s) {
+  return set.has(normSymbol(s));
+}
+
+function hasAny(set, xs) {
+  return arr(xs).some(x => hasSymbol(set, x));
+}
+
+function comboKey(xs) {
+  return normalizeSymbols(xs).join("+");
+}
+
+const CORE_DNA_2_PRIORITY = [
+  ["NVDA", "TSM"],
+  ["MU", "NVDA"],
+  ["MU", "TSM"],
+  ["MU", "AVGO"],
+  ["TSLA", "NVDA"],
+  ["TSLA", "TSM"],
+  ["PLTR", "TSLA"],
+  ["ORCL", "TSLA"],
+  ["AVGO", "NVDA"],
+  ["AVGO", "TSM"],
+  ["ARM", "NVDA"],
+  ["ARM", "TSLA"],
+  ["AMD", "NVDA"],
+  ["AMD", "TSM"],
+  ["GOOG", "NVDA"],
+  ["GOOG", "TSM"],
+  ["AMZN", "NVDA"],
+  ["QQQ", "TSM"]
+];
+
+const CORE_DNA_3_PRIORITY = [
+  ["MU", "NVDA", "TSM"],
+  ["AVGO", "NVDA", "TSM"],
+  ["NVDA", "TSLA", "TSM"],
+  ["NVDA", "PLTR", "TSLA"],
+  ["ARM", "PLTR", "TSLA"],
+  ["AVGO", "NVDA", "TSLA"],
+  ["ARM", "NVDA", "TSM"],
+  ["AMD", "NVDA", "TSM"],
+  ["GOOG", "NVDA", "TSM"],
+  ["AMZN", "NVDA", "TSM"],
+  ["AMD", "MU", "NVDA"],
+  ["AMD", "MU", "TSM"],
+  ["AMD", "AVGO", "MU"],
+  ["INTC", "MU", "TSM"],
+  ["AVGO", "CRDO", "NVDA"]
+];
+
+const CORE_DNA_4_PRIORITY = [
+  ["MU", "NVDA", "TSLA", "TSM"],
+  ["AVGO", "NVDA", "TSLA", "TSM"],
+  ["AMD", "NVDA", "TSLA", "TSM"],
+  ["AVGO", "MU", "NVDA", "TSM"],
+  ["MU", "NVDA", "SMH", "TSM"],
+  ["ARM", "AVGO", "NVDA", "TSM"],
+  ["NVDA", "PLTR", "TSLA", "ALAB"],
+  ["ORCL", "TSLA", "PLTR", "COIN"],
+  ["AVGO", "NVDA", "PLTR", "TSLA"],
+  ["AAPL", "GOOG", "NVDA", "TSM"],
+  ["GOOG", "NVDA", "SMH", "TSM"]
+];
+
+function firstMatchedCombo(symbolSet, combos) {
+  const found = arr(combos).find(combo => combo.every(s => hasSymbol(symbolSet, s)));
+  return found ? comboKey(found) : "";
+}
+
+function classifyBasketTemplate(symbols) {
+  const syms = normalizeSymbols(symbols);
+  const s = new Set(syms);
+
+  const core2 = firstMatchedCombo(s, CORE_DNA_2_PRIORITY);
+  const core3 = firstMatchedCombo(s, CORE_DNA_3_PRIORITY);
+  const core4 = firstMatchedCombo(s, CORE_DNA_4_PRIORITY);
+
+  const semi = ["NVDA", "TSM", "AVGO", "MU", "AMD", "ARM", "MRVL", "SMH", "AMAT", "ASML", "INTC"];
+  const memory = ["MU", "MRVL", "INTC"];
+  const stabilizer = ["AAPL", "GOOG", "MSFT", "AMZN", "QQQ", "LQD", "META", "SMH"];
+  const defensive = ["UNH", "REGN", "NKE", "EL", "TGT", "WMT", "COST", "BAC", "CITI", "LVS"];
+  const speculative = ["PLTR", "COIN", "ALAB", "CRDO", "SOFI"];
+  const travel = ["CCL", "AAL", "NCLH"];
+
+  const semiCount = syms.filter(x => semi.includes(x)).length;
+  const stabilizerCount = syms.filter(x => stabilizer.includes(x)).length;
+  const defensiveCount = syms.filter(x => defensive.includes(x)).length;
+  const speculativeCount = syms.filter(x => speculative.includes(x)).length;
+  const travelCount = syms.filter(x => travel.includes(x)).length;
+  const hasNvdaTsm = hasSymbol(s, "NVDA") && hasSymbol(s, "TSM");
+  const hasMuCore = hasSymbol(s, "MU") && hasAny(s, ["NVDA", "TSM", "AVGO", "SMH", "AMD", "MRVL", "INTC"]);
+  const hasTslaMomentum = hasSymbol(s, "TSLA") && hasAny(s, ["NVDA", "TSM", "AVGO", "GOOG", "ORCL"]);
+  const hasSpecCore = (hasSymbol(s, "PLTR") && hasSymbol(s, "TSLA")) || hasAny(s, ["COIN", "ALAB", "CRDO", "SOFI"]);
+
+  let code = "F";
+  let name = "OTHERS_M7_BASKET_DRIVEN";
+  let reason = "No dominant repeated market DNA; use M7 basket score as main driver.";
+
+  // Priority matters: highly speculative structures override broad AI/semi overlap.
+  if (hasSpecCore && (hasSymbol(s, "TSLA") || hasAny(s, ["COIN", "ALAB", "CRDO"]))) {
+    code = "D";
+    name = "SPECULATIVE_MOMENTUM";
+    reason = "PLTR/TSLA/COIN/ALAB/CRDO type speculative momentum DNA.";
+  } else if (hasMuCore) {
+    code = "B";
+    name = "MEMORY_SEMI_TACTICAL";
+    reason = "MU or memory/semi tactical core with NVDA/TSM/AVGO/SMH linkage.";
+  } else if (hasTslaMomentum) {
+    code = "C";
+    name = "TSLA_MOMENTUM_CORE";
+    reason = "TSLA works as high-beta momentum amplifier with AI/semi core.";
+  } else if (hasNvdaTsm && (semiCount >= 2 || stabilizerCount >= 1)) {
+    code = "A";
+    name = "AI_CORE_INSTITUTIONAL";
+    reason = "NVDA+TSM based institutional AI/semi core.";
+  } else if ((stabilizerCount + defensiveCount) >= 2 && !hasSymbol(s, "TSLA")) {
+    code = "E";
+    name = "DEFENSIVE_STABILIZER";
+    reason = "Mega-cap/ETF/defensive stabilizer basket with lower volatility intent.";
+  }
+
+  const enhancement = syms.filter(x => ![...new Set((core4 || core3 || core2).split("+").filter(Boolean))].includes(x));
+
+  return {
+    basket_template: code,
+    basket_template_name: name,
+    basket_template_label: code + "_" + name,
+    basket_template_reason: reason,
+    basket_symbols_key: syms.join("+"),
+    basket_display: syms.join(", "),
+    core_dna_2: core2,
+    core_dna_3: core3,
+    core_dna_4: core4,
+    enhancement_stocks: enhancement,
+    semi_count: semiCount,
+    stabilizer_count: stabilizerCount,
+    defensive_count: defensiveCount,
+    speculative_count: speculativeCount,
+    travel_count: travelCount
+  };
+}
+
+function classifyStrikeBucket(strike) {
+  const x = toNum(strike);
+  if (x == null) return "unknown";
+  if (x < 60) return "low";
+  if (x < 65) return "medium_low";
+  if (x === 65) return "medium";
+  if (x <= 70) return "medium_high";
+  if (x < 75) return "high";
+  return "very_high";
+}
+
+function classifyKiBucket(ki) {
+  const x = toNum(ki);
+  if (x == null) return "unknown";
+  if (x < 50) return "low";
+  if (x < 55) return "medium_low";
+  if (x === 55) return "medium";
+  if (x < 60) return "medium_high";
+  if (x < 65) return "high";
+  if (x <= 70) return "very_high";
+  return "extreme";
+}
+
+function classifyRiskTemplate(strike, ki) {
+  const s = toNum(strike);
+  const k = toNum(ki);
+  const strikeBucket = classifyStrikeBucket(s);
+  const kiBucket = classifyKiBucket(k);
+  const strikeKiSame = Number.isFinite(s) && Number.isFinite(k) && Math.abs(s - k) < 0.01;
+  const adjustedStrikeForSame = strikeKiSame ? round2(s + 5) : s;
+  const adjustedKiForSame = strikeKiSame ? round2(k - 2.5) : k;
+
+  return {
+    strike_bucket: strikeBucket,
+    ki_bucket: kiBucket,
+    strike_ki_same: strikeKiSame,
+    adjusted_strike_for_same: adjustedStrikeForSame,
+    adjusted_ki_for_same: adjustedKiForSame,
+    risk_template: strikeBucket + "_strike__" + kiBucket + "_ki" + (strikeKiSame ? "__same_barrier_adj" : "")
+  };
+}
+
+function classifyTenorTemplate(tenor) {
+  const t = toNum(tenor);
+  if (t == null) return { tenor_bucket: "unknown", tenor_template: "unknown" };
+  if (t <= 3) return { tenor_bucket: "ultra_short", tenor_template: "ultra_short_0_3m" };
+  if (t <= 6) return { tenor_bucket: "short", tenor_template: "short_4_6m" };
+  if (t <= 9) return { tenor_bucket: "medium", tenor_template: "medium_7_9m" };
+  if (t <= 12) return { tenor_bucket: "long", tenor_template: "long_10_12m" };
+  return { tenor_bucket: "extra_long", tenor_template: "extra_long_12m_plus" };
+}
+
+function classifyStructureTemplate(type, eki) {
+  const t = safeUpper(type);
+  if (eki || t === "EKI") return "EKI";
+  if (t === "AKI") return "AKI";
+  if (t === "NA") return "NO_KI";
+  return t || "UNKNOWN";
+}
+
 function normalizePoolRows(json, sourceName) {
   const rows = Array.isArray(json)
     ? json
@@ -92,6 +309,7 @@ function normalizeFcnRecord(row, sourceName, idx) {
 
   return {
     source_name: sourceName,
+    source_type: sourceName === "fcn_pool_old" ? "old_pool" : "current_pool",
     source_index: idx,
     fcn_id: row?.fcn_id || row?.id || sourceName + "_" + (idx + 1),
     date: row?.date || row?.created_time || "",
@@ -124,6 +342,7 @@ function normalizeMarketHistoryRows(json) {
 
   return rows.map((row, idx) => ({
     source_name: "market_history",
+    source_type: "market_history",
     source_index: idx,
     fcn_id: row?.record_id || "market_history_" + (idx + 1),
     date: json?.generated_at || "",
@@ -230,7 +449,11 @@ function calcSummary(results, invalidRows, source) {
     my_vs_market_gap_mean: round2(avg(valid.map(r => r.my_vs_market_gap))),
     brake_ratio_mean: round2(avg(valid.map(r => r.brake_ratio))),
 
-    source_distribution: countBy(valid, r => r.source_name),
+    source_distribution: countBy(valid, r => r.source_type || r.source_name),
+    template_distribution: countBy(valid, r => r.basket_template_label),
+    risk_template_distribution: countBy(valid, r => r.risk_template),
+    tenor_template_distribution: countBy(valid, r => r.tenor_template),
+    structure_template_distribution: countBy(valid, r => r.structure_template),
     brake_distribution: countBy(valid, r => r.brake_level),
     gap_distribution: countBy(valid, r => r.pricing_gap_label),
     rate_band_distribution: countBy(valid, r => r.market_rate_band)
@@ -288,6 +511,16 @@ export async function buildM8CalibrationDataset(options = {}) {
       });
 
       const features = extractM8Features(m8);
+      const templateInfo = classifyBasketTemplate(record.symbols);
+      const riskInfo = classifyRiskTemplate(record.strike, record.ki);
+      const tenorInfo = classifyTenorTemplate(record.tenor);
+      const structureTemplate = classifyStructureTemplate(record.type, record.eki);
+      const marketBlockKey = [
+        templateInfo.basket_template,
+        riskInfo.risk_template,
+        tenorInfo.tenor_template,
+        structureTemplate
+      ].join("|");
 
       const marketCoupon = round2(record.market_rate);
       const preRate = features.pre_rate;
@@ -312,6 +545,7 @@ export async function buildM8CalibrationDataset(options = {}) {
         calibration_version: M8_CALIBRATION_VERSION,
 
         source_name: record.source_name,
+        source_type: record.source_type,
         source_index: record.source_index,
         fcn_id: record.fcn_id,
         date: record.date,
@@ -324,6 +558,38 @@ export async function buildM8CalibrationDataset(options = {}) {
         tw_bank: record.tw_bank,
 
         symbols: record.symbols,
+        basket: record.symbols,
+        basket_display: templateInfo.basket_display,
+        basket_symbols_key: templateInfo.basket_symbols_key,
+
+        basket_template: templateInfo.basket_template,
+        basket_template_name: templateInfo.basket_template_name,
+        basket_template_label: templateInfo.basket_template_label,
+        basket_template_reason: templateInfo.basket_template_reason,
+        core_dna_2: templateInfo.core_dna_2,
+        core_dna_3: templateInfo.core_dna_3,
+        core_dna_4: templateInfo.core_dna_4,
+        enhancement_stocks: templateInfo.enhancement_stocks,
+        template_counts: {
+          semi_count: templateInfo.semi_count,
+          stabilizer_count: templateInfo.stabilizer_count,
+          defensive_count: templateInfo.defensive_count,
+          speculative_count: templateInfo.speculative_count,
+          travel_count: templateInfo.travel_count
+        },
+
+        strike_bucket: riskInfo.strike_bucket,
+        ki_bucket: riskInfo.ki_bucket,
+        risk_template: riskInfo.risk_template,
+        strike_ki_same: riskInfo.strike_ki_same,
+        adjusted_strike_for_same: riskInfo.adjusted_strike_for_same,
+        adjusted_ki_for_same: riskInfo.adjusted_ki_for_same,
+
+        tenor_bucket: tenorInfo.tenor_bucket,
+        tenor_template: tenorInfo.tenor_template,
+        structure_template: structureTemplate,
+        market_block_key: marketBlockKey,
+
         tenor: record.tenor,
         market_rate: marketCoupon,
         market_coupon: marketCoupon,
@@ -366,10 +632,43 @@ export async function buildM8CalibrationDataset(options = {}) {
         status: "error",
         calibration_version: M8_CALIBRATION_VERSION,
         source_name: record.source_name,
+        source_type: record.source_type,
         source_index: record.source_index,
         fcn_id: record.fcn_id,
         date: record.date,
         symbols: record.symbols,
+        basket: record.symbols,
+        basket_display: templateInfo.basket_display,
+        basket_symbols_key: templateInfo.basket_symbols_key,
+
+        basket_template: templateInfo.basket_template,
+        basket_template_name: templateInfo.basket_template_name,
+        basket_template_label: templateInfo.basket_template_label,
+        basket_template_reason: templateInfo.basket_template_reason,
+        core_dna_2: templateInfo.core_dna_2,
+        core_dna_3: templateInfo.core_dna_3,
+        core_dna_4: templateInfo.core_dna_4,
+        enhancement_stocks: templateInfo.enhancement_stocks,
+        template_counts: {
+          semi_count: templateInfo.semi_count,
+          stabilizer_count: templateInfo.stabilizer_count,
+          defensive_count: templateInfo.defensive_count,
+          speculative_count: templateInfo.speculative_count,
+          travel_count: templateInfo.travel_count
+        },
+
+        strike_bucket: riskInfo.strike_bucket,
+        ki_bucket: riskInfo.ki_bucket,
+        risk_template: riskInfo.risk_template,
+        strike_ki_same: riskInfo.strike_ki_same,
+        adjusted_strike_for_same: riskInfo.adjusted_strike_for_same,
+        adjusted_ki_for_same: riskInfo.adjusted_ki_for_same,
+
+        tenor_bucket: tenorInfo.tenor_bucket,
+        tenor_template: tenorInfo.tenor_template,
+        structure_template: structureTemplate,
+        market_block_key: marketBlockKey,
+
         tenor: record.tenor,
         market_rate: round2(record.market_rate),
         market_coupon: round2(record.market_rate),
@@ -397,7 +696,26 @@ export function buildCalibrationRegressionRows(dataset = {}) {
       return {
         fcn_id: r.fcn_id,
         source_name: r.source_name,
+        source_type: r.source_type,
         date: r.date,
+
+        symbols: r.symbols,
+        basket_display: r.basket_display,
+        basket_symbols_key: r.basket_symbols_key,
+        basket_template: r.basket_template,
+        basket_template_name: r.basket_template_name,
+        basket_template_label: r.basket_template_label,
+        core_dna_2: r.core_dna_2,
+        core_dna_3: r.core_dna_3,
+        core_dna_4: r.core_dna_4,
+        enhancement_stocks: r.enhancement_stocks,
+        risk_template: r.risk_template,
+        strike_bucket: r.strike_bucket,
+        ki_bucket: r.ki_bucket,
+        tenor_bucket: r.tenor_bucket,
+        tenor_template: r.tenor_template,
+        structure_template: r.structure_template,
+        market_block_key: r.market_block_key,
 
         market_rate: r.market_rate,
         market_coupon: r.market_coupon,
@@ -457,3 +775,7 @@ export function downloadCalibrationJson(dataset, filename = "m8_calibration_data
 
   URL.revokeObjectURL(url);
 }
+
+
+export const __M8_TEMPLATE_CLASSIFIER_V2__ = { classifyBasketTemplate, classifyRiskTemplate, classifyTenorTemplate, classifyStructureTemplate };
+
