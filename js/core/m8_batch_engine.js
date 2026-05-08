@@ -562,9 +562,9 @@ function calcHighRateBrake(preRate) {
   preRate = toNum(preRate);
 
   if (preRate < 18) return 0;
-  if (preRate < 22) return 0.18 * Math.pow(preRate - 18, 2);
-  if (preRate < 26) return 2.88 + 0.42 * Math.pow(preRate - 22, 2);
-  return 9 + 0.9 * (preRate - 26);
+  if (preRate < 22) return 0.12 * Math.pow(preRate - 18, 2);
+  if (preRate < 26) return 1.92 + 0.25 * Math.pow(preRate - 22, 2);
+  return 5.92 + 0.35 * (preRate - 26);
 }
 
 // ------------------------------------------
