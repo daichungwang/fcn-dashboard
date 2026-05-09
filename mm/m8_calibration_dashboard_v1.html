@@ -659,20 +659,21 @@ function renderOverlayDashboard(){
   renderRegressionTable("overlayTable", templateEffectiveness.slice(0,120), [
     ["Template","template"],
     ["FCN Count","fcn_count"],
-    ["Active Rows","active_rows"],
     ["Overlay State","overlay_state"],
-    ["Avg Market Coupon","avg_market_coupon","pct"],
-    ["Avg Fair Rate","avg_fair_rate","pct"],
-    ["Avg New Fair Rate","avg_new_fair_rate","pct"],
+    ["Market Coupon","avg_market_coupon","pct"],
+    ["Old Fair Rate","avg_fair_rate","pct"],
+    ["Gap vs Old","gap_old","pct"],
+    ["Gap% vs Old","gap_old_pct","pct"],
+    ["New Fair Before β","avg_new_fair_rate","pct"],
+    ["Gap vs New","gap_before","pct"],
+    ["Gap% vs New","gap_before_pct","pct"],
     ["Avg β","avg_beta"],
-    ["Avg Final Fair Rate","avg_final_fair_rate","pct"],
-    ["Gap Before","gap_before","pct"],
-    ["Gap% Before","gap_before_pct","pct"],
-    ["Gap After","gap_after","pct"],
-    ["Gap% After","gap_after_pct","pct"],
-    ["Improvement %","improvement_pct","pct"],
-    ["Avg Confidence","avg_confidence"],
-    ["One-time Trigger Count","one_time_trigger_count"]
+    ["Final Fair After β","avg_final_fair_rate","pct"],
+    ["Gap vs Final","gap_after","pct"],
+    ["Gap% vs Final","gap_after_pct","pct"],
+    ["Improvement vs New","improvement_pct","pct"],
+    ["Confidence","avg_confidence"],
+    ["One-time Trigger","one_time_trigger_count"]
   ]);
 
   renderRegressionTable("lifecycleTable", summary.slice(0,120), [
@@ -685,10 +686,12 @@ function renderOverlayDashboard(){
     ["Avg β","avg_beta"],
     ["Confidence","avg_confidence"],
     ["Market Coupon","avg_market_coupon","pct"],
-    ["New Fair","avg_new_fair_rate","pct"],
-    ["Final Fair","avg_final_fair_rate","pct"],
-    ["Gap Before %","avg_gap_before_pct","pct"],
-    ["Gap After %","avg_gap_after_pct","pct"],
+    ["Old Fair","avg_old_fair_rate","pct"],
+    ["Gap% vs Old","avg_gap_old_pct","pct"],
+    ["New Fair Before β","avg_new_fair_rate","pct"],
+    ["Final Fair After β","avg_final_fair_rate","pct"],
+    ["Gap% vs New","avg_gap_before_pct","pct"],
+    ["Gap% vs Final","avg_gap_after_pct","pct"],
     ["Improvement %","improvement_pct","pct"]
   ]);
 }
@@ -754,54 +757,92 @@ function renderTemplateDecisionList(eff){
   }));
 }
 
+function calcPctGap(market, fair){
+  const m=Number(market), f=Number(fair);
+  if(!Number.isFinite(m)||!Number.isFinite(f)||f===0) return null;
+  return ((m-f)/f)*100;
+}
+function calcAbsGap(market, fair){
+  const m=Number(market), f=Number(fair);
+  if(!Number.isFinite(m)||!Number.isFinite(f)) return null;
+  return m-f;
+}
 function renderTemplateDecisionDetail(t){
   const detail=document.getElementById("templateDecisionDetail");
   const trace=document.getElementById("calculationTrace");
   if(!t){return;}
-  const before = Number(t.gap_before_pct);
-  const after = Number(t.gap_after_pct);
-  const improved = Math.abs(after) < Math.abs(before);
-  const verdict = improved ? "修正有效，Final Fair 比 New Fair 更接近市場。" : "修正無效或不足，β 需要重新檢查。";
+
+  const oldGap = Number.isFinite(Number(t.gap_old)) ? Number(t.gap_old) : calcAbsGap(t.avg_market_coupon, t.avg_fair_rate);
+  const oldGapPct = Number.isFinite(Number(t.gap_old_pct)) ? Number(t.gap_old_pct) : calcPctGap(t.avg_market_coupon, t.avg_fair_rate);
+  const newGap = Number(t.gap_before);
+  const newGapPct = Number(t.gap_before_pct);
+  const finalGap = Number(t.gap_after);
+  const finalGapPct = Number(t.gap_after_pct);
+
+  const oldAccurate = Math.abs(oldGapPct || 0) <= 2;
+  const newOff = Math.abs(newGapPct || 0) > 5;
+  const finalImproved = Math.abs(finalGapPct || 0) < Math.abs(newGapPct || 0);
+
+  let verdict = "";
+  if(oldAccurate && newOff){
+    verdict = "舊 Fair 其實很貼近市場；目前要檢查的是 New Fair/β 是否把結果拉遠。";
+  }else if(finalImproved){
+    verdict = "β 修正有效，Final Fair 比 New Fair 更接近 Market Coupon。";
+  }else{
+    verdict = "β 修正無效或不足，Final Fair 沒有比 New Fair 更接近市場。";
+  }
+
   if(detail){
     detail.innerHTML=`
       <h3>${escapeHtml(t.template)}</h3>
-      <div class="decision-section"><b>市場發生什麼事：</b><br>${escapeHtml(templateMarketText(t))}</div>
-      <div class="decision-section"><b>M8 原本哪裡不準：</b><br>修正前 gap 為 ${pct(t.gap_before_pct)}，代表 M8 New Fair 與 Market Coupon 仍有距離。</div>
-      <div class="decision-section"><b>做了什麼修正：</b><br>目前 β=${fmt(t.avg_beta)}，Overlay State=${escapeHtml(t.overlay_state||'NONE')}，Confidence=${fmt(t.avg_confidence)}。</div>
-      <div class="decision-section"><b>修正後結果：</b><br>修正後 gap 為 ${pct(t.gap_after_pct)}，Improvement=${pct(t.improvement_pct)}。${escapeHtml(verdict)}</div>
+      <div class="decision-section"><b>市場發生什麼事：</b><br>${escapeHtml(templateMarketText(t, oldGapPct, newGapPct, finalGapPct))}</div>
+      <div class="decision-section"><b>M8 哪裡要檢查：</b><br>Market vs Old Fair gap = ${pct(oldGap)} / ${pct(oldGapPct)}；Market vs New Fair gap = ${pct(newGap)} / ${pct(newGapPct)}。${oldAccurate && newOff ? " 舊 Fair 準，但 New Fair 偏離，所以不能說 M8 整體不準。" : ""}</div>
+      <div class="decision-section"><b>做了什麼修正：</b><br>New Fair × β = Final Fair；目前 β=${fmt(t.avg_beta)}，Overlay State=${escapeHtml(t.overlay_state||'NONE')}，Confidence=${fmt(t.avg_confidence)}。</div>
+      <div class="decision-section"><b>修正後結果：</b><br>Market vs Final Fair gap = ${pct(finalGap)} / ${pct(finalGapPct)}；Improvement vs New Fair = ${pct(t.improvement_pct)}。${escapeHtml(verdict)}</div>
       <div class="proof-grid">
-        <div class="proof-box"><div class="label">Market</div><div class="value">${pct(t.avg_market_coupon)}</div></div>
-        <div class="proof-box"><div class="label">M8 Before</div><div class="value">${pct(t.avg_new_fair_rate)}</div></div>
+        <div class="proof-box"><div class="label">Market Coupon</div><div class="value">${pct(t.avg_market_coupon)}</div></div>
+        <div class="proof-box"><div class="label">Old Fair</div><div class="value">${pct(t.avg_fair_rate)}</div></div>
+        <div class="proof-box"><div class="label">New Fair Before β</div><div class="value">${pct(t.avg_new_fair_rate)}</div></div>
         <div class="proof-box"><div class="label">β</div><div class="value">${fmt(t.avg_beta)}</div></div>
-        <div class="proof-box"><div class="label">M8 After</div><div class="value">${pct(t.avg_final_fair_rate)}</div></div>
+        <div class="proof-box"><div class="label">Final Fair After β</div><div class="value">${pct(t.avg_final_fair_rate)}</div></div>
       </div>`;
   }
   if(trace){
     trace.innerHTML=`<h4>Calculation Trace / 計算對照</h4>
       <div class="trace-row"><span>Market Coupon</span><b>${pct(t.avg_market_coupon)}</b></div>
-      <div class="trace-row"><span>Fair Rate</span><b>${pct(t.avg_fair_rate)}</b></div>
-      <div class="trace-row"><span>New Fair Rate</span><b>${pct(t.avg_new_fair_rate)}</b></div>
+      <div class="trace-row"><span>Old Fair Rate</span><b>${pct(t.avg_fair_rate)}</b></div>
+      <div class="trace-row"><span>Gap vs Old = Market - Old Fair</span><b>${pct(oldGap)} / ${pct(oldGapPct)}</b></div>
+      <div class="trace-row"><span>New Fair Rate before β</span><b>${pct(t.avg_new_fair_rate)}</b></div>
+      <div class="trace-row"><span>Gap Before = Market - New Fair</span><b>${pct(newGap)} / ${pct(newGapPct)}</b></div>
       <div class="trace-row"><span>Avg β</span><b>${fmt(t.avg_beta)}</b></div>
-      <div class="trace-row"><span>Final Fair Rate</span><b>${pct(t.avg_final_fair_rate)}</b></div>
-      <div class="trace-row"><span>Gap Before</span><b>${pct(t.gap_before)} / ${pct(t.gap_before_pct)}</b></div>
-      <div class="trace-row"><span>Gap After</span><b>${pct(t.gap_after)} / ${pct(t.gap_after_pct)}</b></div>
-      <div class="trace-row"><span>Improvement</span><b>${pct(t.improvement_pct)}</b></div>
-      <div class="trace-formula">Final Fair = New Fair Rate × β<br>${pct(t.avg_final_fair_rate)} ≈ ${pct(t.avg_new_fair_rate)} × ${fmt(t.avg_beta)}<br><br>重點：不是看 β 漂不漂亮，而是看 Gap After 是否小於 Gap Before。</div>`;
+      <div class="trace-row"><span>Final Fair Rate after β</span><b>${pct(t.avg_final_fair_rate)}</b></div>
+      <div class="trace-row"><span>Gap After = Market - Final Fair</span><b>${pct(finalGap)} / ${pct(finalGapPct)}</b></div>
+      <div class="trace-row"><span>Improvement vs New Fair</span><b>${pct(t.improvement_pct)}</b></div>
+      <div class="trace-formula">Final Fair = New Fair Rate × β<br>${pct(t.avg_final_fair_rate)} ≈ ${pct(t.avg_new_fair_rate)} × ${fmt(t.avg_beta)}<br><br>判讀順序：先看 Market vs Old Fair 是否本來就準；再看 New Fair 是否偏離；最後看 β 後的 Final Fair 是否把 gap 縮小。</div>`;
   }
 }
 
 function templateHumanSentence(t){
-  return `${t.template}：Market Coupon ${pct(t.avg_market_coupon)}，M8 Before ${pct(t.avg_new_fair_rate)}，β=${fmt(t.avg_beta)} 後 M8 After ${pct(t.avg_final_fair_rate)}；gap 從 ${pct(t.gap_before_pct)} 變成 ${pct(t.gap_after_pct)}，改善 ${pct(t.improvement_pct)}。`;
+  const oldGapPct = Number.isFinite(Number(t.gap_old_pct)) ? Number(t.gap_old_pct) : calcPctGap(t.avg_market_coupon, t.avg_fair_rate);
+  return `${t.template}：Market ${pct(t.avg_market_coupon)}；Old Fair ${pct(t.avg_fair_rate)}，gap ${pct(oldGapPct)}；New Fair ${pct(t.avg_new_fair_rate)}，gap ${pct(t.gap_before_pct)}；β=${fmt(t.avg_beta)} 後 Final Fair ${pct(t.avg_final_fair_rate)}，gap ${pct(t.gap_after_pct)}。`;
 }
-function templateMarketText(t){
-  const gap=Number(t.gap_before_pct);
-  if(gap>8) return `市場給的票息明顯高於 M8 New Fair，表示 M8 對這類模板偏保守。`;
-  if(gap<-8) return `市場給的票息低於 M8 New Fair，表示這類模板可能被市場壓縮。`;
-  return `市場票息與 M8 New Fair 大致接近，目前不需要大幅修正。`;
+function templateMarketText(t, oldGapPct=null, newGapPct=null, finalGapPct=null){
+  const oldGap = Number.isFinite(Number(oldGapPct)) ? Number(oldGapPct) : calcPctGap(t.avg_market_coupon, t.avg_fair_rate);
+  const newGap = Number.isFinite(Number(newGapPct)) ? Number(newGapPct) : Number(t.gap_before_pct);
+  const finalGap = Number.isFinite(Number(finalGapPct)) ? Number(finalGapPct) : Number(t.gap_after_pct);
+  if(Math.abs(oldGap||0)<=2 && Math.abs(newGap||0)>5){
+    return `Market Coupon 與 Old Fair 幾乎貼近，代表舊 M8 其實準；但 New Fair 與市場差距變大，表示新 regression/overlay 前的 fair 需要檢查。`;
+  }
+  if(newGap>8) return `市場票息高於 New Fair，代表 New Fair 對這類模板偏保守；要看 β 後 Final Fair 是否把 gap 縮小。`;
+  if(newGap<-8) return `市場票息低於 New Fair，代表這類模板可能被市場壓縮；要看 β 是否需要小於 1。`;
+  return `市場票息與 New Fair 大致接近，目前不需要大幅修正；重點是維持穩定，不要過度調整。`;
 }
 function nextActionText(t){
+  const oldGapPct = Number.isFinite(Number(t.gap_old_pct)) ? Number(t.gap_old_pct) : calcPctGap(t.avg_market_coupon, t.avg_fair_rate);
   const after=Math.abs(Number(t.gap_after_pct||0));
+  const before=Math.abs(Number(t.gap_before_pct||0));
   const imp=Number(t.improvement_pct||0);
+  if(Math.abs(oldGapPct||0)<=2 && before>5) return "Old Fair 已貼近市場，但 New Fair 偏離；先檢查 New Fair regression，不急著提高 β。";
   if(after>8 && imp<20) return "Gap 修正後仍大，β 可能太小，列入 Watch。";
   if(imp<0) return "修正後更差，先停用或降低 β。";
   if(after<5) return "已接近市場，維持目前設定。";
@@ -861,6 +902,7 @@ function escapeHtml(s){
 </script>
 </body>
 </html>
+
 
 
 
