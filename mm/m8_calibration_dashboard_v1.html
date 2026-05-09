@@ -4,7 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <base href="../">
-<title>M8 Template Calibration Dashboard v2</title>
+<title>M8 Template Calibration Dashboard v3 Overlay</title>
 <style>
 :root{--bg:#0f1115;--panel:#181c24;--panel2:#202634;--line:#30384a;--text:#f4f7fb;--muted:#aab5c8;--blue:#4da3ff;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--purple:#c084fc}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}.app{max-width:1600px;margin:0 auto;padding:24px}.hero{background:linear-gradient(135deg,#10233f,#1d4ed8);border-radius:24px;padding:24px 28px;margin-bottom:20px}.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;color:#dbeafe;font-weight:700}.section{background:var(--panel);border:1px solid var(--line);border-radius:18px;margin:18px 0;overflow:hidden}.section summary{cursor:pointer;padding:16px 20px;font-size:20px;font-weight:900;border-bottom:1px solid var(--line)}.section-body{padding:18px}.grid{display:grid;gap:14px}.kpi-grid{grid-template-columns:repeat(6,minmax(130px,1fr))}.card{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:14px}.kpi-title{font-size:12px;color:var(--muted);font-weight:800}.kpi-value{font-size:24px;font-weight:900;margin-top:6px}.small{font-size:12px;color:var(--muted);line-height:1.55}.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}button,select,input{background:#111827;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 10px}button{cursor:pointer;font-weight:900}button.primary{background:#1d4ed8;border-color:#60a5fa}.table-wrap{overflow:auto;max-height:680px;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;background:var(--panel2)}th,td{border-bottom:1px solid var(--line);padding:8px;font-size:12px;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#111827;z-index:1}.badge{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid var(--line)}.good{background:rgba(52,211,153,.12);color:var(--green)}.warn{background:rgba(251,191,36,.12);color:var(--yellow)}.bad{background:rgba(248,113,113,.12);color:var(--red)}.info{background:rgba(77,163,255,.12);color:var(--blue)}.pref{background:rgba(192,132,252,.12);color:var(--purple)}pre{background:#090b10;border:1px solid var(--line);border-radius:14px;padding:12px;overflow:auto;max-height:520px}.error{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.5);color:#fecaca;border-radius:14px;padding:12px;margin:12px 0}.note{background:#111827;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}.muted{color:var(--muted)}@media(max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.kpi-grid{grid-template-columns:1fr}}
@@ -13,8 +13,8 @@
 <body>
 <div class="app">
   <div class="hero">
-    <h1>M8 Template Calibration Dashboard v2</h1>
-    <p>FCN Pool + Old Pool + Market FCN History → 6大模板 + Risk/Time/EKI → My Preference vs Market Normal</p>
+    <h1>M8 Template Calibration Dashboard v3 Overlay</h1>
+    <p>FCN Pool + Old Pool + Market FCN History → Clean Global Fair + Overlay β + Final Fair</p>
   </div>
 
   <div id="error"></div>
@@ -179,12 +179,37 @@
     </div>
   </details>
 
+  <details class="section" open>
+    <summary>17. Residual Overlay Analysis / 殘差疊加分析</summary>
+    <div class="section-body">
+      <div class="note small">
+        這一區用來檢查 market coupon 與 clean global fair 的 residual 是否足以啟動 overlay β。Overlay 不回寫 Global Surface，只輸出 Final Fair Rate。
+      </div>
+      <div class="table-wrap" style="margin-top:12px"><table id="overlayTable"></table></div>
+    </div>
+  </details>
+
+  <details class="section" open>
+    <summary>18. Overlay Trigger Monitor / Overlay 觸發監控</summary>
+    <div class="section-body">
+      <div id="overlayMonitor" class="grid kpi-grid"></div>
+    </div>
+  </details>
+
+  <details class="section" open>
+    <summary>19. Template Lifecycle / 模板生命週期</summary>
+    <div class="section-body">
+      <div class="table-wrap"><table id="lifecycleTable"></table></div>
+    </div>
+  </details>
+
   <details class="section">
-    <summary>17. Debug JSON</summary>
+    <summary>20. Debug JSON</summary>
     <div class="section-body"><pre id="debug"></pre></div>
   </details>
 </div>
 
+<script src="./js/mm/modules/m8_overlay_engine_v1.js"></script>
 <script src="./js/mm/modules/m8_regression_engine_v1.js"></script>
 
 <script type="module">
@@ -323,6 +348,7 @@ function renderAll(){
   renderRows();
   renderRegRows();
   renderRegressionDashboard();
+  renderOverlayDashboard();
   document.getElementById("debug").textContent=JSON.stringify({calibration: DATASET, regression: REGRESSION},null,2);
 }
 
@@ -455,7 +481,8 @@ function renderRegRows(){
   document.getElementById("regTable").innerHTML=
 `<tr>
 <th>FCN</th><th>Source</th><th>Template</th><th>Basket</th><th>Core2</th><th>Core3</th><th>Risk</th><th>Risk9</th><th>TenorTpl</th><th>Tenor4</th><th>Structure</th>
-<th>Market Coupon</th><th>Old Fair</th><th>New Fair</th><th>Gap vs Old</th><th>Gap vs New</th>
+<th>Market Coupon</th><th>Old Fair</th><th>New Fair</th><th>Final Fair</th><th>Gap vs Old</th><th>Gap vs New</th><th>Gap vs Final</th>
+<th>Overlay State</th><th>β</th><th>Confidence</th><th>Samples</th><th>Days</th><th>Direction</th><th>Residual Std</th>
 <th>Template Base</th><th>Risk Adj</th><th>Tenor Adj</th><th>Structure Adj</th><th>M7 Overlay</th>
 <th>Market Normal</th><th>PreRate</th><th>BrakeGap</th><th>BasketPremium</th><th>Tail</th><th>KI</th><th>Tenor</th><th>Strike</th><th>Type</th><th>Vol</th><th>RP</th><th>Brake</th>
 </tr>${rows.map(r=>`<tr>
@@ -473,8 +500,17 @@ function renderRegRows(){
 <td>${pct(r.market_coupon ?? r.market_rate)}</td>
 <td>${pct(r.fair_yield ?? r.my_preference_rate)}</td>
 <td>${pct(r.new_fair_rate)}</td>
+<td>${pct(r.final_fair_rate)}</td>
 <td>${pct(r.pricing_gap_vs_old ?? r.pricing_gap)}</td>
 <td>${pct(r.pricing_gap_vs_new)}</td>
+<td>${pct(r.pricing_gap_vs_final)}</td>
+<td>${badge(r.overlay_state || "NONE")}</td>
+<td>${fmt(r.overlay_beta)}</td>
+<td>${fmt(r.overlay_confidence)}</td>
+<td>${fmt(r.residual_sample_count)}</td>
+<td>${fmt(r.residual_persistence_days)}</td>
+<td>${fmt(r.residual_same_direction_ratio)}</td>
+<td>${fmt(r.residual_std)}</td>
 <td>${pct(r.template_base_rate)}</td>
 <td>${pct(r.risk_adjustment)}</td>
 <td>${pct(r.tenor_adjustment)}</td>
@@ -497,7 +533,7 @@ function renderRegRows(){
 
 function renderRegressionDashboard(){
   if(!REGRESSION){
-    ["regRelationshipSummary","regTemplateTable","riskSurfaceTable","tenorCurveTable","structureCurveTable","dnaTable","templateRiskTable","templateRiskTenorTable","learningSummary","templateDensityTable"].forEach(id=>{
+    ["regRelationshipSummary","regTemplateTable","riskSurfaceTable","tenorCurveTable","structureCurveTable","dnaTable","templateRiskTable","templateRiskTenorTable","learningSummary","templateDensityTable","overlayTable","overlayMonitor","lifecycleTable"].forEach(id=>{
       const el=document.getElementById(id);
       if(el) el.innerHTML="";
     });
@@ -622,8 +658,10 @@ function renderRegressionRelationship(){
     ["Avg Market Coupon",pct(s.avg_market_coupon)],
     ["Avg Old Fair",pct(s.avg_old_fair_rate)],
     ["Avg New Fair",pct(s.avg_new_fair_rate)],
+    ["Avg Final Fair",pct(s.avg_final_fair_rate)],
     ["Avg Gap vs Old",pct(s.avg_gap_vs_old)],
     ["Avg Gap vs New",pct(s.avg_gap_vs_new)],
+    ["Avg Gap vs Final",pct(s.avg_gap_vs_final)],
     ["Old → New Delta",pct(s.avg_old_to_new_delta)]
   ];
   document.getElementById("regRelationshipSummary").innerHTML=cards.map(([t,v])=>`<div class="card"><div class="kpi-title">${t}</div><div class="kpi-value">${v??"-"}</div></div>`).join("");
@@ -639,6 +677,61 @@ function renderRegressionTable(id, rows, cols){
     return `<td>${out}</td>`;
   }).join("")}</tr>`).join("");
   el.innerHTML=head+body;
+}
+
+
+function renderOverlayDashboard(){
+  const summary = REGRESSION?.overlay_summary || [];
+  const rows = REGRESSION?.calibrated_rows || REG_ROWS || [];
+
+  const activeRows = rows.filter(r => ["ACTIVE","LEARNING"].includes(r.overlay_state));
+  const watchRows = rows.filter(r => r.overlay_state === "WATCH");
+  const oneTimeRows = rows.filter(r => r.one_time_trigger);
+  const dormantRows = rows.filter(r => r.dormant_candidate);
+
+  const monitorCards = [
+    ["Overlay Active Rows", activeRows.length],
+    ["Watch Rows", watchRows.length],
+    ["One-time Triggers", oneTimeRows.length],
+    ["Dormant Candidates", dormantRows.length],
+    ["Avg β", fmt(avg(rows.map(r=>r.overlay_beta)))],
+    ["Avg Confidence", fmt(avg(rows.map(r=>r.overlay_confidence)))]
+  ];
+
+  const monitor = document.getElementById("overlayMonitor");
+  if(monitor){
+    monitor.innerHTML = monitorCards.map(([t,v])=>`<div class="card"><div class="kpi-title">${escapeHtml(t)}</div><div class="kpi-value">${v??"-"}</div></div>`).join("");
+  }
+
+  renderRegressionTable("overlayTable", summary.slice(0,120), [
+    ["Template","template"],
+    ["Core DNA","core_dna"],
+    ["Risk","risk_zone_9"],
+    ["Tenor","tenor_group_4"],
+    ["Count","count"],
+    ["State","overlay_state"],
+    ["Avg β","avg_beta"],
+    ["Confidence","avg_confidence"],
+    ["Avg Residual %","avg_residual_gap_pct","pct"],
+    ["Residual Std","avg_residual_std"],
+    ["Final Fair","avg_final_fair_rate","pct"],
+    ["Gap vs Final","avg_gap_vs_final","pct"],
+    ["One-time","one_time_triggers"],
+    ["Active Rows","active_rows"]
+  ]);
+
+  renderRegressionTable("lifecycleTable", summary.slice(0,120), [
+    ["State","overlay_state"],
+    ["Template","template"],
+    ["Core DNA","core_dna"],
+    ["Risk","risk_zone_9"],
+    ["Tenor","tenor_group_4"],
+    ["Count","count"],
+    ["Avg β","avg_beta"],
+    ["Confidence","avg_confidence"],
+    ["Residual %","avg_residual_gap_pct","pct"],
+    ["Gap vs Final","avg_gap_vs_final","pct"]
+  ]);
 }
 
 function labelGap(v){
@@ -693,6 +786,7 @@ function escapeHtml(s){
 </script>
 </body>
 </html>
+
 
 
 
