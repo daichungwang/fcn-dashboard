@@ -911,7 +911,28 @@
       const trigger = overlayEngine.evaluateOverlayTrigger(historyForOverlay);
       const cleanGlobalFair = pickNum(row.clean_global_fair, row.new_fair_rate);
       const oldFair = getOldFairRate(row);
-      const beta = pickNum(trigger.overlay_beta, 1);
+      const baseBeta = pickNum(trigger.overlay_beta, 1);
+
+const gapSeverityPct =
+  coupon !== null && cleanGlobalFair !== null && cleanGlobalFair !== 0
+    ? Math.abs((coupon - cleanGlobalFair) / cleanGlobalFair) * 100
+    : 0;
+
+let severityBeta = 1;
+
+if (gapSeverityPct >= 25) {
+  severityBeta = 1.50;
+} else if (gapSeverityPct >= 20) {
+  severityBeta = 1.35;
+} else if (gapSeverityPct >= 15) {
+  severityBeta = 1.25;
+} else if (gapSeverityPct >= 10) {
+  severityBeta = 1.15;
+} else if (gapSeverityPct >= 5) {
+  severityBeta = 1.08;
+}
+
+const beta = Math.max(baseBeta, severityBeta);
 
       // v3 anchor rule:
       // Final Fair is no longer New Fair × β.
