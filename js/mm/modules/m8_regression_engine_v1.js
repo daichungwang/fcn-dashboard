@@ -6,74 +6,7 @@
 // 2. Produce New Fair Rate per FCN
 // 3. Compare Market Coupon vs Old Fair vs New Fair
 // ============================================================================
-// ============================================================================
-    );
-  }
 
-  function runOverlayLifecycle(rows){
-    if(!window.M8OverlayEngineV1){
-      console.warn("Overlay engine missing");
-      return rows;
-    }
-
-    const historyMap = buildTemplateHistory(rows);
-
-    return rows.map(row => {
-      const key = [
-        row.basket_template,
-        row.core_dna_3 || row.core_dna_2 || "",
-        row.risk_zone_9 || "",
-        row.tenor_group_4 || ""
-      ].join("|");
-
-      const history = historyMap[key] || [];
-
-      const trigger = window.M8OverlayEngineV1.evaluateOverlayTrigger(history);
-
-      const cleanGlobalFair = calcCleanGlobalFair(row);
-
-      const finalFairRate = round2(
-        cleanGlobalFair * trigger.overlay_beta
-      );
-
-      const pricingGapNew = Number.isFinite(row.market_coupon)
-        ? round2(row.market_coupon - finalFairRate)
-        : null;
-
-      return {
-        ...row,
-
-        clean_global_fair: round2(cleanGlobalFair),
-
-        overlay_state: trigger.overlay_state,
-        overlay_beta: trigger.overlay_beta,
-        overlay_confidence: trigger.overlay_confidence,
-
-        residual_persistence_days: trigger.persistence_days,
-        residual_same_direction_ratio: trigger.direction_consistency,
-        residual_std: trigger.residual_std,
-        residual_sample_count: trigger.sample_count,
-
-        pricing_gap_vs_old_pct: calcPricingGapPct(
-          row.market_coupon,
-          row.fair_yield || cleanGlobalFair
-        ),
-
-        final_fair_rate: finalFairRate,
-        pricing_gap_vs_final: pricingGapNew,
-
-        lifecycle_state: trigger.overlay_state,
-        dormant_candidate: trigger.overlay_state === "DECAY"
-      };
-    });
-  }
-
-  global.M8RegressionEngineV2 = {
-    VERSION,
-    runOverlayLifecycle
-  };
-
-})(window);
 (function (global) {
   "use strict";
 
@@ -570,6 +503,137 @@
     };
   }
 
+
+
+  // --------------------------------------------------------------------------
+  // M8 v3 Overlay Lifecycle Layer
+  // This layer does not mutate the clean global surface. It adds adaptive beta
+  // fields and final_fair_rate for analysis/reporting only.
+  // --------------------------------------------------------------------------
+
+  function calcPricingGapPct(marketCoupon, fairRate) {
+    const m = Number(marketCoupon);
+    const f = Number(fairRate);
+    if (!Number.isFinite(m) || !Number.isFinite(f) || f === 0) return null;
+    return ((m - f) / f) * 100;
+  }
+
+  function buildOverlayHistoryKey(row) {
+    return [
+      safeKey(row.basket_template),
+      safeKey(row.core_dna_3 || row.core_dna_2 || row.basket_symbols_key),
+      safeKey(row.risk_zone_9),
+      safeKey(row.tenor_group_4)
+    ].join("|");
+  }
+
+  function buildOverlayHistoryMap(rows) {
+    const map = new Map();
+    arr(rows).forEach(row => {
+      const k = buildOverlayHistoryKey(row);
+      if (!map.has(k)) map.set(k, []);
+      map.get(k).push(row);
+    });
+    return map;
+  }
+
+  function calcCleanGlobalFair(row) {
+    return pickNum(row.new_fair_rate) || 0;
+  }
+
+  function applyOverlayLifecycle(rows) {
+    const overlayEngine = global.M8OverlayEngineV1;
+
+    const enriched = arr(rows).map(row => {
+      const coupon = getMarketCoupon(row);
+      const oldFair = getOldFairRate(row);
+      const cleanGlobalFair = calcCleanGlobalFair(row);
+
+      return {
+        ...row,
+        clean_global_fair: round2(cleanGlobalFair),
+        pricing_gap_vs_old_pct: coupon !== null && oldFair !== null ? round2(calcPricingGapPct(coupon, oldFair)) : null,
+        pricing_gap_vs_clean_pct: coupon !== null && cleanGlobalFair ? round2(calcPricingGapPct(coupon, cleanGlobalFair)) : null
+      };
+    });
+
+    if (!overlayEngine || typeof overlayEngine.evaluateOverlayTrigger !== "function") {
+      return enriched.map(row => ({
+        ...row,
+        overlay_state: "NONE",
+        overlay_beta: 1,
+        overlay_confidence: 0,
+        residual_sample_count: 0,
+        residual_persistence_days: 0,
+        residual_same_direction_ratio: 0,
+        residual_std: null,
+        final_fair_rate: row.clean_global_fair,
+        pricing_gap_vs_final: row.pricing_gap_vs_new,
+        lifecycle_state: "NONE",
+        one_time_trigger: false,
+        trigger_reason: "overlay_engine_not_loaded"
+      }));
+    }
+
+    const historyMap = buildOverlayHistoryMap(enriched);
+
+    return enriched.map(row => {
+      const coupon = getMarketCoupon(row);
+      const key = buildOverlayHistoryKey(row);
+      const history = historyMap.get(key) || [];
+      const trigger = overlayEngine.evaluateOverlayTrigger(history);
+      const cleanGlobalFair = pickNum(row.clean_global_fair, row.new_fair_rate);
+      const beta = pickNum(trigger.overlay_beta, 1);
+      const finalFairRate = cleanGlobalFair !== null ? cleanGlobalFair * beta : null;
+
+      return {
+        ...row,
+        overlay_key: key,
+        overlay_state: trigger.overlay_state,
+        overlay_beta: beta,
+        overlay_confidence: trigger.overlay_confidence,
+        overlay_target_beta: trigger.target_beta,
+        one_time_trigger: !!trigger.one_time_trigger,
+        should_trigger_overlay: !!trigger.should_trigger_overlay,
+        trigger_reason: trigger.trigger_reason,
+        residual_sample_count: trigger.sample_count,
+        residual_persistence_days: trigger.persistence_days,
+        residual_same_direction_ratio: trigger.direction_consistency,
+        residual_direction: trigger.dominant_direction,
+        residual_std: trigger.residual_std,
+        residual_avg_gap_pct: trigger.avg_gap_pct,
+        final_fair_rate: round2(finalFairRate),
+        pricing_gap_vs_final: coupon !== null && finalFairRate !== null ? round2(coupon - finalFairRate) : null,
+        pricing_gap_vs_final_pct: coupon !== null && finalFairRate ? round2(calcPricingGapPct(coupon, finalFairRate)) : null,
+        lifecycle_state: trigger.overlay_state,
+        dormant_candidate: trigger.overlay_state === "DORMANT" || trigger.overlay_state === "DECAY"
+      };
+    });
+  }
+
+  function buildOverlaySummary(rows) {
+    const groups = groupBy(rows, r => r.overlay_key || "UNKNOWN");
+    return Array.from(groups.entries())
+      .map(([k, rs]) => ({
+        overlay_key: k,
+        template: (rs[0] && rs[0].basket_template_label) || (rs[0] && rs[0].basket_template) || "",
+        core_dna: (rs[0] && (rs[0].core_dna_3 || rs[0].core_dna_2 || rs[0].basket_symbols_key)) || "",
+        risk_zone_9: (rs[0] && rs[0].risk_zone_9) || "",
+        tenor_group_4: (rs[0] && rs[0].tenor_group_4) || "",
+        count: rs.length,
+        overlay_state: (rs[0] && rs[0].overlay_state) || "NONE",
+        avg_beta: round2(avg(rs.map(r => r.overlay_beta))),
+        avg_confidence: round2(avg(rs.map(r => r.overlay_confidence))),
+        avg_residual_gap_pct: round2(avg(rs.map(r => r.residual_avg_gap_pct))),
+        avg_residual_std: round2(avg(rs.map(r => r.residual_std))),
+        avg_final_fair_rate: round2(avg(rs.map(r => r.final_fair_rate))),
+        avg_gap_vs_final: round2(avg(rs.map(r => r.pricing_gap_vs_final))),
+        one_time_triggers: rs.filter(r => r.one_time_trigger).length,
+        active_rows: rs.filter(r => ["ACTIVE", "LEARNING"].includes(r.overlay_state)).length
+      }))
+      .sort((a, b) => (b.avg_confidence || 0) - (a.avg_confidence || 0));
+  }
+
   function runM8Regression(rows) {
     const validRows = arr(rows)
       .filter(r => getMarketCoupon(r) !== null)
@@ -598,13 +662,15 @@
       globalBrake
     };
 
-    const calibratedRows = validRows.map(r => {
+    const calibratedRowsBase = validRows.map(r => {
       const regression = calcNewFairRate(r, curves, globals);
       return {
         ...r,
         ...regression
       };
     });
+
+    const calibratedRows = applyOverlayLifecycle(calibratedRowsBase);
 
     const templateRiskMatrix = buildTemplateRiskMatrix(calibratedRows);
     const templateRiskTenorMatrix = buildTemplateRiskTenorMatrix(calibratedRows);
@@ -618,8 +684,10 @@
       avg_market_coupon: round2(avg(calibratedRows.map(getMarketCoupon))),
       avg_old_fair_rate: round2(avg(calibratedRows.map(getOldFairRate))),
       avg_new_fair_rate: round2(avg(calibratedRows.map(r => r.new_fair_rate))),
+      avg_final_fair_rate: round2(avg(calibratedRows.map(r => r.final_fair_rate))),
       avg_gap_vs_old: round2(avg(calibratedRows.map(r => r.pricing_gap_vs_old))),
       avg_gap_vs_new: round2(avg(calibratedRows.map(r => r.pricing_gap_vs_new))),
+      avg_gap_vs_final: round2(avg(calibratedRows.map(r => r.pricing_gap_vs_final))),
       avg_old_to_new_delta: round2(avg(calibratedRows.map(r => r.fair_rate_delta_old_to_new)))
     };
 
@@ -639,6 +707,7 @@
       template_risk_matrix: templateRiskMatrix,
       template_risk_tenor_matrix: templateRiskTenorMatrix,
       learning_recommendation: learningRecommendation,
+      overlay_summary: buildOverlaySummary(calibratedRows),
       calibrated_rows: calibratedRows
     };
   }
@@ -658,9 +727,14 @@
     buildLearningRecommendation,
     classifyRiskZone9,
     classifyTenorGroup4,
-    calcNewFairRate
+    calcNewFairRate,
+    applyOverlayLifecycle,
+    buildOverlaySummary
   };
 
 })(window);
+
+
+
 
 
