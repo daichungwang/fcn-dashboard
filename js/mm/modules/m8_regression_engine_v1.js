@@ -6,7 +6,74 @@
 // 2. Produce New Fair Rate per FCN
 // 3. Compare Market Coupon vs Old Fair vs New Fair
 // ============================================================================
+// ============================================================================
+    );
+  }
 
+  function runOverlayLifecycle(rows){
+    if(!window.M8OverlayEngineV1){
+      console.warn("Overlay engine missing");
+      return rows;
+    }
+
+    const historyMap = buildTemplateHistory(rows);
+
+    return rows.map(row => {
+      const key = [
+        row.basket_template,
+        row.core_dna_3 || row.core_dna_2 || "",
+        row.risk_zone_9 || "",
+        row.tenor_group_4 || ""
+      ].join("|");
+
+      const history = historyMap[key] || [];
+
+      const trigger = window.M8OverlayEngineV1.evaluateOverlayTrigger(history);
+
+      const cleanGlobalFair = calcCleanGlobalFair(row);
+
+      const finalFairRate = round2(
+        cleanGlobalFair * trigger.overlay_beta
+      );
+
+      const pricingGapNew = Number.isFinite(row.market_coupon)
+        ? round2(row.market_coupon - finalFairRate)
+        : null;
+
+      return {
+        ...row,
+
+        clean_global_fair: round2(cleanGlobalFair),
+
+        overlay_state: trigger.overlay_state,
+        overlay_beta: trigger.overlay_beta,
+        overlay_confidence: trigger.overlay_confidence,
+
+        residual_persistence_days: trigger.persistence_days,
+        residual_same_direction_ratio: trigger.direction_consistency,
+        residual_std: trigger.residual_std,
+        residual_sample_count: trigger.sample_count,
+
+        pricing_gap_vs_old_pct: calcPricingGapPct(
+          row.market_coupon,
+          row.fair_yield || cleanGlobalFair
+        ),
+
+        final_fair_rate: finalFairRate,
+        pricing_gap_vs_final: pricingGapNew,
+
+        lifecycle_state: trigger.overlay_state,
+        dormant_candidate: trigger.overlay_state === "DECAY"
+      };
+    });
+  }
+
+  global.M8RegressionEngineV2 = {
+    VERSION,
+    runOverlayLifecycle
+  };
+
+})(window);
 (function (global) {
   "use strict";
 
