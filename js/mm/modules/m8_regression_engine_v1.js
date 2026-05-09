@@ -663,6 +663,8 @@
         const avgOldFair = avg(rs.map(getOldFairRate).filter(Number.isFinite));
         const avgNewFair = avg(rs.map(r => r.clean_global_fair).filter(Number.isFinite));
         const avgFinalFair = avg(rs.map(r => r.final_fair_rate).filter(Number.isFinite));
+        const gapOld = avgMarket !== null && avgOldFair !== null ? avgMarket - avgOldFair : null;
+        const gapOldPct = avgOldFair ? (gapOld / avgOldFair) * 100 : null;
         const gapBefore = avgMarket !== null && avgNewFair !== null ? avgMarket - avgNewFair : null;
         const gapAfter = avgMarket !== null && avgFinalFair !== null ? avgMarket - avgFinalFair : null;
         const gapBeforePct = avgNewFair ? (gapBefore / avgNewFair) * 100 : null;
@@ -685,6 +687,8 @@
           avg_market_coupon: round2(avgMarket),
           avg_fair_rate: round2(avgOldFair),
           avg_new_fair_rate: round2(avgNewFair),
+          gap_old: round2(gapOld),
+          gap_old_pct: round2(gapOldPct),
           avg_beta: round2(avg(rs.map(r => r.overlay_beta))),
           avg_final_fair_rate: round2(avgFinalFair),
           gap_before: round2(gapBefore),
