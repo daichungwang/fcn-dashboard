@@ -9,7 +9,7 @@
 :root{--bg:#0f1115;--panel:#181c24;--panel2:#202634;--line:#30384a;--text:#f4f7fb;--muted:#aab5c8;--blue:#4da3ff;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--purple:#c084fc}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}.app{max-width:1600px;margin:0 auto;padding:24px}.hero{background:linear-gradient(135deg,#10233f,#1d4ed8);border-radius:24px;padding:24px 28px;margin-bottom:20px}.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;color:#dbeafe;font-weight:700}.section{background:var(--panel);border:1px solid var(--line);border-radius:18px;margin:18px 0;overflow:hidden}.section summary{cursor:pointer;padding:16px 20px;font-size:20px;font-weight:900;border-bottom:1px solid var(--line)}.section-body{padding:18px}.grid{display:grid;gap:14px}.kpi-grid{grid-template-columns:repeat(6,minmax(130px,1fr))}.card{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:14px}.kpi-title{font-size:12px;color:var(--muted);font-weight:800}.kpi-value{font-size:24px;font-weight:900;margin-top:6px}.small{font-size:12px;color:var(--muted);line-height:1.55}.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}button,select,input{background:#111827;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 10px}button{cursor:pointer;font-weight:900}button.primary{background:#1d4ed8;border-color:#60a5fa}.table-wrap{overflow:auto;max-height:680px;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;background:var(--panel2)}th,td{border-bottom:1px solid var(--line);padding:8px;font-size:12px;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#111827;z-index:1}.badge{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid var(--line)}.good{background:rgba(52,211,153,.12);color:var(--green)}.warn{background:rgba(251,191,36,.12);color:var(--yellow)}.bad{background:rgba(248,113,113,.12);color:var(--red)}.info{background:rgba(77,163,255,.12);color:var(--blue)}.pref{background:rgba(192,132,252,.12);color:var(--purple)}pre{background:#090b10;border:1px solid var(--line);border-radius:14px;padding:12px;overflow:auto;max-height:520px}.error{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.5);color:#fecaca;border-radius:14px;padding:12px;margin:12px 0}.note{background:#111827;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}.muted{color:var(--muted)}@media(max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.kpi-grid{grid-template-columns:1fr}}
 
-.pm-kpis{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:14px;margin-top:12px}.pm-kpi{background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:16px}.pm-kpi .label{font-size:12px;color:var(--muted);font-weight:900}.pm-kpi .value{font-size:26px;font-weight:900;margin-top:8px}.pm-kpi .desc{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45}.story-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:16px}.story-card{background:#111827;border:1px solid var(--line);border-radius:18px;padding:16px}.story-title{font-size:18px;font-weight:900;margin-bottom:10px}.story-line{padding:10px 0;border-bottom:1px dashed var(--line);line-height:1.65}.story-line:last-child{border-bottom:0}.workspace{display:grid;grid-template-columns:360px 1fr;gap:16px}.template-list{display:flex;flex-direction:column;gap:10px}.tpl-btn{width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:12px;cursor:pointer}.tpl-btn.active{border-color:#60a5fa;box-shadow:0 0 0 1px rgba(96,165,250,.35);background:#13223a}.tpl-name{font-weight:900;font-size:13px}.tpl-meta{font-size:12px;color:var(--muted);margin-top:6px;display:flex;justify-content:space-between;gap:8px}.detail-layout{display:grid;grid-template-columns:1fr 380px;gap:16px}.decision-card{background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:18px}.decision-card h3{margin:0 0 10px;font-size:22px}.decision-section{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}.decision-section b{color:#e5f0ff}.proof-grid{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:10px;margin-top:12px}.proof-box{background:#0f172a;border:1px solid var(--line);border-radius:14px;padding:12px}.proof-box .label{font-size:11px;color:var(--muted);font-weight:900}.proof-box .value{font-size:20px;font-weight:900;margin-top:5px}.trace-card{background:#090b10;border:1px solid var(--line);border-radius:18px;padding:16px;align-self:start}.trace-card h4{margin:0 0 10px;font-size:16px}.trace-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #1f2937;padding:7px 0;font-size:12px}.trace-row span:first-child{color:var(--muted)}.trace-formula{background:#111827;border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;font-size:12px;line-height:1.55;color:#dbeafe}.subtpl-panel{margin-top:18px;border-top:1px dashed var(--line);padding-top:14px}.subtpl-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}.subtpl-title{font-size:16px;font-weight:900}.subtpl-controls{display:flex;gap:8px;flex-wrap:wrap}.mini-btn{font-size:12px;padding:6px 9px;border-radius:999px;background:#0f172a;border:1px solid var(--line);color:var(--text);cursor:pointer}.mini-btn.active{border-color:#60a5fa;background:#1d4ed8}.subtpl-list{display:grid;gap:10px}.subtpl-card{background:#0f172a;border:1px solid var(--line);border-radius:14px;overflow:hidden}.subtpl-card summary{cursor:pointer;list-style:none;padding:12px 14px;border-bottom:1px solid transparent}.subtpl-card[open] summary{border-bottom-color:var(--line)}.subtpl-summary{display:grid;grid-template-columns:1.5fr repeat(4,minmax(80px,1fr));gap:10px;align-items:center}.subtpl-name{font-weight:900}.subtpl-metric{font-size:12px;color:var(--muted)}.subtpl-metric b{display:block;color:var(--text);font-size:14px;margin-top:3px}.subtpl-body{padding:12px 14px;line-height:1.65;font-size:13px;color:#dbeafe}.subtpl-proof{display:grid;grid-template-columns:repeat(4,minmax(100px,1fr));gap:8px;margin-top:10px}.subtpl-proof div{background:#111827;border:1px solid var(--line);border-radius:10px;padding:8px;font-size:12px}.database-grid{display:grid;gap:16px}.db-note{margin-bottom:12px}.hidden-debug details{margin-top:12px}@media(max-width:1200px){.workspace,.story-grid,.detail-layout{grid-template-columns:1fr}.pm-kpis{grid-template-columns:1fr 1fr}.proof-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.pm-kpis,.proof-grid{grid-template-columns:1fr}}
+.pm-kpis{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:14px;margin-top:12px}.pm-kpi{background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:16px}.pm-kpi .label{font-size:12px;color:var(--muted);font-weight:900}.pm-kpi .value{font-size:26px;font-weight:900;margin-top:8px}.pm-kpi .desc{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45}.story-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:16px}.story-card{background:#111827;border:1px solid var(--line);border-radius:18px;padding:16px}.story-title{font-size:18px;font-weight:900;margin-bottom:10px}.story-line{padding:10px 0;border-bottom:1px dashed var(--line);line-height:1.65}.story-line:last-child{border-bottom:0}.workspace{display:grid;grid-template-columns:360px 1fr;gap:16px}.template-list{display:flex;flex-direction:column;gap:10px}.tpl-btn{width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:12px;cursor:pointer}.tpl-btn.active{border-color:#60a5fa;box-shadow:0 0 0 1px rgba(96,165,250,.35);background:#13223a}.tpl-name{font-weight:900;font-size:13px}.tpl-meta{font-size:12px;color:var(--muted);margin-top:6px;display:flex;justify-content:space-between;gap:8px}.detail-layout{display:grid;grid-template-columns:1fr 380px;gap:16px}.decision-card{background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:18px}.decision-card h3{margin:0 0 10px;font-size:22px}.decision-section{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}.decision-section b{color:#e5f0ff}.proof-grid{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:10px;margin-top:12px}.proof-box{background:#0f172a;border:1px solid var(--line);border-radius:14px;padding:12px}.proof-box .label{font-size:11px;color:var(--muted);font-weight:900}.proof-box .value{font-size:20px;font-weight:900;margin-top:5px}.trace-card{background:#090b10;border:1px solid var(--line);border-radius:18px;padding:16px;align-self:start}.trace-card h4{margin:0 0 10px;font-size:16px}.trace-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #1f2937;padding:7px 0;font-size:12px}.trace-row span:first-child{color:var(--muted)}.trace-formula{background:#111827;border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;font-size:12px;line-height:1.55;color:#dbeafe}.subtpl-panel{margin-top:18px;border-top:1px dashed var(--line);padding-top:14px}.subtpl-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:10px}.subtpl-title{font-size:16px;font-weight:900}.subtpl-controls{display:flex;gap:8px;flex-wrap:wrap}.mini-btn{font-size:12px;padding:6px 9px;border-radius:999px;background:#0f172a;border:1px solid var(--line);color:var(--text);cursor:pointer}.mini-btn.active{border-color:#60a5fa;background:#1d4ed8}.subtpl-list{display:grid;gap:10px}.subtpl-card{background:#0f172a;border:1px solid var(--line);border-radius:14px;overflow:hidden}.subtpl-card summary{cursor:pointer;list-style:none;padding:12px 14px;border-bottom:1px solid transparent}.subtpl-card[open] summary{border-bottom-color:var(--line)}.subtpl-summary{display:grid;grid-template-columns:1.5fr minmax(80px,.7fr) minmax(170px,1.25fr) minmax(90px,.8fr);gap:10px;align-items:center}.subtpl-name{font-weight:900}.subtpl-metric{font-size:12px;color:var(--muted)}.subtpl-metric b{display:block;color:var(--text);font-size:14px;margin-top:3px;line-height:1.45}.subtpl-metric b span{float:right;color:#bfdbfe;font-size:12px;margin-left:8px}.mini-details{margin-top:10px;background:#0b1220;border:1px solid var(--line);border-radius:12px;overflow:hidden}.mini-details summary{cursor:pointer;padding:9px 10px;font-weight:900;color:#dbeafe}.mini-details-body{padding:10px;border-top:1px solid var(--line)}.mini-grid{display:grid;grid-template-columns:repeat(4,minmax(110px,1fr));gap:8px}.mini-grid div{background:#111827;border:1px solid var(--line);border-radius:10px;padding:8px;font-size:12px}.included-table{width:100%;border-collapse:collapse}.included-table th,.included-table td{font-size:11px;padding:6px;border-bottom:1px solid #1f2937;white-space:nowrap}.included-table th{position:static;background:#111827}.subtpl-body{padding:12px 14px;line-height:1.65;font-size:13px;color:#dbeafe}.subtpl-proof{display:grid;grid-template-columns:repeat(4,minmax(100px,1fr));gap:8px;margin-top:10px}.subtpl-proof div{background:#111827;border:1px solid var(--line);border-radius:10px;padding:8px;font-size:12px}.database-grid{display:grid;gap:16px}.db-note{margin-bottom:12px}.hidden-debug details{margin-top:12px}@media(max-width:1200px){.workspace,.story-grid,.detail-layout{grid-template-columns:1fr}.pm-kpis{grid-template-columns:1fr 1fr}.proof-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.pm-kpis,.proof-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -793,6 +793,16 @@ function buildSubtemplateSummary(template){
     const improvement = Number.isFinite(gapBefore) && Math.abs(gapBefore)>0.0001
       ? (1 - Math.abs(gapAfter || 0)/Math.abs(gapBefore))*100
       : null;
+    const betaAvg = avg(rs.map(r=>r.overlay_beta));
+    const gap80Beta = 0.8;
+    const gap80Final = Number.isFinite(Number(oldFair)) && Number.isFinite(Number(market))
+      ? oldFair + gap80Beta * (market - oldFair)
+      : null;
+    const gap80GapPct = calcPctGap(market, gap80Final);
+    const oldAnchorFinal = Number.isFinite(Number(oldFair)) && Number.isFinite(Number(newFair))
+      ? oldFair + (Number.isFinite(Number(betaAvg)) ? betaAvg : 1) * (newFair - oldFair)
+      : finalFair;
+    const oldAnchorGapPct = calcPctGap(market, oldAnchorFinal);
     const summaryRow = {
       key,
       count: rs.length,
@@ -800,20 +810,52 @@ function buildSubtemplateSummary(template){
       old_fair: oldFair,
       new_fair: newFair,
       final_fair: finalFair,
-      beta: avg(rs.map(r=>r.overlay_beta)),
+      beta: betaAvg,
       confidence: avg(rs.map(r=>r.overlay_confidence)),
       gap_old_pct: gapOldPct,
       gap_before_pct: gapBeforePct,
       gap_after_pct: gapAfterPct,
       improvement_pct: improvement,
+      gap80_beta: gap80Beta,
+      gap80_final_fair: gap80Final,
+      gap80_gap_pct: gap80GapPct,
+      global_regression_rate: newFair,
+      old_anchor_final_fair: oldAnchorFinal,
+      old_anchor_gap_pct: oldAnchorGapPct,
       action_rows: rs.filter(r=>r.one_time_trigger || ["WATCH","ACTIVE","LEARNING"].includes(r.overlay_state)).length,
       example_basket: rs[0]?.basket_display || rs[0]?.basket_symbols_key || "",
-      trace: buildAggregateSubtemplateTrace(key, rs, {market, oldFair, newFair, finalFair, gapOldPct, gapBeforePct, gapAfterPct, improvement})
+      included_rows: buildIncludedFcnRows(rs),
+      trace: buildAggregateSubtemplateTrace(key, rs, {market, oldFair, newFair, finalFair, beta: betaAvg, gapOldPct, gapBeforePct, gapAfterPct, improvement, gap80Beta, gap80Final, gap80GapPct, oldAnchorFinal, oldAnchorGapPct})
     };
     return summaryRow;
   }).sort((a,b)=>Math.abs(Number(b.gap_after_pct||0))-Math.abs(Number(a.gap_after_pct||0)) || b.count-a.count);
 }
 
+
+function buildIncludedFcnRows(rs){
+  return (rs || []).map(r=>({
+    fcn_id: r.fcn_id || r.record_id || "-",
+    source_type: r.source_type || "-",
+    bank: r.bank || "-",
+    date: r.date || r.issue_date || r.trade_date || "-",
+    basket: r.basket_display || r.basket_symbols_key || (r.symbols || []).join(", "),
+    market_coupon: pickNum(r.market_coupon, r.market_rate),
+    old_fair: pickNum(r.fair_yield, r.my_preference_rate, r.old_fair_rate),
+    new_fair: pickNum(r.clean_global_fair, r.new_fair_rate),
+    final_fair: pickNum(r.final_fair_rate, r.clean_global_fair, r.new_fair_rate),
+    gap_old_pct: calcPctGap(pickNum(r.market_coupon, r.market_rate), pickNum(r.fair_yield, r.my_preference_rate, r.old_fair_rate)),
+    gap_new_pct: calcPctGap(pickNum(r.market_coupon, r.market_rate), pickNum(r.clean_global_fair, r.new_fair_rate)),
+    gap_final_pct: calcPctGap(pickNum(r.market_coupon, r.market_rate), pickNum(r.final_fair_rate, r.clean_global_fair, r.new_fair_rate)),
+    beta: pickNum(r.overlay_beta, 1),
+    confidence: pickNum(r.overlay_confidence, r.surface_confidence),
+    ki: pickNum(r.ki, r.knock_in, r.ki_level),
+    strike: pickNum(r.strike, r.strike_pct),
+    tenor: pickNum(r.tenor, r.tenor_month, r.T),
+    risk_zone: r.risk_zone_label || r.risk_zone_9 || r.risk_template || "-",
+    tenor_group: r.tenor_group_label || r.tenor_group_4 || r.tenor_template || "-",
+    fallback_level: r.fallback_level || "-"
+  }));
+}
 
 function buildAggregateSubtemplateTrace(key, rs, metrics){
   const first = rs[0] || {};
@@ -832,6 +874,13 @@ function buildAggregateSubtemplateTrace(key, rs, metrics){
     gap_before_pct: metrics.gapBeforePct,
     gap_after_pct: metrics.gapAfterPct,
     improvement_pct: metrics.improvement,
+    gap80_beta: metrics.gap80Beta,
+    gap80_final_fair: metrics.gap80Final,
+    gap80_gap_pct: metrics.gap80GapPct,
+    old_anchor_final_fair: metrics.oldAnchorFinal,
+    old_anchor_gap_pct: metrics.oldAnchorGapPct,
+    global_regression_rate: metrics.newFair,
+    included_rows: buildIncludedFcnRows(rs),
     fallback_level: trace.fallback_level || first.fallback_level || "-",
     surface_key: trace.surface_key || first.surface_key || "-",
     surface_matched_key: trace.surface_matched_key || first.surface_matched_key || "-",
@@ -875,8 +924,7 @@ function renderSubtemplateCards(template){
           <div class="subtpl-summary">
             <div class="subtpl-name">${escapeHtml(r.key)}<div class="small">FCN ${r.count}｜${escapeHtml(r.example_basket || '')}</div></div>
             <div class="subtpl-metric">Market<b>${pct(r.market)}</b></div>
-            <div class="subtpl-metric">New / Final<b>${pct(r.new_fair)} / ${pct(r.final_fair)}</b></div>
-            <div class="subtpl-metric">Gap After<b>${pct(r.gap_after_pct)}</b></div>
+            <div class="subtpl-metric">New / Final<b>${pct(r.new_fair)} <span>Gap ${pct(r.gap_before_pct)}</span><br>${pct(r.final_fair)} <span>Gap ${pct(r.gap_after_pct)}</span></b></div>
             <div class="subtpl-metric">β / Improve<b>${fmt(r.beta)} / ${pct(r.improvement_pct)}</b></div>
           </div>
         </summary>
@@ -884,10 +932,28 @@ function renderSubtemplateCards(template){
           ${escapeHtml(subtemplateHumanText(r))}
           <div class="subtpl-proof">
             <div>Old Fair<br><b>${pct(r.old_fair)}</b><br>Gap ${pct(r.gap_old_pct)}</div>
-            <div>New Fair<br><b>${pct(r.new_fair)}</b><br>Gap ${pct(r.gap_before_pct)}</div>
-            <div>Final Fair<br><b>${pct(r.final_fair)}</b><br>Gap ${pct(r.gap_after_pct)}</div>
+            <div>New Fair-AVG<br><b>${pct(r.new_fair)}</b><br>Gap ${pct(r.gap_before_pct)}</div>
+            <div>Final Fair-AVG<br><b>${pct(r.final_fair)}</b><br>Gap ${pct(r.gap_after_pct)}</div>
             <div>Action Rows<br><b>${r.action_rows}</b><br>Confidence ${fmt(r.confidence)}</div>
           </div>
+          <details class="mini-details">
+            <summary>β Gap 80% Method / 追上市場 Gap 80%</summary>
+            <div class="mini-details-body mini-grid">
+              <div>Market AVG<br><b>${pct(r.market)}</b></div>
+              <div>Old Fair AVG<br><b>${pct(r.old_fair)}</b></div>
+              <div>β Gap80<br><b>${fmt(r.gap80_beta)}</b></div>
+              <div>F-Fair Gap80<br><b>${pct(r.gap80_final_fair)}</b><br>Gap ${pct(r.gap80_gap_pct)}</div>
+            </div>
+          </details>
+          <details class="mini-details">
+            <summary>Old Fair Anchor / 回饋 M8</summary>
+            <div class="mini-details-body mini-grid">
+              <div>Old Fair<br><b>${pct(r.old_fair)}</b></div>
+              <div>β<br><b>${fmt(r.beta)}</b></div>
+              <div>F-fair<br><b>${pct(r.old_anchor_final_fair)}</b><br>Gap ${pct(r.old_anchor_gap_pct)}</div>
+              <div>全域回歸<br><b>${pct(r.global_regression_rate)}</b><br>推估利率</div>
+            </div>
+          </details>
         </div>
       </details>`).join('')}
     </div>
@@ -921,6 +987,21 @@ function renderSelectedSubtemplateTrace(){
   if(row && row.trace) renderSurfaceTrace(row.trace);
 }
 
+function renderIncludedFcnRowsTable(rows){
+  const xs = rows || [];
+  if(!xs.length) return '<div class="small">No included FCN rows.</div>';
+  return `<div class="table-wrap" style="max-height:260px;margin-top:8px"><table class="included-table">
+    <tr><th>FCN</th><th>Src</th><th>Bank</th><th>Date</th><th>Basket</th><th>Market</th><th>Old</th><th>New</th><th>Final</th><th>Gap Old</th><th>Gap New</th><th>Gap Final</th><th>β</th><th>Conf</th><th>K/S/T</th><th>Risk/Tenor</th><th>Level</th></tr>
+    ${xs.map(x=>`<tr>
+      <td><b>${escapeHtml(x.fcn_id)}</b></td><td>${escapeHtml(x.source_type)}</td><td>${escapeHtml(x.bank)}</td><td>${escapeHtml(x.date)}</td><td>${escapeHtml(x.basket)}</td>
+      <td>${pct(x.market_coupon)}</td><td>${pct(x.old_fair)}</td><td>${pct(x.new_fair)}</td><td>${pct(x.final_fair)}</td>
+      <td>${pct(x.gap_old_pct)}</td><td>${pct(x.gap_new_pct)}</td><td>${pct(x.gap_final_pct)}</td>
+      <td>${fmt(x.beta)}</td><td>${fmt(x.confidence)}</td><td>${fmt(x.ki)} / ${fmt(x.strike)} / ${fmt(x.tenor)}M</td>
+      <td>${escapeHtml(x.risk_zone)} / ${escapeHtml(x.tenor_group)}</td><td>${escapeHtml(x.fallback_level)}</td>
+    </tr>`).join('')}
+  </table></div>`;
+}
+
 function renderSurfaceTrace(t){
   const trace=document.getElementById("calculationTrace");
   if(!trace) return;
@@ -934,16 +1015,19 @@ function renderSurfaceTrace(t){
     <div class="trace-row"><span>Selected Level</span><b>${escapeHtml(t.fallback_level)}</b></div>
     <div class="trace-row"><span>Selected Key</span><b>${escapeHtml(t.surface_matched_key || t.surface_key)}</b></div>
     <div class="trace-row"><span>Sample Count / Min</span><b>${fmt(t.lookup_count)} / ${escapeHtml(t.min_count_required)}</b></div>
-    <div class="trace-row"><span>Median Market Coupon</span><b>${pct(t.surface_median_coupon)}</b></div>
+    <div class="trace-row"><span>Avg Market Coupon</span><b>${pct(t.surface_avg_coupon)}</b></div>
     <div class="trace-row"><span>Weighted Avg Coupon</span><b>${pct(t.surface_weighted_avg_coupon)}</b></div>
-    <div class="trace-row"><span>Avg / Std</span><b>${pct(t.surface_avg_coupon)} / ${pct(t.surface_std_coupon)}</b></div>
-    <div class="trace-formula"><b>3. New Fair Build / New Fair 怎麼來</b><br>${escapeHtml(t.surface_calculation_method)}<br>New Fair = ${pct(t.new_fair_rate)}</div>
+    <div class="trace-row"><span>Median / Std</span><b>${pct(t.surface_median_coupon)} / ${pct(t.surface_std_coupon)}</b></div>
+    <div class="trace-formula"><b>3. New Fair Build / New Fair-AVG 怎麼來</b><br>${escapeHtml(t.surface_calculation_method)}<br>New Fair-AVG = ${pct(t.new_fair_rate)}</div>
     <div class="trace-row"><span>Market Coupon</span><b>${pct(t.market_coupon)}</b></div>
     <div class="trace-row"><span>Old Fair</span><b>${pct(t.old_fair_rate)} / gap ${pct(t.gap_old_pct)}</b></div>
-    <div class="trace-row"><span>New Fair before β</span><b>${pct(t.new_fair_rate)} / gap ${pct(t.gap_before_pct)}</b></div>
+    <div class="trace-row"><span>New Fair-AVG before β</span><b>${pct(t.new_fair_rate)} / gap ${pct(t.gap_before_pct)}</b></div>
     <div class="trace-row"><span>β</span><b>${fmt(t.beta)}</b></div>
-    <div class="trace-row"><span>Final Fair after β</span><b>${pct(t.final_fair_rate)} / gap ${pct(t.gap_after_pct)}</b></div>
-    <div class="trace-row"><span>Improvement</span><b>${pct(t.improvement_pct)}</b></div>`;
+    <div class="trace-row"><span>Final Fair-AVG after β</span><b>${pct(t.final_fair_rate)} / gap ${pct(t.gap_after_pct)}</b></div>
+    <div class="trace-row"><span>Improvement</span><b>${pct(t.improvement_pct)}</b></div>
+    <details class="mini-details"><summary>β Gap 80% Method / 追上市場 Gap 80%</summary><div class="mini-details-body mini-grid"><div>Market AVG<br><b>${pct(t.market_coupon)}</b></div><div>Old Fair AVG<br><b>${pct(t.old_fair_rate)}</b></div><div>β Gap80<br><b>${fmt(t.gap80_beta)}</b></div><div>F-Fair Gap80<br><b>${pct(t.gap80_final_fair)}</b><br>Gap ${pct(t.gap80_gap_pct)}</div></div></details>
+    <details class="mini-details"><summary>Old Fair Anchor / 回饋 M8</summary><div class="mini-details-body mini-grid"><div>Old Fair<br><b>${pct(t.old_fair_rate)}</b></div><div>β<br><b>${fmt(t.beta)}</b></div><div>F-fair<br><b>${pct(t.old_anchor_final_fair)}</b><br>Gap ${pct(t.old_anchor_gap_pct)}</div><div>全域回歸<br><b>${pct(t.global_regression_rate)}</b><br>推估利率</div></div></details>
+    <details class="mini-details"><summary>Included FCN Rows / 計入 FCN 明細</summary><div class="mini-details-body">${renderIncludedFcnRowsTable(t.included_rows)}</div></details>`;
 }
 
 
@@ -998,9 +1082,9 @@ function renderTemplateDecisionDetail(t){
       <div class="proof-grid">
         <div class="proof-box"><div class="label">Market Coupon</div><div class="value">${pct(t.avg_market_coupon)}</div></div>
         <div class="proof-box"><div class="label">Old Fair</div><div class="value">${pct(t.avg_fair_rate)}</div></div>
-        <div class="proof-box"><div class="label">New Fair Before β</div><div class="value">${pct(t.avg_new_fair_rate)}</div></div>
+        <div class="proof-box"><div class="label">New Fair-AVG Before β</div><div class="value">${pct(t.avg_new_fair_rate)}</div></div>
         <div class="proof-box"><div class="label">β</div><div class="value">${fmt(t.avg_beta)}</div></div>
-        <div class="proof-box"><div class="label">Final Fair After β</div><div class="value">${pct(t.avg_final_fair_rate)}</div></div>
+        <div class="proof-box"><div class="label">Final Fair-AVG After β</div><div class="value">${pct(t.avg_final_fair_rate)}</div></div>
       </div>
       ${renderSubtemplateCards(t.template)}`;
     setTimeout(()=>{
@@ -1013,13 +1097,13 @@ function renderTemplateDecisionDetail(t){
       <div class="trace-row"><span>Market Coupon</span><b>${pct(t.avg_market_coupon)}</b></div>
       <div class="trace-row"><span>Old Fair Rate</span><b>${pct(t.avg_fair_rate)}</b></div>
       <div class="trace-row"><span>Gap vs Old = Market - Old Fair</span><b>${pct(oldGap)} / ${pct(oldGapPct)}</b></div>
-      <div class="trace-row"><span>New Fair Rate before β</span><b>${pct(t.avg_new_fair_rate)}</b></div>
+      <div class="trace-row"><span>New Fair-AVG before β</span><b>${pct(t.avg_new_fair_rate)}</b></div>
       <div class="trace-row"><span>Gap Before = Market - New Fair</span><b>${pct(newGap)} / ${pct(newGapPct)}</b></div>
       <div class="trace-row"><span>Avg β</span><b>${fmt(t.avg_beta)}</b></div>
-      <div class="trace-row"><span>Final Fair Rate after β</span><b>${pct(t.avg_final_fair_rate)}</b></div>
+      <div class="trace-row"><span>Final Fair-AVG after β</span><b>${pct(t.avg_final_fair_rate)}</b></div>
       <div class="trace-row"><span>Gap After = Market - Final Fair</span><b>${pct(finalGap)} / ${pct(finalGapPct)}</b></div>
       <div class="trace-row"><span>Improvement vs New Fair</span><b>${pct(t.improvement_pct)}</b></div>
-      <div class="trace-formula">Final Fair = New Fair Rate × β<br>${pct(t.avg_final_fair_rate)} ≈ ${pct(t.avg_new_fair_rate)} × ${fmt(t.avg_beta)}<br><br>判讀順序：先看 Market vs Old Fair 是否本來就準；再看 New Fair 是否偏離；最後看 β 後的 Final Fair 是否把 gap 縮小。</div>`;
+      <div class="trace-formula">Final Fair-AVG = Old Fair + β × (New Fair-AVG - Old Fair)<br>${pct(t.avg_final_fair_rate)} ≈ ${pct(t.avg_fair_rate)} + ${fmt(t.avg_beta)} × (${pct(t.avg_new_fair_rate)} - ${pct(t.avg_fair_rate)})<br><br>判讀順序：先看 Market vs Old Fair 是否本來就準；再看 New Fair-AVG 是否偏離；最後看 β 後的 Final Fair-AVG 是否把 gap 縮小。</div>`;
   }
 }
 
@@ -1103,6 +1187,8 @@ function escapeHtml(s){
 </script>
 </body>
 </html>
+
+
 
 
 
