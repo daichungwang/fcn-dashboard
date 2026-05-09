@@ -8,19 +8,21 @@
 <style>
 :root{--bg:#0f1115;--panel:#181c24;--panel2:#202634;--line:#30384a;--text:#f4f7fb;--muted:#aab5c8;--blue:#4da3ff;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--purple:#c084fc}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans TC",sans-serif;background:var(--bg);color:var(--text)}.app{max-width:1600px;margin:0 auto;padding:24px}.hero{background:linear-gradient(135deg,#10233f,#1d4ed8);border-radius:24px;padding:24px 28px;margin-bottom:20px}.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;color:#dbeafe;font-weight:700}.section{background:var(--panel);border:1px solid var(--line);border-radius:18px;margin:18px 0;overflow:hidden}.section summary{cursor:pointer;padding:16px 20px;font-size:20px;font-weight:900;border-bottom:1px solid var(--line)}.section-body{padding:18px}.grid{display:grid;gap:14px}.kpi-grid{grid-template-columns:repeat(6,minmax(130px,1fr))}.card{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:14px}.kpi-title{font-size:12px;color:var(--muted);font-weight:800}.kpi-value{font-size:24px;font-weight:900;margin-top:6px}.small{font-size:12px;color:var(--muted);line-height:1.55}.controls{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}button,select,input{background:#111827;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:9px 10px}button{cursor:pointer;font-weight:900}button.primary{background:#1d4ed8;border-color:#60a5fa}.table-wrap{overflow:auto;max-height:680px;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;background:var(--panel2)}th,td{border-bottom:1px solid var(--line);padding:8px;font-size:12px;text-align:left;white-space:nowrap}th{position:sticky;top:0;background:#111827;z-index:1}.badge{display:inline-flex;padding:3px 8px;border-radius:999px;font-size:12px;font-weight:900;border:1px solid var(--line)}.good{background:rgba(52,211,153,.12);color:var(--green)}.warn{background:rgba(251,191,36,.12);color:var(--yellow)}.bad{background:rgba(248,113,113,.12);color:var(--red)}.info{background:rgba(77,163,255,.12);color:var(--blue)}.pref{background:rgba(192,132,252,.12);color:var(--purple)}pre{background:#090b10;border:1px solid var(--line);border-radius:14px;padding:12px;overflow:auto;max-height:520px}.error{background:rgba(248,113,113,.12);border:1px solid rgba(248,113,113,.5);color:#fecaca;border-radius:14px;padding:12px;margin:12px 0}.note{background:#111827;border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:12px}.muted{color:var(--muted)}@media(max-width:1100px){.kpi-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.kpi-grid{grid-template-columns:1fr}}
+
+.pm-kpis{display:grid;grid-template-columns:repeat(5,minmax(150px,1fr));gap:14px;margin-top:12px}.pm-kpi{background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:16px}.pm-kpi .label{font-size:12px;color:var(--muted);font-weight:900}.pm-kpi .value{font-size:26px;font-weight:900;margin-top:8px}.pm-kpi .desc{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.45}.story-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:16px}.story-card{background:#111827;border:1px solid var(--line);border-radius:18px;padding:16px}.story-title{font-size:18px;font-weight:900;margin-bottom:10px}.story-line{padding:10px 0;border-bottom:1px dashed var(--line);line-height:1.65}.story-line:last-child{border-bottom:0}.workspace{display:grid;grid-template-columns:360px 1fr;gap:16px}.template-list{display:flex;flex-direction:column;gap:10px}.tpl-btn{width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:12px;cursor:pointer}.tpl-btn.active{border-color:#60a5fa;box-shadow:0 0 0 1px rgba(96,165,250,.35);background:#13223a}.tpl-name{font-weight:900;font-size:13px}.tpl-meta{font-size:12px;color:var(--muted);margin-top:6px;display:flex;justify-content:space-between;gap:8px}.detail-layout{display:grid;grid-template-columns:1fr 380px;gap:16px}.decision-card{background:var(--panel2);border:1px solid var(--line);border-radius:18px;padding:18px}.decision-card h3{margin:0 0 10px;font-size:22px}.decision-section{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}.decision-section b{color:#e5f0ff}.proof-grid{display:grid;grid-template-columns:repeat(4,minmax(120px,1fr));gap:10px;margin-top:12px}.proof-box{background:#0f172a;border:1px solid var(--line);border-radius:14px;padding:12px}.proof-box .label{font-size:11px;color:var(--muted);font-weight:900}.proof-box .value{font-size:20px;font-weight:900;margin-top:5px}.trace-card{background:#090b10;border:1px solid var(--line);border-radius:18px;padding:16px;align-self:start}.trace-card h4{margin:0 0 10px;font-size:16px}.trace-row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #1f2937;padding:7px 0;font-size:12px}.trace-row span:first-child{color:var(--muted)}.trace-formula{background:#111827;border:1px solid var(--line);border-radius:12px;padding:10px;margin-top:10px;font-size:12px;line-height:1.55;color:#dbeafe}.database-grid{display:grid;gap:16px}.db-note{margin-bottom:12px}.hidden-debug details{margin-top:12px}@media(max-width:1200px){.workspace,.story-grid,.detail-layout{grid-template-columns:1fr}.pm-kpis{grid-template-columns:1fr 1fr}.proof-grid{grid-template-columns:1fr 1fr}}@media(max-width:760px){.pm-kpis,.proof-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="hero">
-    <h1>M8 Template Calibration Dashboard v3 Overlay</h1>
-    <p>FCN Pool + Old Pool + Market FCN History → Clean Global Fair + Overlay β + Final Fair</p>
+    <h1>M8 v3 Pricing Research Dashboard</h1>
+    <p>最高原則：人話說清楚，數據做證明。上層看結論，中層看模板決策，下層才放完整資料庫。</p>
   </div>
 
   <div id="error"></div>
 
   <details class="section" open>
-    <summary>1. Control / 產生 Calibration Dataset</summary>
+    <summary>0. Control / 產生 Calibration Dataset</summary>
     <div class="section-body">
       <div class="controls">
         <button id="runBtn" class="primary">Run Calibration</button>
@@ -28,184 +30,130 @@
         <button id="downloadRegBtn">Download Regression Rows JSON</button>
         <input id="maxRows" type="number" min="1" placeholder="Max rows optional"/>
       </div>
-      <div class="small">
-        v2 讀取三個來源：data/fcn_pool.json + data/fcn_pool_old.json + data/mm/market_fcn_history.json。<br/>
-        輸出雙軌：<b>My Preference Rate</b>（你的 M8 偏好模型）與 <b>Market Normal Rate</b>（市場正常報價基準）。
-      </div>
-      <div class="note small">
-        若目前 engine 尚未提供 market_normal_rate，本頁會先保留欄位並用 fallback 顯示，等 engine 接上 calibration normal curve 後即可自動吃欄位。
-      </div>
+      <div class="small">讀取：data/fcn_pool.json + data/fcn_pool_old.json + data/mm/market_fcn_history.json。目的不是展示資料，而是讓 M8 更接近市場定價。</div>
     </div>
   </details>
 
   <details class="section" open>
-    <summary>2. Source Summary / 資料來源總覽</summary>
-    <div class="section-body"><div id="sourceSummary" class="grid kpi-grid"></div></div>
-  </details>
-
-  <details class="section" open>
-    <summary>3. Template Summary / 6大模板分布</summary>
-    <div class="section-body"><div id="templateSummary" class="grid kpi-grid"></div></div>
-  </details>
-
-  <details class="section" open>
-    <summary>4. Rate Summary / 雙軌 Rate 總覽</summary>
-    <div class="section-body"><div id="summary" class="grid kpi-grid"></div></div>
-  </details>
-
-  <details class="section" open>
-    <summary>5. Brake Diagnostics / HighRateBrake 診斷</summary>
-    <div class="section-body"><div id="diagnostics" class="grid kpi-grid"></div></div>
-  </details>
-
-  <details class="section" open>
-    <summary>6. Calibration Rows / 明細</summary>
+    <summary>1. Summary Dashboard / 今日總覽：10 秒看懂</summary>
     <div class="section-body">
-      <div class="controls">
-        <input id="search" placeholder="Search FCN / symbol / bank"/>
-        <select id="sourceFilter">
-          <option value="">All sources</option>
-          <option value="current_pool">current_pool</option>
-          <option value="old_pool">old_pool</option>
-          <option value="market_history">market_history</option>
-        </select>
-        <select id="templateFilter">
-          <option value="">All templates</option>
-          <option value="A">A AI Core Institutional</option>
-          <option value="B">B Memory / Semi Tactical</option>
-          <option value="C">C TSLA Momentum Core</option>
-          <option value="D">D Speculative Momentum</option>
-          <option value="E">E Defensive / Stabilizer</option>
-          <option value="F">F Others / M7 Basket Driven</option>
-        </select>
-        <select id="gapFilter">
-          <option value="">All gaps</option>
-          <option value="market_much_higher">market_much_higher</option>
-          <option value="market_higher">market_higher</option>
-          <option value="near_fair">near_fair</option>
-          <option value="market_lower">market_lower</option>
-          <option value="market_much_lower">market_much_lower</option>
-        </select>
-        <select id="brakeFilter">
-          <option value="">All brake</option>
-          <option value="none">none</option>
-          <option value="light">light</option>
-          <option value="medium">medium</option>
-          <option value="heavy">heavy</option>
-          <option value="extreme">extreme</option>
-        </select>
-      </div>
-      <div class="table-wrap"><table id="rowsTable"></table></div>
-    </div>
-  </details>
-
-  <details class="section">
-    <summary>7. Regression Rows / 回歸用資料</summary>
-    <div class="section-body"><div class="table-wrap"><table id="regTable"></table></div></div>
-  </details>
-
-
-  <details class="section" open>
-    <summary>8. Regression Calibration / New Fair Rate 分析</summary>
-    <div class="section-body">
-      <div id="regRelationshipSummary" class="grid kpi-grid"></div>
-      <div class="note small">
-        New Fair Rate = Template Base + Risk Adj + Tenor Adj + Structure Adj + M7 Overlay。<br/>
-        這一區用來比較：Market Coupon vs Old Fair Rate vs New Fair Rate。
+      <div id="pmKpis" class="pm-kpis"></div>
+      <div class="story-grid" style="margin-top:16px">
+        <div class="story-card">
+          <div class="story-title">Today Market View / 今日市場觀察</div>
+          <div id="marketStory"></div>
+        </div>
+        <div class="story-card">
+          <div class="story-title">Next Action / 下一步</div>
+          <div id="nextAction"></div>
+        </div>
       </div>
     </div>
   </details>
 
   <details class="section" open>
-    <summary>9. Template Regression Summary / 模板基準利率</summary>
-    <div class="section-body">
-      <div class="table-wrap"><table id="regTemplateTable"></table></div>
-    </div>
-  </details>
-
-  <details class="section" open>
-    <summary>10. Risk Surface / Strike + KI 風險曲面</summary>
-    <div class="section-body">
-      <div class="table-wrap"><table id="riskSurfaceTable"></table></div>
-    </div>
-  </details>
-
-  <details class="section" open>
-    <summary>11. Tenor Curve / 時間曲線</summary>
-    <div class="section-body">
-      <div class="table-wrap"><table id="tenorCurveTable"></table></div>
-    </div>
-  </details>
-
-  <details class="section" open>
-    <summary>12. Structure Curve / EKI-AKI 結構曲線</summary>
-    <div class="section-body">
-      <div class="table-wrap"><table id="structureCurveTable"></table></div>
-    </div>
-  </details>
-
-  <details class="section" open>
-    <summary>13. DNA Leaderboard / Core DNA 排行</summary>
-    <div class="section-body">
-      <div class="table-wrap"><table id="dnaTable"></table></div>
-    </div>
-  </details>
-
-  <details class="section" open>
-    <summary>14. Template × Risk Matrix / 6模板 × 9風險區塊</summary>
-    <div class="section-body">
-      <div class="note small">
-        先看 Count 與 Density。count >= 5 才建議作為 local curve；count < 5 需 fallback 到 Template 或 Risk 大類。
+    <summary>2. Decision Workspace / 模板決策區：左分類，右細節</summary>
+    <div class="section-body workspace">
+      <div>
+        <div class="small db-note">點選 6 大模板，右邊用人話說明：市場發生什麼事、M8 哪裡不準、β 是否有效。</div>
+        <div id="templateDecisionList" class="template-list"></div>
       </div>
-      <div class="table-wrap"><table id="templateRiskTable"></table></div>
-    </div>
-  </details>
-
-  <details class="section" open>
-    <summary>15. Template × Risk × Tenor Matrix / 6模板 × 9風險 × 4時間</summary>
-    <div class="section-body">
-      <div class="note small">
-        這是 6 × 9 × 4 的 market block density。用來判斷哪些區塊有市場、哪些需要合併或 fallback。
+      <div class="detail-layout">
+        <div id="templateDecisionDetail" class="decision-card"></div>
+        <div id="calculationTrace" class="trace-card"></div>
       </div>
-      <div class="table-wrap"><table id="templateRiskTenorTable"></table></div>
     </div>
   </details>
 
   <details class="section" open>
-    <summary>16. Learning Recommendation / 學習與合併建議</summary>
+    <summary>3. M8 Accuracy Proof / 數據證明：β 修正是否更接近市場</summary>
     <div class="section-body">
-      <div id="learningSummary" class="grid kpi-grid"></div>
-      <div class="table-wrap" style="margin-top:12px"><table id="templateDensityTable"></table></div>
-    </div>
-  </details>
-
-  <details class="section" open>
-    <summary>17. Template Overlay Effectiveness / 模板 β 調整有效性分析</summary>
-    <div class="section-body">
-      <div class="note small">
-        這張表只回答一件事：β 修正後 Final Fair 是否更接近 Market Coupon。用 Before / After Gap 與 Improvement % 證明修正是否有效。
-      </div>
+      <div class="note small">這張表只回答一件事：β 修正後 Final Fair 是否更接近 Market Coupon。先看 Market / M8 Before / β / M8 After，再看 Gap Before / After。</div>
       <div class="table-wrap" style="margin-top:12px"><table id="overlayTable"></table></div>
     </div>
   </details>
 
-  <details class="section" open>
-    <summary>18. Overlay Trigger Monitor / Overlay 觸發監控</summary>
-    <div class="section-body">
-      <div id="overlayMonitor" class="grid kpi-grid"></div>
-    </div>
-  </details>
-
-  <details class="section" open>
-    <summary>19. Template Lifecycle / 模板生命週期</summary>
-    <div class="section-body">
-      <div class="table-wrap"><table id="lifecycleTable"></table></div>
-    </div>
-  </details>
-
   <details class="section">
-    <summary>20. Debug JSON</summary>
-    <div class="section-body"><pre id="debug"></pre></div>
+    <summary>4. Full Database / 完整資料庫與 Filter</summary>
+    <div class="section-body database-grid">
+      <div class="note small">完整資料放這裡，預設收起。需要查 FCN、模板、風險、期限、β、gap 才展開。</div>
+
+      <details class="section" open>
+        <summary>4.1 Calibration Rows / 明細資料庫</summary>
+        <div class="section-body">
+          <div class="controls">
+            <input id="search" placeholder="Search FCN / symbol / bank"/>
+            <select id="sourceFilter">
+              <option value="">All sources</option>
+              <option value="current_pool">current_pool</option>
+              <option value="old_pool">old_pool</option>
+              <option value="market_history">market_history</option>
+            </select>
+            <select id="templateFilter">
+              <option value="">All templates</option>
+              <option value="A">A AI Core Institutional</option>
+              <option value="B">B Memory / Semi Tactical</option>
+              <option value="C">C TSLA Momentum Core</option>
+              <option value="D">D Speculative Momentum</option>
+              <option value="E">E Defensive / Stabilizer</option>
+              <option value="F">F Others / M7 Basket Driven</option>
+            </select>
+            <select id="gapFilter">
+              <option value="">All gaps</option>
+              <option value="market_much_higher">market_much_higher</option>
+              <option value="market_higher">market_higher</option>
+              <option value="near_fair">near_fair</option>
+              <option value="market_lower">market_lower</option>
+              <option value="market_much_lower">market_much_lower</option>
+            </select>
+            <select id="brakeFilter">
+              <option value="">All brake</option>
+              <option value="none">none</option>
+              <option value="light">light</option>
+              <option value="medium">medium</option>
+              <option value="heavy">heavy</option>
+              <option value="extreme">extreme</option>
+            </select>
+          </div>
+          <div class="table-wrap"><table id="rowsTable"></table></div>
+        </div>
+      </details>
+
+      <details class="section">
+        <summary>4.2 Source / Template / Rate / Brake Summary</summary>
+        <div class="section-body">
+          <h3>Source Summary / 資料來源總覽</h3><div id="sourceSummary" class="grid kpi-grid"></div>
+          <h3>Template Summary / 6大模板分布</h3><div id="templateSummary" class="grid kpi-grid"></div>
+          <h3>Rate Summary / 雙軌 Rate 總覽</h3><div id="summary" class="grid kpi-grid"></div>
+          <h3>Brake Diagnostics / HighRateBrake 診斷</h3><div id="diagnostics" class="grid kpi-grid"></div>
+        </div>
+      </details>
+
+      <details class="section">
+        <summary>4.3 Regression / Risk / Tenor / DNA Tables</summary>
+        <div class="section-body">
+          <h3>Regression Calibration / New Fair Rate 分析</h3><div id="regRelationshipSummary" class="grid kpi-grid"></div>
+          <h3>Template Regression Summary / 模板基準利率</h3><div class="table-wrap"><table id="regTemplateTable"></table></div>
+          <h3>Risk Surface / Strike + KI 風險曲面</h3><div class="table-wrap"><table id="riskSurfaceTable"></table></div>
+          <h3>Tenor Curve / 時間曲線</h3><div class="table-wrap"><table id="tenorCurveTable"></table></div>
+          <h3>Structure Curve / EKI-AKI 結構曲線</h3><div class="table-wrap"><table id="structureCurveTable"></table></div>
+          <h3>DNA Leaderboard / Core DNA 排行</h3><div class="table-wrap"><table id="dnaTable"></table></div>
+          <h3>Template × Risk Matrix / 6模板 × 9風險區塊</h3><div class="table-wrap"><table id="templateRiskTable"></table></div>
+          <h3>Template × Risk × Tenor Matrix / 6模板 × 9風險 × 4時間</h3><div class="table-wrap"><table id="templateRiskTenorTable"></table></div>
+          <h3>Learning Recommendation / 學習與合併建議</h3><div id="learningSummary" class="grid kpi-grid"></div><div class="table-wrap" style="margin-top:12px"><table id="templateDensityTable"></table></div>
+        </div>
+      </details>
+
+      <details class="section">
+        <summary>4.4 Trigger Monitor / Lifecycle / Debug</summary>
+        <div class="section-body">
+          <h3>Overlay Trigger Monitor / Overlay 觸發監控</h3><div id="overlayMonitor" class="grid kpi-grid"></div>
+          <h3>Template Lifecycle / 模板生命週期</h3><div class="table-wrap"><table id="lifecycleTable"></table></div>
+          <h3>Regression Rows / 回歸用資料</h3><div class="table-wrap"><table id="regTable"></table></div>
+          <h3>Debug JSON</h3><pre id="debug"></pre>
+        </div>
+      </details>
+    </div>
   </details>
 </div>
 
@@ -224,6 +172,7 @@ const OLD_POOL_PATH = "./data/fcn_pool_old.json";
 const MARKET_HISTORY_PATH = "./data/mm/market_fcn_history.json";
 
 let DATASET=null, REG_ROWS=[], REGRESSION=null;
+let SELECTED_TEMPLATE=null;
 
 document.getElementById("runBtn").addEventListener("click", run);
 document.getElementById("downloadBtn").addEventListener("click",()=>{
@@ -349,6 +298,7 @@ function renderAll(){
   renderRegRows();
   renderRegressionDashboard();
   renderOverlayDashboard();
+  renderPmDecisionDashboard();
   document.getElementById("debug").textContent=JSON.stringify({calibration: DATASET, regression: REGRESSION},null,2);
 }
 
@@ -743,6 +693,122 @@ function renderOverlayDashboard(){
   ]);
 }
 
+
+function renderPmDecisionDashboard(){
+  const rows = REGRESSION?.calibrated_rows || REG_ROWS || [];
+  const eff = REGRESSION?.template_overlay_effectiveness || [];
+  const rel = REGRESSION?.relationship_summary || {};
+  if(!rows.length || !eff.length){
+    const ids=["pmKpis","marketStory","nextAction","templateDecisionList","templateDecisionDetail","calculationTrace"];
+    ids.forEach(id=>{const el=document.getElementById(id); if(el) el.innerHTML='<div class="small">Run Calibration 後顯示。</div>';});
+    return;
+  }
+  const valid = rows.length;
+  const active = rows.filter(r=>["ACTIVE","LEARNING"].includes(r.overlay_state)).length;
+  const watch = rows.filter(r=>r.overlay_state==="WATCH").length;
+  const oneTime = rows.filter(r=>r.one_time_trigger).length;
+  const avgBefore = avg(eff.map(x=>Math.abs(Number(x.gap_before_pct))).filter(Number.isFinite));
+  const avgAfter = avg(eff.map(x=>Math.abs(Number(x.gap_after_pct))).filter(Number.isFinite));
+  const improvement = Number.isFinite(avgBefore) && avgBefore !== 0 ? (1-avgAfter/avgBefore)*100 : null;
+  const worst = eff.slice().sort((a,b)=>Math.abs(Number(b.gap_after_pct||0))-Math.abs(Number(a.gap_after_pct||0)))[0];
+  const best = eff.slice().sort((a,b)=>Number(b.improvement_pct||0)-Number(a.improvement_pct||0))[0];
+
+  const kpis=[
+    ["Data Health", valid, `有效資料 ${valid} 筆`],
+    ["M8 Accuracy", pct(rel.avg_gap_vs_final), "Final Fair vs Market 平均差"],
+    ["β Result", pct(improvement), "整體 gap 改善率"],
+    ["Trigger Watch", `${active}/${watch}/${oneTime}`, "Active / Watch / One-time"],
+    ["Next Focus", worst?.template || "-", "目前 gap 最大模板"]
+  ];
+  const pmKpis=document.getElementById("pmKpis");
+  if(pmKpis){pmKpis.innerHTML=kpis.map(([a,b,c])=>`<div class="pm-kpi"><div class="label">${escapeHtml(a)}</div><div class="value">${escapeHtml(b??'-')}</div><div class="desc">${escapeHtml(c||'')}</div></div>`).join("");}
+
+  const story=document.getElementById("marketStory");
+  if(story){
+    const topLines=[best,worst].filter(Boolean).map(t=>`<div class="story-line">${templateHumanSentence(t)}</div>`).join("");
+    story.innerHTML=topLines || '<div class="small">尚無足夠資料。</div>';
+  }
+  const action=document.getElementById("nextAction");
+  if(action){
+    const actions = eff.slice().sort((a,b)=>Math.abs(Number(b.gap_after_pct||0))-Math.abs(Number(a.gap_after_pct||0))).slice(0,3)
+      .map(t=>`<div class="story-line"><b>${escapeHtml(t.template)}</b><br>${escapeHtml(nextActionText(t))}</div>`).join("");
+    action.innerHTML=actions;
+  }
+
+  if(!SELECTED_TEMPLATE) SELECTED_TEMPLATE = eff[0]?.template;
+  renderTemplateDecisionList(eff);
+  renderTemplateDecisionDetail(eff.find(x=>x.template===SELECTED_TEMPLATE) || eff[0]);
+}
+
+function renderTemplateDecisionList(eff){
+  const box=document.getElementById("templateDecisionList");
+  if(!box) return;
+  box.innerHTML=eff.map(t=>`<button class="tpl-btn ${t.template===SELECTED_TEMPLATE?'active':''}" data-template="${escapeHtml(t.template)}">
+    <div class="tpl-name">${escapeHtml(t.template)}</div>
+    <div class="tpl-meta"><span>FCN ${t.fcn_count ?? '-'}</span><span>Gap After ${pct(t.gap_after_pct)}</span></div>
+    <div class="tpl-meta"><span>β ${fmt(t.avg_beta)}</span><span>Improve ${pct(t.improvement_pct)}</span></div>
+  </button>`).join("");
+  box.querySelectorAll("button[data-template]").forEach(btn=>btn.addEventListener("click",()=>{
+    SELECTED_TEMPLATE=btn.getAttribute("data-template");
+    renderPmDecisionDashboard();
+  }));
+}
+
+function renderTemplateDecisionDetail(t){
+  const detail=document.getElementById("templateDecisionDetail");
+  const trace=document.getElementById("calculationTrace");
+  if(!t){return;}
+  const before = Number(t.gap_before_pct);
+  const after = Number(t.gap_after_pct);
+  const improved = Math.abs(after) < Math.abs(before);
+  const verdict = improved ? "修正有效，Final Fair 比 New Fair 更接近市場。" : "修正無效或不足，β 需要重新檢查。";
+  if(detail){
+    detail.innerHTML=`
+      <h3>${escapeHtml(t.template)}</h3>
+      <div class="decision-section"><b>市場發生什麼事：</b><br>${escapeHtml(templateMarketText(t))}</div>
+      <div class="decision-section"><b>M8 原本哪裡不準：</b><br>修正前 gap 為 ${pct(t.gap_before_pct)}，代表 M8 New Fair 與 Market Coupon 仍有距離。</div>
+      <div class="decision-section"><b>做了什麼修正：</b><br>目前 β=${fmt(t.avg_beta)}，Overlay State=${escapeHtml(t.overlay_state||'NONE')}，Confidence=${fmt(t.avg_confidence)}。</div>
+      <div class="decision-section"><b>修正後結果：</b><br>修正後 gap 為 ${pct(t.gap_after_pct)}，Improvement=${pct(t.improvement_pct)}。${escapeHtml(verdict)}</div>
+      <div class="proof-grid">
+        <div class="proof-box"><div class="label">Market</div><div class="value">${pct(t.avg_market_coupon)}</div></div>
+        <div class="proof-box"><div class="label">M8 Before</div><div class="value">${pct(t.avg_new_fair_rate)}</div></div>
+        <div class="proof-box"><div class="label">β</div><div class="value">${fmt(t.avg_beta)}</div></div>
+        <div class="proof-box"><div class="label">M8 After</div><div class="value">${pct(t.avg_final_fair_rate)}</div></div>
+      </div>`;
+  }
+  if(trace){
+    trace.innerHTML=`<h4>Calculation Trace / 計算對照</h4>
+      <div class="trace-row"><span>Market Coupon</span><b>${pct(t.avg_market_coupon)}</b></div>
+      <div class="trace-row"><span>Fair Rate</span><b>${pct(t.avg_fair_rate)}</b></div>
+      <div class="trace-row"><span>New Fair Rate</span><b>${pct(t.avg_new_fair_rate)}</b></div>
+      <div class="trace-row"><span>Avg β</span><b>${fmt(t.avg_beta)}</b></div>
+      <div class="trace-row"><span>Final Fair Rate</span><b>${pct(t.avg_final_fair_rate)}</b></div>
+      <div class="trace-row"><span>Gap Before</span><b>${pct(t.gap_before)} / ${pct(t.gap_before_pct)}</b></div>
+      <div class="trace-row"><span>Gap After</span><b>${pct(t.gap_after)} / ${pct(t.gap_after_pct)}</b></div>
+      <div class="trace-row"><span>Improvement</span><b>${pct(t.improvement_pct)}</b></div>
+      <div class="trace-formula">Final Fair = New Fair Rate × β<br>${pct(t.avg_final_fair_rate)} ≈ ${pct(t.avg_new_fair_rate)} × ${fmt(t.avg_beta)}<br><br>重點：不是看 β 漂不漂亮，而是看 Gap After 是否小於 Gap Before。</div>`;
+  }
+}
+
+function templateHumanSentence(t){
+  return `${t.template}：Market Coupon ${pct(t.avg_market_coupon)}，M8 Before ${pct(t.avg_new_fair_rate)}，β=${fmt(t.avg_beta)} 後 M8 After ${pct(t.avg_final_fair_rate)}；gap 從 ${pct(t.gap_before_pct)} 變成 ${pct(t.gap_after_pct)}，改善 ${pct(t.improvement_pct)}。`;
+}
+function templateMarketText(t){
+  const gap=Number(t.gap_before_pct);
+  if(gap>8) return `市場給的票息明顯高於 M8 New Fair，表示 M8 對這類模板偏保守。`;
+  if(gap<-8) return `市場給的票息低於 M8 New Fair，表示這類模板可能被市場壓縮。`;
+  return `市場票息與 M8 New Fair 大致接近，目前不需要大幅修正。`;
+}
+function nextActionText(t){
+  const after=Math.abs(Number(t.gap_after_pct||0));
+  const imp=Number(t.improvement_pct||0);
+  if(after>8 && imp<20) return "Gap 修正後仍大，β 可能太小，列入 Watch。";
+  if(imp<0) return "修正後更差，先停用或降低 β。";
+  if(after<5) return "已接近市場，維持目前設定。";
+  return "持續觀察，等更多樣本確認是否升級 active template。";
+}
+
+
 function labelGap(v){
   const n=Number(v);
   if(!Number.isFinite(n)) return "unknown";
@@ -795,6 +861,7 @@ function escapeHtml(s){
 </script>
 </body>
 </html>
+
 
 
 
