@@ -691,52 +691,6 @@ function escapeHtml(s){
   return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
 }
 </script>
-  <details class="section" open>
-  <summary>
-    6. Residual Overlay Analysis / 殘差疊加分析
-  </summary>
-
-  <div class="section-body">
-    <div class="table-wrap">
-      <table id="overlayTable"></table>
-    </div>
-  </div>
-</details>
-
-<details class="section" open>
-  <summary>
-    7. Overlay Trigger Monitor / Overlay 觸發監控
-  </summary>
-
-  <div class="section-body">
-    <div id="overlayMonitor" class="grid kpi-grid"></div>
-  </div>
-</details>
-
-<details class="section" open>
-  <summary>
-    8. Template Lifecycle / 模板生命週期
-  </summary>
-
-  <div class="section-body">
-    <div class="table-wrap">
-      <table id="lifecycleTable"></table>
-    </div>
-  </div>
-</details>
-  <th>Overlay State</th>
-<th>Overlay β</th>
-<th>Confidence</th>
-<th>Persistence Days</th>
-<th>Direction Ratio</th>
-<th>Residual Std</th>
-<th>Final Fair</th>
-<th>Gap vs Final</th>
-<th>Lifecycle</th>
-  finalFairRate =
-cleanGlobalFair
-* overlayBeta
-+ activeTemplateAdjustment;
 </body>
 </html>
 
