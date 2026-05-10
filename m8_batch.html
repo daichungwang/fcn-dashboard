@@ -1414,8 +1414,7 @@
                 <div class="label">Rate Pressure 計算結果</div>
                 <div class="mono">Source = ${r.rate_pressure_source || "missing"}</div>
                 <div class="mono">Basket RP = ${fmt(r.rate_pressure_score_basket)}，RatePressureAdj = ${fmt(r.rate_pressure_adj)}</div>
-                <div class="mono">股票明細：${Array.isArray(r.rate_pressure_stocks) ? r.rate_pressure_stocks.map(x => `${x.symbol} RP=${fmt(x.rate_pressure_score)} | IV=${fmt(x.iv_30d_atm_pct)} | Skew=${fmt(x.put_skew_30d_vol_points)} | Demand=${fmt(x.demand_score)} | Driver=${x.rate_driver_label || "-"} | Formula=${x.rate_pressure_formula_text || "-"}`).join("
-") : "-"}</div>
+                <div class="mono">股票明細：${Array.isArray(r.rate_pressure_stocks) ? r.rate_pressure_stocks.map(x => `${x.symbol} RP=${fmt(x.rate_pressure_score)} | IV=${fmt(x.iv_30d_atm_pct)} | Skew=${fmt(x.put_skew_30d_vol_points)} | Demand=${fmt(x.demand_score)} | Driver=${x.rate_driver_label || "-"} | Formula=${x.rate_pressure_formula_text || "-"}`).join("\n") : "-"}</div>
               </div>
             </div>
           </div>
