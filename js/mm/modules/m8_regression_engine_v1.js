@@ -10,7 +10,7 @@
 (function (global) {
   "use strict";
 
-  const VERSION = "m8_regression_engine_v2_small_template_surface_20260509";
+  const VERSION = "m8_regression_engine_v3_fast_market_convergence_20260510";
 
   function toNum(v, d = 0) {
     const n = Number(v);
@@ -911,11 +911,18 @@
       const trigger = overlayEngine.evaluateOverlayTrigger(historyForOverlay);
       const cleanGlobalFair = pickNum(row.clean_global_fair, row.new_fair_rate);
       const oldFair = getOldFairRate(row);
+
       // ------------------------------------------------------------------
       // v3 Fast Market Convergence Engine
       // β is NOT smoothing.
-      // β is market emotion convergence speed.
-      // Final Fair always converges toward Market Coupon.
+      // β is the market emotion convergence speed.
+      //
+      // M8 Fair Rate = user's preference / structural anchor.
+      // New Fair Rate = long-term global regression / small-template surface.
+      // Final Fair Rate = short-term market fair rate.
+      //
+      // Critical rule:
+      // Final Fair must always converge toward Market Coupon.
       // ------------------------------------------------------------------
 
       const marketGap =
@@ -932,15 +939,21 @@
 
       // --------------------------------------------------
       // FCN Market Regime Convergence
+      // Strategy:
+      // gap < 2%   -> 60%
+      // gap < 10%  -> 85%
+      // gap < 20%  -> 95%
+      // gap >= 20% -> 99%
+      //
       // Goal:
       // Fast catch-up, not slow smoothing.
       // --------------------------------------------------
 
-      if (gapPct > 20) {
+      if (gapPct >= 20) {
         convergenceStrength = 0.99;
-      } else if (gapPct > 10) {
+      } else if (gapPct >= 10) {
         convergenceStrength = 0.95;
-      } else if (gapPct > 2) {
+      } else if (gapPct >= 2) {
         convergenceStrength = 0.85;
       } else {
         convergenceStrength = 0.60;
@@ -957,7 +970,8 @@
           marketGap * convergenceStrength;
       }
 
-      // β display purpose only
+      // β display purpose only.
+      // It now represents market convergence strength, not regression beta.
       const beta = round2(convergenceStrength);
 
       const gapBefore = coupon !== null && cleanGlobalFair !== null ? coupon - cleanGlobalFair : null;
@@ -982,7 +996,7 @@
         residual_std: trigger.residual_std,
         residual_avg_gap_pct: trigger.avg_gap_pct,
         final_fair_rate: round2(finalFairRate),
-        final_fair_method: "Market Convergence: New Fair + (Market - New Fair) × convergenceStrength",
+        final_fair_method: "Market Convergence: Final Fair = New Fair + (Market - New Fair) × convergenceStrength",
         market_gap: round2(marketGap),
         gap_pct: round2(gapPct),
         convergence_strength: round2(convergenceStrength),
