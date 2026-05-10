@@ -1,446 +1,479 @@
-{
-  "generated_at": "2026-05-08",
-  "records": [
-    {
-      "source": "sinopac",
-      "product_id": "FCN2601750",
-      "symbols": ["MU"],
-      "coupon_pct": 9.95,
-      "tenor_month": 4,
-      "strike_pct": 70,
-      "ki_pct": null,
-      "barrier_type": "NA",
-      "memory_type": "monthly",
-      "upstream_bank": "BARCLAYS",
-      "pricing_style": "close"
-    },
-    {
-      "source": "sinopac",
-      "product_id": "FCN2601739",
-      "symbols": ["SNDK"],
-      "coupon_pct": 11.28,
-      "tenor_month": 4,
-      "strike_pct": 55,
-      "ki_pct": 55,
-      "barrier_type": "AKI",
-      "memory_type": "monthly",
-      "upstream_bank": "JPM",
-      "pricing_style": "close"
-    },
-    {
-      "source": "sinopac",
-      "product_id": "FCN2601740",
-      "symbols": ["SNDK"],
-      "coupon_pct": 26.03,
-      "tenor_month": 4,
-      "strike_pct": 65,
-      "ki_pct": 65,
-      "barrier_type": "AKI",
-      "memory_type": "monthly",
-      "upstream_bank": "JPM",
-      "pricing_style": "close"
-    },
-    {
-      "source": "sinopac",
-      "product_id": "FCN2601741",
-      "symbols": ["MU", "INTC", "QCOM"],
-      "coupon_pct": 19.92,
-      "tenor_month": 6,
-      "strike_pct": 65,
-      "ki_pct": 50,
-      "barrier_type": "EKI",
-      "memory_type": "monthly",
-      "upstream_bank": "DBS",
-      "pricing_style": "close"
-    },
-    {
-      "source": "sinopac",
-      "product_id": "FCN2601745",
-      "symbols": ["TSM", "INTC", "AMD"],
-      "coupon_pct": 20.57,
-      "tenor_month": 9,
-      "strike_pct": 70,
-      "ki_pct": 60,
-      "barrier_type": "EKI",
-      "memory_type": "monthly",
-      "upstream_bank": "GS",
-      "pricing_style": "open"
-    },
-    {
-      "source": "sinopac",
-      "product_id": "FCN2601755",
-      "symbols": ["TSM", "TSLA", "MU"],
-      "coupon_pct": 12.22,
-      "tenor_month": 6,
-      "strike_pct": 60,
-      "ki_pct": 55,
-      "barrier_type": "EKI",
-      "memory_type": "monthly",
-      "upstream_bank": "GS",
-      "pricing_style": "open"
-    },
-    {
-      "source": "sinopac",
-      "product_id": "FCN2601691",
-      "symbols": ["TSLA", "MU", "INTC"],
-      "coupon_pct": 18.54,
-      "tenor_month": 4,
-      "strike_pct": 65,
-      "ki_pct": 50,
-      "barrier_type": "AKI",
-      "memory_type": "monthly",
-      "upstream_bank": "NOMURA",
-      "pricing_style": "open"
-    },
-    {
-      "source": "sinopac",
-      "product_id": "FCN2601530",
-      "symbols": ["TSM"],
-      "coupon_pct": 11.41,
-      "tenor_month": 2,
-      "strike_pct": 90,
-      "ki_pct": null,
-      "barrier_type": "NA",
-      "memory_type": "monthly",
-      "upstream_bank": "GS",
-      "pricing_style": "close"
-    },
-    {
-      "source": "sinopac",
-      "product_id": "FCN2601757",
-      "symbols": ["QCOM", "AMZN", "GOOG"],
-      "coupon_pct": 12.00,
-      "tenor_month": 4,
-      "strike_pct": 72.7,
-      "ki_pct": null,
-      "barrier_type": "NA",
-      "memory_type": "monthly",
-      "upstream_bank": "NOMURA",
-      "pricing_style": "close"
-    },
-
-    {
-      "source": "fubon",
-      "product_id": "FCN765N",
-      "symbols": ["NVDA", "TSM", "TSLA"],
-      "coupon_pct": 15.00,
-      "tenor_month": 12,
-      "strike_pct": 70.71,
-      "ki_pct": 65,
-      "barrier_type": "EKI",
-      "memory_type": "daily",
-      "upstream_bank": "BBVA",
-      "pricing_style": "close"
-    },
-    {
-      "source": "fubon",
-      "product_id": "FCN576N",
-      "symbols": ["AVGO", "NVDA", "TSM"],
-      "coupon_pct": 16.41,
-      "tenor_month": 6,
-      "strike_pct": 85,
-      "ki_pct": 75,
-      "barrier_type": "AKI",
-      "memory_type": "daily",
-      "upstream_bank": "DBS",
-      "pricing_style": "close"
-    },
-    {
-      "source": "fubon",
-      "product_id": "FCN783N",
-      "symbols": ["AMD", "GOOGL", "NVDA", "TSLA", "TSM"],
-      "coupon_pct": 18.46,
-      "tenor_month": 9,
-      "strike_pct": 65,
-      "ki_pct": 57,
-      "barrier_type": "EKI",
-      "memory_type": "daily",
-      "upstream_bank": "NATIXIS",
-      "pricing_style": "vwap"
-    },
-    {
-      "source": "fubon",
-      "product_id": "FCN779N",
-      "symbols": ["NVDA", "TSM", "AVGO", "MU"],
-      "coupon_pct": 18.00,
-      "tenor_month": 6,
-      "strike_pct": 60.97,
-      "ki_pct": 50,
-      "barrier_type": "AKI",
-      "memory_type": "daily",
-      "upstream_bank": "UBS",
-      "pricing_style": "open"
-    },
-    {
-      "source": "fubon",
-      "product_id": "FCN785N",
-      "symbols": ["NVDA", "ORCL", "TSLA"],
-      "coupon_pct": 18.00,
-      "tenor_month": 6,
-      "strike_pct": 70,
-      "ki_pct": 55,
-      "barrier_type": "AKI",
-      "memory_type": "daily",
-      "upstream_bank": "NOMURA",
-      "pricing_style": "vwap"
-    }
-  ]
-},
-{
-  "generated_at": "2026-05-07",
-  "base_currency": "USD",
-  "source": "manual_market_quotes_from_line_and_sabrina",
-  "records": [
-    {
-      "record_id": "MKT_20260507_001",
-      "basket_type": "conservative_plus",
-      "symbols": ["TSM", "NVDA", "AVGO"],
-      "coupon_pct": 12.86,
-      "strike_pct": 75,
-      "ki_pct": 65,
-      "upside_pct": 95,
-      "tenor_month": 4,
-      "barrier_type": "AKI",
-      "memory": "daily_memory",
-      "bank": "BARCLAYS",
-      "pricing_type": "VWAP",
-      "market_style": "tight",
-      "market_comment": "3檔高品質AI核心，75/65僅12.86%，代表市場偏tight。",
-      "risk_level": "conservative_plus"
-    },
-    {
-      "record_id": "MKT_20260507_002",
-      "basket_type": "rational_core",
-      "symbols": ["AAPL", "NVDA", "TSM"],
-      "coupon_pct": 15.0,
-      "strike_pct": 79.54,
-      "ki_pct": null,
-      "upside_pct": 100,
-      "tenor_month": 6,
-      "barrier_type": "NA",
-      "memory": "daily_memory",
-      "bank": "DBS",
-      "pricing_type": "OPEN",
-      "market_style": "neutral",
-      "market_comment": "AAPL加入後，市場願意給15%，但strike已接近80%。",
-      "risk_level": "rational"
-    },
-    {
-      "record_id": "MKT_20260507_003",
-      "basket_type": "aggressive",
-      "symbols": ["NVDA", "TSM"],
-      "coupon_pct": 17.79,
-      "strike_pct": 85,
-      "ki_pct": 75,
-      "upside_pct": 100,
-      "tenor_month": 3,
-      "barrier_type": "AKI",
-      "memory": "daily_memory",
-      "bank": "NOMURA",
-      "pricing_type": "VWAP",
-      "market_style": "loose",
-      "market_comment": "雙標高品質AI股即可接近18%，市場對AI核心接受度很高。",
-      "risk_level": "rational_plus"
-    },
-    {
-      "record_id": "MKT_20260507_004",
-      "basket_type": "rational_plus",
-      "symbols": ["AMD", "MSFT", "NVDA"],
-      "coupon_pct": 15.33,
-      "strike_pct": 70,
-      "ki_pct": 65,
-      "upside_pct": 100,
-      "tenor_month": 6,
-      "barrier_type": "EKI",
-      "memory": "daily_memory",
-      "bank": "GS",
-      "pricing_type": "VWAP",
-      "market_style": "neutral",
-      "market_comment": "AMD提供波動率，MSFT穩定品質，NVDA拉高收益。",
-      "risk_level": "rational"
-    },
-    {
-      "record_id": "MKT_20260507_005",
-      "basket_type": "aggressive_mix",
-      "symbols": ["AVGO", "MU", "NVDA", "TSLA", "TSM"],
-      "coupon_pct": 22.0,
-      "strike_pct": 63.73,
-      "ki_pct": 55,
-      "upside_pct": 95,
-      "tenor_month": 6,
-      "barrier_type": "EKI",
-      "memory": "daily_memory",
-      "bank": "BBVA",
-      "pricing_type": "VWAP",
-      "market_style": "loose",
-      "market_comment": "TSLA+MU+NVDA高波動組合，市場願意給22%。",
-      "risk_level": "aggressive"
-    },
-    {
-      "record_id": "MKT_20260507_006",
-      "basket_type": "rational_plus",
-      "symbols": ["AVGO", "GOOG", "NVDA", "TSLA"],
-      "coupon_pct": 18.0,
-      "strike_pct": 69,
-      "ki_pct": 65,
-      "upside_pct": 100,
-      "tenor_month": 12,
-      "barrier_type": "EKI",
-      "memory": "daily_memory",
-      "bank": "DBS",
-      "pricing_type": "VWAP",
-      "market_style": "neutral",
-      "market_comment": "GOOG穩定品質，TSLA提供vol boost，12M仍可18%。",
-      "risk_level": "rational_plus"
-    },
-    {
-      "record_id": "MKT_20260507_007",
-      "basket_type": "aggressive_mix",
-      "symbols": ["AVGO", "AMD", "NVDA", "TSLA", "ASML"],
-      "coupon_pct": 17.3,
-      "strike_pct": 65,
-      "ki_pct": 60,
-      "upside_pct": 90,
-      "tenor_month": 12,
-      "barrier_type": "AKI",
-      "memory": "daily_memory",
-      "bank": "NATIXIS",
-      "pricing_type": "VWAP",
-      "market_style": "tight",
-      "market_comment": "雖然含TSLA與AMD，但12M長天期壓低coupon。",
-      "risk_level": "rational_plus"
-    },
-    {
-      "record_id": "MKT_20260507_008",
-      "basket_type": "rational",
-      "symbols": ["INTC", "MU", "TSM"],
-      "coupon_pct": 18.0,
-      "strike_pct": 68.52,
-      "ki_pct": 70,
-      "upside_pct": 100,
-      "tenor_month": 3,
-      "barrier_type": "EKI",
-      "memory": "daily_memory",
-      "bank": "NOMURA",
-      "pricing_type": "OPEN",
-      "market_style": "neutral",
-      "market_comment": "INTC與MU波動率仍高，3M短天期可給18%。",
-      "risk_level": "rational_plus"
-    },
-    {
-      "record_id": "MKT_20260507_009",
-      "basket_type": "conservative_plus",
-      "symbols": ["AMAT", "NFLX"],
-      "coupon_pct": 16.9,
-      "strike_pct": 75,
-      "ki_pct": 65,
-      "upside_pct": 100,
-      "tenor_month": 7,
-      "barrier_type": "EKI",
-      "memory": "daily_memory",
-      "bank": "CA",
-      "pricing_type": "VWAP",
-      "market_style": "neutral",
-      "market_comment": "雙標結構提高集中風險，但市場仍願給16.9%。",
-      "risk_level": "rational"
-    },
-    {
-      "record_id": "MKT_20260507_010",
-      "basket_type": "aggressive_mix",
-      "symbols": ["NVDA", "TSM", "MU"],
-      "coupon_pct": 19.31,
-      "strike_pct": 65,
-      "ki_pct": 55,
-      "upside_pct": 100,
-      "tenor_month": 9,
-      "barrier_type": "EKI",
-      "memory": "daily_memory",
-      "bank": "BBVA",
-      "pricing_type": "VWAP",
-      "market_style": "loose",
-      "market_comment": "MU加入後yield顯著提高，55KI代表市場接受高風險。",
-      "risk_level": "aggressive"
-    },
-    {
-      "record_id": "MKT_20260507_011",
-      "basket_type": "conservative_plus",
-      "symbols": ["AMZN", "GOOG", "NVDA", "TSM"],
-      "coupon_pct": 15.33,
-      "strike_pct": 80,
-      "ki_pct": 70,
-      "upside_pct": 105,
-      "tenor_month": 6,
-      "barrier_type": "AKI",
-      "memory": "daily_memory",
-      "bank": "DBS",
-      "pricing_type": "VWAP",
-      "market_style": "tight",
-      "market_comment": "超高品質AI megacap basket，需80 strike才有15%。",
-      "risk_level": "conservative_plus"
-    },
-    {
-      "record_id": "MKT_20260507_012",
-      "basket_type": "conservative",
-      "symbols": ["ADBE", "AMAT", "ASML", "BBY"],
-      "coupon_pct": 12.0,
-      "strike_pct": 75.75,
-      "ki_pct": null,
-      "upside_pct": 95,
-      "tenor_month": 3,
-      "barrier_type": "NA",
-      "memory": "daily_memory",
-      "bank": "MS",
-      "pricing_type": "VWAP",
-      "market_style": "tight",
-      "market_comment": "成熟科技股組合，市場僅願給12%。",
-      "risk_level": "conservative"
-    },
-    {
-      "record_id": "MKT_20260507_013",
-      "basket_type": "conservative_plus",
-      "symbols": ["GOOG", "NVDA", "TSLA", "TSM"],
-      "coupon_pct": 13.76,
-      "strike_pct": 75,
-      "ki_pct": 65,
-      "upside_pct": 105,
-      "tenor_month": 6,
-      "barrier_type": "AKI",
-      "memory": "daily_memory",
-      "bank": "DBS",
-      "pricing_type": "VWAP",
-      "market_style": "tight",
-      "market_comment": "GOOG與TSM穩定結構，但TSLA拉低市場保守接受度。",
-      "risk_level": "conservative_plus"
-    },
-    {
-      "record_id": "MKT_20260507_014",
-      "basket_type": "conservative",
-      "symbols": ["NVDA", "MU", "TSLA"],
-      "coupon_pct": 10.0,
-      "strike_pct": 80,
-      "ki_pct": 75,
-      "upside_pct": 100,
-      "tenor_month": 1,
-      "barrier_type": "AKI",
-      "memory": "monthly_no_memory",
-      "bank": "CA",
-      "pricing_type": "CLOSE",
-      "market_style": "very_tight",
-      "market_comment": "極短天期與高strike壓低收益。",
-      "risk_level": "conservative"
-    }
-  ],
-  "market_summary": {
-    "market_style": "neutral_to_tight",
-    "ai_appetite": "high",
-    "best_yield_area": "15%~18%",
-    "tightness_comment": "高品質AI股仍可做15%~18%，但strike普遍提高至70~80。",
-    "market_observation": [
-      "TSLA、MU、AMD仍是主要vol booster。",
-      "GOOG、TSM、MSFT提供穩定性。",
-      "市場對AI megacap接受度仍高。",
-      "12M長天期明顯壓低coupon。",
-      "高品質basket需要更高strike才能維持15%。"
-    ]
+[
+  {
+    "generated_at": "2026-05-08",
+    "source": "sinopac",
+    "product_id": "FCN2601750",
+    "symbols": [
+      "MU"
+    ],
+    "coupon_pct": 9.95,
+    "tenor_month": 4,
+    "strike_pct": 70,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "memory_type": "monthly",
+    "upstream_bank": "BARCLAYS"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "sinopac",
+    "product_id": "FCN2601739",
+    "symbols": [
+      "SNDK"
+    ],
+    "coupon_pct": 11.28,
+    "tenor_month": 4,
+    "strike_pct": 55,
+    "ki_pct": 55,
+    "barrier_type": "AKI",
+    "memory_type": "monthly",
+    "upstream_bank": "JPM"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "sinopac",
+    "product_id": "FCN2601740",
+    "symbols": [
+      "SNDK"
+    ],
+    "coupon_pct": 26.03,
+    "tenor_month": 4,
+    "strike_pct": 65,
+    "ki_pct": 65,
+    "barrier_type": "AKI",
+    "memory_type": "monthly",
+    "upstream_bank": "JPM"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "sinopac",
+    "product_id": "FCN2601741",
+    "symbols": [
+      "MU",
+      "INTC",
+      "QCOM"
+    ],
+    "coupon_pct": 19.92,
+    "tenor_month": 6,
+    "strike_pct": 65,
+    "ki_pct": 50,
+    "barrier_type": "EKI",
+    "memory_type": "monthly",
+    "upstream_bank": "DBS"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "sinopac",
+    "product_id": "FCN2601745",
+    "symbols": [
+      "TSM",
+      "INTC",
+      "AMD"
+    ],
+    "coupon_pct": 20.57,
+    "tenor_month": 9,
+    "strike_pct": 70,
+    "ki_pct": 60,
+    "barrier_type": "EKI",
+    "memory_type": "monthly",
+    "upstream_bank": "GS"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "sinopac",
+    "product_id": "FCN2601755",
+    "symbols": [
+      "TSM",
+      "TSLA",
+      "MU"
+    ],
+    "coupon_pct": 12.22,
+    "tenor_month": 6,
+    "strike_pct": 60,
+    "ki_pct": 55,
+    "barrier_type": "EKI",
+    "memory_type": "monthly",
+    "upstream_bank": "GS"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "sinopac",
+    "product_id": "FCN2601691",
+    "symbols": [
+      "TSLA",
+      "MU",
+      "INTC"
+    ],
+    "coupon_pct": 18.54,
+    "tenor_month": 4,
+    "strike_pct": 65,
+    "ki_pct": 50,
+    "barrier_type": "AKI",
+    "memory_type": "monthly",
+    "upstream_bank": "NOMURA"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "sinopac",
+    "product_id": "FCN2601530",
+    "symbols": [
+      "TSM"
+    ],
+    "coupon_pct": 11.41,
+    "tenor_month": 2,
+    "strike_pct": 90,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "memory_type": "monthly",
+    "upstream_bank": "GS"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "sinopac",
+    "product_id": "FCN2601757",
+    "symbols": [
+      "QCOM",
+      "AMZN",
+      "GOOG"
+    ],
+    "coupon_pct": 12.0,
+    "tenor_month": 4,
+    "strike_pct": 72.7,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "memory_type": "monthly",
+    "upstream_bank": "NOMURA"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "fubon",
+    "product_id": "FCN765N",
+    "symbols": [
+      "NVDA",
+      "TSM",
+      "TSLA"
+    ],
+    "coupon_pct": 15.0,
+    "tenor_month": 12,
+    "strike_pct": 70.71,
+    "ki_pct": 65,
+    "barrier_type": "EKI",
+    "memory_type": "daily",
+    "upstream_bank": "BBVA"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "fubon",
+    "product_id": "FCN576N",
+    "symbols": [
+      "AVGO",
+      "NVDA",
+      "TSM"
+    ],
+    "coupon_pct": 16.41,
+    "tenor_month": 6,
+    "strike_pct": 85,
+    "ki_pct": 75,
+    "barrier_type": "AKI",
+    "memory_type": "daily",
+    "upstream_bank": "DBS"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "fubon",
+    "product_id": "FCN783N",
+    "symbols": [
+      "AMD",
+      "GOOGL",
+      "NVDA",
+      "TSLA",
+      "TSM"
+    ],
+    "coupon_pct": 18.46,
+    "tenor_month": 9,
+    "strike_pct": 65,
+    "ki_pct": 57,
+    "barrier_type": "EKI",
+    "memory_type": "daily",
+    "upstream_bank": "NATIXIS"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "fubon",
+    "product_id": "FCN779N",
+    "symbols": [
+      "NVDA",
+      "TSM",
+      "AVGO",
+      "MU"
+    ],
+    "coupon_pct": 18.0,
+    "tenor_month": 6,
+    "strike_pct": 60.97,
+    "ki_pct": 50,
+    "barrier_type": "AKI",
+    "memory_type": "daily",
+    "upstream_bank": "UBS"
+  },
+  {
+    "generated_at": "2026-05-08",
+    "source": "fubon",
+    "product_id": "FCN785N",
+    "symbols": [
+      "NVDA",
+      "ORCL",
+      "TSLA"
+    ],
+    "coupon_pct": 18.0,
+    "tenor_month": 6,
+    "strike_pct": 70,
+    "ki_pct": 55,
+    "barrier_type": "AKI",
+    "memory_type": "daily",
+    "upstream_bank": "NOMURA"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_001",
+    "symbols": [
+      "TSM",
+      "NVDA",
+      "AVGO"
+    ],
+    "coupon_pct": 12.86,
+    "tenor_month": 4,
+    "strike_pct": 75,
+    "ki_pct": 65,
+    "barrier_type": "AKI",
+    "memory_type": "daily",
+    "upstream_bank": "BARCLAYS"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_002",
+    "symbols": [
+      "AAPL",
+      "NVDA",
+      "TSM"
+    ],
+    "coupon_pct": 15.0,
+    "tenor_month": 6,
+    "strike_pct": 79.54,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "memory_type": "daily",
+    "upstream_bank": "DBS"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_003",
+    "symbols": [
+      "NVDA",
+      "TSM"
+    ],
+    "coupon_pct": 17.79,
+    "tenor_month": 3,
+    "strike_pct": 85,
+    "ki_pct": 75,
+    "barrier_type": "AKI",
+    "memory_type": "daily",
+    "upstream_bank": "NOMURA"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_004",
+    "symbols": [
+      "AMD",
+      "MSFT",
+      "NVDA"
+    ],
+    "coupon_pct": 15.33,
+    "tenor_month": 6,
+    "strike_pct": 70,
+    "ki_pct": 65,
+    "barrier_type": "EKI",
+    "memory_type": "daily",
+    "upstream_bank": "GS"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_005",
+    "symbols": [
+      "AVGO",
+      "MU",
+      "NVDA",
+      "TSLA",
+      "TSM"
+    ],
+    "coupon_pct": 22.0,
+    "tenor_month": 6,
+    "strike_pct": 63.73,
+    "ki_pct": 55,
+    "barrier_type": "EKI",
+    "memory_type": "daily",
+    "upstream_bank": "BBVA"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_006",
+    "symbols": [
+      "AVGO",
+      "GOOG",
+      "NVDA",
+      "TSLA"
+    ],
+    "coupon_pct": 18.0,
+    "tenor_month": 12,
+    "strike_pct": 69,
+    "ki_pct": 65,
+    "barrier_type": "EKI",
+    "memory_type": "daily",
+    "upstream_bank": "DBS"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_007",
+    "symbols": [
+      "AVGO",
+      "AMD",
+      "NVDA",
+      "TSLA",
+      "ASML"
+    ],
+    "coupon_pct": 17.3,
+    "tenor_month": 12,
+    "strike_pct": 65,
+    "ki_pct": 60,
+    "barrier_type": "AKI",
+    "memory_type": "daily",
+    "upstream_bank": "NATIXIS"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_008",
+    "symbols": [
+      "INTC",
+      "MU",
+      "TSM"
+    ],
+    "coupon_pct": 18.0,
+    "tenor_month": 3,
+    "strike_pct": 68.52,
+    "ki_pct": 70,
+    "barrier_type": "EKI",
+    "memory_type": "daily",
+    "upstream_bank": "NOMURA"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_009",
+    "symbols": [
+      "AMAT",
+      "NFLX"
+    ],
+    "coupon_pct": 16.9,
+    "tenor_month": 7,
+    "strike_pct": 75,
+    "ki_pct": 65,
+    "barrier_type": "EKI",
+    "memory_type": "daily",
+    "upstream_bank": "CA"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_010",
+    "symbols": [
+      "NVDA",
+      "TSM",
+      "MU"
+    ],
+    "coupon_pct": 19.31,
+    "tenor_month": 9,
+    "strike_pct": 65,
+    "ki_pct": 55,
+    "barrier_type": "EKI",
+    "memory_type": "daily",
+    "upstream_bank": "BBVA"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_011",
+    "symbols": [
+      "AMZN",
+      "GOOG",
+      "NVDA",
+      "TSM"
+    ],
+    "coupon_pct": 15.33,
+    "tenor_month": 6,
+    "strike_pct": 80,
+    "ki_pct": 70,
+    "barrier_type": "AKI",
+    "memory_type": "daily",
+    "upstream_bank": "DBS"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_012",
+    "symbols": [
+      "ADBE",
+      "AMAT",
+      "ASML",
+      "BBY"
+    ],
+    "coupon_pct": 12.0,
+    "tenor_month": 3,
+    "strike_pct": 75.75,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "memory_type": "daily",
+    "upstream_bank": "MS"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_013",
+    "symbols": [
+      "GOOG",
+      "NVDA",
+      "TSLA",
+      "TSM"
+    ],
+    "coupon_pct": 13.76,
+    "tenor_month": 6,
+    "strike_pct": 75,
+    "ki_pct": 65,
+    "barrier_type": "AKI",
+    "memory_type": "daily",
+    "upstream_bank": "DBS"
+  },
+  {
+    "generated_at": "2026-05-07",
+    "source": "manual_market_quotes",
+    "product_id": "MKT_20260507_014",
+    "symbols": [
+      "NVDA",
+      "MU",
+      "TSLA"
+    ],
+    "coupon_pct": 10.0,
+    "tenor_month": 1,
+    "strike_pct": 80,
+    "ki_pct": 75,
+    "barrier_type": "AKI",
+    "memory_type": "monthly",
+    "upstream_bank": "CA"
   }
-}
+]
