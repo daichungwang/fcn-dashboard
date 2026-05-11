@@ -31,7 +31,7 @@
         <button id="downloadSurfaceBtn" class="primary">Export M8 Template Surface</button>
         <input id="maxRows" type="number" min="1" placeholder="Max rows optional"/>
       </div>
-      <div class="small">讀取：data/fcn_pool.json + data/fcn_pool_old.json + data/mm/market_fcn_history.json。目的不是展示資料，而是讓 M8 更接近市場定價。</div>
+      <div class="small">讀取：data/fcn_pool.json + data/fcn_pool_old.json + data/mm/market_fcn_history.json。Dashboard 分析層保留 all data；Export Surface 實際定價層只使用近 3 個月 current_pool + market_history，並提供 1W→1M→2M→3M fallback。</div>
     </div>
   </details>
 
@@ -1134,7 +1134,7 @@ function renderTemplateDecisionDetail(t){
       <h3>${escapeHtml(t.template)}</h3>
       <div class="decision-section"><b>市場發生什麼事：</b><br>${escapeHtml(templateMarketText(t, oldGapPct, newGapPct, finalGapPct))}</div>
       <div class="decision-section"><b>M8 哪裡要檢查：</b><br>Market vs Old Fair gap = ${pct(oldGap)} / ${pct(oldGapPct)}；Market vs New Fair gap = ${pct(newGap)} / ${pct(newGapPct)}。${oldAccurate && newOff ? " 舊 Fair 準，但 New Fair 偏離，所以不能說 M8 整體不準。" : ""}</div>
-      <div class="decision-section"><b>做了什麼修正：</b><br>New Fair × β = Final Fair；目前 β=${fmt(t.avg_beta)}，Overlay State=${escapeHtml(t.overlay_state||'NONE')}，Confidence=${fmt(t.avg_confidence)}。</div>
+      <div class="decision-section"><b>做了什麼修正：</b><br>New Fair + β × (Market Coupon - New Fair) = Final Fair；目前 β=${fmt(t.avg_beta)}，Overlay State=${escapeHtml(t.overlay_state||'NONE')}，Confidence=${fmt(t.avg_confidence)}。</div>
       <div class="decision-section"><b>修正後結果：</b><br>Market vs Final Fair gap = ${pct(finalGap)} / ${pct(finalGapPct)}；Improvement vs New Fair = ${pct(t.improvement_pct)}。${escapeHtml(verdict)}</div>
       <div class="proof-grid">
         <div class="proof-box"><div class="label">Market Coupon</div><div class="value">${pct(t.avg_market_coupon)}</div></div>
@@ -1160,7 +1160,7 @@ function renderTemplateDecisionDetail(t){
       <div class="trace-row"><span>Final Fair-AVG after β</span><b>${pct(t.avg_final_fair_rate)}</b></div>
       <div class="trace-row"><span>Gap After = Market - Final Fair</span><b>${pct(finalGap)} / ${pct(finalGapPct)}</b></div>
       <div class="trace-row"><span>Improvement vs New Fair</span><b>${pct(t.improvement_pct)}</b></div>
-      <div class="trace-formula">Final Fair-AVG = Old Fair + β × (New Fair-AVG - Old Fair)<br>${pct(t.avg_final_fair_rate)} ≈ ${pct(t.avg_fair_rate)} + ${fmt(t.avg_beta)} × (${pct(t.avg_new_fair_rate)} - ${pct(t.avg_fair_rate)})<br><br>判讀順序：先看 Market vs Old Fair 是否本來就準；再看 New Fair-AVG 是否偏離；最後看 β 後的 Final Fair-AVG 是否把 gap 縮小。</div>`;
+      <div class="trace-formula">Final Fair-AVG = New Fair-AVG + β × (Market Coupon - New Fair-AVG)<br>${pct(t.avg_final_fair_rate)} ≈ ${pct(t.avg_new_fair_rate)} + ${fmt(t.avg_beta)} × (${pct(t.avg_market_coupon)} - ${pct(t.avg_new_fair_rate)})<br><br>判讀順序：先看 Market vs Old Fair 是否本來就準；再看 New Fair-AVG 是否偏離；最後看 β 後的 Final Fair-AVG 是否把 gap 縮小。</div>`;
   }
 }
 
@@ -1222,6 +1222,43 @@ function getRowFinalFair(row) {
   return pickNum(row.final_fair_rate, row.avg_final_fair_rate, getRowNewFair(row));
 }
 
+function getRowObservationDate(row) {
+  return row?.generated_at || row?.entry_time || row?.created_time || row?.date || row?.issue_date || row?.trade_date || "";
+}
+
+function parseObservationDate(row) {
+  const raw = getRowObservationDate(row);
+  if (!raw) return null;
+  const d = new Date(raw);
+  return Number.isFinite(d.getTime()) ? d : null;
+}
+
+function isoDateOnly(d) {
+  if (!(d instanceof Date) || !Number.isFinite(d.getTime())) return "";
+  return d.toISOString().slice(0, 10);
+}
+
+function getExportReferenceDate(rows) {
+  const dates = (rows || [])
+    .filter(r => (r.source_type || "") !== "old_pool")
+    .map(parseObservationDate)
+    .filter(Boolean)
+    .sort((a, b) => b.getTime() - a.getTime());
+  return dates[0] || new Date();
+}
+
+function isRecentExportRow(row, referenceDate, days) {
+  if ((row?.source_type || "") === "old_pool") return false;
+  const d = parseObservationDate(row);
+  if (!d) return false;
+  const ageDays = (referenceDate.getTime() - d.getTime()) / 86400000;
+  return ageDays >= -1 && ageDays <= days;
+}
+
+function filterRecentSurfaceRows(rows, referenceDate, days) {
+  return (rows || []).filter(r => isRecentExportRow(r, referenceDate, days));
+}
+
 function addSurfaceObservation(bucket, row) {
   const market = getRowMarketCoupon(row);
   const oldFair = getRowOldFair(row);
@@ -1241,6 +1278,15 @@ function addSurfaceObservation(bucket, row) {
 
   const id = row.fcn_id || row.record_id || row.product_id || "";
   if (id && bucket.sample_ids.length < 20) bucket.sample_ids.push(id);
+
+  const sourceType = row.source_type || row.source_name || "unknown";
+  bucket.source_distribution[sourceType] = (bucket.source_distribution[sourceType] || 0) + 1;
+  const d = parseObservationDate(row);
+  if (d) {
+    const ts = d.getTime();
+    if (!bucket.latest_observation_ts || ts > bucket.latest_observation_ts) bucket.latest_observation_ts = ts;
+    if (!bucket.oldest_observation_ts || ts < bucket.oldest_observation_ts) bucket.oldest_observation_ts = ts;
+  }
 }
 
 function createSurfaceBucket(templateId, extra={}) {
@@ -1259,6 +1305,9 @@ function createSurfaceBucket(templateId, extra={}) {
     count_final: 0,
     count_beta: 0,
     count_confidence: 0,
+    source_distribution: {},
+    latest_observation_ts: null,
+    oldest_observation_ts: null,
     sample_ids: []
   };
 }
@@ -1267,13 +1316,20 @@ function finalizeSurfaceBucket(bucket) {
   bucket.avg_market_coupon = round2(bucket.sum_market_coupon / bucket.count);
   bucket.avg_old_fair_rate = bucket.count_old ? round2(bucket.sum_old_fair_rate / bucket.count_old) : null;
   bucket.avg_new_fair_rate = bucket.count_new ? round2(bucket.sum_new_fair_rate / bucket.count_new) : bucket.avg_market_coupon;
+
+  // v3 pricing formula source values:
+  // Final Fair = New Fair + β × (Market Coupon - New Fair)
+  // avg_final_fair_rate here is informational only; m8_batch recomputes from avg_market_coupon / avg_new_fair_rate / avg_beta.
   bucket.avg_final_fair_rate = bucket.count_final ? round2(bucket.sum_final_fair_rate / bucket.count_final) : bucket.avg_new_fair_rate;
   bucket.avg_beta = bucket.count_beta ? round2(bucket.sum_beta / bucket.count_beta) : 1;
   bucket.avg_confidence = bucket.count_confidence ? round2(bucket.sum_confidence / bucket.count_confidence) : null;
   bucket.residual_premium = round2(bucket.avg_market_coupon - bucket.avg_new_fair_rate);
   bucket.confidence = bucket.count >= 10 ? "high" : bucket.count >= 3 ? "medium" : "low";
+  bucket.latest_observation_date = bucket.latest_observation_ts ? isoDateOnly(new Date(bucket.latest_observation_ts)) : "";
+  bucket.oldest_observation_date = bucket.oldest_observation_ts ? isoDateOnly(new Date(bucket.oldest_observation_ts)) : "";
   delete bucket.sum_market_coupon; delete bucket.sum_old_fair_rate; delete bucket.sum_new_fair_rate; delete bucket.sum_final_fair_rate;
   delete bucket.sum_beta; delete bucket.sum_confidence; delete bucket.count_old; delete bucket.count_new; delete bucket.count_final; delete bucket.count_beta; delete bucket.count_confidence;
+  delete bucket.latest_observation_ts; delete bucket.oldest_observation_ts;
   return bucket;
 }
 
@@ -1359,27 +1415,44 @@ function createThemeTemplateBucket(themeKey) {
       match_core_symbols: ["TSM", "NVDA", "AVGO"],
       derived: true,
       derived_type: "ETF_SEMI_CORE",
-      source: "derived_from_full_basket"
+      source: "derived_from_recent_observation_pool"
     });
   }
-  return createSurfaceBucket(themeKey, { derived: true, source: "derived_from_full_basket" });
+  return createSurfaceBucket(themeKey, { derived: true, source: "derived_from_recent_observation_pool" });
 }
 
-function buildM8TemplateSurface() {
-  const rows = (REGRESSION?.calibrated_rows || REG_ROWS || DATASET?.rows || []).filter(r => r && (r.status === "ok" || r.market_coupon != null || r.market_rate != null));
+function getSurfaceRowsBase() {
+  return (REGRESSION?.calibrated_rows || REG_ROWS || DATASET?.rows || [])
+    .filter(r => r && (r.status === "ok" || r.market_coupon != null || r.market_rate != null));
+}
+
+function buildM8TemplateSurfaceFromRows(rows, meta = {}) {
   const surface = {
     version: "m8_template_surface_v1",
     generated_at: new Date().toISOString(),
     source: "m8_calibration_dashboard_v1.html",
-    market_window: "calibration_dataset_current",
-    method: "clean_global_surface_plus_template_overlay",
+    market_window: meta.market_window || "recent_observation_pool",
+    window_days: meta.window_days ?? null,
+    reference_date: meta.reference_date || "",
+    observation_count: rows.length,
+    method: "recent_market_observation_surface_newfair_plus_beta_market_gap",
     templates: {},
     small_templates: {},
     theme_templates: {},
     template_dna_rules: getM8TemplateDnaRules(),
     fallback_rules: {
       min_count_for_small_template: 3,
-      match_order: ["exact_small_template", "theme_template", "partial_small_template_with_dna_guard", "parent_template", "global_surface"]
+      min_count_for_theme_template: 1,
+      allow_parent_template_fallback: false,
+      allow_global_surface_fallback: false,
+      max_fallback_window: "3m",
+      match_order: [
+        "same_template_1w",
+        "same_template_1m",
+        "same_template_2m",
+        "same_template_3m",
+        "no_correction_beta_0"
+      ]
     },
     global_surface: createSurfaceBucket("GLOBAL")
   };
@@ -1419,16 +1492,46 @@ function buildM8TemplateSurface() {
   finalizeSurfaceBucket(surface.global_surface);
 
   Object.keys(surface.small_templates).forEach(k => {
-    if (surface.small_templates[k].count < surface.fallback_rules.min_count_for_small_template) {
-      surface.small_templates[k].eligible = false;
-    } else {
-      surface.small_templates[k].eligible = true;
-    }
+    surface.small_templates[k].eligible = surface.small_templates[k].count >= surface.fallback_rules.min_count_for_small_template;
   });
   Object.keys(surface.theme_templates).forEach(k => {
-    surface.theme_templates[k].eligible = surface.theme_templates[k].count >= 1;
+    surface.theme_templates[k].eligible = surface.theme_templates[k].count >= surface.fallback_rules.min_count_for_theme_template;
   });
 
+  return surface;
+}
+
+function buildM8TemplateSurface() {
+  const allRows = getSurfaceRowsBase();
+  const referenceDate = getExportReferenceDate(allRows);
+  const windows = [
+    ["1w", 7],
+    ["1m", 31],
+    ["2m", 62],
+    ["3m", 93]
+  ];
+
+  const surfaceWindows = {};
+  windows.forEach(([label, days]) => {
+    const recentRows = filterRecentSurfaceRows(allRows, referenceDate, days);
+    surfaceWindows[label] = buildM8TemplateSurfaceFromRows(recentRows, {
+      market_window: label,
+      window_days: days,
+      reference_date: isoDateOnly(referenceDate)
+    });
+  });
+
+  const surface = surfaceWindows["3m"];
+  surface.market_window = "3m_export_pricing_surface";
+  surface.reference_date = isoDateOnly(referenceDate);
+  surface.export_policy = {
+    analysis_layer: "dashboard uses all calibration rows including old_pool for historical/regime research",
+    pricing_surface_layer: "exported surface uses current_pool + market_history only, max 3 months",
+    fallback_order: ["1w", "1m", "2m", "3m", "no_correction_beta_0"],
+    no_correction_rule: "If no same/template/theme data exists within 3 months, m8_batch should set beta=0 and Final Fair=New Fair.",
+    formula: "Final Fair = New Fair + beta * (Surface Market Coupon - New Fair)"
+  };
+  surface.surface_windows = surfaceWindows;
   return surface;
 }
 
@@ -1490,3 +1593,4 @@ function escapeHtml(s){
 </script>
 </body>
 </html>
+
