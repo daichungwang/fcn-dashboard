@@ -2888,7 +2888,17 @@
         }
       });
     });
-
+<div class="result-card">
+  <div class="label">Market Coupon Avg</div>
+  <div class="value">
+    ${surfaceMarketCoupon?.toFixed(2) || "--"}%
+  </div>
+</div>
+    const surfaceMarketCoupon =
+  selectedSurface?.avg_market_coupon ||
+  selectedSurface?.surface_market_coupon ||
+  selectedSurface?.market_coupon_avg ||
+  0;
 </script>
 </body>
 </html>
