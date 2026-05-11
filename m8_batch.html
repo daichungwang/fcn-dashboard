@@ -842,6 +842,28 @@
       return 0.60;
     }
 
+
+    function recencyWeight(dateStr) {
+      if (!dateStr) return 0.05;
+
+      const dateText = String(dateStr).slice(0, 10);
+      const quoteDate = new Date(dateText + "T00:00:00");
+      if (Number.isNaN(quoteDate.getTime())) return 0.05;
+
+      const today = new Date();
+      const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const days = Math.floor((todayDate - quoteDate) / 86400000);
+
+      if (days < 0) return 1.00;
+      if (days === 0) return 1.00;
+      if (days === 1) return 0.90;
+      if (days === 2) return 0.75;
+      if (days === 3) return 0.60;
+      if (days <= 5) return 0.40;
+      if (days <= 7) return 0.20;
+      return 0;
+    }
+
     async function loadMarketFcnHistory() {
       try {
         const res = await fetch("./data/mm/market_fcn_history.json?v=20260510_market_flat");
