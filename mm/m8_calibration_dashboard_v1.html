@@ -781,6 +781,27 @@ function getRowSymbolsForTheme(row){
   return normalizeSurfaceSymbols(row?.symbols || row?.basket_symbols_key || row?.basket_display || row?.core_dna_3 || row?.core_dna_2 || []);
 }
 
+function getDnaSafeSubtemplateKey(row, templateId){
+  const symbols = getRowSymbolsForTheme(row);
+  const rawKey = row?.core_dna_3 || row?.core_dna_2 || row?.basket_symbols_key || row?.basket_display || "UNKNOWN";
+  const rawSymbols = normalizeSurfaceSymbols(rawKey);
+  const normalizedTemplate = normalizeTemplateId(templateId);
+
+  // The display key itself must satisfy the parent template DNA.
+  // Example: a C_TSLA row may have core_dna_3 = AVGO+NVDA+TSM,
+  // but because C requires TSLA, the card must show AVGO+NVDA+TSLA+TSM.
+  // Otherwise users will see a non-TSLA sub-template inside the TSLA template.
+  if (passTemplateDna(rawSymbols, normalizedTemplate)) {
+    return normalizeSurfaceKey(rawSymbols);
+  }
+
+  if (symbols.length && passTemplateDna(symbols, normalizedTemplate)) {
+    return normalizeSurfaceKey(symbols);
+  }
+
+  return normalizeSurfaceKey(rawSymbols.length ? rawSymbols : symbols) || "UNKNOWN";
+}
+
 function buildSubtemplateSummary(template){
   const templateId = normalizeTemplateId(template);
   const rows = (REGRESSION?.calibrated_rows || REG_ROWS || [])
@@ -796,7 +817,7 @@ function buildSubtemplateSummary(template){
   const groupTypes = {};
 
   rows.forEach(r=>{
-    const key = r.core_dna_3 || r.core_dna_2 || r.basket_symbols_key || r.basket_display || "UNKNOWN";
+    const key = getDnaSafeSubtemplateKey(r, templateId);
     if(!groups[key]) groups[key]=[];
     groups[key].push(r);
     groupTypes[key] = groupTypes[key] || "small_template";
@@ -1469,9 +1490,3 @@ function escapeHtml(s){
 </script>
 </body>
 </html>
-
-
-
-
-
-
