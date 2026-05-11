@@ -831,12 +831,33 @@
       return best;
     }
 
+    function detectThemeTemplate(symbols) {
+      const set = new Set(normalizeSurfaceSymbols(symbols));
+      const hasEtf = set.has("SMH") || set.has("QQQ");
+      const hasSemiCore = set.has("TSM") || set.has("NVDA") || set.has("AVGO");
+      if (hasEtf && hasSemiCore) return "ETF_SEMI_CORE";
+      return null;
+    }
+
+    function resolveThemeTemplate(symbols) {
+      if (!M8_TEMPLATE_SURFACE?.theme_templates) return null;
+      const themeKey = detectThemeTemplate(symbols);
+      const theme = themeKey ? M8_TEMPLATE_SURFACE.theme_templates?.[themeKey] : null;
+      if (theme && theme.eligible !== false) return { level: "theme_template", template: theme };
+      return null;
+    }
+
     function resolveSurfaceTemplate(symbols) {
       if (!M8_TEMPLATE_SURFACE) return { level: "legacy_fallback", template: null };
       const key = normalizeSurfaceKey(symbols);
       const small = M8_TEMPLATE_SURFACE.small_templates?.[key];
       if (small && small.eligible !== false) return { level: "exact_small_template", template: small };
 
+      const theme = resolveThemeTemplate(symbols);
+      if (theme) return theme;
+
+      // Partial small template is intentionally after theme template.
+      // For SMH/QQQ + TSM/NVDA/AVGO, theme surface should win over random overlap.
       const partial = findBestSurfacePartial(symbols, M8_TEMPLATE_SURFACE.small_templates);
       if (partial) return { level: "partial_small_template", template: partial.template, overlap: partial.overlap };
 
@@ -877,6 +898,8 @@
         surface_matched_key: t.template_id,
         surface_template_id: t.template_id,
         surface_level: match.level,
+        theme_type: t.theme_type || null,
+        request_basket_key: normalizeSurfaceKey(payload.symbols || []),
 
         history_weighted_market_rate: round2(historyMarket),
         new_fair_rate: round2(newFair),
@@ -906,7 +929,7 @@
         confidence: t.avg_confidence ?? t.confidence ?? "low",
         surface_sample_ids: t.sample_ids || [],
 
-        comment: `使用 data/mm/m8_template_surface.json：${match.level} → ${t.template_id}，樣本 ${t.count || 0} 筆；Surface Market=${round2(historyMarket)}%，New Fair=${round2(newFair)}%，Residual Premium=${round2(premium)}%，Final Fair=${round2(finalFair)}%。Current Market Yield=${round2(currentMarket)}% 只做 gap 判定，不進訓練。`
+        comment: `${t.theme_type ? "使用 Theme Surface " + t.theme_type + "；" : ""}使用 data/mm/m8_template_surface.json：${match.level} → ${t.template_id}，樣本 ${t.count || 0} 筆；Surface Market=${round2(historyMarket)}%，New Fair=${round2(newFair)}%，Residual Premium=${round2(premium)}%，Final Fair=${round2(finalFair)}%。Current Market Yield=${round2(currentMarket)}% 只做 gap 判定，不進訓練。`
       };
     }
 
@@ -1611,7 +1634,7 @@
       const marketGap = marketRegression?.pricing_gap_vs_final_pct ?? marketRegression?.gap_after_pct ?? null;
       const globalRegression = marketRegression?.global_regression_rate ?? marketRegression?.clean_global_fair ?? newFair;
       const templateClass = marketRegression?.large_template || marketRegression?.template || "待接入";
-      const usedTemplate = marketRegression?.small_template || marketRegression?.surface_matched_key || "待接入";
+      const usedTemplate = marketRegression?.surface_matched_key || marketRegression?.surface_template_id || marketRegression?.small_template || "待接入";
       const templateCount = marketRegression?.lookup_count ?? marketRegression?.sample_count ?? "-";
       const confidence = marketRegression?.surface_confidence ?? marketRegression?.confidence ?? "-";
 
@@ -2719,3 +2742,4 @@
 </script>
 </body>
 </html>
+
