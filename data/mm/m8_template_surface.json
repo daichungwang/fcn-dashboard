@@ -1,163 +1,41 @@
 {
   "version": "m8_template_surface_v1",
-  "generated_at": "2026-05-11T10:51:06.631Z",
+  "generated_at": "2026-05-11T12:12:22.614Z",
   "source": "m8_calibration_dashboard_v1.html",
-  "market_window": "calibration_dataset_current",
-  "method": "clean_global_surface_plus_template_overlay",
+  "market_window": "3m_export_pricing_surface",
+  "window_days": 93,
+  "reference_date": "2026-05-04",
+  "observation_count": 23,
+  "method": "recent_market_observation_surface_newfair_plus_beta_market_gap",
   "templates": {
-    "E_DEFENSIVE_STABILIZER": {
-      "template_id": "E_DEFENSIVE_STABILIZER",
-      "count": 6,
-      "sample_ids": [
-        "FCN085J 富邦",
-        "FCN2601188 永豐",
-        "FCN127H",
-        "FCN373H",
-        "FCN085J 富邦",
-        "FCN125K 富邦"
-      ],
-      "avg_market_coupon": 17.57,
-      "avg_old_fair_rate": 19.38,
-      "avg_new_fair_rate": 16.62,
-      "avg_final_fair_rate": 17.47,
-      "avg_beta": 0.94,
-      "avg_confidence": 50,
-      "residual_premium": 0.95,
-      "confidence": "medium"
-    },
-    "A_AI_CORE_INSTITUTIONAL": {
-      "template_id": "A_AI_CORE_INSTITUTIONAL",
-      "count": 28,
-      "sample_ids": [
-        "FCN817J 富邦",
-        "FCN757K 富邦",
-        "FCN069L 富邦",
-        "FCN715M 富邦",
-        "FCN733M 富邦",
-        "FCN981M 富邦",
-        "FCN2601454 永豐",
-        "FCN499N 富邦",
-        "FCN391N 富邦",
-        "FCN901M 富邦",
-        "FCN609G",
-        "FCN669G",
-        "FCN701G",
-        "FCN817G",
-        "FCN965G",
-        "FCN817J 富邦",
-        "FCN757K 富邦",
-        "FCN069L 富邦",
-        "FCN020M 富邦",
-        "FCN715M 富邦"
-      ],
-      "avg_market_coupon": 17.42,
-      "avg_old_fair_rate": 17.59,
-      "avg_new_fair_rate": 17,
-      "avg_final_fair_rate": 17.43,
-      "avg_beta": 0.85,
-      "avg_confidence": 48.11,
-      "residual_premium": 0.42,
-      "confidence": "high"
-    },
-    "D_SPECULATIVE_MOMENTUM": {
-      "template_id": "D_SPECULATIVE_MOMENTUM",
-      "count": 30,
-      "sample_ids": [
-        "FCN465K 富邦",
-        "FCN791K 富邦",
-        "FCN935K 富邦",
-        "FCN441L 富邦",
-        "FCN607L 富邦",
-        "FCN725L 富邦",
-        "FCN735L 富邦",
-        "FCN760L 富邦",
-        "FCN371N 富邦",
-        "FCN469N 富邦",
-        "FCN239H",
-        "FCN393H",
-        "FCN660H",
-        "FCN827H",
-        "FCN417J",
-        "FCN539J",
-        "FCN945J 富邦",
-        "FCN321K 富邦",
-        "FCN465K 富邦",
-        "FCN593K 富邦"
-      ],
-      "avg_market_coupon": 20.34,
-      "avg_old_fair_rate": 19.28,
-      "avg_new_fair_rate": 19.97,
-      "avg_final_fair_rate": 20.39,
-      "avg_beta": 0.85,
-      "avg_confidence": 51.01,
-      "residual_premium": 0.37,
-      "confidence": "high"
-    },
     "F_OTHERS_M7_BASKET_DRIVEN": {
       "template_id": "F_OTHERS_M7_BASKET_DRIVEN",
-      "count": 10,
+      "count": 2,
+      "source_distribution": {
+        "current_pool": 2
+      },
       "sample_ids": [
-        "FCN055L 富邦",
-        "FCN2503655 永豐",
         "FCN461M 富邦",
-        "FCN369N 富邦",
-        "FCN055L 富邦",
-        "FCN461M 富邦",
-        "market_history_5",
-        "market_history_9",
-        "market_history_18",
-        "market_history_23"
+        "FCN369N 富邦"
       ],
-      "avg_market_coupon": 17.78,
-      "avg_old_fair_rate": 19.67,
-      "avg_new_fair_rate": 18.24,
-      "avg_final_fair_rate": 17.82,
+      "avg_market_coupon": 19.81,
+      "avg_old_fair_rate": 20.58,
+      "avg_new_fair_rate": 18.42,
+      "avg_final_fair_rate": 19.71,
       "avg_beta": 0.9,
-      "avg_confidence": 47.8,
-      "residual_premium": -0.46,
-      "confidence": "high"
-    },
-    "C_TSLA_MOMENTUM_CORE": {
-      "template_id": "C_TSLA_MOMENTUM_CORE",
-      "count": 25,
-      "sample_ids": [
-        "FCN2504096 永豐",
-        "FCN499G",
-        "FCN581G",
-        "FCN650G",
-        "FCN671G",
-        "FCN697G",
-        "FCN730G",
-        "FCN777G",
-        "FCN789G",
-        "FCN197H",
-        "FCN630H",
-        "FCN693H",
-        "FCN710H 富邦",
-        "FCN813H",
-        "FCN833H",
-        "FCN865H",
-        "FCN023J",
-        "FCN527J",
-        "FCN581J",
-        "FCN135K 富邦"
-      ],
-      "avg_market_coupon": 18.43,
-      "avg_old_fair_rate": 18.42,
-      "avg_new_fair_rate": 17.78,
-      "avg_final_fair_rate": 18.42,
-      "avg_beta": 0.8,
-      "avg_confidence": 48.97,
-      "residual_premium": 0.65,
-      "confidence": "high"
+      "avg_confidence": 50.5,
+      "residual_premium": 1.39,
+      "confidence": "low",
+      "latest_observation_date": "2026-04-21",
+      "oldest_observation_date": "2026-02-09"
     },
     "B_MEMORY_SEMI_TACTICAL": {
       "template_id": "B_MEMORY_SEMI_TACTICAL",
-      "count": 41,
+      "count": 11,
+      "source_distribution": {
+        "current_pool": 11
+      },
       "sample_ids": [
-        "FCN623L 富邦",
-        "FCN699L 富邦",
-        "FCN783L 富邦",
         "FCN685M 富邦",
         "FCN710M 富邦",
         "FCN727M 富邦",
@@ -168,416 +46,88 @@
         "FCN219N 富邦",
         "FCN139N 富邦",
         "FCN427N 富邦",
-        "FCN629N 富邦",
-        "FCN673G",
-        "FCN917G",
-        "FCN925G",
-        "FCN367H",
-        "FCN751H",
-        "FCN863H"
+        "FCN629N 富邦"
       ],
-      "avg_market_coupon": 20.51,
-      "avg_old_fair_rate": 19.16,
-      "avg_new_fair_rate": 20.17,
-      "avg_final_fair_rate": 20.54,
-      "avg_beta": 0.84,
-      "avg_confidence": 51.38,
-      "residual_premium": 0.34,
-      "confidence": "high"
+      "avg_market_coupon": 24.65,
+      "avg_old_fair_rate": 18.8,
+      "avg_new_fair_rate": 20.83,
+      "avg_final_fair_rate": 24.61,
+      "avg_beta": 0.86,
+      "avg_confidence": 49.52,
+      "residual_premium": 3.82,
+      "confidence": "high",
+      "latest_observation_date": "2026-05-04",
+      "oldest_observation_date": "2026-03-06"
+    },
+    "A_AI_CORE_INSTITUTIONAL": {
+      "template_id": "A_AI_CORE_INSTITUTIONAL",
+      "count": 7,
+      "source_distribution": {
+        "current_pool": 7
+      },
+      "sample_ids": [
+        "FCN715M 富邦",
+        "FCN733M 富邦",
+        "FCN981M 富邦",
+        "FCN2601454 永豐",
+        "FCN499N 富邦",
+        "FCN391N 富邦",
+        "FCN901M 富邦"
+      ],
+      "avg_market_coupon": 17.7,
+      "avg_old_fair_rate": 17.3,
+      "avg_new_fair_rate": 17.07,
+      "avg_final_fair_rate": 17.72,
+      "avg_beta": 0.8,
+      "avg_confidence": 50.71,
+      "residual_premium": 0.63,
+      "confidence": "medium",
+      "latest_observation_date": "2026-04-24",
+      "oldest_observation_date": "2026-03-10"
+    },
+    "E_DEFENSIVE_STABILIZER": {
+      "template_id": "E_DEFENSIVE_STABILIZER",
+      "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
+      "sample_ids": [
+        "FCN2601188 永豐"
+      ],
+      "avg_market_coupon": 12.12,
+      "avg_old_fair_rate": 18.97,
+      "avg_new_fair_rate": 16.62,
+      "avg_final_fair_rate": 12.17,
+      "avg_beta": 0.99,
+      "avg_confidence": 49,
+      "residual_premium": -4.5,
+      "confidence": "low",
+      "latest_observation_date": "2026-04-15",
+      "oldest_observation_date": "2026-04-15"
+    },
+    "D_SPECULATIVE_MOMENTUM": {
+      "template_id": "D_SPECULATIVE_MOMENTUM",
+      "count": 2,
+      "source_distribution": {
+        "current_pool": 2
+      },
+      "sample_ids": [
+        "FCN371N 富邦",
+        "FCN469N 富邦"
+      ],
+      "avg_market_coupon": 22.75,
+      "avg_old_fair_rate": 19.34,
+      "avg_new_fair_rate": 20.22,
+      "avg_final_fair_rate": 22.62,
+      "avg_beta": 0.95,
+      "avg_confidence": 48.38,
+      "residual_premium": 2.53,
+      "confidence": "low",
+      "latest_observation_date": "2026-04-24",
+      "oldest_observation_date": "2026-04-21"
     }
   },
   "small_templates": {
-    "EL+MRVL+NKE+TGT+UNH": {
-      "template_id": "EL+MRVL+NKE+TGT+UNH",
-      "parent_template": "E_DEFENSIVE_STABILIZER",
-      "match_symbols": [
-        "EL",
-        "MRVL",
-        "NKE",
-        "TGT",
-        "UNH"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN085J 富邦",
-        "FCN085J 富邦"
-      ],
-      "avg_market_coupon": 18.75,
-      "avg_old_fair_rate": 19.8,
-      "avg_new_fair_rate": 16.62,
-      "avg_final_fair_rate": 18.64,
-      "avg_beta": 0.95,
-      "avg_confidence": 52,
-      "residual_premium": 2.13,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AVGO+GOOG+META+NVDA+TSM": {
-      "template_id": "AVGO+GOOG+META+NVDA+TSM",
-      "parent_template": "A_AI_CORE_INSTITUTIONAL",
-      "match_symbols": [
-        "AVGO",
-        "GOOG",
-        "META",
-        "NVDA",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN817J 富邦",
-        "FCN817J 富邦"
-      ],
-      "avg_market_coupon": 14.94,
-      "avg_old_fair_rate": 17.68,
-      "avg_new_fair_rate": 16.95,
-      "avg_final_fair_rate": 15.04,
-      "avg_beta": 0.95,
-      "avg_confidence": 52,
-      "residual_premium": -2.01,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+ARM+ORCL+PLTR+TSLA": {
-      "template_id": "AMD+ARM+ORCL+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "AMD",
-        "ARM",
-        "ORCL",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN465K 富邦",
-        "FCN465K 富邦"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 19.79,
-      "avg_new_fair_rate": 19.05,
-      "avg_final_fair_rate": 18.16,
-      "avg_beta": 0.85,
-      "avg_confidence": 47.75,
-      "residual_premium": -1.05,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+AVGO+NVDA+TSM": {
-      "template_id": "ARM+AVGO+NVDA+TSM",
-      "parent_template": "A_AI_CORE_INSTITUTIONAL",
-      "match_symbols": [
-        "ARM",
-        "AVGO",
-        "NVDA",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN757K 富邦",
-        "FCN757K 富邦"
-      ],
-      "avg_market_coupon": 21.28,
-      "avg_old_fair_rate": 20.35,
-      "avg_new_fair_rate": 16.95,
-      "avg_final_fair_rate": 21.24,
-      "avg_beta": 0.99,
-      "avg_confidence": 52,
-      "residual_premium": 4.33,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ALAB+AMD+COIN+NVDA+TSM": {
-      "template_id": "ALAB+AMD+COIN+NVDA+TSM",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "ALAB",
-        "AMD",
-        "COIN",
-        "NVDA",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN791K 富邦",
-        "FCN791K 富邦"
-      ],
-      "avg_market_coupon": 25,
-      "avg_old_fair_rate": 19.96,
-      "avg_new_fair_rate": 20.01,
-      "avg_final_fair_rate": 24.95,
-      "avg_beta": 0.99,
-      "avg_confidence": 52,
-      "residual_premium": 4.99,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AVGO+COIN+INTC+TSLA": {
-      "template_id": "AVGO+COIN+INTC+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "AVGO",
-        "COIN",
-        "INTC",
-        "TSLA"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN935K 富邦",
-        "FCN935K 富邦"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 21.96,
-      "avg_new_fair_rate": 20.01,
-      "avg_final_fair_rate": 18.1,
-      "avg_beta": 0.95,
-      "avg_confidence": 52,
-      "residual_premium": -2.01,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+ARM+PLTR": {
-      "template_id": "AMD+ARM+PLTR",
-      "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
-      "match_symbols": [
-        "AMD",
-        "ARM",
-        "PLTR"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN055L 富邦",
-        "FCN055L 富邦"
-      ],
-      "avg_market_coupon": 17.44,
-      "avg_old_fair_rate": 20.14,
-      "avg_new_fair_rate": 18.42,
-      "avg_final_fair_rate": 17.59,
-      "avg_beta": 0.85,
-      "avg_confidence": 52,
-      "residual_premium": -0.98,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMZN+NVDA+PLTR+TSM": {
-      "template_id": "AMZN+NVDA+PLTR+TSM",
-      "parent_template": "A_AI_CORE_INSTITUTIONAL",
-      "match_symbols": [
-        "AMZN",
-        "NVDA",
-        "PLTR",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN069L 富邦",
-        "FCN069L 富邦"
-      ],
-      "avg_market_coupon": 15,
-      "avg_old_fair_rate": 18.51,
-      "avg_new_fair_rate": 16,
-      "avg_final_fair_rate": 15.15,
-      "avg_beta": 0.85,
-      "avg_confidence": 52,
-      "residual_premium": -1,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+META+ORCL": {
-      "template_id": "ARM+META+ORCL",
-      "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
-      "match_symbols": [
-        "ARM",
-        "META",
-        "ORCL"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN2503655 永豐"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 20.01,
-      "avg_new_fair_rate": 18.42,
-      "avg_final_fair_rate": 18.06,
-      "avg_beta": 0.85,
-      "avg_confidence": 49,
-      "residual_premium": -0.42,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AVGO+NVDA+PLTR+TSLA+TSM": {
-      "template_id": "AVGO+NVDA+PLTR+TSLA+TSM",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "AVGO",
-        "NVDA",
-        "PLTR",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN441L 富邦",
-        "FCN441L 富邦"
-      ],
-      "avg_market_coupon": 17,
-      "avg_old_fair_rate": 17.79,
-      "avg_new_fair_rate": 17.33,
-      "avg_final_fair_rate": 17.13,
-      "avg_beta": 0.6,
-      "avg_confidence": 52,
-      "residual_premium": -0.33,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AVGO+NVDA+PLTR+TSLA": {
-      "template_id": "AVGO+NVDA+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "AVGO",
-        "NVDA",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN607L 富邦",
-        "FCN607L 富邦"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 17.35,
-      "avg_new_fair_rate": 19.66,
-      "avg_final_fair_rate": 18.25,
-      "avg_beta": 0.85,
-      "avg_confidence": 52,
-      "residual_premium": -1.66,
-      "confidence": "low",
-      "eligible": false
-    },
-    "INTC+NVDA+TSLA": {
-      "template_id": "INTC+NVDA+TSLA",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "INTC",
-        "NVDA",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN2504096 永豐"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 21.44,
-      "avg_new_fair_rate": 17.59,
-      "avg_final_fair_rate": 17.94,
-      "avg_beta": 0.85,
-      "avg_confidence": 49,
-      "residual_premium": 0.41,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+MU+NVDA+TSLA+TSM": {
-      "template_id": "AMD+MU+NVDA+TSLA+TSM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "AMD",
-        "MU",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 6,
-      "sample_ids": [
-        "FCN623L 富邦",
-        "FCN699L 富邦",
-        "FCN783L 富邦",
-        "FCN623L 富邦",
-        "FCN699L 富邦",
-        "FCN783L 富邦"
-      ],
-      "avg_market_coupon": 18.93,
-      "avg_old_fair_rate": 19.15,
-      "avg_new_fair_rate": 19.06,
-      "avg_final_fair_rate": 18.95,
-      "avg_beta": 0.85,
-      "avg_confidence": 66.5,
-      "residual_premium": -0.13,
-      "confidence": "medium",
-      "eligible": true
-    },
-    "ARM+MU+NVDA+PLTR+TSLA": {
-      "template_id": "ARM+MU+NVDA+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "ARM",
-        "MU",
-        "NVDA",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN725L 富邦",
-        "FCN725L 富邦"
-      ],
-      "avg_market_coupon": 20.22,
-      "avg_old_fair_rate": 20.08,
-      "avg_new_fair_rate": 20.66,
-      "avg_final_fair_rate": 20.29,
-      "avg_beta": 0.85,
-      "avg_confidence": 52,
-      "residual_premium": -0.44,
-      "confidence": "low",
-      "eligible": false
-    },
-    "GOOG+MU+PLTR+TSLA": {
-      "template_id": "GOOG+MU+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "GOOG",
-        "MU",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN735L 富邦",
-        "FCN735L 富邦"
-      ],
-      "avg_market_coupon": 19.91,
-      "avg_old_fair_rate": 19.36,
-      "avg_new_fair_rate": 21.39,
-      "avg_final_fair_rate": 20.13,
-      "avg_beta": 0.85,
-      "avg_confidence": 52,
-      "residual_premium": -1.48,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+AVGO+MU+PLTR+TSLA": {
-      "template_id": "AMD+AVGO+MU+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "AMD",
-        "AVGO",
-        "MU",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN760L 富邦",
-        "FCN760L 富邦"
-      ],
-      "avg_market_coupon": 20.95,
-      "avg_old_fair_rate": 19.36,
-      "avg_new_fair_rate": 21.25,
-      "avg_final_fair_rate": 21.07,
-      "avg_beta": 0.6,
-      "avg_confidence": 52,
-      "residual_premium": -0.3,
-      "confidence": "low",
-      "eligible": false
-    },
     "ARM+CCL+MRVL+NVDA+UNH": {
       "template_id": "ARM+CCL+MRVL+NVDA+UNH",
       "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
@@ -588,9 +138,11 @@
         "NVDA",
         "UNH"
       ],
-      "count": 2,
+      "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
-        "FCN461M 富邦",
         "FCN461M 富邦"
       ],
       "avg_market_coupon": 20.5,
@@ -601,6 +153,8 @@
       "avg_confidence": 52,
       "residual_premium": 2.08,
       "confidence": "low",
+      "latest_observation_date": "2026-02-09",
+      "oldest_observation_date": "2026-02-09",
       "eligible": false
     },
     "MU+NVDA+PLTR+TSM": {
@@ -612,9 +166,11 @@
         "PLTR",
         "TSM"
       ],
-      "count": 2,
+      "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
-        "FCN685M 富邦",
         "FCN685M 富邦"
       ],
       "avg_market_coupon": 23,
@@ -625,6 +181,8 @@
       "avg_confidence": 52,
       "residual_premium": 2.67,
       "confidence": "low",
+      "latest_observation_date": "2026-03-06",
+      "oldest_observation_date": "2026-03-06",
       "eligible": false
     },
     "MU+NVDA+TSM": {
@@ -635,22 +193,25 @@
         "NVDA",
         "TSM"
       ],
-      "count": 4,
+      "count": 2,
+      "source_distribution": {
+        "current_pool": 2
+      },
       "sample_ids": [
         "FCN710M 富邦",
-        "FCN629N 富邦",
-        "FCN710M 富邦",
-        "market_history_24"
+        "FCN629N 富邦"
       ],
-      "avg_market_coupon": 21.46,
-      "avg_old_fair_rate": 18.02,
-      "avg_new_fair_rate": 21.56,
-      "avg_final_fair_rate": 21.47,
+      "avg_market_coupon": 21.01,
+      "avg_old_fair_rate": 18.01,
+      "avg_new_fair_rate": 21.27,
+      "avg_final_fair_rate": 21.02,
       "avg_beta": 0.95,
-      "avg_confidence": 44.38,
-      "residual_premium": -0.1,
-      "confidence": "medium",
-      "eligible": true
+      "avg_confidence": 45.88,
+      "residual_premium": -0.26,
+      "confidence": "low",
+      "latest_observation_date": "2026-05-04",
+      "oldest_observation_date": "2026-03-10",
+      "eligible": false
     },
     "AVGO+MU+NVDA+SMH+TSM": {
       "template_id": "AVGO+MU+NVDA+SMH+TSM",
@@ -662,9 +223,11 @@
         "SMH",
         "TSM"
       ],
-      "count": 2,
+      "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
-        "FCN727M 富邦",
         "FCN727M 富邦"
       ],
       "avg_market_coupon": 23.4,
@@ -675,6 +238,8 @@
       "avg_confidence": 52,
       "residual_premium": -0.01,
       "confidence": "low",
+      "latest_observation_date": "2026-03-11",
+      "oldest_observation_date": "2026-03-11",
       "eligible": false
     },
     "ARM+AVGO+MRVL+NVDA+TSM": {
@@ -687,21 +252,24 @@
         "NVDA",
         "TSM"
       ],
-      "count": 3,
+      "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
-        "FCN715M 富邦",
-        "FCN020M 富邦",
         "FCN715M 富邦"
       ],
-      "avg_market_coupon": 22.05,
-      "avg_old_fair_rate": 20.21,
-      "avg_new_fair_rate": 17.66,
-      "avg_final_fair_rate": 21.98,
-      "avg_beta": 0.98,
-      "avg_confidence": 51,
-      "residual_premium": 4.39,
-      "confidence": "medium",
-      "eligible": true
+      "avg_market_coupon": 23.4,
+      "avg_old_fair_rate": 19.95,
+      "avg_new_fair_rate": 17.96,
+      "avg_final_fair_rate": 23.35,
+      "avg_beta": 0.99,
+      "avg_confidence": 52,
+      "residual_premium": 5.44,
+      "confidence": "low",
+      "latest_observation_date": "2026-03-10",
+      "oldest_observation_date": "2026-03-10",
+      "eligible": false
     },
     "AAPL+GOOG+NVDA+SMH+TSM": {
       "template_id": "AAPL+GOOG+NVDA+SMH+TSM",
@@ -713,9 +281,11 @@
         "SMH",
         "TSM"
       ],
-      "count": 2,
+      "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
-        "FCN733M 富邦",
         "FCN733M 富邦"
       ],
       "avg_market_coupon": 15.59,
@@ -726,6 +296,8 @@
       "avg_confidence": 52,
       "residual_premium": -0.3,
       "confidence": "low",
+      "latest_observation_date": "2026-03-11",
+      "oldest_observation_date": "2026-03-11",
       "eligible": false
     },
     "AMD+AVGO+NVDA+TSM": {
@@ -737,21 +309,24 @@
         "NVDA",
         "TSM"
       ],
-      "count": 3,
+      "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
-        "FCN981M 富邦",
-        "FCN701G",
         "FCN981M 富邦"
       ],
-      "avg_market_coupon": 18.77,
-      "avg_old_fair_rate": 17.77,
+      "avg_market_coupon": 19.16,
+      "avg_old_fair_rate": 17.85,
       "avg_new_fair_rate": 17.96,
-      "avg_final_fair_rate": 18.65,
-      "avg_beta": 0.77,
-      "avg_confidence": 51,
-      "residual_premium": 0.81,
-      "confidence": "medium",
-      "eligible": true
+      "avg_final_fair_rate": 18.98,
+      "avg_beta": 0.85,
+      "avg_confidence": 52,
+      "residual_premium": 1.2,
+      "confidence": "low",
+      "latest_observation_date": "2026-04-07",
+      "oldest_observation_date": "2026-04-07",
+      "eligible": false
     },
     "AMD+AVGO+MU": {
       "template_id": "AMD+AVGO+MU",
@@ -761,9 +336,11 @@
         "AVGO",
         "MU"
       ],
-      "count": 2,
+      "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
-        "FCN019N 富邦",
         "FCN019N 富邦"
       ],
       "avg_market_coupon": 21.55,
@@ -774,6 +351,8 @@
       "avg_confidence": 52,
       "residual_premium": 0.3,
       "confidence": "low",
+      "latest_observation_date": "2026-04-09",
+      "oldest_observation_date": "2026-04-09",
       "eligible": false
     },
     "GOOG+MU+NVDA+SMH+TSM": {
@@ -786,9 +365,11 @@
         "SMH",
         "TSM"
       ],
-      "count": 2,
+      "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
-        "FCN765M 富邦",
         "FCN765M 富邦"
       ],
       "avg_market_coupon": 23.42,
@@ -799,6 +380,8 @@
       "avg_confidence": 52,
       "residual_premium": 0.01,
       "confidence": "low",
+      "latest_observation_date": "2026-03-13",
+      "oldest_observation_date": "2026-03-13",
       "eligible": false
     },
     "LQD+QQQ+SMH+TSM": {
@@ -811,6 +394,9 @@
         "TSM"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN2601188 永豐"
       ],
@@ -822,6 +408,8 @@
       "avg_confidence": 49,
       "residual_premium": -4.5,
       "confidence": "low",
+      "latest_observation_date": "2026-04-15",
+      "oldest_observation_date": "2026-04-15",
       "eligible": false
     },
     "ARM+INTC+MU+TSLA": {
@@ -834,6 +422,9 @@
         "TSLA"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "DACN26000064 永豐"
       ],
@@ -845,6 +436,8 @@
       "avg_confidence": 49,
       "residual_premium": 26.83,
       "confidence": "low",
+      "latest_observation_date": "2026-04-15",
+      "oldest_observation_date": "2026-04-15",
       "eligible": false
     },
     "MRVL+MU+NVDA+SMH": {
@@ -857,6 +450,9 @@
         "SMH"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN310N 富邦"
       ],
@@ -868,6 +464,8 @@
       "avg_confidence": 49,
       "residual_premium": 4.62,
       "confidence": "low",
+      "latest_observation_date": "2026-04-20",
+      "oldest_observation_date": "2026-04-20",
       "eligible": false
     },
     "MU+QQQ+TSM": {
@@ -879,6 +477,9 @@
         "TSM"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN219N 富邦"
       ],
@@ -890,6 +491,8 @@
       "avg_confidence": 49,
       "residual_premium": -1.77,
       "confidence": "low",
+      "latest_observation_date": "2026-04-16",
+      "oldest_observation_date": "2026-04-16",
       "eligible": false
     },
     "AVGO+NVDA+QQQ+SMH": {
@@ -902,6 +505,9 @@
         "SMH"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN2601454 永豐"
       ],
@@ -913,6 +519,8 @@
       "avg_confidence": 49,
       "residual_premium": -1.1,
       "confidence": "low",
+      "latest_observation_date": "2026-04-22",
+      "oldest_observation_date": "2026-04-22",
       "eligible": false
     },
     "MRVL+MU+NVDA+TSLA+TSM": {
@@ -926,6 +534,9 @@
         "TSM"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN139N 富邦"
       ],
@@ -937,6 +548,8 @@
       "avg_confidence": 49,
       "residual_premium": 4.67,
       "confidence": "low",
+      "latest_observation_date": "2026-04-15",
+      "oldest_observation_date": "2026-04-15",
       "eligible": false
     },
     "AVGO+MRVL+MU+NVDA+SMH": {
@@ -950,6 +563,9 @@
         "SMH"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN427N 富邦"
       ],
@@ -961,6 +577,8 @@
       "avg_confidence": 49,
       "residual_premium": 5.22,
       "confidence": "low",
+      "latest_observation_date": "2026-04-22",
+      "oldest_observation_date": "2026-04-22",
       "eligible": false
     },
     "COIN+ORCL+PLTR+TSLA": {
@@ -973,6 +591,9 @@
         "TSLA"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN371N 富邦"
       ],
@@ -984,6 +605,8 @@
       "avg_confidence": 49,
       "residual_premium": 2.95,
       "confidence": "low",
+      "latest_observation_date": "2026-04-21",
+      "oldest_observation_date": "2026-04-21",
       "eligible": false
     },
     "AMZN+NVDA+SMH+TSM+UNH": {
@@ -997,6 +620,9 @@
         "UNH"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN499N 富邦"
       ],
@@ -1008,6 +634,8 @@
       "avg_confidence": 49,
       "residual_premium": 0.65,
       "confidence": "low",
+      "latest_observation_date": "2026-04-24",
+      "oldest_observation_date": "2026-04-24",
       "eligible": false
     },
     "ARM+AVGO+ORCL+PLTR+TSLA": {
@@ -1021,6 +649,9 @@
         "TSLA"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN469N 富邦"
       ],
@@ -1032,6 +663,8 @@
       "avg_confidence": 47.75,
       "residual_premium": 2.11,
       "confidence": "low",
+      "latest_observation_date": "2026-04-24",
+      "oldest_observation_date": "2026-04-24",
       "eligible": false
     },
     "AVGO+NVDA+QQQ+SMH+TSM": {
@@ -1045,6 +678,9 @@
         "TSM"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN391N 富邦"
       ],
@@ -1056,6 +692,8 @@
       "avg_confidence": 49,
       "residual_premium": -1.49,
       "confidence": "low",
+      "latest_observation_date": "2026-04-21",
+      "oldest_observation_date": "2026-04-21",
       "eligible": false
     },
     "AMD+ARM+AVGO": {
@@ -1067,6 +705,9 @@
         "AVGO"
       ],
       "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
         "FCN369N 富邦"
       ],
@@ -1078,6 +719,8 @@
       "avg_confidence": 49,
       "residual_premium": 0.71,
       "confidence": "low",
+      "latest_observation_date": "2026-04-21",
+      "oldest_observation_date": "2026-04-21",
       "eligible": false
     },
     "NVDA+PLTR+TSM": {
@@ -1088,9 +731,11 @@
         "PLTR",
         "TSM"
       ],
-      "count": 2,
+      "count": 1,
+      "source_distribution": {
+        "current_pool": 1
+      },
       "sample_ids": [
-        "FCN901M 富邦",
         "FCN901M 富邦"
       ],
       "avg_market_coupon": 17.76,
@@ -1101,1214 +746,8 @@
       "avg_confidence": 52,
       "residual_premium": -0.04,
       "confidence": "low",
-      "eligible": false
-    },
-    "AMZN+NVDA+TSLA+TSM": {
-      "template_id": "AMZN+NVDA+TSLA+TSM",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "AMZN",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN499G",
-        "FCN697G"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 17.36,
-      "avg_new_fair_rate": 17.71,
-      "avg_final_fair_rate": 17.88,
-      "avg_beta": 0.6,
-      "avg_confidence": 55,
-      "residual_premium": 0.29,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AVGO+NVDA+TSLA+TSM": {
-      "template_id": "AVGO+NVDA+TSLA+TSM",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "AVGO",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 3,
-      "sample_ids": [
-        "FCN581G",
-        "FCN777G",
-        "FCN813H"
-      ],
-      "avg_market_coupon": 17.58,
-      "avg_old_fair_rate": 17.35,
-      "avg_new_fair_rate": 17.45,
-      "avg_final_fair_rate": 17.58,
-      "avg_beta": 0.68,
-      "avg_confidence": 49,
-      "residual_premium": 0.13,
-      "confidence": "medium",
-      "eligible": true
-    },
-    "NVDA+TSM": {
-      "template_id": "NVDA+TSM",
-      "parent_template": "A_AI_CORE_INSTITUTIONAL",
-      "match_symbols": [
-        "NVDA",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN609G",
-        "market_history_17"
-      ],
-      "avg_market_coupon": 19.25,
-      "avg_old_fair_rate": 15.14,
-      "avg_new_fair_rate": 17.8,
-      "avg_final_fair_rate": 19.17,
-      "avg_beta": 0.77,
-      "avg_confidence": 46,
-      "residual_premium": 1.45,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AAPL+NVDA+TSLA+TSM": {
-      "template_id": "AAPL+NVDA+TSLA+TSM",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "AAPL",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN650G",
-        "FCN630H"
-      ],
-      "avg_market_coupon": 20.49,
-      "avg_old_fair_rate": 16.47,
-      "avg_new_fair_rate": 17.71,
-      "avg_final_fair_rate": 20.58,
-      "avg_beta": 0.92,
-      "avg_confidence": 50.5,
-      "residual_premium": 2.78,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMZN+NVDA+QQQ+TSM": {
-      "template_id": "AMZN+NVDA+QQQ+TSM",
-      "parent_template": "A_AI_CORE_INSTITUTIONAL",
-      "match_symbols": [
-        "AMZN",
-        "NVDA",
-        "QQQ",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN669G"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 17.5,
-      "avg_new_fair_rate": 16,
-      "avg_final_fair_rate": 17.9,
-      "avg_beta": 0.95,
-      "avg_confidence": 49,
-      "residual_premium": 2,
-      "confidence": "low",
-      "eligible": false
-    },
-    "NVDA+TSLA+TSM": {
-      "template_id": "NVDA+TSLA+TSM",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 3,
-      "sample_ids": [
-        "FCN671G",
-        "FCN135K 富邦",
-        "market_history_10"
-      ],
-      "avg_market_coupon": 18.19,
-      "avg_old_fair_rate": 17.43,
-      "avg_new_fair_rate": 18.62,
-      "avg_final_fair_rate": 18.23,
-      "avg_beta": 0.92,
-      "avg_confidence": 43.5,
-      "residual_premium": -0.43,
-      "confidence": "medium",
-      "eligible": true
-    },
-    "AMD+MU+TSM": {
-      "template_id": "AMD+MU+TSM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "AMD",
-        "MU",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN673G"
-      ],
-      "avg_market_coupon": 17.57,
-      "avg_old_fair_rate": 18.65,
-      "avg_new_fair_rate": 19.73,
-      "avg_final_fair_rate": 17.68,
-      "avg_beta": 0.95,
-      "avg_confidence": 49,
-      "residual_premium": -2.16,
-      "confidence": "low",
-      "eligible": false
-    },
-    "MSFT+NVDA+TSLA+TSM": {
-      "template_id": "MSFT+NVDA+TSLA+TSM",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "MSFT",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN730G"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 16.24,
-      "avg_new_fair_rate": 17.71,
-      "avg_final_fair_rate": 17.88,
-      "avg_beta": 0.6,
-      "avg_confidence": 58,
-      "residual_premium": 0.29,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+NVDA+TSLA+TSM": {
-      "template_id": "AMD+NVDA+TSLA+TSM",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "AMD",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN789G"
-      ],
-      "avg_market_coupon": 25,
-      "avg_old_fair_rate": 18.93,
-      "avg_new_fair_rate": 18.62,
-      "avg_final_fair_rate": 24.94,
-      "avg_beta": 0.99,
-      "avg_confidence": 43.75,
-      "residual_premium": 6.38,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMZN+GOOG+NVDA+TSM": {
-      "template_id": "AMZN+GOOG+NVDA+TSM",
-      "parent_template": "A_AI_CORE_INSTITUTIONAL",
-      "match_symbols": [
-        "AMZN",
-        "GOOG",
-        "NVDA",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN817G",
-        "market_history_25"
-      ],
-      "avg_market_coupon": 16.2,
-      "avg_old_fair_rate": 18.92,
-      "avg_new_fair_rate": 15.89,
-      "avg_final_fair_rate": 16.15,
-      "avg_beta": 0.85,
-      "avg_confidence": 34.5,
-      "residual_premium": 0.31,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+MU+NVDA+TSM": {
-      "template_id": "ARM+MU+NVDA+TSM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "ARM",
-        "MU",
-        "NVDA",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN917G",
-        "FCN925G"
-      ],
-      "avg_market_coupon": 18.49,
-      "avg_old_fair_rate": 20.2,
-      "avg_new_fair_rate": 20.57,
-      "avg_final_fair_rate": 18.48,
-      "avg_beta": 0.92,
-      "avg_confidence": 44.13,
-      "residual_premium": -2.08,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AVGO+NVDA+TSM": {
-      "template_id": "AVGO+NVDA+TSM",
-      "parent_template": "A_AI_CORE_INSTITUTIONAL",
-      "match_symbols": [
-        "AVGO",
-        "NVDA",
-        "TSM"
-      ],
-      "count": 3,
-      "sample_ids": [
-        "FCN965G",
-        "market_history_11",
-        "market_history_15"
-      ],
-      "avg_market_coupon": 14.76,
-      "avg_old_fair_rate": 17.33,
-      "avg_new_fair_rate": 16.93,
-      "avg_final_fair_rate": 14.83,
-      "avg_beta": 0.93,
-      "avg_confidence": 40.33,
-      "residual_premium": -2.17,
-      "confidence": "medium",
-      "eligible": true
-    },
-    "EL+NKE+NVDA+REGN+UNH": {
-      "template_id": "EL+NKE+NVDA+REGN+UNH",
-      "parent_template": "E_DEFENSIVE_STABILIZER",
-      "match_symbols": [
-        "EL",
-        "NKE",
-        "NVDA",
-        "REGN",
-        "UNH"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN127H"
-      ],
-      "avg_market_coupon": 19.51,
-      "avg_old_fair_rate": 19.68,
-      "avg_new_fair_rate": 16.62,
-      "avg_final_fair_rate": 19.37,
-      "avg_beta": 0.95,
-      "avg_confidence": 49,
-      "residual_premium": 2.89,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+NVDA+TSLA+TSM": {
-      "template_id": "ARM+NVDA+TSLA+TSM",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "ARM",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN197H",
-        "FCN865H"
-      ],
-      "avg_market_coupon": 17.51,
-      "avg_old_fair_rate": 19.85,
-      "avg_new_fair_rate": 18.17,
-      "avg_final_fair_rate": 17.57,
-      "avg_beta": 0.73,
-      "avg_confidence": 50.5,
-      "residual_premium": -0.66,
-      "confidence": "low",
-      "eligible": false
-    },
-    "NVDA+PLTR+TSLA+TSM": {
-      "template_id": "NVDA+PLTR+TSLA+TSM",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "NVDA",
-        "PLTR",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN239H"
-      ],
-      "avg_market_coupon": 21.51,
-      "avg_old_fair_rate": 18.07,
-      "avg_new_fair_rate": 18.62,
-      "avg_final_fair_rate": 21.37,
-      "avg_beta": 0.95,
-      "avg_confidence": 49,
-      "residual_premium": 2.89,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+GOOG+MU+NVDA+TSM": {
-      "template_id": "ARM+GOOG+MU+NVDA+TSM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "ARM",
-        "GOOG",
-        "MU",
-        "NVDA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN367H"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 20.06,
-      "avg_new_fair_rate": 19.33,
-      "avg_final_fair_rate": 18.2,
-      "avg_beta": 0.85,
-      "avg_confidence": 73.75,
-      "residual_premium": -1.33,
-      "confidence": "low",
-      "eligible": false
-    },
-    "GOOG+NKE+NVDA+REGN+UNH": {
-      "template_id": "GOOG+NKE+NVDA+REGN+UNH",
-      "parent_template": "E_DEFENSIVE_STABILIZER",
-      "match_symbols": [
-        "GOOG",
-        "NKE",
-        "NVDA",
-        "REGN",
-        "UNH"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN373H"
-      ],
-      "avg_market_coupon": 18.55,
-      "avg_old_fair_rate": 17.04,
-      "avg_new_fair_rate": 16.62,
-      "avg_final_fair_rate": 18.45,
-      "avg_beta": 0.95,
-      "avg_confidence": 49,
-      "residual_premium": 1.93,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+PLTR+TSLA+TSM": {
-      "template_id": "ARM+PLTR+TSLA+TSM",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "ARM",
-        "PLTR",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN393H"
-      ],
-      "avg_market_coupon": 24.91,
-      "avg_old_fair_rate": 20.03,
-      "avg_new_fair_rate": 19.58,
-      "avg_final_fair_rate": 24.86,
-      "avg_beta": 0.99,
-      "avg_confidence": 49,
-      "residual_premium": 5.33,
-      "confidence": "low",
-      "eligible": false
-    },
-    "GOOG+NVDA+PLTR+TSLA": {
-      "template_id": "GOOG+NVDA+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "GOOG",
-        "NVDA",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN660H"
-      ],
-      "avg_market_coupon": 22.52,
-      "avg_old_fair_rate": 17.93,
-      "avg_new_fair_rate": 19.66,
-      "avg_final_fair_rate": 22.38,
-      "avg_beta": 0.95,
-      "avg_confidence": 53,
-      "residual_premium": 2.86,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+MRVL+ORCL+TSLA": {
-      "template_id": "ARM+MRVL+ORCL+TSLA",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "ARM",
-        "MRVL",
-        "ORCL",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN693H"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 20,
-      "avg_new_fair_rate": 17.54,
-      "avg_final_fair_rate": 17.93,
-      "avg_beta": 0.85,
-      "avg_confidence": 49,
-      "residual_premium": 0.46,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+AVGO+NVDA+ORCL+TSLA": {
-      "template_id": "ARM+AVGO+NVDA+ORCL+TSLA",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "ARM",
-        "AVGO",
-        "NVDA",
-        "ORCL",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN710H 富邦"
-      ],
-      "avg_market_coupon": 25,
-      "avg_old_fair_rate": 20.57,
-      "avg_new_fair_rate": 17.77,
-      "avg_final_fair_rate": 24.93,
-      "avg_beta": 0.99,
-      "avg_confidence": 49,
-      "residual_premium": 7.23,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+MU+NVDA+TSLA+TSM": {
-      "template_id": "ARM+MU+NVDA+TSLA+TSM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "ARM",
-        "MU",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN751H"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 20.05,
-      "avg_new_fair_rate": 19.33,
-      "avg_final_fair_rate": 18.2,
-      "avg_beta": 0.85,
-      "avg_confidence": 73.75,
-      "residual_premium": -1.33,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+NVDA+PLTR+TSLA": {
-      "template_id": "ARM+NVDA+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "ARM",
-        "NVDA",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN827H",
-        "FCN417J"
-      ],
-      "avg_market_coupon": 19.56,
-      "avg_old_fair_rate": 20.06,
-      "avg_new_fair_rate": 20.66,
-      "avg_final_fair_rate": 19.62,
-      "avg_beta": 0.77,
-      "avg_confidence": 53,
-      "residual_premium": -1.1,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+ARM+AVGO+NVDA+TSLA": {
-      "template_id": "AMD+ARM+AVGO+NVDA+TSLA",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "AMD",
-        "ARM",
-        "AVGO",
-        "NVDA",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN833H"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 20.08,
-      "avg_new_fair_rate": 17.77,
-      "avg_final_fair_rate": 17.91,
-      "avg_beta": 0.6,
-      "avg_confidence": 49,
-      "residual_premium": 0.23,
-      "confidence": "low",
-      "eligible": false
-    },
-    "EL+MRVL+MU+NVDA+UNH": {
-      "template_id": "EL+MRVL+MU+NVDA+UNH",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "EL",
-        "MRVL",
-        "MU",
-        "NVDA",
-        "UNH"
-      ],
-      "count": 2,
-      "sample_ids": [
-        "FCN863H",
-        "FCN775J"
-      ],
-      "avg_market_coupon": 18.86,
-      "avg_old_fair_rate": 20.39,
-      "avg_new_fair_rate": 19.19,
-      "avg_final_fair_rate": 18.91,
-      "avg_beta": 0.73,
-      "avg_confidence": 49,
-      "residual_premium": -0.33,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+AVGO+NVDA+TSLA+TSM": {
-      "template_id": "ARM+AVGO+NVDA+TSLA+TSM",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "ARM",
-        "AVGO",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN023J"
-      ],
-      "avg_market_coupon": 17.71,
-      "avg_old_fair_rate": 20.02,
-      "avg_new_fair_rate": 16.9,
-      "avg_final_fair_rate": 17.59,
-      "avg_beta": 0.85,
-      "avg_confidence": 58,
-      "residual_premium": 0.81,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+ARM+MRVL+NVDA+TSLA": {
-      "template_id": "AMD+ARM+MRVL+NVDA+TSLA",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "AMD",
-        "ARM",
-        "MRVL",
-        "NVDA",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN527J"
-      ],
-      "avg_market_coupon": 16.77,
-      "avg_old_fair_rate": 20.66,
-      "avg_new_fair_rate": 17.59,
-      "avg_final_fair_rate": 16.89,
-      "avg_beta": 0.85,
-      "avg_confidence": 49,
-      "residual_premium": -0.82,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ARM+AVGO+NVDA+PLTR+TSLA": {
-      "template_id": "ARM+AVGO+NVDA+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "ARM",
-        "AVGO",
-        "NVDA",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN539J"
-      ],
-      "avg_market_coupon": 20.13,
-      "avg_old_fair_rate": 20.36,
-      "avg_new_fair_rate": 19.66,
-      "avg_final_fair_rate": 20.06,
-      "avg_beta": 0.85,
-      "avg_confidence": 53,
-      "residual_premium": 0.47,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+AVGO+NVDA+TSLA+TSM": {
-      "template_id": "AMD+AVGO+NVDA+TSLA+TSM",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "AMD",
-        "AVGO",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN581J"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 18.46,
-      "avg_new_fair_rate": 16.9,
-      "avg_final_fair_rate": 17.84,
-      "avg_beta": 0.85,
-      "avg_confidence": 58,
-      "residual_premium": 1.1,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+ARM+CCL+PLTR+TSLA": {
-      "template_id": "AMD+ARM+CCL+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "AMD",
-        "ARM",
-        "CCL",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN945J 富邦"
-      ],
-      "avg_market_coupon": 19.27,
-      "avg_old_fair_rate": 21.24,
-      "avg_new_fair_rate": 19.58,
-      "avg_final_fair_rate": 19.39,
-      "avg_beta": 0.6,
-      "avg_confidence": 49,
-      "residual_premium": -0.31,
-      "confidence": "low",
-      "eligible": false
-    },
-    "CCL+EL+MRVL+NVDA+TGT": {
-      "template_id": "CCL+EL+MRVL+NVDA+TGT",
-      "parent_template": "E_DEFENSIVE_STABILIZER",
-      "match_symbols": [
-        "CCL",
-        "EL",
-        "MRVL",
-        "NVDA",
-        "TGT"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN125K 富邦"
-      ],
-      "avg_market_coupon": 17.74,
-      "avg_old_fair_rate": 21.01,
-      "avg_new_fair_rate": 16.62,
-      "avg_final_fair_rate": 17.57,
-      "avg_beta": 0.85,
-      "avg_confidence": 49,
-      "residual_premium": 1.12,
-      "confidence": "low",
-      "eligible": false
-    },
-    "ALAB+NVDA+PLTR+TSLA": {
-      "template_id": "ALAB+NVDA+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "ALAB",
-        "NVDA",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 3,
-      "sample_ids": [
-        "FCN321K 富邦",
-        "FCN593K 富邦",
-        "FCN593K 富邦"
-      ],
-      "avg_market_coupon": 23,
-      "avg_old_fair_rate": 18.49,
-      "avg_new_fair_rate": 20.66,
-      "avg_final_fair_rate": 22.88,
-      "avg_beta": 0.95,
-      "avg_confidence": 51,
-      "residual_premium": 2.34,
-      "confidence": "medium",
-      "eligible": true
-    },
-    "AVGO+MU+NVDA+TSLA+TSM": {
-      "template_id": "AVGO+MU+NVDA+TSLA+TSM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "AVGO",
-        "MU",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 3,
-      "sample_ids": [
-        "FCN580K 富邦",
-        "FCN665K 富邦",
-        "market_history_19"
-      ],
-      "avg_market_coupon": 19.57,
-      "avg_old_fair_rate": 18.89,
-      "avg_new_fair_rate": 18.79,
-      "avg_final_fair_rate": 19.59,
-      "avg_beta": 0.8,
-      "avg_confidence": 44.67,
-      "residual_premium": 0.78,
-      "confidence": "medium",
-      "eligible": true
-    },
-    "ARM+PLTR+TSLA": {
-      "template_id": "ARM+PLTR+TSLA",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "ARM",
-        "PLTR",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN931K 富邦"
-      ],
-      "avg_market_coupon": 16.16,
-      "avg_old_fair_rate": 19.72,
-      "avg_new_fair_rate": 19.58,
-      "avg_final_fair_rate": 16.33,
-      "avg_beta": 0.95,
-      "avg_confidence": 49,
-      "residual_premium": -3.42,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+MU+NVDA": {
-      "template_id": "AMD+MU+NVDA",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "AMD",
-        "MU",
-        "NVDA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN340L 富邦"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 18.98,
-      "avg_new_fair_rate": 19.73,
-      "avg_final_fair_rate": 18.26,
-      "avg_beta": 0.85,
-      "avg_confidence": 49,
-      "residual_premium": -1.73,
-      "confidence": "low",
-      "eligible": false
-    },
-    "MU+NVDA+TSLA+TSM": {
-      "template_id": "MU+NVDA+TSLA+TSM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "MU",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN597L 富邦"
-      ],
-      "avg_market_coupon": 19.59,
-      "avg_old_fair_rate": 19.68,
-      "avg_new_fair_rate": 18.92,
-      "avg_final_fair_rate": 19.49,
-      "avg_beta": 0.85,
-      "avg_confidence": 45.5,
-      "residual_premium": 0.67,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AVGO+CRDO": {
-      "template_id": "AVGO+CRDO",
-      "parent_template": "D_SPECULATIVE_MOMENTUM",
-      "match_symbols": [
-        "AVGO",
-        "CRDO"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "FCN179M 富邦"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 15.41,
-      "avg_new_fair_rate": 20.01,
-      "avg_final_fair_rate": 18.1,
-      "avg_beta": 0.95,
-      "avg_confidence": 49,
-      "residual_premium": -2.01,
-      "confidence": "low",
-      "eligible": false
-    },
-    "INTC+MU+QCOM": {
-      "template_id": "INTC+MU+QCOM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "INTC",
-        "MU",
-        "QCOM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_4"
-      ],
-      "avg_market_coupon": 19.92,
-      "avg_old_fair_rate": 20.83,
-      "avg_new_fair_rate": 19.73,
-      "avg_final_fair_rate": 19.84,
-      "avg_beta": 0.6,
-      "avg_confidence": 43,
-      "residual_premium": 0.19,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+INTC+TSM": {
-      "template_id": "AMD+INTC+TSM",
-      "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
-      "match_symbols": [
-        "AMD",
-        "INTC",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_5"
-      ],
-      "avg_market_coupon": 20.57,
-      "avg_old_fair_rate": 21.58,
-      "avg_new_fair_rate": 18.42,
-      "avg_final_fair_rate": 20.46,
-      "avg_beta": 0.95,
-      "avg_confidence": 43,
-      "residual_premium": 2.15,
-      "confidence": "low",
-      "eligible": false
-    },
-    "MU+TSLA+TSM": {
-      "template_id": "MU+TSLA+TSM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "MU",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_6"
-      ],
-      "avg_market_coupon": 12.22,
-      "avg_old_fair_rate": 17.6,
-      "avg_new_fair_rate": 19.73,
-      "avg_final_fair_rate": 12.3,
-      "avg_beta": 0.99,
-      "avg_confidence": 43,
-      "residual_premium": -7.51,
-      "confidence": "low",
-      "eligible": false
-    },
-    "INTC+MU+TSLA": {
-      "template_id": "INTC+MU+TSLA",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "INTC",
-        "MU",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_7"
-      ],
-      "avg_market_coupon": 18.54,
-      "avg_old_fair_rate": 20.9,
-      "avg_new_fair_rate": 19.73,
-      "avg_final_fair_rate": 18.72,
-      "avg_beta": 0.85,
-      "avg_confidence": 43,
-      "residual_premium": -1.19,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMZN+GOOG+QCOM": {
-      "template_id": "AMZN+GOOG+QCOM",
-      "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
-      "match_symbols": [
-        "AMZN",
-        "GOOG",
-        "QCOM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_9"
-      ],
-      "avg_market_coupon": 12,
-      "avg_old_fair_rate": 17.03,
-      "avg_new_fair_rate": 16.62,
-      "avg_final_fair_rate": 12.05,
-      "avg_beta": 0.99,
-      "avg_confidence": 43,
-      "residual_premium": -4.62,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AVGO+MU+NVDA+TSM": {
-      "template_id": "AVGO+MU+NVDA+TSM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "AVGO",
-        "MU",
-        "NVDA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_13"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 18.3,
-      "avg_new_fair_rate": 20.33,
-      "avg_final_fair_rate": 18.12,
-      "avg_beta": 0.95,
-      "avg_confidence": 43,
-      "residual_premium": -2.33,
-      "confidence": "low",
-      "eligible": false
-    },
-    "NVDA+ORCL+TSLA": {
-      "template_id": "NVDA+ORCL+TSLA",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "NVDA",
-        "ORCL",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_14"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 16.37,
-      "avg_new_fair_rate": 17.59,
-      "avg_final_fair_rate": 17.94,
-      "avg_beta": 0.85,
-      "avg_confidence": 43,
-      "residual_premium": 0.41,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AAPL+NVDA+TSM": {
-      "template_id": "AAPL+NVDA+TSM",
-      "parent_template": "A_AI_CORE_INSTITUTIONAL",
-      "match_symbols": [
-        "AAPL",
-        "NVDA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_16"
-      ],
-      "avg_market_coupon": 15,
-      "avg_old_fair_rate": 14.01,
-      "avg_new_fair_rate": 17.8,
-      "avg_final_fair_rate": 15.14,
-      "avg_beta": 0.95,
-      "avg_confidence": 43,
-      "residual_premium": -2.8,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+MSFT+NVDA": {
-      "template_id": "AMD+MSFT+NVDA",
-      "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
-      "match_symbols": [
-        "AMD",
-        "MSFT",
-        "NVDA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_18"
-      ],
-      "avg_market_coupon": 15.33,
-      "avg_old_fair_rate": 16.54,
-      "avg_new_fair_rate": 18.42,
-      "avg_final_fair_rate": 15.48,
-      "avg_beta": 0.95,
-      "avg_confidence": 43,
-      "residual_premium": -3.09,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AVGO+GOOG+NVDA+TSLA": {
-      "template_id": "AVGO+GOOG+NVDA+TSLA",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "AVGO",
-        "GOOG",
-        "NVDA",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_20"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 18.09,
-      "avg_new_fair_rate": 17.77,
-      "avg_final_fair_rate": 17.91,
-      "avg_beta": 0.6,
-      "avg_confidence": 43,
-      "residual_premium": 0.23,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMD+ASML+AVGO+NVDA+TSLA": {
-      "template_id": "AMD+ASML+AVGO+NVDA+TSLA",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "AMD",
-        "ASML",
-        "AVGO",
-        "NVDA",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_21"
-      ],
-      "avg_market_coupon": 17.3,
-      "avg_old_fair_rate": 19.93,
-      "avg_new_fair_rate": 17.77,
-      "avg_final_fair_rate": 17.37,
-      "avg_beta": 0.85,
-      "avg_confidence": 43,
-      "residual_premium": -0.47,
-      "confidence": "low",
-      "eligible": false
-    },
-    "INTC+MU+TSM": {
-      "template_id": "INTC+MU+TSM",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "INTC",
-        "MU",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_22"
-      ],
-      "avg_market_coupon": 18,
-      "avg_old_fair_rate": 21.01,
-      "avg_new_fair_rate": 19.73,
-      "avg_final_fair_rate": 18.26,
-      "avg_beta": 0.85,
-      "avg_confidence": 43,
-      "residual_premium": -1.73,
-      "confidence": "low",
-      "eligible": false
-    },
-    "AMAT+NFLX": {
-      "template_id": "AMAT+NFLX",
-      "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
-      "match_symbols": [
-        "AMAT",
-        "NFLX"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_23"
-      ],
-      "avg_market_coupon": 16.9,
-      "avg_old_fair_rate": 18.91,
-      "avg_new_fair_rate": 18.42,
-      "avg_final_fair_rate": 17.13,
-      "avg_beta": 0.85,
-      "avg_confidence": 43,
-      "residual_premium": -1.52,
-      "confidence": "low",
-      "eligible": false
-    },
-    "GOOG+NVDA+TSLA+TSM": {
-      "template_id": "GOOG+NVDA+TSLA+TSM",
-      "parent_template": "C_TSLA_MOMENTUM_CORE",
-      "match_symbols": [
-        "GOOG",
-        "NVDA",
-        "TSLA",
-        "TSM"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_27"
-      ],
-      "avg_market_coupon": 13.76,
-      "avg_old_fair_rate": 18.12,
-      "avg_new_fair_rate": 17.71,
-      "avg_final_fair_rate": 13.8,
-      "avg_beta": 0.99,
-      "avg_confidence": 43,
-      "residual_premium": -3.95,
-      "confidence": "low",
-      "eligible": false
-    },
-    "MU+NVDA+TSLA": {
-      "template_id": "MU+NVDA+TSLA",
-      "parent_template": "B_MEMORY_SEMI_TACTICAL",
-      "match_symbols": [
-        "MU",
-        "NVDA",
-        "TSLA"
-      ],
-      "count": 1,
-      "sample_ids": [
-        "market_history_28"
-      ],
-      "avg_market_coupon": 10,
-      "avg_old_fair_rate": 19.53,
-      "avg_new_fair_rate": 19.19,
-      "avg_final_fair_rate": 10.09,
-      "avg_beta": 0.99,
-      "avg_confidence": 43,
-      "residual_premium": -9.19,
-      "confidence": "low",
+      "latest_observation_date": "2026-03-26",
+      "oldest_observation_date": "2026-03-26",
       "eligible": false
     }
   },
@@ -2328,8 +767,11 @@
       ],
       "derived": true,
       "derived_type": "ETF_SEMI_CORE",
-      "source": "derived_from_full_basket",
-      "count": 14,
+      "source": "derived_from_recent_observation_pool",
+      "count": 10,
+      "source_distribution": {
+        "current_pool": 10
+      },
       "sample_ids": [
         "FCN727M 富邦",
         "FCN733M 富邦",
@@ -2340,20 +782,18 @@
         "FCN2601454 永豐",
         "FCN427N 富邦",
         "FCN499N 富邦",
-        "FCN391N 富邦",
-        "FCN669G",
-        "FCN727M 富邦",
-        "FCN733M 富邦",
-        "FCN765M 富邦"
+        "FCN391N 富邦"
       ],
-      "avg_market_coupon": 19.22,
-      "avg_old_fair_rate": 17.82,
-      "avg_new_fair_rate": 19,
-      "avg_final_fair_rate": 19.27,
-      "avg_beta": 0.78,
-      "avg_confidence": 50.29,
-      "residual_premium": 0.22,
+      "avg_market_coupon": 18.87,
+      "avg_old_fair_rate": 17.9,
+      "avg_new_fair_rate": 18.73,
+      "avg_final_fair_rate": 18.93,
+      "avg_beta": 0.82,
+      "avg_confidence": 49.9,
+      "residual_premium": 0.14,
       "confidence": "high",
+      "latest_observation_date": "2026-04-24",
+      "oldest_observation_date": "2026-03-11",
       "eligible": true
     }
   },
@@ -2409,46 +849,2678 @@
   },
   "fallback_rules": {
     "min_count_for_small_template": 3,
+    "min_count_for_theme_template": 1,
+    "allow_parent_template_fallback": false,
+    "allow_global_surface_fallback": false,
+    "max_fallback_window": "3m",
     "match_order": [
-      "exact_small_template",
-      "theme_template",
-      "partial_small_template_with_dna_guard",
-      "parent_template",
-      "global_surface"
+      "same_template_1w",
+      "same_template_1m",
+      "same_template_2m",
+      "same_template_3m",
+      "no_correction_beta_0"
     ]
   },
   "global_surface": {
     "template_id": "GLOBAL",
-    "count": 140,
+    "count": 23,
+    "source_distribution": {
+      "current_pool": 23
+    },
     "sample_ids": [
-      "FCN085J 富邦",
-      "FCN817J 富邦",
-      "FCN465K 富邦",
-      "FCN757K 富邦",
-      "FCN791K 富邦",
-      "FCN935K 富邦",
-      "FCN055L 富邦",
-      "FCN069L 富邦",
-      "FCN2503655 永豐",
-      "FCN441L 富邦",
-      "FCN607L 富邦",
-      "FCN2504096 永豐",
-      "FCN623L 富邦",
-      "FCN699L 富邦",
-      "FCN725L 富邦",
-      "FCN735L 富邦",
-      "FCN760L 富邦",
-      "FCN783L 富邦",
       "FCN461M 富邦",
-      "FCN685M 富邦"
+      "FCN685M 富邦",
+      "FCN710M 富邦",
+      "FCN727M 富邦",
+      "FCN715M 富邦",
+      "FCN733M 富邦",
+      "FCN981M 富邦",
+      "FCN019N 富邦",
+      "FCN765M 富邦",
+      "FCN2601188 永豐",
+      "DACN26000064 永豐",
+      "FCN310N 富邦",
+      "FCN219N 富邦",
+      "FCN2601454 永豐",
+      "FCN139N 富邦",
+      "FCN427N 富邦",
+      "FCN371N 富邦",
+      "FCN499N 富邦",
+      "FCN469N 富邦",
+      "FCN391N 富邦"
     ],
-    "avg_market_coupon": 19.17,
-    "avg_old_fair_rate": 18.79,
-    "avg_new_fair_rate": 18.78,
-    "avg_final_fair_rate": 19.18,
-    "avg_beta": 0.85,
-    "avg_confidence": 49.9,
-    "residual_premium": 0.39,
-    "confidence": "high"
+    "avg_market_coupon": 21.4,
+    "avg_old_fair_rate": 18.55,
+    "avg_new_fair_rate": 19.24,
+    "avg_final_fair_rate": 21.38,
+    "avg_beta": 0.86,
+    "avg_confidence": 49.85,
+    "residual_premium": 2.16,
+    "confidence": "high",
+    "latest_observation_date": "2026-05-04",
+    "oldest_observation_date": "2026-02-09"
+  },
+  "export_policy": {
+    "analysis_layer": "dashboard uses all calibration rows including old_pool for historical/regime research",
+    "pricing_surface_layer": "exported surface uses current_pool + market_history only, max 3 months",
+    "fallback_order": [
+      "1w",
+      "1m",
+      "2m",
+      "3m",
+      "no_correction_beta_0"
+    ],
+    "no_correction_rule": "If no same/template/theme data exists within 3 months, m8_batch should set beta=0 and Final Fair=New Fair.",
+    "formula": "Final Fair = New Fair + beta * (Surface Market Coupon - New Fair)"
+  },
+  "surface_windows": {
+    "1w": {
+      "version": "m8_template_surface_v1",
+      "generated_at": "2026-05-11T12:12:22.612Z",
+      "source": "m8_calibration_dashboard_v1.html",
+      "market_window": "1w",
+      "window_days": 7,
+      "reference_date": "2026-05-04",
+      "observation_count": 1,
+      "method": "recent_market_observation_surface_newfair_plus_beta_market_gap",
+      "templates": {
+        "B_MEMORY_SEMI_TACTICAL": {
+          "template_id": "B_MEMORY_SEMI_TACTICAL",
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN629N 富邦"
+          ],
+          "avg_market_coupon": 17.5,
+          "avg_old_fair_rate": 18,
+          "avg_new_fair_rate": 20.33,
+          "avg_final_fair_rate": 17.64,
+          "avg_beta": 0.95,
+          "avg_confidence": 49,
+          "residual_premium": -2.83,
+          "confidence": "low",
+          "latest_observation_date": "2026-05-04",
+          "oldest_observation_date": "2026-05-04"
+        }
+      },
+      "small_templates": {
+        "MU+NVDA+TSM": {
+          "template_id": "MU+NVDA+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MU",
+            "NVDA",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN629N 富邦"
+          ],
+          "avg_market_coupon": 17.5,
+          "avg_old_fair_rate": 18,
+          "avg_new_fair_rate": 20.33,
+          "avg_final_fair_rate": 17.64,
+          "avg_beta": 0.95,
+          "avg_confidence": 49,
+          "residual_premium": -2.83,
+          "confidence": "low",
+          "latest_observation_date": "2026-05-04",
+          "oldest_observation_date": "2026-05-04",
+          "eligible": false
+        }
+      },
+      "theme_templates": {},
+      "template_dna_rules": {
+        "C_TSLA_MOMENTUM_CORE": {
+          "any_required": [
+            "TSLA"
+          ]
+        },
+        "D_SPECULATIVE_MOMENTUM": {
+          "any_required": [
+            "COIN",
+            "CRDO",
+            "ALAB",
+            "SOFI",
+            "COHR",
+            "COHRN",
+            "LITE",
+            "CRDW",
+            "PLTR"
+          ]
+        },
+        "B_MEMORY_SEMI_TACTICAL": {
+          "any_required": [
+            "MU",
+            "SNDK"
+          ]
+        },
+        "E_DEFENSIVE_STABILIZER": {
+          "any_required": [
+            "LQD",
+            "AAPL",
+            "BAC",
+            "C",
+            "UNH",
+            "REGN",
+            "TGT"
+          ]
+        },
+        "A_AI_CORE_INSTITUTIONAL": {
+          "any_required": [
+            "NVDA",
+            "TSM",
+            "AVGO",
+            "SMH",
+            "QQQ",
+            "AMD",
+            "MRVL",
+            "ARM",
+            "AMAT"
+          ]
+        }
+      },
+      "fallback_rules": {
+        "min_count_for_small_template": 3,
+        "min_count_for_theme_template": 1,
+        "allow_parent_template_fallback": false,
+        "allow_global_surface_fallback": false,
+        "max_fallback_window": "3m",
+        "match_order": [
+          "same_template_1w",
+          "same_template_1m",
+          "same_template_2m",
+          "same_template_3m",
+          "no_correction_beta_0"
+        ]
+      },
+      "global_surface": {
+        "template_id": "GLOBAL",
+        "count": 1,
+        "source_distribution": {
+          "current_pool": 1
+        },
+        "sample_ids": [
+          "FCN629N 富邦"
+        ],
+        "avg_market_coupon": 17.5,
+        "avg_old_fair_rate": 18,
+        "avg_new_fair_rate": 20.33,
+        "avg_final_fair_rate": 17.64,
+        "avg_beta": 0.95,
+        "avg_confidence": 49,
+        "residual_premium": -2.83,
+        "confidence": "low",
+        "latest_observation_date": "2026-05-04",
+        "oldest_observation_date": "2026-05-04"
+      }
+    },
+    "1m": {
+      "version": "m8_template_surface_v1",
+      "generated_at": "2026-05-11T12:12:22.612Z",
+      "source": "m8_calibration_dashboard_v1.html",
+      "market_window": "1m",
+      "window_days": 31,
+      "reference_date": "2026-05-04",
+      "observation_count": 15,
+      "method": "recent_market_observation_surface_newfair_plus_beta_market_gap",
+      "templates": {
+        "A_AI_CORE_INSTITUTIONAL": {
+          "template_id": "A_AI_CORE_INSTITUTIONAL",
+          "count": 4,
+          "source_distribution": {
+            "current_pool": 4
+          },
+          "sample_ids": [
+            "FCN981M 富邦",
+            "FCN2601454 永豐",
+            "FCN499N 富邦",
+            "FCN391N 富邦"
+          ],
+          "avg_market_coupon": 16.78,
+          "avg_old_fair_rate": 17.66,
+          "avg_new_fair_rate": 16.97,
+          "avg_final_fair_rate": 16.81,
+          "avg_beta": 0.85,
+          "avg_confidence": 49.75,
+          "residual_premium": -0.19,
+          "confidence": "medium",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-07"
+        },
+        "B_MEMORY_SEMI_TACTICAL": {
+          "template_id": "B_MEMORY_SEMI_TACTICAL",
+          "count": 7,
+          "source_distribution": {
+            "current_pool": 7
+          },
+          "sample_ids": [
+            "FCN019N 富邦",
+            "DACN26000064 永豐",
+            "FCN310N 富邦",
+            "FCN219N 富邦",
+            "FCN139N 富邦",
+            "FCN427N 富邦",
+            "FCN629N 富邦"
+          ],
+          "avg_market_coupon": 25.26,
+          "avg_old_fair_rate": 19.02,
+          "avg_new_fair_rate": 19.96,
+          "avg_final_fair_rate": 25.24,
+          "avg_beta": 0.91,
+          "avg_confidence": 49.43,
+          "residual_premium": 5.3,
+          "confidence": "medium",
+          "latest_observation_date": "2026-05-04",
+          "oldest_observation_date": "2026-04-09"
+        },
+        "E_DEFENSIVE_STABILIZER": {
+          "template_id": "E_DEFENSIVE_STABILIZER",
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN2601188 永豐"
+          ],
+          "avg_market_coupon": 12.12,
+          "avg_old_fair_rate": 18.97,
+          "avg_new_fair_rate": 16.62,
+          "avg_final_fair_rate": 12.17,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": -4.5,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15"
+        },
+        "D_SPECULATIVE_MOMENTUM": {
+          "template_id": "D_SPECULATIVE_MOMENTUM",
+          "count": 2,
+          "source_distribution": {
+            "current_pool": 2
+          },
+          "sample_ids": [
+            "FCN371N 富邦",
+            "FCN469N 富邦"
+          ],
+          "avg_market_coupon": 22.75,
+          "avg_old_fair_rate": 19.34,
+          "avg_new_fair_rate": 20.22,
+          "avg_final_fair_rate": 22.62,
+          "avg_beta": 0.95,
+          "avg_confidence": 48.38,
+          "residual_premium": 2.53,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-21"
+        },
+        "F_OTHERS_M7_BASKET_DRIVEN": {
+          "template_id": "F_OTHERS_M7_BASKET_DRIVEN",
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN369N 富邦"
+          ],
+          "avg_market_coupon": 19.13,
+          "avg_old_fair_rate": 19.95,
+          "avg_new_fair_rate": 18.42,
+          "avg_final_fair_rate": 19.02,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": 0.71,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21"
+        }
+      },
+      "small_templates": {
+        "AMD+AVGO+NVDA+TSM": {
+          "template_id": "AMD+AVGO+NVDA+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AMD",
+            "AVGO",
+            "NVDA",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN981M 富邦"
+          ],
+          "avg_market_coupon": 19.16,
+          "avg_old_fair_rate": 17.85,
+          "avg_new_fair_rate": 17.96,
+          "avg_final_fair_rate": 18.98,
+          "avg_beta": 0.85,
+          "avg_confidence": 52,
+          "residual_premium": 1.2,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-07",
+          "oldest_observation_date": "2026-04-07",
+          "eligible": false
+        },
+        "AMD+AVGO+MU": {
+          "template_id": "AMD+AVGO+MU",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "AMD",
+            "AVGO",
+            "MU"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN019N 富邦"
+          ],
+          "avg_market_coupon": 21.55,
+          "avg_old_fair_rate": 18.92,
+          "avg_new_fair_rate": 21.25,
+          "avg_final_fair_rate": 21.43,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": 0.3,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-09",
+          "oldest_observation_date": "2026-04-09",
+          "eligible": false
+        },
+        "LQD+QQQ+SMH+TSM": {
+          "template_id": "LQD+QQQ+SMH+TSM",
+          "parent_template": "E_DEFENSIVE_STABILIZER",
+          "match_symbols": [
+            "LQD",
+            "QQQ",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN2601188 永豐"
+          ],
+          "avg_market_coupon": 12.12,
+          "avg_old_fair_rate": 18.97,
+          "avg_new_fair_rate": 16.62,
+          "avg_final_fair_rate": 12.17,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": -4.5,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15",
+          "eligible": false
+        },
+        "ARM+INTC+MU+TSLA": {
+          "template_id": "ARM+INTC+MU+TSLA",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "ARM",
+            "INTC",
+            "MU",
+            "TSLA"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "DACN26000064 永豐"
+          ],
+          "avg_market_coupon": 46.56,
+          "avg_old_fair_rate": 22.93,
+          "avg_new_fair_rate": 19.73,
+          "avg_final_fair_rate": 46.29,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 26.83,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15",
+          "eligible": false
+        },
+        "MRVL+MU+NVDA+SMH": {
+          "template_id": "MRVL+MU+NVDA+SMH",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MRVL",
+            "MU",
+            "NVDA",
+            "SMH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN310N 富邦"
+          ],
+          "avg_market_coupon": 23.81,
+          "avg_old_fair_rate": 18.37,
+          "avg_new_fair_rate": 19.19,
+          "avg_final_fair_rate": 23.76,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 4.62,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-20",
+          "oldest_observation_date": "2026-04-20",
+          "eligible": false
+        },
+        "MU+QQQ+TSM": {
+          "template_id": "MU+QQQ+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MU",
+            "QQQ",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN219N 富邦"
+          ],
+          "avg_market_coupon": 17.96,
+          "avg_old_fair_rate": 17.36,
+          "avg_new_fair_rate": 19.73,
+          "avg_final_fair_rate": 18.23,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": -1.77,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-16",
+          "oldest_observation_date": "2026-04-16",
+          "eligible": false
+        },
+        "AVGO+NVDA+QQQ+SMH": {
+          "template_id": "AVGO+NVDA+QQQ+SMH",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AVGO",
+            "NVDA",
+            "QQQ",
+            "SMH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN2601454 永豐"
+          ],
+          "avg_market_coupon": 15.52,
+          "avg_old_fair_rate": 16.88,
+          "avg_new_fair_rate": 16.62,
+          "avg_final_fair_rate": 15.69,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": -1.1,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-22",
+          "oldest_observation_date": "2026-04-22",
+          "eligible": false
+        },
+        "MRVL+MU+NVDA+TSLA+TSM": {
+          "template_id": "MRVL+MU+NVDA+TSLA+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MRVL",
+            "MU",
+            "NVDA",
+            "TSLA",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN139N 富邦"
+          ],
+          "avg_market_coupon": 25,
+          "avg_old_fair_rate": 18.88,
+          "avg_new_fair_rate": 20.33,
+          "avg_final_fair_rate": 24.95,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 4.67,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15",
+          "eligible": false
+        },
+        "AVGO+MRVL+MU+NVDA+SMH": {
+          "template_id": "AVGO+MRVL+MU+NVDA+SMH",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "AVGO",
+            "MRVL",
+            "MU",
+            "NVDA",
+            "SMH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN427N 富邦"
+          ],
+          "avg_market_coupon": 24.41,
+          "avg_old_fair_rate": 18.66,
+          "avg_new_fair_rate": 19.19,
+          "avg_final_fair_rate": 24.36,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 5.22,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-22",
+          "oldest_observation_date": "2026-04-22",
+          "eligible": false
+        },
+        "COIN+ORCL+PLTR+TSLA": {
+          "template_id": "COIN+ORCL+PLTR+TSLA",
+          "parent_template": "D_SPECULATIVE_MOMENTUM",
+          "match_symbols": [
+            "COIN",
+            "ORCL",
+            "PLTR",
+            "TSLA"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN371N 富邦"
+          ],
+          "avg_market_coupon": 24.34,
+          "avg_old_fair_rate": 19.25,
+          "avg_new_fair_rate": 21.39,
+          "avg_final_fair_rate": 24.19,
+          "avg_beta": 0.95,
+          "avg_confidence": 49,
+          "residual_premium": 2.95,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21",
+          "eligible": false
+        },
+        "AMZN+NVDA+SMH+TSM+UNH": {
+          "template_id": "AMZN+NVDA+SMH+TSM+UNH",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AMZN",
+            "NVDA",
+            "SMH",
+            "TSM",
+            "UNH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN499N 富邦"
+          ],
+          "avg_market_coupon": 16.87,
+          "avg_old_fair_rate": 18.61,
+          "avg_new_fair_rate": 16.22,
+          "avg_final_fair_rate": 16.77,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": 0.65,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-24",
+          "eligible": false
+        },
+        "ARM+AVGO+ORCL+PLTR+TSLA": {
+          "template_id": "ARM+AVGO+ORCL+PLTR+TSLA",
+          "parent_template": "D_SPECULATIVE_MOMENTUM",
+          "match_symbols": [
+            "ARM",
+            "AVGO",
+            "ORCL",
+            "PLTR",
+            "TSLA"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN469N 富邦"
+          ],
+          "avg_market_coupon": 21.16,
+          "avg_old_fair_rate": 19.42,
+          "avg_new_fair_rate": 19.05,
+          "avg_final_fair_rate": 21.05,
+          "avg_beta": 0.95,
+          "avg_confidence": 47.75,
+          "residual_premium": 2.11,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-24",
+          "eligible": false
+        },
+        "AVGO+NVDA+QQQ+SMH+TSM": {
+          "template_id": "AVGO+NVDA+QQQ+SMH+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AVGO",
+            "NVDA",
+            "QQQ",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN391N 富邦"
+          ],
+          "avg_market_coupon": 15.57,
+          "avg_old_fair_rate": 17.28,
+          "avg_new_fair_rate": 17.06,
+          "avg_final_fair_rate": 15.79,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": -1.49,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21",
+          "eligible": false
+        },
+        "MU+NVDA+TSM": {
+          "template_id": "MU+NVDA+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MU",
+            "NVDA",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN629N 富邦"
+          ],
+          "avg_market_coupon": 17.5,
+          "avg_old_fair_rate": 18,
+          "avg_new_fair_rate": 20.33,
+          "avg_final_fair_rate": 17.64,
+          "avg_beta": 0.95,
+          "avg_confidence": 49,
+          "residual_premium": -2.83,
+          "confidence": "low",
+          "latest_observation_date": "2026-05-04",
+          "oldest_observation_date": "2026-05-04",
+          "eligible": false
+        },
+        "AMD+ARM+AVGO": {
+          "template_id": "AMD+ARM+AVGO",
+          "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
+          "match_symbols": [
+            "AMD",
+            "ARM",
+            "AVGO"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN369N 富邦"
+          ],
+          "avg_market_coupon": 19.13,
+          "avg_old_fair_rate": 19.95,
+          "avg_new_fair_rate": 18.42,
+          "avg_final_fair_rate": 19.02,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": 0.71,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21",
+          "eligible": false
+        }
+      },
+      "theme_templates": {
+        "ETF_SEMI_CORE": {
+          "template_id": "ETF_SEMI_CORE",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "theme_type": "SMH_QQQ_PLUS_TSM_NVDA_AVGO",
+          "match_etfs": [
+            "SMH",
+            "QQQ"
+          ],
+          "match_core_symbols": [
+            "TSM",
+            "NVDA",
+            "AVGO"
+          ],
+          "derived": true,
+          "derived_type": "ETF_SEMI_CORE",
+          "source": "derived_from_recent_observation_pool",
+          "count": 7,
+          "source_distribution": {
+            "current_pool": 7
+          },
+          "sample_ids": [
+            "FCN2601188 永豐",
+            "FCN310N 富邦",
+            "FCN219N 富邦",
+            "FCN2601454 永豐",
+            "FCN427N 富邦",
+            "FCN499N 富邦",
+            "FCN391N 富邦"
+          ],
+          "avg_market_coupon": 18.04,
+          "avg_old_fair_rate": 18.02,
+          "avg_new_fair_rate": 17.8,
+          "avg_final_fair_rate": 18.11,
+          "avg_beta": 0.91,
+          "avg_confidence": 49,
+          "residual_premium": 0.24,
+          "confidence": "medium",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-15",
+          "eligible": true
+        }
+      },
+      "template_dna_rules": {
+        "C_TSLA_MOMENTUM_CORE": {
+          "any_required": [
+            "TSLA"
+          ]
+        },
+        "D_SPECULATIVE_MOMENTUM": {
+          "any_required": [
+            "COIN",
+            "CRDO",
+            "ALAB",
+            "SOFI",
+            "COHR",
+            "COHRN",
+            "LITE",
+            "CRDW",
+            "PLTR"
+          ]
+        },
+        "B_MEMORY_SEMI_TACTICAL": {
+          "any_required": [
+            "MU",
+            "SNDK"
+          ]
+        },
+        "E_DEFENSIVE_STABILIZER": {
+          "any_required": [
+            "LQD",
+            "AAPL",
+            "BAC",
+            "C",
+            "UNH",
+            "REGN",
+            "TGT"
+          ]
+        },
+        "A_AI_CORE_INSTITUTIONAL": {
+          "any_required": [
+            "NVDA",
+            "TSM",
+            "AVGO",
+            "SMH",
+            "QQQ",
+            "AMD",
+            "MRVL",
+            "ARM",
+            "AMAT"
+          ]
+        }
+      },
+      "fallback_rules": {
+        "min_count_for_small_template": 3,
+        "min_count_for_theme_template": 1,
+        "allow_parent_template_fallback": false,
+        "allow_global_surface_fallback": false,
+        "max_fallback_window": "3m",
+        "match_order": [
+          "same_template_1w",
+          "same_template_1m",
+          "same_template_2m",
+          "same_template_3m",
+          "no_correction_beta_0"
+        ]
+      },
+      "global_surface": {
+        "template_id": "GLOBAL",
+        "count": 15,
+        "source_distribution": {
+          "current_pool": 15
+        },
+        "sample_ids": [
+          "FCN981M 富邦",
+          "FCN019N 富邦",
+          "FCN2601188 永豐",
+          "DACN26000064 永豐",
+          "FCN310N 富邦",
+          "FCN219N 富邦",
+          "FCN2601454 永豐",
+          "FCN139N 富邦",
+          "FCN427N 富邦",
+          "FCN371N 富邦",
+          "FCN499N 富邦",
+          "FCN469N 富邦",
+          "FCN391N 富邦",
+          "FCN629N 富邦",
+          "FCN369N 富邦"
+        ],
+        "avg_market_coupon": 21.38,
+        "avg_old_fair_rate": 18.76,
+        "avg_new_fair_rate": 18.87,
+        "avg_final_fair_rate": 21.35,
+        "avg_beta": 0.9,
+        "avg_confidence": 49.32,
+        "residual_premium": 2.51,
+        "confidence": "high",
+        "latest_observation_date": "2026-05-04",
+        "oldest_observation_date": "2026-04-07"
+      }
+    },
+    "2m": {
+      "version": "m8_template_surface_v1",
+      "generated_at": "2026-05-11T12:12:22.613Z",
+      "source": "m8_calibration_dashboard_v1.html",
+      "market_window": "2m",
+      "window_days": 62,
+      "reference_date": "2026-05-04",
+      "observation_count": 22,
+      "method": "recent_market_observation_surface_newfair_plus_beta_market_gap",
+      "templates": {
+        "B_MEMORY_SEMI_TACTICAL": {
+          "template_id": "B_MEMORY_SEMI_TACTICAL",
+          "count": 11,
+          "source_distribution": {
+            "current_pool": 11
+          },
+          "sample_ids": [
+            "FCN685M 富邦",
+            "FCN710M 富邦",
+            "FCN727M 富邦",
+            "FCN019N 富邦",
+            "FCN765M 富邦",
+            "DACN26000064 永豐",
+            "FCN310N 富邦",
+            "FCN219N 富邦",
+            "FCN139N 富邦",
+            "FCN427N 富邦",
+            "FCN629N 富邦"
+          ],
+          "avg_market_coupon": 24.65,
+          "avg_old_fair_rate": 18.8,
+          "avg_new_fair_rate": 20.83,
+          "avg_final_fair_rate": 24.61,
+          "avg_beta": 0.86,
+          "avg_confidence": 49.52,
+          "residual_premium": 3.82,
+          "confidence": "high",
+          "latest_observation_date": "2026-05-04",
+          "oldest_observation_date": "2026-03-06"
+        },
+        "A_AI_CORE_INSTITUTIONAL": {
+          "template_id": "A_AI_CORE_INSTITUTIONAL",
+          "count": 7,
+          "source_distribution": {
+            "current_pool": 7
+          },
+          "sample_ids": [
+            "FCN715M 富邦",
+            "FCN733M 富邦",
+            "FCN981M 富邦",
+            "FCN2601454 永豐",
+            "FCN499N 富邦",
+            "FCN391N 富邦",
+            "FCN901M 富邦"
+          ],
+          "avg_market_coupon": 17.7,
+          "avg_old_fair_rate": 17.3,
+          "avg_new_fair_rate": 17.07,
+          "avg_final_fair_rate": 17.72,
+          "avg_beta": 0.8,
+          "avg_confidence": 50.71,
+          "residual_premium": 0.63,
+          "confidence": "medium",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-03-10"
+        },
+        "E_DEFENSIVE_STABILIZER": {
+          "template_id": "E_DEFENSIVE_STABILIZER",
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN2601188 永豐"
+          ],
+          "avg_market_coupon": 12.12,
+          "avg_old_fair_rate": 18.97,
+          "avg_new_fair_rate": 16.62,
+          "avg_final_fair_rate": 12.17,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": -4.5,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15"
+        },
+        "D_SPECULATIVE_MOMENTUM": {
+          "template_id": "D_SPECULATIVE_MOMENTUM",
+          "count": 2,
+          "source_distribution": {
+            "current_pool": 2
+          },
+          "sample_ids": [
+            "FCN371N 富邦",
+            "FCN469N 富邦"
+          ],
+          "avg_market_coupon": 22.75,
+          "avg_old_fair_rate": 19.34,
+          "avg_new_fair_rate": 20.22,
+          "avg_final_fair_rate": 22.62,
+          "avg_beta": 0.95,
+          "avg_confidence": 48.38,
+          "residual_premium": 2.53,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-21"
+        },
+        "F_OTHERS_M7_BASKET_DRIVEN": {
+          "template_id": "F_OTHERS_M7_BASKET_DRIVEN",
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN369N 富邦"
+          ],
+          "avg_market_coupon": 19.13,
+          "avg_old_fair_rate": 19.95,
+          "avg_new_fair_rate": 18.42,
+          "avg_final_fair_rate": 19.02,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": 0.71,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21"
+        }
+      },
+      "small_templates": {
+        "MU+NVDA+PLTR+TSM": {
+          "template_id": "MU+NVDA+PLTR+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MU",
+            "NVDA",
+            "PLTR",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN685M 富邦"
+          ],
+          "avg_market_coupon": 23,
+          "avg_old_fair_rate": 18.13,
+          "avg_new_fair_rate": 20.33,
+          "avg_final_fair_rate": 22.87,
+          "avg_beta": 0.95,
+          "avg_confidence": 52,
+          "residual_premium": 2.67,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-06",
+          "oldest_observation_date": "2026-03-06",
+          "eligible": false
+        },
+        "MU+NVDA+TSM": {
+          "template_id": "MU+NVDA+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MU",
+            "NVDA",
+            "TSM"
+          ],
+          "count": 2,
+          "source_distribution": {
+            "current_pool": 2
+          },
+          "sample_ids": [
+            "FCN710M 富邦",
+            "FCN629N 富邦"
+          ],
+          "avg_market_coupon": 21.01,
+          "avg_old_fair_rate": 18.01,
+          "avg_new_fair_rate": 21.27,
+          "avg_final_fair_rate": 21.02,
+          "avg_beta": 0.95,
+          "avg_confidence": 45.88,
+          "residual_premium": -0.26,
+          "confidence": "low",
+          "latest_observation_date": "2026-05-04",
+          "oldest_observation_date": "2026-03-10",
+          "eligible": false
+        },
+        "AVGO+MU+NVDA+SMH+TSM": {
+          "template_id": "AVGO+MU+NVDA+SMH+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "AVGO",
+            "MU",
+            "NVDA",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN727M 富邦"
+          ],
+          "avg_market_coupon": 23.4,
+          "avg_old_fair_rate": 18.74,
+          "avg_new_fair_rate": 23.41,
+          "avg_final_fair_rate": 23.4,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": -0.01,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-11",
+          "oldest_observation_date": "2026-03-11",
+          "eligible": false
+        },
+        "ARM+AVGO+MRVL+NVDA+TSM": {
+          "template_id": "ARM+AVGO+MRVL+NVDA+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "ARM",
+            "AVGO",
+            "MRVL",
+            "NVDA",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN715M 富邦"
+          ],
+          "avg_market_coupon": 23.4,
+          "avg_old_fair_rate": 19.95,
+          "avg_new_fair_rate": 17.96,
+          "avg_final_fair_rate": 23.35,
+          "avg_beta": 0.99,
+          "avg_confidence": 52,
+          "residual_premium": 5.44,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-10",
+          "oldest_observation_date": "2026-03-10",
+          "eligible": false
+        },
+        "AAPL+GOOG+NVDA+SMH+TSM": {
+          "template_id": "AAPL+GOOG+NVDA+SMH+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AAPL",
+            "GOOG",
+            "NVDA",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN733M 富邦"
+          ],
+          "avg_market_coupon": 15.59,
+          "avg_old_fair_rate": 15.43,
+          "avg_new_fair_rate": 15.89,
+          "avg_final_fair_rate": 15.71,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": -0.3,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-11",
+          "oldest_observation_date": "2026-03-11",
+          "eligible": false
+        },
+        "AMD+AVGO+NVDA+TSM": {
+          "template_id": "AMD+AVGO+NVDA+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AMD",
+            "AVGO",
+            "NVDA",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN981M 富邦"
+          ],
+          "avg_market_coupon": 19.16,
+          "avg_old_fair_rate": 17.85,
+          "avg_new_fair_rate": 17.96,
+          "avg_final_fair_rate": 18.98,
+          "avg_beta": 0.85,
+          "avg_confidence": 52,
+          "residual_premium": 1.2,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-07",
+          "oldest_observation_date": "2026-04-07",
+          "eligible": false
+        },
+        "AMD+AVGO+MU": {
+          "template_id": "AMD+AVGO+MU",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "AMD",
+            "AVGO",
+            "MU"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN019N 富邦"
+          ],
+          "avg_market_coupon": 21.55,
+          "avg_old_fair_rate": 18.92,
+          "avg_new_fair_rate": 21.25,
+          "avg_final_fair_rate": 21.43,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": 0.3,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-09",
+          "oldest_observation_date": "2026-04-09",
+          "eligible": false
+        },
+        "GOOG+MU+NVDA+SMH+TSM": {
+          "template_id": "GOOG+MU+NVDA+SMH+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "GOOG",
+            "MU",
+            "NVDA",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN765M 富邦"
+          ],
+          "avg_market_coupon": 23.42,
+          "avg_old_fair_rate": 18.74,
+          "avg_new_fair_rate": 23.41,
+          "avg_final_fair_rate": 23.42,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": 0.01,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-13",
+          "oldest_observation_date": "2026-03-13",
+          "eligible": false
+        },
+        "LQD+QQQ+SMH+TSM": {
+          "template_id": "LQD+QQQ+SMH+TSM",
+          "parent_template": "E_DEFENSIVE_STABILIZER",
+          "match_symbols": [
+            "LQD",
+            "QQQ",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN2601188 永豐"
+          ],
+          "avg_market_coupon": 12.12,
+          "avg_old_fair_rate": 18.97,
+          "avg_new_fair_rate": 16.62,
+          "avg_final_fair_rate": 12.17,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": -4.5,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15",
+          "eligible": false
+        },
+        "ARM+INTC+MU+TSLA": {
+          "template_id": "ARM+INTC+MU+TSLA",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "ARM",
+            "INTC",
+            "MU",
+            "TSLA"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "DACN26000064 永豐"
+          ],
+          "avg_market_coupon": 46.56,
+          "avg_old_fair_rate": 22.93,
+          "avg_new_fair_rate": 19.73,
+          "avg_final_fair_rate": 46.29,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 26.83,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15",
+          "eligible": false
+        },
+        "MRVL+MU+NVDA+SMH": {
+          "template_id": "MRVL+MU+NVDA+SMH",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MRVL",
+            "MU",
+            "NVDA",
+            "SMH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN310N 富邦"
+          ],
+          "avg_market_coupon": 23.81,
+          "avg_old_fair_rate": 18.37,
+          "avg_new_fair_rate": 19.19,
+          "avg_final_fair_rate": 23.76,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 4.62,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-20",
+          "oldest_observation_date": "2026-04-20",
+          "eligible": false
+        },
+        "MU+QQQ+TSM": {
+          "template_id": "MU+QQQ+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MU",
+            "QQQ",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN219N 富邦"
+          ],
+          "avg_market_coupon": 17.96,
+          "avg_old_fair_rate": 17.36,
+          "avg_new_fair_rate": 19.73,
+          "avg_final_fair_rate": 18.23,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": -1.77,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-16",
+          "oldest_observation_date": "2026-04-16",
+          "eligible": false
+        },
+        "AVGO+NVDA+QQQ+SMH": {
+          "template_id": "AVGO+NVDA+QQQ+SMH",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AVGO",
+            "NVDA",
+            "QQQ",
+            "SMH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN2601454 永豐"
+          ],
+          "avg_market_coupon": 15.52,
+          "avg_old_fair_rate": 16.88,
+          "avg_new_fair_rate": 16.62,
+          "avg_final_fair_rate": 15.69,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": -1.1,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-22",
+          "oldest_observation_date": "2026-04-22",
+          "eligible": false
+        },
+        "MRVL+MU+NVDA+TSLA+TSM": {
+          "template_id": "MRVL+MU+NVDA+TSLA+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MRVL",
+            "MU",
+            "NVDA",
+            "TSLA",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN139N 富邦"
+          ],
+          "avg_market_coupon": 25,
+          "avg_old_fair_rate": 18.88,
+          "avg_new_fair_rate": 20.33,
+          "avg_final_fair_rate": 24.95,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 4.67,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15",
+          "eligible": false
+        },
+        "AVGO+MRVL+MU+NVDA+SMH": {
+          "template_id": "AVGO+MRVL+MU+NVDA+SMH",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "AVGO",
+            "MRVL",
+            "MU",
+            "NVDA",
+            "SMH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN427N 富邦"
+          ],
+          "avg_market_coupon": 24.41,
+          "avg_old_fair_rate": 18.66,
+          "avg_new_fair_rate": 19.19,
+          "avg_final_fair_rate": 24.36,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 5.22,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-22",
+          "oldest_observation_date": "2026-04-22",
+          "eligible": false
+        },
+        "COIN+ORCL+PLTR+TSLA": {
+          "template_id": "COIN+ORCL+PLTR+TSLA",
+          "parent_template": "D_SPECULATIVE_MOMENTUM",
+          "match_symbols": [
+            "COIN",
+            "ORCL",
+            "PLTR",
+            "TSLA"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN371N 富邦"
+          ],
+          "avg_market_coupon": 24.34,
+          "avg_old_fair_rate": 19.25,
+          "avg_new_fair_rate": 21.39,
+          "avg_final_fair_rate": 24.19,
+          "avg_beta": 0.95,
+          "avg_confidence": 49,
+          "residual_premium": 2.95,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21",
+          "eligible": false
+        },
+        "AMZN+NVDA+SMH+TSM+UNH": {
+          "template_id": "AMZN+NVDA+SMH+TSM+UNH",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AMZN",
+            "NVDA",
+            "SMH",
+            "TSM",
+            "UNH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN499N 富邦"
+          ],
+          "avg_market_coupon": 16.87,
+          "avg_old_fair_rate": 18.61,
+          "avg_new_fair_rate": 16.22,
+          "avg_final_fair_rate": 16.77,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": 0.65,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-24",
+          "eligible": false
+        },
+        "ARM+AVGO+ORCL+PLTR+TSLA": {
+          "template_id": "ARM+AVGO+ORCL+PLTR+TSLA",
+          "parent_template": "D_SPECULATIVE_MOMENTUM",
+          "match_symbols": [
+            "ARM",
+            "AVGO",
+            "ORCL",
+            "PLTR",
+            "TSLA"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN469N 富邦"
+          ],
+          "avg_market_coupon": 21.16,
+          "avg_old_fair_rate": 19.42,
+          "avg_new_fair_rate": 19.05,
+          "avg_final_fair_rate": 21.05,
+          "avg_beta": 0.95,
+          "avg_confidence": 47.75,
+          "residual_premium": 2.11,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-24",
+          "eligible": false
+        },
+        "AVGO+NVDA+QQQ+SMH+TSM": {
+          "template_id": "AVGO+NVDA+QQQ+SMH+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AVGO",
+            "NVDA",
+            "QQQ",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN391N 富邦"
+          ],
+          "avg_market_coupon": 15.57,
+          "avg_old_fair_rate": 17.28,
+          "avg_new_fair_rate": 17.06,
+          "avg_final_fair_rate": 15.79,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": -1.49,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21",
+          "eligible": false
+        },
+        "AMD+ARM+AVGO": {
+          "template_id": "AMD+ARM+AVGO",
+          "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
+          "match_symbols": [
+            "AMD",
+            "ARM",
+            "AVGO"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN369N 富邦"
+          ],
+          "avg_market_coupon": 19.13,
+          "avg_old_fair_rate": 19.95,
+          "avg_new_fair_rate": 18.42,
+          "avg_final_fair_rate": 19.02,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": 0.71,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21",
+          "eligible": false
+        },
+        "NVDA+PLTR+TSM": {
+          "template_id": "NVDA+PLTR+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "NVDA",
+            "PLTR",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN901M 富邦"
+          ],
+          "avg_market_coupon": 17.76,
+          "avg_old_fair_rate": 15.13,
+          "avg_new_fair_rate": 17.8,
+          "avg_final_fair_rate": 17.78,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": -0.04,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-26",
+          "oldest_observation_date": "2026-03-26",
+          "eligible": false
+        }
+      },
+      "theme_templates": {
+        "ETF_SEMI_CORE": {
+          "template_id": "ETF_SEMI_CORE",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "theme_type": "SMH_QQQ_PLUS_TSM_NVDA_AVGO",
+          "match_etfs": [
+            "SMH",
+            "QQQ"
+          ],
+          "match_core_symbols": [
+            "TSM",
+            "NVDA",
+            "AVGO"
+          ],
+          "derived": true,
+          "derived_type": "ETF_SEMI_CORE",
+          "source": "derived_from_recent_observation_pool",
+          "count": 10,
+          "source_distribution": {
+            "current_pool": 10
+          },
+          "sample_ids": [
+            "FCN727M 富邦",
+            "FCN733M 富邦",
+            "FCN765M 富邦",
+            "FCN2601188 永豐",
+            "FCN310N 富邦",
+            "FCN219N 富邦",
+            "FCN2601454 永豐",
+            "FCN427N 富邦",
+            "FCN499N 富邦",
+            "FCN391N 富邦"
+          ],
+          "avg_market_coupon": 18.87,
+          "avg_old_fair_rate": 17.9,
+          "avg_new_fair_rate": 18.73,
+          "avg_final_fair_rate": 18.93,
+          "avg_beta": 0.82,
+          "avg_confidence": 49.9,
+          "residual_premium": 0.14,
+          "confidence": "high",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-03-11",
+          "eligible": true
+        }
+      },
+      "template_dna_rules": {
+        "C_TSLA_MOMENTUM_CORE": {
+          "any_required": [
+            "TSLA"
+          ]
+        },
+        "D_SPECULATIVE_MOMENTUM": {
+          "any_required": [
+            "COIN",
+            "CRDO",
+            "ALAB",
+            "SOFI",
+            "COHR",
+            "COHRN",
+            "LITE",
+            "CRDW",
+            "PLTR"
+          ]
+        },
+        "B_MEMORY_SEMI_TACTICAL": {
+          "any_required": [
+            "MU",
+            "SNDK"
+          ]
+        },
+        "E_DEFENSIVE_STABILIZER": {
+          "any_required": [
+            "LQD",
+            "AAPL",
+            "BAC",
+            "C",
+            "UNH",
+            "REGN",
+            "TGT"
+          ]
+        },
+        "A_AI_CORE_INSTITUTIONAL": {
+          "any_required": [
+            "NVDA",
+            "TSM",
+            "AVGO",
+            "SMH",
+            "QQQ",
+            "AMD",
+            "MRVL",
+            "ARM",
+            "AMAT"
+          ]
+        }
+      },
+      "fallback_rules": {
+        "min_count_for_small_template": 3,
+        "min_count_for_theme_template": 1,
+        "allow_parent_template_fallback": false,
+        "allow_global_surface_fallback": false,
+        "max_fallback_window": "3m",
+        "match_order": [
+          "same_template_1w",
+          "same_template_1m",
+          "same_template_2m",
+          "same_template_3m",
+          "no_correction_beta_0"
+        ]
+      },
+      "global_surface": {
+        "template_id": "GLOBAL",
+        "count": 22,
+        "source_distribution": {
+          "current_pool": 22
+        },
+        "sample_ids": [
+          "FCN685M 富邦",
+          "FCN710M 富邦",
+          "FCN727M 富邦",
+          "FCN715M 富邦",
+          "FCN733M 富邦",
+          "FCN981M 富邦",
+          "FCN019N 富邦",
+          "FCN765M 富邦",
+          "FCN2601188 永豐",
+          "DACN26000064 永豐",
+          "FCN310N 富邦",
+          "FCN219N 富邦",
+          "FCN2601454 永豐",
+          "FCN139N 富邦",
+          "FCN427N 富邦",
+          "FCN371N 富邦",
+          "FCN499N 富邦",
+          "FCN469N 富邦",
+          "FCN391N 富邦",
+          "FCN629N 富邦"
+        ],
+        "avg_market_coupon": 21.44,
+        "avg_old_fair_rate": 18.43,
+        "avg_new_fair_rate": 19.28,
+        "avg_final_fair_rate": 21.42,
+        "avg_beta": 0.85,
+        "avg_confidence": 49.75,
+        "residual_premium": 2.16,
+        "confidence": "high",
+        "latest_observation_date": "2026-05-04",
+        "oldest_observation_date": "2026-03-06"
+      }
+    },
+    "3m": {
+      "version": "m8_template_surface_v1",
+      "generated_at": "2026-05-11T12:12:22.614Z",
+      "source": "m8_calibration_dashboard_v1.html",
+      "market_window": "3m",
+      "window_days": 93,
+      "reference_date": "2026-05-04",
+      "observation_count": 23,
+      "method": "recent_market_observation_surface_newfair_plus_beta_market_gap",
+      "templates": {
+        "F_OTHERS_M7_BASKET_DRIVEN": {
+          "template_id": "F_OTHERS_M7_BASKET_DRIVEN",
+          "count": 2,
+          "source_distribution": {
+            "current_pool": 2
+          },
+          "sample_ids": [
+            "FCN461M 富邦",
+            "FCN369N 富邦"
+          ],
+          "avg_market_coupon": 19.81,
+          "avg_old_fair_rate": 20.58,
+          "avg_new_fair_rate": 18.42,
+          "avg_final_fair_rate": 19.71,
+          "avg_beta": 0.9,
+          "avg_confidence": 50.5,
+          "residual_premium": 1.39,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-02-09"
+        },
+        "B_MEMORY_SEMI_TACTICAL": {
+          "template_id": "B_MEMORY_SEMI_TACTICAL",
+          "count": 11,
+          "source_distribution": {
+            "current_pool": 11
+          },
+          "sample_ids": [
+            "FCN685M 富邦",
+            "FCN710M 富邦",
+            "FCN727M 富邦",
+            "FCN019N 富邦",
+            "FCN765M 富邦",
+            "DACN26000064 永豐",
+            "FCN310N 富邦",
+            "FCN219N 富邦",
+            "FCN139N 富邦",
+            "FCN427N 富邦",
+            "FCN629N 富邦"
+          ],
+          "avg_market_coupon": 24.65,
+          "avg_old_fair_rate": 18.8,
+          "avg_new_fair_rate": 20.83,
+          "avg_final_fair_rate": 24.61,
+          "avg_beta": 0.86,
+          "avg_confidence": 49.52,
+          "residual_premium": 3.82,
+          "confidence": "high",
+          "latest_observation_date": "2026-05-04",
+          "oldest_observation_date": "2026-03-06"
+        },
+        "A_AI_CORE_INSTITUTIONAL": {
+          "template_id": "A_AI_CORE_INSTITUTIONAL",
+          "count": 7,
+          "source_distribution": {
+            "current_pool": 7
+          },
+          "sample_ids": [
+            "FCN715M 富邦",
+            "FCN733M 富邦",
+            "FCN981M 富邦",
+            "FCN2601454 永豐",
+            "FCN499N 富邦",
+            "FCN391N 富邦",
+            "FCN901M 富邦"
+          ],
+          "avg_market_coupon": 17.7,
+          "avg_old_fair_rate": 17.3,
+          "avg_new_fair_rate": 17.07,
+          "avg_final_fair_rate": 17.72,
+          "avg_beta": 0.8,
+          "avg_confidence": 50.71,
+          "residual_premium": 0.63,
+          "confidence": "medium",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-03-10"
+        },
+        "E_DEFENSIVE_STABILIZER": {
+          "template_id": "E_DEFENSIVE_STABILIZER",
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN2601188 永豐"
+          ],
+          "avg_market_coupon": 12.12,
+          "avg_old_fair_rate": 18.97,
+          "avg_new_fair_rate": 16.62,
+          "avg_final_fair_rate": 12.17,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": -4.5,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15"
+        },
+        "D_SPECULATIVE_MOMENTUM": {
+          "template_id": "D_SPECULATIVE_MOMENTUM",
+          "count": 2,
+          "source_distribution": {
+            "current_pool": 2
+          },
+          "sample_ids": [
+            "FCN371N 富邦",
+            "FCN469N 富邦"
+          ],
+          "avg_market_coupon": 22.75,
+          "avg_old_fair_rate": 19.34,
+          "avg_new_fair_rate": 20.22,
+          "avg_final_fair_rate": 22.62,
+          "avg_beta": 0.95,
+          "avg_confidence": 48.38,
+          "residual_premium": 2.53,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-21"
+        }
+      },
+      "small_templates": {
+        "ARM+CCL+MRVL+NVDA+UNH": {
+          "template_id": "ARM+CCL+MRVL+NVDA+UNH",
+          "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
+          "match_symbols": [
+            "ARM",
+            "CCL",
+            "MRVL",
+            "NVDA",
+            "UNH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN461M 富邦"
+          ],
+          "avg_market_coupon": 20.5,
+          "avg_old_fair_rate": 21.21,
+          "avg_new_fair_rate": 18.42,
+          "avg_final_fair_rate": 20.4,
+          "avg_beta": 0.95,
+          "avg_confidence": 52,
+          "residual_premium": 2.08,
+          "confidence": "low",
+          "latest_observation_date": "2026-02-09",
+          "oldest_observation_date": "2026-02-09",
+          "eligible": false
+        },
+        "MU+NVDA+PLTR+TSM": {
+          "template_id": "MU+NVDA+PLTR+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MU",
+            "NVDA",
+            "PLTR",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN685M 富邦"
+          ],
+          "avg_market_coupon": 23,
+          "avg_old_fair_rate": 18.13,
+          "avg_new_fair_rate": 20.33,
+          "avg_final_fair_rate": 22.87,
+          "avg_beta": 0.95,
+          "avg_confidence": 52,
+          "residual_premium": 2.67,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-06",
+          "oldest_observation_date": "2026-03-06",
+          "eligible": false
+        },
+        "MU+NVDA+TSM": {
+          "template_id": "MU+NVDA+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MU",
+            "NVDA",
+            "TSM"
+          ],
+          "count": 2,
+          "source_distribution": {
+            "current_pool": 2
+          },
+          "sample_ids": [
+            "FCN710M 富邦",
+            "FCN629N 富邦"
+          ],
+          "avg_market_coupon": 21.01,
+          "avg_old_fair_rate": 18.01,
+          "avg_new_fair_rate": 21.27,
+          "avg_final_fair_rate": 21.02,
+          "avg_beta": 0.95,
+          "avg_confidence": 45.88,
+          "residual_premium": -0.26,
+          "confidence": "low",
+          "latest_observation_date": "2026-05-04",
+          "oldest_observation_date": "2026-03-10",
+          "eligible": false
+        },
+        "AVGO+MU+NVDA+SMH+TSM": {
+          "template_id": "AVGO+MU+NVDA+SMH+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "AVGO",
+            "MU",
+            "NVDA",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN727M 富邦"
+          ],
+          "avg_market_coupon": 23.4,
+          "avg_old_fair_rate": 18.74,
+          "avg_new_fair_rate": 23.41,
+          "avg_final_fair_rate": 23.4,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": -0.01,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-11",
+          "oldest_observation_date": "2026-03-11",
+          "eligible": false
+        },
+        "ARM+AVGO+MRVL+NVDA+TSM": {
+          "template_id": "ARM+AVGO+MRVL+NVDA+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "ARM",
+            "AVGO",
+            "MRVL",
+            "NVDA",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN715M 富邦"
+          ],
+          "avg_market_coupon": 23.4,
+          "avg_old_fair_rate": 19.95,
+          "avg_new_fair_rate": 17.96,
+          "avg_final_fair_rate": 23.35,
+          "avg_beta": 0.99,
+          "avg_confidence": 52,
+          "residual_premium": 5.44,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-10",
+          "oldest_observation_date": "2026-03-10",
+          "eligible": false
+        },
+        "AAPL+GOOG+NVDA+SMH+TSM": {
+          "template_id": "AAPL+GOOG+NVDA+SMH+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AAPL",
+            "GOOG",
+            "NVDA",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN733M 富邦"
+          ],
+          "avg_market_coupon": 15.59,
+          "avg_old_fair_rate": 15.43,
+          "avg_new_fair_rate": 15.89,
+          "avg_final_fair_rate": 15.71,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": -0.3,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-11",
+          "oldest_observation_date": "2026-03-11",
+          "eligible": false
+        },
+        "AMD+AVGO+NVDA+TSM": {
+          "template_id": "AMD+AVGO+NVDA+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AMD",
+            "AVGO",
+            "NVDA",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN981M 富邦"
+          ],
+          "avg_market_coupon": 19.16,
+          "avg_old_fair_rate": 17.85,
+          "avg_new_fair_rate": 17.96,
+          "avg_final_fair_rate": 18.98,
+          "avg_beta": 0.85,
+          "avg_confidence": 52,
+          "residual_premium": 1.2,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-07",
+          "oldest_observation_date": "2026-04-07",
+          "eligible": false
+        },
+        "AMD+AVGO+MU": {
+          "template_id": "AMD+AVGO+MU",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "AMD",
+            "AVGO",
+            "MU"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN019N 富邦"
+          ],
+          "avg_market_coupon": 21.55,
+          "avg_old_fair_rate": 18.92,
+          "avg_new_fair_rate": 21.25,
+          "avg_final_fair_rate": 21.43,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": 0.3,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-09",
+          "oldest_observation_date": "2026-04-09",
+          "eligible": false
+        },
+        "GOOG+MU+NVDA+SMH+TSM": {
+          "template_id": "GOOG+MU+NVDA+SMH+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "GOOG",
+            "MU",
+            "NVDA",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN765M 富邦"
+          ],
+          "avg_market_coupon": 23.42,
+          "avg_old_fair_rate": 18.74,
+          "avg_new_fair_rate": 23.41,
+          "avg_final_fair_rate": 23.42,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": 0.01,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-13",
+          "oldest_observation_date": "2026-03-13",
+          "eligible": false
+        },
+        "LQD+QQQ+SMH+TSM": {
+          "template_id": "LQD+QQQ+SMH+TSM",
+          "parent_template": "E_DEFENSIVE_STABILIZER",
+          "match_symbols": [
+            "LQD",
+            "QQQ",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN2601188 永豐"
+          ],
+          "avg_market_coupon": 12.12,
+          "avg_old_fair_rate": 18.97,
+          "avg_new_fair_rate": 16.62,
+          "avg_final_fair_rate": 12.17,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": -4.5,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15",
+          "eligible": false
+        },
+        "ARM+INTC+MU+TSLA": {
+          "template_id": "ARM+INTC+MU+TSLA",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "ARM",
+            "INTC",
+            "MU",
+            "TSLA"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "DACN26000064 永豐"
+          ],
+          "avg_market_coupon": 46.56,
+          "avg_old_fair_rate": 22.93,
+          "avg_new_fair_rate": 19.73,
+          "avg_final_fair_rate": 46.29,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 26.83,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15",
+          "eligible": false
+        },
+        "MRVL+MU+NVDA+SMH": {
+          "template_id": "MRVL+MU+NVDA+SMH",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MRVL",
+            "MU",
+            "NVDA",
+            "SMH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN310N 富邦"
+          ],
+          "avg_market_coupon": 23.81,
+          "avg_old_fair_rate": 18.37,
+          "avg_new_fair_rate": 19.19,
+          "avg_final_fair_rate": 23.76,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 4.62,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-20",
+          "oldest_observation_date": "2026-04-20",
+          "eligible": false
+        },
+        "MU+QQQ+TSM": {
+          "template_id": "MU+QQQ+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MU",
+            "QQQ",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN219N 富邦"
+          ],
+          "avg_market_coupon": 17.96,
+          "avg_old_fair_rate": 17.36,
+          "avg_new_fair_rate": 19.73,
+          "avg_final_fair_rate": 18.23,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": -1.77,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-16",
+          "oldest_observation_date": "2026-04-16",
+          "eligible": false
+        },
+        "AVGO+NVDA+QQQ+SMH": {
+          "template_id": "AVGO+NVDA+QQQ+SMH",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AVGO",
+            "NVDA",
+            "QQQ",
+            "SMH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN2601454 永豐"
+          ],
+          "avg_market_coupon": 15.52,
+          "avg_old_fair_rate": 16.88,
+          "avg_new_fair_rate": 16.62,
+          "avg_final_fair_rate": 15.69,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": -1.1,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-22",
+          "oldest_observation_date": "2026-04-22",
+          "eligible": false
+        },
+        "MRVL+MU+NVDA+TSLA+TSM": {
+          "template_id": "MRVL+MU+NVDA+TSLA+TSM",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "MRVL",
+            "MU",
+            "NVDA",
+            "TSLA",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN139N 富邦"
+          ],
+          "avg_market_coupon": 25,
+          "avg_old_fair_rate": 18.88,
+          "avg_new_fair_rate": 20.33,
+          "avg_final_fair_rate": 24.95,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 4.67,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-15",
+          "oldest_observation_date": "2026-04-15",
+          "eligible": false
+        },
+        "AVGO+MRVL+MU+NVDA+SMH": {
+          "template_id": "AVGO+MRVL+MU+NVDA+SMH",
+          "parent_template": "B_MEMORY_SEMI_TACTICAL",
+          "match_symbols": [
+            "AVGO",
+            "MRVL",
+            "MU",
+            "NVDA",
+            "SMH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN427N 富邦"
+          ],
+          "avg_market_coupon": 24.41,
+          "avg_old_fair_rate": 18.66,
+          "avg_new_fair_rate": 19.19,
+          "avg_final_fair_rate": 24.36,
+          "avg_beta": 0.99,
+          "avg_confidence": 49,
+          "residual_premium": 5.22,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-22",
+          "oldest_observation_date": "2026-04-22",
+          "eligible": false
+        },
+        "COIN+ORCL+PLTR+TSLA": {
+          "template_id": "COIN+ORCL+PLTR+TSLA",
+          "parent_template": "D_SPECULATIVE_MOMENTUM",
+          "match_symbols": [
+            "COIN",
+            "ORCL",
+            "PLTR",
+            "TSLA"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN371N 富邦"
+          ],
+          "avg_market_coupon": 24.34,
+          "avg_old_fair_rate": 19.25,
+          "avg_new_fair_rate": 21.39,
+          "avg_final_fair_rate": 24.19,
+          "avg_beta": 0.95,
+          "avg_confidence": 49,
+          "residual_premium": 2.95,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21",
+          "eligible": false
+        },
+        "AMZN+NVDA+SMH+TSM+UNH": {
+          "template_id": "AMZN+NVDA+SMH+TSM+UNH",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AMZN",
+            "NVDA",
+            "SMH",
+            "TSM",
+            "UNH"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN499N 富邦"
+          ],
+          "avg_market_coupon": 16.87,
+          "avg_old_fair_rate": 18.61,
+          "avg_new_fair_rate": 16.22,
+          "avg_final_fair_rate": 16.77,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": 0.65,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-24",
+          "eligible": false
+        },
+        "ARM+AVGO+ORCL+PLTR+TSLA": {
+          "template_id": "ARM+AVGO+ORCL+PLTR+TSLA",
+          "parent_template": "D_SPECULATIVE_MOMENTUM",
+          "match_symbols": [
+            "ARM",
+            "AVGO",
+            "ORCL",
+            "PLTR",
+            "TSLA"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN469N 富邦"
+          ],
+          "avg_market_coupon": 21.16,
+          "avg_old_fair_rate": 19.42,
+          "avg_new_fair_rate": 19.05,
+          "avg_final_fair_rate": 21.05,
+          "avg_beta": 0.95,
+          "avg_confidence": 47.75,
+          "residual_premium": 2.11,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-04-24",
+          "eligible": false
+        },
+        "AVGO+NVDA+QQQ+SMH+TSM": {
+          "template_id": "AVGO+NVDA+QQQ+SMH+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "AVGO",
+            "NVDA",
+            "QQQ",
+            "SMH",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN391N 富邦"
+          ],
+          "avg_market_coupon": 15.57,
+          "avg_old_fair_rate": 17.28,
+          "avg_new_fair_rate": 17.06,
+          "avg_final_fair_rate": 15.79,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": -1.49,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21",
+          "eligible": false
+        },
+        "AMD+ARM+AVGO": {
+          "template_id": "AMD+ARM+AVGO",
+          "parent_template": "F_OTHERS_M7_BASKET_DRIVEN",
+          "match_symbols": [
+            "AMD",
+            "ARM",
+            "AVGO"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN369N 富邦"
+          ],
+          "avg_market_coupon": 19.13,
+          "avg_old_fair_rate": 19.95,
+          "avg_new_fair_rate": 18.42,
+          "avg_final_fair_rate": 19.02,
+          "avg_beta": 0.85,
+          "avg_confidence": 49,
+          "residual_premium": 0.71,
+          "confidence": "low",
+          "latest_observation_date": "2026-04-21",
+          "oldest_observation_date": "2026-04-21",
+          "eligible": false
+        },
+        "NVDA+PLTR+TSM": {
+          "template_id": "NVDA+PLTR+TSM",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "match_symbols": [
+            "NVDA",
+            "PLTR",
+            "TSM"
+          ],
+          "count": 1,
+          "source_distribution": {
+            "current_pool": 1
+          },
+          "sample_ids": [
+            "FCN901M 富邦"
+          ],
+          "avg_market_coupon": 17.76,
+          "avg_old_fair_rate": 15.13,
+          "avg_new_fair_rate": 17.8,
+          "avg_final_fair_rate": 17.78,
+          "avg_beta": 0.6,
+          "avg_confidence": 52,
+          "residual_premium": -0.04,
+          "confidence": "low",
+          "latest_observation_date": "2026-03-26",
+          "oldest_observation_date": "2026-03-26",
+          "eligible": false
+        }
+      },
+      "theme_templates": {
+        "ETF_SEMI_CORE": {
+          "template_id": "ETF_SEMI_CORE",
+          "parent_template": "A_AI_CORE_INSTITUTIONAL",
+          "theme_type": "SMH_QQQ_PLUS_TSM_NVDA_AVGO",
+          "match_etfs": [
+            "SMH",
+            "QQQ"
+          ],
+          "match_core_symbols": [
+            "TSM",
+            "NVDA",
+            "AVGO"
+          ],
+          "derived": true,
+          "derived_type": "ETF_SEMI_CORE",
+          "source": "derived_from_recent_observation_pool",
+          "count": 10,
+          "source_distribution": {
+            "current_pool": 10
+          },
+          "sample_ids": [
+            "FCN727M 富邦",
+            "FCN733M 富邦",
+            "FCN765M 富邦",
+            "FCN2601188 永豐",
+            "FCN310N 富邦",
+            "FCN219N 富邦",
+            "FCN2601454 永豐",
+            "FCN427N 富邦",
+            "FCN499N 富邦",
+            "FCN391N 富邦"
+          ],
+          "avg_market_coupon": 18.87,
+          "avg_old_fair_rate": 17.9,
+          "avg_new_fair_rate": 18.73,
+          "avg_final_fair_rate": 18.93,
+          "avg_beta": 0.82,
+          "avg_confidence": 49.9,
+          "residual_premium": 0.14,
+          "confidence": "high",
+          "latest_observation_date": "2026-04-24",
+          "oldest_observation_date": "2026-03-11",
+          "eligible": true
+        }
+      },
+      "template_dna_rules": {
+        "C_TSLA_MOMENTUM_CORE": {
+          "any_required": [
+            "TSLA"
+          ]
+        },
+        "D_SPECULATIVE_MOMENTUM": {
+          "any_required": [
+            "COIN",
+            "CRDO",
+            "ALAB",
+            "SOFI",
+            "COHR",
+            "COHRN",
+            "LITE",
+            "CRDW",
+            "PLTR"
+          ]
+        },
+        "B_MEMORY_SEMI_TACTICAL": {
+          "any_required": [
+            "MU",
+            "SNDK"
+          ]
+        },
+        "E_DEFENSIVE_STABILIZER": {
+          "any_required": [
+            "LQD",
+            "AAPL",
+            "BAC",
+            "C",
+            "UNH",
+            "REGN",
+            "TGT"
+          ]
+        },
+        "A_AI_CORE_INSTITUTIONAL": {
+          "any_required": [
+            "NVDA",
+            "TSM",
+            "AVGO",
+            "SMH",
+            "QQQ",
+            "AMD",
+            "MRVL",
+            "ARM",
+            "AMAT"
+          ]
+        }
+      },
+      "fallback_rules": {
+        "min_count_for_small_template": 3,
+        "min_count_for_theme_template": 1,
+        "allow_parent_template_fallback": false,
+        "allow_global_surface_fallback": false,
+        "max_fallback_window": "3m",
+        "match_order": [
+          "same_template_1w",
+          "same_template_1m",
+          "same_template_2m",
+          "same_template_3m",
+          "no_correction_beta_0"
+        ]
+      },
+      "global_surface": {
+        "template_id": "GLOBAL",
+        "count": 23,
+        "source_distribution": {
+          "current_pool": 23
+        },
+        "sample_ids": [
+          "FCN461M 富邦",
+          "FCN685M 富邦",
+          "FCN710M 富邦",
+          "FCN727M 富邦",
+          "FCN715M 富邦",
+          "FCN733M 富邦",
+          "FCN981M 富邦",
+          "FCN019N 富邦",
+          "FCN765M 富邦",
+          "FCN2601188 永豐",
+          "DACN26000064 永豐",
+          "FCN310N 富邦",
+          "FCN219N 富邦",
+          "FCN2601454 永豐",
+          "FCN139N 富邦",
+          "FCN427N 富邦",
+          "FCN371N 富邦",
+          "FCN499N 富邦",
+          "FCN469N 富邦",
+          "FCN391N 富邦"
+        ],
+        "avg_market_coupon": 21.4,
+        "avg_old_fair_rate": 18.55,
+        "avg_new_fair_rate": 19.24,
+        "avg_final_fair_rate": 21.38,
+        "avg_beta": 0.86,
+        "avg_confidence": 49.85,
+        "residual_premium": 2.16,
+        "confidence": "high",
+        "latest_observation_date": "2026-05-04",
+        "oldest_observation_date": "2026-02-09"
+      }
+    }
   }
 }
