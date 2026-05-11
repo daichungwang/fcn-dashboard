@@ -1,4 +1,3001 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>M8 FCN 定價模型</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, "Noto Sans TC", sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
+
+    .page {
+      max-width: 1680px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 18px;
+      font-size: 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 480px 1fr;
+      gap: 18px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+      border: 1px solid #e8ebf2;
+    }
+
+    .card h2 {
+      margin: 0 0 14px;
+      font-size: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #444;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border: 1px solid #cfd6e4;
+      border-radius: 10px;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    .form-group textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .btn-primary { background: #2f6fed; color: #fff; }
+    .btn-secondary { background: #eef2ff; color: #2447b2; }
+    .btn-danger { background: #ffe8e8; color: #b42318; }
+    .btn-success { background: #ecfdf3; color: #027a48; }
+
+    .muted {
+      color: #667085;
+      font-size: 13px;
+    }
+
+    .result-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pill.ok { background: #ecfdf3; color: #027a48; }
+    .pill.warn { background: #fff7ed; color: #b54708; }
+    .pill.bad { background: #fef3f2; color: #b42318; }
+    .pill.info { background: #eff8ff; color: #175cd3; }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .summary-box {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fafafa;
+    }
+
+    .summary-box .k {
+      font-size: 12px;
+      color: #667085;
+      margin-bottom: 6px;
+    }
+
+    .summary-box .v {
+      font-size: 22px;
+      font-weight: 800;
+      color: #111827;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    th, td {
+      border: 1px solid #e5e7eb;
+      padding: 10px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 700;
+    }
+
+    .section-title {
+      margin: 18px 0 10px;
+      font-size: 16px;
+      font-weight: 800;
+      color: #1d2939;
+    }
+
+    .mono {
+      font-family: Consolas, Monaco, monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.5;
+    }
+
+    .blueprint-card {
+      margin-top: 18px;
+    }
+
+    .bp-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .bp-block {
+      margin-top: 14px;
+    }
+
+    .bp-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 14px;
+    }
+
+    .bp-table th,
+    .bp-table td {
+      border: 1px solid #ddd;
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .bp-table th {
+      width: 220px;
+      background: #f7f7f7;
+    }
+
+    .empty {
+      padding: 24px;
+      text-align: center;
+      color: #667085;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .explain-box {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fafafa;
+      padding: 14px;
+      margin-top: 12px;
+    }
+
+    .explain-box .row {
+      margin-bottom: 12px;
+    }
+
+    .explain-box .label {
+      font-weight: 700;
+      color: #344054;
+      margin-bottom: 4px;
+    }
+
+    .small-note {
+      font-size: 12px;
+      color: #667085;
+      margin-top: 6px;
+    }
+
+    .split-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .split-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .sticky-box {
+      max-height: 360px;
+      overflow: auto;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .history-meta {
+      font-size: 12px;
+      color: #667085;
+      line-height: 1.5;
+    }
+
+
+    .decision-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .decision-box {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 12px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+    .decision-box .k { font-size: 12px; color: #667085; margin-bottom: 6px; font-weight: 700; }
+    .decision-box .v { font-size: 22px; font-weight: 900; color: #111827; }
+    .decision-box .sub { margin-top: 4px; font-size: 12px; color: #667085; }
+    .decision-comment {
+      border-radius: 14px;
+      padding: 12px 14px;
+      border: 1px solid #d0d5dd;
+      background: #f9fafb;
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .template-line { display: grid; grid-template-columns: repeat(7, minmax(120px, 1fr)); gap: 10px; margin-bottom: 16px; }
+    .mini-kpi { border: 1px solid #e5e7eb; border-radius: 12px; padding: 10px 12px; background: #fff; }
+    .mini-kpi .k { color: #667085; font-size: 12px; margin-bottom: 4px; font-weight: 700; }
+    .mini-kpi .v { color: #111827; font-weight: 800; font-size: 15px; word-break: break-word; }
+    .engine-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+    .engine-card { border: 1px solid #e5e7eb; border-radius: 16px; background: #fff; overflow: hidden; }
+    .engine-card-header {
+      padding: 14px 16px;
+      border-bottom: 1px solid #e5e7eb;
+      background: #f8fafc;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .engine-card-header h3 { margin: 0; font-size: 17px; }
+    .engine-card-body { padding: 14px 16px; }
+    .meter-wrap { margin: 12px 0; }
+    .meter-row { display: flex; align-items: center; gap: 10px; margin: 9px 0; }
+    .meter-label { width: 140px; font-size: 12px; color: #475467; font-weight: 700; }
+    .meter { flex: 1; height: 12px; background: #eef2f6; border-radius: 999px; overflow: hidden; }
+    .meter-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, #2f6fed, #12b76a); }
+    .meter-fill.warn { background: linear-gradient(90deg, #f79009, #fdb022); }
+    .meter-fill.bad { background: linear-gradient(90deg, #f04438, #f97066); }
+    .meter-value { width: 70px; text-align: right; font-size: 12px; font-weight: 800; color: #344054; }
+    .engine-comment {
+      background: #f9fafb;
+      border: 1px solid #eaecf0;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #344054;
+      margin-top: 10px;
+    }
+    details.collapsible-section {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      background: #fff;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    details.collapsible-section summary {
+      cursor: pointer;
+      padding: 12px 14px;
+      font-weight: 800;
+      background: #f8fafc;
+      color: #1d2939;
+      list-style: none;
+    }
+    details.collapsible-section summary::-webkit-details-marker { display: none; }
+    details.collapsible-section summary::before { content: "▶"; margin-right: 8px; color: #667085; }
+    details.collapsible-section[open] summary::before { content: "▼"; }
+    .collapsible-body { padding: 14px; border-top: 1px solid #e5e7eb; }
+    .calibration-link {
+      display: inline-block;
+      padding: 8px 10px;
+      border-radius: 10px;
+      background: #eef2ff;
+      color: #2447b2;
+      font-weight: 800;
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    @media (max-width: 1180px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .split-2,
+      .split-3,
+      .decision-grid,
+      .template-line,
+      .engine-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 12px;
+      }
+
+      .summary-grid {
+        grid-template-columns: 1fr;
+      }
+
+      th, td {
+        font-size: 13px;
+        padding: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <h1>FCN M8 定價模型（詢價單管理版）</h1>
+
+    <div class="grid">
+      <section class="card">
+        <h2>詢價單輸入</h2>
+
+        <div class="split-2">
+          <div class="form-group">
+            <label for="inquiryDate">詢價日期</label>
+            <input id="inquiryDate" type="date" />
+          </div>
+
+          <div class="form-group">
+            <label for="inquiryNo">詢價單號</label>
+            <input id="inquiryNo" type="text" readonly />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputMode">輸入模式</label>
+          <select id="inputMode">
+            <option value="single">單筆輸入</option>
+            <option value="batch">整批輸入</option>
+          </select>
+        </div>
+
+        <div id="singleInputPanel">
+          <div class="split-2">
+            <div class="form-group">
+              <label for="issuer">承做機構</label>
+              <select id="issuer">
+                <option value="">請選擇</option>
+                <option value="富邦">富邦</option>
+                <option value="永豐">永豐</option>
+                <option value="中信">中信</option>
+                <option value="國泰">國泰</option>
+                <option value="台新">台新</option>
+                <option value="星展">星展</option>
+                <option value="元大">元大</option>
+                <option value="第一">第一</option>
+                <option value="其他">其他</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="upstreamBank">上手銀行</label>
+              <select id="upstreamBank">
+                <option value="">請選擇</option>
+                <option value="NATIXIS">NATIXIS｜法國外貿銀行</option>
+                <option value="UBS">UBS｜瑞士銀行</option>
+                <option value="NOMURA">NOMURA｜野村銀行</option>
+                <option value="GS">GS｜高盛</option>
+                <option value="BARCLAYS">BARCLAYS｜巴克萊銀行</option>
+                <option value="DBS">DBS｜星展銀行</option>
+                <option value="HSBC">HSBC｜香港上海匯豐銀行</option>
+                <option value="CA">CA｜法國農業信貸銀行</option>
+                <option value="BBVA">BBVA｜西班牙對外銀行</option>
+                <option value="MS">MS｜摩根士丹利</option>
+                <option value="SG">SG｜法國興業銀行</option>
+                <option value="BNP">BNP｜法國巴黎銀行</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="split-2">
+            <div class="form-group">
+              <label for="rm">RM / 聯絡人</label>
+              <input id="rm" type="text" placeholder="例如：王小姐" />
+            </div>
+
+            <div class="form-group">
+              <label for="caseName">案例名稱</label>
+              <input id="caseName" type="text" value="Case 1" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="symbols">股票代號（逗號分隔，2~5 檔）</label>
+            <textarea id="symbols">TSM,AAPL,MSFT,LQD</textarea>
+          </div>
+
+          <div class="split-2">
+            <div class="form-group">
+              <label for="ki">KI</label>
+              <input id="ki" type="number" value="55" />
+            </div>
+
+            <div class="form-group">
+              <label for="strike">Strike</label>
+              <input id="strike" type="number" value="65" />
+            </div>
+          </div>
+
+          <div class="split-2">
+            <div class="form-group">
+              <label for="tenor">Tenor（月）</label>
+              <input id="tenor" type="number" value="6" />
+            </div>
+
+            <div class="form-group">
+              <label for="type">Type</label>
+              <select id="type">
+                <option value="EKI">EKI</option>
+                <option value="DACN">DACN</option>
+                <option value="AKI">AKI</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="split-2">
+            <div class="form-group">
+              <label for="marketYield">Market Yield (%)</label>
+              <input id="marketYield" type="number" step="0.01" value="14" />
+            </div>
+
+            <div class="form-group">
+              <label for="note">備註</label>
+              <input id="note" type="text" placeholder="例如：核心科技籃子" />
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-primary" id="runBtn">執行 M8 並留存</button>
+            <button class="btn-secondary" id="demoBtn">載入示範案例</button>
+            <button class="btn-danger" id="clearBtn">清空結果</button>
+          </div>
+        </div>
+
+        <div id="batchInputPanel" style="display:none;">
+          <div class="form-group">
+            <label for="batchInput">整批貼上</label>
+            <textarea id="batchInput" placeholder="承做機構,上手銀行,RM,CaseName,股票1|股票2|股票3,KI,Strike,Tenor,Type,MarketYield,備註
+富邦,NATIXIS,王小姐,Case1,TSM|AAPL|MSFT|LQD,55,65,6,EKI,14,核心科技
+永豐,UBS,陳先生,Case2,NVDA|AMD|AVGO|TSM,60,70,9,AKI,18.5,AI高波動"></textarea>
+            <div class="small-note">新格式：承做機構,上手銀行,RM,CaseName,股票1|股票2|股票3,KI,Strike,Tenor,Type,MarketYield,備註</div>
+            <div class="small-note">舊格式也相容：CaseName,股票1|股票2|股票3,KI,Strike,Tenor,Type,MarketYield</div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn-success" id="importBatchBtn">匯入整批詢價單並執行 M8</button>
+          </div>
+        </div>
+
+        <p class="muted" style="margin-top:12px;">
+          說明：Vol 模組已正式納入，不再另外加 ResonanceAdj。這版 storage 已升級為統一 schema，可供後續 M2 / M3 使用。
+        </p>
+
+        <div class="section-title">Anchor-based Yield Proxy</div>
+
+        <div class="form-group">
+          <label for="proxySymbols">股票代號（逗號分隔，至少 2 檔）</label>
+          <textarea id="proxySymbols" placeholder="例如：GOOG,AAPL,TSM,QQQ,MRVL"></textarea>
+          <div class="small-note">系統會自動找出 today_score 最高者當 anchor。</div>
+        </div>
+
+        <div class="split-2">
+          <div class="form-group">
+            <label for="proxyKi">KI</label>
+            <input id="proxyKi" type="number" value="55" />
+          </div>
+
+          <div class="form-group">
+            <label for="proxyStrike">Strike</label>
+            <input id="proxyStrike" type="number" value="65" />
+          </div>
+        </div>
+
+        <div class="split-2">
+          <div class="form-group">
+            <label for="proxyTenor">Tenor（月）</label>
+            <input id="proxyTenor" type="number" value="6" />
+          </div>
+
+          <div class="form-group">
+            <label for="proxyType">Type</label>
+            <select id="proxyType">
+              <option value="EKI">EKI</option>
+              <option value="DACN">DACN</option>
+              <option value="AKI" selected>AKI</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-success" id="runProxyBtn">產出 Anchor Proxy</button>
+        </div>
+
+        <div class="sticky-box" style="margin-top:10px;">
+          <div id="proxyResult" class="muted" style="padding:12px;">尚未執行</div>
+        </div>
+
+        <div class="section-title">歷史詢價單</div>
+        <div class="btn-row" style="margin-bottom:10px;">
+          <button class="btn-secondary" id="exportJsonBtn">匯出 JSON</button>
+          <button class="btn-secondary" id="exportCsvBtn">匯出 CSV</button>
+          <button class="btn-danger" id="clearHistoryBtn">清空全部</button>
+        </div>
+        <div class="sticky-box">
+          <div id="historyList" class="muted" style="padding:12px;">尚無資料</div>
+        </div>
+
+        <div class="section-title">同 Basket 歷史比較</div>
+        <div class="sticky-box">
+          <div id="basketCompare" class="muted" style="padding:12px;">尚無資料</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="result-top">
+          <h2 style="margin:0;">M8 結果</h2>
+          <span id="pricingBadge" class="pill ok">尚未執行</span>
+        </div>
+
+        <div id="resultArea">
+          <div class="empty">請先輸入案例後，按「執行 M8 並留存」</div>
+        </div>
+      </section>
+    </div>
+
+    <section class="card blueprint-card">
+      <details class="collapsible-section">
+        <summary>M8 Market Runtime Dashboard（工程調校資料，預設收合）</summary>
+        <div class="collapsible-body">
+        <div class="summary-grid">
+          <div class="summary-box">
+            <div class="k">Symbols</div>
+            <div class="v" id="rtSymbolCount">-</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="k">Avg RP</div>
+            <div class="v" id="rtAvgRP">-</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="k">High RP</div>
+            <div class="v" id="rtHighRP">-</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="k">Avg IV%</div>
+            <div class="v" id="rtAvgIV">-</div>
+          </div>
+
+          <div class="summary-box">
+            <div class="k">Extreme Skew</div>
+            <div class="v" id="rtHighSkew">-</div>
+          </div>
+        </div>
+
+        <div class="split-3" style="margin-bottom:12px;">
+          <div class="form-group">
+            <label>Symbol Filter</label>
+            <input id="runtimeFilterSymbol" type="text" placeholder="NVDA" />
+          </div>
+
+          <div class="form-group">
+            <label>Driver Filter</label>
+            <select id="runtimeFilterDriver">
+              <option value="">ALL</option>
+              <option value="IV_DRIVEN">IV_DRIVEN</option>
+              <option value="SKEW_DRIVEN">SKEW_DRIVEN</option>
+              <option value="DEMAND_DRIVEN">DEMAND_DRIVEN</option>
+              <option value="LOW_PRESSURE">LOW_PRESSURE</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Sort</label>
+            <select id="runtimeSort">
+              <option value="rp_desc">RP High → Low</option>
+              <option value="iv_desc">IV High → Low</option>
+              <option value="skew_desc">Skew High → Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="sticky-box">
+          <div id="runtimeDashboardTable" style="padding:12px;">
+            尚未載入
+          </div>
+        </div>
+        </div>
+      </details>
+    </section>
 
 
 
+    <section class="card blueprint-card">
+      <details class="collapsible-section">
+        <summary>M8 All Stocks Pool / Option Runtime 全市場池（工程調校資料，預設收合）</summary>
+        <div class="collapsible-body">
+          <div class="muted" style="margin-bottom:12px;">檢查 IV / Skew / Demand / RP 的 scale 與排序是否合理</div>
+        <div class="summary-grid">
+          <div class="summary-box"><div class="k">Symbols</div><div class="v" id="allPoolSymbolCount">-</div></div>
+          <div class="summary-box"><div class="k">Avg IVScore</div><div class="v" id="allPoolAvgIVScore">-</div></div>
+          <div class="summary-box"><div class="k">Avg SkewScore</div><div class="v" id="allPoolAvgSkewScore">-</div></div>
+          <div class="summary-box"><div class="k">Avg Demand</div><div class="v" id="allPoolAvgDemand">-</div></div>
+          <div class="summary-box"><div class="k">Avg RP</div><div class="v" id="allPoolAvgRP">-</div></div>
+        </div>
 
+        <div class="split-3" style="margin-bottom:12px;">
+          <div class="form-group">
+            <label>Symbol Filter</label>
+            <input id="allPoolFilterSymbol" type="text" placeholder="NVDA / MU / AAPL" />
+          </div>
+          <div class="form-group">
+            <label>Driver Filter</label>
+            <select id="allPoolFilterDriver">
+              <option value="">ALL</option>
+              <option value="IV_DRIVEN">IV_DRIVEN</option>
+              <option value="SKEW_DRIVEN">SKEW_DRIVEN</option>
+              <option value="DEMAND_DRIVEN">DEMAND_DRIVEN</option>
+              <option value="LOW_PRESSURE">LOW_PRESSURE</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Sort</label>
+            <select id="allPoolSort">
+              <option value="rp_desc">RP High → Low</option>
+              <option value="ivscore_desc">IV Score High → Low</option>
+              <option value="iv_desc">IV% High → Low</option>
+              <option value="skewscore_desc">Skew Score High → Low</option>
+              <option value="demand_desc">Demand High → Low</option>
+              <option value="symbol_asc">Symbol A → Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="split-3" style="margin-bottom:12px;">
+          <div class="form-group">
+            <label>Min IV Score</label>
+            <input id="allPoolMinIVScore" type="number" step="0.1" value="0" />
+          </div>
+          <div class="form-group">
+            <label>Min RP</label>
+            <input id="allPoolMinRP" type="number" step="0.1" value="0" />
+          </div>
+          <div class="form-group">
+            <label>Warning Filter</label>
+            <select id="allPoolWarningFilter">
+              <option value="">ALL</option>
+              <option value="with_warning">With warning</option>
+              <option value="no_warning">No warning</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="explain-box">
+          <div class="label">Rate Pressure Formula</div>
+          <div class="mono">RP = 0.45 × IVScore + 0.30 × SkewScore + 0.20 × DemandScore + 0.05 × EventScore</div>
+          <div class="small-note">
+            這張表不是做單結果，而是檢查全市場 option_runtime.json 的 IVScore / SkewScore / DemandScore 是否同量級。
+          </div>
+        </div>
+
+        <div class="sticky-box" style="margin-top:12px; max-height:520px;">
+          <div id="allStocksPoolTable" style="padding:12px;">尚未載入</div>
+        </div>
+        </div>
+      </details>
+    </section>
+
+
+    <section class="card blueprint-card">
+      <details class="collapsible-section">
+        <summary>M8 Blueprint（完整邏輯 / 公式 / 參數，預設收合）</summary>
+        <div class="collapsible-body">
+          <div id="blueprintContent"></div>
+        </div>
+      </details>
+    </section>
+  </div>
+
+  <script src="./js/mm/modules/m8_overlay_engine_v1.js?v=20260510_beta"></script>
+  <script src="./js/mm/modules/m8_regression_engine_v1.js?v=20260510_beta"></script>
+  <script type="module">
+    import { runM8Case, getM8Blueprint, runM8AnchorProxy } from "./js/core/m8_batch_engine.js?v=20260510_market_fair";
+
+    const $ = (id) => document.getElementById(id);
+    const STORAGE_KEY = "fcn_quote_history_v3";
+    const M8_TEMPLATE_SURFACE_PATH = "./data/mm/m8_template_surface.json?v=20260511_partial_depth_final";
+    let currentEditingInquiryNo = null;
+    let M8_TEMPLATE_SURFACE = null;
+
+    async function loadM8TemplateSurface() {
+      try {
+        const res = await fetch(M8_TEMPLATE_SURFACE_PATH, { cache: "no-store" });
+        if (!res.ok) throw new Error(`m8_template_surface.json ${res.status}`);
+        M8_TEMPLATE_SURFACE = await res.json();
+        console.log("[M8] template surface loaded", M8_TEMPLATE_SURFACE);
+        return M8_TEMPLATE_SURFACE;
+      } catch (err) {
+        console.warn("[M8] template surface load failed:", err);
+        M8_TEMPLATE_SURFACE = null;
+        return null;
+      }
+    }
+
+    function normalizeSurfaceSymbols(symbols) {
+      if (!symbols) return [];
+      if (typeof symbols === "string") symbols = symbols.split(/[,+|\s]+/);
+      return (Array.isArray(symbols) ? symbols : [])
+        .map(s => String(s || "").replace(/\s+(UW|UN|US|JP|HK)$/i, "").trim().toUpperCase())
+        .filter(Boolean)
+        .sort();
+    }
+
+    function normalizeSurfaceKey(symbols) {
+      return normalizeSurfaceSymbols(symbols).join("+");
+    }
+
+    function round2(v) {
+      const n = Number(v);
+      return Number.isFinite(n) ? Math.round(n * 100) / 100 : null;
+    }
+
+
+    const M8_TEMPLATE_DNA_RULES = {
+      C_TSLA_MOMENTUM_CORE: {
+        any_required: ["TSLA"]
+      },
+      D_SPECULATIVE_MOMENTUM: {
+        any_required: ["COIN", "CRDO", "ALAB", "SOFI", "COHR", "COHRN", "LITE", "CRDW", "PLTR"]
+      },
+      B_MEMORY_SEMI_TACTICAL: {
+        any_required: ["MU", "SNDK"]
+      },
+      E_DEFENSIVE_STABILIZER: {
+        any_required: ["LQD", "AAPL", "BAC", "C", "UNH", "REGN", "TGT"]
+      },
+      A_AI_CORE_INSTITUTIONAL: {
+        any_required: ["NVDA", "TSM", "AVGO", "SMH", "QQQ", "AMD", "MRVL", "ARM", "AMAT"]
+      }
+    };
+
+    function normalizeTemplateIdForDna(templateId) {
+      const s = String(templateId || "").toUpperCase();
+      if (s.includes("C_TSLA_MOMENTUM_CORE")) return "C_TSLA_MOMENTUM_CORE";
+      if (s.includes("D_SPECULATIVE_MOMENTUM")) return "D_SPECULATIVE_MOMENTUM";
+      if (s.includes("B_MEMORY_SEMI_TACTICAL")) return "B_MEMORY_SEMI_TACTICAL";
+      if (s.includes("E_DEFENSIVE_STABILIZER")) return "E_DEFENSIVE_STABILIZER";
+      if (s.includes("A_AI_CORE_INSTITUTIONAL")) return "A_AI_CORE_INSTITUTIONAL";
+      return s;
+    }
+
+    function passTemplateDna(symbols, templateId) {
+      const normalizedTemplateId = normalizeTemplateIdForDna(templateId);
+      const rule = M8_TEMPLATE_DNA_RULES[normalizedTemplateId];
+      if (!rule) return true;
+      const set = new Set(normalizeSurfaceSymbols(symbols));
+      const required = rule.any_required || [];
+      if (!required.length) return true;
+      return required.some(s => set.has(String(s).toUpperCase()));
+    }
+
+    function getSurfaceTemplateParentId(t) {
+      return t?.parent_template || t?.large_template || t?.basket_template_label || t?.template || "";
+    }
+
+    function listSurfaceTemplates(collection) {
+      const out = [];
+      const walk = (x) => {
+        if (!x) return;
+        if (Array.isArray(x)) {
+          x.forEach(walk);
+          return;
+        }
+        if (typeof x !== "object") return;
+
+        const looksLikeTemplate =
+          x.template_id ||
+          x.match_symbols ||
+          x.avg_market_coupon != null ||
+          x.avg_new_fair_rate != null ||
+          x.count != null ||
+          x.sample_ids;
+
+        if (looksLikeTemplate) {
+          out.push(x);
+          return;
+        }
+
+        Object.values(x).forEach(walk);
+      };
+      walk(collection);
+      return out;
+    }
+
+    function getSurfaceTemplateByKey(collection, key) {
+      const normalizedKey = normalizeSurfaceKey(key);
+      return listSurfaceTemplates(collection).find(t => {
+        const tid = normalizeSurfaceKey(t.template_id || t.match_symbols || "");
+        return tid === normalizedKey;
+      }) || null;
+    }
+
+    function getMinimumPartialSubsetSize(querySymbolCount) {
+      const n = Number(querySymbolCount || 0);
+
+      // M8 v3 production rule:
+      // 5-stock basket can fall back to 4-stock or 3-stock subset, then stop.
+      // 4-stock basket can fall back to 3-stock or 2-stock subset, then stop.
+      // 3-stock basket can fall back to 2-stock subset, then stop.
+      // 2-stock basket must remain exact 2-stock; never fall back to 1-stock.
+      if (n >= 5) return 3;
+      if (n >= 4) return 2;
+      if (n >= 3) return 2;
+      return n;
+    }
+
+    function findBestSurfacePartial(symbols, smallTemplates) {
+      const q = normalizeSurfaceSymbols(symbols);
+      const qSet = new Set(q);
+      const minSubsetSize = getMinimumPartialSubsetSize(q.length);
+      let best = null;
+
+      listSurfaceTemplates(smallTemplates).forEach(t => {
+        if (!t) return;
+        const parentTemplateId = getSurfaceTemplateParentId(t);
+        if (!passTemplateDna(q, parentTemplateId)) return;
+
+        const ts = normalizeSurfaceSymbols(t.match_symbols || t.template_id || "");
+        if (!ts.length) return;
+
+        const overlap = ts.filter(s => qSet.has(s)).length;
+        const missingFromQuery = ts.filter(s => !qSet.has(s)).length;
+
+        // Partial template must be a true subset of inquiry basket.
+        // Allowed depth:
+        // 5 -> 4 / 3, stop before 2
+        // 4 -> 3 / 2, stop before 1
+        // 3 -> 2, stop before 1
+        // 2 -> exact only, no 1-stock fallback
+        if (missingFromQuery > 0) return;
+        if (ts.length >= q.length) return;
+        if (ts.length < minSubsetSize) return;
+        if (overlap !== ts.length) return;
+
+        const eligibleBonus = t.eligible === false ? 0 : 500;
+        const overlapScore = overlap * 1000;
+        const countScore = Number(t.count || 0);
+        const confidencePenalty = t.eligible === false ? -100 : 0;
+        const score = eligibleBonus + overlapScore + countScore + confidencePenalty;
+
+        if (!best || score > best.score) {
+          best = {
+            score,
+            template: t,
+            overlap,
+            subset_size: ts.length,
+            min_subset_size: minSubsetSize
+          };
+        }
+      });
+      return best;
+    }
+
+    function detectThemeTemplate(symbols) {
+      const set = new Set(normalizeSurfaceSymbols(symbols));
+      const hasEtf = set.has("SMH") || set.has("QQQ");
+      const hasSemiCore = set.has("TSM") || set.has("NVDA") || set.has("AVGO");
+      if (hasEtf && hasSemiCore) return "ETF_SEMI_CORE";
+      return null;
+    }
+
+    function resolveThemeTemplate(symbols) {
+      if (!M8_TEMPLATE_SURFACE?.theme_templates) return null;
+      const themeKey = detectThemeTemplate(symbols);
+      const theme = themeKey ? M8_TEMPLATE_SURFACE.theme_templates?.[themeKey] : null;
+      if (theme && theme.eligible !== false) return { level: "theme_template", template: theme };
+      return null;
+    }
+
+    function getNewFairFromResult(result) {
+      return round2(
+        result?.market_regression?.new_fair_rate ??
+        result?.m8_market_regression?.new_fair_rate ??
+        result?.fair_yield ??
+        result?.m8?.fair_yield ??
+        result?.M8?.fair_yield ??
+        result?.engine?.fair_yield ??
+        result?.pre_rate ??
+        result?.m8_features?.fair_yield
+      );
+    }
+
+    function resolveSurfaceTemplateInWindow(symbols, surfaceWindow, windowLabel) {
+      if (!surfaceWindow) return { level: `${windowLabel}_no_surface`, template: null };
+
+      const key = normalizeSurfaceKey(symbols);
+      const themeKey = detectThemeTemplate(symbols);
+      const smallTemplates = surfaceWindow.small_templates || surfaceWindow.smallTemplates || surfaceWindow.templates || {};
+      const themeTemplates = surfaceWindow.theme_templates || surfaceWindow.themeTemplates || {};
+
+      // 1) Exact small template first.
+      // Important: exact basket can be used even when eligible=false / count<3,
+      // because it is still a real same-basket market observation. Confidence will show as low.
+      const small = getSurfaceTemplateByKey(smallTemplates, key) || smallTemplates?.[key];
+      if (small) {
+        return {
+          level: small.eligible === false ? `${windowLabel}_exact_small_template_low_count` : `${windowLabel}_exact_small_template`,
+          template: small,
+          window: windowLabel,
+          low_count: small.eligible === false
+        };
+      }
+
+      // 2) Partial small-template subset fallback.
+      // This aligns m8_batch with calibration dashboard:
+      // AMD+AVGO+NVDA+TSM can use AVGO+NVDA+TSM when calibration normalized away AMD.
+      const partial = findBestSurfacePartial(symbols, smallTemplates);
+      if (partial) {
+        return {
+          level: `${windowLabel}_partial_small_template`,
+          template: partial.template,
+          overlap: partial.overlap,
+          window: windowLabel,
+          partial_reason: `query basket contains this observed ${partial.subset_size}-stock small template; min allowed subset=${partial.min_subset_size}`
+        };
+      }
+
+      // 3) Theme template only after exact / partial.
+      const theme = themeKey ? themeTemplates?.[themeKey] : null;
+      if (theme && theme.eligible !== false) {
+        return { level: `${windowLabel}_theme_template`, template: theme, window: windowLabel, requested_theme: themeKey };
+      }
+
+      // 4) Stop. Do not fall back to parent/global template because 6大類平均太粗，會污染當下 pricing。
+      return { level: `${windowLabel}_no_same_template`, template: null, window: windowLabel, requested_theme: themeKey || null };
+    }
+
+    function resolveSurfaceTemplate(symbols) {
+      if (!M8_TEMPLATE_SURFACE) return { level: "legacy_fallback", template: null };
+
+      const windows = M8_TEMPLATE_SURFACE.surface_windows || {
+        "3m": M8_TEMPLATE_SURFACE
+      };
+      const order = ["1w", "1m", "2m", "3m"];
+      const trace = [];
+
+      for (const w of order) {
+        const resolved = resolveSurfaceTemplateInWindow(symbols, windows[w], w);
+        trace.push({
+          window: w,
+          level: resolved.level,
+          key: resolved.template?.template_id || resolved.requested_theme || normalizeSurfaceKey(symbols),
+          count: resolved.template?.count || 0,
+          eligible: !!resolved.template
+        });
+        if (resolved.template) {
+          resolved.trace = trace;
+          return resolved;
+        }
+      }
+
+      return {
+        level: "no_recent_surface_beta_0",
+        template: null,
+        window: "none",
+        trace,
+        reason: "No exact/theme/DNA-safe partial subset surface within 3 months. Rule: 5→4/3, 4→3/2, 3→2, 2→exact only. Do not use parent/global fallback."
+      };
+    }
+
+    function buildNoCorrectionMarketRegression(payload, result, match) {
+      const newFair = getNewFairFromResult(result);
+      const currentMarket = num(payload.marketYield);
+      if (!Number.isFinite(Number(newFair))) return null;
+      const currentGap = currentMarket - Number(newFair);
+      const currentGapPct = Number(newFair) ? (currentGap / Number(newFair)) * 100 : null;
+      return {
+        status: "no_recent_surface_no_correction",
+        method: "m8_template_surface_1w_1m_2m_3m_no_correction",
+        large_template: classifyLargeTemplateFromSymbols(payload.symbols || []),
+        template: "no_recent_surface_beta_0",
+        small_template: normalizeSurfaceKey(payload.symbols || []),
+        surface_matched_key: "NO_RECENT_SURFACE_WITHIN_3M",
+        surface_template_id: null,
+        surface_level: "no_recent_surface_beta_0",
+        surface_window: "none",
+        request_basket_key: normalizeSurfaceKey(payload.symbols || []),
+        history_weighted_market_rate: null,
+        new_fair_rate: round2(newFair),
+        global_regression_rate: round2(newFair),
+        final_fair_rate: round2(newFair),
+        residual_premium: 0,
+        overlay_beta: 0,
+        convergence_strength: 0,
+        history_market_gap: 0,
+        history_gap_pct: 0,
+        gap_before: 0,
+        gap_before_pct: 0,
+        gap_after: round2(currentGap),
+        gap_after_pct: round2(currentGapPct),
+        current_quote_gap: round2(currentGap),
+        current_quote_gap_pct: round2(currentGapPct),
+        pricing_gap_vs_final: round2(currentGap),
+        pricing_gap_vs_final_pct: round2(currentGapPct),
+        market_gap: round2(currentGap),
+        gap_pct: round2(currentGapPct),
+        improvement_pct: 0,
+        lookup_count: 0,
+        sample_count: 0,
+        surface_confidence: "none",
+        confidence: 0,
+        surface_candidate_trace: match?.trace || [],
+        comment: `近 1W/1M/2M/3M 都找不到同模板或符合層級規則的 DNA-safe partial subset surface（5→4/3、4→3/2、3→2、2 不往 1）；依規則不使用 6 大類或 global fallback，β=0，Final Fair=New Fair=${round2(newFair)}%。Current Market Yield=${round2(currentMarket)}% 只做 gap 判定。`
+      };
+    }
+
+    function buildMarketRegressionFromSurface(payload, result) {
+      const match = resolveSurfaceTemplate(payload.symbols || []);
+      if (!match.template) return buildNoCorrectionMarketRegression(payload, result, match);
+
+      const t = match.template;
+      const newFair = Number.isFinite(Number(t.avg_new_fair_rate)) ? Number(t.avg_new_fair_rate) : Number(t.avg_market_coupon);
+      const historyMarket = Number(t.avg_market_coupon);
+      const beta = Number.isFinite(Number(t.avg_beta)) ? Number(t.avg_beta) : 1;
+
+      // M8 v3 market feedback formula:
+      // Final Fair = New Fair + β × (Surface Market Coupon - New Fair)
+      // Current Market Yield is only used for gap judgement and never trains the surface.
+      const finalFair = newFair + beta * (historyMarket - newFair);
+      const premium = historyMarket - newFair;
+      const currentMarket = num(payload.marketYield);
+      const currentGap = currentMarket - finalFair;
+      const currentGapPct = finalFair ? (currentGap / finalFair) * 100 : null;
+      const historyGapBefore = historyMarket - newFair;
+      const historyGapAfter = historyMarket - finalFair;
+      const improvement = Math.abs(historyGapBefore) > 0.0001
+        ? (1 - Math.abs(historyGapAfter) / Math.abs(historyGapBefore)) * 100
+        : 0;
+
+      return {
+        status: "ok",
+        method: "m8_template_surface_windowed_1w_1m_2m_3m",
+        large_template: t.parent_template || classifyLargeTemplateFromSymbols(payload.symbols || []),
+        template: match.level,
+        small_template: match.requested_theme || (match.level.includes("theme_template") ? t.template_id : normalizeSurfaceKey(payload.symbols || [])),
+        surface_matched_key: t.template_id,
+        surface_template_id: t.template_id,
+        surface_level: match.level,
+        surface_window: match.window || "3m",
+        theme_type: t.theme_type || null,
+        request_basket_key: normalizeSurfaceKey(payload.symbols || []),
+
+        history_weighted_market_rate: round2(historyMarket),
+        new_fair_rate: round2(newFair),
+        global_regression_rate: round2(newFair),
+        final_fair_rate: round2(finalFair),
+        residual_premium: round2(premium),
+        overlay_beta: round2(beta),
+        convergence_strength: round2(beta),
+
+        history_market_gap: round2(historyMarket - newFair),
+        history_gap_pct: newFair ? round2((historyMarket - newFair) / newFair * 100) : null,
+        gap_before: round2(historyGapBefore),
+        gap_before_pct: newFair ? round2(historyGapBefore / newFair * 100) : null,
+        gap_after: round2(currentGap),
+        gap_after_pct: round2(currentGapPct),
+        current_quote_gap: round2(currentGap),
+        current_quote_gap_pct: round2(currentGapPct),
+        pricing_gap_vs_final: round2(currentGap),
+        pricing_gap_vs_final_pct: round2(currentGapPct),
+        market_gap: round2(currentGap),
+        gap_pct: round2(currentGapPct),
+        improvement_pct: round2(improvement),
+
+        lookup_count: t.count || 0,
+        sample_count: t.count || 0,
+        surface_confidence: t.confidence || "low",
+        confidence: t.avg_confidence ?? t.confidence ?? "low",
+        surface_sample_ids: t.sample_ids || [],
+        surface_candidate_trace: match.trace || [],
+        latest_observation_date: t.latest_observation_date || null,
+        oldest_observation_date: t.oldest_observation_date || null,
+
+        comment: `${t.theme_type ? "使用 Theme Surface " + t.theme_type + "；" : ""}使用 ${match.window || "3m"} 視窗：${match.level} → ${t.template_id}，${match.low_count ? "Exact low-count surface；" : ""}樣本 ${t.count || 0} 筆；Surface Market=${round2(historyMarket)}%，New Fair=${round2(newFair)}%，β=${round2(beta)}，Final Fair = New Fair + β × (Market-NewFair) = ${round2(finalFair)}%。Current Market Yield=${round2(currentMarket)}% 只做 gap 判定，不進訓練。`
+      };
+    }
+
+
+    function badgeClass(view) {
+      if (view === "便宜" || view === "略便宜") return "pill ok";
+      if (view === "合理") return "pill warn";
+      if (view === "尚未執行") return "pill info";
+      return "pill bad";
+    }
+
+    function num(v) {
+      const n = Number(v);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function fmt(v) {
+      return Number(num(v).toFixed(2));
+    }
+
+    function avgNum(values) {
+      const xs = (Array.isArray(values) ? values : [])
+        .map(Number)
+        .filter(Number.isFinite);
+      if (!xs.length) return null;
+      return xs.reduce((a, b) => a + b, 0) / xs.length;
+    }
+
+    function normalizeQuoteSymbols(symbols) {
+      return (Array.isArray(symbols) ? symbols : [])
+        .map(s => String(s || "").replace(/\s+(UW|UN|US|JP|HK)$/i, "").trim().toUpperCase())
+        .filter(Boolean)
+        .sort();
+    }
+
+    function symbolsKey(symbols) {
+      return normalizeQuoteSymbols(symbols).join("+");
+    }
+
+    function classifyQuoteRisk(ki, strike) {
+      const s = num(strike);
+      const k = ki == null ? null : num(ki);
+      if (s >= 80 || (k !== null && k >= 70)) return "R9_vh_vh";
+      if (s >= 70 || (k !== null && k >= 60)) return "R7_mh_m";
+      if (s >= 60 || (k !== null && k >= 50)) return "R5_m_m";
+      return "R3_ml_m";
+    }
+
+    function classifyQuoteTenor(tenor) {
+      const t = num(tenor);
+      if (t <= 3) return "T1_0_3M";
+      if (t <= 6) return "T2_4_6M";
+      if (t <= 9) return "T3_7_9M";
+      return "T4_10_12M";
+    }
+
+    function calcBetaConvergenceStrength(gapPct) {
+      const g = Math.abs(num(gapPct));
+      if (g >= 20) return 0.99;
+      if (g >= 10) return 0.95;
+      if (g >= 2) return 0.85;
+      return 0.60;
+    }
+
+
+    function recencyWeight(dateStr) {
+      if (!dateStr) return 0.05;
+
+      const dateText = String(dateStr).slice(0, 10);
+      const quoteDate = new Date(dateText + "T00:00:00");
+      if (Number.isNaN(quoteDate.getTime())) return 0.05;
+
+      const today = new Date();
+      const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const days = Math.floor((todayDate - quoteDate) / 86400000);
+
+      if (days < 0) return 1.00;
+      if (days === 0) return 1.00;
+      if (days === 1) return 0.90;
+      if (days === 2) return 0.75;
+      if (days === 3) return 0.60;
+      if (days <= 5) return 0.40;
+      if (days <= 7) return 0.20;
+      return 0;
+    }
+
+    async function loadMarketFcnHistory() {
+      try {
+        const res = await fetch("./data/mm/market_fcn_history.json?v=20260510_market_flat");
+        if (!res.ok) throw new Error(`market_fcn_history ${res.status}`);
+        const json = await res.json();
+
+        if (Array.isArray(json)) return json;
+        if (json && Array.isArray(json.records)) {
+          return json.records.map(r => ({ ...r, generated_at: r.generated_at || json.generated_at }));
+        }
+        return [];
+      } catch (err) {
+        console.warn("market_fcn_history load failed:", err);
+        return [];
+      }
+    }
+
+
+    function makeQuoteBasketKey(symbols) {
+      return normalizeQuoteSymbols(symbols || []).join("+");
+    }
+
+    function classifyLargeTemplateFromSymbols(symbols) {
+      const set = new Set(normalizeQuoteSymbols(symbols || []));
+      const has = (s) => set.has(s);
+      const any = (...xs) => xs.some(x => has(x));
+
+      // Template DNA priority: special-risk templates must not be swallowed by generic AI-core overlap.
+      if (any("COIN", "CRDO", "ALAB", "SOFI", "COHR", "COHRN", "LITE", "CRDW", "PLTR")) return "D_SPECULATIVE_MOMENTUM";
+      if (any("MU", "SNDK")) return "B_MEMORY_SEMI_TACTICAL";
+      if (any("TSLA")) return "C_TSLA_MOMENTUM_CORE";
+      if (any("LQD", "AAPL", "BAC", "C", "UNH", "REGN", "TGT")) return "E_DEFENSIVE_STABILIZER";
+      if (any("NVDA", "TSM", "AVGO", "SMH", "QQQ", "AMD", "MRVL", "ARM", "AMAT")) return "A_AI_CORE_INSTITUTIONAL";
+      return "F_OTHERS_M7_BASKET_DRIVEN";
+    }
+
+    function weightedAvg(rows, valueFn, weightFn) {
+      let total = 0;
+      let weightSum = 0;
+      (rows || []).forEach(row => {
+        const v = Number(valueFn(row));
+        const w = Number(weightFn(row));
+        if (Number.isFinite(v) && Number.isFinite(w) && w > 0) {
+          total += v * w;
+          weightSum += w;
+        }
+      });
+      return weightSum > 0 ? total / weightSum : null;
+    }
+
+    function normalizeMarketQuoteRow(row) {
+      const symbols = normalizeQuoteSymbols(row.symbols);
+      const coupon = Number(row.coupon_pct ?? row.market_coupon ?? row.market_rate);
+      const tenor = Number(row.tenor_month ?? row.tenor ?? row.T);
+      const strike = Number(row.strike_pct ?? row.strike);
+      const kiRaw = row.ki_pct ?? row.KI ?? row.ki;
+      const ki = kiRaw === null || kiRaw === undefined || kiRaw === "" ? null : Number(kiRaw);
+      const barrier = String(row.barrier_type || row.type || "NA").trim().toUpperCase();
+      const risk = classifyQuoteRisk(ki, strike);
+      const tenorGroup = classifyQuoteTenor(tenor);
+
+      return {
+        ...row,
+        symbols,
+        symbols_key: symbols.join("+"),
+        coupon_pct: Number.isFinite(coupon) ? coupon : null,
+        tenor_month: Number.isFinite(tenor) ? tenor : null,
+        strike_pct: Number.isFinite(strike) ? strike : null,
+        ki_pct: Number.isFinite(ki) ? ki : null,
+        barrier_type: barrier,
+        risk_zone_9: risk,
+        tenor_group_4: tenorGroup,
+        small_template: symbols.join("+"),
+        template_risk_tenor_key: [symbols.join("+"), risk, tenorGroup].join("|")
+      };
+    }
+
+    function selectMarketHistoryRows(historyRows, query) {
+      const rows = historyRows
+        .map(normalizeMarketQuoteRow)
+        .filter(r => r.symbols.length && Number.isFinite(r.coupon_pct));
+
+      const q = normalizeMarketQuoteRow(query);
+      const qSet = new Set(q.symbols);
+      const overlap = (r) => r.symbols.filter(s => qSet.has(s)).length;
+
+      const exactRiskTenor = rows.filter(r =>
+        r.symbols_key === q.symbols_key &&
+        r.risk_zone_9 === q.risk_zone_9 &&
+        r.tenor_group_4 === q.tenor_group_4 &&
+        r.barrier_type === q.barrier_type
+      );
+      if (exactRiskTenor.length >= 2) {
+        return { level: "Small Template × Risk × Tenor", rows: exactRiskTenor };
+      }
+
+      const exactTemplate = rows.filter(r => r.symbols_key === q.symbols_key);
+      if (exactTemplate.length >= 2) {
+        return { level: "Small Template", rows: exactTemplate };
+      }
+
+      const partial = rows
+        .map(r => ({ row: r, overlap: overlap(r) }))
+        .filter(x => x.overlap >= Math.min(2, q.symbols.length))
+        .sort((a, b) => b.overlap - a.overlap)
+        .slice(0, 12)
+        .map(x => x.row);
+      if (partial.length >= 3) {
+        return { level: "Similar Symbols", rows: partial };
+      }
+
+      return { level: "Global Market History", rows };
+    }
+
+    async function buildMarketRegressionForPayload(payload, result) {
+      if (!M8_TEMPLATE_SURFACE) await loadM8TemplateSurface();
+
+      const surfaceRegression = buildMarketRegressionFromSurface(payload, result);
+      if (surfaceRegression) return surfaceRegression;
+
+      const historyRows = await loadMarketFcnHistory();
+      if (!historyRows.length) {
+        return {
+          status: "missing_surface_and_history",
+          large_template: classifyLargeTemplateFromSymbols(payload.symbols || []),
+          template: "No Surface / No History",
+          small_template: makeQuoteBasketKey(payload.symbols || []),
+          new_fair_rate: null,
+          global_regression_rate: null,
+          history_weighted_market_rate: null,
+          final_fair_rate: null,
+          overlay_beta: null,
+          convergence_strength: null,
+          pricing_gap_vs_final_pct: null,
+          lookup_count: 0,
+          sample_count: 0,
+          confidence: 0,
+          comment: "找不到 data/mm/m8_template_surface.json，也找不到 market_fcn_history.json，暫無法產出 New Fair / Final Fair。"
+        };
+      }
+
+      const query = {
+        generated_at: payload.inquiryDate,
+        source: payload.issuer || "current_quote",
+        product_id: payload.inquiryNo,
+        symbols: payload.symbols || [],
+        coupon_pct: payload.marketYield,
+        tenor_month: payload.T,
+        strike_pct: payload.Strike,
+        ki_pct: payload.KI,
+        barrier_type: payload.type,
+        memory_type: "daily",
+        upstream_bank: payload.upstreamBank || null
+      };
+
+      const selected = selectMarketHistoryRows(historyRows, query);
+      const weightedCoupon = weightedAvg(selected.rows, r => Number(r.coupon_pct), r => recencyWeight(r.generated_at));
+      const fallbackCoupon = avgNum(selected.rows.map(r => Number(r.coupon_pct)).filter(Number.isFinite));
+      const historyWeightedMarket = Number.isFinite(weightedCoupon) ? weightedCoupon : fallbackCoupon;
+
+      if (!Number.isFinite(historyWeightedMarket)) {
+        return {
+          status: "no_match",
+          large_template: classifyLargeTemplateFromSymbols(payload.symbols || []),
+          template: selected.level,
+          small_template: makeQuoteBasketKey(payload.symbols || []),
+          new_fair_rate: null,
+          global_regression_rate: null,
+          history_weighted_market_rate: null,
+          final_fair_rate: null,
+          overlay_beta: null,
+          convergence_strength: null,
+          pricing_gap_vs_final_pct: null,
+          lookup_count: selected.rows.length,
+          sample_count: selected.rows.length,
+          confidence: 0,
+          comment: "surface 不可用，market history 也無有效 coupon，暫無法產出市場公平利率。"
+        };
+      }
+
+      const newFair = historyWeightedMarket;
+      const historyMarketGap = historyWeightedMarket - newFair;
+      const historyGapPct = newFair ? (historyMarketGap / newFair) * 100 : 0;
+      const beta = calcBetaConvergenceStrength(historyGapPct);
+      const finalFair = newFair + historyMarketGap * beta;
+      const currentMarket = num(payload.marketYield);
+      const currentGap = currentMarket - finalFair;
+      const currentGapPct = finalFair ? (currentGap / finalFair) * 100 : null;
+      const qn = normalizeMarketQuoteRow(query);
+      const confidence = Math.min(95, 30 + selected.rows.length * 8);
+
+      return {
+        status: "ok",
+        method: "market_fcn_history_recent_7d_time_decay_beta_fallback",
+        large_template: classifyLargeTemplateFromSymbols(payload.symbols || []),
+        template: selected.level,
+        small_template: qn.symbols_key,
+        surface_matched_key: [qn.symbols_key, qn.risk_zone_9, qn.tenor_group_4].join("|"),
+        history_weighted_market_rate: fmt(historyWeightedMarket),
+        new_fair_rate: fmt(newFair),
+        global_regression_rate: fmt(newFair),
+        final_fair_rate: fmt(finalFair),
+        overlay_beta: fmt(beta),
+        convergence_strength: fmt(beta),
+        history_market_gap: fmt(historyMarketGap),
+        history_gap_pct: fmt(historyGapPct),
+        current_quote_gap: fmt(currentGap),
+        current_quote_gap_pct: fmt(currentGapPct),
+        market_gap: fmt(currentGap),
+        gap_pct: fmt(currentGapPct),
+        gap_after: fmt(currentGap),
+        gap_after_pct: fmt(currentGapPct),
+        pricing_gap_vs_final: fmt(currentGap),
+        pricing_gap_vs_final_pct: fmt(currentGapPct),
+        improvement_pct: 0,
+        lookup_count: selected.rows.length,
+        sample_count: selected.rows.length,
+        surface_confidence: confidence,
+        confidence,
+        history_rows_used: selected.rows.slice(0, 12),
+        comment: `Surface 不可用，fallback 使用 ${selected.level}，近一周時間衰減樣本 ${selected.rows.length} 筆；History Market=${fmt(historyWeightedMarket)}%，Final Fair=${fmt(finalFair)}%。Current Market Yield=${fmt(currentMarket)}% 只做 gap 判定，不進訓練。`
+      };
+    }
+
+    function parseSymbols(text) {
+      return String(text || "")
+        .split(",")
+        .map(s => s.trim().toUpperCase())
+        .filter(Boolean);
+    }
+
+    function todayStr() {
+      const d = new Date();
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+
+    function generateInquiryNo(dateStr) {
+      const key = `fcn_inquiry_seq_${dateStr}`;
+      let seq = Number(localStorage.getItem(key) || "0") + 1;
+      localStorage.setItem(key, String(seq));
+
+      const pureDate = dateStr.replaceAll("-", "");
+      const seq3 = String(seq).padStart(3, "0");
+      return `FCN${pureDate}${seq3}`;
+    }
+
+    function previewInquiryNo(dateStr) {
+      const key = `fcn_inquiry_seq_${dateStr}`;
+      const seq = Number(localStorage.getItem(key) || "0") + 1;
+      const pureDate = dateStr.replaceAll("-", "");
+      return `FCN${pureDate}${String(seq).padStart(3, "0")}`;
+    }
+
+    function refreshInquiryNo() {
+      const dateStr = $("inquiryDate").value || todayStr();
+      if (currentEditingInquiryNo) {
+        $("inquiryNo").value = currentEditingInquiryNo;
+      } else {
+        $("inquiryNo").value = previewInquiryNo(dateStr);
+      }
+    }
+
+    function normalizeBasket(symbols) {
+      return [...(symbols || [])].map(s => String(s).toUpperCase()).sort().join("|");
+    }
+
+    function getInquiryStore() {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    }
+
+    function saveInquiryStore(rows) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(rows));
+    }
+
+    function getUpstreamBankLabel(code) {
+      const map = {
+        NATIXIS: "NATIXIS｜法國外貿銀行",
+        UBS: "UBS｜瑞士銀行",
+        NOMURA: "NOMURA｜野村銀行",
+        GS: "GS｜高盛",
+        BARCLAYS: "BARCLAYS｜巴克萊銀行",
+        DBS: "DBS｜星展銀行",
+        HSBC: "HSBC｜香港上海匯豐銀行",
+        CA: "CA｜法國農業信貸銀行",
+        BBVA: "BBVA｜西班牙對外銀行",
+        MS: "MS｜摩根士丹利",
+        SG: "SG｜法國興業銀行",
+        BNP: "BNP｜法國巴黎銀行"
+      };
+      return map[code] || code || "";
+    }
+
+    function getMarketContext(basketVol) {
+      const v = num(basketVol);
+      if (v > 6) return "高波動";
+      if (v > 3) return "中波動";
+      return "低波動";
+    }
+
+    function getActionPriority(edge, basketVol) {
+      if (edge < -1 || basketVol > 6) return "高";
+      if (edge <= 1) return "中";
+      return "低";
+    }
+
+    function getSuggestedAction(edge, pricingView, basketVol) {
+      if (edge < -1) return "考慮調整或轉倉";
+      if (basketVol > 6) return "提高警覺 / 留意波動";
+      if (pricingView === "便宜" || pricingView === "略便宜") return "可持有觀察";
+      return "正常";
+    }
+
+    function buildEngineSchema(payload, result, existingCreatedAt = null) {
+      const marketYield = num(payload.marketYield);
+      const fairYield = num(result.fair_yield);
+      const edge = fmt(marketYield - fairYield);
+      const basketVol = num(result.basket_vol);
+      const marketContext = getMarketContext(basketVol);
+
+      return {
+        schema_version: "m8_quote_v3",
+
+        inquiry: {
+          inquiry_no: payload.inquiryNo,
+          inquiry_date: payload.inquiryDate
+        },
+
+        counterparty: {
+          issuer_local: payload.issuer || "",
+          upstream_bank_code: payload.upstreamBank || "",
+          upstream_bank_name: getUpstreamBankLabel(payload.upstreamBank),
+          rm: payload.rm || ""
+        },
+
+        quote: {
+          case_name: payload.caseName || "",
+          symbols: payload.symbols || [],
+          basket_key: normalizeBasket(payload.symbols || []),
+          KI: payload.KI,
+          strike: payload.Strike,
+          tenor: payload.T,
+          type: payload.type,
+          market_yield: payload.marketYield,
+          note: payload.note || ""
+        },
+
+        engine: {
+          fair_yield: fairYield,
+          basket_vol: basketVol,
+          vol_adj: num(result.vol_adj),
+          rate_pressure_adj: num(result.rate_pressure_adj),
+          rate_pressure_score_basket: num(result.rate_pressure_score_basket),
+          rate_pressure_source: result.rate_pressure_source || "",
+          rate_pressure_stocks: result.rate_pressure_stocks || [],
+          pricing_delta: num(result.pricing_delta),
+          pricing_view: result.pricing_view || "",
+          edge: edge,
+          market_regression: result.market_regression || null,
+
+          base: num(result.base),
+          BW: num(result.BW),
+          basket_premium: num(result.basket_premium),
+          tail_adj: num(result.tail_adj),
+          ki_adj: num(result.ki_adj),
+          tenor_adj: num(result.tenor_adj),
+          strike_adj: num(result.strike_adj),
+          type_adj: num(result.type_adj),
+          structure_total: num(result.structure_total),
+          pre_rate: num(result.pre_rate),
+          high_rate_brake: num(result.high_rate_brake),
+
+          scores: result.scores || [],
+          weaknesses: result.weaknesses || [],
+          short_swings: result.short_swings || [],
+          short_swing_days: result.short_swing_days || [],
+          stock_sources: result.stock_sources || [],
+          market_regression: result.market_regression || null
+        },
+
+        m2_callback: {
+          ready: true,
+          basket_key: normalizeBasket(payload.symbols || []),
+          basket_vol: basketVol,
+          vol_adj: num(result.vol_adj),
+          fair_yield_ref: fairYield,
+          pricing_delta: num(result.pricing_delta),
+          pricing_view: result.pricing_view || "",
+          market_context: marketContext,
+          action_priority: getActionPriority(edge, basketVol),
+          watch_reason:
+            basketVol > 6 ? "BasketVol 偏高" :
+            edge < -1 ? "市場條件轉差" :
+            "一般觀察",
+          need_active_attention: edge < -1 || basketVol > 6,
+          suggested_action: getSuggestedAction(edge, result.pricing_view, basketVol)
+        },
+
+        raw_engine_result: result,
+
+        created_at: existingCreatedAt || new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+    }
+
+    function parseBatchText(text, inquiryDate) {
+      const lines = String(text || "")
+        .split("\n")
+        .map(x => x.trim())
+        .filter(Boolean);
+
+      const output = [];
+
+      for (const line of lines) {
+        const parts = line.split(",").map(x => x.trim());
+
+        if (parts.length >= 10) {
+          const issuer = parts[0] || "";
+          const upstreamBank = parts[1] || "";
+          const rm = parts[2] || "";
+          const caseName = parts[3] || "Case";
+          const symbolText = parts[4] || "";
+          const KI = Number(parts[5]);
+          const Strike = Number(parts[6]);
+          const T = Number(parts[7]);
+          const type = parts[8] || "EKI";
+          const marketYield = Number(parts[9]);
+          const note = parts[10] || "";
+
+          const symbols = symbolText.split("|").map(x => x.trim().toUpperCase()).filter(Boolean);
+
+          output.push({
+            inquiryDate,
+            inquiryNo: generateInquiryNo(inquiryDate),
+            issuer,
+            upstreamBank,
+            rm,
+            caseName,
+            symbols,
+            KI,
+            Strike,
+            T,
+            type,
+            marketYield,
+            note
+          });
+          continue;
+        }
+
+        if (parts.length >= 7) {
+          const caseName = parts[0] || "Case";
+          const symbolText = parts[1] || "";
+          const KI = Number(parts[2]);
+          const Strike = Number(parts[3]);
+          const T = Number(parts[4]);
+          const type = parts[5] || "EKI";
+          const marketYield = Number(parts[6]);
+
+          const symbols = symbolText.split("|").map(x => x.trim().toUpperCase()).filter(Boolean);
+
+          output.push({
+            inquiryDate,
+            inquiryNo: generateInquiryNo(inquiryDate),
+            issuer: "",
+            upstreamBank: "",
+            rm: "",
+            caseName,
+            symbols,
+            KI,
+            Strike,
+            T,
+            type,
+            marketYield,
+            note: ""
+          });
+        }
+      }
+
+      return output;
+    }
+
+    function renderBlueprint() {
+      const bp = getM8Blueprint() || {};
+      const container = $("blueprintContent");
+      if (!container) return;
+
+      const summary = Array.isArray(bp.summary) ? bp.summary : [];
+      const formulas = bp.formulas || {};
+      const parameters = bp.parameters || {};
+      const typeMap = parameters.type_map || {};
+      const tenor = parameters.tenor || {};
+
+      container.innerHTML = `
+        <div class="bp-block">
+          <h3>${bp.version || "M8 Blueprint"}</h3>
+          <ul>
+            ${summary.map(x => `<li>${x}</li>`).join("")}
+          </ul>
+        </div>
+
+        <div class="bp-block">
+          <h3>完整公式</h3>
+          <table class="bp-table">
+            <tbody>
+              ${Object.entries(formulas).map(([k, v]) => `
+                <tr>
+                  <th>${k}</th>
+                  <td>${v}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="bp-block">
+          <h3>參數設定</h3>
+          <table class="bp-table">
+            <tbody>
+              <tr><th>Base</th><td>${parameters.base ?? "-"}</td></tr>
+              <tr><th>Type</th><td>EKI=${typeMap.EKI ?? "-"}, DACN=${typeMap.DACN ?? "-"}, AKI=${typeMap.AKI ?? "-"}</td></tr>
+              <tr><th>Tenor</th><td>${tenor.short || "-"} / ${tenor.mid || "-"} / ${tenor.long || "-"} / max=${tenor.max ?? "-"}</td></tr>
+              <tr><th>Vol Note</th><td>${parameters.vol_note || "-"}</td></tr>
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function setupBlueprintToggle() {
+      // Blueprint now uses native <details> collapsed UI.
+    }
+
+    function buildShortSwingFormula(days) {
+      const d = Array.isArray(days) ? days : [];
+      const d0 = fmt(d[0]);
+      const d1 = fmt(d[1]);
+      const d2 = fmt(d[2]);
+      const d3 = fmt(d[3]);
+      const d4 = fmt(d[4]);
+      const d5 = fmt(d[5]);
+
+      return `0.35×${d0} + 0.25×${d1} + 0.15×${d2} + 0.10×${d3} + 0.08×${d4} + 0.07×${d5}`;
+    }
+
+    function buildVolAdjExplain(v) {
+      const basketVol = num(v);
+
+      if (basketVol <= 2.0) {
+        return {
+          bucket: "v ≤ 2",
+          formula: "-0.1 + 0.35×v",
+          substitution: `-0.1 + 0.35×${fmt(basketVol)}`
+        };
+      }
+      if (basketVol <= 4.0) {
+        const d = basketVol - 2.0;
+        return {
+          bucket: "2 < v ≤ 4",
+          formula: "0.6 + 0.7×(v-2) + 0.3×(v-2)^2",
+          substitution: `0.6 + 0.7×${fmt(d)} + 0.3×${fmt(d)}^2`
+        };
+      }
+      if (basketVol <= 6.0) {
+        const d = basketVol - 4.0;
+        return {
+          bucket: "4 < v ≤ 6",
+          formula: "3.2 + 0.85×(v-4) + 0.3×(v-4)^2",
+          substitution: `3.2 + 0.85×${fmt(d)} + 0.3×${fmt(d)}^2`
+        };
+      }
+
+      const d = basketVol - 6.0;
+      return {
+        bucket: "v > 6",
+        formula: "6.4 + 0.45×(v-6) - 0.04×(v-6)^2",
+        substitution: `6.4 + 0.45×${fmt(d)} - 0.04×${fmt(d)}^2`
+      };
+    }
+
+    function renderResult(r, schema = null) {
+      $("pricingBadge").className = badgeClass(r.pricing_view || "尚未執行");
+      $("pricingBadge").textContent = r.pricing_view || "尚未執行";
+
+      const sortedSwings = (r.short_swings || [])
+        .map((v, idx) => ({ idx, v: num(v), symbol: r.symbols?.[idx] || "" }))
+        .sort((a, b) => b.v - a.v);
+
+      const rankMap = {};
+      const roleMap = {};
+      sortedSwings.forEach((x, i) => {
+        rankMap[x.idx] = i + 1;
+        if (i === 0) roleMap[x.idx] = "s1";
+        else if (i === 1) roleMap[x.idx] = "s2";
+        else roleMap[x.idx] = "avg only";
+      });
+
+      const s1 = sortedSwings[0]?.v || 0;
+      const s2 = sortedSwings[1]?.v || 0;
+      const avgSwing = sortedSwings.length
+        ? sortedSwings.reduce((sum, x) => sum + x.v, 0) / sortedSwings.length
+        : 0;
+
+      const volAdjExplain = buildVolAdjExplain(r.basket_vol);
+      const marketYield = fmt(r.market_yield);
+      const m8Fair = fmt(r.fair_yield);
+      const pricingDelta = fmt(r.pricing_delta);
+
+      // Market Regression placeholder. Next phase will be filled by:
+      // data/mm/market_fcn_history.json + js/mm/modules/m8_regression_engine_v1.js
+      const marketRegression = r.market_regression || r.m8_market_regression || schema?.engine?.market_regression || null;
+      const newFair = marketRegression?.new_fair_rate ?? null;
+      const finalFair = marketRegression?.final_fair_rate ?? null;
+      const beta = marketRegression?.overlay_beta ?? marketRegression?.convergence_strength ?? null;
+      const betaEffect = marketRegression?.improvement_pct ?? null;
+      const marketGap = marketRegression?.pricing_gap_vs_final_pct ?? marketRegression?.gap_after_pct ?? null;
+      const globalRegression = marketRegression?.global_regression_rate ?? marketRegression?.clean_global_fair ?? newFair;
+      const templateClass = marketRegression?.large_template || marketRegression?.template || "待接入";
+      const usedTemplate = marketRegression?.surface_matched_key || marketRegression?.surface_template_id || marketRegression?.small_template || "待接入";
+      const templateCount = marketRegression?.lookup_count ?? marketRegression?.sample_count ?? "-";
+      const confidence = marketRegression?.surface_confidence ?? marketRegression?.confidence ?? "-";
+      const surfaceMarketCoupon =
+        marketRegression?.history_weighted_market_rate ??
+        marketRegression?.surface_market_coupon ??
+        marketRegression?.market_coupon_avg ??
+        marketRegression?.avg_market_coupon ??
+        null;
+      const surfaceCurrentGap = surfaceMarketCoupon == null ? null : Number(surfaceMarketCoupon) - Number(marketYield);
+
+      const marketDecision = (() => {
+        if (marketRegression && Number.isFinite(Number(marketGap))) {
+          const g = Number(marketGap);
+          if (Math.abs(g) <= 2) return "市場判定：接近 Final Market Fair，屬合理報價。";
+          if (g > 2) return "市場判定：報價高於 Final Market Fair，屬偏甜 / aggressive quote。";
+          return "市場判定：報價低於 Final Market Fair，屬偏保守 / 可議價。";
+        }
+        if (pricingDelta >= 1) return "偏好判定：Market 高於 M8 Fair，對你的偏好而言偏甜。";
+        if (pricingDelta <= -1) return "偏好判定：Market 低於 M8 Fair，對你的偏好而言偏貴。";
+        return "偏好判定：Market 接近 M8 Fair，屬合理區間。";
+      })();
+
+      const preferenceComment = (() => {
+        const parts = [];
+        if (pricingDelta < -1) parts.push(`Market ${marketYield}% 低於 M8 Fair ${m8Fair}%，此單在你的偏好模型下偏貴。`);
+        else if (pricingDelta > 1) parts.push(`Market ${marketYield}% 高於 M8 Fair ${m8Fair}%，此單在你的偏好模型下有利差。`);
+        else parts.push(`Market ${marketYield}% 與 M8 Fair ${m8Fair}% 接近，偏好模型判定為合理附近。`);
+
+        if (num(r.basket_vol) > 6) parts.push("BasketVol 偏高，需留意最弱標的與短線波動。");
+        else if (num(r.basket_vol) < 2) parts.push("BasketVol 偏低，票息上行空間有限。");
+        else parts.push("BasketVol 屬中性區間，主要看 KI / Strike 與 Rate Pressure。");
+
+        return parts.join(" ");
+      })();
+
+      const marketComment = marketRegression && marketRegression.status !== "missing_history"
+        ? (marketRegression.comment || `β 啟動原因：小模板近期 market coupon 與 New Fair 出現落差，β 依 gap 大小快速收斂到市場。New Fair ${fmt(newFair)}%，β ${fmt(beta)}，Final Fair ${fmt(finalFair)}%。`)
+        : "Market Regression Engine 尚未接入；請先確認 data/mm/market_fcn_history.json 已上傳，系統會使用小模板 + β 產出 Final Market Fair。";
+
+      function meter(label, value, max, cls = "") {
+        const v = Math.max(0, Math.min(100, max ? (num(value) / max) * 100 : 0));
+        return `
+          <div class="meter-row">
+            <div class="meter-label">${label}</div>
+            <div class="meter"><div class="meter-fill ${cls}" style="width:${v}%;"></div></div>
+            <div class="meter-value">${fmt(value)}</div>
+          </div>
+        `;
+      }
+
+      const stockRows = (r.stock_sources || []).map((s, idx) => `
+        <tr>
+          <td>${idx + 1}</td>
+          <td>${s.symbol || ""}</td>
+          <td>${s.source || ""}</td>
+          <td>${fmt(s.m7_v2_score)}</td>
+          <td>${fmt(s.rate_pressure_score)}</td>
+          <td>${fmt(s.rate_pressure_score_0_100)}</td>
+          <td>${fmt(s.iv_30d_atm_pct)}</td>
+          <td>${fmt(s.iv_score)}</td>
+          <td>${fmt(s.put_skew_30d_vol_points)}</td>
+          <td>${fmt(s.skew_score)}</td>
+          <td>${fmt(s.demand_score)}</td>
+          <td>${s.rate_driver_label || ""}</td>
+          <td>${s.data_warning || ""}</td>
+          <td>${s.sector || ""}</td>
+          <td>${s.subsector || ""}</td>
+          <td>${s.risk || ""}</td>
+          <td>${fmt(r.scores?.[idx])}</td>
+          <td>${fmt(r.weaknesses?.[idx])}</td>
+          <td>${fmt(r.short_swings?.[idx])}</td>
+        </tr>
+      `).join("");
+
+      const swingRows = (r.short_swing_days || []).map((days, idx) => {
+        const ds = Array.isArray(days) ? days : [];
+        return `
+          <tr>
+            <td>${r.symbols?.[idx] || ""}</td>
+            <td>${fmt(ds[0])}</td>
+            <td>${fmt(ds[1])}</td>
+            <td>${fmt(ds[2])}</td>
+            <td>${fmt(ds[3])}</td>
+            <td>${fmt(ds[4])}</td>
+            <td>${fmt(ds[5])}</td>
+            <td>${fmt(r.short_swings?.[idx])}</td>
+            <td>${rankMap[idx] || ""}</td>
+            <td>${roleMap[idx] || ""}</td>
+          </tr>
+        `;
+      }).join("");
+
+      const shortSwingExplainRows = (r.short_swing_days || []).map((days, idx) => `
+        <tr>
+          <td>${r.symbols?.[idx] || ""}</td>
+          <td class="mono">${buildShortSwingFormula(days)}</td>
+          <td>${fmt(r.short_swings?.[idx])}</td>
+        </tr>
+      `).join("");
+
+      $("resultArea").innerHTML = `
+        <div class="decision-grid">
+          <div class="decision-box"><div class="k">Market</div><div class="v">${marketYield}%</div><div class="sub">銀行報價</div></div>
+          <div class="decision-box"><div class="k">M8 Fair</div><div class="v">${m8Fair}%</div><div class="sub">你的偏好</div></div>
+          <div class="decision-box"><div class="k">Final Fair</div><div class="v">${finalFair == null ? "-" : `${fmt(finalFair)}%`}</div><div class="sub">市場公平利率</div></div>
+          <div class="decision-box"><div class="k">Gap</div><div class="v">${marketGap == null ? `${pricingDelta}%` : `${fmt(marketGap)}%`}</div><div class="sub">${marketGap == null ? "vs M8 Fair" : "vs Final Fair"}</div></div>
+          <div class="decision-box"><div class="k">判定</div><div class="v" style="font-size:18px;">${r.pricing_view || "-"}</div><div class="sub">${marketRegression ? "雙引擎" : "偏好模型"}</div></div>
+          <div class="decision-box">
+            <div class="k">Calibration</div>
+            <div class="v" style="font-size:14px;"><a class="calibration-link" href="./mm/m8_calibration_dashboard_v1.html" target="_blank">Go to m8_calibration</a></div>
+            <div class="sub">模板校正</div>
+          </div>
+        </div>
+
+        <div class="decision-comment">${marketDecision}</div>
+
+        <div class="template-line">
+          <div class="mini-kpi"><div class="k">分類模板</div><div class="v">${templateClass}</div></div>
+          <div class="mini-kpi"><div class="k">使用模板</div><div class="v">${usedTemplate}</div></div>
+          <div class="mini-kpi"><div class="k">New Fair</div><div class="v">${newFair == null ? "-" : `${fmt(newFair)}%`}</div></div>
+          <div class="mini-kpi"><div class="k">全域回歸推估利率</div><div class="v">${globalRegression == null ? "-" : `${fmt(globalRegression)}%`}</div></div>
+          <div class="mini-kpi"><div class="k">β 值 / β 效果</div><div class="v">${beta == null ? "-" : `${fmt(beta)} / ${betaEffect == null ? "-" : `${fmt(betaEffect)}%`}`}</div></div>
+          <div class="mini-kpi"><div class="k">樣本 / 信心</div><div class="v">${templateCount} / ${confidence}</div></div>
+          <div class="mini-kpi"><div class="k">Market Coupon Avg</div><div class="v">${surfaceMarketCoupon == null ? "-" : `${fmt(surfaceMarketCoupon)}%`}</div></div>
+          <div class="mini-kpi"><div class="k">Surface - Current</div><div class="v">${surfaceCurrentGap == null ? "-" : `${fmt(surfaceCurrentGap)}%`}</div></div>
+        </div>
+
+        <div class="engine-grid">
+          <div class="engine-card">
+            <div class="engine-card-header">
+              <h3>B1. M8 Preference Engine｜你的偏好</h3>
+              <span class="pill info">Preference</span>
+            </div>
+            <div class="engine-card-body">
+              <div class="meter-wrap">
+                ${meter("Base", r.base, Math.max(num(r.pre_rate), num(r.fair_yield), 1))}
+                ${meter("Basket Premium", r.basket_premium, Math.max(num(r.pre_rate), num(r.fair_yield), 1))}
+                ${meter("Structure Total", r.structure_total, Math.max(num(r.pre_rate), num(r.fair_yield), 1))}
+                ${meter("VolAdj", r.vol_adj, Math.max(num(r.pre_rate), num(r.fair_yield), 1))}
+                ${meter("RatePressureAdj", r.rate_pressure_adj, Math.max(num(r.pre_rate), num(r.fair_yield), 1), num(r.rate_pressure_adj) > 2 ? "warn" : "")}
+                ${meter("PreRate", r.pre_rate, Math.max(num(r.pre_rate), num(r.fair_yield), 1))}
+                ${meter("HighRateBrake", r.high_rate_brake, Math.max(num(r.pre_rate), num(r.fair_yield), 1), "bad")}
+                ${meter("Final M8 Fair", r.fair_yield, Math.max(num(r.pre_rate), num(r.fair_yield), 1))}
+              </div>
+              <div class="engine-comment">${preferenceComment}</div>
+            </div>
+          </div>
+
+          <div class="engine-card">
+            <div class="engine-card-header">
+              <h3>B2. Market Regression Engine｜市場公平利率</h3>
+              <span class="pill warn">β Market</span>
+            </div>
+            <div class="engine-card-body">
+              <div class="meter-wrap">
+                ${meter("New Fair", newFair ?? 0, 50)}
+                ${meter("Final Fair", finalFair ?? 0, 50)}
+                ${meter("β", beta ?? 0, 1)}
+                ${meter("Template Count", templateCount === "-" ? 0 : templateCount, 30)}
+                ${meter("Confidence", confidence === "-" ? 0 : confidence, 100)}
+              </div>
+              <div class="engine-comment">${marketComment}</div>
+            </div>
+          </div>
+        </div>
+
+        <details class="collapsible-section">
+          <summary>C. Explainability｜M8 Preference 細部公式與參數</summary>
+          <div class="collapsible-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>Base</th><th>BW</th><th>BasketPremium</th><th>TailAdj</th><th>KIAdj</th><th>TenorAdj</th><th>StrikeAdj</th><th>TypeAdj</th><th>StructureTotal</th><th>BasketVol</th><th>VolAdj</th><th>RatePressureAdj</th><th>PreRate</th><th>HighRateBrake</th><th>FairYield</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>${fmt(r.base)}</td><td>${fmt(r.BW)}</td><td>${fmt(r.basket_premium)}</td><td>${fmt(r.tail_adj)}</td><td>${fmt(r.ki_adj)}</td><td>${fmt(r.tenor_adj)}</td><td>${fmt(r.strike_adj)}</td><td>${fmt(r.type_adj)}</td><td>${fmt(r.structure_total)}</td><td>${fmt(r.basket_vol)}</td><td>${fmt(r.vol_adj)}</td><td>${fmt(r.rate_pressure_adj)}</td><td>${fmt(r.pre_rate)}</td><td>${fmt(r.high_rate_brake)}</td><td>${fmt(r.fair_yield)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="collapsible-section">
+          <summary>C. Explainability｜股票明細 / Rate Pressure 工程資料</summary>
+          <div class="collapsible-body">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th><th>Symbol</th><th>Source</th><th>M7_v2</th><th>RP Score</th><th>RP(100)</th><th>IV%</th><th>IV Score</th><th>Skew</th><th>Skew Score</th><th>Demand</th><th>Driver</th><th>Warning</th><th>Sector</th><th>Subsector</th><th>Risk</th><th>Today Score</th><th>Weakness</th><th>ShortSwing</th>
+                </tr>
+              </thead>
+              <tbody>${stockRows || `<tr><td colspan="19">無資料</td></tr>`}</tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="collapsible-section">
+          <summary>C. Explainability｜6日振幅 / ShortSwing / BasketVol / VolAdj</summary>
+          <div class="collapsible-body">
+            <div class="section-title">6日振幅輸入</div>
+            <table>
+              <thead>
+                <tr><th>Symbol</th><th>d0</th><th>d1</th><th>d2</th><th>d3</th><th>d4</th><th>d5</th><th>ShortSwing</th><th>Vol Rank</th><th>Basket Role</th></tr>
+              </thead>
+              <tbody>${swingRows || `<tr><td colspan="10">無資料</td></tr>`}</tbody>
+            </table>
+
+            <div class="explain-box">
+              <div class="row">
+                <div class="label">ShortSwing 公式</div>
+                <div class="mono">ShortSwing = 0.35×d0 + 0.25×d1 + 0.15×d2 + 0.10×d3 + 0.08×d4 + 0.07×d5</div>
+                <div class="mono">Yield Cap = ${r.yield_capped ? "已套用 10%" : "未觸發"}</div>
+              </div>
+              <div class="row">
+                <div class="label">各股 ShortSwing 計算過程</div>
+                <table><thead><tr><th>Symbol</th><th>計算式</th><th>結果</th></tr></thead><tbody>${shortSwingExplainRows || `<tr><td colspan="3">無資料</td></tr>`}</tbody></table>
+              </div>
+              <div class="row">
+                <div class="label">BasketVol 計算過程</div>
+                <div class="mono">排序後 ShortSwing：${sortedSwings.map(x => `${x.symbol}:${fmt(x.v)}`).join(" , ") || "-"}</div>
+                <div class="mono">s1 = ${fmt(s1)}, s2 = ${fmt(s2)}, avg = ${fmt(avgSwing)}</div>
+                <div class="mono">BasketVol = 0.5×${fmt(s1)} + 0.3×${fmt(s2)} + 0.2×${fmt(avgSwing)} = ${fmt(r.basket_vol)}</div>
+              </div>
+              <div class="row">
+                <div class="label">VolAdj 計算過程</div>
+                <div class="mono">BasketVol = ${fmt(r.basket_vol)}，落在區間：${volAdjExplain.bucket}</div>
+                <div class="mono">公式：${volAdjExplain.formula}</div>
+                <div class="mono">代入：${volAdjExplain.substitution}</div>
+                <div class="mono">VolAdj = ${fmt(r.vol_adj)}</div>
+              </div>
+              <div class="row">
+                <div class="label">Rate Pressure 計算結果</div>
+                <div class="mono">Source = ${r.rate_pressure_source || "missing"}</div>
+                <div class="mono">Basket RP = ${fmt(r.rate_pressure_score_basket)}，RatePressureAdj = ${fmt(r.rate_pressure_adj)}</div>
+                <div class="mono">股票明細：${Array.isArray(r.rate_pressure_stocks) ? r.rate_pressure_stocks.map(x => `${x.symbol} RP=${fmt(x.rate_pressure_score)} | IV=${fmt(x.iv_30d_atm_pct)} | Skew=${fmt(x.put_skew_30d_vol_points)} | Demand=${fmt(x.demand_score)} | Driver=${x.rate_driver_label || "-"} | Formula=${x.rate_pressure_formula_text || "-"}`).join("\n") : "-"}</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      `;
+    }
+
+    function renderProxyResult(result) {
+      const box = $("proxyResult");
+      if (!box) return;
+
+      if (!result || !Array.isArray(result.proxies) || !result.proxies.length) {
+        box.innerHTML = "沒有可顯示的 proxy 結果";
+        return;
+      }
+
+      box.innerHTML = `
+        <div style="padding:12px;">
+          <div style="font-weight:800; margin-bottom:8px;">
+            Anchor：${result.anchor_symbol} ${result.anchor_name} ｜ today_score ${fmt(result.anchor_today_score)}
+          </div>
+          <div class="small-note" style="margin-bottom:10px;">
+            Normalization Base Yield：${fmt(result.base_yield_for_normalization)}
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Target</th>
+                <th>Today Score</th>
+                <th>Pair Fair Yield</th>
+                <th>BasketVol</th>
+                <th>VolAdj</th>
+                <th>Proxy</th>
+                <th>Normalized</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${result.proxies.map((x, idx) => `
+                <tr>
+                  <td>${idx + 1}</td>
+                  <td>${x.target_symbol}</td>
+                  <td>${fmt(x.target_today_score)}</td>
+                  <td>${fmt(x.pair_fair_yield)}</td>
+                  <td>${fmt(x.pair_basket_vol)}</td>
+                  <td>${fmt(x.pair_vol_adj)}</td>
+                  <td>${fmt(x.proxy_value)}</td>
+                  <td>${fmt(x.normalized_proxy)}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function renderHistory() {
+      const store = getInquiryStore()
+        .slice()
+        .sort((a, b) => String(b.inquiry?.inquiry_no || "").localeCompare(String(a.inquiry?.inquiry_no || "")));
+
+      const box = $("historyList");
+
+      if (!store.length) {
+        box.innerHTML = "尚無資料";
+        return;
+      }
+
+      box.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>詢價單號</th>
+              <th>日期</th>
+              <th>承做</th>
+              <th>上手</th>
+              <th>RM</th>
+              <th>Case</th>
+              <th>Symbols</th>
+              <th>Market</th>
+              <th>Fair</th>
+              <th>Edge</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${store.map((r, idx) => `
+              <tr>
+                <td>${r.inquiry?.inquiry_no || ""}</td>
+                <td>${r.inquiry?.inquiry_date || ""}</td>
+                <td>${r.counterparty?.issuer_local || "-"}</td>
+                <td>${r.counterparty?.upstream_bank_code || "-"}</td>
+                <td>${r.counterparty?.rm || "-"}</td>
+                <td>${r.quote?.case_name || ""}</td>
+                <td>${(r.quote?.symbols || []).join("|")}</td>
+                <td>${r.quote?.market_yield != null ? fmt(r.quote.market_yield) : "-"}</td>
+                <td>${r.engine?.fair_yield != null ? fmt(r.engine.fair_yield) : "-"}</td>
+                <td>${r.engine?.edge != null ? fmt(r.engine.edge) : "-"}</td>
+                <td>
+                  <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <button class="btn-secondary" data-load-index="${idx}">載入</button>
+                    <button class="btn-success" data-edit-index="${idx}">編輯</button>
+                    <button class="btn-danger" data-delete-index="${idx}">刪除</button>
+                  </div>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+
+      box.querySelectorAll("[data-load-index]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-load-index"));
+          loadHistoryBySortedIndex(idx);
+        });
+      });
+
+      box.querySelectorAll("[data-edit-index]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-edit-index"));
+          editHistoryBySortedIndex(idx);
+        });
+      });
+
+      box.querySelectorAll("[data-delete-index]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.getAttribute("data-delete-index"));
+          deleteHistoryBySortedIndex(idx);
+        });
+      });
+    }
+
+    function renderBasketCompare(symbols = null) {
+      const store = getInquiryStore();
+      const box = $("basketCompare");
+
+      if (!store.length) {
+        box.innerHTML = "尚無資料";
+        return;
+      }
+
+      let basketKey = null;
+
+      if (symbols && symbols.length) {
+        basketKey = normalizeBasket(symbols);
+      } else {
+        const currentSymbols = parseSymbols($("symbols").value);
+        if (currentSymbols.length) basketKey = normalizeBasket(currentSymbols);
+      }
+
+      if (!basketKey) {
+        box.innerHTML = "尚無資料";
+        return;
+      }
+
+      const rows = store
+        .filter(x => x.quote?.basket_key === basketKey)
+        .sort((a, b) => String(a.inquiry?.inquiry_date || "").localeCompare(String(b.inquiry?.inquiry_date || "")));
+
+      if (!rows.length) {
+        box.innerHTML = "尚無資料";
+        return;
+      }
+
+      box.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>單號</th>
+              <th>承做</th>
+              <th>上手</th>
+              <th>Market</th>
+              <th>Fair</th>
+              <th>Edge</th>
+              <th>BasketVol</th>
+              <th>VolAdj</th>
+              <th>M2建議</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.map(r => `
+              <tr>
+                <td>${r.inquiry?.inquiry_date || ""}</td>
+                <td>${r.inquiry?.inquiry_no || ""}</td>
+                <td>${r.counterparty?.issuer_local || "-"}</td>
+                <td>${r.counterparty?.upstream_bank_code || "-"}</td>
+                <td>${r.quote?.market_yield != null ? fmt(r.quote.market_yield) : "-"}</td>
+                <td>${r.engine?.fair_yield != null ? fmt(r.engine.fair_yield) : "-"}</td>
+                <td>${r.engine?.edge != null ? fmt(r.engine.edge) : "-"}</td>
+                <td>${r.engine?.basket_vol != null ? fmt(r.engine.basket_vol) : "-"}</td>
+                <td>${r.engine?.vol_adj != null ? fmt(r.engine.vol_adj) : "-"}</td>
+                <td>${r.m2_callback?.suggested_action || "-"}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function loadRecordIntoForm(schema, editing = false) {
+      if (!schema) return;
+
+      $("inquiryDate").value = schema.inquiry?.inquiry_date || todayStr();
+      $("issuer").value = schema.counterparty?.issuer_local || "";
+      $("upstreamBank").value = schema.counterparty?.upstream_bank_code || "";
+      $("rm").value = schema.counterparty?.rm || "";
+      $("caseName").value = schema.quote?.case_name || "Case 1";
+      $("symbols").value = (schema.quote?.symbols || []).join(",");
+      $("ki").value = schema.quote?.KI ?? 0;
+      $("strike").value = schema.quote?.strike ?? 0;
+      $("tenor").value = schema.quote?.tenor ?? 0;
+      $("type").value = schema.quote?.type || "EKI";
+      $("marketYield").value = schema.quote?.market_yield ?? 0;
+      $("note").value = schema.quote?.note || "";
+
+      $("inputMode").value = "single";
+      setupInputMode();
+
+      if (editing) {
+        currentEditingInquiryNo = schema.inquiry?.inquiry_no || null;
+        $("inquiryNo").value = schema.inquiry?.inquiry_no || "";
+      } else {
+        currentEditingInquiryNo = null;
+        refreshInquiryNo();
+      }
+
+      renderBasketCompare(schema.quote?.symbols || []);
+
+      if (schema.raw_engine_result) {
+        renderResult(schema.raw_engine_result, schema);
+      }
+    }
+
+    function loadHistoryBySortedIndex(sortedIndex) {
+      const sorted = getInquiryStore()
+        .slice()
+        .sort((a, b) => String(b.inquiry?.inquiry_no || "").localeCompare(String(a.inquiry?.inquiry_no || "")));
+      const schema = sorted[sortedIndex];
+      if (!schema) return;
+
+      loadRecordIntoForm(schema, false);
+    }
+
+    function editHistoryBySortedIndex(sortedIndex) {
+      const sorted = getInquiryStore()
+        .slice()
+        .sort((a, b) => String(b.inquiry?.inquiry_no || "").localeCompare(String(a.inquiry?.inquiry_no || "")));
+      const schema = sorted[sortedIndex];
+      if (!schema) return;
+
+      loadRecordIntoForm(schema, true);
+      alert(`已載入編輯模式：${schema.inquiry?.inquiry_no || ""}`);
+    }
+
+    function deleteHistoryBySortedIndex(sortedIndex) {
+      const sorted = getInquiryStore()
+        .slice()
+        .sort((a, b) => String(b.inquiry?.inquiry_no || "").localeCompare(String(a.inquiry?.inquiry_no || "")));
+      const target = sorted[sortedIndex];
+      if (!target) return;
+
+      const ok = confirm(`確定刪除 ${target.inquiry?.inquiry_no || ""} 嗎？`);
+      if (!ok) return;
+
+      const store = getInquiryStore().filter(x => x.inquiry?.inquiry_no !== target.inquiry?.inquiry_no);
+      saveInquiryStore(store);
+
+      if (currentEditingInquiryNo === target.inquiry?.inquiry_no) {
+        currentEditingInquiryNo = null;
+        refreshInquiryNo();
+      }
+
+      renderHistory();
+      renderBasketCompare(parseSymbols($("symbols").value));
+    }
+
+    function downloadFile(filename, content, mimeType = "text/plain;charset=utf-8") {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function csvEscape(value) {
+      const s = String(value ?? "");
+      if (s.includes('"') || s.includes(",") || s.includes("\n")) {
+        return `"${s.replace(/"/g, '""')}"`;
+      }
+      return s;
+    }
+
+    function exportHistoryJson() {
+      const store = getInquiryStore();
+      if (!store.length) {
+        alert("目前沒有可匯出的歷史資料");
+        return;
+      }
+      downloadFile(
+        `fcn_quote_history_${todayStr().replaceAll("-", "")}.json`,
+        JSON.stringify(store, null, 2),
+        "application/json;charset=utf-8"
+      );
+    }
+
+    function exportHistoryCsv() {
+      const store = getInquiryStore();
+      if (!store.length) {
+        alert("目前沒有可匯出的歷史資料");
+        return;
+      }
+
+      const rows = [[
+        "schema_version",
+        "inquiry_date",
+        "inquiry_no",
+        "issuer_local",
+        "upstream_bank_code",
+        "upstream_bank_name",
+        "rm",
+        "case_name",
+        "symbols",
+        "basket_key",
+        "KI",
+        "strike",
+        "tenor",
+        "type",
+        "market_yield",
+        "note",
+        "fair_yield",
+        "basket_vol",
+        "vol_adj",
+        "rate_pressure_adj",
+        "rate_pressure_score_basket",
+        "pricing_view",
+        "pricing_delta",
+        "edge",
+        "m2_market_context",
+        "m2_action_priority",
+        "m2_need_active_attention",
+        "m2_suggested_action",
+        "created_at",
+        "updated_at"
+      ].join(",")];
+
+      store.forEach(r => {
+        rows.push([
+          csvEscape(r.schema_version),
+          csvEscape(r.inquiry?.inquiry_date),
+          csvEscape(r.inquiry?.inquiry_no),
+          csvEscape(r.counterparty?.issuer_local),
+          csvEscape(r.counterparty?.upstream_bank_code),
+          csvEscape(r.counterparty?.upstream_bank_name),
+          csvEscape(r.counterparty?.rm),
+          csvEscape(r.quote?.case_name),
+          csvEscape((r.quote?.symbols || []).join("|")),
+          csvEscape(r.quote?.basket_key),
+          csvEscape(r.quote?.KI),
+          csvEscape(r.quote?.strike),
+          csvEscape(r.quote?.tenor),
+          csvEscape(r.quote?.type),
+          csvEscape(r.quote?.market_yield),
+          csvEscape(r.quote?.note),
+          csvEscape(r.engine?.fair_yield ?? ""),
+          csvEscape(r.engine?.basket_vol ?? ""),
+          csvEscape(r.engine?.vol_adj ?? ""),
+          csvEscape(r.engine?.rate_pressure_adj ?? ""),
+          csvEscape(r.engine?.rate_pressure_score_basket ?? ""),
+          csvEscape(r.engine?.pricing_view ?? ""),
+          csvEscape(r.engine?.pricing_delta ?? ""),
+          csvEscape(r.engine?.edge ?? ""),
+          csvEscape(r.m2_callback?.market_context ?? ""),
+          csvEscape(r.m2_callback?.action_priority ?? ""),
+          csvEscape(r.m2_callback?.need_active_attention ?? ""),
+          csvEscape(r.m2_callback?.suggested_action ?? ""),
+          csvEscape(r.created_at ?? ""),
+          csvEscape(r.updated_at ?? "")
+        ].join(","));
+      });
+
+      downloadFile(
+        `fcn_quote_history_${todayStr().replaceAll("-", "")}.csv`,
+        rows.join("\n"),
+        "text/csv;charset=utf-8"
+      );
+    }
+
+    function clearAllHistory() {
+      const store = getInquiryStore();
+      if (!store.length) {
+        alert("目前沒有資料可清空");
+        return;
+      }
+
+      const ok = confirm("確定要清空全部歷史詢價單嗎？此動作無法復原。");
+      if (!ok) return;
+
+      localStorage.removeItem(STORAGE_KEY);
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith("fcn_inquiry_seq_")) {
+          localStorage.removeItem(key);
+        }
+      });
+
+      currentEditingInquiryNo = null;
+      refreshInquiryNo();
+      renderHistory();
+      renderBasketCompare();
+      loadRuntimeDashboard();
+      loadAllStocksPool();
+      clearResult();
+    }
+
+    function collectSinglePayload() {
+      const inquiryDate = $("inquiryDate").value || todayStr();
+
+      return {
+        inquiryDate,
+        inquiryNo: currentEditingInquiryNo || generateInquiryNo(inquiryDate),
+        issuer: $("issuer").value || "",
+        upstreamBank: $("upstreamBank").value || "",
+        rm: $("rm").value.trim() || "",
+        caseName: $("caseName").value.trim() || "Case 1",
+        symbols: parseSymbols($("symbols").value),
+        KI: num($("ki").value),
+        Strike: num($("strike").value),
+        T: num($("tenor").value),
+        type: $("type").value,
+        marketYield: num($("marketYield").value),
+        note: $("note").value.trim() || ""
+      };
+    }
+
+    async function saveSchemaRecord(schema) {
+      const store = getInquiryStore();
+      const inquiryNo = schema.inquiry?.inquiry_no;
+      const existingIndex = store.findIndex(x => x.inquiry?.inquiry_no === inquiryNo);
+
+      if (existingIndex >= 0) {
+        schema.created_at = store[existingIndex].created_at || schema.created_at;
+        store[existingIndex] = schema;
+      } else {
+        store.push(schema);
+      }
+
+      saveInquiryStore(store);
+      currentEditingInquiryNo = null;
+      refreshInquiryNo();
+      renderHistory();
+      renderBasketCompare(schema.quote?.symbols || []);
+    }
+
+    async function runCase() {
+      try {
+        const payload = collectSinglePayload();
+
+        const engineInput = {
+          caseName: payload.caseName,
+          symbols: payload.symbols,
+          KI: payload.KI,
+          Strike: payload.Strike,
+          T: payload.T,
+          type: payload.type,
+          marketYield: payload.marketYield,
+          note: payload.note
+        };
+
+        const result = await runM8Case(engineInput);
+
+        if (!result.market_yield && result.market_yield !== 0) {
+          result.market_yield = payload.marketYield;
+        }
+        if (!result.case_name) {
+          result.case_name = payload.caseName;
+        }
+        if (!result.note) {
+          result.note = payload.note;
+        }
+
+        result.market_regression = await buildMarketRegressionForPayload(payload, result);
+
+        const store = getInquiryStore();
+        const old = store.find(x => x.inquiry?.inquiry_no === payload.inquiryNo);
+        const schema = buildEngineSchema(payload, result, old?.created_at || null);
+
+        renderResult(result, schema);
+        await saveSchemaRecord(schema);
+
+      } catch (err) {
+        $("pricingBadge").className = "pill bad";
+        $("pricingBadge").textContent = "執行失敗";
+        $("resultArea").innerHTML = `<div class="empty" style="color:#b42318;">${err.message || err}</div>`;
+      }
+    }
+
+    async function runAnchorProxy() {
+      try {
+        const symbols = parseSymbols($("proxySymbols").value);
+        const KI = num($("proxyKi").value);
+        const Strike = num($("proxyStrike").value);
+        const T = num($("proxyTenor").value);
+        const type = $("proxyType").value;
+
+        const result = await runM8AnchorProxy({
+          symbols,
+          KI,
+          Strike,
+          T,
+          type
+        });
+
+        renderProxyResult(result);
+      } catch (err) {
+        const box = $("proxyResult");
+        if (box) {
+          box.innerHTML = `<div style="color:#b42318;padding:12px;">${err.message || err}</div>`;
+        }
+      }
+    }
+
+    async function importBatchInquiry() {
+      const inquiryDate = $("inquiryDate").value || todayStr();
+      const rows = parseBatchText($("batchInput").value, inquiryDate);
+
+      if (!rows.length) {
+        alert("沒有可匯入的資料");
+        return;
+      }
+
+      const store = getInquiryStore();
+      let successCount = 0;
+      let lastSchema = null;
+
+      for (const row of rows) {
+        try {
+          const engineInput = {
+            caseName: row.caseName,
+            symbols: row.symbols,
+            KI: row.KI,
+            Strike: row.Strike,
+            T: row.T,
+            type: row.type,
+            marketYield: row.marketYield,
+            note: row.note
+          };
+
+          const result = await runM8Case(engineInput);
+
+          if (!result.market_yield && result.market_yield !== 0) {
+            result.market_yield = row.marketYield;
+          }
+          if (!result.case_name) {
+            result.case_name = row.caseName;
+          }
+          if (!result.note) {
+            result.note = row.note;
+          }
+
+          const payload = {
+            inquiryDate: row.inquiryDate,
+            inquiryNo: row.inquiryNo,
+            issuer: row.issuer,
+            upstreamBank: row.upstreamBank,
+            rm: row.rm,
+            caseName: row.caseName,
+            symbols: row.symbols,
+            KI: row.KI,
+            Strike: row.Strike,
+            T: row.T,
+            type: row.type,
+            marketYield: row.marketYield,
+            note: row.note
+          };
+
+          result.market_regression = await buildMarketRegressionForPayload(payload, result);
+
+          const schema = buildEngineSchema(payload, result, null);
+          store.push(schema);
+          lastSchema = schema;
+          successCount += 1;
+        } catch (err) {
+          console.error("batch run failed:", row, err);
+        }
+      }
+
+      saveInquiryStore(store);
+      renderHistory();
+
+      if (lastSchema?.raw_engine_result) {
+        renderResult(lastSchema.raw_engine_result, lastSchema);
+        renderBasketCompare(lastSchema.quote?.symbols || []);
+      }
+
+      refreshInquiryNo();
+      alert(`已匯入並完成 M8 計算：${successCount} 筆`);
+    }
+
+    function setupInputMode() {
+      const mode = $("inputMode").value;
+      $("singleInputPanel").style.display = mode === "single" ? "block" : "none";
+      $("batchInputPanel").style.display = mode === "batch" ? "block" : "none";
+    }
+
+    function loadDemo() {
+      $("issuer").value = "富邦";
+      $("upstreamBank").value = "NATIXIS";
+      $("rm").value = "王小姐";
+      $("caseName").value = "Case Demo";
+      $("symbols").value = "ARM,GOOG,INTC,TSM";
+      $("ki").value = 60;
+      $("strike").value = 70;
+      $("tenor").value = 6;
+      $("type").value = "EKI";
+      $("marketYield").value = 23.35;
+      $("note").value = "示範案例";
+      $("inputMode").value = "single";
+      currentEditingInquiryNo = null;
+      setupInputMode();
+      refreshInquiryNo();
+      renderBasketCompare(parseSymbols($("symbols").value));
+    }
+
+    
+    async function loadRuntimeDashboard() {
+      try {
+        const res = await fetch("./data/options/option_runtime.json");
+        const json = await res.json();
+
+        const rows = Object.values(json.data || {}).filter(x => x && x.status === "ok");
+
+        const avg = (arr) => arr.length ? arr.reduce((a,b)=>a+b,0)/arr.length : 0;
+
+        const avgRP = avg(rows.map(x => Number(x.rate_pressure_score || 0)));
+        const avgIV = avg(rows.map(x => Number(x.iv_30d_atm_pct || 0)));
+
+        $("rtSymbolCount").textContent = rows.length;
+        $("rtAvgRP").textContent = fmt(avgRP);
+        $("rtAvgIV").textContent = fmt(avgIV);
+
+        $("rtHighRP").textContent =
+          rows.filter(x => Number(x.rate_pressure_score || 0) >= 5).length;
+
+        $("rtHighSkew").textContent =
+          rows.filter(x => Number(x.put_skew_30d_vol_points || 0) >= 5).length;
+
+        function renderTable() {
+          const symbolFilter = ($("runtimeFilterSymbol").value || "").toUpperCase();
+          const driverFilter = $("runtimeFilterDriver").value || "";
+          const sortMode = $("runtimeSort").value || "rp_desc";
+
+          let data = rows.filter(x => {
+            const symOk = !symbolFilter || String(x.symbol || "").includes(symbolFilter);
+            const drvOk = !driverFilter || x.rate_driver_label === driverFilter;
+            return symOk && drvOk;
+          });
+
+          if (sortMode === "rp_desc") {
+            data.sort((a,b)=>(b.rate_pressure_score||0)-(a.rate_pressure_score||0));
+          } else if (sortMode === "iv_desc") {
+            data.sort((a,b)=>(b.iv_30d_atm_pct||0)-(a.iv_30d_atm_pct||0));
+          } else if (sortMode === "skew_desc") {
+            data.sort((a,b)=>(b.put_skew_30d_vol_points||0)-(a.put_skew_30d_vol_points||0));
+          }
+
+          $("runtimeDashboardTable").innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>Symbol</th>
+                  <th>IV%</th>
+                  <th>IV Score</th>
+                  <th>Skew</th>
+                  <th>Skew Score</th>
+                  <th>Demand</th>
+                  <th>RP</th>
+                  <th>Driver</th>
+                  <th>Warning</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map(x => `
+                  <tr>
+                    <td>${x.symbol || ""}</td>
+                    <td>${fmt(x.iv_30d_atm_pct)}</td>
+                    <td>${fmt(x.iv_score)}</td>
+                    <td>${fmt(x.put_skew_30d_vol_points)}</td>
+                    <td>${fmt(x.skew_score)}</td>
+                    <td>${fmt(x.demand_score)}</td>
+                    <td>${fmt(x.rate_pressure_score)}</td>
+                    <td>${x.rate_driver_label || ""}</td>
+                    <td>${x.data_warning || ""}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          `;
+        }
+
+        renderTable();
+
+        ["runtimeFilterSymbol","runtimeFilterDriver","runtimeSort"].forEach(id => {
+          $(id).addEventListener("input", renderTable);
+          $(id).addEventListener("change", renderTable);
+        });
+
+      } catch (err) {
+        console.error("runtime dashboard failed", err);
+      }
+    }
+
+
+
+    async function loadAllStocksPool() {
+      try {
+        const res = await fetch("./data/options/option_runtime.json");
+        const json = await res.json();
+        const rows = Object.values(json.data || {}).filter(x => x && x.status === "ok");
+        const avg = (arr) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
+
+        function updateSummary(data) {
+          $("allPoolSymbolCount").textContent = data.length;
+          $("allPoolAvgIVScore").textContent = fmt(avg(data.map(x => Number(x.iv_score || 0))));
+          $("allPoolAvgSkewScore").textContent = fmt(avg(data.map(x => Number(x.skew_score || 0))));
+          $("allPoolAvgDemand").textContent = fmt(avg(data.map(x => Number(x.demand_score || 0))));
+          $("allPoolAvgRP").textContent = fmt(avg(data.map(x => Number(x.rate_pressure_score || 0))));
+        }
+
+        function renderTable() {
+          const symbolFilter = ($("allPoolFilterSymbol").value || "").trim().toUpperCase();
+          const driverFilter = $("allPoolFilterDriver").value || "";
+          const sortMode = $("allPoolSort").value || "rp_desc";
+          const minIVScore = Number($("allPoolMinIVScore").value || 0);
+          const minRP = Number($("allPoolMinRP").value || 0);
+          const warningFilter = $("allPoolWarningFilter").value || "";
+
+          let data = rows.filter(x => {
+            const symbol = String(x.symbol || "").toUpperCase();
+            const warning = String(x.data_warning || "");
+            const passSymbol = !symbolFilter || symbol.includes(symbolFilter);
+            const passDriver = !driverFilter || x.rate_driver_label === driverFilter;
+            const passIV = Number(x.iv_score || 0) >= minIVScore;
+            const passRP = Number(x.rate_pressure_score || 0) >= minRP;
+            const passWarning =
+              !warningFilter ||
+              (warningFilter === "with_warning" && warning) ||
+              (warningFilter === "no_warning" && !warning);
+            return passSymbol && passDriver && passIV && passRP && passWarning;
+          });
+
+          if (sortMode === "rp_desc") data.sort((a, b) => Number(b.rate_pressure_score || 0) - Number(a.rate_pressure_score || 0));
+          else if (sortMode === "ivscore_desc") data.sort((a, b) => Number(b.iv_score || 0) - Number(a.iv_score || 0));
+          else if (sortMode === "iv_desc") data.sort((a, b) => Number(b.iv_30d_atm_pct || 0) - Number(a.iv_30d_atm_pct || 0));
+          else if (sortMode === "skewscore_desc") data.sort((a, b) => Number(b.skew_score || 0) - Number(a.skew_score || 0));
+          else if (sortMode === "demand_desc") data.sort((a, b) => Number(b.demand_score || 0) - Number(a.demand_score || 0));
+          else if (sortMode === "symbol_asc") data.sort((a, b) => String(a.symbol || "").localeCompare(String(b.symbol || "")));
+
+          updateSummary(data);
+
+          $("allStocksPoolTable").innerHTML = `
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Symbol</th>
+                  <th>Spot</th>
+                  <th>IV%</th>
+                  <th>IV Score</th>
+                  <th>Skew</th>
+                  <th>Skew Score</th>
+                  <th>Demand</th>
+                  <th>Event</th>
+                  <th>RP</th>
+                  <th>Driver</th>
+                  <th>IV Source</th>
+                  <th>Warning</th>
+                  <th>Expiry</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.map((x, idx) => `
+                  <tr>
+                    <td>${idx + 1}</td>
+                    <td>${x.symbol || ""}</td>
+                    <td>${fmt(x.spot)}</td>
+                    <td>${fmt(x.iv_30d_atm_pct)}</td>
+                    <td>${fmt(x.iv_score)}</td>
+                    <td>${fmt(x.put_skew_30d_vol_points)}</td>
+                    <td>${fmt(x.skew_score)}</td>
+                    <td>${fmt(x.demand_score)}</td>
+                    <td>${fmt(x.event_score)}</td>
+                    <td>${fmt(x.rate_pressure_score)}</td>
+                    <td>${x.rate_driver_label || ""}</td>
+                    <td>${x.iv_source || ""}</td>
+                    <td>${x.data_warning || ""}</td>
+                    <td>${x.expiry_used || ""}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          `;
+        }
+
+        renderTable();
+
+        ["allPoolFilterSymbol", "allPoolFilterDriver", "allPoolSort", "allPoolMinIVScore", "allPoolMinRP", "allPoolWarningFilter"].forEach(id => {
+          const el = $(id);
+          if (el) {
+            el.addEventListener("input", renderTable);
+            el.addEventListener("change", renderTable);
+          }
+        });
+      } catch (err) {
+        console.error("all stocks pool failed", err);
+        const box = $("allStocksPoolTable");
+        if (box) box.innerHTML = `<div style="color:#b42318;">載入失敗：${err.message || err}</div>`;
+      }
+    }
+
+
+    function clearResult() {
+      currentEditingInquiryNo = null;
+      refreshInquiryNo();
+
+      $("pricingBadge").className = "pill info";
+      $("pricingBadge").textContent = "尚未執行";
+      $("resultArea").innerHTML = `<div class="empty">請先輸入案例後，按「執行 M8 並留存」</div>`;
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      console.log("m8_batch html loaded - partial depth rule FINAL 20260511");
+      await loadM8TemplateSurface();
+
+      $("inquiryDate").value = todayStr();
+      refreshInquiryNo();
+
+      renderBlueprint();
+      setupBlueprintToggle();
+      renderHistory();
+      renderBasketCompare();
+      setupInputMode();
+      loadRuntimeDashboard();
+      loadAllStocksPool();
+
+      $("inquiryDate").addEventListener("change", () => {
+        if (!currentEditingInquiryNo) refreshInquiryNo();
+      });
+
+      $("inputMode").addEventListener("change", setupInputMode);
+
+      $("runBtn").addEventListener("click", runCase);
+      $("demoBtn").addEventListener("click", loadDemo);
+      $("clearBtn").addEventListener("click", clearResult);
+      $("importBatchBtn").addEventListener("click", importBatchInquiry);
+      $("runProxyBtn").addEventListener("click", runAnchorProxy);
+
+      $("exportJsonBtn").addEventListener("click", exportHistoryJson);
+      $("exportCsvBtn").addEventListener("click", exportHistoryCsv);
+      $("clearHistoryBtn").addEventListener("click", clearAllHistory);
+
+      ["symbols", "ki", "strike", "tenor", "type", "marketYield"].forEach(id => {
+        const el = $(id);
+        if (el) {
+          el.addEventListener("change", () => {
+            renderBasketCompare(parseSymbols($("symbols").value));
+          });
+        }
+      });
+    });
+</script>
+</body>
+</html>
