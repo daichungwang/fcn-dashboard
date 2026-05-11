@@ -1249,6 +1249,27 @@ function finalizeSurfaceBucket(bucket) {
 }
 
 
+
+function getM8TemplateDnaRules() {
+  return {
+    C_TSLA_MOMENTUM_CORE: {
+      any_required: ["TSLA"]
+    },
+    D_SPECULATIVE_MOMENTUM: {
+      any_required: ["COIN", "CRDO", "ALAB", "SOFI", "COHR", "COHRN", "LITE", "CRDW", "PLTR"]
+    },
+    B_MEMORY_SEMI_TACTICAL: {
+      any_required: ["MU", "SNDK"]
+    },
+    E_DEFENSIVE_STABILIZER: {
+      any_required: ["LQD", "AAPL", "BAC", "C", "UNH", "REGN", "TGT"]
+    },
+    A_AI_CORE_INSTITUTIONAL: {
+      any_required: ["NVDA", "TSM", "AVGO", "SMH", "QQQ", "AMD", "MRVL", "ARM", "AMAT"]
+    }
+  };
+}
+
 function detectThemeTemplate(symbols) {
   const set = new Set(normalizeSurfaceSymbols(symbols));
   const hasEtf = set.has("SMH") || set.has("QQQ");
@@ -1283,9 +1304,10 @@ function buildM8TemplateSurface() {
     templates: {},
     small_templates: {},
     theme_templates: {},
+    template_dna_rules: getM8TemplateDnaRules(),
     fallback_rules: {
       min_count_for_small_template: 3,
-      match_order: ["exact_small_template", "theme_template", "partial_small_template", "parent_template", "global_surface"]
+      match_order: ["exact_small_template", "theme_template", "partial_small_template_with_dna_guard", "parent_template", "global_surface"]
     },
     global_surface: createSurfaceBucket("GLOBAL")
   };
@@ -1395,6 +1417,9 @@ function escapeHtml(s){
 </script>
 </body>
 </html>
+
+
+
 
 
 
