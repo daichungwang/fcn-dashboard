@@ -859,18 +859,67 @@
       return t?.parent_template || t?.large_template || t?.basket_template_label || t?.template || "";
     }
 
+    function listSurfaceTemplates(collection) {
+      const out = [];
+      const walk = (x) => {
+        if (!x) return;
+        if (Array.isArray(x)) {
+          x.forEach(walk);
+          return;
+        }
+        if (typeof x !== "object") return;
+
+        const looksLikeTemplate =
+          x.template_id ||
+          x.avg_market_coupon != null ||
+          x.avg_new_fair_rate != null ||
+          x.count != null ||
+          x.sample_ids;
+
+        if (looksLikeTemplate) {
+          out.push(x);
+          return;
+        }
+
+        Object.values(x).forEach(walk);
+      };
+      walk(collection);
+      return out;
+    }
+
+    function getSurfaceTemplateByKey(collection, key) {
+      const normalizedKey = normalizeSurfaceKey(key);
+      return listSurfaceTemplates(collection).find(t => {
+        if (t.eligible === false) return false;
+        const tid = normalizeSurfaceKey(t.template_id || t.match_symbols || "");
+        return tid === normalizedKey;
+      }) || null;
+    }
+
     function findBestSurfacePartial(symbols, smallTemplates) {
       const q = normalizeSurfaceSymbols(symbols);
       const qSet = new Set(q);
       let best = null;
-      Object.values(smallTemplates || {}).forEach(t => {
+
+      listSurfaceTemplates(smallTemplates).forEach(t => {
         if (t.eligible === false) return;
         const parentTemplateId = getSurfaceTemplateParentId(t);
         if (!passTemplateDna(q, parentTemplateId)) return;
+
         const ts = normalizeSurfaceSymbols(t.match_symbols || t.template_id || "");
+        if (!ts.length) return;
+
         const overlap = ts.filter(s => qSet.has(s)).length;
+        const missingFromQuery = ts.filter(s => !qSet.has(s)).length;
+
+        // Partial template must be fully contained in the inquiry basket.
+        // Example: inquiry AMD+AVGO+NVDA+TSM can use AVGO+NVDA+TSM,
+        // but should not use an unrelated template with missing symbols.
+        if (missingFromQuery > 0) return;
         if (overlap < Math.min(2, q.length)) return;
-        const score = overlap * 100 + Number(t.count || 0);
+
+        const exactnessBonus = overlap === ts.length ? 50 : 0;
+        const score = overlap * 100 + exactnessBonus + Number(t.count || 0);
         if (!best || score > best.score) best = { score, template: t, overlap };
       });
       return best;
@@ -909,26 +958,35 @@
       if (!surfaceWindow) return { level: `${windowLabel}_no_surface`, template: null };
       const key = normalizeSurfaceKey(symbols);
       const themeKey = detectThemeTemplate(symbols);
-      const small = surfaceWindow.small_templates?.[key];
+      const smallTemplates = surfaceWindow.small_templates || surfaceWindow.smallTemplates || surfaceWindow.templates || {};
+      const themeTemplates = surfaceWindow.theme_templates || surfaceWindow.themeTemplates || {};
+      const small = getSurfaceTemplateByKey(smallTemplates, key) || smallTemplates?.[key];
 
-      if (!themeKey && small && small.eligible !== false) {
+      if (small && small.eligible !== false) {
         return { level: `${windowLabel}_exact_small_template`, template: small, window: windowLabel };
       }
 
-      const theme = themeKey ? surfaceWindow.theme_templates?.[themeKey] : null;
+      // Partial small-template fallback must run before broad no-surface result.
+      // This aligns m8_batch with calibration dashboard:
+      // AMD+AVGO+NVDA+TSM can use the observed AVGO+NVDA+TSM surface
+      // when AMD was removed by calibration's small-template normalization.
+      const partial = findBestSurfacePartial(symbols, smallTemplates);
+      if (partial) {
+        return {
+          level: `${windowLabel}_partial_small_template`,
+          template: partial.template,
+          overlap: partial.overlap,
+          window: windowLabel,
+          partial_reason: "query basket contains this observed small template"
+        };
+      }
+
+      const theme = themeKey ? themeTemplates?.[themeKey] : null;
       if (theme && theme.eligible !== false) {
         return { level: `${windowLabel}_theme_template`, template: theme, window: windowLabel, requested_theme: themeKey };
       }
 
-      // Within each window, partial match is allowed only with DNA guard and only for non-theme baskets.
       // Do not fall back to parent/global template because 6大類平均太粗，會污染當下 pricing。
-      if (!themeKey) {
-        const partial = findBestSurfacePartial(symbols, surfaceWindow.small_templates);
-        if (partial) {
-          return { level: `${windowLabel}_partial_small_template`, template: partial.template, overlap: partial.overlap, window: windowLabel };
-        }
-      }
-
       return { level: `${windowLabel}_no_same_template`, template: null, window: windowLabel, requested_theme: themeKey || null };
     }
 
@@ -2900,5 +2958,6 @@
 </script>
 </body>
 </html>
+
 
 
