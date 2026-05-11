@@ -20,7 +20,7 @@
     "quantity": 39,
     "cost": 242,
     "role": "核心部位",
-    "status": "open"
+    "status": "CLOSED"
   },
   {
    "position_id": "Coin_FCN20260301_main",
@@ -32,7 +32,7 @@
     "quantity": 0,
     "cost": 308.4,
     "role": "核心部位",
-    "status": "open"
+    "status": "CLOSED"
   },
   {
     "position_id": "ORCL_FCN710H_tactical",
@@ -44,6 +44,6 @@
     "quantity": 0,
     "cost": 178.82,
     "role": "機動部位",
-    "status": "open"
+    "status": "CLOSED"
   }
 ]
