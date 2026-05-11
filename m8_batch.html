@@ -2630,6 +2630,80 @@
         }
       });
     });
+    let M8_TEMPLATE_SURFACE = null;
+
+async function loadM8TemplateSurface() {
+  try {
+    const res = await fetch("data/mm/m8_template_surface.json", {
+      cache: "no-store"
+    });
+    if (!res.ok) throw new Error("m8_template_surface.json not found");
+    M8_TEMPLATE_SURFACE = await res.json();
+    console.log("[M8] template surface loaded", M8_TEMPLATE_SURFACE);
+  } catch (err) {
+    console.warn("[M8] template surface load failed", err);
+    M8_TEMPLATE_SURFACE = null;
+  }
+}
+    function resolveSurfaceTemplate(symbols) {
+  if (!M8_TEMPLATE_SURFACE) {
+    return {
+      level: "legacy_fallback",
+      template: null
+    };
+  }
+
+  const key = normalizeBasketKey(symbols);
+
+  const small = M8_TEMPLATE_SURFACE.small_templates?.[key];
+  if (small) {
+    return {
+      level: "exact_small_template",
+      template: small
+    };
+  }
+
+  const parentKey = inferParentTemplate(symbols);
+  const parent = M8_TEMPLATE_SURFACE.templates?.[parentKey];
+
+  if (parent) {
+    return {
+      level: "parent_template",
+      template: parent
+    };
+  }
+
+  return {
+    level: "global_surface",
+    template: null
+  };
+}
+    function applyTemplateSurface(newFairRate, symbols) {
+  const match = resolveSurfaceTemplate(symbols);
+
+  if (!match.template) {
+    return {
+      new_fair_rate: newFairRate,
+      final_fair_rate: newFairRate,
+      surface_level: match.level,
+      surface_confidence: "none",
+      surface_premium: 0
+    };
+  }
+
+  const premium = Number(match.template.residual_premium || 0);
+  const finalFair = Number(newFairRate || 0) + premium;
+
+  return {
+    new_fair_rate: round2(newFairRate),
+    final_fair_rate: round2(finalFair),
+    surface_level: match.level,
+    surface_confidence: match.template.confidence || "low",
+    surface_premium: premium,
+    surface_count: match.template.count || 0,
+    surface_template_id: match.template.template_id
+  };
+}
   </script>
 </body>
 </html>
