@@ -777,15 +777,33 @@ function calcAbsGap(market, fair){
   return m-f;
 }
 
+function getRowSymbolsForTheme(row){
+  return normalizeSurfaceSymbols(row?.symbols || row?.basket_symbols_key || row?.basket_display || row?.core_dna_3 || row?.core_dna_2 || []);
+}
+
 function buildSubtemplateSummary(template){
   const rows = (REGRESSION?.calibrated_rows || REG_ROWS || [])
     .filter(r => (r.basket_template_label || r.basket_template || "") === template || (r.basket_template || "") === template);
   const groups = {};
+  const groupTypes = {};
+
   rows.forEach(r=>{
     const key = r.core_dna_3 || r.core_dna_2 || r.basket_symbols_key || r.basket_display || "UNKNOWN";
     if(!groups[key]) groups[key]=[];
     groups[key].push(r);
+    groupTypes[key] = groupTypes[key] || "small_template";
+
+    // Display-layer derived theme template.
+    // Export-layer already writes surface.theme_templates, but the dashboard card list
+    // reads REGRESSION rows directly, so we must also create the same theme group here.
+    const themeKey = detectThemeTemplate(getRowSymbolsForTheme(r));
+    if(themeKey){
+      if(!groups[themeKey]) groups[themeKey]=[];
+      groups[themeKey].push(r);
+      groupTypes[themeKey] = "theme_template";
+    }
   });
+
   return Object.entries(groups).map(([key, rs])=>{
     const market = avg(rs.map(r=>pickNum(r.market_coupon, r.market_rate)));
     const oldFair = avg(rs.map(r=>pickNum(r.fair_yield, r.my_preference_rate)));
@@ -811,6 +829,7 @@ function buildSubtemplateSummary(template){
     const oldAnchorGapPct = calcPctGap(market, oldAnchorFinal);
     const summaryRow = {
       key,
+      group_type: groupTypes[key] || "small_template",
       count: rs.length,
       market,
       old_fair: oldFair,
@@ -834,7 +853,10 @@ function buildSubtemplateSummary(template){
       trace: buildAggregateSubtemplateTrace(key, rs, {market, oldFair, newFair, finalFair, beta: betaAvg, gapOldPct, gapBeforePct, gapAfterPct, improvement, gap80Beta, gap80Final, gap80GapPct, oldAnchorFinal, oldAnchorGapPct})
     };
     return summaryRow;
-  }).sort((a,b)=>Math.abs(Number(b.gap_after_pct||0))-Math.abs(Number(a.gap_after_pct||0)) || b.count-a.count);
+  }).sort((a,b)=>{
+    if((a.group_type === "theme_template") !== (b.group_type === "theme_template")) return a.group_type === "theme_template" ? -1 : 1;
+    return Math.abs(Number(b.gap_after_pct||0))-Math.abs(Number(a.gap_after_pct||0)) || b.count-a.count;
+  });
 }
 
 
@@ -928,7 +950,7 @@ function renderSubtemplateCards(template){
       ${rows.map(r=>`<details class="subtpl-card" data-subtpl-key="${encodeURIComponent(r.key)}">
         <summary>
           <div class="subtpl-summary">
-            <div class="subtpl-name">${escapeHtml(r.key)}<div class="small">FCN ${r.count}｜${escapeHtml(r.example_basket || '')}</div></div>
+            <div class="subtpl-name">${escapeHtml(r.key)}${r.group_type === 'theme_template' ? ' <span class="badge info">THEME</span>' : ''}<div class="small">FCN ${r.count}｜${escapeHtml(r.example_basket || '')}</div></div>
             <div class="subtpl-metric">Market<b>${pct(r.market)}</b></div>
             <div class="subtpl-metric">New / Final<b>${pct(r.new_fair)} <span>Gap ${pct(r.gap_before_pct)}</span><br>${pct(r.final_fair)} <span>Gap ${pct(r.gap_after_pct)}</span></b></div>
             <div class="subtpl-metric">β / Improve<b>${fmt(r.beta)} / ${pct(r.improvement_pct)}</b></div>
@@ -1373,8 +1395,6 @@ function escapeHtml(s){
 </script>
 </body>
 </html>
-
-
 
 
 
