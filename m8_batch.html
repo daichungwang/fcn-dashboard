@@ -298,7 +298,7 @@
       line-height: 1.6;
       margin-bottom: 12px;
     }
-    .template-line { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 16px; }
+    .template-line { display: grid; grid-template-columns: repeat(7, minmax(120px, 1fr)); gap: 10px; margin-bottom: 16px; }
     .mini-kpi { border: 1px solid #e5e7eb; border-radius: 12px; padding: 10px 12px; background: #fff; }
     .mini-kpi .k { color: #667085; font-size: 12px; margin-bottom: 4px; font-weight: 700; }
     .mini-kpi .v { color: #111827; font-weight: 800; font-size: 15px; word-break: break-word; }
@@ -1787,6 +1787,13 @@
       const usedTemplate = marketRegression?.surface_matched_key || marketRegression?.surface_template_id || marketRegression?.small_template || "待接入";
       const templateCount = marketRegression?.lookup_count ?? marketRegression?.sample_count ?? "-";
       const confidence = marketRegression?.surface_confidence ?? marketRegression?.confidence ?? "-";
+      const surfaceMarketCoupon =
+        marketRegression?.history_weighted_market_rate ??
+        marketRegression?.surface_market_coupon ??
+        marketRegression?.market_coupon_avg ??
+        marketRegression?.avg_market_coupon ??
+        null;
+      const surfaceCurrentGap = surfaceMarketCoupon == null ? null : Number(surfaceMarketCoupon) - Number(marketYield);
 
       const marketDecision = (() => {
         if (marketRegression && Number.isFinite(Number(marketGap))) {
@@ -1901,6 +1908,8 @@
           <div class="mini-kpi"><div class="k">全域回歸推估利率</div><div class="v">${globalRegression == null ? "-" : `${fmt(globalRegression)}%`}</div></div>
           <div class="mini-kpi"><div class="k">β 值 / β 效果</div><div class="v">${beta == null ? "-" : `${fmt(beta)} / ${betaEffect == null ? "-" : `${fmt(betaEffect)}%`}`}</div></div>
           <div class="mini-kpi"><div class="k">樣本 / 信心</div><div class="v">${templateCount} / ${confidence}</div></div>
+          <div class="mini-kpi"><div class="k">Market Coupon Avg</div><div class="v">${surfaceMarketCoupon == null ? "-" : `${fmt(surfaceMarketCoupon)}%`}</div></div>
+          <div class="mini-kpi"><div class="k">Surface - Current</div><div class="v">${surfaceCurrentGap == null ? "-" : `${fmt(surfaceCurrentGap)}%`}</div></div>
         </div>
 
         <div class="engine-grid">
@@ -2888,18 +2897,8 @@
         }
       });
     });
-<div class="result-card">
-  <div class="label">Market Coupon Avg</div>
-  <div class="value">
-    ${surfaceMarketCoupon?.toFixed(2) || "--"}%
-  </div>
-</div>
-    const surfaceMarketCoupon =
-  selectedSurface?.avg_market_coupon ||
-  selectedSurface?.surface_market_coupon ||
-  selectedSurface?.market_coupon_avg ||
-  0;
 </script>
 </body>
 </html>
+
 
