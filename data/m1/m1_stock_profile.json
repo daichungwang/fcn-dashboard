@@ -232,1274 +232,1256 @@
     }
   },
   "NVDA": {
-"symbol": "NVDA",
-"name": "NVIDIA Corporation",
-"type": "research_raw",
-"company_overview": "NVDA 已經不是單純 GPU 公司。FY2026 營收 2,159 億美元、年增 65%，其中 Data Center 1,937 億美元，約占全年營收 90%，投資判斷核心不是遊戲卡，而是 AI 訓練與推論資本支出能否延續。",
-"basic_info": {
-"founded": "1993。",
-"headquarters": "Santa Clara, California。",
-"industry": "AI accelerators / data center compute / networking / edge & automotive。",
-"market_cap": "2026-04-21 市值約 4.53 兆美元，股價 201.55 美元。"
-},
-"business_model": {
-"summary": "NVDA 的收入高度集中在 AI 資料中心。FY2026 Data Center 1,937 億美元、Gaming 160 億美元、Professional Visualization 31.9 億美元、Automotive 23.5 億美元；Data Center 已遠大於其他業務總和。",
-"segments": [
-"Data Center：FY2026 營收 1,937 億美元，約占總營收 90%，Q4 FY2026 單季 623 億美元、年增 75%；這一塊決定公司估值。",
-"Gaming：FY2026 營收約 160 億美元，約占總營收 7%；仍賺錢，但已從主引擎退成次要現金流來源。",
-"Networking / automotive / pro viz：Professional Visualization 31.9 億美元、Automotive 23.5 億美元、OEM/Other 6.19 億美元；占比都小，但可用來觀察非 AI GPU 的分散度。"
-]
-},
-"customer_analysis": {
-"summary": "客戶集中度很高。FY2025 直接客戶中有 3 家各占營收 12%、11%、11%，合計 34%；而且公司明講很多雲端公司是透過直接與間接客戶採購，代表最終需求更集中在 hyperscalers 與 AI 平台。",
-"key_customers": [
-{
-"name": "Microsoft",
-"role": "Azure AI 基礎設施客戶",
-"importance": "Microsoft FY2025 Azure 營收首次超過 750 億美元、年增 34%，代表其對 AI 加速器需求不是短單；這是 NVDA 最核心的雲端需求來源之一。"
-},
-{
-"name": "Meta",
-"role": "Llama / 推論與訓練集群客戶",
-"importance": "Meta 2025 年營收 2,009.7 億美元、年增 22%，同時持續拉高 AI 基礎建設支出；它不是小客戶，而是能影響 NVDA 出貨節奏的 CAPEX 買家。"
-},
-{
-"name": "Oracle",
-"role": "OCI 大型 Blackwell 雲端採購客戶",
-"importance": "Oracle 已公開表示 OCI Supercluster 將提供最多 131,072 顆 NVIDIA Blackwell GPU，且已開始接單；這是具體、可量化的大單訊號。"
-}
-],
-"conclusion": "NVDA 最大優點是客戶都很大，最大缺點也是客戶都很大。只要 3~5 家 hyperscaler 延後 CAPEX，營收彈性就會很大，這種集中度不適合當低波動 FCN 接股核心。"
-},
-"why_this_company": [
-"FY2026 營收 2,159 億美元、年增 65%，不是題材，是已經兌現的財報。",
-"FY2026 GAAP gross margin 71.1%，代表它不是只靠量，還有極高議價能力。",
-"Data Center 占比約 90%，表示公司已成為 AI 基礎設施核心供應商，而非消費性晶片股。"
-],
-"market_view": "市場現在在 pricing 的是 AI CAPEX 延續，而不是單一新品。Q4 FY2026 營收 681 億美元、年增 73%，Data Center 623 億美元、年增 75%；市場在擔心的是中國出口限制與客戶 CAPEX 集中，因為 FY2026 公司僅在許可下做出約 6,000 萬美元 H20 收入，政策一變就會影響區域出貨。",
-"financial_summary": {
-"revenue": "FY2026 營收 2,159 億美元。",
-"growth": "年增 65%。",
-"net_margin": "以 FY2026 GAAP diluted EPS 4.08 與市值口徑估算，獲利結構仍極厚；公司 FY2026 GAAP gross margin 71.1%，為獲利核心支撐。",
-"fcf_margin": "公司在 FY2026 持續產生極高現金流，市場願意給高估值主因是 70% 以上毛利率與資料中心現金創造力，而非低基期修復。",
-"eps": "EPS 4.08。",
-"pe": "2026-04-21 即時 P/E 約 45.63 倍。",
-"dividend_yield": "股息殖利率極低，投資重點不是配息，而是成長與 CAPEX 週期。",
-"beta": "屬高波動大型成長股；價格對 AI CAPEX 與政策消息反應很大。"
-},
-"competition": {
-"summary": "NVDA 競爭不是跟傳統 CPU 比，而是跟 AMD AI GPU、Broadcom/Marvell ASIC、以及客戶自研晶片比。它現在贏在整機櫃、軟體、生態與交付能力，不只是單顆晶片。",
-"peers": [
-{
-"name": "AMD",
-"position": "通用 AI GPU 對手",
-"comparison": "AMD 在 AI GPU 存在感提高，但 NVDA FY2026 營收已達 2,159 億美元、毛利率 71.1%，規模與盈利力仍遠高於一般 GPU 對手。"
-},
-{
-"name": "Broadcom",
-"position": "客製 ASIC 對手",
-"comparison": "Broadcom 主打 TPU/ASIC 設計；Google 已與 Broadcom 合作多年，且合作延到 2031，代表 ASIC 正在分食部分 AI workload。"
-},
-{
-"name": "Marvell",
-"position": "雲端 ASIC 與互連對手",
-"comparison": "Google 近期也傳出和 Marvell 談兩款 AI 晶片，表示超大客戶開始做多供應商策略，這對 NVDA 是估值風險，不一定是短期營收風險。"
-}
-],
-"conclusion": "NVDA 仍是主戰場龍頭，但市場已從『只有 GPU』轉向『GPU+ASIC 混合架構』；所以它值得高分，但不值得無限上調估值。"
-},
-"valuation_and_timing": {
-"valuation_view": "現價 201.55 美元、P/E 45.63 倍。對比 FY2026 營收年增 65%，估值不算離譜，但已不是深度便宜區；這是高成長高估值股，不是撿煙蒂。",
-"buy_strategy": "不追急漲。策略上比較適合等 CAPEX 雜音、政策消息或供應鏈修正時分批，因為估值已反映大部分上半年樂觀預期。",
-"sweet_zone": "甜區偏向 P/E 壓回 38~42 倍，或股價回到 180 美元附近再看；若維持 45 倍以上，只適合小量追蹤，不適合大幅加碼。",
-"technical_view": {
-"mid_trend": "中期仍偏多，因為基本面 65% 年增還沒結束，但股價已高度反映。",
-"short_term": "短線容易受出口限制與客戶 CAPEX 消息震盪。",
-"structure": "結構屬超級成長股，不是防守股；適合主升段參與，不適合保守接股。",
-"conclusion": "判斷：可買，但要挑回檔，不追高。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": true,
-"category": "core",
-"reason": "營收 2,159 億美元、年增 65%、毛利率 71.1%，基本面與產業地位都足以進 pool30 核心。",
-"upgrade_condition": [
-"若中國限制再升級、且 Data Center 年增跌破 30%，核心權重要下調。",
-"若客製 ASIC 大幅分流 hyperscaler 預算，也要從 core 高權重改成 core 低權重。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"FY2025 直接三大客戶合計占營收 34%，集中度偏高。",
-"中國 H20 相關收入在許可下僅約 6,000 萬美元，顯示政策風險是真實存在，不是口頭風險。"
-],
-"opportunity": [
-"Oracle 單一公開雲端案子就對應最多 131,072 顆 Blackwell GPU，代表雲端 AI 基礎建設仍在擴。",
-"只要 FY2027 Data Center 仍能維持高雙位數成長，45 倍 P/E 還有支撐。"
-]
-},
-"final_view": "NVDA 是 pool30 核心股，但不是低風險股。能做股票，不適合保守 FCN 接股；若做 FCN，只能用很深 KI、很低權重。Timing 判斷：等回檔，不追漲。"
-},
-"TSM": {
-"symbol": "TSM",
-"name": "Taiwan Semiconductor Manufacturing Company Limited",
-"type": "research_raw",
-"company_overview": "TSM 是 AI 時代最核心的 foundry，不賣品牌終端，但賣最難取代的先進製程與封裝。2025 年 Form 20-F 顯示，公司客戶前 10 大占營收 78%，最大客戶 19%、第二大 17%，代表它是高品質集中型基礎設施。",
-"basic_info": {
-"founded": "1987。",
-"headquarters": "Hsinchu, Taiwan。",
-"industry": "Pure-play semiconductor foundry。",
-"market_cap": "2026-04-21 ADR 股價 368.39 美元；Yahoo 摘要顯示市值約 1.67 兆美元、EV 約 1.59 兆美元。"
-},
-"business_model": {
-"summary": "TSM 的錢不是靠單一產品，而是靠製程節點與客戶 mix。2026 Q1 HPC 已占營收 61%，3nm 超過 20%，表示營收重心持續往 AI 與高價值節點移動。",
-"segments": [
-"HPC：2026 Q1 占營收 61%，已是最大結構來源，AI GPU、CPU、ASIC 都在這一塊。",
-"Smartphone：Apple 與手機 SoC 仍重要，但相對占比被 AI/HPC 稀釋；2025 最大客戶占比已降到 19%。",
-"Advanced nodes / packaging：3nm 在 2026 Q1 已超過 20% 營收，公司 2026 CAPEX 指引 520~560 億美元，反映先進製程與 CoWoS 持續擴產。"
-]
-},
-"customer_analysis": {
-"summary": "客戶集中度高但品質極高。2025 年前 10 大客戶占營收 78%，最大客戶 19%、第二大 17%；這不是壞事，因為前幾大多是 Apple、NVIDIA、AMD 這種全球級客戶。",
-"key_customers": [
-{
-"name": "Apple",
-"role": "手機與自研 SoC 主要客戶",
-"importance": "2025 年最大客戶占營收 19%，市場普遍對應 Apple；雖然比過去 25% 下滑，但仍是大客戶。"
-},
-{
-"name": "NVIDIA",
-"role": "AI GPU / advanced packaging 客戶",
-"importance": "2025 年第二大客戶占營收 17%，市場普遍對應 NVIDIA；AI 熱潮下其份額由 11% 升到 17%。"
-},
-{
-"name": "AMD",
-"role": "CPU / GPU / accelerator 客戶",
-"importance": "雖未單獨披露占比，但屬 HPC 受益群；TSM 2026 Q1 HPC 占比 61%，表示 AMD 類客戶結構重要性正在上升。"
-}
-],
-"conclusion": "TSM 的集中度不能用一般代工廠眼光看。它集中在全球最強的幾家設計公司，反而形成進入障礙；真正風險在地緣與擴產成本，不在客戶品質。"
-},
-"why_this_company": [
-"2026 Q1 營收 359 億美元、年增 40.6%，不是復甦，是結構成長。",
-"HPC 占比 61%、3nm 占比超過 20%，表示高 ASP 製程 mix 正在改善。",
-"CapEx 指引 520~560 億美元，顯示公司自己都還在擴 AI 供給。"
-],
-"market_view": "市場在 pricing AI 長單與先進製程供不應求，所以願意給 TSM 24~35 倍 P/E；市場在擔心的是海外廠成本、匯率與地緣。公司自己已提醒 Q3 毛利率可能被海外成本與匯率壓到 55.5%~57.5%。",
-"financial_summary": {
-"revenue": "2026 Q1 單季營收 359 億美元。",
-"growth": "2026 Q1 年增 40.6%；公司上調全年營收成長至 30% 以上。",
-"net_margin": "2026 Q1 淨利 182 億美元，淨利率約 50.7%。",
-"fcf_margin": "TSM 長期現金創造強，但短期 FCF 受 520~560 億美元 CapEx 壓力影響，不宜用輕資產股框架看。",
-"eps": "ADR 即時 EPS 未由 finance 工具直接回傳；估值仍可用 P/E 與 EV 觀察。",
-"pe": "Yahoo 摘要顯示 trailing P/E 約 31.34、forward P/E 約 24.33；Macrotrends 顯示 2026-04-21 P/E 約 34.80。",
-"dividend_yield": "有配息，但投資主軸仍是製程與 AI 產能，而不是高殖利率。",
-"beta": "屬大型優質半導體核心股，波動低於高 beta AI 設計股。"
-},
-"competition": {
-"summary": "TSM 真正對手只有 Samsung Foundry 與 Intel Foundry。市場不會給它軟體股估值，但也很難再把它當傳統景氣循環股。",
-"peers": [
-{
-"name": "Samsung Foundry",
-"position": "先進製程代工對手",
-"comparison": "TSM 2026 Q1 HPC 占比 61%、3nm 占比逾 20%，在先進節點量產與客戶組合上仍領先 Samsung。"
-},
-{
-"name": "Intel Foundry",
-"position": "美國本土製造對手",
-"comparison": "Intel 有地緣政策優勢，但 TSM 2025 前兩大客戶就占 36%，客戶黏著度與量產成熟度明顯更高。"
-},
-{
-"name": "ASML",
-"position": "供應鏈瓶頸上游，不是直接對手",
-"comparison": "ASML 2024 年中國收入占 36%，出口限制會影響設備交付與客戶 CAPEX；TSM 雖非直接競爭，但也會承受設備與地緣限制。"
-}
-],
-"conclusion": "TSM 不是成長最快的股票，但在 AI 供應鏈裡是最難繞開的一環，所以 pool30 地位比多數設計股更穩。"
-},
-"valuation_and_timing": {
-"valuation_view": "現價 368.39 美元，trailing P/E 約 31~35 倍、forward P/E 約 24 倍。對一個 2026 Q1 年增 40.6% 的 foundry 來說不算便宜，但也還沒進泡沫區。",
-"buy_strategy": "可以買，但偏向逢回布局，不追財報後急拉。因為匯率、海外廠與地緣會讓市場給估值折價。",
-"sweet_zone": "甜區可看 forward P/E 22~24 倍，或 ADR 回到 330~345 美元區；若重回 35 倍以上追價，安全邊際就明顯下降。",
-"technical_view": {
-"mid_trend": "中期仍多，因為全年營收成長指引已上修到 30% 以上。",
-"short_term": "短線受匯率與關稅敘事干擾，容易高檔震盪。",
-"structure": "結構是 AI 供應鏈核心，不是純景氣循環代工股。",
-"conclusion": "判斷：可買，可當核心，但等回檔更漂亮。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": true,
-"category": "core",
-"reason": "營收高成長、獲利高、技術門檻高，且前兩大客戶是全球級需求來源，符合核心。",
-"upgrade_condition": [
-"若海外廠導致毛利率長期跌破 53% 左右，權重要下調。",
-"若 AI/HPC 占比持續提升且 2nm 開始貢獻營收，核心權重可上調。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"前 10 大客戶占營收 78%，若 Apple 或 NVIDIA 訂單節奏改變，單季波動不小。",
-"公司已提醒匯率與海外廠可能壓縮毛利率約數百個基點。"
-],
-"opportunity": [
-"HPC 占比已達 61%，只要 AI 需求持續，TSM 的 mix 仍會往高 ASP 走。",
-"2026 CapEx 520~560 億美元說明公司還在為未來 2~3 年需求擴產，不像短單。"
-]
-},
-"final_view": "TSM 是標準 pool30 核心股，也比多數 AI 設計股更適合做中長期持有與較保守 FCN 參考股。Timing 判斷：可買，但要等回檔，不追高。"
-},
-"MU": {
-"symbol": "MU",
-"name": "Micron Technology, Inc.",
-"type": "research_raw",
-"company_overview": "MU 是記憶體景氣股裡面最接近 AI 結構成長的公司，關鍵在 HBM 與 data center DRAM。2025 財年營收年增 49%，不是線性成長，而是景氣與產品 mix 同時改善。",
-"basic_info": {
-"founded": "1978。",
-"headquarters": "Boise, Idaho。",
-"industry": "Memory semiconductors: DRAM, NAND, HBM。",
-"market_cap": "2026-04-21 股價 445.00 美元；市場資料顯示 P/E 約 21.4，屬高景氣高估值記憶體股。"
-},
-"business_model": {
-"summary": "MU 的重點不是『記憶體會不會漲價』，而是 HBM 與 data center DRAM 能不能把 cyclical business 拉成 structural upcycle。2025 年 DRAM 銷售增加 62%，主因 ASP 低 40% 段數成長與 bit shipments 中十幾% 成長。",
-"segments": [
-"CNBU（雲端與網通）：2025 Q2 營收 QoQ 增 4%，其中 HBM 產品營收增幅超過 50%，是目前最值得追蹤的核心。",
-"SBU（儲存）：2025 Q2 QoQ 減 20%，主因 data center storage 投資放緩與 NAND 價格下滑，顯示 NAND 還在修復。",
-"Mobile / Embedded：MBU 2025 Q2 QoQ 減 30%、EBU 減 3%，代表手機與車用還不是主成長引擎。"
-]
-},
-"customer_analysis": {
-"summary": "MU 客戶集中度中高。2024 年有 1 家客戶占營收 10%，2022 年曾有兩家分別占 12% 與 11%；2025 年 10-K 亦顯示沒有單一客戶壓倒性占比，但 hyperscaler 與記憶體模組客戶對產品 mix 影響很大。",
-"key_customers": [
-{
-"name": "NVIDIA",
-"role": "HBM / AI accelerator 生態關鍵客戶",
-"importance": "HBM 出貨與 data center mix 改善，是 MU 2025~2026 獲利修復核心；雖未單列占比，但 Q2 2025 HBM 營收 QoQ 增逾 50%。"
-},
-{
-"name": "Microsoft",
-"role": "資料中心記憶體需求來源",
-"importance": "Azure FY2025 營收逾 750 億美元、年增 34%，代表 hyperscaler memory content 仍在增加。"
-},
-{
-"name": "Samsung / OEM handset customers",
-"role": "手機與行動記憶體需求端",
-"importance": "MBU 在 2025 Q2 QoQ 下滑 30%，說明手機鏈仍偏弱，這是 MU 客戶結構裡的拖累項。"
-}
-],
-"conclusion": "MU 的客戶風險不在『只有一個客戶』，而在『太多需求仍跟景氣循環走』。HBM 可以抬高估值，但 NAND 與 mobile 還沒完全跟上。"
-},
-"why_this_company": [
-"2025 財年營收年增 49%，基本面已脫離谷底。",
-"Q2 2025 consolidated gross margin 37%，較去年同期 19% 大幅改善。",
-"HBM 營收在 2025 Q2 QoQ 增逾 50%，代表 AI 需求正在改變 MU 的產品組合。"
-],
-"market_view": "市場在 pricing HBM 與 DRAM 上行，所以願意給 MU 約 21 倍 P/E；市場在擔心 NAND 與 mobile 修復不夠快，因為 SBU Q2 2025 QoQ -20%、MBU -30%。",
-"financial_summary": {
-"revenue": "2025 財年營收年增 49%；MCBU 收入 118.6 億美元。",
-"growth": "2025 財年 total revenue 年增 49%。",
-"net_margin": "毛利率在 2025 Q2 升至 37%，較去年同期 19% 顯著改善；淨利結構隨 DRAM/HBM 改善。",
-"fcf_margin": "MU 屬重資本記憶體公司，FCF 會受擴產與價格週期影響，不宜要求像 fabless 一樣高而穩。",
-"eps": "finance 工具顯示 EPS 21.18。",
-"pe": "市場資料顯示 2026-04 P/E 約 20.9~21.5 倍。",
-"dividend_yield": "低殖利率；投資重點是價格循環與 HBM 滲透。",
-"beta": "屬高波動景氣股，股價彈性明顯高於軟體與雲端股。"
-},
-"competition": {
-"summary": "MU 競爭對手就是 Samsung 與 SK hynix。真正差異在 HBM 良率、DRAM mix 與資本紀律，不是品牌。",
-"peers": [
-{
-"name": "SK hynix",
-"position": "HBM 直接對手",
-"comparison": "HBM 是當前最關鍵戰場；MU 已看到 HBM 營收 QoQ 超過 50% 成長，但市場普遍認為 SK hynix 仍有先發。"
-},
-{
-"name": "Samsung Electronics",
-"position": "DRAM / NAND 最大對手",
-"comparison": "Samsung 規模更大，但 MU 的資本紀律與北美客戶結構使其在 AI cycle 中能拿到估值溢價。"
-},
-{
-"name": "Western Digital / Kioxia",
-"position": "NAND 相關對手",
-"comparison": "MU SBU 2025 Q2 QoQ -20%，顯示 NAND 端競爭與價格壓力仍高於 DRAM/HBM。"
-}
-],
-"conclusion": "MU 可以進 stock_pool，也可進 pool30 的成長區，但權重不能像 TSM、MSFT 那麼穩，因為記憶體週期風險還在。"
-},
-"valuation_and_timing": {
-"valuation_view": "現價 445 美元，P/E 約 21 倍，低於高成長 AI 設計股，但高於 MU 自己長期中位數。這說明市場已把 HBM 溢價算進去。",
-"buy_strategy": "可以買，但不要把它當純 AI 永續股追價。比較適合在 NAND 壓力或記憶體價格雜音時分批。",
-"sweet_zone": "甜區偏向 P/E 回到 17~19 倍，或股價拉回 360~390 美元再看；若 21 倍以上追價，要接受週期波動。",
-"technical_view": {
-"mid_trend": "中期偏多，因為 HBM 與 DRAM 結構改善。",
-"short_term": "短線容易受 NAND 價格與記憶體報價波動影響。",
-"structure": "結構從純景氣股往 AI memory 成長股靠，但還沒完全脫離周期。",
-"conclusion": "判斷：可買，但只適合回檔買，不適合追高當核心滿倉。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": true,
-"category": "growth",
-"reason": "營收與毛利率都在修復，HBM 提升公司質地，值得進成長池。",
-"upgrade_condition": [
-"若 HBM 與 data center 需求持續強、且 NAND 修復跟上，可升高權重。",
-"若 SBU 與 MBU 持續疲弱、拖累毛利率，則只能維持 watch/growth。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"SBU 2025 Q2 QoQ -20%、MBU -30%，表示非 AI 業務還偏弱。",
-"2026 P/E 約 21.5，高於 10 年中位數 15.54，估值已不便宜。"
-],
-"opportunity": [
-"HBM 2025 Q2 營收 QoQ 增逾 50%，只要 AI 記憶體缺口持續，估值還有支撐。",
-"2025 營收年增 49%，公司已從底部週期翻上來。"
-]
-},
-"final_view": "MU 可以進系統，也適合成長型配置，但 FCN 只能淺倉或高票息深 KI；它比 NVDA 便宜，但比 TSM 不穩。Timing：等待回檔再買。"
-},
-"GOOG": {
-"symbol": "GOOG",
-"name": "Alphabet Inc.",
-"type": "research_raw",
-"company_overview": "GOOG 本質上仍是廣告現金牛，但 AI 正在把它從搜尋公司推向雲端、模型與基礎設施公司。2025 年 10-K 顯示，超過 70% 營收仍來自 online advertising，所以市場最在意的是 AI 能否守住搜尋變現，不是單看 Gemini 話題。",
-"basic_info": {
-"founded": "1998。",
-"headquarters": "Mountain View, California。",
-"industry": "Internet search, digital advertising, cloud, AI。",
-"market_cap": "2026-04-21 市值約 2.94 兆美元，股價 335.17 美元。"
-},
-"business_model": {
-"summary": "GOOG 的收入結構仍是廣告主導，但 Cloud 已成第二引擎。2025 年公司揭露 online advertising 超過總營收 70%，同時 2025 年技術基礎設施與庫存採購承諾已到 1,491 億美元，代表它真的在為 AI 與雲端擴張砸錢。",
-"segments": [
-"Google Advertising：2025 年超過總營收 70%，是絕對現金牛。",
-"Google Cloud：雖然本次摘要未列全年營收，但市場把它視為 AI 商業化最直接入口之一；資本支出與技術承諾大增就是證據。",
-"Other Bets：收入占比低，但虧損與估值敘事影響有限，投資焦點不在這裡。"
-]
-},
-"customer_analysis": {
-"summary": "GOOG 沒有像硬體公司那種單一大客戶集中風險，真正的『客戶集中』來自廣告主、生態夥伴與分發平台。公司 2025 年仍有超過 70% 營收來自廣告，所以只要搜尋流量與廣告價格失速，整體估值就會受傷。",
-"key_customers": [
-{
-"name": "Shopify merchants",
-"role": "Google 廣告與商業生態客戶群",
-"importance": "廣告客戶碎片化是 GOOG 優勢；雖無單一大客戶 10% 以上，但數百萬中小廣告主撐起 70% 以上營收結構。"
-},
-{
-"name": "Samsung",
-"role": "Android / 搜尋預設分發夥伴",
-"importance": "這類分發夥伴不是傳統客戶，但直接影響搜尋流量入口與 TAC，對廣告變現極重要。"
-},
-{
-"name": "Cloud enterprise customers",
-"role": "Google Cloud / AI 平台客戶",
-"importance": "2025 年技術基礎設施與庫存承諾達 1,491 億美元，說明管理層看見企業與 AI 雲端需求，而不是只靠廣告。"
-}
-],
-"conclusion": "GOOG 客戶並不集中在少數公司，但收入太集中在廣告模式。這讓它比硬體公司穩，卻也讓 AI 搜尋變現成為最大變數。"
-},
-"why_this_company": [
-"2026-04-21 P/E 約 23.65 倍，在 mega-cap AI 股裡算偏合理。",
-"超過 70% 營收來自廣告，現金流底盤很厚。",
-"2025 年技術基礎設施與庫存承諾 1,491 億美元，代表公司不是嘴上講 AI，而是實際投資。"
-],
-"market_view": "市場在 pricing Gemini、Cloud、YouTube 與搜尋防守力，所以願意給 GOOG 約 24 倍 P/E；市場在擔心的是 AI 搜尋會不會侵蝕廣告點擊與分潤結構，以及 156 億美元法規與罰款準備對情緒的壓力。",
-"financial_summary": {
-"revenue": "2025 年總營收以 10-K 為準；其中超過 70% 來自 online advertising。",
-"growth": "2025 年廣告與 Cloud 仍撐住成長，但公司同時大幅拉高 AI / 技術基礎設施承諾。",
-"net_margin": "GOOG 長期屬高獲利大型平台；本輪投資重點在 AI CAPEX 與法規成本，而非獲利崩壞。",
-"fcf_margin": "龐大廣告現金流支撐高額基建採購，這是它和純 AI 新創最大差異。",
-"eps": "EPS 10.13。",
-"pe": "P/E 23.65 倍。",
-"dividend_yield": "有配息，但殖利率不是投資主因。",
-"beta": "屬 mega-cap 成長股，波動低於 NVDA、MU、MRVL。"
-},
-"competition": {
-"summary": "GOOG 在廣告上對手是 Meta，在雲端上對手是 Microsoft / AWS，在 AI 搜尋上則要面對 OpenAI 與自己產品重組壓力。",
-"peers": [
-{
-"name": "Meta",
-"position": "數位廣告對手",
-"comparison": "META 2026-04-21 P/E 約 31.50，高於 GOOG 的 23.65，代表市場對 Meta 廣告效率與 AI 變現給更高估值。"
-},
-{
-"name": "Microsoft",
-"position": "AI 與雲端對手",
-"comparison": "MSFT 2025 年營收 2,817 億美元、Azure 年營收逾 750 億美元，雲端與 Copilot 已形成直接競爭。"
-},
-{
-"name": "Amazon AWS",
-"position": "雲端對手",
-"comparison": "AWS 在雲端規模仍大，GOOG 想靠 AI 追，但基礎設施承諾 1,491 億美元也代表投入壓力。"
-}
-],
-"conclusion": "GOOG 最大優勢是估值比其他 mega-cap AI 股低，最大風險是搜尋廣告護城河若被 AI 介面改寫，市場不會再給這麼寬容的多重。"
-},
-"valuation_and_timing": {
-"valuation_view": "現價 335.17 美元，P/E 23.65 倍。若拿 mega-cap AI 股比較，GOOG 估值不高；但它不是便宜股，而是『相對合理』。",
-"buy_strategy": "適合逢回分批，尤其在法規或搜尋份額消息造成壓力時。因為現金流底盤厚，回檔時比較有承接價值。",
-"sweet_zone": "甜區偏向 P/E 20~22 倍，或股價回到 300~315 美元區。若仍在 24 倍以上追價，報酬空間不如更低估值時漂亮。",
-"technical_view": {
-"mid_trend": "中期偏多，但不是爆發型。",
-"short_term": "短線容易受反壟斷、AI 搜尋產品更新與 Cloud 財報影響。",
-"structure": "屬高品質現金牛 + AI 轉型股，結構優於純廣告股。",
-"conclusion": "判斷：可買，偏核心配置。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": true,
-"category": "core",
-"reason": "廣告現金流穩、估值相對合理、AI 與 Cloud 可提供第二引擎，符合 core。",
-"upgrade_condition": [
-"若 Cloud 與 AI 變現加速、同時搜尋廣告沒有被侵蝕，可上調權重。",
-"若法規罰款與搜尋介面變化持續壓縮廣告 monetization，則核心權重要下調。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"2025 年短期法規與和解準備達 156 億美元，法規風險不是抽象名詞。",
-"超過 70% 營收來自廣告，AI 搜尋若改變點擊路徑，對基本盤影響會很直接。"
-],
-"opportunity": [
-"P/E 僅 23.65 倍，低於 META 31.50 倍與多數 AI mega-cap，估值有吸引力。",
-"1,491 億美元技術基礎設施承諾意味著未來 1~3 年 Cloud/AI 有機會加速。"
-]
-},
-"final_view": "GOOG 是可以進 pool30 的 core 股，且比高 beta AI 股更適合保守型長期配置與 FCN 參考股。Timing：回檔買，不追消息面急拉。"
-},
-"META": {
-"symbol": "META",
-"name": "Meta Platforms, Inc.",
-"type": "research_raw",
-"company_overview": "META 的本質仍是全球最大社交廣告平台之一，但現在估值已加上 AI 廣告效率與 Llama 生態預期。2025 年營收 2,009.7 億美元、年增 22%，同時 Reality Labs 仍拖累 191.9 億美元營運利潤，這就是這家公司最核心的多空結構。",
-"basic_info": {
-"founded": "2004。",
-"headquarters": "Menlo Park, California。",
-"industry": "Digital advertising, social media platforms, AI, VR/AR。",
-"market_cap": "2026-04-21 市值約 1.84 兆美元，股價 673.28 美元。"
-},
-"business_model": {
-"summary": "META 的錢還是來自 Family of Apps 廣告。Q1 2025 DAP 34.3 億、年增 6%，廣告 impressions 年增 5%，平均廣告價格年增 10%，這三個數字一起證明 AI 推薦系統正在改善 monetization。",
-"segments": [
-"Family of Apps：2025 年大部分營收都來自這一塊，Q1 2025 營收 423.1 億美元、年增 16%。",
-"Reality Labs：2025 年仍造成約 191.9 億美元營運利潤拖累，這不是小實驗，是大型長期燒錢項目。",
-"AI-driven ads：Q1 2025 ad impressions +5%、average price per ad +10%，這就是 AI 變現最直接數據。"
-]
-},
-"customer_analysis": {
-"summary": "META 的客戶不是少數大企業，而是全球廣告主。真正集中風險不在單一客戶，而在廣告模式本身與平台活躍度。Q1 2025 DAP 34.3 億人，這就是最重要的『客戶資產』。",
-"key_customers": [
-{
-"name": "Global SMB advertisers",
-"role": "Family of Apps 廣告主群",
-"importance": "Q1 2025 平均廣告價格年增 10%，表示 META 仍能從大量廣告主榨出更高變現效率。"
-},
-{
-"name": "Global retail / e-commerce advertisers",
-"role": "高 ROAS 廣告投放客戶",
-"importance": "廣告 impressions 年增 5%，代表廣告供給仍在增；只要轉換率維持，零售廣告就會持續投。"
-},
-{
-"name": "Developers / enterprises using Llama ecosystem",
-"role": "AI 平台潛在客戶",
-"importance": "目前財報主體仍是廣告，但 AI 生態是中期選擇權；市場先給估值，不是先給收入。"
-}
-],
-"conclusion": "META 客戶分散，平台流量龐大，所以現金流很穩；但估值已不只是看廣告，要一起承擔 Reality Labs 長期虧損。"
-},
-"why_this_company": [
-"2025 營收 2,009.7 億美元、年增 22%，大型平台裡成長不慢。",
-"Q1 2025 ad price +10%、impressions +5%，代表 AI 推薦系統有實際變現成果。",
-"DAP 34.3 億、年增 6%，流量底盤仍大。"
-],
-"market_view": "市場在 pricing AI 廣告效率提升與 Llama 選擇權，所以給 META 31.5 倍 P/E；市場在擔心的是 Reality Labs 每年近 200 億美元級別的利潤拖累會持續。",
-"financial_summary": {
-"revenue": "2025 年營收 2,009.7 億美元。",
-"growth": "年增 22%。",
-"net_margin": "2025 年成本與費用 1,176.9 億美元，表示公司仍有很厚的利潤空間，但投資支出在增加。",
-"fcf_margin": "高現金流平台，但 FCF 要扣除大量 AI 基礎設施與 Reality Labs 投資。",
-"eps": "EPS 22.58。",
-"pe": "P/E 31.50 倍。",
-"dividend_yield": "有配息，但投資核心仍是廣告效率與 AI 支出。",
-"beta": "屬大型成長股，但波動低於 NVDA、MU、MRVL。"
-},
-"competition": {
-"summary": "META 最大對手是 GOOG 的廣告平台、TikTok 的用戶時間爭奪，以及 AI 助理入口。它不是沒有競爭，而是廣告效率目前仍很能打。",
-"peers": [
-{
-"name": "Alphabet",
-"position": "數位廣告對手",
-"comparison": "META P/E 31.50，高於 GOOG 23.65；市場願意為 META 的廣告效率改善付更高估值。"
-},
-{
-"name": "TikTok",
-"position": "用戶時長與廣告預算對手",
-"comparison": "META 透過 Reels 與推薦系統守住流量，Q1 2025 DAP 仍成長 6%。"
-},
-{
-"name": "Snap",
-"position": "年輕族群社交廣告對手",
-"comparison": "META 的規模與獲利能力明顯更高，且廣告價格年增 10% 就是最直接比較。"
-}
-],
-"conclusion": "META 的廣告基本盤足以進 core，但 VR/AR 長期燒錢讓它不像 GOOG 那麼穩。"
-},
-"valuation_and_timing": {
-"valuation_view": "現價 673.28 美元，P/E 31.50 倍。對 2025 年營收成長 22% 的平台來說不便宜，但也不算極端；高估值來自 AI 廣告效率，不是 VR。",
-"buy_strategy": "不追高。META 適合逢回買，尤其在市場重新擔心資本支出或 Reality Labs 虧損時。",
-"sweet_zone": "甜區偏向 P/E 26~28 倍，或股價回到 560~600 美元區。若維持 31 倍以上追價，容錯率較低。",
-"technical_view": {
-"mid_trend": "中期偏多，因為廣告與用戶數字都還在往上。",
-"short_term": "短線容易因 CAPEX 指引與 AI 支出擴大而震盪。",
-"structure": "結構屬高品質廣告平台 + 高支出 AI/VR 選擇權。",
-"conclusion": "判斷：可買，但等拉回。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": true,
-"category": "core",
-"reason": "廣告現金流穩、流量大、AI 提升廣告效率，足以進 core。",
-"upgrade_condition": [
-"若 Reality Labs 虧損縮小且廣告價格持續高個位數以上成長，可再上調權重。",
-"若 DAP 成長停滯或廣告價格轉負，則要下調。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"Reality Labs 2025 年拖累約 191.9 億美元營運利潤，金額太大，不能忽略。",
-"P/E 31.5 倍高於 GOOG 23.65 倍，估值容錯率較低。"
-],
-"opportunity": [
-"Q1 2025 平均廣告價格 +10%、impressions +5%，代表 AI 變現仍在加速。",
-"DAP 34.3 億仍在增長，平台基礎沒有鬆。"
-]
-},
-"final_view": "META 可以進 pool30 核心，但因 VR/AR 長期燒錢，FCN 僅適合中等保守條件，不如 GOOG、MSFT 穩。Timing：回檔買，不追。"
-},
-"SNDK": {
-"symbol": "SNDK",
-"name": "Sandisk Corporation",
-"type": "research_raw",
-"company_overview": "Sandisk 是 NAND Flash 與 SSD 公司，2025 年從 Western Digital 分拆上市；FY2025 營收 73.55 億美元、YoY +10%，但 GAAP 淨利仍為虧損，代表它不是穩定型 core，而是記憶體循環反轉股。",
-"basic_info": {
-"founded": "1988；2025 年從 Western Digital 分拆為獨立上市公司",
-"headquarters": "Milpitas, California, USA",
-"industry": "NAND Flash / SSD / Data Center Storage",
-"market_cap": "約 1,660 億美元；股價約 1,064 美元"
-},
-"business_model": {
-"summary": "Sandisk 主要靠 NAND 晶片、Client SSD、Enterprise SSD、Consumer storage 出貨賺錢；FY2026 Q2 營收 30.25 億美元、QoQ +31%，顯示目前定價循環正在上行。",
-"segments": [
-"Data Center / Enterprise SSD：FY2026 Q2 datacenter revenue QoQ +64%，受 AI infrastructure builders 採用推動，是目前估值重估的核心。",
-"Client：FY2025 Q3 client revenue 9.27 億美元，仍大於 cloud revenue 1.97 億美元，代表 PC / OEM 需求仍是基本盤。",
-"Consumer：FY2025 Q3 consumer revenue 5.71 億美元，YoY 約 -0.3%，成長性低於 datacenter，但可提供品牌與通路現金流。"
-]
-},
-"customer_analysis": {
-"summary": "FY2026 Q2 前十大客戶占營收 44%，六個月占比 40%，且單一客戶未超過 10%；集中度中等，但資料中心客戶導入速度會直接影響估值。",
-"key_customers": [
-{
-"name": "Hyperscaler customer A",
-"role": "AI infrastructure SSD buyer",
-"importance": "公司揭露 datacenter revenue QoQ +64%，並提到 AI infrastructure builders 採用；但未公開單一客戶名稱，單一客戶低於 10%。"
-},
-{
-"name": "Hyperscaler customer B",
-"role": "qualification customer",
-"importance": "FY2026 Q1 公司表示 2 家 hyperscalers 正在 qualification，另有第 3 家 hyperscaler 與 top storage OEM 規劃 CY2026。"
-},
-{
-"name": "Top storage OEM",
-"role": "enterprise / client storage channel",
-"importance": "公司揭露 CY2026 規劃導入 top storage OEM；前十大客戶 40%~44% 代表 OEM 客戶仍影響營收穩定性。"
-}
-],
-"conclusion": "可進 stock pool 觀察，但因具名客戶揭露不足、前十大客戶仍占 40% 以上，不適合直接放入 pool30 core。"
-},
-"why_this_company": [
-"FY2026 Q2 營收 30.25 億美元、QoQ +31%，比 FY2025 單季 16~19 億美元區間明顯跳升，代表 NAND 定價循環轉強。",
-"FY2026 Q2 GAAP EPS 5.15 美元、non-GAAP EPS 6.20 美元，較 FY2025 Q4 GAAP EPS -0.16 美元明顯反轉。",
-"公司給 FY2026 Q3 revenue guidance 44~48 億美元、gross margin 64.9%~66.9%，若達標，獲利彈性會遠高於 FY2025 30.1% gross margin。"
-],
-"market_view": "市場正在 pricing AI storage 與 NAND tight supply：FY2026 Q2 revenue YoY +61%、datacenter QoQ +64%，但市場也在擔心記憶體循環高點，因 FY2025 公司仍有 -1.2 億美元 free cash flow 與 GAAP 虧損紀錄。",
-"financial_summary": {
-"revenue": "FY2025 revenue 73.55 億美元；FY2026 Q2 revenue 30.25 億美元",
-"growth": "FY2025 YoY +10%；FY2026 Q2 YoY +61%、QoQ +31%",
-"net_margin": "TTM net margin 約 -11.66%；FY2026 Q2 GAAP net income 8.03 億美元，單季淨利率約 26.5%",
-"fcf_margin": "FY2025 FCF 約 -1.2 億美元，FCF margin 約 -1.6%；FY2026 Q2 FCF 約 8.43 億美元，單季 FCF margin 約 27.9%",
-"eps": "TTM EPS 約 -7.60；FY2026 Q2 GAAP EPS 5.15、non-GAAP EPS 6.20",
-"pe": "TTM PE 為負值約 -140；若用 FY2026 Q3 guidance EPS 12~14 美元年化，估值約 19~22 倍，但循環股不能只看單季年化",
-"dividend_yield": "0%",
-"beta": "新分拆上市，beta 參考價值低；股價自 2025 分拆後波動極大，單日成交量約 1,135 萬股"
-},
-"competition": {
-"summary": "SNDK 的比較對象是 MU、WDC、STX；SNDK TTM PE 為負，MU 約 24.5 倍、WDC 約 41.5 倍、STX 約 72.8 倍，表示 SNDK 估值完全建立在 FY2026 獲利反轉，而不是過去 12 個月獲利。",
-"peers": [
-{
-"name": "Micron Technology",
-"position": "DRAM + NAND peer",
-"comparison": "MU PE 約 24.5 倍且市值約 5,921 億美元；SNDK 市值約 1,660 億美元但 TTM PE 為負，SNDK 彈性較大、財務穩定度較低。"
-},
-{
-"name": "Western Digital",
-"position": "Storage / HDD / NAND related peer",
-"comparison": "WDC PE 約 41.5 倍、市值約 1,399 億美元；SNDK 市值約 1,660 億美元，代表市場已給 SNDK 更高 AI NAND 反轉期待。"
-},
-{
-"name": "Seagate",
-"position": "HDD / mass storage peer",
-"comparison": "STX PE 約 72.8 倍、市值約 1,467 億美元；SNDK 與 STX 都受 AI storage 需求重估，但 SNDK 更依賴 NAND pricing cycle。"
-}
-],
-"conclusion": "SNDK 比 MU 更純 NAND、比 STX 更偏 flash，但因 TTM 仍虧損，不適合用 core 估值方式處理。"
-},
-"valuation_and_timing": {
-"valuation_view": "股價約 1,064 美元、市值約 1,660 億美元、TTM PE 約 -140；若用 FY2026 Q3 non-GAAP EPS guidance 12~14 美元單季年化，forward run-rate PE 約 19~22 倍，但這是高景氣單季估算，不可當長期常態。",
-"buy_strategy": "不追高；只有在 FY2026 Q3 revenue 44~48 億美元與 gross margin 65% 左右確認後，才考慮小比例納入 stock pool；若股價回落 15%~25% 且 guidance 未下修，才有較好的風險報酬。",
-"sweet_zone": "sweet zone：股價低於 850 美元，或 forward run-rate PE 低於 18 倍，且 Q3 gross margin guidance 維持 64% 以上；若跌破 750 美元但 EPS guidance 下修，不能視為甜點。",
-"technical_view": {
-"mid_trend": "中期趨勢偏熱：股價約 1,064 美元，已遠高於 2025 分拆初期約 36 美元區間，屬高波動趨勢股。",
-"short_term": "短線不適合追價：單日區間約 1,047.85~1,101.94 美元，日內振幅約 5.2%，FCN 敲入風險高。",
-"structure": "結構屬記憶體循環反轉，不是穩定複利；FY2025 gross margin 30.1%，FY2026 Q3 guidance 64.9%~66.9%，落差太大代表循環敏感度高。",
-"conclusion": "技術與估值都不適合重倉；只適合 event-driven / cycle trade，不適合 core holding。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": false,
-"category": "speculative",
-"reason": "SNDK 有 AI storage 與 NAND 上行週期，但 FY2025 FCF -1.2 億美元、TTM net margin -11.66%、TTM PE 為負，品質與穩定度不足以進 pool30。",
-"upgrade_condition": [
-"連續 2 季 revenue > 40 億美元且 gross margin > 60%，證明 FY2026 Q3 guidance 不是單季高點。",
-"連續 2 季 FCF margin > 15%，且前十大客戶占比維持低於 45%，降低循環與客戶集中風險。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"記憶體循環風險：FY2025 gross margin 30.1%，FY2026 Q3 guidance 升到 64.9%~66.9%，若 NAND 價格反轉，獲利可能快速下修。",
-"估值風險：市值約 1,660 億美元、TTM PE 為負，市場已提前反映 FY2026 EPS 大幅改善，miss guidance 可能造成 20% 以上修正。",
-"客戶與產品導入風險：前十大客戶占 FY2026 Q2 營收 44%，雖單一客戶低於 10%，但 hyperscaler qualification 延後會影響 datacenter QoQ +64% 的延續性。"
-],
-"opportunity": [
-"AI storage demand：FY2026 Q2 datacenter revenue QoQ +64%，若 AI server SSD attach rate 提升，SNDK 可取得高 ASP 訂單。",
-"獲利槓桿：FY2026 Q2 FCF 8.43 億美元、FCF margin 約 27.9%，若 Q3 revenue 達 44~48 億美元，現金流會快速改善。",
-"供需改善：公司 FY2026 Q3 gross margin guidance 64.9%~66.9%，若 NAND tight supply 維持 2~3 季，EPS 可重新定價。"
-]
-},
-"final_view": "SNDK 可列入 M1 stock pool 的 speculative / cycle watch，但不進 pool30；投資判斷不是公司好不好，而是 NAND 週期與 AI datacenter SSD 導入能否撐過 2 個季度。FCN 不建議目前做，除非 KI 設在 55% 以下、天期短於 3 個月、票息足以補償單日 5% 以上波動。"
-},
-"quality_check": {
-"completeness": 9,
-"specificity": 9,
-"data_support": 9,
-"decision_usefulness": 9,
-"fcn_alignment": 8,
-"total_score": 8.8,
-"fail_reasons": []
-},  
-"NKE": {
-"symbol": "NKE",
-"name": "NIKE, Inc.",
-"type": "research_raw",
-"company_overview": "Nike 是全球運動鞋服品牌，FY2025 營收 463.09 億美元、年減 10%，目前不是高成長股，而是品牌修復與庫存折扣改善股；投資判斷重點在毛利率能否從 FY2025 的 42.7% 回升，而不是單純看品牌知名度。",
-"basic_info": {
-"founded": "1964",
-"headquarters": "Beaverton, Oregon, USA",
-"industry": "Athletic footwear, apparel and sports equipment",
-"market_cap": "約 640 億美元"
-},
-"business_model": {
-"summary": "Nike 主要靠 NIKE Brand 鞋服、Direct-to-consumer 與批發通路賺錢；FY2025 NIKE Brand 營收 447 億美元、Converse 17 億美元，Direct 收入 188 億美元、年減 13%，批發收入 259 億美元、年減 7%。",
-"segments": [
-"Footwear 是核心品類，FY2026 上半年 NIKE Brand footwear 匯率中性年減 2%，代表主力鞋款仍在去庫存與折扣壓力中。",
-"Apparel 在 FY2026 上半年匯率中性年增 5%，但 ASP 下降約 2 個百分點，表示成長品質仍受折扣影響。",
-"NIKE Direct FY2026 上半年收入 91 億美元、年減 6%，其中 Digital 年減 13%，短期不適合用高 DTC 成長股估值看待。"
-]
-},
-"customer_analysis": {
-"summary": "Nike 客戶不集中，FY2025 沒有單一客戶占合併營收 10% 以上；但美國前三大客戶占美國銷售約 25%，非美國前三大客戶占非美國銷售約 16%，所以批發通路談判力仍會影響毛利率。",
-"key_customers": [
-{
-"name": "Foot Locker",
-"role": "全球運動鞋零售通路",
-"importance": "Nike 未揭露單一客戶營收占比，但 FY2025 美國前三大客戶合計占美國銷售約 25%，Foot Locker 屬於需追蹤的批發通路代表。"
-},
-{
-"name": "DICK'S Sporting Goods",
-"role": "美國大型體育用品零售商",
-"importance": "美國市場占 Nike FY2025 總營收約 43%，DICK'S Sporting Goods 這類大型零售商會影響美國批發補貨節奏。"
-},
-{
-"name": "JD Sports",
-"role": "歐洲與全球運動鞋服零售通路",
-"importance": "Nike 非美國銷售占 FY2025 總營收約 57%，JD Sports 這類國際通路會影響 EMEA 與海外批發恢復速度。"
-}
-],
-"conclusion": "客戶集中度低於單一 10% 門檻是優點，但前三大美國客戶占美國銷售 25%，若批發補貨轉弱，NKE 的 FCN 票息可能上升但股價穩定度會下降。"
-},
-"why_this_company": [
-"Nike FY2025 仍有 463.09 億美元營收與 92 億美元現金加短投，代表品牌仍有現金流底盤，不是財務危機股。",
-"FY2025 股利連續調升 23 年，forward dividend yield 約 3.8%，適合放入 stock_pool 觀察但不適合直接升為 Pool30 核心。",
-"FY2026 Q2 營收 124 億美元、年增 1%，顯示營收跌幅暫時止血，但 EPS 0.53 美元仍年減約 32%，修復尚未完成。"
-],
-"market_view": "市場目前不是在 pricing 高成長，而是在 pricing 轉型止血：FY2025 營收年減 10%、EPS 年減 42%，FY2026 Q2 營收只年增 1%；市場擔心的是關稅、折扣與中國區壓力，其中 Greater China FY2026 Q2 匯率中性年減 16%、Digital 年減 36%。",
-"financial_summary": {
-"revenue": "FY2025 revenue 463.09 億美元",
-"growth": "FY2025 YoY -10%；FY2026 Q2 revenue 124 億美元、YoY +1%",
-"net_margin": "FY2025 net income 32 億美元，net margin 約 6.9%",
-"fcf_margin": "FY2025 free cash flow 約 33 億美元，FCF margin 約 7.1%",
-"eps": "FY2025 diluted EPS 2.16 美元，YoY -42%；FY2026 Q2 diluted EPS 0.53 美元，YoY -32%",
-"pe": "TTM PE 約 28.5x；normalized PE 約 29.4x",
-"dividend_yield": "Forward dividend yield 約 3.8%",
-"beta": "約 1.2"
-},
-"competition": {
-"summary": "Nike 的問題不是品牌消失，而是成長與毛利率落後市場期待；FY2025 gross margin 42.7%、年降 190 bps，若與高成長運動品牌相比，估值仍不能給太高溢價。",
-"peers": [
-{
-"name": "Adidas",
-"position": "全球運動鞋服直接競爭者",
-"comparison": "Adidas 與 Nike 同屬全球鞋服品牌，但 Nike FY2025 營收 463 億美元，規模仍大；問題是 Nike FY2025 EPS 年減 42%，估值需要打折。"
-},
-{
-"name": "On Holding",
-"position": "高成長跑鞋品牌",
-"comparison": "On 的市場定價偏高成長，Nike 目前 FY2026 Q2 營收僅 +1%，所以 Nike 不能用新興高成長品牌倍數評價。"
-},
-{
-"name": "Deckers / Hoka",
-"position": "跑鞋與舒適鞋競爭者",
-"comparison": "Hoka 在跑鞋細分市場搶成長，Nike Greater China FY2026 Q2 footwear 年減 20%，顯示部分核心鞋類需求正在被競爭品牌分流。"
-}
-],
-"conclusion": "NKE 可放 stock_pool 觀察，但在 EPS -42%、毛利率 -190 bps 修復前，不應給 core Pool30 權重。"
-},
-"valuation_and_timing": {
-"valuation_view": "NKE 目前 TTM PE 約 28.5x、normalized PE 約 29.4x，對 FY2025 EPS 年減 42% 的公司不便宜；合理看法是等待 EPS 修復而非追高。",
-"buy_strategy": "不建議一次買滿；若股價回到 PE 22x-24x 或 FY2026 單季營收連續 2 季正成長且 gross margin 停止下滑，再考慮分批。",
-"sweet_zone": "甜甜價條件：股價低於 40 美元，或 forward PE 低於 24x，且中國區跌幅從 -16% 收斂到 -5% 以內。",
-"technical_view": {
-"mid_trend": "中期仍屬修復盤，FY2025 營收 -10% 與 EPS -42% 代表基本面尚未反轉。",
-"short_term": "短線可觀察 FY2026 Q2 營收 +1% 是否延續；若下一季又轉負，股價容易再測低點。",
-"structure": "股價約 43 美元、市值約 640 億美元，已反映部分壞消息，但 PE 約 28.5x 仍未到深度價值區。",
-"conclusion": "timing 判斷為 watch，不是 buy；適合等毛利率與中國區數據改善後再提高配置。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": false,
-"category": "defensive",
-"reason": "NKE 有 463 億美元營收、3.8% 股息率與全球品牌底盤，可進 stock_pool；但 FY2025 EPS -42%、Direct -13%、Digital -20%，目前不符合 Pool30 的成長與穩定條件。",
-"upgrade_condition": [
-"FY2026 單季營收連續 2 季 YoY 轉正，且 gross margin 年減幅度收斂到 100 bps 以內。",
-"Greater China 從 FY2026 Q2 的 -16% 收斂到 -5% 以內，Digital 跌幅從 -36% 收斂到 -10% 以內。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"毛利率壓力明確：FY2025 gross margin 42.7%、年降 190 bps，FY2026 上半年又因關稅與 ASP 下降再壓縮 310 bps。",
-"中國區拖累明顯：FY2026 Q2 Greater China 匯率中性年減 16%，Digital 年減 36%，代表品牌熱度與通路流量都有問題。",
-"估值不便宜：TTM PE 約 28.5x，但 FY2025 EPS 年減 42%，若 EPS 修復慢，股價彈性會被壓抑。"
-],
-"opportunity": [
-"若毛利率從 FY2025 的 42.7% 回升到 44% 以上，每 100 bps 毛利改善都可能明顯推升營業利益率。",
-"北美 FY2026 上半年匯率中性收入 +7%，批發 +18%，若補貨週期延續，營收可先止跌。",
-"股息率約 3.8% 與 23 年連續提高股利，讓 NKE 在低價區有防守型資金支撐。"
-]
-},
-"final_view": "NKE 目前是可觀察的 defensive / turnaround stock，不是 Pool30 核心股；FCN 可以等 strike 壓低到 35-38 美元區間再評估，現階段不適合用高 KI 或高 strike 追票息。",
-"quality_check": {
-"completeness": 9,
-"specificity": 9,
-"data_support": 9,
-"decision_usefulness": 9,
-"fcn_alignment": 8,
-"total_score": 8.8,
-"fail_reasons": []
-}
-},
-"AAPL": {
-"symbol": "AAPL",
-"name": "Apple Inc.",
-"type": "research_raw",
-"company_overview": "AAPL 是硬體+服務的超級現金牛，但目前市場不再只看 iPhone 出貨，而是在看 25 億台以上裝置基礎能不能把服務與 AI 功能變現。2025 財年營收 4,162 億美元，仍是規模最大的消費科技平台之一。",
-"basic_info": {
-"founded": "1976。",
-"headquarters": "Cupertino, California。",
-"industry": "Consumer hardware, services ecosystem, software。",
-"market_cap": "2026-04-21 市值約 4.05 兆美元，股價 268.03 美元。"
-},
-"business_model": {
-"summary": "AAPL 的估值不能只看 iPhone，因為服務業務已接近年營收 1,000 億美元，裝置基礎也已超過 25 億台。這表示硬體賣的是入口，服務賣的是高毛利延伸。",
-"segments": [
-"iPhone：2025 年 10-K 明確指出 iPhone net sales 增加，主因 Pro models 銷售較高；仍是最大單一品類。",
-"Services：過去 12 個月服務營收接近 1,000 億美元，且 2025 年 10-K 指出 Services 受廣告、App Store 與 cloud services 帶動成長。",
-"Mac / iPad / Wearables：2025 年 Mac、iPad 成長，但 Wearables, Home and Accessories 下滑，顯示非手機業務仍有分化。"
-]
-},
-"customer_analysis": {
-"summary": "AAPL 沒有傳統意義上的客戶集中問題，因為它面對的是數十億終端用戶。真正的集中風險在產品結構與區域。2025 年 Greater China 仍因 iPhone 下滑而承壓，代表中國需求是重要觀察點。",
-"key_customers": [
-{
-"name": "iPhone user base",
-"role": "核心硬體客戶群",
-"importance": "2026 年 1 月 Apple 公布 active devices 超過 25 億台，這是服務變現的根本。"
-},
-{
-"name": "App Store developers",
-"role": "服務生態供給端",
-"importance": "Services 過去 12 個月接近 1,000 億美元，開發者生態直接支持高毛利服務營收。"
-},
-{
-"name": "Enterprise / cloud subscribers",
-"role": "iCloud 與服務付費用戶",
-"importance": "2025 10-K 指出 Services 成長來自廣告、App Store 與 cloud services，顯示訂閱型收入仍在擴。"
-}
-],
-"conclusion": "AAPL 的客戶分散且黏著，這是最大優點；但成長要再加速，不能只靠換機週期，必須靠服務與 AI 功能提高 ARPU。"
-},
-"why_this_company": [
-"2025 財年營收 4,162 億美元，規模與現金流仍頂級。",
-"Active devices 超過 25 億台，生態護城河極深。",
-"服務年營收已接近 1,000 億美元，高毛利結構支撐估值。"
-],
-"market_view": "市場在 pricing 服務高毛利與裝置生態，因此 AAPL 即便成長不像 AI 硬體股，仍有 34.38 倍 P/E；市場在擔心的是中國 iPhone 壓力與 AI 功能變現速度不夠快。",
-"financial_summary": {
-"revenue": "2025 財年營收 4,162 億美元。",
-"growth": "2025 財年創歷史新高，但增速不屬爆發型；Q1 FY2025 營收 1,243 億美元、年增 4%。",
-"net_margin": "Q1 FY2025 淨利 363 億美元，淨利率約 29.2%。",
-"fcf_margin": "高毛利服務與龐大裝置基礎支撐高 FCF，但硬體供應鏈與回購使資本運用複雜。",
-"eps": "EPS 7.90。",
-"pe": "P/E 34.38 倍。",
-"dividend_yield": "有配息，但殖利率不是主線。",
-"beta": "大型穩健科技股，波動低於多數半導體股。"
-},
-"competition": {
-"summary": "AAPL 的競爭不是只有手機，而是終端生態與高端消費電子。它的對手可以是 Samsung、Google Pixel，也可以是所有想搶高價值用戶時間與服務訂閱的公司。",
-"peers": [
-{
-"name": "Samsung",
-"position": "智慧手機硬體對手",
-"comparison": "AAPL 2025 iPhone 仍成長，但 Greater China 壓力存在；Apple 贏在服務與高端用戶 ARPU，不只在硬體台數。"
-},
-{
-"name": "Alphabet",
-"position": "生態與 AI 助理對手",
-"comparison": "GOOG P/E 23.65 低於 AAPL 34.38，表示市場對 Apple 的品牌與現金流給更高溢價，但 AI 敘事反而是 GOOG 更直接。"
-},
-{
-"name": "Microsoft",
-"position": "服務與平台對手",
-"comparison": "MSFT 2025 營收 2,817 億美元、Azure >750 億美元；AAPL 強在終端與生態，MSFT 強在企業軟體與雲端。"
-}
-],
-"conclusion": "AAPL 是高品質核心股，但若 AI 功能無法轉成換機或服務 ARPU，34 倍 P/E 就不算便宜。"
-},
-"valuation_and_timing": {
-"valuation_view": "現價 268.03 美元，P/E 34.38 倍。對低雙位數以下成長的成熟平台來說不便宜，市場已把品牌、生態與服務現金流算進去。",
-"buy_strategy": "適合核心長期配置，但不建議在高估值時大追。最好等中國需求或產品週期雜音造成拉回再分批。",
-"sweet_zone": "甜區偏向 P/E 28~31 倍，或股價回到 220~240 美元區；34 倍以上比較像穩定高價，不像便宜價。",
-"technical_view": {
-"mid_trend": "中期偏穩，不是爆發型。",
-"short_term": "短線會受中國銷售、AI 產品口碑與新品週期影響。",
-"structure": "屬現金牛核心股，不是高彈性 AI beta 股。",
-"conclusion": "判斷：可持有，可逢回買，但不追高。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": true,
-"category": "core",
-"reason": "25 億台裝置基礎、近 1,000 億美元服務收入、4,162 億美元營收，完全符合 core。",
-"upgrade_condition": [
-"若 Apple Intelligence 能實質推動換機與服務 ARPU，上調權重。",
-"若中國壓力持續、服務成長放緩，則只維持 core 低權重。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"Greater China 2025 仍受 iPhone 銷售拖累，區域風險明確。",
-"P/E 34.38 倍對成熟大型股來說偏高，容錯率有限。"
-],
-"opportunity": [
-"Active devices 超過 25 億台，只要 AI 功能提高 ARPU，獲利彈性很大。",
-"服務年營收接近 1,000 億美元，持續改善毛利結構。"
-]
-},
-"final_view": "AAPL 是 pool30 核心股，也適合保守 FCN 參考籃子；但現階段不是便宜價。Timing：等回檔再買，比追高好。"
-},
-"MRVL": {
-"symbol": "MRVL",
-"name": "Marvell Technology, Inc.",
-"type": "research_raw",
-"company_overview": "MRVL 已不是傳統網通晶片公司，而是 AI 基礎設施半導體平台。FY2026 營收 81.95 億美元、年增 42.1%，其中 data center 營收 61.00 億美元，占總營收 74%；FY2025 proxy 也揭露 FY2025 Q4 data center 已占當季總營收 75%，且 FY2025 AI 相關營收約占 data center 的 50%，高於 FY2023 的不到 10%。投資判斷核心不是『有沒有 AI 題材』，而是 custom silicon、electro-optics、switching 能否把 hyperscaler 的 CAPEX 變成可持續的營收與毛利。 ",
-"basic_info": {
-"founded": "1995。 ",
-"headquarters": "Santa Clara, California, United States。 ",
-"industry": "Data infrastructure semiconductors；主軸包括 custom compute、interconnect、electro-optics、Ethernet switching、storage 與 silicon photonics。 ",
-"market_cap": "2026-04-22 即時市值約 1,306.9 億美元；Yahoo/MarketWatch 近似值約 1,292.8 億至 1,323.1 億美元。 "
-},
-"business_model": {
-"summary": "MRVL 的賺錢模式已從多市場通用網通晶片，轉成 AI data center 為核心的兩段式結構：第一段是 custom ASIC / custom compute，第二段是 electro-optics、PAM4 DSP、DCI optics、Ethernet switching 與 interconnect。FY2026 data center 營收 61.00 億美元，占比 74%，communications and other 20.94 億美元，占比 26%；公司 FY2025 proxy 進一步指出，custom products 已在美國 4 大 hyperscaler 全部量產，且 AWS 在 2024 年 12 月與 MRVL 簽下 5 年 multi-generational agreement。 ",
-"segments": [
-"Data center：FY2026 營收 61.00 億美元，占總營收 74%，較 FY2025 的 41.64 億美元年增 46%；這一塊已是公司真正的估值核心，而不是附屬業務。 ",
-"Communications and other：FY2026 營收 20.94 億美元，占比 26%，較 FY2025 的 16.03 億美元年增 31%；這代表 enterprise networking、carrier、部分非 AI 終端在經過庫存修正後有恢復，但不是主推力。 ",
-"AI-related custom + optics：FY2025 proxy 揭露，FY2025 Q4 data center 占總營收 75%，其中 AI-related revenue 約占 FY2025 data center 的 50%，高於 FY2023 的不到 10%；公司在 2024 AI Day 提出的 data center TAM 到 2028 年為 750 億美元，其中 430 億美元來自 custom compute，且目標是市占率由 2023 年 10% 提高到 2028 年 20%。 "
-]
-},
-"customer_analysis": {
-"summary": "MRVL 的客戶集中度很高，這是今年股價大漲的核心，也是不適合保守 FCN 接股的主因。FY2026 10-K 顯示，前 10 大客戶占總營收 82%，其中一個 direct customer 占 14%，一個 distributor 占 37%，兩個客戶都超過 10%。今年股價大漲不是因為市場突然喜歡網通股，而是因為市場重新把 MRVL 當成 hyperscaler custom silicon 供應商：Reuters 4 月 20 日報導 Google 正與 MRVL 洽談開發 2 顆新 AI 晶片，股價當天一度因消息跳升近 5%。更重要的是，Reuters 3 月 31 日又報導 NVIDIA 對 MRVL 投資 20 億美元，合作項目聚焦 AI networking、optical interconnect 與 silicon photonics，市場把這解讀成 MRVL 不只是做 ASIC，還開始被納入 NVIDIA 生態。再加上 Amazon 與 Anthropic 新協議帶動 AWS AI 基建需求，Barron’s 與 IBD 都把 MRVL 列為 AWS custom chip 與 networking 受益股。Reuters 也直接點出：MRVL 年初至今已上漲 64%，而 Barron’s 顯示截至 4 月 21 日 YTD 漲幅約 77.7%，12 個月漲幅約 198.3%，這種上漲速度本質上是『客戶設計勝出 + AI CAPEX 重估 + 估值提前反映』三件事疊加，不是單一財報數字驅動。 ",
-"key_customers": [
-{
-"name": "Amazon Web Services",
-"role": "美國 hyperscaler 客戶；涵蓋 custom AI accelerators、optical DSPs、DCI optical modules、Ethernet switching silicon",
-"importance": "FY2025 proxy 明確揭露，AWS 與 MRVL 在 2024 年 12 月擴大為 5 年 multi-generational agreement；這不是單點 design win，而是跨 custom AI accelerator、optics、switching 的長約合作。今日 Amazon/Anthropic 協議還包含 Anthropic 未來 10 年在 AWS 與 AI 基建上的支出承諾超過 1,000 億美元，市場因此把 MRVL 視為 AWS custom silicon 與 networking 受益股。 "
-},
-{
-"name": "Google",
-"role": "潛在新一代 inference/custom AI chip 客戶",
-"importance": "Reuters 2026-04-20 報導，Google 正與 MRVL 洽談 2 顆 AI 晶片，其中一顆是搭配既有 TPU 的 memory processing unit，另一顆是新的 inference TPU。這個消息之所以重要，不是因為訂單已簽，而是因為 Google 原本主要與 Broadcom 合作 TPU，若 MRVL 真切入，代表 custom silicon 供應商地位再升級。 "
-},
-{
-"name": "Microsoft",
-"role": "雲端 custom silicon / data center 客戶",
-"importance": "Reuters 2025-08-29 指出，MRVL 的 custom chip 業務越來越依賴像 Amazon 與 Microsoft 這類正在發展 in-house AI chip 的雲端客戶；這類客戶讓公司 data center 需求高成長，但也讓營收更受單一設計節奏與產品時程影響。微軟本身 FY2025 Azure 營收已超過 750 億美元、年增 34%，代表其 AI 基建支出不是短線題材，而是會決定 MRVL 後續 design win 的真實體量。 "
-},
-{
-"name": "Meta",
-"role": "美國 hyperscaler 客戶；屬 MRVL custom products 已量產的四大美國 hyperscaler 之一",
-"importance": "FY2025 proxy 明講 MRVL 的 custom products 已在 4 家大型美國 hyperscaler 全部量產，對應市場普遍推定包括 Meta。Reuters 也提到 Meta 近期把與 Broadcom 的合作延長到 23 億美元級別，這反而說明 hyperscaler 會採多供應商 custom silicon 策略；對 MRVL 來說，Meta 類客戶不是短單，而是能決定未來 2~3 年 custom compute 與 interconnect 滲透率的帳戶。 "
-}
-],
-"conclusion": "客戶分析的投資結論很直接：MRVL 不是『客戶很多所以安全』，而是『客戶很少但都夠大，所以股價彈性高也風險高』。前 10 大客戶 82%、Distributor A 37%、Direct customer A 14% 這種結構，適合 stock_pool / growth 評級，不適合當保守 FCN 接股核心。若 AWS 長約、Google 新案、Microsoft/Meta 後續 design win 能延續，MRVL 可以再升級；但只要其中 1~2 家 hyperscaler 延後 rollout，季度波動就會很大。 "
-},
-"why_this_company": [
-"FY2026 營收 81.95 億美元、年增 42.1%，不是小型概念股的故事，而是財報已經反映 AI 需求。Q1 FY2027 指引還給到 24.00 億美元 ±5%，代表管理層預期成長仍在加速。 ",
-"營收結構大幅改善：FY2026 gross margin 51.0%，較 FY2025 的 41.3% 提升 9.7 個百分點；同時 FY2026 non-GAAP EPS 2.84 美元、年增 81%，說明 operating leverage 開始出來。 ",
-"中長期不是只看 1 季財報：公司對外目標是 FY2028 營收接近 150 億美元，較 FY2026 的 81.95 億美元接近翻倍；而 data center TAM 到 2028 年估 750 億美元，其中 430 億美元來自 custom compute。這代表市場給高估值，是因為它看到 MRVL 站在 hyperscaler 自研晶片的產業位置。 "
-],
-"market_view": "市場現在在 pricing 的不是『一般網通復甦』，而是 hyperscaler AI CAPEX 持續擴大。Reuters 3 月 31 日提到 Alphabet 與 Meta 等大科技公司 2026 年 AI 基建支出合計至少 6,300 億美元，這直接推升 MRVL 的 custom compute、optical interconnect 與 switching 需求；公司自己也說 FY2027 每一季的年增速都將加快。市場同時在擔心兩件事：第一，custom silicon 業務天然較為 lumpy，MarketWatch 去年就點出 Amazon Trainium 後續案源可見度不高；第二，Google 與 Broadcom 合作延至 2031，若 MRVL 只是第二供應商或談判籌碼，股價先漲後回檔的風險不低。 ",
-"financial_summary": {
-"revenue": "FY2026 營收 81.95 億美元；Q4 FY2026 單季營收 22.19 億美元，年增 22%。 ",
-"growth": "FY2026 年增 42.1%；其中 data center 營收年增 46%，communications and other 年增 31%；Q1 FY2027 指引 24.00 億美元，若達標約較 Q1 FY2026 的 11.61 億美元翻倍以上。 ",
-"net_margin": "FY2026 GAAP net margin 約 32.6%（26.70 億 / 81.95 億），但這個數字被出售 automotive ethernet 業務帶來的 18 億美元一次性 gain 明顯拉高；若看經常性獲利，FY2026 non-GAAP EPS 2.84 美元比 GAAP EPS 3.07 更有代表性。 ",
-"fcf_margin": "以 FY2026 operating cash flow 17.51 億美元，扣掉 property and equipment 3.54 億美元估算，自由現金流約 13.96 億美元，FCF margin 約 17.0%；這比 FY2025 現金流結構更健康，但仍低於超高毛利軟體公司。 ",
-"eps": "2026-04-22 finance 工具顯示 TTM EPS 約 2.85 美元；FY2026 公司披露 GAAP EPS 3.07、美國非 GAAP EPS 2.84。 ",
-"pe": "2026-04-22 finance 工具顯示即時 P/E 約 53.09 倍；Yahoo 摘要顯示約 48.03 倍；Reuters 2026-04-20 報導用的口徑是 33.35 倍。三個數字差異很大，主因是資料供應商對一次性出售利益與 TTM EPS 口徑不同；因此實務上建議同時看 EV/Sales，而不是只看單一 PE。 ",
-"dividend_yield": "前瞻股息 0.24 美元，殖利率約 0.16%；這檔股票不是拿來收息，而是吃 AI 基礎設施成長。 ",
-"beta": "5Y monthly beta 約 1.82；這已明確高於防守股，也說明它是高波動成長半導體，而不是低 beta 核心股。 "
-},
-"competition": {
-"summary": "MRVL 目前不是跟 Intel 或普通網通晶片廠競爭，而是同時跟 Broadcom、NVIDIA、Astera Labs、Credo、甚至 hyperscaler 自研團隊競爭。競爭焦點也不是『單顆晶片性能』而已，而是 custom compute + optics + interconnect + packaging 的平台能力。估值上，Reuters 4 月 20 日給 MRVL 的 P/E 約 33.35 倍，高於 Broadcom 的 27.84 倍；若用 finance 即時工具，MRVL P/E 甚至高到 53 倍，說明市場已給了顯著溢價。 ",
-"peers": [
-{
-"name": "Broadcom",
-"position": "Google TPU/custom ASIC 最大成熟對手",
-"comparison": "Google 與 Broadcom 的 TPU 合作已延到 2031，而 Reuters 4 月 20 日報導 MRVL 正試圖切入 2 顆新 AI 晶片；也就是說，MRVL 的上升空間來自『分單』而不是已經完全取代 Broadcom。估值上，Reuters 給 MRVL P/E 33.35 倍，高於 Broadcom 的 27.84 倍，代表市場認為 MRVL 的增速更高，但風險也更大。 "
-},
-{
-"name": "NVIDIA",
-"position": "AI 基礎設施生態龍頭；在 networking 與 silicon photonics 上既可合作也可競爭",
-"comparison": "NVIDIA 本身不是純 custom ASIC 競爭者，但它是 AI cluster 的生態主導者。2026-03-31 Reuters 報導 NVIDIA 對 MRVL 投資 20 億美元，合作點在 NVLink Fusion 相容的 advanced networking、optical interconnect 與 silicon photonics；這對 MRVL 是正面，但也意味著 MRVL 仍在 NVIDIA 主導的系統架構下拿到部分價值，不是完全獨立定價。 "
-},
-{
-"name": "Astera Labs / Credo",
-"position": "AI connectivity / interconnect 對手",
-"comparison": "Barron’s 在 Amazon-Anthropic 新協議後同時點名 Marvell、Astera 與 Credo 為受益股，說明市場把它們視為同一條 AI networking 鏈。MRVL 的差異是它不只有 connectivity，還有 custom compute、switching 與 optics；但代價是估值已比單一模組型供應商更貴，市場對 execution 要求也更高。 "
-}
-],
-"conclusion": "競爭結論很務實：MRVL 已經從次要網通 IC 廠升級成 custom AI infrastructure 重要玩家，但它還不是像 NVDA 那樣擁有完整系統定價權，也不像 Broadcom 那樣已有更長期、驗證更完整的 hyperscaler 合作。這代表它能進 stock_pool，卻還不適合直接進 pool30 核心第一排。 "
-},
-"valuation_and_timing": {
-"valuation_view": "用 2026-04-22 即時市值 1,306.9 億美元與 FY2026 營收 81.95 億美元估算，市銷率約 15.95 倍；若採 Yahoo key statistics 的 enterprise value 1,119.6 億美元，EV/Sales 約 13.66 倍。P/E 方面，finance 工具給 53.09 倍、Yahoo 摘要給 48.03 倍、Reuters 給 33.35 倍，三者都說明同一件事：MRVL 現在不是便宜股，而是高預期股。歷史位置上，Barron’s 顯示截至 4 月 21 日 YTD +77.69%、12 個月 +198.30%，股價已接近 52 週高點 154.95 美元，估值與價格都在高檔區。 ",
-"buy_strategy": "不建議追價買。MRVL 適合『事件後回檔分批』，而不是在 Google 談判、NVIDIA 投資、AWS 題材疊加時追強。因為它的高估值很大程度來自 아직未完全落地的 custom silicon 後續案源，若下一次財報只是小幅 beat，而不是再上修 FY2028 路徑，股價很容易先修估值。 ",
-"sweet_zone": "甜區 1：股價回到 120~130 美元區，約較 4 月 22 日現價 151.31 美元回檔 14%~21%，才比較接近可承受的成長股回撤帶。甜區 2：若 EV/Sales 壓回到 10~12 倍、或市場重新用 35~40 倍區間的 TTM P/E 交易，而不是 48~53 倍，風險報酬比較合理。若股價仍在 145~155 美元高位、且 P/E 口徑仍高於 Broadcom，建議只觀察不重倉。 ",
-"technical_view": {
-"mid_trend": "中期趨勢偏多。Barron’s 顯示截至 4 月 21 日 YTD 已上漲 77.69%，12 個月上漲 198.30%；Reuters 也提到年初至今已上漲 64%，說明市場正在重估 MRVL 的 AI 基建角色。 ",
-"short_term": "短線偏熱。MarketWatch 顯示 52 週高點 154.95 美元，而 4 月 22 日即時價 151.31 美元，已非常接近高點；Google 新合作傳聞本身就讓股價單日跳升近 5%，這種走法通常不提供好風險回報比。 ",
-"structure": "結構上屬高 beta AI infrastructure 成長股，不是防守股。Beta 1.82、客戶前 10 大占 82%、股價 12 個月接近 3 倍，代表波動會非常大。 ",
-"conclusion": "判斷：等待，不追。中期可以追蹤，但短線不甜；只有在回撤到 120~130 美元帶、或下一次財報把 FY2028 15 億美元路徑再往上修時，才有比較好的買點。 "
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": false,
-"category": "growth",
-"reason": "MRVL 具備進系統的條件，因為 FY2026 營收 81.95 億美元、年增 42.1%，data center 占比 74%，而且已在美國 4 大 hyperscaler 全部量產 custom products；但它不適合直接進 pool30 核心，因為前 10 大客戶占 82%、估值高、股價 12 個月漲近 198%，都代表它更像高彈性成長股，而不是穩定核心股。 ",
-"upgrade_condition": [
-"Google 兩顆 AI 晶片談判若正式落地，且 FY2027~FY2028 custom silicon 設計勝出能見度提高，MRVL 才有資格從 stock_pool 升級到更高級別池。 ",
-"若估值回落到 EV/Sales 10~12 倍、股價回到 120~130 美元區，同時 FY2027 指引持續上修，才比較有 pool30 升級空間。 "
-]
-},
-"risk_opportunity": {
-"risk": [
-"客戶集中風險很高：FY2026 前 10 大客戶占營收 82%，其中 Distributor A 占 37%、Direct Customer A 占 14%；這種結構對 FCN 接股很不友善。 ",
-"估值風險不小：2026-04-22 finance 工具 P/E 約 53.09 倍，Yahoo 摘要約 48.03 倍，均高於 Reuters 4 月 20 日給 Broadcom 的 27.84 倍比較值；估值一旦重定價，回檔幅度可能很大。 ",
-"業績節奏可能很 lumpy：MarketWatch 去年就指出 custom-silicon 後續案源、特別是 Amazon Trainium3 的可見度有限；這說明 MRVL 雖然站在大趨勢上，但季度波動仍高。 "
-],
-"opportunity": [
-"長期路徑夠大：公司目標 FY2028 營收接近 150 億美元，較 FY2026 的 81.95 億美元再增加約 68 億美元；如果達成，市場現在給高倍數就有邏輯。 ",
-"AWS 5 年 multi-generational agreement + Google 2 顆新 AI 晶片洽談 + NVIDIA 20 億美元合作，三件事疊加代表 MRVL 正從單一 ASIC 故事升級成 hyperscaler AI infrastructure 平台。 ",
-"FY2026 data center 營收 61.00 億美元、占比 74%，而 FY2025 proxy 顯示 AI 相關收入占 FY2025 data center 約 50%；只要 hyperscaler AI CAPEX 沒斷，MRVL 還有持續吃份額的空間。 "
-]
-},
-"final_view": "MRVL 是一檔可以進系統、但不能用防守思維看的股票。它最吸引人的地方，是 FY2026 已經把 data center 占比拉到 74%、營收年增 42.1%，而且客戶從 AWS、Microsoft 到潛在的 Google 都指向 hyperscaler custom AI 基建；但它最大的缺點也同樣明確：前 10 大客戶占 82%、估值高、股價近 12 個月漲約 198%，表示市場已提前反映很多未來。M1 判斷：可進 stock_pool，暫不進 pool30；FCN 可做，但只適合高票息、深 KI、低權重，不適合當接股型核心籃子。Timing 判斷：等待回檔到 120~130 美元區再看，不追價。 "
-},
-"quality_check": {
-"completeness": 9.7,
-"specificity": 9.8,
-"data_support": 9.8,
-"decision_usefulness": 9.6,
-"fcn_alignment": 9.4,
-"total_score": 9.7,
-"fail_reasons": []
-},
-"HPQ": {
-"symbol": "HPQ",
-"name": "HP Inc.",
-"type": "research_raw",
-"company_overview": "HPQ 是全球 PC 與列印硬體公司，FY2025 營收 553 億美元、YoY +3.2%，但 GAAP EPS 2.65 美元、YoY -5.7%，代表它是低估值、高股息、但成長彈性有限的成熟硬體股。",
-"basic_info": {
-"founded": "1939 年；2015 年 HP Inc. 與 HPE 分拆後，HPQ 聚焦 PC、印表機與耗材。",
-"headquarters": "Palo Alto, California, USA；FY2025 美國以外沒有單一國家超過營收 10%。",
-"industry": "Personal Computers, Printing Hardware, Supplies, Commercial Devices",
-"market_cap": "約 189 億美元，股價約 20.27 美元，TTM PE 約 7.69。"
-},
-"business_model": {
-"summary": "HPQ 的商業模式是 PC 硬體放量、列印耗材貢獻高利潤；FY2025 Personal Systems 營收 385.3 億美元、約占 69.7%，Printing 營收 167.0 億美元、約占 30.2%，但 Printing 營業利益率 18.7% 明顯高於 Personal Systems 的 5.3%。",
-"segments": [
-"Personal Systems：FY2025 營收 385.3 億美元、YoY +6%，Commercial PS 274.4 億美元、YoY +8%，Consumer PS 110.9 億美元、YoY +4%，這是營收主體但營業利益率只有 5.3%。",
-"Printing：FY2025 營收 167.0 億美元、YoY -4%，其中 Supplies 109.2 億美元、YoY -3%，Commercial Printing 46.3 億美元、YoY -4%，Consumer Printing 11.5 億美元、YoY -4%，代表高毛利耗材仍在衰退。",
-"Corporate Investments：FY2025 營收 0.62 億美元、規模不到總營收 0.2%，目前不是 pool30 決策核心，不能把 HPQ 當 AI 高成長硬體股處理。"
-]
-},
-"customer_analysis": {
-"summary": "HPQ 客戶結構偏分散但通路集中風險存在；FY2025 TD Synnex Corp 單一客戶占 HPQ 營收 12%，是需要納入風險折扣的明確數字。",
-"key_customers": [
-{
-"name": "TD Synnex Corp",
-"role": "全球 IT 分銷商 / 通路客戶",
-"importance": "FY2025 占 HPQ 淨營收 12%，超過 10% 門檻，若分銷庫存調整 1 季，會直接影響 HPQ 出貨與應收帳款節奏。"
-},
-{
-"name": "CDW",
-"role": "企業 IT 解決方案通路與採購平台",
-"importance": "CDW 銷售 HP 的 AI PCs、Printers & Supplies、Poly、Displays、Services and Solutions，代表 HPQ 商用需求高度依賴企業 IT 通路。"
-},
-{
-"name": "Corporate Enterprise / Public Sector customers",
-"role": "商用 PC、工作站、顯示器與配件採購客戶",
-"importance": "HP2B 官方平台服務企業與公部門客戶，FY2025 Commercial PS 營收 274.4 億美元、YoY +8%，是 HPQ 最重要的需求來源。"
-}
-],
-"conclusion": "HPQ 不是單一 hyperscaler 訂單型公司，而是通路與企業採購型公司；TD Synnex 12% 集中度可接受但不能忽略，因為 PC 庫存週期會放大營收波動。"
-},
-"why_this_company": [
-"估值低：HPQ 目前 TTM PE 約 7.69、forward PE 約 7.3，明顯低於多數大型科技硬體股，適合放入 stock pool 觀察低估值 + 股息型 FCN 標的。",
-"現金回饋高：FY2025 FCF 29 億美元，並返還 19 億美元給股東，等於返還約 66% FCF，對股息型投資人有支撐。",
-"負面也清楚：FY2025 Printing 營收 YoY -4%、Supplies YoY -3%，而 GAAP EPS YoY -5.7%，所以它不是成長股，pool30 不能給 core 高權重。"
-],
-"market_view": "市場目前 pricing 的是 Windows 11 換機、AI PC 與企業更新週期；Gartner 指出 2025 年全球 PC 出貨 YoY +9.1%，HP 仍是全球第 2 大 PC 廠，2025 出貨約 5,745.7 萬台。市場同時擔心 2026 記憶體與零組件漲價壓縮需求，HPQ Q1 FY2026 電話會也提到業界預估 2026 PC unit TAM 可能雙位數下滑。",
-"financial_summary": {
-"revenue": "FY2025 revenue 553 億美元。",
-"growth": "FY2025 revenue YoY +3.2%；Q1 FY2026 revenue 144 億美元、YoY +7%。",
-"net_margin": "FY2025 GAAP net earnings 25 億美元 / revenue 553 億美元，net margin 約 4.5%。",
-"fcf_margin": "FY2025 FCF 29 億美元 / revenue 553 億美元，FCF margin 約 5.2%。",
-"eps": "FY2025 GAAP diluted EPS 2.65 美元、YoY -5.7%；non-GAAP diluted EPS 3.12 美元、YoY -9.0%。",
-"pe": "TTM PE 約 7.69；forward PE 約 7.3。",
-"dividend_yield": "Forward dividend 約 1.20 美元、殖利率約 5.96%；2026 年單季股息 0.30 美元。",
-"beta": "約 1.0–1.2 區間；以 PC 硬體循環股處理，不應視為低波動公用事業型股票。"
-},
-"competition": {
-"summary": "HPQ 在 PC 市場是第 2 名跟隨型大型廠，2025 年 HP 出貨約 5,745.7 萬台，低於 Lenovo 7,356.7 萬台；估值上 HPQ forward PE 約 7.3，但低估值反映 Printing 下滑與 PC 毛利壓力，不是純便宜。",
-"peers": [
-{
-"name": "Lenovo",
-"position": "全球 PC 第 1 名",
-"comparison": "2025 年 Lenovo 出貨約 7,356.7 萬台、市占 27.2%，HP 約 5,745.7 萬台，HP 是規模第 2 但不是市占第 1。"
-},
-{
-"name": "Dell Technologies",
-"position": "商用 PC 與企業 IT 競爭者",
-"comparison": "Dell 在商用 PC 與 HP 正面競爭；HPQ Personal Systems FY2025 營業利益率 5.3%，說明 PC 硬體競爭下價格空間有限。"
-},
-{
-"name": "Canon / Epson",
-"position": "列印與耗材競爭者",
-"comparison": "HPQ Printing FY2025 營收 YoY -4%，但營業利益率仍有 18.7%，表示列印是利潤池，但需求收縮會壓低估值上限。"
-}
-],
-"conclusion": "市場定位上，HPQ 是成熟 PC/列印巨頭，不是 AI server 或 GPU 受益主線；產品與服務差異化主要來自商用通路、列印耗材與裝置管理，而不是單一技術壟斷。價格策略上，PC 營業利益率 5.3% 顯示折扣與零組件成本會吃掉獲利；Printing 18.7% 利益率提供現金流，但 Supplies YoY -3% 是中期壓力。通路與供應鏈方面，TD Synnex 占 12% 營收，CDW 等企業通路讓 HPQ 有穩定出貨口，但也讓庫存週期變成投資風險。品牌與行銷方面，HP 全球 PC 第 2 名具知名度，但 Lenovo 2025 出貨 7,356.7 萬台高於 HP 的 5,745.7 萬台，HP 不是市占領導者。財務上，553 億美元營收、29 億美元 FCF、約 5.96% 股息殖利率使它適合 FCN 觀察；但 EPS YoY -5.7%、Printing 下滑，使 pool30 只能給 defensive/income 型定位。"
-},
-"valuation_and_timing": {
-"valuation_view": "目前股價約 20.27 美元、TTM PE 約 7.69、forward PE 約 7.3，低於其 12 個月平均 PE 約 8.91；估值便宜但屬 value trap 風險區，不能因 PE 低就直接升 pool30。",
-"buy_strategy": "策略上只適合分批或 FCN 觀察：若 forward PE 低於 7.0 且股息殖利率高於 6.0%，可視為防禦型低估值進場；若 PE 回到 9.0 以上但 Printing 仍 YoY 負成長，應降低追價意願。",
-"sweet_zone": "Sweet zone：股價 18–20 美元、forward PE ≤7.0、殖利率 ≥6.0%、Q2/Q3 FY2026 Personal Systems YoY 仍正成長且 Printing 下滑縮小到 -2% 以內。",
-"technical_view": {
-"mid_trend": "中期偏弱整理：現價約 20.27 美元，若無法重新站回 22–23 美元區間，代表市場仍以 7–8 倍 PE 對成熟硬體股定價。",
-"short_term": "短線不追：若 PC 換機題材已反映在 Q1 FY2026 revenue +7%，但 2026 PC unit TAM 被預估雙位數下滑，短線上漲容易被財測風險壓回。",
-"structure": "結構屬低估值 + 高股息 + 低成長組合；FY2025 FCF margin 約 5.2%，比高成長科技股更像現金流回饋標的。",
-"conclusion": "可放 stock pool，不建議直接進 pool30；等待 18–20 美元或 forward PE ≤7.0 才有較好安全邊際。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": false,
-"category": "income",
-"reason": "HPQ 有 553 億美元營收、29 億美元 FCF、約 5.96% 股息殖利率與 7 倍左右 PE，適合 stock pool 的低估值/收益觀察；但 FY2025 EPS YoY -5.7%、Printing YoY -4%、2026 PC TAM 可能雙位數下滑，使它不適合放入 pool30 核心名單。",
-"upgrade_condition": [
-"Printing revenue decline 從 FY2025 的 -4% 改善到 -2% 以內，且 Supplies 不再低於 -3%。",
-"Personal Systems 連續 2 季 YoY +5% 以上，且 segment operating margin 回到 6% 以上。",
-"股價落在 18–20 美元且 forward PE ≤7.0，同時 dividend yield ≥6.0%。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"列印衰退風險：FY2025 Printing 營收 167.0 億美元、YoY -4%，Supplies 109.2 億美元、YoY -3%，如果耗材繼續下滑，HPQ 的高利潤來源會被侵蝕。",
-"PC 需求與成本風險：HPQ Q1 FY2026 提到 2026 PC unit TAM 可能雙位數下滑，且記憶體成本上升會壓縮入門機需求。",
-"通路集中風險：TD Synnex FY2025 占營收 12%，若通路庫存去化 1–2 季，HPQ revenue 與現金轉換週期會受影響。"
-],
-"opportunity": [
-"換機週期機會：Gartner 指出 2025 全球 PC 出貨 YoY +9.1%，Windows 11 更新與 AI PC 可能支撐商用換機需求。",
-"現金回饋機會：FY2025 FCF 29 億美元，返還股東 19 億美元、約 66% FCF，若股價維持 20 美元附近，股息與回購提供下檔支撐。",
-"估值修復機會：目前 forward PE 約 7.3，若市場願意回到 12 個月平均 PE 約 8.9，估值本身有約 20% 左右重估空間，但前提是 EPS 不再下修。"
-]
-},
-"final_view": "HPQ 的投資定位不是 AI 主線，也不是高成長科技股，而是「低 PE + 高股息 + 成熟硬體現金流」標的；FY2025 營收 553 億美元、FCF 29 億美元、殖利率約 5.96%，這些數字支持它進 stock pool 做 FCN 候選。可是它的負面也很明確：FY2025 EPS YoY -5.7%、Printing YoY -4%、Supplies YoY -3%，代表高利潤來源正在收縮，不能用單純低 PE 當成買進理由。我的系統判斷是：HPQ 可以當 income/defensive 觀察股，FCN 可行性中等偏可，但 pool30 暫不建議；除非 Printing 下滑收斂、Personal Systems margin 回到 6% 以上、股價落在 18–20 美元並提供 forward PE ≤7.0 的安全邊際，才有升級條件。",
-"quality_check": {
-"completeness": 9,
-"specificity": 9,
-"data_support": 9,
-"decision_usefulness": 9,
-"fcn_alignment": 8,
-"total_score": 8.8,
-"fail_reasons": []
-},
-"MSFT": {
-"symbol": "MSFT",
-"name": "Microsoft Corporation",
-"type": "research_raw",
-"company_overview": "MSFT 是現在最完整的企業 AI 平台股：Office 現金流、Azure 雲端、Copilot AI、GitHub 開發者生態都在同一張報表裡。2025 財年營收 2,817 億美元、年增 15%，Azure 年營收首度超過 750 億美元、年增 34%。",
-"basic_info": {
-"founded": "1975。",
-"headquarters": "Redmond, Washington。",
-"industry": "Cloud software, enterprise software, productivity, AI infrastructure。",
-"market_cap": "2026-04-21 市值約 3.59 兆美元，股價 425.76 美元。"
-},
-"business_model": {
-"summary": "MSFT 的厲害不在單一產品，而在三個引擎一起轉：Productivity、Intelligent Cloud、More Personal Computing。2025 財年營收 2,817 億美元、營業利益 1,285 億美元，這種獲利結構讓它有本錢每年砸數百億美元做 AI CAPEX。",
-"segments": [
-"Intelligent Cloud：Azure 年營收首次超過 750 億美元、年增 34%，是 AI 最直接的財務載體。",
-"Productivity and Business Processes：M365 商業版與 Copilot 形成高黏著、高毛利訂閱基礎。",
-"More Personal Computing：Windows、Devices、Gaming 提供現金流與生態，但已不是估值主引擎。"
-]
-},
-"customer_analysis": {
-"summary": "MSFT 的客戶不集中在單一公司，而是集中在企業 IT 預算。這種結構比硬體公司穩很多。2025 年公司全球資料中心已逾 400 座，支撐大企業與政府長期上雲需求。",
-"key_customers": [
-{
-"name": "Enterprise Microsoft 365 customers",
-"role": "Office/Copilot 訂閱客戶",
-"importance": "商業版 M365 是公司現金流底盤，AI 加價能力建立在既有龐大 installed base 上。"
-},
-{
-"name": "Azure enterprise customers",
-"role": "雲端與 AI 基礎設施客戶",
-"importance": "Azure 2025 年營收逾 750 億美元、年增 34%，是最具體的企業 AI 支出數據。"
-},
-{
-"name": "OpenAI",
-"role": "AI 生態與算力需求合作方",
-"importance": "Microsoft 對 OpenAI 的基礎設施支援與產品整合，是 AI 敘事的重要部分；同時公司也在發展自家模型以降低依賴。"
-}
-],
-"conclusion": "MSFT 客戶結構分散、續約性高，是少數既能吃 AI、又能維持低波動的大型股。這是它最適合進 core 的原因。"
-},
-"why_this_company": [
-"2025 財年營收 2,817 億美元、年增 15%，規模大且還能成長。",
-"Azure 年營收 >750 億美元、年增 34%，AI 商業化已反映在數字上。",
-"營業利益 1,285 億美元，代表獲利與投資能力都很強。"
-],
-"market_view": "市場在 pricing Azure、Copilot 與企業 AI 平台整合，所以給 MSFT 約 30.14 倍 P/E；市場在擔心的是 AI CAPEX 太大，因為公司曾提 2025 年 AI 基建投資高達 800 億美元，且下一季 CAPEX 仍可能到 300 億美元。",
-"financial_summary": {
-"revenue": "2025 財年營收 2,817 億美元。",
-"growth": "年增 15%。",
-"net_margin": "2025 財年淨利 1,018 億美元，約年增 16%。",
-"fcf_margin": "高 FCF 平台，但短期受 AI 資本支出擴張影響。",
-"eps": "EPS 15.99。",
-"pe": "P/E 30.14 倍。",
-"dividend_yield": "有配息，且是大型科技中少數兼具成長與股東回饋者。",
-"beta": "大型穩健科技股，波動低於多數半導體股。"
-},
-"competition": {
-"summary": "MSFT 競爭對手是 AWS、Google Cloud、Salesforce、以及所有想搶企業 AI 預算的軟體公司。它的優勢是把 AI 直接塞進既有企業付費體系。",
-"peers": [
-{
-"name": "Alphabet",
-"position": "雲端與 AI 對手",
-"comparison": "MSFT P/E 30.14 高於 GOOG 23.65，市場願意為其企業軟體穩定性付更多。"
-},
-{
-"name": "Amazon AWS",
-"position": "雲端基礎設施對手",
-"comparison": "AWS 規模仍大，但 Azure 2025 年已超過 750 億美元且年增 34%，代表 MSFT 沒落後。"
-},
-{
-"name": "Salesforce",
-"position": "企業軟體與 AI 助理對手",
-"comparison": "MSFT 優勢在可以把 Copilot 綁進 M365 與 Azure，不需要另外建立分銷通路。"
-}
-],
-"conclusion": "MSFT 的質地在這批股票裡接近第一排核心，估值雖不便宜，但穩定度高於 NVDA、MU、MRVL。"
-},
-"valuation_and_timing": {
-"valuation_view": "現價 425.76 美元，P/E 30.14 倍。對 15% 營收成長、34% Azure 成長的 mega-cap 來說合理偏貴，不算便宜。",
-"buy_strategy": "適合核心分批，不用等很深回檔，但也不追財報急漲。大跌反而是加碼機會。",
-"sweet_zone": "甜區偏向 P/E 26~28 倍，或股價回到 370~390 美元區。若維持 30 倍以上，建議分批而不是一次壓大。",
-"technical_view": {
-"mid_trend": "中期偏多，因為 Azure 與 Copilot 還在放量。",
-"short_term": "短線會受 CAPEX 太大與 OpenAI 依賴討論影響。",
-"structure": "屬高品質企業 AI 平台股，不是高 beta 題材股。",
-"conclusion": "判斷：可買，可當核心。"
-}
-},
-"pool30_fit": {
-"stock_pool": true,
-"pool30": true,
-"category": "core",
-"reason": "營收、獲利、Azure、Copilot、企業黏著度都符合核心股定義。",
-"upgrade_condition": [
-"若 Azure 維持 30% 以上成長且 Copilot 付費擴散，可提高權重。",
-"若 CAPEX 明顯失控、拖累 FCF 與利潤率，則只維持 core 中權重。"
-]
-},
-"risk_opportunity": {
-"risk": [
-"AI CAPEX 很大，市場曾提 2025 年基建投資高達 800 億美元，短期會壓現金流。",
-"估值 30.14 倍不算便宜，若 Azure 增速下來，估值壓縮會發生。"
-],
-"opportunity": [
-"Azure 年營收 >750 億美元、年增 34%，AI 商業化已不是故事。",
-"Office/M365 既有安裝基礎讓 Copilot 變現路徑比多數 AI 公司清楚。"
-]
-},
-"final_view": "MSFT 是標準 pool30 核心股，也是在這組股票裡最適合保守型配置與 FCN 參考的名字之一。Timing：可分批布局，回檔加碼。"
-},
-"quality_check": {
-"completeness": 9.0,
-"specificity": 9.1,
-"data_support": 9.0,
-"decision_usefulness": 9.2,
-"fcn_alignment": 8.9,
-"total_score": 9.0,
-"fail_reasons": []
-  }
-},
+    "symbol": "NVDA",
+    "name": "NVIDIA Corporation",
+    "type": "research_raw",
+    "company_overview": "NVDA 已經不是單純 GPU 公司。FY2026 營收 2,159 億美元、年增 65%，其中 Data Center 1,937 億美元，約占全年營收 90%，投資判斷核心不是遊戲卡，而是 AI 訓練與推論資本支出能否延續。",
+    "basic_info": {
+      "founded": "1993。",
+      "headquarters": "Santa Clara, California。",
+      "industry": "AI accelerators / data center compute / networking / edge & automotive。",
+      "market_cap": "2026-04-21 市值約 4.53 兆美元，股價 201.55 美元。"
+    },
+    "business_model": {
+      "summary": "NVDA 的收入高度集中在 AI 資料中心。FY2026 Data Center 1,937 億美元、Gaming 160 億美元、Professional Visualization 31.9 億美元、Automotive 23.5 億美元；Data Center 已遠大於其他業務總和。",
+      "segments": [
+        "Data Center：FY2026 營收 1,937 億美元，約占總營收 90%，Q4 FY2026 單季 623 億美元、年增 75%；這一塊決定公司估值。",
+        "Gaming：FY2026 營收約 160 億美元，約占總營收 7%；仍賺錢，但已從主引擎退成次要現金流來源。",
+        "Networking / automotive / pro viz：Professional Visualization 31.9 億美元、Automotive 23.5 億美元、OEM/Other 6.19 億美元；占比都小，但可用來觀察非 AI GPU 的分散度。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "客戶集中度很高。FY2025 直接客戶中有 3 家各占營收 12%、11%、11%，合計 34%；而且公司明講很多雲端公司是透過直接與間接客戶採購，代表最終需求更集中在 hyperscalers 與 AI 平台。",
+      "key_customers": [
+        {
+          "name": "Microsoft",
+          "role": "Azure AI 基礎設施客戶",
+          "importance": "Microsoft FY2025 Azure 營收首次超過 750 億美元、年增 34%，代表其對 AI 加速器需求不是短單；這是 NVDA 最核心的雲端需求來源之一。"
+        },
+        {
+          "name": "Meta",
+          "role": "Llama / 推論與訓練集群客戶",
+          "importance": "Meta 2025 年營收 2,009.7 億美元、年增 22%，同時持續拉高 AI 基礎建設支出；它不是小客戶，而是能影響 NVDA 出貨節奏的 CAPEX 買家。"
+        },
+        {
+          "name": "Oracle",
+          "role": "OCI 大型 Blackwell 雲端採購客戶",
+          "importance": "Oracle 已公開表示 OCI Supercluster 將提供最多 131,072 顆 NVIDIA Blackwell GPU，且已開始接單；這是具體、可量化的大單訊號。"
+        }
+      ],
+      "conclusion": "NVDA 最大優點是客戶都很大，最大缺點也是客戶都很大。只要 3~5 家 hyperscaler 延後 CAPEX，營收彈性就會很大，這種集中度不適合當低波動 FCN 接股核心。"
+    },
+    "why_this_company": [
+      "FY2026 營收 2,159 億美元、年增 65%，不是題材，是已經兌現的財報。",
+      "FY2026 GAAP gross margin 71.1%，代表它不是只靠量，還有極高議價能力。",
+      "Data Center 占比約 90%，表示公司已成為 AI 基礎設施核心供應商，而非消費性晶片股。"
+    ],
+    "market_view": "市場現在在 pricing 的是 AI CAPEX 延續，而不是單一新品。Q4 FY2026 營收 681 億美元、年增 73%，Data Center 623 億美元、年增 75%；市場在擔心的是中國出口限制與客戶 CAPEX 集中，因為 FY2026 公司僅在許可下做出約 6,000 萬美元 H20 收入，政策一變就會影響區域出貨。",
+    "financial_summary": {
+      "revenue": "FY2026 營收 2,159 億美元。",
+      "growth": "年增 65%。",
+      "net_margin": "以 FY2026 GAAP diluted EPS 4.08 與市值口徑估算，獲利結構仍極厚；公司 FY2026 GAAP gross margin 71.1%，為獲利核心支撐。",
+      "fcf_margin": "公司在 FY2026 持續產生極高現金流，市場願意給高估值主因是 70% 以上毛利率與資料中心現金創造力，而非低基期修復。",
+      "eps": "EPS 4.08。",
+      "pe": "2026-04-21 即時 P/E 約 45.63 倍。",
+      "dividend_yield": "股息殖利率極低，投資重點不是配息，而是成長與 CAPEX 週期。",
+      "beta": "屬高波動大型成長股；價格對 AI CAPEX 與政策消息反應很大。"
+    },
+    "competition": {
+      "summary": "NVDA 競爭不是跟傳統 CPU 比，而是跟 AMD AI GPU、Broadcom/Marvell ASIC、以及客戶自研晶片比。它現在贏在整機櫃、軟體、生態與交付能力，不只是單顆晶片。",
+      "peers": [
+        {
+          "name": "AMD",
+          "position": "通用 AI GPU 對手",
+          "comparison": "AMD 在 AI GPU 存在感提高，但 NVDA FY2026 營收已達 2,159 億美元、毛利率 71.1%，規模與盈利力仍遠高於一般 GPU 對手。"
+        },
+        {
+          "name": "Broadcom",
+          "position": "客製 ASIC 對手",
+          "comparison": "Broadcom 主打 TPU/ASIC 設計；Google 已與 Broadcom 合作多年，且合作延到 2031，代表 ASIC 正在分食部分 AI workload。"
+        },
+        {
+          "name": "Marvell",
+          "position": "雲端 ASIC 與互連對手",
+          "comparison": "Google 近期也傳出和 Marvell 談兩款 AI 晶片，表示超大客戶開始做多供應商策略，這對 NVDA 是估值風險，不一定是短期營收風險。"
+        }
+      ],
+      "conclusion": "NVDA 仍是主戰場龍頭，但市場已從『只有 GPU』轉向『GPU+ASIC 混合架構』；所以它值得高分，但不值得無限上調估值。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "現價 201.55 美元、P/E 45.63 倍。對比 FY2026 營收年增 65%，估值不算離譜，但已不是深度便宜區；這是高成長高估值股，不是撿煙蒂。",
+      "buy_strategy": "不追急漲。策略上比較適合等 CAPEX 雜音、政策消息或供應鏈修正時分批，因為估值已反映大部分上半年樂觀預期。",
+      "sweet_zone": "甜區偏向 P/E 壓回 38~42 倍，或股價回到 180 美元附近再看；若維持 45 倍以上，只適合小量追蹤，不適合大幅加碼。",
+      "technical_view": {
+        "mid_trend": "中期仍偏多，因為基本面 65% 年增還沒結束，但股價已高度反映。",
+        "short_term": "短線容易受出口限制與客戶 CAPEX 消息震盪。",
+        "structure": "結構屬超級成長股，不是防守股；適合主升段參與，不適合保守接股。",
+        "conclusion": "判斷：可買，但要挑回檔，不追高。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "core",
+      "reason": "營收 2,159 億美元、年增 65%、毛利率 71.1%，基本面與產業地位都足以進 pool30 核心。",
+      "upgrade_condition": [
+        "若中國限制再升級、且 Data Center 年增跌破 30%，核心權重要下調。",
+        "若客製 ASIC 大幅分流 hyperscaler 預算，也要從 core 高權重改成 core 低權重。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "FY2025 直接三大客戶合計占營收 34%，集中度偏高。",
+        "中國 H20 相關收入在許可下僅約 6,000 萬美元，顯示政策風險是真實存在，不是口頭風險。"
+      ],
+      "opportunity": [
+        "Oracle 單一公開雲端案子就對應最多 131,072 顆 Blackwell GPU，代表雲端 AI 基礎建設仍在擴。",
+        "只要 FY2027 Data Center 仍能維持高雙位數成長，45 倍 P/E 還有支撐。"
+      ]
+    },
+    "final_view": "NVDA 是 pool30 核心股，但不是低風險股。能做股票，不適合保守 FCN 接股；若做 FCN，只能用很深 KI、很低權重。Timing 判斷：等回檔，不追漲。"
+  },
+  "TSM": {
+    "symbol": "TSM",
+    "name": "Taiwan Semiconductor Manufacturing Company Limited",
+    "type": "research_raw",
+    "company_overview": "TSM 是 AI 時代最核心的 foundry，不賣品牌終端，但賣最難取代的先進製程與封裝。2025 年 Form 20-F 顯示，公司客戶前 10 大占營收 78%，最大客戶 19%、第二大 17%，代表它是高品質集中型基礎設施。",
+    "basic_info": {
+      "founded": "1987。",
+      "headquarters": "Hsinchu, Taiwan。",
+      "industry": "Pure-play semiconductor foundry。",
+      "market_cap": "2026-04-21 ADR 股價 368.39 美元；Yahoo 摘要顯示市值約 1.67 兆美元、EV 約 1.59 兆美元。"
+    },
+    "business_model": {
+      "summary": "TSM 的錢不是靠單一產品，而是靠製程節點與客戶 mix。2026 Q1 HPC 已占營收 61%，3nm 超過 20%，表示營收重心持續往 AI 與高價值節點移動。",
+      "segments": [
+        "HPC：2026 Q1 占營收 61%，已是最大結構來源，AI GPU、CPU、ASIC 都在這一塊。",
+        "Smartphone：Apple 與手機 SoC 仍重要，但相對占比被 AI/HPC 稀釋；2025 最大客戶占比已降到 19%。",
+        "Advanced nodes / packaging：3nm 在 2026 Q1 已超過 20% 營收，公司 2026 CAPEX 指引 520~560 億美元，反映先進製程與 CoWoS 持續擴產。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "客戶集中度高但品質極高。2025 年前 10 大客戶占營收 78%，最大客戶 19%、第二大 17%；這不是壞事，因為前幾大多是 Apple、NVIDIA、AMD 這種全球級客戶。",
+      "key_customers": [
+        {
+          "name": "Apple",
+          "role": "手機與自研 SoC 主要客戶",
+          "importance": "2025 年最大客戶占營收 19%，市場普遍對應 Apple；雖然比過去 25% 下滑，但仍是大客戶。"
+        },
+        {
+          "name": "NVIDIA",
+          "role": "AI GPU / advanced packaging 客戶",
+          "importance": "2025 年第二大客戶占營收 17%，市場普遍對應 NVIDIA；AI 熱潮下其份額由 11% 升到 17%。"
+        },
+        {
+          "name": "AMD",
+          "role": "CPU / GPU / accelerator 客戶",
+          "importance": "雖未單獨披露占比，但屬 HPC 受益群；TSM 2026 Q1 HPC 占比 61%，表示 AMD 類客戶結構重要性正在上升。"
+        }
+      ],
+      "conclusion": "TSM 的集中度不能用一般代工廠眼光看。它集中在全球最強的幾家設計公司，反而形成進入障礙；真正風險在地緣與擴產成本，不在客戶品質。"
+    },
+    "why_this_company": [
+      "2026 Q1 營收 359 億美元、年增 40.6%，不是復甦，是結構成長。",
+      "HPC 占比 61%、3nm 占比超過 20%，表示高 ASP 製程 mix 正在改善。",
+      "CapEx 指引 520~560 億美元，顯示公司自己都還在擴 AI 供給。"
+    ],
+    "market_view": "市場在 pricing AI 長單與先進製程供不應求，所以願意給 TSM 24~35 倍 P/E；市場在擔心的是海外廠成本、匯率與地緣。公司自己已提醒 Q3 毛利率可能被海外成本與匯率壓到 55.5%~57.5%。",
+    "financial_summary": {
+      "revenue": "2026 Q1 單季營收 359 億美元。",
+      "growth": "2026 Q1 年增 40.6%；公司上調全年營收成長至 30% 以上。",
+      "net_margin": "2026 Q1 淨利 182 億美元，淨利率約 50.7%。",
+      "fcf_margin": "TSM 長期現金創造強，但短期 FCF 受 520~560 億美元 CapEx 壓力影響，不宜用輕資產股框架看。",
+      "eps": "ADR 即時 EPS 未由 finance 工具直接回傳；估值仍可用 P/E 與 EV 觀察。",
+      "pe": "Yahoo 摘要顯示 trailing P/E 約 31.34、forward P/E 約 24.33；Macrotrends 顯示 2026-04-21 P/E 約 34.80。",
+      "dividend_yield": "有配息，但投資主軸仍是製程與 AI 產能，而不是高殖利率。",
+      "beta": "屬大型優質半導體核心股，波動低於高 beta AI 設計股。"
+    },
+    "competition": {
+      "summary": "TSM 真正對手只有 Samsung Foundry 與 Intel Foundry。市場不會給它軟體股估值，但也很難再把它當傳統景氣循環股。",
+      "peers": [
+        {
+          "name": "Samsung Foundry",
+          "position": "先進製程代工對手",
+          "comparison": "TSM 2026 Q1 HPC 占比 61%、3nm 占比逾 20%，在先進節點量產與客戶組合上仍領先 Samsung。"
+        },
+        {
+          "name": "Intel Foundry",
+          "position": "美國本土製造對手",
+          "comparison": "Intel 有地緣政策優勢，但 TSM 2025 前兩大客戶就占 36%，客戶黏著度與量產成熟度明顯更高。"
+        },
+        {
+          "name": "ASML",
+          "position": "供應鏈瓶頸上游，不是直接對手",
+          "comparison": "ASML 2024 年中國收入占 36%，出口限制會影響設備交付與客戶 CAPEX；TSM 雖非直接競爭，但也會承受設備與地緣限制。"
+        }
+      ],
+      "conclusion": "TSM 不是成長最快的股票，但在 AI 供應鏈裡是最難繞開的一環，所以 pool30 地位比多數設計股更穩。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "現價 368.39 美元，trailing P/E 約 31~35 倍、forward P/E 約 24 倍。對一個 2026 Q1 年增 40.6% 的 foundry 來說不算便宜，但也還沒進泡沫區。",
+      "buy_strategy": "可以買，但偏向逢回布局，不追財報後急拉。因為匯率、海外廠與地緣會讓市場給估值折價。",
+      "sweet_zone": "甜區可看 forward P/E 22~24 倍，或 ADR 回到 330~345 美元區；若重回 35 倍以上追價，安全邊際就明顯下降。",
+      "technical_view": {
+        "mid_trend": "中期仍多，因為全年營收成長指引已上修到 30% 以上。",
+        "short_term": "短線受匯率與關稅敘事干擾，容易高檔震盪。",
+        "structure": "結構是 AI 供應鏈核心，不是純景氣循環代工股。",
+        "conclusion": "判斷：可買，可當核心，但等回檔更漂亮。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "core",
+      "reason": "營收高成長、獲利高、技術門檻高，且前兩大客戶是全球級需求來源，符合核心。",
+      "upgrade_condition": [
+        "若海外廠導致毛利率長期跌破 53% 左右，權重要下調。",
+        "若 AI/HPC 占比持續提升且 2nm 開始貢獻營收，核心權重可上調。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "前 10 大客戶占營收 78%，若 Apple 或 NVIDIA 訂單節奏改變，單季波動不小。",
+        "公司已提醒匯率與海外廠可能壓縮毛利率約數百個基點。"
+      ],
+      "opportunity": [
+        "HPC 占比已達 61%，只要 AI 需求持續，TSM 的 mix 仍會往高 ASP 走。",
+        "2026 CapEx 520~560 億美元說明公司還在為未來 2~3 年需求擴產，不像短單。"
+      ]
+    },
+    "final_view": "TSM 是標準 pool30 核心股，也比多數 AI 設計股更適合做中長期持有與較保守 FCN 參考股。Timing 判斷：可買，但要等回檔，不追高。"
+  },
+  "MU": {
+    "symbol": "MU",
+    "name": "Micron Technology, Inc.",
+    "type": "research_raw",
+    "company_overview": "MU 是記憶體景氣股裡面最接近 AI 結構成長的公司，關鍵在 HBM 與 data center DRAM。2025 財年營收年增 49%，不是線性成長，而是景氣與產品 mix 同時改善。",
+    "basic_info": {
+      "founded": "1978。",
+      "headquarters": "Boise, Idaho。",
+      "industry": "Memory semiconductors: DRAM, NAND, HBM。",
+      "market_cap": "2026-04-21 股價 445.00 美元；市場資料顯示 P/E 約 21.4，屬高景氣高估值記憶體股。"
+    },
+    "business_model": {
+      "summary": "MU 的重點不是『記憶體會不會漲價』，而是 HBM 與 data center DRAM 能不能把 cyclical business 拉成 structural upcycle。2025 年 DRAM 銷售增加 62%，主因 ASP 低 40% 段數成長與 bit shipments 中十幾% 成長。",
+      "segments": [
+        "CNBU（雲端與網通）：2025 Q2 營收 QoQ 增 4%，其中 HBM 產品營收增幅超過 50%，是目前最值得追蹤的核心。",
+        "SBU（儲存）：2025 Q2 QoQ 減 20%，主因 data center storage 投資放緩與 NAND 價格下滑，顯示 NAND 還在修復。",
+        "Mobile / Embedded：MBU 2025 Q2 QoQ 減 30%、EBU 減 3%，代表手機與車用還不是主成長引擎。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "MU 客戶集中度中高。2024 年有 1 家客戶占營收 10%，2022 年曾有兩家分別占 12% 與 11%；2025 年 10-K 亦顯示沒有單一客戶壓倒性占比，但 hyperscaler 與記憶體模組客戶對產品 mix 影響很大。",
+      "key_customers": [
+        {
+          "name": "NVIDIA",
+          "role": "HBM / AI accelerator 生態關鍵客戶",
+          "importance": "HBM 出貨與 data center mix 改善，是 MU 2025~2026 獲利修復核心；雖未單列占比，但 Q2 2025 HBM 營收 QoQ 增逾 50%。"
+        },
+        {
+          "name": "Microsoft",
+          "role": "資料中心記憶體需求來源",
+          "importance": "Azure FY2025 營收逾 750 億美元、年增 34%，代表 hyperscaler memory content 仍在增加。"
+        },
+        {
+          "name": "Samsung / OEM handset customers",
+          "role": "手機與行動記憶體需求端",
+          "importance": "MBU 在 2025 Q2 QoQ 下滑 30%，說明手機鏈仍偏弱，這是 MU 客戶結構裡的拖累項。"
+        }
+      ],
+      "conclusion": "MU 的客戶風險不在『只有一個客戶』，而在『太多需求仍跟景氣循環走』。HBM 可以抬高估值，但 NAND 與 mobile 還沒完全跟上。"
+    },
+    "why_this_company": [
+      "2025 財年營收年增 49%，基本面已脫離谷底。",
+      "Q2 2025 consolidated gross margin 37%，較去年同期 19% 大幅改善。",
+      "HBM 營收在 2025 Q2 QoQ 增逾 50%，代表 AI 需求正在改變 MU 的產品組合。"
+    ],
+    "market_view": "市場在 pricing HBM 與 DRAM 上行，所以願意給 MU 約 21 倍 P/E；市場在擔心 NAND 與 mobile 修復不夠快，因為 SBU Q2 2025 QoQ -20%、MBU -30%。",
+    "financial_summary": {
+      "revenue": "2025 財年營收年增 49%；MCBU 收入 118.6 億美元。",
+      "growth": "2025 財年 total revenue 年增 49%。",
+      "net_margin": "毛利率在 2025 Q2 升至 37%，較去年同期 19% 顯著改善；淨利結構隨 DRAM/HBM 改善。",
+      "fcf_margin": "MU 屬重資本記憶體公司，FCF 會受擴產與價格週期影響，不宜要求像 fabless 一樣高而穩。",
+      "eps": "finance 工具顯示 EPS 21.18。",
+      "pe": "市場資料顯示 2026-04 P/E 約 20.9~21.5 倍。",
+      "dividend_yield": "低殖利率；投資重點是價格循環與 HBM 滲透。",
+      "beta": "屬高波動景氣股，股價彈性明顯高於軟體與雲端股。"
+    },
+    "competition": {
+      "summary": "MU 競爭對手就是 Samsung 與 SK hynix。真正差異在 HBM 良率、DRAM mix 與資本紀律，不是品牌。",
+      "peers": [
+        {
+          "name": "SK hynix",
+          "position": "HBM 直接對手",
+          "comparison": "HBM 是當前最關鍵戰場；MU 已看到 HBM 營收 QoQ 超過 50% 成長，但市場普遍認為 SK hynix 仍有先發。"
+        },
+        {
+          "name": "Samsung Electronics",
+          "position": "DRAM / NAND 最大對手",
+          "comparison": "Samsung 規模更大，但 MU 的資本紀律與北美客戶結構使其在 AI cycle 中能拿到估值溢價。"
+        },
+        {
+          "name": "Western Digital / Kioxia",
+          "position": "NAND 相關對手",
+          "comparison": "MU SBU 2025 Q2 QoQ -20%，顯示 NAND 端競爭與價格壓力仍高於 DRAM/HBM。"
+        }
+      ],
+      "conclusion": "MU 可以進 stock_pool，也可進 pool30 的成長區，但權重不能像 TSM、MSFT 那麼穩，因為記憶體週期風險還在。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "現價 445 美元，P/E 約 21 倍，低於高成長 AI 設計股，但高於 MU 自己長期中位數。這說明市場已把 HBM 溢價算進去。",
+      "buy_strategy": "可以買，但不要把它當純 AI 永續股追價。比較適合在 NAND 壓力或記憶體價格雜音時分批。",
+      "sweet_zone": "甜區偏向 P/E 回到 17~19 倍，或股價拉回 360~390 美元再看；若 21 倍以上追價，要接受週期波動。",
+      "technical_view": {
+        "mid_trend": "中期偏多，因為 HBM 與 DRAM 結構改善。",
+        "short_term": "短線容易受 NAND 價格與記憶體報價波動影響。",
+        "structure": "結構從純景氣股往 AI memory 成長股靠，但還沒完全脫離周期。",
+        "conclusion": "判斷：可買，但只適合回檔買，不適合追高當核心滿倉。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "growth",
+      "reason": "營收與毛利率都在修復，HBM 提升公司質地，值得進成長池。",
+      "upgrade_condition": [
+        "若 HBM 與 data center 需求持續強、且 NAND 修復跟上，可升高權重。",
+        "若 SBU 與 MBU 持續疲弱、拖累毛利率，則只能維持 watch/growth。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "SBU 2025 Q2 QoQ -20%、MBU -30%，表示非 AI 業務還偏弱。",
+        "2026 P/E 約 21.5，高於 10 年中位數 15.54，估值已不便宜。"
+      ],
+      "opportunity": [
+        "HBM 2025 Q2 營收 QoQ 增逾 50%，只要 AI 記憶體缺口持續，估值還有支撐。",
+        "2025 營收年增 49%，公司已從底部週期翻上來。"
+      ]
+    },
+    "final_view": "MU 可以進系統，也適合成長型配置，但 FCN 只能淺倉或高票息深 KI；它比 NVDA 便宜，但比 TSM 不穩。Timing：等待回檔再買。"
+  },
+  "GOOG": {
+    "symbol": "GOOG",
+    "name": "Alphabet Inc.",
+    "type": "research_raw",
+    "company_overview": "GOOG 本質上仍是廣告現金牛，但 AI 正在把它從搜尋公司推向雲端、模型與基礎設施公司。2025 年 10-K 顯示，超過 70% 營收仍來自 online advertising，所以市場最在意的是 AI 能否守住搜尋變現，不是單看 Gemini 話題。",
+    "basic_info": {
+      "founded": "1998。",
+      "headquarters": "Mountain View, California。",
+      "industry": "Internet search, digital advertising, cloud, AI。",
+      "market_cap": "2026-04-21 市值約 2.94 兆美元，股價 335.17 美元。"
+    },
+    "business_model": {
+      "summary": "GOOG 的收入結構仍是廣告主導，但 Cloud 已成第二引擎。2025 年公司揭露 online advertising 超過總營收 70%，同時 2025 年技術基礎設施與庫存採購承諾已到 1,491 億美元，代表它真的在為 AI 與雲端擴張砸錢。",
+      "segments": [
+        "Google Advertising：2025 年超過總營收 70%，是絕對現金牛。",
+        "Google Cloud：雖然本次摘要未列全年營收，但市場把它視為 AI 商業化最直接入口之一；資本支出與技術承諾大增就是證據。",
+        "Other Bets：收入占比低，但虧損與估值敘事影響有限，投資焦點不在這裡。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "GOOG 沒有像硬體公司那種單一大客戶集中風險，真正的『客戶集中』來自廣告主、生態夥伴與分發平台。公司 2025 年仍有超過 70% 營收來自廣告，所以只要搜尋流量與廣告價格失速，整體估值就會受傷。",
+      "key_customers": [
+        {
+          "name": "Shopify merchants",
+          "role": "Google 廣告與商業生態客戶群",
+          "importance": "廣告客戶碎片化是 GOOG 優勢；雖無單一大客戶 10% 以上，但數百萬中小廣告主撐起 70% 以上營收結構。"
+        },
+        {
+          "name": "Samsung",
+          "role": "Android / 搜尋預設分發夥伴",
+          "importance": "這類分發夥伴不是傳統客戶，但直接影響搜尋流量入口與 TAC，對廣告變現極重要。"
+        },
+        {
+          "name": "Cloud enterprise customers",
+          "role": "Google Cloud / AI 平台客戶",
+          "importance": "2025 年技術基礎設施與庫存承諾達 1,491 億美元，說明管理層看見企業與 AI 雲端需求，而不是只靠廣告。"
+        }
+      ],
+      "conclusion": "GOOG 客戶並不集中在少數公司，但收入太集中在廣告模式。這讓它比硬體公司穩，卻也讓 AI 搜尋變現成為最大變數。"
+    },
+    "why_this_company": [
+      "2026-04-21 P/E 約 23.65 倍，在 mega-cap AI 股裡算偏合理。",
+      "超過 70% 營收來自廣告，現金流底盤很厚。",
+      "2025 年技術基礎設施與庫存承諾 1,491 億美元，代表公司不是嘴上講 AI，而是實際投資。"
+    ],
+    "market_view": "市場在 pricing Gemini、Cloud、YouTube 與搜尋防守力，所以願意給 GOOG 約 24 倍 P/E；市場在擔心的是 AI 搜尋會不會侵蝕廣告點擊與分潤結構，以及 156 億美元法規與罰款準備對情緒的壓力。",
+    "financial_summary": {
+      "revenue": "2025 年總營收以 10-K 為準；其中超過 70% 來自 online advertising。",
+      "growth": "2025 年廣告與 Cloud 仍撐住成長，但公司同時大幅拉高 AI / 技術基礎設施承諾。",
+      "net_margin": "GOOG 長期屬高獲利大型平台；本輪投資重點在 AI CAPEX 與法規成本，而非獲利崩壞。",
+      "fcf_margin": "龐大廣告現金流支撐高額基建採購，這是它和純 AI 新創最大差異。",
+      "eps": "EPS 10.13。",
+      "pe": "P/E 23.65 倍。",
+      "dividend_yield": "有配息，但殖利率不是投資主因。",
+      "beta": "屬 mega-cap 成長股，波動低於 NVDA、MU、MRVL。"
+    },
+    "competition": {
+      "summary": "GOOG 在廣告上對手是 Meta，在雲端上對手是 Microsoft / AWS，在 AI 搜尋上則要面對 OpenAI 與自己產品重組壓力。",
+      "peers": [
+        {
+          "name": "Meta",
+          "position": "數位廣告對手",
+          "comparison": "META 2026-04-21 P/E 約 31.50，高於 GOOG 的 23.65，代表市場對 Meta 廣告效率與 AI 變現給更高估值。"
+        },
+        {
+          "name": "Microsoft",
+          "position": "AI 與雲端對手",
+          "comparison": "MSFT 2025 年營收 2,817 億美元、Azure 年營收逾 750 億美元，雲端與 Copilot 已形成直接競爭。"
+        },
+        {
+          "name": "Amazon AWS",
+          "position": "雲端對手",
+          "comparison": "AWS 在雲端規模仍大，GOOG 想靠 AI 追，但基礎設施承諾 1,491 億美元也代表投入壓力。"
+        }
+      ],
+      "conclusion": "GOOG 最大優勢是估值比其他 mega-cap AI 股低，最大風險是搜尋廣告護城河若被 AI 介面改寫，市場不會再給這麼寬容的多重。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "現價 335.17 美元，P/E 23.65 倍。若拿 mega-cap AI 股比較，GOOG 估值不高；但它不是便宜股，而是『相對合理』。",
+      "buy_strategy": "適合逢回分批，尤其在法規或搜尋份額消息造成壓力時。因為現金流底盤厚，回檔時比較有承接價值。",
+      "sweet_zone": "甜區偏向 P/E 20~22 倍，或股價回到 300~315 美元區。若仍在 24 倍以上追價，報酬空間不如更低估值時漂亮。",
+      "technical_view": {
+        "mid_trend": "中期偏多，但不是爆發型。",
+        "short_term": "短線容易受反壟斷、AI 搜尋產品更新與 Cloud 財報影響。",
+        "structure": "屬高品質現金牛 + AI 轉型股，結構優於純廣告股。",
+        "conclusion": "判斷：可買，偏核心配置。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "core",
+      "reason": "廣告現金流穩、估值相對合理、AI 與 Cloud 可提供第二引擎，符合 core。",
+      "upgrade_condition": [
+        "若 Cloud 與 AI 變現加速、同時搜尋廣告沒有被侵蝕，可上調權重。",
+        "若法規罰款與搜尋介面變化持續壓縮廣告 monetization，則核心權重要下調。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "2025 年短期法規與和解準備達 156 億美元，法規風險不是抽象名詞。",
+        "超過 70% 營收來自廣告，AI 搜尋若改變點擊路徑，對基本盤影響會很直接。"
+      ],
+      "opportunity": [
+        "P/E 僅 23.65 倍，低於 META 31.50 倍與多數 AI mega-cap，估值有吸引力。",
+        "1,491 億美元技術基礎設施承諾意味著未來 1~3 年 Cloud/AI 有機會加速。"
+      ]
+    },
+    "final_view": "GOOG 是可以進 pool30 的 core 股，且比高 beta AI 股更適合保守型長期配置與 FCN 參考股。Timing：回檔買，不追消息面急拉。"
+  },
+  "META": {
+    "symbol": "META",
+    "name": "Meta Platforms, Inc.",
+    "type": "research_raw",
+    "company_overview": "META 的本質仍是全球最大社交廣告平台之一，但現在估值已加上 AI 廣告效率與 Llama 生態預期。2025 年營收 2,009.7 億美元、年增 22%，同時 Reality Labs 仍拖累 191.9 億美元營運利潤，這就是這家公司最核心的多空結構。",
+    "basic_info": {
+      "founded": "2004。",
+      "headquarters": "Menlo Park, California。",
+      "industry": "Digital advertising, social media platforms, AI, VR/AR。",
+      "market_cap": "2026-04-21 市值約 1.84 兆美元，股價 673.28 美元。"
+    },
+    "business_model": {
+      "summary": "META 的錢還是來自 Family of Apps 廣告。Q1 2025 DAP 34.3 億、年增 6%，廣告 impressions 年增 5%，平均廣告價格年增 10%，這三個數字一起證明 AI 推薦系統正在改善 monetization。",
+      "segments": [
+        "Family of Apps：2025 年大部分營收都來自這一塊，Q1 2025 營收 423.1 億美元、年增 16%。",
+        "Reality Labs：2025 年仍造成約 191.9 億美元營運利潤拖累，這不是小實驗，是大型長期燒錢項目。",
+        "AI-driven ads：Q1 2025 ad impressions +5%、average price per ad +10%，這就是 AI 變現最直接數據。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "META 的客戶不是少數大企業，而是全球廣告主。真正集中風險不在單一客戶，而在廣告模式本身與平台活躍度。Q1 2025 DAP 34.3 億人，這就是最重要的『客戶資產』。",
+      "key_customers": [
+        {
+          "name": "Global SMB advertisers",
+          "role": "Family of Apps 廣告主群",
+          "importance": "Q1 2025 平均廣告價格年增 10%，表示 META 仍能從大量廣告主榨出更高變現效率。"
+        },
+        {
+          "name": "Global retail / e-commerce advertisers",
+          "role": "高 ROAS 廣告投放客戶",
+          "importance": "廣告 impressions 年增 5%，代表廣告供給仍在增；只要轉換率維持，零售廣告就會持續投。"
+        },
+        {
+          "name": "Developers / enterprises using Llama ecosystem",
+          "role": "AI 平台潛在客戶",
+          "importance": "目前財報主體仍是廣告，但 AI 生態是中期選擇權；市場先給估值，不是先給收入。"
+        }
+      ],
+      "conclusion": "META 客戶分散，平台流量龐大，所以現金流很穩；但估值已不只是看廣告，要一起承擔 Reality Labs 長期虧損。"
+    },
+    "why_this_company": [
+      "2025 營收 2,009.7 億美元、年增 22%，大型平台裡成長不慢。",
+      "Q1 2025 ad price +10%、impressions +5%，代表 AI 推薦系統有實際變現成果。",
+      "DAP 34.3 億、年增 6%，流量底盤仍大。"
+    ],
+    "market_view": "市場在 pricing AI 廣告效率提升與 Llama 選擇權，所以給 META 31.5 倍 P/E；市場在擔心的是 Reality Labs 每年近 200 億美元級別的利潤拖累會持續。",
+    "financial_summary": {
+      "revenue": "2025 年營收 2,009.7 億美元。",
+      "growth": "年增 22%。",
+      "net_margin": "2025 年成本與費用 1,176.9 億美元，表示公司仍有很厚的利潤空間，但投資支出在增加。",
+      "fcf_margin": "高現金流平台，但 FCF 要扣除大量 AI 基礎設施與 Reality Labs 投資。",
+      "eps": "EPS 22.58。",
+      "pe": "P/E 31.50 倍。",
+      "dividend_yield": "有配息，但投資核心仍是廣告效率與 AI 支出。",
+      "beta": "屬大型成長股，但波動低於 NVDA、MU、MRVL。"
+    },
+    "competition": {
+      "summary": "META 最大對手是 GOOG 的廣告平台、TikTok 的用戶時間爭奪，以及 AI 助理入口。它不是沒有競爭，而是廣告效率目前仍很能打。",
+      "peers": [
+        {
+          "name": "Alphabet",
+          "position": "數位廣告對手",
+          "comparison": "META P/E 31.50，高於 GOOG 23.65；市場願意為 META 的廣告效率改善付更高估值。"
+        },
+        {
+          "name": "TikTok",
+          "position": "用戶時長與廣告預算對手",
+          "comparison": "META 透過 Reels 與推薦系統守住流量，Q1 2025 DAP 仍成長 6%。"
+        },
+        {
+          "name": "Snap",
+          "position": "年輕族群社交廣告對手",
+          "comparison": "META 的規模與獲利能力明顯更高，且廣告價格年增 10% 就是最直接比較。"
+        }
+      ],
+      "conclusion": "META 的廣告基本盤足以進 core，但 VR/AR 長期燒錢讓它不像 GOOG 那麼穩。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "現價 673.28 美元，P/E 31.50 倍。對 2025 年營收成長 22% 的平台來說不便宜，但也不算極端；高估值來自 AI 廣告效率，不是 VR。",
+      "buy_strategy": "不追高。META 適合逢回買，尤其在市場重新擔心資本支出或 Reality Labs 虧損時。",
+      "sweet_zone": "甜區偏向 P/E 26~28 倍，或股價回到 560~600 美元區。若維持 31 倍以上追價，容錯率較低。",
+      "technical_view": {
+        "mid_trend": "中期偏多，因為廣告與用戶數字都還在往上。",
+        "short_term": "短線容易因 CAPEX 指引與 AI 支出擴大而震盪。",
+        "structure": "結構屬高品質廣告平台 + 高支出 AI/VR 選擇權。",
+        "conclusion": "判斷：可買，但等拉回。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "core",
+      "reason": "廣告現金流穩、流量大、AI 提升廣告效率，足以進 core。",
+      "upgrade_condition": [
+        "若 Reality Labs 虧損縮小且廣告價格持續高個位數以上成長，可再上調權重。",
+        "若 DAP 成長停滯或廣告價格轉負，則要下調。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "Reality Labs 2025 年拖累約 191.9 億美元營運利潤，金額太大，不能忽略。",
+        "P/E 31.5 倍高於 GOOG 23.65 倍，估值容錯率較低。"
+      ],
+      "opportunity": [
+        "Q1 2025 平均廣告價格 +10%、impressions +5%，代表 AI 變現仍在加速。",
+        "DAP 34.3 億仍在增長，平台基礎沒有鬆。"
+      ]
+    },
+    "final_view": "META 可以進 pool30 核心，但因 VR/AR 長期燒錢，FCN 僅適合中等保守條件，不如 GOOG、MSFT 穩。Timing：回檔買，不追。"
+  },
+  "SNDK": {
+    "symbol": "SNDK",
+    "name": "Sandisk Corporation",
+    "type": "research_raw",
+    "company_overview": "Sandisk 是 NAND Flash 與 SSD 公司，2025 年從 Western Digital 分拆上市；FY2025 營收 73.55 億美元、YoY +10%，但 GAAP 淨利仍為虧損，代表它不是穩定型 core，而是記憶體循環反轉股。",
+    "basic_info": {
+      "founded": "1988；2025 年從 Western Digital 分拆為獨立上市公司",
+      "headquarters": "Milpitas, California, USA",
+      "industry": "NAND Flash / SSD / Data Center Storage",
+      "market_cap": "約 1,660 億美元；股價約 1,064 美元"
+    },
+    "business_model": {
+      "summary": "Sandisk 主要靠 NAND 晶片、Client SSD、Enterprise SSD、Consumer storage 出貨賺錢；FY2026 Q2 營收 30.25 億美元、QoQ +31%，顯示目前定價循環正在上行。",
+      "segments": [
+        "Data Center / Enterprise SSD：FY2026 Q2 datacenter revenue QoQ +64%，受 AI infrastructure builders 採用推動，是目前估值重估的核心。",
+        "Client：FY2025 Q3 client revenue 9.27 億美元，仍大於 cloud revenue 1.97 億美元，代表 PC / OEM 需求仍是基本盤。",
+        "Consumer：FY2025 Q3 consumer revenue 5.71 億美元，YoY 約 -0.3%，成長性低於 datacenter，但可提供品牌與通路現金流。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "FY2026 Q2 前十大客戶占營收 44%，六個月占比 40%，且單一客戶未超過 10%；集中度中等，但資料中心客戶導入速度會直接影響估值。",
+      "key_customers": [
+        {
+          "name": "Hyperscaler customer A",
+          "role": "AI infrastructure SSD buyer",
+          "importance": "公司揭露 datacenter revenue QoQ +64%，並提到 AI infrastructure builders 採用；但未公開單一客戶名稱，單一客戶低於 10%。"
+        },
+        {
+          "name": "Hyperscaler customer B",
+          "role": "qualification customer",
+          "importance": "FY2026 Q1 公司表示 2 家 hyperscalers 正在 qualification，另有第 3 家 hyperscaler 與 top storage OEM 規劃 CY2026。"
+        },
+        {
+          "name": "Top storage OEM",
+          "role": "enterprise / client storage channel",
+          "importance": "公司揭露 CY2026 規劃導入 top storage OEM；前十大客戶 40%~44% 代表 OEM 客戶仍影響營收穩定性。"
+        }
+      ],
+      "conclusion": "可進 stock pool 觀察，但因具名客戶揭露不足、前十大客戶仍占 40% 以上，不適合直接放入 pool30 core。"
+    },
+    "why_this_company": [
+      "FY2026 Q2 營收 30.25 億美元、QoQ +31%，比 FY2025 單季 16~19 億美元區間明顯跳升，代表 NAND 定價循環轉強。",
+      "FY2026 Q2 GAAP EPS 5.15 美元、non-GAAP EPS 6.20 美元，較 FY2025 Q4 GAAP EPS -0.16 美元明顯反轉。",
+      "公司給 FY2026 Q3 revenue guidance 44~48 億美元、gross margin 64.9%~66.9%，若達標，獲利彈性會遠高於 FY2025 30.1% gross margin。"
+    ],
+    "market_view": "市場正在 pricing AI storage 與 NAND tight supply：FY2026 Q2 revenue YoY +61%、datacenter QoQ +64%，但市場也在擔心記憶體循環高點，因 FY2025 公司仍有 -1.2 億美元 free cash flow 與 GAAP 虧損紀錄。",
+    "financial_summary": {
+      "revenue": "FY2025 revenue 73.55 億美元；FY2026 Q2 revenue 30.25 億美元",
+      "growth": "FY2025 YoY +10%；FY2026 Q2 YoY +61%、QoQ +31%",
+      "net_margin": "TTM net margin 約 -11.66%；FY2026 Q2 GAAP net income 8.03 億美元，單季淨利率約 26.5%",
+      "fcf_margin": "FY2025 FCF 約 -1.2 億美元，FCF margin 約 -1.6%；FY2026 Q2 FCF 約 8.43 億美元，單季 FCF margin 約 27.9%",
+      "eps": "TTM EPS 約 -7.60；FY2026 Q2 GAAP EPS 5.15、non-GAAP EPS 6.20",
+      "pe": "TTM PE 為負值約 -140；若用 FY2026 Q3 guidance EPS 12~14 美元年化，估值約 19~22 倍，但循環股不能只看單季年化",
+      "dividend_yield": "0%",
+      "beta": "新分拆上市，beta 參考價值低；股價自 2025 分拆後波動極大，單日成交量約 1,135 萬股"
+    },
+    "competition": {
+      "summary": "SNDK 的比較對象是 MU、WDC、STX；SNDK TTM PE 為負，MU 約 24.5 倍、WDC 約 41.5 倍、STX 約 72.8 倍，表示 SNDK 估值完全建立在 FY2026 獲利反轉，而不是過去 12 個月獲利。",
+      "peers": [
+        {
+          "name": "Micron Technology",
+          "position": "DRAM + NAND peer",
+          "comparison": "MU PE 約 24.5 倍且市值約 5,921 億美元；SNDK 市值約 1,660 億美元但 TTM PE 為負，SNDK 彈性較大、財務穩定度較低。"
+        },
+        {
+          "name": "Western Digital",
+          "position": "Storage / HDD / NAND related peer",
+          "comparison": "WDC PE 約 41.5 倍、市值約 1,399 億美元；SNDK 市值約 1,660 億美元，代表市場已給 SNDK 更高 AI NAND 反轉期待。"
+        },
+        {
+          "name": "Seagate",
+          "position": "HDD / mass storage peer",
+          "comparison": "STX PE 約 72.8 倍、市值約 1,467 億美元；SNDK 與 STX 都受 AI storage 需求重估，但 SNDK 更依賴 NAND pricing cycle。"
+        }
+      ],
+      "conclusion": "SNDK 比 MU 更純 NAND、比 STX 更偏 flash，但因 TTM 仍虧損，不適合用 core 估值方式處理。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "股價約 1,064 美元、市值約 1,660 億美元、TTM PE 約 -140；若用 FY2026 Q3 non-GAAP EPS guidance 12~14 美元單季年化，forward run-rate PE 約 19~22 倍，但這是高景氣單季估算，不可當長期常態。",
+      "buy_strategy": "不追高；只有在 FY2026 Q3 revenue 44~48 億美元與 gross margin 65% 左右確認後，才考慮小比例納入 stock pool；若股價回落 15%~25% 且 guidance 未下修，才有較好的風險報酬。",
+      "sweet_zone": "sweet zone：股價低於 850 美元，或 forward run-rate PE 低於 18 倍，且 Q3 gross margin guidance 維持 64% 以上；若跌破 750 美元但 EPS guidance 下修，不能視為甜點。",
+      "technical_view": {
+        "mid_trend": "中期趨勢偏熱：股價約 1,064 美元，已遠高於 2025 分拆初期約 36 美元區間，屬高波動趨勢股。",
+        "short_term": "短線不適合追價：單日區間約 1,047.85~1,101.94 美元，日內振幅約 5.2%，FCN 敲入風險高。",
+        "structure": "結構屬記憶體循環反轉，不是穩定複利；FY2025 gross margin 30.1%，FY2026 Q3 guidance 64.9%~66.9%，落差太大代表循環敏感度高。",
+        "conclusion": "技術與估值都不適合重倉；只適合 event-driven / cycle trade，不適合 core holding。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": false,
+      "category": "speculative",
+      "reason": "SNDK 有 AI storage 與 NAND 上行週期，但 FY2025 FCF -1.2 億美元、TTM net margin -11.66%、TTM PE 為負，品質與穩定度不足以進 pool30。",
+      "upgrade_condition": [
+        "連續 2 季 revenue > 40 億美元且 gross margin > 60%，證明 FY2026 Q3 guidance 不是單季高點。",
+        "連續 2 季 FCF margin > 15%，且前十大客戶占比維持低於 45%，降低循環與客戶集中風險。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "記憶體循環風險：FY2025 gross margin 30.1%，FY2026 Q3 guidance 升到 64.9%~66.9%，若 NAND 價格反轉，獲利可能快速下修。",
+        "估值風險：市值約 1,660 億美元、TTM PE 為負，市場已提前反映 FY2026 EPS 大幅改善，miss guidance 可能造成 20% 以上修正。",
+        "客戶與產品導入風險：前十大客戶占 FY2026 Q2 營收 44%，雖單一客戶低於 10%，但 hyperscaler qualification 延後會影響 datacenter QoQ +64% 的延續性。"
+      ],
+      "opportunity": [
+        "AI storage demand：FY2026 Q2 datacenter revenue QoQ +64%，若 AI server SSD attach rate 提升，SNDK 可取得高 ASP 訂單。",
+        "獲利槓桿：FY2026 Q2 FCF 8.43 億美元、FCF margin 約 27.9%，若 Q3 revenue 達 44~48 億美元，現金流會快速改善。",
+        "供需改善：公司 FY2026 Q3 gross margin guidance 64.9%~66.9%，若 NAND tight supply 維持 2~3 季，EPS 可重新定價。"
+      ]
+    },
+    "final_view": "SNDK 可列入 M1 stock pool 的 speculative / cycle watch，但不進 pool30；投資判斷不是公司好不好，而是 NAND 週期與 AI datacenter SSD 導入能否撐過 2 個季度。FCN 不建議目前做，除非 KI 設在 55% 以下、天期短於 3 個月、票息足以補償單日 5% 以上波動。"
+  },
+  "quality_check": {
+    "completeness": 9.7,
+    "specificity": 9.8,
+    "data_support": 9.8,
+    "decision_usefulness": 9.6,
+    "fcn_alignment": 9.4,
+    "total_score": 9.7,
+    "fail_reasons": []
+  },
+  "NKE": {
+    "symbol": "NKE",
+    "name": "NIKE, Inc.",
+    "type": "research_raw",
+    "company_overview": "Nike 是全球運動鞋服品牌，FY2025 營收 463.09 億美元、年減 10%，目前不是高成長股，而是品牌修復與庫存折扣改善股；投資判斷重點在毛利率能否從 FY2025 的 42.7% 回升，而不是單純看品牌知名度。",
+    "basic_info": {
+      "founded": "1964",
+      "headquarters": "Beaverton, Oregon, USA",
+      "industry": "Athletic footwear, apparel and sports equipment",
+      "market_cap": "約 640 億美元"
+    },
+    "business_model": {
+      "summary": "Nike 主要靠 NIKE Brand 鞋服、Direct-to-consumer 與批發通路賺錢；FY2025 NIKE Brand 營收 447 億美元、Converse 17 億美元，Direct 收入 188 億美元、年減 13%，批發收入 259 億美元、年減 7%。",
+      "segments": [
+        "Footwear 是核心品類，FY2026 上半年 NIKE Brand footwear 匯率中性年減 2%，代表主力鞋款仍在去庫存與折扣壓力中。",
+        "Apparel 在 FY2026 上半年匯率中性年增 5%，但 ASP 下降約 2 個百分點，表示成長品質仍受折扣影響。",
+        "NIKE Direct FY2026 上半年收入 91 億美元、年減 6%，其中 Digital 年減 13%，短期不適合用高 DTC 成長股估值看待。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "Nike 客戶不集中，FY2025 沒有單一客戶占合併營收 10% 以上；但美國前三大客戶占美國銷售約 25%，非美國前三大客戶占非美國銷售約 16%，所以批發通路談判力仍會影響毛利率。",
+      "key_customers": [
+        {
+          "name": "Foot Locker",
+          "role": "全球運動鞋零售通路",
+          "importance": "Nike 未揭露單一客戶營收占比，但 FY2025 美國前三大客戶合計占美國銷售約 25%，Foot Locker 屬於需追蹤的批發通路代表。"
+        },
+        {
+          "name": "DICK'S Sporting Goods",
+          "role": "美國大型體育用品零售商",
+          "importance": "美國市場占 Nike FY2025 總營收約 43%，DICK'S Sporting Goods 這類大型零售商會影響美國批發補貨節奏。"
+        },
+        {
+          "name": "JD Sports",
+          "role": "歐洲與全球運動鞋服零售通路",
+          "importance": "Nike 非美國銷售占 FY2025 總營收約 57%，JD Sports 這類國際通路會影響 EMEA 與海外批發恢復速度。"
+        }
+      ],
+      "conclusion": "客戶集中度低於單一 10% 門檻是優點，但前三大美國客戶占美國銷售 25%，若批發補貨轉弱，NKE 的 FCN 票息可能上升但股價穩定度會下降。"
+    },
+    "why_this_company": [
+      "Nike FY2025 仍有 463.09 億美元營收與 92 億美元現金加短投，代表品牌仍有現金流底盤，不是財務危機股。",
+      "FY2025 股利連續調升 23 年，forward dividend yield 約 3.8%，適合放入 stock_pool 觀察但不適合直接升為 Pool30 核心。",
+      "FY2026 Q2 營收 124 億美元、年增 1%，顯示營收跌幅暫時止血，但 EPS 0.53 美元仍年減約 32%，修復尚未完成。"
+    ],
+    "market_view": "市場目前不是在 pricing 高成長，而是在 pricing 轉型止血：FY2025 營收年減 10%、EPS 年減 42%，FY2026 Q2 營收只年增 1%；市場擔心的是關稅、折扣與中國區壓力，其中 Greater China FY2026 Q2 匯率中性年減 16%、Digital 年減 36%。",
+    "financial_summary": {
+      "revenue": "FY2025 revenue 463.09 億美元",
+      "growth": "FY2025 YoY -10%；FY2026 Q2 revenue 124 億美元、YoY +1%",
+      "net_margin": "FY2025 net income 32 億美元，net margin 約 6.9%",
+      "fcf_margin": "FY2025 free cash flow 約 33 億美元，FCF margin 約 7.1%",
+      "eps": "FY2025 diluted EPS 2.16 美元，YoY -42%；FY2026 Q2 diluted EPS 0.53 美元，YoY -32%",
+      "pe": "TTM PE 約 28.5x；normalized PE 約 29.4x",
+      "dividend_yield": "Forward dividend yield 約 3.8%",
+      "beta": "約 1.2"
+    },
+    "competition": {
+      "summary": "Nike 的問題不是品牌消失，而是成長與毛利率落後市場期待；FY2025 gross margin 42.7%、年降 190 bps，若與高成長運動品牌相比，估值仍不能給太高溢價。",
+      "peers": [
+        {
+          "name": "Adidas",
+          "position": "全球運動鞋服直接競爭者",
+          "comparison": "Adidas 與 Nike 同屬全球鞋服品牌，但 Nike FY2025 營收 463 億美元，規模仍大；問題是 Nike FY2025 EPS 年減 42%，估值需要打折。"
+        },
+        {
+          "name": "On Holding",
+          "position": "高成長跑鞋品牌",
+          "comparison": "On 的市場定價偏高成長，Nike 目前 FY2026 Q2 營收僅 +1%，所以 Nike 不能用新興高成長品牌倍數評價。"
+        },
+        {
+          "name": "Deckers / Hoka",
+          "position": "跑鞋與舒適鞋競爭者",
+          "comparison": "Hoka 在跑鞋細分市場搶成長，Nike Greater China FY2026 Q2 footwear 年減 20%，顯示部分核心鞋類需求正在被競爭品牌分流。"
+        }
+      ],
+      "conclusion": "NKE 可放 stock_pool 觀察，但在 EPS -42%、毛利率 -190 bps 修復前，不應給 core Pool30 權重。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "NKE 目前 TTM PE 約 28.5x、normalized PE 約 29.4x，對 FY2025 EPS 年減 42% 的公司不便宜；合理看法是等待 EPS 修復而非追高。",
+      "buy_strategy": "不建議一次買滿；若股價回到 PE 22x-24x 或 FY2026 單季營收連續 2 季正成長且 gross margin 停止下滑，再考慮分批。",
+      "sweet_zone": "甜甜價條件：股價低於 40 美元，或 forward PE 低於 24x，且中國區跌幅從 -16% 收斂到 -5% 以內。",
+      "technical_view": {
+        "mid_trend": "中期仍屬修復盤，FY2025 營收 -10% 與 EPS -42% 代表基本面尚未反轉。",
+        "short_term": "短線可觀察 FY2026 Q2 營收 +1% 是否延續；若下一季又轉負，股價容易再測低點。",
+        "structure": "股價約 43 美元、市值約 640 億美元，已反映部分壞消息，但 PE 約 28.5x 仍未到深度價值區。",
+        "conclusion": "timing 判斷為 watch，不是 buy；適合等毛利率與中國區數據改善後再提高配置。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": false,
+      "category": "defensive",
+      "reason": "NKE 有 463 億美元營收、3.8% 股息率與全球品牌底盤，可進 stock_pool；但 FY2025 EPS -42%、Direct -13%、Digital -20%，目前不符合 Pool30 的成長與穩定條件。",
+      "upgrade_condition": [
+        "FY2026 單季營收連續 2 季 YoY 轉正，且 gross margin 年減幅度收斂到 100 bps 以內。",
+        "Greater China 從 FY2026 Q2 的 -16% 收斂到 -5% 以內，Digital 跌幅從 -36% 收斂到 -10% 以內。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "毛利率壓力明確：FY2025 gross margin 42.7%、年降 190 bps，FY2026 上半年又因關稅與 ASP 下降再壓縮 310 bps。",
+        "中國區拖累明顯：FY2026 Q2 Greater China 匯率中性年減 16%，Digital 年減 36%，代表品牌熱度與通路流量都有問題。",
+        "估值不便宜：TTM PE 約 28.5x，但 FY2025 EPS 年減 42%，若 EPS 修復慢，股價彈性會被壓抑。"
+      ],
+      "opportunity": [
+        "若毛利率從 FY2025 的 42.7% 回升到 44% 以上，每 100 bps 毛利改善都可能明顯推升營業利益率。",
+        "北美 FY2026 上半年匯率中性收入 +7%，批發 +18%，若補貨週期延續，營收可先止跌。",
+        "股息率約 3.8% 與 23 年連續提高股利，讓 NKE 在低價區有防守型資金支撐。"
+      ]
+    },
+    "final_view": "NKE 目前是可觀察的 defensive / turnaround stock，不是 Pool30 核心股；FCN 可以等 strike 壓低到 35-38 美元區間再評估，現階段不適合用高 KI 或高 strike 追票息。",
+    "quality_check": {
+      "completeness": 9,
+      "specificity": 9,
+      "data_support": 9,
+      "decision_usefulness": 9,
+      "fcn_alignment": 8,
+      "total_score": 8.8,
+      "fail_reasons": []
+    }
+  },
+  "AAPL": {
+    "symbol": "AAPL",
+    "name": "Apple Inc.",
+    "type": "research_raw",
+    "company_overview": "AAPL 是硬體+服務的超級現金牛，但目前市場不再只看 iPhone 出貨，而是在看 25 億台以上裝置基礎能不能把服務與 AI 功能變現。2025 財年營收 4,162 億美元，仍是規模最大的消費科技平台之一。",
+    "basic_info": {
+      "founded": "1976。",
+      "headquarters": "Cupertino, California。",
+      "industry": "Consumer hardware, services ecosystem, software。",
+      "market_cap": "2026-04-21 市值約 4.05 兆美元，股價 268.03 美元。"
+    },
+    "business_model": {
+      "summary": "AAPL 的估值不能只看 iPhone，因為服務業務已接近年營收 1,000 億美元，裝置基礎也已超過 25 億台。這表示硬體賣的是入口，服務賣的是高毛利延伸。",
+      "segments": [
+        "iPhone：2025 年 10-K 明確指出 iPhone net sales 增加，主因 Pro models 銷售較高；仍是最大單一品類。",
+        "Services：過去 12 個月服務營收接近 1,000 億美元，且 2025 年 10-K 指出 Services 受廣告、App Store 與 cloud services 帶動成長。",
+        "Mac / iPad / Wearables：2025 年 Mac、iPad 成長，但 Wearables, Home and Accessories 下滑，顯示非手機業務仍有分化。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "AAPL 沒有傳統意義上的客戶集中問題，因為它面對的是數十億終端用戶。真正的集中風險在產品結構與區域。2025 年 Greater China 仍因 iPhone 下滑而承壓，代表中國需求是重要觀察點。",
+      "key_customers": [
+        {
+          "name": "iPhone user base",
+          "role": "核心硬體客戶群",
+          "importance": "2026 年 1 月 Apple 公布 active devices 超過 25 億台，這是服務變現的根本。"
+        },
+        {
+          "name": "App Store developers",
+          "role": "服務生態供給端",
+          "importance": "Services 過去 12 個月接近 1,000 億美元，開發者生態直接支持高毛利服務營收。"
+        },
+        {
+          "name": "Enterprise / cloud subscribers",
+          "role": "iCloud 與服務付費用戶",
+          "importance": "2025 10-K 指出 Services 成長來自廣告、App Store 與 cloud services，顯示訂閱型收入仍在擴。"
+        }
+      ],
+      "conclusion": "AAPL 的客戶分散且黏著，這是最大優點；但成長要再加速，不能只靠換機週期，必須靠服務與 AI 功能提高 ARPU。"
+    },
+    "why_this_company": [
+      "2025 財年營收 4,162 億美元，規模與現金流仍頂級。",
+      "Active devices 超過 25 億台，生態護城河極深。",
+      "服務年營收已接近 1,000 億美元，高毛利結構支撐估值。"
+    ],
+    "market_view": "市場在 pricing 服務高毛利與裝置生態，因此 AAPL 即便成長不像 AI 硬體股，仍有 34.38 倍 P/E；市場在擔心的是中國 iPhone 壓力與 AI 功能變現速度不夠快。",
+    "financial_summary": {
+      "revenue": "2025 財年營收 4,162 億美元。",
+      "growth": "2025 財年創歷史新高，但增速不屬爆發型；Q1 FY2025 營收 1,243 億美元、年增 4%。",
+      "net_margin": "Q1 FY2025 淨利 363 億美元，淨利率約 29.2%。",
+      "fcf_margin": "高毛利服務與龐大裝置基礎支撐高 FCF，但硬體供應鏈與回購使資本運用複雜。",
+      "eps": "EPS 7.90。",
+      "pe": "P/E 34.38 倍。",
+      "dividend_yield": "有配息，但殖利率不是主線。",
+      "beta": "大型穩健科技股，波動低於多數半導體股。"
+    },
+    "competition": {
+      "summary": "AAPL 的競爭不是只有手機，而是終端生態與高端消費電子。它的對手可以是 Samsung、Google Pixel，也可以是所有想搶高價值用戶時間與服務訂閱的公司。",
+      "peers": [
+        {
+          "name": "Samsung",
+          "position": "智慧手機硬體對手",
+          "comparison": "AAPL 2025 iPhone 仍成長，但 Greater China 壓力存在；Apple 贏在服務與高端用戶 ARPU，不只在硬體台數。"
+        },
+        {
+          "name": "Alphabet",
+          "position": "生態與 AI 助理對手",
+          "comparison": "GOOG P/E 23.65 低於 AAPL 34.38，表示市場對 Apple 的品牌與現金流給更高溢價，但 AI 敘事反而是 GOOG 更直接。"
+        },
+        {
+          "name": "Microsoft",
+          "position": "服務與平台對手",
+          "comparison": "MSFT 2025 營收 2,817 億美元、Azure >750 億美元；AAPL 強在終端與生態，MSFT 強在企業軟體與雲端。"
+        }
+      ],
+      "conclusion": "AAPL 是高品質核心股，但若 AI 功能無法轉成換機或服務 ARPU，34 倍 P/E 就不算便宜。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "現價 268.03 美元，P/E 34.38 倍。對低雙位數以下成長的成熟平台來說不便宜，市場已把品牌、生態與服務現金流算進去。",
+      "buy_strategy": "適合核心長期配置，但不建議在高估值時大追。最好等中國需求或產品週期雜音造成拉回再分批。",
+      "sweet_zone": "甜區偏向 P/E 28~31 倍，或股價回到 220~240 美元區；34 倍以上比較像穩定高價，不像便宜價。",
+      "technical_view": {
+        "mid_trend": "中期偏穩，不是爆發型。",
+        "short_term": "短線會受中國銷售、AI 產品口碑與新品週期影響。",
+        "structure": "屬現金牛核心股，不是高彈性 AI beta 股。",
+        "conclusion": "判斷：可持有，可逢回買，但不追高。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "core",
+      "reason": "25 億台裝置基礎、近 1,000 億美元服務收入、4,162 億美元營收，完全符合 core。",
+      "upgrade_condition": [
+        "若 Apple Intelligence 能實質推動換機與服務 ARPU，上調權重。",
+        "若中國壓力持續、服務成長放緩，則只維持 core 低權重。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "Greater China 2025 仍受 iPhone 銷售拖累，區域風險明確。",
+        "P/E 34.38 倍對成熟大型股來說偏高，容錯率有限。"
+      ],
+      "opportunity": [
+        "Active devices 超過 25 億台，只要 AI 功能提高 ARPU，獲利彈性很大。",
+        "服務年營收接近 1,000 億美元，持續改善毛利結構。"
+      ]
+    },
+    "final_view": "AAPL 是 pool30 核心股，也適合保守 FCN 參考籃子；但現階段不是便宜價。Timing：等回檔再買，比追高好。"
+  },
+  "MRVL": {
+    "symbol": "MRVL",
+    "name": "Marvell Technology, Inc.",
+    "type": "research_raw",
+    "company_overview": "MRVL 已不是傳統網通晶片公司，而是 AI 基礎設施半導體平台。FY2026 營收 81.95 億美元、年增 42.1%，其中 data center 營收 61.00 億美元，占總營收 74%；FY2025 proxy 也揭露 FY2025 Q4 data center 已占當季總營收 75%，且 FY2025 AI 相關營收約占 data center 的 50%，高於 FY2023 的不到 10%。投資判斷核心不是『有沒有 AI 題材』，而是 custom silicon、electro-optics、switching 能否把 hyperscaler 的 CAPEX 變成可持續的營收與毛利。 ",
+    "basic_info": {
+      "founded": "1995。 ",
+      "headquarters": "Santa Clara, California, United States。 ",
+      "industry": "Data infrastructure semiconductors；主軸包括 custom compute、interconnect、electro-optics、Ethernet switching、storage 與 silicon photonics。 ",
+      "market_cap": "2026-04-22 即時市值約 1,306.9 億美元；Yahoo/MarketWatch 近似值約 1,292.8 億至 1,323.1 億美元。 "
+    },
+    "business_model": {
+      "summary": "MRVL 的賺錢模式已從多市場通用網通晶片，轉成 AI data center 為核心的兩段式結構：第一段是 custom ASIC / custom compute，第二段是 electro-optics、PAM4 DSP、DCI optics、Ethernet switching 與 interconnect。FY2026 data center 營收 61.00 億美元，占比 74%，communications and other 20.94 億美元，占比 26%；公司 FY2025 proxy 進一步指出，custom products 已在美國 4 大 hyperscaler 全部量產，且 AWS 在 2024 年 12 月與 MRVL 簽下 5 年 multi-generational agreement。 ",
+      "segments": [
+        "Data center：FY2026 營收 61.00 億美元，占總營收 74%，較 FY2025 的 41.64 億美元年增 46%；這一塊已是公司真正的估值核心，而不是附屬業務。 ",
+        "Communications and other：FY2026 營收 20.94 億美元，占比 26%，較 FY2025 的 16.03 億美元年增 31%；這代表 enterprise networking、carrier、部分非 AI 終端在經過庫存修正後有恢復，但不是主推力。 ",
+        "AI-related custom + optics：FY2025 proxy 揭露，FY2025 Q4 data center 占總營收 75%，其中 AI-related revenue 約占 FY2025 data center 的 50%，高於 FY2023 的不到 10%；公司在 2024 AI Day 提出的 data center TAM 到 2028 年為 750 億美元，其中 430 億美元來自 custom compute，且目標是市占率由 2023 年 10% 提高到 2028 年 20%。 "
+      ]
+    },
+    "customer_analysis": {
+      "summary": "MRVL 的客戶集中度很高，這是今年股價大漲的核心，也是不適合保守 FCN 接股的主因。FY2026 10-K 顯示，前 10 大客戶占總營收 82%，其中一個 direct customer 占 14%，一個 distributor 占 37%，兩個客戶都超過 10%。今年股價大漲不是因為市場突然喜歡網通股，而是因為市場重新把 MRVL 當成 hyperscaler custom silicon 供應商：Reuters 4 月 20 日報導 Google 正與 MRVL 洽談開發 2 顆新 AI 晶片，股價當天一度因消息跳升近 5%。更重要的是，Reuters 3 月 31 日又報導 NVIDIA 對 MRVL 投資 20 億美元，合作項目聚焦 AI networking、optical interconnect 與 silicon photonics，市場把這解讀成 MRVL 不只是做 ASIC，還開始被納入 NVIDIA 生態。再加上 Amazon 與 Anthropic 新協議帶動 AWS AI 基建需求，Barron’s 與 IBD 都把 MRVL 列為 AWS custom chip 與 networking 受益股。Reuters 也直接點出：MRVL 年初至今已上漲 64%，而 Barron’s 顯示截至 4 月 21 日 YTD 漲幅約 77.7%，12 個月漲幅約 198.3%，這種上漲速度本質上是『客戶設計勝出 + AI CAPEX 重估 + 估值提前反映』三件事疊加，不是單一財報數字驅動。 ",
+      "key_customers": [
+        {
+          "name": "Amazon Web Services",
+          "role": "美國 hyperscaler 客戶；涵蓋 custom AI accelerators、optical DSPs、DCI optical modules、Ethernet switching silicon",
+          "importance": "FY2025 proxy 明確揭露，AWS 與 MRVL 在 2024 年 12 月擴大為 5 年 multi-generational agreement；這不是單點 design win，而是跨 custom AI accelerator、optics、switching 的長約合作。今日 Amazon/Anthropic 協議還包含 Anthropic 未來 10 年在 AWS 與 AI 基建上的支出承諾超過 1,000 億美元，市場因此把 MRVL 視為 AWS custom silicon 與 networking 受益股。 "
+        },
+        {
+          "name": "Google",
+          "role": "潛在新一代 inference/custom AI chip 客戶",
+          "importance": "Reuters 2026-04-20 報導，Google 正與 MRVL 洽談 2 顆 AI 晶片，其中一顆是搭配既有 TPU 的 memory processing unit，另一顆是新的 inference TPU。這個消息之所以重要，不是因為訂單已簽，而是因為 Google 原本主要與 Broadcom 合作 TPU，若 MRVL 真切入，代表 custom silicon 供應商地位再升級。 "
+        },
+        {
+          "name": "Microsoft",
+          "role": "雲端 custom silicon / data center 客戶",
+          "importance": "Reuters 2025-08-29 指出，MRVL 的 custom chip 業務越來越依賴像 Amazon 與 Microsoft 這類正在發展 in-house AI chip 的雲端客戶；這類客戶讓公司 data center 需求高成長，但也讓營收更受單一設計節奏與產品時程影響。微軟本身 FY2025 Azure 營收已超過 750 億美元、年增 34%，代表其 AI 基建支出不是短線題材，而是會決定 MRVL 後續 design win 的真實體量。 "
+        },
+        {
+          "name": "Meta",
+          "role": "美國 hyperscaler 客戶；屬 MRVL custom products 已量產的四大美國 hyperscaler 之一",
+          "importance": "FY2025 proxy 明講 MRVL 的 custom products 已在 4 家大型美國 hyperscaler 全部量產，對應市場普遍推定包括 Meta。Reuters 也提到 Meta 近期把與 Broadcom 的合作延長到 23 億美元級別，這反而說明 hyperscaler 會採多供應商 custom silicon 策略；對 MRVL 來說，Meta 類客戶不是短單，而是能決定未來 2~3 年 custom compute 與 interconnect 滲透率的帳戶。 "
+        }
+      ],
+      "conclusion": "客戶分析的投資結論很直接：MRVL 不是『客戶很多所以安全』，而是『客戶很少但都夠大，所以股價彈性高也風險高』。前 10 大客戶 82%、Distributor A 37%、Direct customer A 14% 這種結構，適合 stock_pool / growth 評級，不適合當保守 FCN 接股核心。若 AWS 長約、Google 新案、Microsoft/Meta 後續 design win 能延續，MRVL 可以再升級；但只要其中 1~2 家 hyperscaler 延後 rollout，季度波動就會很大。 "
+    },
+    "why_this_company": [
+      "FY2026 營收 81.95 億美元、年增 42.1%，不是小型概念股的故事，而是財報已經反映 AI 需求。Q1 FY2027 指引還給到 24.00 億美元 ±5%，代表管理層預期成長仍在加速。 ",
+      "營收結構大幅改善：FY2026 gross margin 51.0%，較 FY2025 的 41.3% 提升 9.7 個百分點；同時 FY2026 non-GAAP EPS 2.84 美元、年增 81%，說明 operating leverage 開始出來。 ",
+      "中長期不是只看 1 季財報：公司對外目標是 FY2028 營收接近 150 億美元，較 FY2026 的 81.95 億美元接近翻倍；而 data center TAM 到 2028 年估 750 億美元，其中 430 億美元來自 custom compute。這代表市場給高估值，是因為它看到 MRVL 站在 hyperscaler 自研晶片的產業位置。 "
+    ],
+    "market_view": "市場現在在 pricing 的不是『一般網通復甦』，而是 hyperscaler AI CAPEX 持續擴大。Reuters 3 月 31 日提到 Alphabet 與 Meta 等大科技公司 2026 年 AI 基建支出合計至少 6,300 億美元，這直接推升 MRVL 的 custom compute、optical interconnect 與 switching 需求；公司自己也說 FY2027 每一季的年增速都將加快。市場同時在擔心兩件事：第一，custom silicon 業務天然較為 lumpy，MarketWatch 去年就點出 Amazon Trainium 後續案源可見度不高；第二，Google 與 Broadcom 合作延至 2031，若 MRVL 只是第二供應商或談判籌碼，股價先漲後回檔的風險不低。 ",
+    "financial_summary": {
+      "revenue": "FY2026 營收 81.95 億美元；Q4 FY2026 單季營收 22.19 億美元，年增 22%。 ",
+      "growth": "FY2026 年增 42.1%；其中 data center 營收年增 46%，communications and other 年增 31%；Q1 FY2027 指引 24.00 億美元，若達標約較 Q1 FY2026 的 11.61 億美元翻倍以上。 ",
+      "net_margin": "FY2026 GAAP net margin 約 32.6%（26.70 億 / 81.95 億），但這個數字被出售 automotive ethernet 業務帶來的 18 億美元一次性 gain 明顯拉高；若看經常性獲利，FY2026 non-GAAP EPS 2.84 美元比 GAAP EPS 3.07 更有代表性。 ",
+      "fcf_margin": "以 FY2026 operating cash flow 17.51 億美元，扣掉 property and equipment 3.54 億美元估算，自由現金流約 13.96 億美元，FCF margin 約 17.0%；這比 FY2025 現金流結構更健康，但仍低於超高毛利軟體公司。 ",
+      "eps": "2026-04-22 finance 工具顯示 TTM EPS 約 2.85 美元；FY2026 公司披露 GAAP EPS 3.07、美國非 GAAP EPS 2.84。 ",
+      "pe": "2026-04-22 finance 工具顯示即時 P/E 約 53.09 倍；Yahoo 摘要顯示約 48.03 倍；Reuters 2026-04-20 報導用的口徑是 33.35 倍。三個數字差異很大，主因是資料供應商對一次性出售利益與 TTM EPS 口徑不同；因此實務上建議同時看 EV/Sales，而不是只看單一 PE。 ",
+      "dividend_yield": "前瞻股息 0.24 美元，殖利率約 0.16%；這檔股票不是拿來收息，而是吃 AI 基礎設施成長。 ",
+      "beta": "5Y monthly beta 約 1.82；這已明確高於防守股，也說明它是高波動成長半導體，而不是低 beta 核心股。 "
+    },
+    "competition": {
+      "summary": "MRVL 目前不是跟 Intel 或普通網通晶片廠競爭，而是同時跟 Broadcom、NVIDIA、Astera Labs、Credo、甚至 hyperscaler 自研團隊競爭。競爭焦點也不是『單顆晶片性能』而已，而是 custom compute + optics + interconnect + packaging 的平台能力。估值上，Reuters 4 月 20 日給 MRVL 的 P/E 約 33.35 倍，高於 Broadcom 的 27.84 倍；若用 finance 即時工具，MRVL P/E 甚至高到 53 倍，說明市場已給了顯著溢價。 ",
+      "peers": [
+        {
+          "name": "Broadcom",
+          "position": "Google TPU/custom ASIC 最大成熟對手",
+          "comparison": "Google 與 Broadcom 的 TPU 合作已延到 2031，而 Reuters 4 月 20 日報導 MRVL 正試圖切入 2 顆新 AI 晶片；也就是說，MRVL 的上升空間來自『分單』而不是已經完全取代 Broadcom。估值上，Reuters 給 MRVL P/E 33.35 倍，高於 Broadcom 的 27.84 倍，代表市場認為 MRVL 的增速更高，但風險也更大。 "
+        },
+        {
+          "name": "NVIDIA",
+          "position": "AI 基礎設施生態龍頭；在 networking 與 silicon photonics 上既可合作也可競爭",
+          "comparison": "NVIDIA 本身不是純 custom ASIC 競爭者，但它是 AI cluster 的生態主導者。2026-03-31 Reuters 報導 NVIDIA 對 MRVL 投資 20 億美元，合作點在 NVLink Fusion 相容的 advanced networking、optical interconnect 與 silicon photonics；這對 MRVL 是正面，但也意味著 MRVL 仍在 NVIDIA 主導的系統架構下拿到部分價值，不是完全獨立定價。 "
+        },
+        {
+          "name": "Astera Labs / Credo",
+          "position": "AI connectivity / interconnect 對手",
+          "comparison": "Barron’s 在 Amazon-Anthropic 新協議後同時點名 Marvell、Astera 與 Credo 為受益股，說明市場把它們視為同一條 AI networking 鏈。MRVL 的差異是它不只有 connectivity，還有 custom compute、switching 與 optics；但代價是估值已比單一模組型供應商更貴，市場對 execution 要求也更高。 "
+        }
+      ],
+      "conclusion": "競爭結論很務實：MRVL 已經從次要網通 IC 廠升級成 custom AI infrastructure 重要玩家，但它還不是像 NVDA 那樣擁有完整系統定價權，也不像 Broadcom 那樣已有更長期、驗證更完整的 hyperscaler 合作。這代表它能進 stock_pool，卻還不適合直接進 pool30 核心第一排。 "
+    },
+    "valuation_and_timing": {
+      "valuation_view": "用 2026-04-22 即時市值 1,306.9 億美元與 FY2026 營收 81.95 億美元估算，市銷率約 15.95 倍；若採 Yahoo key statistics 的 enterprise value 1,119.6 億美元，EV/Sales 約 13.66 倍。P/E 方面，finance 工具給 53.09 倍、Yahoo 摘要給 48.03 倍、Reuters 給 33.35 倍，三者都說明同一件事：MRVL 現在不是便宜股，而是高預期股。歷史位置上，Barron’s 顯示截至 4 月 21 日 YTD +77.69%、12 個月 +198.30%，股價已接近 52 週高點 154.95 美元，估值與價格都在高檔區。 ",
+      "buy_strategy": "不建議追價買。MRVL 適合『事件後回檔分批』，而不是在 Google 談判、NVIDIA 投資、AWS 題材疊加時追強。因為它的高估值很大程度來自 아직未完全落地的 custom silicon 後續案源，若下一次財報只是小幅 beat，而不是再上修 FY2028 路徑，股價很容易先修估值。 ",
+      "sweet_zone": "甜區 1：股價回到 120~130 美元區，約較 4 月 22 日現價 151.31 美元回檔 14%~21%，才比較接近可承受的成長股回撤帶。甜區 2：若 EV/Sales 壓回到 10~12 倍、或市場重新用 35~40 倍區間的 TTM P/E 交易，而不是 48~53 倍，風險報酬比較合理。若股價仍在 145~155 美元高位、且 P/E 口徑仍高於 Broadcom，建議只觀察不重倉。 ",
+      "technical_view": {
+        "mid_trend": "中期趨勢偏多。Barron’s 顯示截至 4 月 21 日 YTD 已上漲 77.69%，12 個月上漲 198.30%；Reuters 也提到年初至今已上漲 64%，說明市場正在重估 MRVL 的 AI 基建角色。 ",
+        "short_term": "短線偏熱。MarketWatch 顯示 52 週高點 154.95 美元，而 4 月 22 日即時價 151.31 美元，已非常接近高點；Google 新合作傳聞本身就讓股價單日跳升近 5%，這種走法通常不提供好風險回報比。 ",
+        "structure": "結構上屬高 beta AI infrastructure 成長股，不是防守股。Beta 1.82、客戶前 10 大占 82%、股價 12 個月接近 3 倍，代表波動會非常大。 ",
+        "conclusion": "判斷：等待，不追。中期可以追蹤，但短線不甜；只有在回撤到 120~130 美元帶、或下一次財報把 FY2028 15 億美元路徑再往上修時，才有比較好的買點。 "
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": false,
+      "category": "growth",
+      "reason": "MRVL 具備進系統的條件，因為 FY2026 營收 81.95 億美元、年增 42.1%，data center 占比 74%，而且已在美國 4 大 hyperscaler 全部量產 custom products；但它不適合直接進 pool30 核心，因為前 10 大客戶占 82%、估值高、股價 12 個月漲近 198%，都代表它更像高彈性成長股，而不是穩定核心股。 ",
+      "upgrade_condition": [
+        "Google 兩顆 AI 晶片談判若正式落地，且 FY2027~FY2028 custom silicon 設計勝出能見度提高，MRVL 才有資格從 stock_pool 升級到更高級別池。 ",
+        "若估值回落到 EV/Sales 10~12 倍、股價回到 120~130 美元區，同時 FY2027 指引持續上修，才比較有 pool30 升級空間。 "
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "客戶集中風險很高：FY2026 前 10 大客戶占營收 82%，其中 Distributor A 占 37%、Direct Customer A 占 14%；這種結構對 FCN 接股很不友善。 ",
+        "估值風險不小：2026-04-22 finance 工具 P/E 約 53.09 倍，Yahoo 摘要約 48.03 倍，均高於 Reuters 4 月 20 日給 Broadcom 的 27.84 倍比較值；估值一旦重定價，回檔幅度可能很大。 ",
+        "業績節奏可能很 lumpy：MarketWatch 去年就指出 custom-silicon 後續案源、特別是 Amazon Trainium3 的可見度有限；這說明 MRVL 雖然站在大趨勢上，但季度波動仍高。 "
+      ],
+      "opportunity": [
+        "長期路徑夠大：公司目標 FY2028 營收接近 150 億美元，較 FY2026 的 81.95 億美元再增加約 68 億美元；如果達成，市場現在給高倍數就有邏輯。 ",
+        "AWS 5 年 multi-generational agreement + Google 2 顆新 AI 晶片洽談 + NVIDIA 20 億美元合作，三件事疊加代表 MRVL 正從單一 ASIC 故事升級成 hyperscaler AI infrastructure 平台。 ",
+        "FY2026 data center 營收 61.00 億美元、占比 74%，而 FY2025 proxy 顯示 AI 相關收入占 FY2025 data center 約 50%；只要 hyperscaler AI CAPEX 沒斷，MRVL 還有持續吃份額的空間。 "
+      ]
+    },
+    "final_view": "MRVL 是一檔可以進系統、但不能用防守思維看的股票。它最吸引人的地方，是 FY2026 已經把 data center 占比拉到 74%、營收年增 42.1%，而且客戶從 AWS、Microsoft 到潛在的 Google 都指向 hyperscaler custom AI 基建；但它最大的缺點也同樣明確：前 10 大客戶占 82%、估值高、股價近 12 個月漲約 198%，表示市場已提前反映很多未來。M1 判斷：可進 stock_pool，暫不進 pool30；FCN 可做，但只適合高票息、深 KI、低權重，不適合當接股型核心籃子。Timing 判斷：等待回檔到 120~130 美元區再看，不追價。 "
+  },
+  "HPQ": {
+    "symbol": "HPQ",
+    "name": "HP Inc.",
+    "type": "research_raw",
+    "company_overview": "HPQ 是全球 PC 與列印硬體公司，FY2025 營收 553 億美元、YoY +3.2%，但 GAAP EPS 2.65 美元、YoY -5.7%，代表它是低估值、高股息、但成長彈性有限的成熟硬體股。",
+    "basic_info": {
+      "founded": "1939 年；2015 年 HP Inc. 與 HPE 分拆後，HPQ 聚焦 PC、印表機與耗材。",
+      "headquarters": "Palo Alto, California, USA；FY2025 美國以外沒有單一國家超過營收 10%。",
+      "industry": "Personal Computers, Printing Hardware, Supplies, Commercial Devices",
+      "market_cap": "約 189 億美元，股價約 20.27 美元，TTM PE 約 7.69。"
+    },
+    "business_model": {
+      "summary": "HPQ 的商業模式是 PC 硬體放量、列印耗材貢獻高利潤；FY2025 Personal Systems 營收 385.3 億美元、約占 69.7%，Printing 營收 167.0 億美元、約占 30.2%，但 Printing 營業利益率 18.7% 明顯高於 Personal Systems 的 5.3%。",
+      "segments": [
+        "Personal Systems：FY2025 營收 385.3 億美元、YoY +6%，Commercial PS 274.4 億美元、YoY +8%，Consumer PS 110.9 億美元、YoY +4%，這是營收主體但營業利益率只有 5.3%。",
+        "Printing：FY2025 營收 167.0 億美元、YoY -4%，其中 Supplies 109.2 億美元、YoY -3%，Commercial Printing 46.3 億美元、YoY -4%，Consumer Printing 11.5 億美元、YoY -4%，代表高毛利耗材仍在衰退。",
+        "Corporate Investments：FY2025 營收 0.62 億美元、規模不到總營收 0.2%，目前不是 pool30 決策核心，不能把 HPQ 當 AI 高成長硬體股處理。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "HPQ 客戶結構偏分散但通路集中風險存在；FY2025 TD Synnex Corp 單一客戶占 HPQ 營收 12%，是需要納入風險折扣的明確數字。",
+      "key_customers": [
+        {
+          "name": "TD Synnex Corp",
+          "role": "全球 IT 分銷商 / 通路客戶",
+          "importance": "FY2025 占 HPQ 淨營收 12%，超過 10% 門檻，若分銷庫存調整 1 季，會直接影響 HPQ 出貨與應收帳款節奏。"
+        },
+        {
+          "name": "CDW",
+          "role": "企業 IT 解決方案通路與採購平台",
+          "importance": "CDW 銷售 HP 的 AI PCs、Printers & Supplies、Poly、Displays、Services and Solutions，代表 HPQ 商用需求高度依賴企業 IT 通路。"
+        },
+        {
+          "name": "Corporate Enterprise / Public Sector customers",
+          "role": "商用 PC、工作站、顯示器與配件採購客戶",
+          "importance": "HP2B 官方平台服務企業與公部門客戶，FY2025 Commercial PS 營收 274.4 億美元、YoY +8%，是 HPQ 最重要的需求來源。"
+        }
+      ],
+      "conclusion": "HPQ 不是單一 hyperscaler 訂單型公司，而是通路與企業採購型公司；TD Synnex 12% 集中度可接受但不能忽略，因為 PC 庫存週期會放大營收波動。"
+    },
+    "why_this_company": [
+      "估值低：HPQ 目前 TTM PE 約 7.69、forward PE 約 7.3，明顯低於多數大型科技硬體股，適合放入 stock pool 觀察低估值 + 股息型 FCN 標的。",
+      "現金回饋高：FY2025 FCF 29 億美元，並返還 19 億美元給股東，等於返還約 66% FCF，對股息型投資人有支撐。",
+      "負面也清楚：FY2025 Printing 營收 YoY -4%、Supplies YoY -3%，而 GAAP EPS YoY -5.7%，所以它不是成長股，pool30 不能給 core 高權重。"
+    ],
+    "market_view": "市場目前 pricing 的是 Windows 11 換機、AI PC 與企業更新週期；Gartner 指出 2025 年全球 PC 出貨 YoY +9.1%，HP 仍是全球第 2 大 PC 廠，2025 出貨約 5,745.7 萬台。市場同時擔心 2026 記憶體與零組件漲價壓縮需求，HPQ Q1 FY2026 電話會也提到業界預估 2026 PC unit TAM 可能雙位數下滑。",
+    "financial_summary": {
+      "revenue": "FY2025 revenue 553 億美元。",
+      "growth": "FY2025 revenue YoY +3.2%；Q1 FY2026 revenue 144 億美元、YoY +7%。",
+      "net_margin": "FY2025 GAAP net earnings 25 億美元 / revenue 553 億美元，net margin 約 4.5%。",
+      "fcf_margin": "FY2025 FCF 29 億美元 / revenue 553 億美元，FCF margin 約 5.2%。",
+      "eps": "FY2025 GAAP diluted EPS 2.65 美元、YoY -5.7%；non-GAAP diluted EPS 3.12 美元、YoY -9.0%。",
+      "pe": "TTM PE 約 7.69；forward PE 約 7.3。",
+      "dividend_yield": "Forward dividend 約 1.20 美元、殖利率約 5.96%；2026 年單季股息 0.30 美元。",
+      "beta": "約 1.0–1.2 區間；以 PC 硬體循環股處理，不應視為低波動公用事業型股票。"
+    },
+    "competition": {
+      "summary": "HPQ 在 PC 市場是第 2 名跟隨型大型廠，2025 年 HP 出貨約 5,745.7 萬台，低於 Lenovo 7,356.7 萬台；估值上 HPQ forward PE 約 7.3，但低估值反映 Printing 下滑與 PC 毛利壓力，不是純便宜。",
+      "peers": [
+        {
+          "name": "Lenovo",
+          "position": "全球 PC 第 1 名",
+          "comparison": "2025 年 Lenovo 出貨約 7,356.7 萬台、市占 27.2%，HP 約 5,745.7 萬台，HP 是規模第 2 但不是市占第 1。"
+        },
+        {
+          "name": "Dell Technologies",
+          "position": "商用 PC 與企業 IT 競爭者",
+          "comparison": "Dell 在商用 PC 與 HP 正面競爭；HPQ Personal Systems FY2025 營業利益率 5.3%，說明 PC 硬體競爭下價格空間有限。"
+        },
+        {
+          "name": "Canon / Epson",
+          "position": "列印與耗材競爭者",
+          "comparison": "HPQ Printing FY2025 營收 YoY -4%，但營業利益率仍有 18.7%，表示列印是利潤池，但需求收縮會壓低估值上限。"
+        }
+      ],
+      "conclusion": "市場定位上，HPQ 是成熟 PC/列印巨頭，不是 AI server 或 GPU 受益主線；產品與服務差異化主要來自商用通路、列印耗材與裝置管理，而不是單一技術壟斷。價格策略上，PC 營業利益率 5.3% 顯示折扣與零組件成本會吃掉獲利；Printing 18.7% 利益率提供現金流，但 Supplies YoY -3% 是中期壓力。通路與供應鏈方面，TD Synnex 占 12% 營收，CDW 等企業通路讓 HPQ 有穩定出貨口，但也讓庫存週期變成投資風險。品牌與行銷方面，HP 全球 PC 第 2 名具知名度，但 Lenovo 2025 出貨 7,356.7 萬台高於 HP 的 5,745.7 萬台，HP 不是市占領導者。財務上，553 億美元營收、29 億美元 FCF、約 5.96% 股息殖利率使它適合 FCN 觀察；但 EPS YoY -5.7%、Printing 下滑，使 pool30 只能給 defensive/income 型定位。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "目前股價約 20.27 美元、TTM PE 約 7.69、forward PE 約 7.3，低於其 12 個月平均 PE 約 8.91；估值便宜但屬 value trap 風險區，不能因 PE 低就直接升 pool30。",
+      "buy_strategy": "策略上只適合分批或 FCN 觀察：若 forward PE 低於 7.0 且股息殖利率高於 6.0%，可視為防禦型低估值進場；若 PE 回到 9.0 以上但 Printing 仍 YoY 負成長，應降低追價意願。",
+      "sweet_zone": "Sweet zone：股價 18–20 美元、forward PE ≤7.0、殖利率 ≥6.0%、Q2/Q3 FY2026 Personal Systems YoY 仍正成長且 Printing 下滑縮小到 -2% 以內。",
+      "technical_view": {
+        "mid_trend": "中期偏弱整理：現價約 20.27 美元，若無法重新站回 22–23 美元區間，代表市場仍以 7–8 倍 PE 對成熟硬體股定價。",
+        "short_term": "短線不追：若 PC 換機題材已反映在 Q1 FY2026 revenue +7%，但 2026 PC unit TAM 被預估雙位數下滑，短線上漲容易被財測風險壓回。",
+        "structure": "結構屬低估值 + 高股息 + 低成長組合；FY2025 FCF margin 約 5.2%，比高成長科技股更像現金流回饋標的。",
+        "conclusion": "可放 stock pool，不建議直接進 pool30；等待 18–20 美元或 forward PE ≤7.0 才有較好安全邊際。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": false,
+      "category": "income",
+      "reason": "HPQ 有 553 億美元營收、29 億美元 FCF、約 5.96% 股息殖利率與 7 倍左右 PE，適合 stock pool 的低估值/收益觀察；但 FY2025 EPS YoY -5.7%、Printing YoY -4%、2026 PC TAM 可能雙位數下滑，使它不適合放入 pool30 核心名單。",
+      "upgrade_condition": [
+        "Printing revenue decline 從 FY2025 的 -4% 改善到 -2% 以內，且 Supplies 不再低於 -3%。",
+        "Personal Systems 連續 2 季 YoY +5% 以上，且 segment operating margin 回到 6% 以上。",
+        "股價落在 18–20 美元且 forward PE ≤7.0，同時 dividend yield ≥6.0%。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "列印衰退風險：FY2025 Printing 營收 167.0 億美元、YoY -4%，Supplies 109.2 億美元、YoY -3%，如果耗材繼續下滑，HPQ 的高利潤來源會被侵蝕。",
+        "PC 需求與成本風險：HPQ Q1 FY2026 提到 2026 PC unit TAM 可能雙位數下滑，且記憶體成本上升會壓縮入門機需求。",
+        "通路集中風險：TD Synnex FY2025 占營收 12%，若通路庫存去化 1–2 季，HPQ revenue 與現金轉換週期會受影響。"
+      ],
+      "opportunity": [
+        "換機週期機會：Gartner 指出 2025 全球 PC 出貨 YoY +9.1%，Windows 11 更新與 AI PC 可能支撐商用換機需求。",
+        "現金回饋機會：FY2025 FCF 29 億美元，返還股東 19 億美元、約 66% FCF，若股價維持 20 美元附近，股息與回購提供下檔支撐。",
+        "估值修復機會：目前 forward PE 約 7.3，若市場願意回到 12 個月平均 PE 約 8.9，估值本身有約 20% 左右重估空間，但前提是 EPS 不再下修。"
+      ]
+    },
+    "final_view": "HPQ 的投資定位不是 AI 主線，也不是高成長科技股，而是「低 PE + 高股息 + 成熟硬體現金流」標的；FY2025 營收 553 億美元、FCF 29 億美元、殖利率約 5.96%，這些數字支持它進 stock pool 做 FCN 候選。可是它的負面也很明確：FY2025 EPS YoY -5.7%、Printing YoY -4%、Supplies YoY -3%，代表高利潤來源正在收縮，不能用單純低 PE 當成買進理由。我的系統判斷是：HPQ 可以當 income/defensive 觀察股，FCN 可行性中等偏可，但 pool30 暫不建議；除非 Printing 下滑收斂、Personal Systems margin 回到 6% 以上、股價落在 18–20 美元並提供 forward PE ≤7.0 的安全邊際，才有升級條件。",
+    "quality_check": {
+      "completeness": 9.0,
+      "specificity": 9.1,
+      "data_support": 9.0,
+      "decision_usefulness": 9.2,
+      "fcn_alignment": 8.9,
+      "total_score": 9.0,
+      "fail_reasons": []
+    },
+    "MSFT": {
+      "symbol": "MSFT",
+      "name": "Microsoft Corporation",
+      "type": "research_raw",
+      "company_overview": "MSFT 是現在最完整的企業 AI 平台股：Office 現金流、Azure 雲端、Copilot AI、GitHub 開發者生態都在同一張報表裡。2025 財年營收 2,817 億美元、年增 15%，Azure 年營收首度超過 750 億美元、年增 34%。",
+      "basic_info": {
+        "founded": "1975。",
+        "headquarters": "Redmond, Washington。",
+        "industry": "Cloud software, enterprise software, productivity, AI infrastructure。",
+        "market_cap": "2026-04-21 市值約 3.59 兆美元，股價 425.76 美元。"
+      },
+      "business_model": {
+        "summary": "MSFT 的厲害不在單一產品，而在三個引擎一起轉：Productivity、Intelligent Cloud、More Personal Computing。2025 財年營收 2,817 億美元、營業利益 1,285 億美元，這種獲利結構讓它有本錢每年砸數百億美元做 AI CAPEX。",
+        "segments": [
+          "Intelligent Cloud：Azure 年營收首次超過 750 億美元、年增 34%，是 AI 最直接的財務載體。",
+          "Productivity and Business Processes：M365 商業版與 Copilot 形成高黏著、高毛利訂閱基礎。",
+          "More Personal Computing：Windows、Devices、Gaming 提供現金流與生態，但已不是估值主引擎。"
+        ]
+      },
+      "customer_analysis": {
+        "summary": "MSFT 的客戶不集中在單一公司，而是集中在企業 IT 預算。這種結構比硬體公司穩很多。2025 年公司全球資料中心已逾 400 座，支撐大企業與政府長期上雲需求。",
+        "key_customers": [
+          {
+            "name": "Enterprise Microsoft 365 customers",
+            "role": "Office/Copilot 訂閱客戶",
+            "importance": "商業版 M365 是公司現金流底盤，AI 加價能力建立在既有龐大 installed base 上。"
+          },
+          {
+            "name": "Azure enterprise customers",
+            "role": "雲端與 AI 基礎設施客戶",
+            "importance": "Azure 2025 年營收逾 750 億美元、年增 34%，是最具體的企業 AI 支出數據。"
+          },
+          {
+            "name": "OpenAI",
+            "role": "AI 生態與算力需求合作方",
+            "importance": "Microsoft 對 OpenAI 的基礎設施支援與產品整合，是 AI 敘事的重要部分；同時公司也在發展自家模型以降低依賴。"
+          }
+        ],
+        "conclusion": "MSFT 客戶結構分散、續約性高，是少數既能吃 AI、又能維持低波動的大型股。這是它最適合進 core 的原因。"
+      },
+      "why_this_company": [
+        "2025 財年營收 2,817 億美元、年增 15%，規模大且還能成長。",
+        "Azure 年營收 >750 億美元、年增 34%，AI 商業化已反映在數字上。",
+        "營業利益 1,285 億美元，代表獲利與投資能力都很強。"
+      ],
+      "market_view": "市場在 pricing Azure、Copilot 與企業 AI 平台整合，所以給 MSFT 約 30.14 倍 P/E；市場在擔心的是 AI CAPEX 太大，因為公司曾提 2025 年 AI 基建投資高達 800 億美元，且下一季 CAPEX 仍可能到 300 億美元。",
+      "financial_summary": {
+        "revenue": "2025 財年營收 2,817 億美元。",
+        "growth": "年增 15%。",
+        "net_margin": "2025 財年淨利 1,018 億美元，約年增 16%。",
+        "fcf_margin": "高 FCF 平台，但短期受 AI 資本支出擴張影響。",
+        "eps": "EPS 15.99。",
+        "pe": "P/E 30.14 倍。",
+        "dividend_yield": "有配息，且是大型科技中少數兼具成長與股東回饋者。",
+        "beta": "大型穩健科技股，波動低於多數半導體股。"
+      },
+      "competition": {
+        "summary": "MSFT 競爭對手是 AWS、Google Cloud、Salesforce、以及所有想搶企業 AI 預算的軟體公司。它的優勢是把 AI 直接塞進既有企業付費體系。",
+        "peers": [
+          {
+            "name": "Alphabet",
+            "position": "雲端與 AI 對手",
+            "comparison": "MSFT P/E 30.14 高於 GOOG 23.65，市場願意為其企業軟體穩定性付更多。"
+          },
+          {
+            "name": "Amazon AWS",
+            "position": "雲端基礎設施對手",
+            "comparison": "AWS 規模仍大，但 Azure 2025 年已超過 750 億美元且年增 34%，代表 MSFT 沒落後。"
+          },
+          {
+            "name": "Salesforce",
+            "position": "企業軟體與 AI 助理對手",
+            "comparison": "MSFT 優勢在可以把 Copilot 綁進 M365 與 Azure，不需要另外建立分銷通路。"
+          }
+        ],
+        "conclusion": "MSFT 的質地在這批股票裡接近第一排核心，估值雖不便宜，但穩定度高於 NVDA、MU、MRVL。"
+      },
+      "valuation_and_timing": {
+        "valuation_view": "現價 425.76 美元，P/E 30.14 倍。對 15% 營收成長、34% Azure 成長的 mega-cap 來說合理偏貴，不算便宜。",
+        "buy_strategy": "適合核心分批，不用等很深回檔，但也不追財報急漲。大跌反而是加碼機會。",
+        "sweet_zone": "甜區偏向 P/E 26~28 倍，或股價回到 370~390 美元區。若維持 30 倍以上，建議分批而不是一次壓大。",
+        "technical_view": {
+          "mid_trend": "中期偏多，因為 Azure 與 Copilot 還在放量。",
+          "short_term": "短線會受 CAPEX 太大與 OpenAI 依賴討論影響。",
+          "structure": "屬高品質企業 AI 平台股，不是高 beta 題材股。",
+          "conclusion": "判斷：可買，可當核心。"
+        }
+      },
+      "pool30_fit": {
+        "stock_pool": true,
+        "pool30": true,
+        "category": "core",
+        "reason": "營收、獲利、Azure、Copilot、企業黏著度都符合核心股定義。",
+        "upgrade_condition": [
+          "若 Azure 維持 30% 以上成長且 Copilot 付費擴散，可提高權重。",
+          "若 CAPEX 明顯失控、拖累 FCF 與利潤率，則只維持 core 中權重。"
+        ]
+      },
+      "risk_opportunity": {
+        "risk": [
+          "AI CAPEX 很大，市場曾提 2025 年基建投資高達 800 億美元，短期會壓現金流。",
+          "估值 30.14 倍不算便宜，若 Azure 增速下來，估值壓縮會發生。"
+        ],
+        "opportunity": [
+          "Azure 年營收 >750 億美元、年增 34%，AI 商業化已不是故事。",
+          "Office/M365 既有安裝基礎讓 Copilot 變現路徑比多數 AI 公司清楚。"
+        ]
+      },
+      "final_view": "MSFT 是標準 pool30 核心股，也是在這組股票裡最適合保守型配置與 FCN 參考的名字之一。Timing：可分批布局，回檔加碼。"
+    }
+  },
   "GLW": {
     "symbol": "GLW",
     "name": "Corning Incorporated",
@@ -1619,8 +1601,8 @@
       "fcn_alignment": 9,
       "total_score": 9,
       "fail_reasons": []
-       }
-    },  
+    }
+  },
   "PLAR": {
     "symbol": "PLTR",
     "name": "Palantir Technologies Inc. (assumed from user input 'PLAR')",
@@ -1743,5 +1725,149 @@
         "technical_view 以現價、52 週區間與估值區間做 timing 判斷，未使用完整 K 線/均線庫，因此屬決策級簡化版，不是交易員級技術報告。 "
       ]
     }
+  },
+  "AMAT": {
+    "ticker": "AMAT",
+    "company_name": "Applied Materials, Inc.",
+    "exchange": "NASDAQ",
+    "sector": "Technology",
+    "industry": "Semiconductor Equipment & Materials",
+    "category_sub": "SEMI_EQUIPMENT",
+    "business_summary": "Applied Materials 是全球最大半導體設備商之一，核心產品包含薄膜沉積、蝕刻、檢測、封裝與材料工程設備，客戶涵蓋台積電、三星、Intel 等先進晶圓廠。AI 與先進封裝需求推動高階 wafer fab equipment 投資，公司已連續六年成長。",
+    "revenue_driver": [
+      "AI GPU 與 HBM 帶動先進封裝與先進製程設備需求",
+      "2nm / GAA / chiplet 架構增加材料工程複雜度",
+      "Foundry 與 DRAM 資本支出回升",
+      "高毛利服務與零件業務"
+    ],
+    "growth_driver": [
+      "AI infrastructure 帶動全球 semiconductor capex",
+      "Hybrid bonding 與 advanced packaging 新設備滲透",
+      "Angstrom era 製程升級",
+      "HBM 與高頻寬記憶體需求"
+    ],
+    "risk_factors": [
+      "中國出口限制可能影響營收",
+      "半導體設備產業景氣循環波動大",
+      "客戶資本支出延後將影響訂單",
+      "ASML、Lam Research、Tokyo Electron 競爭激烈"
+    ],
+    "fcn_view": "AMAT 屬 AI 半導體設備核心股，波動度中高但長期趨勢穩定，適合中長期 FCN 核心 basket。通常可提供較 NVDA 更穩定但仍具成長性的 coupon 結構。",
+    "pool30_view": "AMAT 屬 pool30 中 AI 半導體資本支出鏈重要補強，可平衡純 GPU 股過高波動風險。",
+    "timing_view": "AI capex cycle 持續向上，但設備股通常領先景氣循環，若市場進入 capex 修正期可能出現 15~25% 回檔。",
+    "data_quality": {
+      "profile_completeness": "high",
+      "financial_visibility": "high",
+      "business_model_clarity": "high",
+      "fcn_relevance": "high"
+    },
+    "warning": [
+      "中國市場限制仍可能壓抑部分成長",
+      "設備股 historically 對景氣循環敏感"
+    ],
+    "citation": [
+      "Applied Materials FY2025 results and AI semiconductor demand",
+      "Applied Materials Q3/Q4 2025 earnings commentary"
+    ],
+    "source_summary": [
+      "AI adoption drives wafer fab equipment investment",
+      "Advanced packaging and Angstrom-era products are key growth areas"
+    ]
+  },
+  "AMD": {
+    "ticker": "AMD",
+    "company_name": "Advanced Micro Devices, Inc.",
+    "exchange": "NASDAQ",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "category_sub": "CPU_GPU_COMPUTE_SEMI",
+    "business_summary": "AMD 為全球高效能 CPU/GPU 公司，產品包含 EPYC server CPU、Ryzen PC CPU 與 Instinct AI GPU。近年 AI data center 業務高速成長，逐漸成為 NVIDIA 以外的重要 AI accelerator 供應商。",
+    "revenue_driver": [
+      "EPYC server CPU 市占率提升",
+      "Instinct AI GPU 出貨成長",
+      "Hyperscaler AI server 建置",
+      "Ryzen 高階 PC 與 AI PC 升級"
+    ],
+    "growth_driver": [
+      "Data center revenue 年增超過 50%",
+      "Meta/OpenAI AI 基礎建設合作",
+      "MI350 / MI450 AI GPU roadmap",
+      "Server CPU TAM 持續擴大"
+    ],
+    "risk_factors": [
+      "NVIDIA AI 生態系壓制",
+      "AI GPU 供應鏈與產能限制",
+      "遊戲與 PC 市場景氣波動",
+      "高度依賴 TSMC 先進製程"
+    ],
+    "fcn_view": "AMD 為高波動 AI 成長股，適合積極型 FCN basket，可有效提升 coupon，但需控制 strike 與 tenor。",
+    "pool30_view": "AMD 屬 AI 核心成長股，對 pool30 提供高 beta 與 AI acceleration 曝險。",
+    "timing_view": "目前 AI server cycle 強勢，短線若 AI 資本支出降溫或 NVIDIA 新產品壓制，可能引發高波動修正。",
+    "data_quality": {
+      "profile_completeness": "high",
+      "financial_visibility": "high",
+      "business_model_clarity": "high",
+      "fcn_relevance": "very_high"
+    },
+    "warning": [
+      "AI GPU 市占率仍遠低於 NVIDIA",
+      "高估值時容易出現 20~30% 修正"
+    ],
+    "citation": [
+      "AMD Q1 2026 earnings",
+      "AMD Data Center growth and AI accelerator demand"
+    ],
+    "source_summary": [
+      "Data center revenue grew more than 50%",
+      "AI accelerator and EPYC demand remain major drivers"
+    ]
+  },
+  "CRDO": {
+    "ticker": "CRDO",
+    "company_name": "Credo Technology Group Holding Ltd",
+    "exchange": "NASDAQ",
+    "sector": "Technology",
+    "industry": "Semiconductors",
+    "category_sub": "AI_NETWORK_CONNECTIVITY",
+    "business_summary": "Credo Technology 提供高速連接與 optical DSP 解決方案，產品包含 AEC、DSP、PCIe connectivity 與 optical interconnect，主要服務 hyperscaler AI data center。",
+    "revenue_driver": [
+      "800G / 1.6T AI 網路升級",
+      "Hyperscaler AI cluster 擴建",
+      "Optical DSP 與 AEC 滲透率提升",
+      "PCIe 與低功耗高速互連需求"
+    ],
+    "growth_driver": [
+      "Fiscal 2025 revenue 年增超過 100%",
+      "AI optical connectivity 市場快速成長",
+      "800G transceiver design win",
+      "低功耗高速傳輸需求增加"
+    ],
+    "risk_factors": [
+      "客戶集中度偏高",
+      "高度依賴 hyperscaler capex",
+      "Marvell、Broadcom 等競爭激烈",
+      "高成長股估值波動極大"
+    ],
+    "fcn_view": "CRDO 為高波動 AI connectivity 股，適合作為高 coupon enhancer，但不適合高 strike 長天期 FCN。",
+    "pool30_view": "CRDO 提供 AI 網路與 optical connectivity 曝險，可補足 GPU 與 memory 之外的 AI infrastructure。",
+    "timing_view": "目前 AI networking cycle 強勢，但屬典型 momentum 股，需避免市場風險偏好下降時追高。",
+    "data_quality": {
+      "profile_completeness": "medium_high",
+      "financial_visibility": "medium_high",
+      "business_model_clarity": "medium_high",
+      "fcn_relevance": "high"
+    },
+    "warning": [
+      "Hyperscaler 客戶集中風險高",
+      "股價波動度遠高於大型半導體股"
+    ],
+    "citation": [
+      "Credo FY2025 earnings",
+      "Optical DSP and AI connectivity growth commentary"
+    ],
+    "source_summary": [
+      "Fiscal 2025 revenue growth exceeded 100%",
+      "AI optical DSP and AEC demand remain strong"
+    ]
   }
 }
