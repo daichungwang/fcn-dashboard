@@ -1,0 +1,48 @@
+{
+  "plan_date": "2026-05-12",
+  "status": "design_ready",
+  "security_mode": {
+    "bank_alias": {
+      "sinopac": "Bank-w",
+      "fubon": "Bank-t"
+    },
+    "amount_scale": 0.1,
+    "amount_note": "display_amount = real_amount / 10"
+  },
+  "new_allocation_budget": {
+    "total_display": 140000,
+    "by_bank_display": {
+      "Bank-t": 90000,
+      "Bank-w": 50000
+    }
+  },
+  "target_mix": {
+    "stable_cashflow": { "label": "長期穩定現金流", "rate_min": 12, "rate_max": 17.99, "target_pct": 40 },
+    "reasonable_investment": { "label": "合理投資型", "rate_min": 18, "rate_max": 20.99, "target_pct": 30 },
+    "aggressive": { "label": "積極單", "rate_min": 21, "rate_max": 25, "target_pct": 20 },
+    "short_term_speculative": { "label": "短期投機單", "tenor_months_max": 6, "target_pct": 10 }
+  },
+  "health_check_rules": {
+    "primary_risk_basis": "basket_score_and_worst_of",
+    "rate_is_not_risk_basis": true,
+    "basket_score_formula": {
+      "worst_of_score": 0.35,
+      "avg_stock_quality": 0.25,
+      "basket_diversification": 0.2,
+      "ki_safety_score": 0.1,
+      "valuation_timing_score": 0.1
+    },
+    "danger_flags": [
+      "near_KI",
+      "weak_worst_of",
+      "sector_concentration",
+      "single_name_overexposure",
+      "long_tenor_high_vol",
+      "m8_underpaid_risk"
+    ]
+  },
+  "planner_summary": {
+    "main_finding": "等待讀取 FCN pool 後自動計算；此檔保留目標比例與資安規則。",
+    "next_action": "Open mm/fcn_one_month_planner.html to calculate 30d cash release, base pool, basket health, and new allocation plan."
+  }
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MM FCN One-Month Planner</title>
+<style>
+:root{
+  --bg:#eef4fa;--panel:#fff;--ink:#162434;--muted:#667085;--line:#d8e4ef;
+  --brand:#11283f;--brand2:#214b73;--blue:#2f80ed;--good:#188b58;--warn:#b9770e;--bad:#be3f3f;
+  --good-bg:#eaf8f1;--warn-bg:#fff4df;--bad-bg:#fff0f0;--soft:#f8fbff;--shadow:0 12px 30px rgba(16,24,40,.08);
+}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,var(--bg),#f8fbfe);color:var(--ink);font-family:"Segoe UI","Noto Sans TC",Arial,sans-serif;font-size:14px}.app{max-width:1680px;margin:0 auto;padding:18px 18px 44px}.hero{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:28px;padding:24px 26px;box-shadow:var(--shadow);margin-bottom:16px}.hero h1{margin:0;font-size:32px}.hero p{margin:8px 0 0;color:rgba(255,255,255,.86);line-height:1.65}.hero-row{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;flex-wrap:wrap}.hero-actions{display:flex;gap:8px;flex-wrap:wrap}.hero-actions a,.hero-pill{color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:8px 11px;font-size:12px;font-weight:900;text-decoration:none}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 0}button,.btn{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:8px 11px;font-weight:900;cursor:pointer;text-decoration:none}.btn.primary,button.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:0}.kpi-grid{display:grid;grid-template-columns:repeat(8,minmax(140px,1fr));gap:12px;margin-bottom:16px}.kpi{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:14px;box-shadow:0 8px 22px rgba(16,24,40,.045)}.kpi .k{font-size:12px;color:var(--muted);font-weight:800}.kpi .v{font-size:23px;font-weight:950;margin-top:6px}.kpi .d{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.45}.layout{display:grid;grid-template-columns:360px minmax(0,1fr);gap:16px}.nav-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;box-shadow:var(--shadow);position:sticky;top:12px}.nav-item{display:flex;justify-content:space-between;gap:8px;align-items:center;border:1px solid #e6eef6;background:#fbfdff;border-radius:15px;padding:12px;margin-bottom:10px;cursor:pointer}.nav-item b{font-size:14px}.nav-item span{font-size:12px;color:var(--muted)}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:950;border:1px solid #d0d5dd}.ok{background:var(--good-bg);color:var(--good);border-color:#ccead9}.warn{background:var(--warn-bg);color:var(--warn);border-color:#f1dfb5}.bad{background:var(--bad-bg);color:var(--bad);border-color:#f0cfcf}.gray{background:#f2f4f7;color:#667085}.section{background:#fff;border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}.section>summary{list-style:none;cursor:pointer;padding:15px 18px;font-size:18px;font-weight:950;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}.section>summary::-webkit-details-marker{display:none}.section>summary:before{content:"▸";margin-right:8px}.section[open]>summary:before{content:"▾"}.section-body{padding:16px}.two-col{display:grid;grid-template-columns:310px minmax(0,1fr);gap:14px}.summary-box{border:1px solid #e6eef6;background:#fbfdff;border-radius:16px;padding:14px}.summary-box h3{margin:0 0 10px}.metric{display:grid;grid-template-columns:1fr auto;gap:8px;border-bottom:1px dashed #e6eef6;padding:7px 0}.metric:last-child{border-bottom:0}.metric span{color:var(--muted);font-size:12px}.metric b{font-size:13px}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.chart-card{border:1px solid #e6eef6;background:#fff;border-radius:16px;padding:14px}.bar-row{display:grid;grid-template-columns:145px 1fr 70px;gap:9px;align-items:center;margin:9px 0}.bar-bg{height:12px;border-radius:999px;background:#edf2f7;overflow:hidden}.bar-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#7bc6ff,#2f80ed)}.bar-fill.warn{background:linear-gradient(90deg,#ffd68a,#b9770e)}.bar-fill.bad{background:linear-gradient(90deg,#ffaaa5,#be3f3f)}.donut{width:150px;height:150px;border-radius:50%;background:conic-gradient(#2f80ed 0 40%,#52b788 40% 70%,#f4a261 70% 90%,#e76f51 90% 100%);margin:10px auto;position:relative}.donut:after{content:"Mix";position:absolute;inset:34px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:950;color:var(--muted)}.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}table{width:100%;border-collapse:collapse;min-width:880px}th,td{border-bottom:1px solid #e5e7eb;padding:8px;font-size:12px;white-space:nowrap;text-align:left}th{background:#f8fafc}.note{font-size:12px;color:var(--muted);line-height:1.65}.decision{border:1px solid #e6eef6;background:#f8fbff;border-radius:16px;padding:14px;margin-bottom:10px}.decision h3{margin:0 0 8px}.recommend-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.rec-card{border:1px solid #e6eef6;border-radius:16px;padding:14px;background:#fff}.rec-card h4{margin:0 0 8px}.footer-note{margin-top:18px;color:var(--muted);font-size:12px;line-height:1.7}@media(max-width:1280px){.kpi-grid{grid-template-columns:repeat(4,1fr)}.layout,.two-col{grid-template-columns:1fr}.nav-card{position:static}.chart-grid,.recommend-grid{grid-template-columns:1fr 1fr}}@media(max-width:720px){.kpi-grid,.chart-grid,.recommend-grid{grid-template-columns:1fr}.hero h1{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <section class="hero">
+    <div class="hero-row">
+      <div>
+        <h1>MM FCN One-Month Planner / 未來一個月 FCN 布局規劃器</h1>
+        <p>不動 M2，每次只讀 FCN pool 做二次分析：30 天資金回收、扣除後母體、收益配置缺口、basket score / worst-of 持股健檢與 Bank-t / Bank-w 新單規劃。</p>
+      </div>
+      <div class="hero-actions">
+        <a href="./engine_progress_dashboard.html">回 MM Dashboard</a>
+        <a href="../m2.html">M2 原始作業</a>
+        <span class="hero-pill">Bank-w / Bank-t</span>
+        <span class="hero-pill">Amount ×0.1</span>
+      </div>
+    </div>
+    <div class="toolbar">
+      <button class="primary" id="expandAll">全部展開</button>
+      <button id="collapseAll">全部收合</button>
+      <button id="showRiskOnly">只看異常</button>
+      <button id="resetView">恢復總覽</button>
+    </div>
+  </section>
+
+  <section id="kpiGrid" class="kpi-grid"></section>
+
+  <div class="layout">
+    <aside class="nav-card">
+      <div class="nav-item" data-target="cash"><div><b>1. 資金回收</b><br><span>30 天到期 / 提前出場 / 待入帳</span></div><i class="pill ok" id="navCash">OK</i></div>
+      <div class="nav-item" data-target="base"><div><b>2. 扣除後母體</b><br><span>留下來才是真正風險母體</span></div><i class="pill warn" id="navBase">Check</i></div>
+      <div class="nav-item" data-target="mix"><div><b>3. 收益配置</b><br><span>40 / 30 / 20 / 10 缺口</span></div><i class="pill gray" id="navMix">Mix</i></div>
+      <div class="nav-item" data-target="health"><div><b>4. 持股健檢</b><br><span>basket score / worst-of 主導</span></div><i class="pill bad" id="navHealth">Risk</i></div>
+      <div class="nav-item" data-target="plan"><div><b>5. 新單規劃</b><br><span>Bank-t 90,000 / Bank-w 50,000</span></div><i class="pill ok" id="navPlan">Plan</i></div>
+      <div class="summary-box">
+        <h3>資安模式</h3>
+        <div class="metric"><span>永豐</span><b>Bank-w</b></div>
+        <div class="metric"><span>富邦</span><b>Bank-t</b></div>
+        <div class="metric"><span>金額</span><b>實際 / 10</b></div>
+        <p class="note">畫面金額皆為資安縮放值；比例與配置判斷不受影響。</p>
+      </div>
+    </aside>
+
+    <main>
+      <details class="section planner-section" id="cash" open>
+        <summary><span>1. 資金回收 / 30 天可用資金</span><span class="pill ok">Cash Release</span></summary>
+        <div class="section-body two-col">
+          <div class="summary-box" id="cashSummary"></div>
+          <div class="chart-grid">
+            <div class="chart-card"><h3>銀行別回收</h3><div id="cashBankBars"></div></div>
+            <div class="chart-card"><h3>30 天時間軸</h3><div id="cashTimeline"></div></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="section planner-section" id="base" open>
+        <summary><span>2. 扣除後母體 / 真正持有風險</span><span class="pill warn">Base Pool</span></summary>
+        <div class="section-body two-col">
+          <div class="summary-box" id="baseSummary"></div>
+          <div class="chart-grid">
+            <div class="chart-card"><h3>保留 / 排除</h3><div id="baseDonut" class="donut"></div><div id="baseDonutText" class="note"></div></div>
+            <div class="chart-card"><h3>Worst-of 集中度</h3><div id="worstOfBars"></div></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="section planner-section" id="mix" open>
+        <summary><span>3. 收益配置 / 目標 vs 現況</span><span class="pill gray">40/30/20/10</span></summary>
+        <div class="section-body two-col">
+          <div class="summary-box" id="mixSummary"></div>
+          <div class="chart-card"><h3>配置缺口</h3><div id="mixBars"></div></div>
+        </div>
+      </details>
+
+      <details class="section planner-section risk-section" id="health" open>
+        <summary><span>4. 持股健檢 / Basket Score + Worst-of</span><span class="pill bad">Health Check</span></summary>
+        <div class="section-body">
+          <div class="decision"><h3>判斷原則</h3><div class="note">風險健檢不用 rate 分類。Rate 是收益結果；真正風險由 basket score、worst-of、KI 距離、標的品質與集中度決定。</div></div>
+          <div class="chart-grid">
+            <div class="chart-card"><h3>Basket Score 分布</h3><div id="scoreBars"></div></div>
+            <div class="chart-card"><h3>Danger Flags</h3><div id="flagBars"></div></div>
+          </div>
+          <div style="height:12px"></div>
+          <div class="table-wrap"><table><thead><tr><th>FCN</th><th>Bank</th><th>Basket</th><th>Worst-of</th><th>Basket Score</th><th>Risk</th><th>Danger Flags</th><th>Action</th></tr></thead><tbody id="healthRows"></tbody></table></div>
+        </div>
+      </details>
+
+      <details class="section planner-section" id="plan" open>
+        <summary><span>5. 新單規劃 / Bank-t + Bank-w</span><span class="pill ok">Allocation Plan</span></summary>
+        <div class="section-body">
+          <div class="recommend-grid" id="recommendCards"></div>
+          <div class="chart-card" style="margin-top:12px"><h3>銀行 × 類別建議</h3><div id="bankPlanBars"></div></div>
+        </div>
+      </details>
+
+      <details class="section planner-section" id="raw">
+        <summary><span>資料與限制 / Data Notes</span><span class="pill gray">Debug</span></summary>
+        <div class="section-body">
+          <div class="note" id="dataNotes"></div>
+        </div>
+      </details>
+    </main>
+  </div>
+  <div class="footer-note">此頁是 MM 規劃器，不會寫回 M2，也不會修改 FCN pool。正式下單仍需人工確認銀行條件、KI/Strike、M8 market coupon 與即時價格。</div>
+</div>
+<script src="../js/mm/modules/mm_fcn_one_month_planner.js"></script>
+</body>
+</html>
