@@ -8,7 +8,8 @@
   const TODAY = new Date('2026-05-12T00:00:00+08:00');
   const WINDOW_DAYS = 30;
   const TRANSFER_FEE_USD = 20;
-  const MIN_TICKET = { 'Bank-w': 30000, 'Bank-t': 10000 };
+  const MIN_LOTS = { 'Bank-w': 3, 'Bank-t': 1 };
+  const LOT_DISPLAY_AMOUNT = 1000;
   const BANK_ALIAS = {
     '永豐': 'Bank-w',
     'sinopac': 'Bank-w',
@@ -71,14 +72,14 @@
   function normalizeRows(rawPool) {
     const rows = safeArr(rawPool && rawPool.data ? rawPool.data : rawPool);
     return rows.map((r, idx) => {
-      const amount = num(r.amount ?? r.principal ?? r.notional ?? r.invest_amount ?? r.money ?? r.display_amount, 0);
+      const amount = num(r.amt ?? r.amount ?? r.principal ?? r.notional ?? r.invest_amount ?? r.money ?? r.display_amount, 0);
       const coupon = num(r.coupon_rate ?? r.rate ?? r.coupon ?? r.annual_coupon ?? r.apr, 0);
       const tenor = num(r.tenor_months ?? r.tenor ?? r.period_months ?? r.months, 0);
-      const maturity = dateOf(r.maturity_date ?? r.expiry_date ?? r.end_date ?? r.mature_date);
-      const entry = dateOf(r.entry_date ?? r.create_date ?? r.trade_date ?? r.start_date);
+      const maturity = dateOf(r.exit_time ?? r.maturity_date ?? r.expiry_date ?? r.end_date ?? r.mature_date);
+      const entry = dateOf(r.entry_time ?? r.created_time ?? r.date ?? r.entry_date ?? r.create_date ?? r.trade_date ?? r.start_date);
       const expectedCash = dateOf(r.expected_cash_release_date ?? r.cash_date ?? r.payment_date ?? r.settlement_date);
       const symbols = extractSymbols(r);
-      const bank = aliasBank(r.bank ?? r.broker ?? r.source_bank ?? r.platform);
+      const bank = aliasBank(r.tw_bank ?? r.bank ?? r.broker ?? r.source_bank ?? r.platform);
       const id = r.fcn_id || r.id || r.no || r.product_id || `FCN-${idx + 1}`;
       const currentPrice = num(r.current_price ?? r.spot ?? r.worst_of_price ?? r.price_now, 0);
       const kiPrice = num(r.ki_price ?? r.knock_in_price ?? r.lower_barrier_price, 0);
@@ -100,6 +101,7 @@
         currentPrice,
         kiPrice,
         status: rawStatus,
+        entryPrices: r.entry_prices || r.entryPrices || r.entry_price || {},
         worstOf: String(r.worst_of ?? r.worstOf ?? r.worst_symbol ?? symbols[0] ?? '').toUpperCase()
       };
     }).filter(r => r.amount > 0 || r.symbols.length || r.coupon > 0);
@@ -171,6 +173,51 @@
     return count(semi) >= Math.max(3, symbols.length - 1) || count(tech) >= Math.max(3, symbols.length - 1);
   }
 
+
+  function entryPriceOf(row, symbol) {
+    if (!row || !symbol) return 0;
+    const raw = row.entryPrices || row.raw.entry_prices || row.raw.entryPrices || row.raw.entry_price || {};
+    if (typeof raw === 'number' || typeof raw === 'string') return num(raw, 0);
+    return num(raw[symbol] ?? raw[String(symbol).toUpperCase()] ?? raw[String(symbol).toLowerCase()], 0);
+  }
+
+  function currentPriceOf(row, symbol, opt) {
+    const optObj = opt?.[symbol] || opt?.data?.[symbol] || {};
+    return num(optObj.price_now ?? optObj.spot ?? optObj.last ?? row.raw.price_now ?? row.raw.current_price ?? row.currentPrice, 0);
+  }
+
+  function inferExpectedEarlyExit(row, opt) {
+    const symbols = row.symbols.length ? row.symbols : [row.worstOf].filter(Boolean);
+    const daysSinceEntry = row.entry ? daysBetween(row.entry, TODAY) : null;
+    const priced = symbols.map(s => ({ symbol: s, entry: entryPriceOf(row, s), current: currentPriceOf(row, s, opt) }))
+      .filter(x => x.entry > 0 && x.current > 0);
+    const worst = priced.length ? priced.map(x => ({ ...x, ratio: x.current / x.entry })).sort((a, b) => a.ratio - b.ratio)[0] : null;
+    const isExpected = !!(worst && daysSinceEntry !== null && daysSinceEntry > 21 && worst.current > worst.entry);
+    return {
+      expectedEarlyExit: isExpected,
+      daysSinceEntry,
+      expectedWorstOf: worst?.symbol || row.worst || row.worstOf || '--',
+      expectedWorstRatio: worst ? worst.ratio * 100 : null,
+      expectedEarlyExitReason: isExpected ? 'worst-of 現價高於 entry，且進場超過 21 天；僅作規劃雷達，不視為確定現金。' : ''
+    };
+  }
+
+  function inferConfirmedEarlyExit(row) {
+    return /early.?exit|autocall|called|出場|提前/.test(row.status) || row.raw.early_exit_ready === true || row.raw.confirmed_early_exit === true;
+  }
+
+  function lotsOf(displayAmount) {
+    return Math.floor(num(displayAmount, 0) / LOT_DISPLAY_AMOUNT);
+  }
+
+  function lotNote(bank, displayAmount) {
+    const lots = lotsOf(displayAmount);
+    const minLots = MIN_LOTS[bank] || 1;
+    if (lots < minLots && lots > 0) return `${bank} 可用約 ${lots} lot，低於普通最低 ${minLots} lot，建議等待累積。`;
+    if (lots >= minLots) return `${bank} 可用約 ${lots} lot，符合普通最低 ${minLots} lot；輸出只用整數 lots。`;
+    return `${bank} 目前無可規劃 lot。`;
+  }
+
   function analyze(rows, m1, m7, opt) {
     const total = rows.reduce((s, r) => s + r.displayAmount, 0);
     const bySymbolAmt = {};
@@ -181,7 +228,9 @@
       r.incomeClass = classifyIncome(r);
       r.daysToMaturity = r.maturity ? daysBetween(TODAY, r.maturity) : null;
       r.isMaturing30d = r.daysToMaturity !== null && r.daysToMaturity >= 0 && r.daysToMaturity <= WINDOW_DAYS;
-      r.isExpectedExit = /exit|autocall|called|出場|提前|到期/.test(r.status) || (r.raw.expected_exit === true);
+      r.isConfirmedEarlyExit = inferConfirmedEarlyExit(r);
+      Object.assign(r, inferExpectedEarlyExit(r, opt));
+      r.isExpectedExit = r.isConfirmedEarlyExit || /到期/.test(r.status) || (r.raw.expected_exit === true);
       Object.assign(r, healthCheck(r, m1, m7, opt, exposureBySymbol));
       Object.assign(r, inferDeliveryRisk(r, r));
       r.excludeFromBase = r.isMaturing30d || r.isExpectedExit;
@@ -191,6 +240,8 @@
 
     const exitRows = rows.filter(r => r.excludeFromBase);
     const cashRows = rows.filter(r => r.cashAvailable);
+    const confirmedEarlyExitRows = rows.filter(r => r.isConfirmedEarlyExit && !r.stockDeliveryRisk);
+    const expectedEarlyExitRows = rows.filter(r => r.expectedEarlyExit && !r.isConfirmedEarlyExit && !r.stockDeliveryRisk);
     const deliveryRows = rows.filter(r => r.bankCapacityHold);
     const baseRows = rows.filter(r => !r.excludeFromBase);
     const cash = sumBy(cashRows, r => r.bank, r => r.displayAmount);
@@ -209,7 +260,7 @@
     const flagCounts = {};
     baseRows.forEach(r => r.flags.forEach(f => { flagCounts[f] = (flagCounts[f] || 0) + 1; }));
     const avgScore = baseRows.length ? baseRows.reduce((s, r) => s + r.basketScore, 0) / baseRows.length : 0;
-    return { rows, exitRows, cashRows, deliveryRows, baseRows, total, baseTotal, excludedTotal: exitRows.reduce((s,r)=>s+r.displayAmount,0), availableCashTotal: cashRows.reduce((s,r)=>s+r.displayAmount,0), deliveryHoldTotal: deliveryRows.reduce((s,r)=>s+r.displayAmount,0), cash, deliveryHold, mix, worstBars, riskCounts, flagCounts, avgScore };
+    return { rows, exitRows, cashRows, confirmedEarlyExitRows, expectedEarlyExitRows, deliveryRows, baseRows, total, baseTotal, excludedTotal: exitRows.reduce((s,r)=>s+r.displayAmount,0), availableCashTotal: cashRows.reduce((s,r)=>s+r.displayAmount,0), confirmedEarlyExitTotal: confirmedEarlyExitRows.reduce((s,r)=>s+r.displayAmount,0), expectedEarlyExitTotal: expectedEarlyExitRows.reduce((s,r)=>s+r.displayAmount,0), maturityCashTotal: cashRows.filter(r=>r.isMaturing30d && !r.isConfirmedEarlyExit).reduce((s,r)=>s+r.displayAmount,0), deliveryHoldTotal: deliveryRows.reduce((s,r)=>s+r.displayAmount,0), cash, deliveryHold, mix, worstBars, riskCounts, flagCounts, avgScore };
   }
 
   function sumBy(rows, keyFn, valFn) {
@@ -232,9 +283,11 @@
     const topWorst = Object.entries(a.worstBars).sort((x,y)=>y[1]-x[1])[0]?.[0] || '--';
     const budget = cfg?.new_allocation_budget?.total_display || 140000;
     $('kpiGrid').innerHTML = [
-      ['30 天可用現金', fmt(a.availableCashTotal), '排除高機率接股 FCN'],
+      ['預計本月再投入金額', fmt(budget), '規劃預算，不代表已到位現金'],
+      ['確定到期可用', fmt(a.maturityCashTotal), '30 天內到期且排除接股風險'],
+      ['確定提早出場', fmt(a.confirmedEarlyExitTotal), 'M2 / 原始資料確認訊號'],
+      ['預計提早出場', fmt(a.expectedEarlyExitTotal), 'worst-of > entry 且 >21 天，僅規劃雷達'],
       ['接股 / 額度占用', fmt(a.deliveryHoldTotal), '不列入可配置資金'],
-      ['本月新增配置', fmt(budget), 'Bank-t 90,000 + Bank-w 50,000'],
       ['分析母體', fmt(a.baseTotal), '扣除一個月內離場後'],
       ['Basket 平均分數', a.avgScore ? a.avgScore.toFixed(2) : '--', '持股健檢核心指標'],
       ['High Risk', high, '不新增同類 basket'],
@@ -246,11 +299,13 @@
   function renderCash(a) {
     $('cashSummary').innerHTML = `<h3>資金回收摘要</h3>` +
       metric('30 天到期 / 出場總額', fmt(a.excludedTotal)) +
-      metric('可用現金', fmt(a.availableCashTotal)) +
-      metric('可能接股 / 額度占用', fmt(a.deliveryHoldTotal)) +
+      metric('確定到期可用', fmt(a.maturityCashTotal)) +
+      metric('確定提早出場', fmt(a.confirmedEarlyExitTotal)) +
+      metric('預計提早出場', fmt(a.expectedEarlyExitTotal)) +
+      metric('接股 / 額度占用', fmt(a.deliveryHoldTotal)) +
       metric('Bank-t 可用', fmt(a.cash['Bank-t'] || 0)) +
       metric('Bank-w 可用', fmt(a.cash['Bank-w'] || 0)) +
-      `<p class="note">到期 FCN 若有破下限、接股或 Critical/near_KI 訊號，不納入可配置現金；該銀行先視為額度被占用。</p>`;
+      `<p class="note">預計提早出場只作規劃雷達：worst-of 現價高於 entry 且進場超過 21 天；未滿 M2 正式規則前，不當作保證現金。</p>`;
     const merged = { ...a.cash };
     Object.entries(a.deliveryHold).forEach(([k,v]) => { merged[`${k} 接股占用`] = v; });
     const max = Math.max(...Object.values(merged), 1);
@@ -298,8 +353,8 @@
     const needs = Object.entries(a.mix).sort((x,y)=>y[1].gapPct-x[1].gapPct).filter(([_,m])=>m.gapPct>0);
     const blocked = a.baseRows.concat(a.deliveryRows).filter(r => ['Critical','High Risk'].includes(r.risk) || r.stockDeliveryRisk).map(r => r.worst).filter(Boolean);
     const blockedUnique = [...new Set(blocked)].slice(0,6);
-    const bankWNote = effectiveBudget['Bank-w'] > 0 && effectiveBudget['Bank-w'] < MIN_TICKET['Bank-w'] ? '低於永豐最低 30,000，不建議硬做或轉資。' : '滿足永豐最低 30,000 才規劃新單。';
-    const bankTNote = effectiveBudget['Bank-t'] > 0 && effectiveBudget['Bank-t'] < MIN_TICKET['Bank-t'] ? '低於富邦最低 10,000，不建議硬做或轉資。' : '滿足富邦最低 10,000 才規劃新單。';
+    const bankWNote = lotNote('Bank-w', effectiveBudget['Bank-w'] || 0);
+    const bankTNote = lotNote('Bank-t', effectiveBudget['Bank-t'] || 0);
     const transferNote = `跨銀行轉資成本約 ${TRANSFER_FEE_USD} USD；除非能滿足最低投資門檻且配置缺口明確，否則不建議隨意轉移。`;
     const cards = [
       ['Bank-t 可規劃', fmt(effectiveBudget['Bank-t']||0), `原額度 ${fmt(budget['Bank-t']||0)}，扣除接股占用 ${fmt(a.deliveryHold['Bank-t']||0)}。${bankTNote}`],
@@ -309,7 +364,7 @@
     ];
     $('recommendCards').innerHTML = cards.map(([h,v,d])=>`<div class="rec-card"><h4>${h}</h4><div class="kpi"><div class="v">${v}</div><div class="d">${d}</div></div></div>`).join('');
     const max = Math.max(...Object.values(budget),1);
-    const planRows = Object.entries(budget).flatMap(([bank, amt]) => [[`${bank} 原配置`, amt, ''], [`${bank} 接股占用`, a.deliveryHold[bank] || 0, 'bad'], [`${bank} 可規劃`, effectiveBudget[bank] || 0, (effectiveBudget[bank] || 0) < (MIN_TICKET[bank] || 0) && (effectiveBudget[bank] || 0) > 0 ? 'warn' : '']]);
+    const planRows = Object.entries(budget).flatMap(([bank, amt]) => [[`${bank} 原配置`, amt, ''], [`${bank} 接股占用`, a.deliveryHold[bank] || 0, 'bad'], [`${bank} 可規劃`, effectiveBudget[bank] || 0, lotsOf(effectiveBudget[bank] || 0) < (MIN_LOTS[bank] || 1) && (effectiveBudget[bank] || 0) > 0 ? 'warn' : '']]);
     $('bankPlanBars').innerHTML = planRows.map(([k,v,c])=>bar(k,v,max,c)).join('');
   }
 
@@ -322,7 +377,7 @@
   }
 
   function renderNotes(rows, cfg) {
-    $('dataNotes').innerHTML = `讀取 FCN 筆數：${rows.length}<br>資安：${cfg?.security_mode?.amount_note || 'display_amount = real_amount / 10'}<br>銀行最低投資：Bank-w 30,000、Bank-t 10,000；跨銀行轉資估計 ${TRANSFER_FEE_USD} USD。<br>限制：若原始資料缺少 KI / strike / worst_of，系統會用 basket 內最低 stock score 估算 worst-of；接股風險以資料標記、狀態文字、KI 與 basket score 做保守判斷。`;
+    $('dataNotes').innerHTML = `讀取 FCN 筆數：${rows.length}<br>資安：${cfg?.security_mode?.amount_note || 'display_amount = real_amount / 10'}<br>普通單最低 lots：Bank-w 3 lots、Bank-t 1 lot；只輸出整數 lots；跨銀行轉資估計 ${TRANSFER_FEE_USD} USD。<br>限制：若原始資料缺少 KI / strike / worst_of，系統會用 basket 內最低 stock score 估算 worst-of；接股風險以資料標記、狀態文字、KI 與 basket score 做保守判斷。`;
   }
 
   async function init() {
@@ -337,3 +392,4 @@
 
   document.addEventListener('DOMContentLoaded', init);
 })();
+
