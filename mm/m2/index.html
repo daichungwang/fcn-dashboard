@@ -27,9 +27,9 @@
     .good{color:#188b58}.warn{color:#b9770e}.bad{color:#c62828}.blue{color:#1e3a8a}.pill{display:inline-block;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:800;border:1px solid #ddd;background:#fafafa}.pill-good{background:#ecfff1;color:#188b58;border-color:#a9e2b4}.pill-warn{background:#fff7e8;color:#b9770e;border-color:#f0d298}.pill-bad{background:#fff0f0;color:#c62828;border-color:#f1b5b5}.pill-blue{background:#eef6ff;color:#1e3a8a;border-color:#cfe1ff}
     .broker-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.broker-card{border:1px solid #e5e7eb;border-radius:18px;padding:15px;background:linear-gradient(135deg,#fff,#f8fafc);box-shadow:0 14px 28px rgba(15,23,42,.07)}.broker-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:12px}.broker-avail{font-size:26px;font-weight:950;color:#0f766e}.broker-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.mini-metric{position:relative;overflow:hidden;border:1px solid #eee;border-radius:14px;padding:11px 10px 11px 14px;background:#fff;box-shadow:0 6px 14px rgba(15,23,42,.04)}.metric-title{font-size:12px;color:#666}.metric-main{font-size:16px;font-weight:900;margin-top:5px}.metric-sub{font-size:12px;color:#666;margin-top:4px;line-height:1.4}
     .alloc-layout{display:grid;grid-template-columns:310px 1.25fr 1fr;gap:14px;align-items:start}.panel{border:1px solid #e5e7eb;border-radius:16px;padding:14px;background:#fff}.pie{width:220px;height:220px;border-radius:50%;margin:16px auto;border:8px solid #fff;box-shadow:inset -14px -18px 28px rgba(0,0,0,.14),inset 10px 12px 22px rgba(255,255,255,.22),0 18px 30px rgba(15,23,42,.18)}.legend-row,.alloc-row{display:grid;grid-template-columns:1fr auto;gap:8px;border-bottom:1px solid #eee;padding:8px 0;font-size:13px}.legend-dot{display:inline-block;width:10px;height:10px;border-radius:999px;margin-right:6px;vertical-align:middle}.alloc-row{grid-template-columns:1.1fr 1fr}.bar{height:8px;background:#eef2f7;border-radius:999px;overflow:hidden;margin-top:5px}.bar span{display:block;height:100%;background:var(--bar,#111);border-radius:999px}.interpret-box{border:1px solid #dbeafe;background:#f8fbff;border-radius:14px;padding:12px;margin-bottom:10px;line-height:1.65;font-size:13px}.interpret-title{font-weight:900;margin-bottom:4px}
-    .table-wrap{overflow:auto;border:1px solid #e5e5e5;border-radius:14px}table{width:100%;border-collapse:collapse;min-width:1080px}th,td{border-bottom:1px solid #eee;padding:8px;text-align:left;white-space:nowrap;font-size:13px}th{background:#fafafa;color:#555;position:sticky;top:0} .row-bad{background:#fff7f7}.row-warn{background:#fffdf7}.row-good{background:#fbfffb}
-    .list-card{border:1px solid #eee;border-radius:12px;padding:10px;margin:8px 0;background:#fafafa;font-size:13px;line-height:1.55}.list-card b{font-size:14px}
-    @media(max-width:1100px){.grid,.grid-3,.broker-grid,.alloc-layout,.flow-panel{grid-template-columns:1fr}.broker-metrics{grid-template-columns:repeat(2,1fr)}}@media(max-width:680px){.broker-metrics{grid-template-columns:1fr}.toolbar{flex-direction:column;align-items:stretch}.btn,button{width:100%}}
+    .table-wrap{overflow:auto;border:1px solid #e5e5e5;border-radius:14px}table{width:100%;border-collapse:collapse;min-width:1080px}th,td{border-bottom:1px solid #eee;padding:8px;text-align:left;white-space:nowrap;font-size:13px}th{background:#fafafa;color:#555;position:sticky;top:0}.row-bad{background:#fff7f7}.row-warn{background:#fffdf7}.row-good{background:#fbfffb}
+    .list-card{border:1px solid #eee;border-radius:12px;padding:10px;margin:8px 0;background:#fafafa;font-size:13px;line-height:1.55}.list-card b{font-size:14px}.cash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.cash-card{border:1px solid #e5e7eb;border-radius:16px;padding:14px;background:#fff;min-height:160px}.cash-title{font-weight:900;margin-bottom:8px}
+    @media(max-width:1100px){.grid,.grid-3,.cash-grid,.broker-grid,.alloc-layout,.flow-panel{grid-template-columns:1fr}.broker-metrics{grid-template-columns:repeat(2,1fr)}}@media(max-width:680px){.broker-metrics{grid-template-columns:1fr}.toolbar{flex-direction:column;align-items:stretch}.btn,button{width:100%}}
   </style>
 </head>
 <body>
@@ -74,18 +74,32 @@
       </div>
     </div>
 
+    <div class="card section" data-section="cashDetail">
+      <div class="section-head"><h2>3. Cash-in Detail｜一個月出場資金明細</h2><button class="light section-toggle">展開</button></div>
+      <div class="section-body"><div id="cashInDetail" class="cash-grid"></div></div>
+    </div>
+
     <div class="card section" data-section="broker">
-      <div class="section-head"><h2>3. Broker Capacity Preview｜富邦 / 永豐容量預覽</h2><button class="light section-toggle">展開</button></div>
+      <div class="section-head"><h2>4. Broker Capacity Preview｜富邦 / 永豐容量預覽</h2><button class="light section-toggle">展開</button></div>
       <div class="section-body"><div id="brokerGrid" class="broker-grid"></div><div id="brokerPlanBox" class="decision-note"></div></div>
     </div>
 
     <div class="card section" data-section="allocation">
-      <div class="section-head"><h2>4. Allocation Preview｜扣除出場後配置重建</h2><button class="light section-toggle">展開</button></div>
+      <div class="section-head"><h2>5. Allocation Preview｜扣除出場後配置重建</h2><button class="light section-toggle">展開</button></div>
       <div class="section-body"><div id="allocGrid"></div><div id="allocNote" class="decision-note"></div></div>
     </div>
 
+    <div class="card section" data-section="stockCapacity">
+      <div class="section-head"><h2>6. Stock Capacity｜單股動態額度與燈號</h2><button class="light section-toggle">展開</button></div>
+      <div class="section-body">
+        <div class="note">D 區邏輯：用 Planning Base 重新計算單股額度。Static Remaining 看現在 active，Dynamic Available 看扣除 30D 出場後的可用額度。</div>
+        <div id="stockCapacityGrid" class="flow-panel" style="margin-top:12px"></div>
+        <div class="table-wrap" style="margin-top:12px"><table><thead><tr><th>Stock</th><th>Category</th><th>Max</th><th>Active</th><th>Exit Release</th><th>Planning Base</th><th>Static Rem.</th><th>Dynamic Available</th><th>Light</th><th>Suggested Bucket</th><th>Comment</th></tr></thead><tbody id="stockCapacityRows"></tbody></table></div>
+      </div>
+    </div>
+
     <div class="card section" data-section="table">
-      <div class="section-head"><h2>5. FCN Read-only Table｜只讀持倉清單</h2><button class="light section-toggle">展開</button></div>
+      <div class="section-head"><h2>7. FCN Read-only Table｜只讀持倉清單</h2><button class="light section-toggle">展開</button></div>
       <div class="section-body">
         <div id="tableMeta" class="muted" style="margin-bottom:8px">尚無資料</div>
         <div class="table-wrap"><table><thead><tr><th>FCN ID</th><th>Bank</th><th>Amount</th><th>Rate</th><th>Tenor</th><th>Basket</th><th>Worst-of</th><th>Health</th><th>Planner Tag</th><th>Days to Maturity</th></tr></thead><tbody id="fcnRows"></tbody></table></div>
