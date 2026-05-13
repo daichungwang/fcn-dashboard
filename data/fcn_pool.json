@@ -182,7 +182,6 @@
       }
     }
   },
- 
   {
     "date": "2025-10-15",
     "fcn_id": "FCN757K 富邦",
@@ -199,14 +198,14 @@
     "ki": 60.0,
     "eki": false,
     "bank": "法國外貿銀行",
-    "has_position": true,
+    "has_position": false,
     "amt": 20000.0,
     "currency": "USD",
     "status": "closed",
     "tw_bank": "富邦",
     "created_time": "2025-10-15T09:00",
     "entry_time": "2025-10-15T09:00",
-    "exit_time":  "2026-04-21T09:00",
+    "exit_time": "2026-04-21T09:00",
     "decision_flag": "manual",
     "is_portfolio": true,
     "note": "標的價格=VWAP",
@@ -236,7 +235,10 @@
         "hit": true,
         "first_hit_time": "2026-04-15T09:00"
       }
-    }
+    },
+    "lifecycle": "closed",
+    "closed_reason": "exit_time populated",
+    "closed_time": "2026-04-21T09:00"
   },
   {
     "date": "2025-10-17",
@@ -299,61 +301,64 @@
       }
     }
   },
- {
-  "date": "2025-10-27",
-  "fcn_id": "FCN935K 富邦",
-  "basket": [
-    "AVGO",
-    "COIN",
-    "INTC",
-    "TSLA"
-  ],
-  "tenor": 6,
-  "rate": 18,
-  "autocall": 95,
-  "strike": 70.16,
-  "ki": 50,
-  "eki": false,
-  "bank": "西班牙對外銀行",
-  "has_position": true,
-  "amt": 10000,
-  "currency": "USD",
-  "status": "closed",
-  "tw_bank": "富邦",
-  "created_time": "2025-10-27T09:00",
-  "entry_time": "2025-10-27T09:00",
-  "exit_time": "2026-05-07T09:00",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "標的價格=VWAP",
-  "entry_prices": {
-    "AVGO": 341.6129,
-    "COIN": 345.6199,
-    "INTC": 37.7347,
-    "TSLA": 428.8179
+  {
+    "date": "2025-10-27",
+    "fcn_id": "FCN935K 富邦",
+    "basket": [
+      "AVGO",
+      "COIN",
+      "INTC",
+      "TSLA"
+    ],
+    "tenor": 6,
+    "rate": 18,
+    "autocall": 95,
+    "strike": 70.16,
+    "ki": 50,
+    "eki": false,
+    "bank": "西班牙對外銀行",
+    "has_position": false,
+    "amt": 10000,
+    "currency": "USD",
+    "status": "closed",
+    "tw_bank": "富邦",
+    "created_time": "2025-10-27T09:00",
+    "entry_time": "2025-10-27T09:00",
+    "exit_time": "2026-05-07T09:00",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "標的價格=VWAP",
+    "entry_prices": {
+      "AVGO": 341.6129,
+      "COIN": 345.6199,
+      "INTC": 37.7347,
+      "TSLA": 428.8179
+    },
+    "maturity_time": "2026-04-27T09:00",
+    "has_ki_breach": true,
+    "first_ki_breach_time": "2026-04-06T19:50",
+    "early_exit_record": {
+      "AVGO": {
+        "hit": true,
+        "first_hit_time": "2026-04-15T09:00"
+      },
+      "COIN": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "INTC": {
+        "hit": true,
+        "first_hit_time": "2026-04-15T09:00"
+      },
+      "TSLA": {
+        "hit": false,
+        "first_hit_time": ""
+      }
+    },
+    "lifecycle": "closed",
+    "closed_reason": "exit_time populated",
+    "closed_time": "2026-05-07T09:00"
   },
-  "maturity_time": "2026-04-27T09:00",
-  "has_ki_breach": true,
-  "first_ki_breach_time": "2026-04-06T19:50",
-  "early_exit_record": {
-    "AVGO": {
-      "hit": true,
-      "first_hit_time": "2026-04-15T09:00"
-    },
-    "COIN": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "INTC": {
-      "hit": true,
-      "first_hit_time": "2026-04-15T09:00"
-    },
-    "TSLA": {
-      "hit": false,
-      "first_hit_time": ""
-    }
-  }
-},
   {
     "date": "2025-10-31",
     "fcn_id": "FCN055L 富邦",
@@ -459,54 +464,54 @@
     }
   },
   {
-  "date": "2025-11-04",
-  "fcn_id": "FCN2503655 永豐",
-  "basket": [
-    "ARM",
-    "META",
-    "ORCL"
-  ],
-  "tenor": 12,
-  "rate": 18,
-  "autocall": 100,
-  "strike": 76.37,
-  "ki": 60,
-  "eki": true,
-  "bank": "摩根大通",
-  "has_position": true,
-  "amt": 40000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "永豐",
-  "created_time": "2025-11-04T09:01",
-  "entry_time": "2025-11-04T09:01",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "ARM": 160.73,
-    "META": 627.32,
-    "ORCL": 248.17
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "ARM": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2025-11-04",
+    "fcn_id": "FCN2503655 永豐",
+    "basket": [
+      "ARM",
+      "META",
+      "ORCL"
+    ],
+    "tenor": 12,
+    "rate": 18,
+    "autocall": 100,
+    "strike": 76.37,
+    "ki": 60,
+    "eki": true,
+    "bank": "摩根大通",
+    "has_position": true,
+    "amt": 40000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "永豐",
+    "created_time": "2025-11-04T09:01",
+    "entry_time": "2025-11-04T09:01",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "ARM": 160.73,
+      "META": 627.32,
+      "ORCL": 248.17
     },
-    "META": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "ORCL": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "ARM": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "META": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "ORCL": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
     "date": "2025-12-01",
     "fcn_id": "FCN441L 富邦",
@@ -624,54 +629,54 @@
     }
   },
   {
-  "date": "2025-12-11",
-  "fcn_id": "FCN2504096 永豐",
-  "basket": [
-    "NVDA",
-    "TSLA",
-    "INTC"
-  ],
-  "tenor": 12,
-  "rate": 18,
-  "autocall": 100,
-  "strike": 60.55,
-  "ki": 60.55,
-  "eki": false,
-  "bank": "星展銀行",
-  "has_position": true,
-  "amt": 30000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "永豐",
-  "created_time": "2025-12-11T09:14",
-  "entry_time": "2025-12-11T09:14",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "NVDA": 183.38,
-    "TSLA": 454.53,
-    "INTC": 40.5
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "NVDA": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2025-12-11",
+    "fcn_id": "FCN2504096 永豐",
+    "basket": [
+      "NVDA",
+      "TSLA",
+      "INTC"
+    ],
+    "tenor": 12,
+    "rate": 18,
+    "autocall": 100,
+    "strike": 60.55,
+    "ki": 60.55,
+    "eki": false,
+    "bank": "星展銀行",
+    "has_position": true,
+    "amt": 30000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "永豐",
+    "created_time": "2025-12-11T09:14",
+    "entry_time": "2025-12-11T09:14",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "NVDA": 183.38,
+      "TSLA": 454.53,
+      "INTC": 40.5
     },
-    "TSLA": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "INTC": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "NVDA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSLA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "INTC": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
     "date": "2025-12-12",
     "fcn_id": "FCN623L 富邦",
@@ -1163,14 +1168,14 @@
     "ki": 55.0,
     "eki": false,
     "bank": "法國外貿銀行",
-    "has_position": true,
+    "has_position": false,
     "amt": 30000.0,
     "currency": "USD",
     "status": "closed",
     "tw_bank": "富邦",
     "created_time": "2026-03-10T09:00",
     "entry_time": "2026-03-10T09:00",
-    "exit_time":  "2026-04-20T09:00",
+    "exit_time": "2026-04-20T09:00",
     "decision_flag": "manual",
     "is_portfolio": true,
     "note": "標的價格=VWAP",
@@ -1195,7 +1200,10 @@
         "hit": false,
         "first_hit_time": ""
       }
-    }
+    },
+    "lifecycle": "closed",
+    "closed_reason": "exit_time populated",
+    "closed_time": "2026-04-20T09:00"
   },
   {
     "date": "2026-03-11",
@@ -1214,7 +1222,7 @@
     "ki": 50.0,
     "eki": false,
     "bank": "法國外貿銀行",
-    "has_position": true,
+    "has_position": false,
     "amt": 50000.0,
     "currency": "USD",
     "status": "closed",
@@ -1256,7 +1264,10 @@
         "hit": false,
         "first_hit_time": ""
       }
-    }
+    },
+    "lifecycle": "closed",
+    "closed_reason": "exit_time populated",
+    "closed_time": "2026-04-21T09:00"
   },
   {
     "date": "2026-03-10",
@@ -1275,7 +1286,7 @@
     "ki": 50.0,
     "eki": false,
     "bank": "法國外貿銀行",
-    "has_position": true,
+    "has_position": false,
     "amt": 80000.0,
     "currency": "USD",
     "status": "closed",
@@ -1317,7 +1328,10 @@
         "hit": false,
         "first_hit_time": ""
       }
-    }
+    },
+    "lifecycle": "closed",
+    "closed_reason": "exit_time populated",
+    "closed_time": "2026-04-20T09:00"
   },
   {
     "date": "2026-03-11",
@@ -1336,7 +1350,7 @@
     "ki": 55.0,
     "eki": false,
     "bank": "法國外貿銀行",
-    "has_position": true,
+    "has_position": false,
     "amt": 70000.0,
     "currency": "USD",
     "status": "closed",
@@ -1378,7 +1392,10 @@
         "hit": false,
         "first_hit_time": ""
       }
-    }
+    },
+    "lifecycle": "closed",
+    "closed_reason": "exit_time populated",
+    "closed_time": "2026-04-21T09:00"
   },
   {
     "date": "2026-04-07",
@@ -1501,7 +1518,7 @@
     "ki": 50.0,
     "eki": false,
     "bank": "法國外貿銀行",
-    "has_position": true,
+    "has_position": false,
     "amt": 50000.0,
     "currency": "USD",
     "status": "closed",
@@ -1543,790 +1560,793 @@
         "hit": false,
         "first_hit_time": ""
       }
-    }
+    },
+    "lifecycle": "closed",
+    "closed_reason": "exit_time populated",
+    "closed_time": "2026-04-21T09:00"
   },
   {
-  "date": "2026-04-15",
-  "fcn_id": "FCN2601188 永豐",
-  "basket": [
-    "TSM",
-    "QQQ",
-    "SMH",
-    "LQD"
-  ],
-  "tenor": 12,
-  "rate": 12.12,
-  "autocall": 100,
-  "strike": 70,
-  "ki": 70,
-  "eki": false,
-  "bank": "法國外貿銀行",
-  "has_position": true,
-  "amt": 60000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "永豐",
-  "created_time": "2026-04-15T09:00",
-  "entry_time": "2026-04-15T09:00",
-  "exit_time": null,
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "IS code 147000024478",
-  "entry_prices": {
-    "TSM": 375.1,
-    "QQQ": 637.4,
-    "SMH": 453,
-    "LQD": 109.94
-  },
-  "maturity_time": "2027-04-22T09:00",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "SMH": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-15",
+    "fcn_id": "FCN2601188 永豐",
+    "basket": [
+      "TSM",
+      "QQQ",
+      "SMH",
+      "LQD"
+    ],
+    "tenor": 12,
+    "rate": 12.12,
+    "autocall": 100,
+    "strike": 70,
+    "ki": 70,
+    "eki": false,
+    "bank": "法國外貿銀行",
+    "has_position": true,
+    "amt": 60000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "永豐",
+    "created_time": "2026-04-15T09:00",
+    "entry_time": "2026-04-15T09:00",
+    "exit_time": null,
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "IS code 147000024478",
+    "entry_prices": {
+      "TSM": 375.1,
+      "QQQ": 637.4,
+      "SMH": 453,
+      "LQD": 109.94
     },
-    "TSM": {
-      "hit": false,
-      "first_hit_time": ""
-    },
+    "maturity_time": "2027-04-22T09:00",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "SMH": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSM": {
+        "hit": false,
+        "first_hit_time": ""
+      },
       "QQQ": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "LQD": {
-      "hit": false,
-      "first_hit_time": ""
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "LQD": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
-  {
-  "date": "2026-04-15",
-  "fcn_id": "DACN26000064 永豐",
-  "basket": [
-    "MU",
-    "INTC",
-    "ARM",
-    "TSLA"
-  ],
-  "tenor": 12,
-  "rate": 46.56,
-  "autocall": 105,
-  "strike": 65,
-  "ki": 64.99,
-  "eki": false,
-  "bank": "法國外貿銀行",
-  "has_position": true,
-  "amt": 30000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "永豐",
-  "created_time": "2026-04-16T09:00",
-  "entry_time": "2026-04-16T09:00",
-  "exit_time": null,
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "IS code 328000191080",
-  "entry_prices": {
-    "MU": 457.23,
-    "INTC": 68.5,
-    "ARM": 162,
-    "TSLA": 388.9
   },
-  "maturity_time": "2027-04-23T09:00",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "INTC": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "TSLA": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-     "ARM": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "MU": {
-      "hit": false,
-      "first_hit_time": ""
-    }
-  }
-},
   {
-  "date": "2026-04-20",
-  "fcn_id": "FCN310N 富邦",
-  "basket": [
-    "MRVL",
-    "MU",
-    "NVDA",
-    "SMH"
-  ],
-  "tenor": 7,
-  "rate": 23.81,
-  "autocall": 100,
-  "strike": 62,
-  "ki": 52,
-  "eki": true,
-  "bank": "NATIXIS",
-  "has_position": true,
-  "amt": 50000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "富邦",
-  "created_time": "2026-04-20T09:00",
-  "entry_time": "2026-04-20T09:00",
-  "exit_time": null,
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "標的價格=VWAP",
-  "entry_prices": {
-    "MRVL": 147.2341,
-    "MU": 447.54,
-    "NVDA": 200.7159,
-    "SMH": 462.5778
-  },
-  "maturity_time": "2026-11-30T09:00",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "MRVL": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-15",
+    "fcn_id": "DACN26000064 永豐",
+    "basket": [
+      "MU",
+      "INTC",
+      "ARM",
+      "TSLA"
+    ],
+    "tenor": 12,
+    "rate": 46.56,
+    "autocall": 105,
+    "strike": 65,
+    "ki": 64.99,
+    "eki": false,
+    "bank": "法國外貿銀行",
+    "has_position": true,
+    "amt": 30000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "永豐",
+    "created_time": "2026-04-16T09:00",
+    "entry_time": "2026-04-16T09:00",
+    "exit_time": null,
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "IS code 328000191080",
+    "entry_prices": {
+      "MU": 457.23,
+      "INTC": 68.5,
+      "ARM": 162,
+      "TSLA": 388.9
     },
-    "MU": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "SMH": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "NVDA": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "2027-04-23T09:00",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "INTC": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSLA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "ARM": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "MU": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
-  "date": "2026-04-16",
-  "fcn_id": "FCN219N 富邦",
-  "basket": [
-    "QQQ",
-    "MU",
-    "TSM"
-  ],
-  "tenor": 9,
-  "rate": 17.96,
-  "autocall": 100,
-  "strike": 60,
-  "ki": 50,
-  "eki": true,
-  "bank": "JP.Morgan",
-  "has_position": true,
-  "amt": 20000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "富邦",
-  "created_time": "2026-04-16T20:02",
-  "entry_time": "2026-04-16T20:02",
-  "exit_time":null,
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "QQQ": 639.2408,
-    "MU": 456.2766,
-    "TSM": 364.9356
-  },
-   "maturity_time": "2026-11-30T09:00",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "QQQ": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-20",
+    "fcn_id": "FCN310N 富邦",
+    "basket": [
+      "MRVL",
+      "MU",
+      "NVDA",
+      "SMH"
+    ],
+    "tenor": 7,
+    "rate": 23.81,
+    "autocall": 100,
+    "strike": 62,
+    "ki": 52,
+    "eki": true,
+    "bank": "NATIXIS",
+    "has_position": true,
+    "amt": 50000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "富邦",
+    "created_time": "2026-04-20T09:00",
+    "entry_time": "2026-04-20T09:00",
+    "exit_time": null,
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "標的價格=VWAP",
+    "entry_prices": {
+      "MRVL": 147.2341,
+      "MU": 447.54,
+      "NVDA": 200.7159,
+      "SMH": 462.5778
     },
-    "MU": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "TSM": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "2026-11-30T09:00",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "MRVL": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "MU": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "SMH": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "NVDA": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
-  "date": "2026-04-22",
-  "fcn_id": "FCN2601454 永豐",
-  "basket": [
-    "NVDA",
-    "AVGO",
-    "SMH",
-    "QQQ"
-  ],
-  "tenor": 7,
-  "rate": 15.52,
-  "autocall": 100,
-  "strike": 70,
-  "ki": 70,
-  "eki": false,
-  "bank": "CITI",
-  "has_position": true,
-  "amt": 100000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "永豐",
-  "created_time": "2026-04-22T17:00",
-  "entry_time": "2026-04-29T17:00",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "NVDA": 202.5,
-    "AVGO": 422.65,
-    "SMH": 476.83,
-    "QQQ": 655.11
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "NVDA": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-16",
+    "fcn_id": "FCN219N 富邦",
+    "basket": [
+      "QQQ",
+      "MU",
+      "TSM"
+    ],
+    "tenor": 9,
+    "rate": 17.96,
+    "autocall": 100,
+    "strike": 60,
+    "ki": 50,
+    "eki": true,
+    "bank": "JP.Morgan",
+    "has_position": true,
+    "amt": 20000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "富邦",
+    "created_time": "2026-04-16T20:02",
+    "entry_time": "2026-04-16T20:02",
+    "exit_time": null,
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "QQQ": 639.2408,
+      "MU": 456.2766,
+      "TSM": 364.9356
     },
-    "AVGO": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "SMH": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "QQQ": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "2026-11-30T09:00",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "QQQ": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "MU": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSM": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
-  "date": "2026-04-15",
-  "fcn_id": "FCN139N 富邦",
-  "basket": [
-    "NVDA",
-    "TSM",
-    "TSLA",
-    "MRVL",
-    "MU"
-  ],
-  "tenor": 9,
-  "rate": 25,
-  "autocall": 100,
-  "strike": 52,
-  "ki": 62,
-  "eki": false,
-  "bank": "法國外貿銀行",
-  "has_position": true,
-  "amt": 20000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "富邦",
-  "created_time": "2026-04-15T15:56",
-  "entry_time": "2026-04-15T15:56",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "NVDA": 198.57,
-    "TSM": 377.04,
-    "TSLA": 386.5523,
-    "MRVL": 134.3325,
-    "MU": 452.8883
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "NVDA": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-22",
+    "fcn_id": "FCN2601454 永豐",
+    "basket": [
+      "NVDA",
+      "AVGO",
+      "SMH",
+      "QQQ"
+    ],
+    "tenor": 7,
+    "rate": 15.52,
+    "autocall": 100,
+    "strike": 70,
+    "ki": 70,
+    "eki": false,
+    "bank": "CITI",
+    "has_position": true,
+    "amt": 100000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "永豐",
+    "created_time": "2026-04-22T17:00",
+    "entry_time": "2026-04-29T17:00",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "NVDA": 202.5,
+      "AVGO": 422.65,
+      "SMH": 476.83,
+      "QQQ": 655.11
     },
-    "TSM": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "TSLA": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "MRVL": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "MU": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "NVDA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "AVGO": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "SMH": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "QQQ": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
-  "date": "2026-04-22",
-  "fcn_id": "FCN427N 富邦",
-  "basket": [
-    "MU",
-    "MRVL",
-    "NVDA",
-    "AVGO",
-    "SMH"
-  ],
-  "tenor": 7,
-  "rate": 24.41,
-  "autocall": 100,
-  "strike": 65,
-  "ki": 50,
-  "eki": true,
-  "bank": "法國外貿銀行",
-  "has_position": true,
-  "amt": 60000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "富邦",
-  "created_time": "2026-04-22T16:16",
-  "entry_time": "2026-04-22T16:16",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "MU": 478.5125,
-    "MRVL": 156.1552,
-    "NVDA": 201.88,
-    "AVGO": 418.8138,
-    "SMH": 473.7886
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "MU": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-15",
+    "fcn_id": "FCN139N 富邦",
+    "basket": [
+      "NVDA",
+      "TSM",
+      "TSLA",
+      "MRVL",
+      "MU"
+    ],
+    "tenor": 9,
+    "rate": 25,
+    "autocall": 100,
+    "strike": 52,
+    "ki": 62,
+    "eki": false,
+    "bank": "法國外貿銀行",
+    "has_position": true,
+    "amt": 20000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "富邦",
+    "created_time": "2026-04-15T15:56",
+    "entry_time": "2026-04-15T15:56",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "NVDA": 198.57,
+      "TSM": 377.04,
+      "TSLA": 386.5523,
+      "MRVL": 134.3325,
+      "MU": 452.8883
     },
-    "MRVL": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "NVDA": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "AVGO": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "SMH": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "NVDA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSM": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSLA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "MRVL": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "MU": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
-  "date": "2026-04-21",
-  "fcn_id": "FCN371N 富邦",
-  "basket": [
-    "ORCL",
-    "TSLA",
-    "PLTR",
-    "COIN"
-  ],
-  "tenor": 10,
-  "rate": 24.34,
-  "autocall": 100,
-  "strike": 55,
-  "ki": 65,
-  "eki": false,
-  "bank": "法國外貿銀行",
-  "has_position": true,
-  "amt": 20000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "富邦",
-  "created_time": "2026-04-24T16:08",
-  "entry_time": "2026-04-24T16:08",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "ORCL": 182.282,
-    "TSLA": 388.9552,
-    "PLTR": 146.671,
-    "COIN": 199.1374
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "ORCL": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-22",
+    "fcn_id": "FCN427N 富邦",
+    "basket": [
+      "MU",
+      "MRVL",
+      "NVDA",
+      "AVGO",
+      "SMH"
+    ],
+    "tenor": 7,
+    "rate": 24.41,
+    "autocall": 100,
+    "strike": 65,
+    "ki": 50,
+    "eki": true,
+    "bank": "法國外貿銀行",
+    "has_position": true,
+    "amt": 60000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "富邦",
+    "created_time": "2026-04-22T16:16",
+    "entry_time": "2026-04-22T16:16",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "MU": 478.5125,
+      "MRVL": 156.1552,
+      "NVDA": 201.88,
+      "AVGO": 418.8138,
+      "SMH": 473.7886
     },
-    "TSLA": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "PLTR": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "COIN": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "MU": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "MRVL": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "NVDA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "AVGO": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "SMH": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
-  "date": "2026-04-24",
-  "fcn_id": "FCN499N 富邦",
-  "basket": [
-    "NVDA",
-    "TSM",
-    "AMZN",
-    "SMH",
-    "UNH"
-  ],
-  "tenor": 7,
-  "rate": 16.87,
-  "autocall": 100,
-  "strike": 70,
-  "ki": 70,
-  "eki": false,
-  "bank": "法國外貿銀行",
-  "has_position": true,
-  "amt": 100000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "富邦",
-  "created_time": "2026-04-24T16:16",
-  "entry_time": "2026-04-24T16:16",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "NVDA": 207.435,
-    "TSM": 401.71,
-    "AMZN": 262.5068,
-    "SMH": 504.1389,
-    "UNH": 354.7843
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "NVDA": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-21",
+    "fcn_id": "FCN371N 富邦",
+    "basket": [
+      "ORCL",
+      "TSLA",
+      "PLTR",
+      "COIN"
+    ],
+    "tenor": 10,
+    "rate": 24.34,
+    "autocall": 100,
+    "strike": 55,
+    "ki": 65,
+    "eki": false,
+    "bank": "法國外貿銀行",
+    "has_position": true,
+    "amt": 20000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "富邦",
+    "created_time": "2026-04-24T16:08",
+    "entry_time": "2026-04-24T16:08",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "ORCL": 182.282,
+      "TSLA": 388.9552,
+      "PLTR": 146.671,
+      "COIN": 199.1374
     },
-    "TSM": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "AMZN": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "SMH": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "UNH": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "ORCL": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSLA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "PLTR": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "COIN": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
-  "date": "2026-04-24",
-  "fcn_id": "FCN469N 富邦",
-  "basket": [
-    "AVGO",
-    "ARM",
-    "ORCL",
-    "PLTR",
-    "TSLA"
-  ],
-  "tenor": 12,
-  "rate": 21.16,
-  "autocall": 100,
-  "strike": 55,
-  "ki": 50,
-  "eki": true,
-  "bank": "NATIXIS",
-  "has_position": true,
-  "amt": 10000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "富邦",
-  "created_time": "2026-04-24T16:16",
-  "entry_time": "2026-04-24T16:16",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "AVGO": 422.76,
-    "ARM": 234.81,
-    "ORCL": 173.28,
-    "PLTR": 143.09,
-    "TSLA": 376.3
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "AVGO": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-24",
+    "fcn_id": "FCN499N 富邦",
+    "basket": [
+      "NVDA",
+      "TSM",
+      "AMZN",
+      "SMH",
+      "UNH"
+    ],
+    "tenor": 7,
+    "rate": 16.87,
+    "autocall": 100,
+    "strike": 70,
+    "ki": 70,
+    "eki": false,
+    "bank": "法國外貿銀行",
+    "has_position": true,
+    "amt": 100000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "富邦",
+    "created_time": "2026-04-24T16:16",
+    "entry_time": "2026-04-24T16:16",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "NVDA": 207.435,
+      "TSM": 401.71,
+      "AMZN": 262.5068,
+      "SMH": 504.1389,
+      "UNH": 354.7843
     },
-    "ARM": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "ORCL": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "PLTR": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "TSLA": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "NVDA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSM": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "AMZN": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "SMH": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "UNH": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
-  "date": "2026-04-21",
-  "fcn_id": "FCN391N 富邦",
-  "basket": [
-    "NVDA",
-    "AVGO",
-    "TSM",
-    "SMH",
-    "QQQ"
-  ],
-  "tenor": 7,
-  "rate": 15.57,
-  "autocall": 100,
-  "strike": 70,
-  "ki": 70,
-  "eki": false,
-  "bank": "法國外貿銀行",
-  "has_position": true,
-  "amt": 100000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "富邦",
-  "created_time": "2026-04-21T16:13",
-  "entry_time": "2026-04-21T16:13",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "NVDA": 200.4725,
-    "AVGO": 401.1266,
-    "TSM": 368.0092,
-    "SMH": 465.2677,
-    "QQQ": 646.3933
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "NVDA": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-24",
+    "fcn_id": "FCN469N 富邦",
+    "basket": [
+      "AVGO",
+      "ARM",
+      "ORCL",
+      "PLTR",
+      "TSLA"
+    ],
+    "tenor": 12,
+    "rate": 21.16,
+    "autocall": 100,
+    "strike": 55,
+    "ki": 50,
+    "eki": true,
+    "bank": "NATIXIS",
+    "has_position": true,
+    "amt": 10000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "富邦",
+    "created_time": "2026-04-24T16:16",
+    "entry_time": "2026-04-24T16:16",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "AVGO": 422.76,
+      "ARM": 234.81,
+      "ORCL": 173.28,
+      "PLTR": 143.09,
+      "TSLA": 376.3
     },
-    "AVGO": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "TSM": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "SMH": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "QQQ": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "AVGO": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "ARM": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "ORCL": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "PLTR": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSLA": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
-  "date": "2026-05-04",
-  "fcn_id": "FCN629N 富邦",
-  "basket": [
-    "MU",
-    "TSM",
-    "NVDA"
-  ],
-  "tenor": 3,
-  "rate": 17.5,
-  "autocall": 100,
-  "strike": 75,
-  "ki": 65,
-  "eki": true,
-  "bank": "BBVA",
-  "has_position": true,
-  "amt": 10000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "富邦",
-  "created_time": "2026-05-04T16:16",
-  "entry_time": "2026-05-04T16:16",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "JPM 100萬, not usd 1萬",
-  "entry_prices": {
-    "MU": 579.6928,
-    "TSM": 401.7103,
-    "NVDA": 197.99
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "MU": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-21",
+    "fcn_id": "FCN391N 富邦",
+    "basket": [
+      "NVDA",
+      "AVGO",
+      "TSM",
+      "SMH",
+      "QQQ"
+    ],
+    "tenor": 7,
+    "rate": 15.57,
+    "autocall": 100,
+    "strike": 70,
+    "ki": 70,
+    "eki": false,
+    "bank": "法國外貿銀行",
+    "has_position": true,
+    "amt": 100000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "富邦",
+    "created_time": "2026-04-21T16:13",
+    "entry_time": "2026-04-21T16:13",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "NVDA": 200.4725,
+      "AVGO": 401.1266,
+      "TSM": 368.0092,
+      "SMH": 465.2677,
+      "QQQ": 646.3933
     },
-    "TSM": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "NVDA": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "NVDA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "AVGO": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSM": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "SMH": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "QQQ": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
- },
+  },
   {
-  "date": "2026-04-21",
-  "fcn_id": "FCN369N 富邦",
-  "basket": [
-    "AMD",
-    "ARM",
-    "AVGO"
-  ],
-  "tenor": 11,
-  "rate": 19.13,
-  "autocall": 100,
-  "strike": 65,
-  "ki": 55,
-  "eki": true,
-  "bank": "法國外貿銀行",
-  "has_position": true,
-  "amt": 20000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "富邦",
-  "created_time": "2026-04-21T16:05",
-  "entry_time": "2026-04-21T16:05",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "AMD": 282.5616,
-    "ARM": 176.0009,
-    "AVGO": 401.1266
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "AMD": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-05-04",
+    "fcn_id": "FCN629N 富邦",
+    "basket": [
+      "MU",
+      "TSM",
+      "NVDA"
+    ],
+    "tenor": 3,
+    "rate": 17.5,
+    "autocall": 100,
+    "strike": 75,
+    "ki": 65,
+    "eki": true,
+    "bank": "BBVA",
+    "has_position": true,
+    "amt": 10000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "富邦",
+    "created_time": "2026-05-04T16:16",
+    "entry_time": "2026-05-04T16:16",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "JPM 100萬, not usd 1萬",
+    "entry_prices": {
+      "MU": 579.6928,
+      "TSM": 401.7103,
+      "NVDA": 197.99
     },
-    "ARM": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "AVGO": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "MU": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSM": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "NVDA": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
   {
-  "date": "2026-05-08",
-  "fcn_id": "DACN2600117 永豐",
-  "basket": [
-    "NVDA",
-    "TSM",
-    "AMD",
-    "COHR"
-  ],
-  "tenor": 6,
-  "rate": 42.63,
-  "autocall": 95,
-  "strike": 63,
-  "ki": 63,
-  "eki": false,
-  "bank": "星展銀行",
-  "has_position": true,
-  "amt": 30000,
-  "currency": "USD",
-  "status": "active",
-  "tw_bank": "永豐",
-  "created_time": "2026-05-08T10:12",
-  "entry_time": "2026-05-08T10:12",
-  "exit_time": "",
-  "decision_flag": "manual",
-  "is_portfolio": true,
-  "note": "",
-  "entry_prices": {
-    "NVDA": 215.2,
-    "TSM": 411.68,
-    "AMD": 455.19,
-    "COHR": 335.26
-  },
-  "maturity_time": "",
-  "has_ki_breach": false,
-  "first_ki_breach_time": "",
-  "early_exit_record": {
-    "NVDA": {
-      "hit": false,
-      "first_hit_time": ""
+    "date": "2026-04-21",
+    "fcn_id": "FCN369N 富邦",
+    "basket": [
+      "AMD",
+      "ARM",
+      "AVGO"
+    ],
+    "tenor": 11,
+    "rate": 19.13,
+    "autocall": 100,
+    "strike": 65,
+    "ki": 55,
+    "eki": true,
+    "bank": "法國外貿銀行",
+    "has_position": true,
+    "amt": 20000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "富邦",
+    "created_time": "2026-04-21T16:05",
+    "entry_time": "2026-04-21T16:05",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "AMD": 282.5616,
+      "ARM": 176.0009,
+      "AVGO": 401.1266
     },
-    "TSM": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "AMD": {
-      "hit": false,
-      "first_hit_time": ""
-    },
-    "COHR": {
-      "hit": false,
-      "first_hit_time": ""
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "AMD": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "ARM": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "AVGO": {
+        "hit": false,
+        "first_hit_time": ""
+      }
     }
-  }
-},
+  },
+  {
+    "date": "2026-05-08",
+    "fcn_id": "DACN2600117 永豐",
+    "basket": [
+      "NVDA",
+      "TSM",
+      "AMD",
+      "COHR"
+    ],
+    "tenor": 6,
+    "rate": 42.63,
+    "autocall": 95,
+    "strike": 63,
+    "ki": 63,
+    "eki": false,
+    "bank": "星展銀行",
+    "has_position": true,
+    "amt": 30000,
+    "currency": "USD",
+    "status": "active",
+    "tw_bank": "永豐",
+    "created_time": "2026-05-08T10:12",
+    "entry_time": "2026-05-08T10:12",
+    "exit_time": "",
+    "decision_flag": "manual",
+    "is_portfolio": true,
+    "note": "",
+    "entry_prices": {
+      "NVDA": 215.2,
+      "TSM": 411.68,
+      "AMD": 455.19,
+      "COHR": 335.26
+    },
+    "maturity_time": "",
+    "has_ki_breach": false,
+    "first_ki_breach_time": "",
+    "early_exit_record": {
+      "NVDA": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "TSM": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "AMD": {
+        "hit": false,
+        "first_hit_time": ""
+      },
+      "COHR": {
+        "hit": false,
+        "first_hit_time": ""
+      }
+    }
+  },
   {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
