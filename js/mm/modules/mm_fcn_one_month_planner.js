@@ -153,9 +153,16 @@
   function deliveryRisk(row, health) {
     if (isExited(row)) return { stockDeliveryRisk: false, stockDeliveryReason: 'closed/exited; not evaluated' };
     if (row.hasKiBreach) return { stockDeliveryRisk: true, stockDeliveryReason: 'has_ki_breach=true' };
-    if (row.ki >= 65 && health.risk !== 'healthy') return { stockDeliveryRisk: true, stockDeliveryReason: 'KI high and not healthy' };
-    if (row.ki >= 60 && health.risk === 'danger') return { stockDeliveryRisk: true, stockDeliveryReason: 'near KI and danger' };
-    return { stockDeliveryRisk: false, stockDeliveryReason: '' };
+    // M2-compatible: 接股/額度占用 only for actual delivery/barrier signals.
+    // High KI / near_KI / weak basket are Danger/Tracking, not delivery hold.
+    const statusText = String(row.status || '').toLowerCase();
+    const rawText = String(row.raw?.note || row.raw?.memo || row.raw?.remark || row.raw?.risk_note || '').toLowerCase();
+    const explicitDelivery = row.raw?.stock_delivery_risk === true || row.raw?.expected_stock_delivery === true || row.raw?.must_take_stock === true;
+    if (explicitDelivery) return { stockDeliveryRisk: true, stockDeliveryReason: 'M2-compatible explicit delivery flag=true' };
+    if (/接股|入股|破下限|knock.?in|ki breach|barrier breach|delivery/.test(statusText + ' ' + rawText)) {
+      return { stockDeliveryRisk: true, stockDeliveryReason: 'M2-compatible status/note indicates delivery or barrier breach' };
+    }
+    return { stockDeliveryRisk: false, stockDeliveryReason: 'no M2-compatible delivery signal' };
   }
 
   function classifyRow(row, m1, m7, opt, exposureBySymbol) {
@@ -316,14 +323,16 @@
   function renderAllFcnTable(a) {
     ensureDetailSection();
     const filters = [
-      ['all','All'], ['active','Active'], ['closed','Closed'], ['expected','預計可投入資金'], ['danger','Danger'], ['tracking','Tracking'], ['healthy','健康'], ['bankt','富邦'], ['bankw','永豐'], ['new30','新增FCN']
+      ['all','All'], ['active','Active'], ['closed','Closed'], ['maturity','到期可用'], ['expected','預計可用'], ['delivery','接股 / 額度占用'], ['danger','Danger'], ['tracking','Tracking'], ['healthy','健康'], ['bankt','富邦'], ['bankw','永豐'], ['new30','新增FCN']
     ];
     const chips = $('fcnFilterChips');
     const tbody = $('allFcnRows');
     const pick = (key) => {
       if (key === 'active') return a.rows.filter(r=>r.lifecycle==='active');
       if (key === 'closed') return a.closed;
-      if (key === 'expected') return a.available30;
+      if (key === 'maturity') return a.maturity;
+      if (key === 'expected') return a.expected;
+      if (key === 'delivery') return a.delivery;
       if (key === 'danger') return a.active.filter(r=>r.risk==='danger');
       if (key === 'tracking') return a.active.filter(r=>r.risk==='tracking');
       if (key === 'healthy') return a.healthy;
@@ -368,5 +377,6 @@
 
   document.addEventListener('DOMContentLoaded', init);
 })();
+
 
 
