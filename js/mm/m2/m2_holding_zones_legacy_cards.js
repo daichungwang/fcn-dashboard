@@ -1,7 +1,7 @@
 // ============================================================
-// MM/M2 Holding Zones Legacy Cards Renderer v0.1
+// MM/M2 Holding Zones Legacy Cards Renderer v0.2
 // Purpose: restore old M2 small-card reading style inside new /mm/m2 cockpit.
-// This module is intentionally standalone so the main m2_mm_engine.js can stay stable.
+// Focus v0.2: readable UI, working expand/collapse, old-M2-like risk rhythm.
 // ============================================================
 
 const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
@@ -20,47 +20,42 @@ function shortDate(v){
   const s=String(v);
   return s.length>=10?s.slice(0,10):s;
 }
-function money(v){
-  if(v===undefined||v===null||v==='')return '-';
-  return `USD ${fmt(v,0)}`;
-}
-function price(v){
-  if(v===undefined||v===null||v==='')return '-';
-  return fmt(v,2);
-}
-function pct(v){
-  if(v===undefined||v===null||v==='')return '-';
-  return `${fmt(v,1)}%`;
-}
-function fcnType(f){
-  return pick(f,['type','fcn_type','note_type','structure','product_type','productType'],'-');
-}
-function entryDate(f){
-  return shortDate(pick(f,['entry_date','create_date','trade_date','start_date','date','created_at','issue_date'],'-'));
-}
-function maturityDate(f){
-  return shortDate(pick(f,['maturity_date','maturity.maturity_date','end_date','expiry_date'],'-'));
-}
-function healthPill(health){
-  if(health==='danger')return 'pill-danger';
-  if(health==='watch')return 'pill-watch';
-  return 'pill-healthy';
-}
-function decisionClass(f,zoneKey){
-  if(zoneKey==='exit'||f.early_exit_ready)return 'decision-exit';
-  if(f.fcn_health==='danger')return 'decision-red';
-  if(f.fcn_health==='watch')return 'decision-yellow';
-  return 'decision-green';
-}
-function cardClass(f,zoneKey){
-  if(zoneKey==='exit')return 'fcn-card-exit-blue';
-  if(f.fcn_health==='danger')return 'fcn-card-exit-red';
-  if(f.fcn_health==='watch')return 'fcn-card-exit-green';
-  return '';
+function money(v){return v===undefined||v===null||v===''?'-':`USD ${fmt(v,0)}`;}
+function price(v){return v===undefined||v===null||v===''?'-':fmt(v,2);}
+function pct(v){return v===undefined||v===null||v===''?'-':`${fmt(v,1)}%`;}
+function fcnType(f){return pick(f,['type','fcn_type','note_type','structure','product_type','productType'],'-');}
+function entryDate(f){return shortDate(pick(f,['entry_date','create_date','trade_date','start_date','date','created_at','issue_date'],'-'));}
+function maturityDate(f){return shortDate(pick(f,['maturity_date','maturity.maturity_date','end_date','expiry_date'],'-'));}
+function healthPill(health){if(health==='danger')return 'hz-pill-danger';if(health==='watch')return 'hz-pill-watch';return 'hz-pill-healthy';}
+function zoneTone(zoneKey){return zoneKey==='danger'?'danger':zoneKey==='watch'?'watch':zoneKey==='healthy'?'healthy':'exit';}
+function decisionClass(f,zoneKey){if(zoneKey==='exit'||f.early_exit_ready)return 'hz-decision-exit';if(f.fcn_health==='danger')return 'hz-decision-danger';if(f.fcn_health==='watch')return 'hz-decision-watch';return 'hz-decision-healthy';}
+function cardClass(f,zoneKey){const tone=zoneTone(zoneKey);return `hz-card-${tone}`;}
+function injectLegacyCSS(){
+  if(document.getElementById('m2-legacy-holding-zone-css'))return;
+  const style=document.createElement('style');
+  style.id='m2-legacy-holding-zone-css';
+  style.textContent=`
+    .hz-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px 0;align-items:center}
+    .hz-toolbar button{border:1px solid #d7dce5;background:#fff;border-radius:10px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer}
+    .hz-toolbar button:hover{background:#f3f6fb}
+    .hz-board{display:grid;grid-template-columns:repeat(2,minmax(360px,1fr));gap:14px;align-items:start}
+    .hz-zone{border:1px solid #dfe5ef;border-radius:16px;padding:12px;background:#fff;box-shadow:0 3px 14px rgba(15,23,42,.05)}
+    .hz-zone.exit{background:#f0fdfa;border-color:#5eead4}.hz-zone.danger{background:#fff5f5;border-color:#fca5a5}.hz-zone.watch{background:#fffbeb;border-color:#fcd34d}.hz-zone.healthy{background:#f0fdf4;border-color:#86efac}
+    .hz-zone-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;border-bottom:1px solid rgba(15,23,42,.08);padding-bottom:8px;margin-bottom:8px}
+    .hz-zone-title{font-size:16px;font-weight:900;letter-spacing:.2px}.hz-zone-meta{font-size:12px;color:#64748b;line-height:1.45}.hz-zone-amt{text-align:right;font-weight:900;font-size:15px}.hz-zone-count{font-size:12px;color:#64748b;margin-top:2px}
+    .hz-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;margin:10px 0;padding:12px;box-shadow:0 2px 10px rgba(15,23,42,.04);overflow:hidden}.hz-card-exit{border-left:5px solid #14b8a6}.hz-card-danger{border-left:5px solid #dc2626}.hz-card-watch{border-left:5px solid #f59e0b}.hz-card-healthy{border-left:5px solid #16a34a}
+    .hz-card-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:8px}.hz-id{font-size:15px;font-weight:900;color:#0f172a}.hz-sub{font-size:12px;color:#64748b;line-height:1.45;margin-top:2px}.hz-pill{display:inline-flex;align-items:center;border-radius:999px;border:1px solid #ddd;padding:3px 8px;font-size:11px;font-weight:900;white-space:nowrap}.hz-pill-danger{background:#fee2e2;border-color:#fecaca;color:#991b1b}.hz-pill-watch{background:#fef3c7;border-color:#fde68a;color:#92400e}.hz-pill-healthy{background:#dcfce7;border-color:#bbf7d0;color:#166534}.hz-pill-exit{background:#ccfbf1;border-color:#99f6e4;color:#115e59}
+    .hz-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin:8px 0}.hz-metric{border:1px solid #edf0f4;border-radius:10px;background:#f8fafc;padding:7px}.hz-metric b{display:block;font-size:12px;color:#334155}.hz-metric span{font-size:13px;font-weight:900;color:#0f172a}.hz-line{font-size:13px;line-height:1.55;margin:4px 0;color:#111827}.hz-basket{background:#f8fafc;border:1px solid #edf0f4;border-radius:10px;padding:7px 9px;font-size:13px;line-height:1.5;margin:8px 0}
+    .hz-pl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}.hz-pl div{border-radius:10px;padding:7px 8px;background:#f8fafc;border:1px solid #edf0f4}.hz-pl label{display:block;font-size:11px;color:#64748b}.hz-pl b{font-size:13px}.hz-decision{border-radius:12px;padding:9px 10px;margin-top:9px;font-size:13px;line-height:1.55}.hz-decision-danger{background:#fff1f2;border:1px solid #fecdd3}.hz-decision-watch{background:#fffbeb;border:1px solid #fde68a}.hz-decision-healthy{background:#f0fdf4;border:1px solid #bbf7d0}.hz-decision-exit{background:#ecfeff;border:1px solid #99f6e4}
+    .hz-actions{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:9px}.hz-price-basis{font-size:11px;color:#64748b}.hz-expand{border:1px solid #cbd5e1;background:#0f172a;color:white;border-radius:10px;padding:6px 10px;font-size:12px;font-weight:800;cursor:pointer}.hz-expand:hover{background:#334155}.hz-card.open .hz-expand{background:#475569}
+    .hz-detail{display:none;margin-top:10px;border-top:1px dashed #cbd5e1;padding-top:10px}.hz-card.open .hz-detail{display:block}.hz-detail.show{display:block}.hz-detail-title{font-size:13px;font-weight:900;margin:8px 0 6px;color:#0f172a}.hz-stock{display:grid;grid-template-columns:88px 70px repeat(6,1fr);gap:6px;align-items:center;border-bottom:1px solid #f1f5f9;padding:5px 0;font-size:12px}.hz-stock b{font-size:13px}.risk-danger{color:#b91c1c;font-weight:900}.risk-watch{color:#b45309;font-weight:900}.risk-safe{color:#15803d;font-weight:900}.hz-empty{font-size:13px;color:#64748b;padding:12px;background:#fff;border-radius:10px}.hz-healthy-wrap{margin-top:14px}.hz-healthy-wrap summary{cursor:pointer;padding:10px 12px;border-radius:12px;background:#f0fdf4;border:1px solid #bbf7d0;font-weight:900}
+    @media(max-width:1180px){.hz-board{grid-template-columns:1fr}.hz-stock{grid-template-columns:80px 70px repeat(3,1fr)}}
+  `;
+  document.head.appendChild(style);
 }
 function stockLines(f){
   const stocks=f.stocks||[];
-  if(!stocks.length)return '<div class="fcn-line muted">尚無單股健康明細</div>';
+  if(!stocks.length)return '<div class="hz-empty">尚無單股健康明細</div>';
   return stocks.map(s=>{
     const cls=s.stock_health==='danger'?'risk-danger':s.stock_health==='watch'?'risk-watch':'risk-safe';
     const distStrike=pick(s,['distance_to_strike_pct','dist_to_strike_pct','strike_distance_pct'],'-');
@@ -69,13 +64,11 @@ function stockLines(f){
     const entry=pick(s,['entry_price','entry'],'-');
     const strike=pick(s,['strike_price','strike'],'-');
     const ki=pick(s,['ki_price','ki','knock_in_price'],'-');
-    return `<div class="fcn-line"><b>${s.symbol||'-'}</b>｜<span class="${cls}">${s.stock_health||'-'}</span>｜Now ${price(now)}｜Entry ${price(entry)}｜Strike ${price(strike)}｜KI ${price(ki)}｜距Strike ${pct(distStrike)}｜距KI ${pct(distKi)}</div>`;
+    return `<div class="hz-stock"><b>${s.symbol||'-'}</b><span class="${cls}">${s.stock_health||'-'}</span><span>Now ${price(now)}</span><span>Entry ${price(entry)}</span><span>Strike ${price(strike)}</span><span>KI ${price(ki)}</span><span>距S ${pct(distStrike)}</span><span>距KI ${pct(distKi)}</span></div>`;
   }).join('');
 }
 function legacyFCNCard(f,zoneKey='normal'){
-  const type=fcnType(f);
-  const eDate=entryDate(f);
-  const mDate=maturityDate(f);
+  const type=fcnType(f), eDate=entryDate(f), mDate=maturityDate(f);
   const basket=(f.basket||[]).join(' / ');
   const worst=f.worst_of||pick(f,['worst.symbol','worst_stock.symbol'],'-');
   const health=f.fcn_health||'-';
@@ -84,63 +77,41 @@ function legacyFCNCard(f,zoneKey='normal'){
   const interest=pick(f,['interest_received','interest','coupon_received','interest_amt'],'-');
   const net=pick(f,['net_profit','net','net_pnl','net_amt'],'-');
   const days=f.maturity?.days_to_maturity??pick(f,['days_to_maturity'],'-');
-  return `<div class="fcn-card ${cardClass(f,zoneKey)}">
-    <div class="fcn-head">
-      <div>
-        <div class="fcn-id">${f.fcn_id||'-'}</div>
-        <div class="fcn-line muted">${f.tw_bank||''}｜${type}｜Entry ${eDate}｜Maturity ${mDate}</div>
-      </div>
-      <div><span class="pill ${healthPill(health)}">${health}</span></div>
-    </div>
-    <div class="fcn-line"><b>Amount</b> ${money(f.amt)}｜<b>Rate</b> ${fmt(f.rate,2)}%｜<b>Tenor</b> ${f.tenor||'-'}M｜<b>Days</b> ${days}</div>
-    <div class="fcn-line"><b>Basket</b> ${basket||'-'}｜<b>Worst-of</b> ${worst}</div>
-    <div class="pl-block"><b>P/L Snapshot</b><br>Loss ${loss==='-'?'-':money(loss)}｜Interest ${interest==='-'?'-':money(interest)}｜Net ${net==='-'?'-':money(net)}</div>
-    <div class="decision-box ${decisionClass(f,zoneKey)}"><b>Decision</b><br>${decision}<br><span class="muted">Planner Tag: ${f.planner_tag||'-'}｜Early Exit ${f.early_exit_remark_count??0}/${f.early_exit_total_count??0}｜Ready ${f.early_exit_ready?'Y':'N'}｜Eligible ${f.early_exit_eligible?'Y':'N'}</span></div>
-    <button class="expand-btn" type="button">展開 / 收合明細</button>
-    <div class="detail-box">
-      <div class="mini-title">Price / Risk Detail</div>
-      ${stockLines(f)}
-      <div class="mini-title">Raw FCN Detail</div>
-      <div class="fcn-line">Bank ${f.bank||f.tw_bank||'-'}｜Currency ${f.currency||'USD'}｜Autocall ${pick(f,['autocall','autocall_pct'],'-')}｜Strike ${pick(f,['strike','strike_pct'],'-')}｜KI ${pick(f,['ki','ki_pct'],'-')}</div>
-    </div>
+  const exitPill=zoneKey==='exit'?'<span class="hz-pill hz-pill-exit">exit</span>':'';
+  return `<div class="hz-card ${cardClass(f,zoneKey)}">
+    <div class="hz-card-head"><div><div class="hz-id">${f.fcn_id||'-'} ${exitPill}</div><div class="hz-sub">${f.tw_bank||''}｜${type}｜Entry ${eDate}｜Maturity ${mDate}</div></div><span class="hz-pill ${healthPill(health)}">${health}</span></div>
+    <div class="hz-grid"><div class="hz-metric"><b>Amount</b><span>${money(f.amt)}</span></div><div class="hz-metric"><b>Rate</b><span>${fmt(f.rate,2)}%</span></div><div class="hz-metric"><b>Tenor</b><span>${f.tenor||'-'}M</span></div><div class="hz-metric"><b>Days</b><span>${days}</span></div></div>
+    <div class="hz-basket"><b>Basket</b>｜${basket||'-'}<br><b>Worst-of</b>｜${worst}</div>
+    <div class="hz-pl"><div><label>Loss</label><b>${loss==='-'?'-':money(loss)}</b></div><div><label>Interest</label><b>${interest==='-'?'-':money(interest)}</b></div><div><label>Net</label><b>${net==='-'?'-':money(net)}</b></div></div>
+    <div class="hz-decision ${decisionClass(f,zoneKey)}"><b>Decision</b>｜${decision}<br><span class="hz-sub">Planner ${f.planner_tag||'-'}｜Early ${f.early_exit_remark_count??0}/${f.early_exit_total_count??0}｜Ready ${f.early_exit_ready?'Y':'N'}｜Eligible ${f.early_exit_eligible?'Y':'N'}</span></div>
+    <div class="hz-actions"><div class="hz-price-basis">Now = latest daily close / 每日早上更新；Entry、Strike、KI = 合約基準</div><button class="hz-expand" type="button">展開 / 收合明細</button></div>
+    <div class="hz-detail"><div class="hz-detail-title">Price / Risk Detail</div>${stockLines(f)}<div class="hz-detail-title">Raw FCN Detail</div><div class="hz-line">Bank ${f.bank||f.tw_bank||'-'}｜Currency ${f.currency||'USD'}｜Autocall ${pick(f,['autocall','autocall_pct'],'-')}｜Strike ${pick(f,['strike','strike_pct'],'-')}｜KI ${pick(f,['ki','ki_pct'],'-')}</div></div>
   </div>`;
 }
-function zoneSummaryCard(title,rows,desc,cls){
-  return `<div class="zone-card ${cls}"><div class="zone-title">${title}</div><div class="zone-meta">${desc}</div><div class="summary-value">${rows.length}</div><div class="summary-sub">USD ${fmt(sum(rows),0)}</div></div>`;
-}
+function zoneSummaryCard(title,rows,desc,cls){return `<div class="zone-card ${cls}"><div class="zone-title">${title}</div><div class="zone-meta">${desc}</div><div class="summary-value">${rows.length}</div><div class="summary-sub">USD ${fmt(sum(rows),0)}</div></div>`;}
 function legacyZonePanel(title,rows,zoneKey,empty='none'){
-  return `<div class="zone-card ${zoneKey==='danger'?'zone-danger':zoneKey==='watch'?'zone-watch':zoneKey==='healthy'?'zone-healthy':'zone-maturity'}"><div class="zone-title">${title}</div><div class="zone-meta">${rows.length} 檔｜USD ${fmt(sum(rows),0)}</div>${rows.length?rows.map(f=>legacyFCNCard(f,zoneKey)).join(''):`<div class="muted">${empty}</div>`}</div>`;
+  const tone=zoneTone(zoneKey);
+  return `<section class="hz-zone ${tone}" data-zone="${tone}"><div class="hz-zone-head"><div><div class="hz-zone-title">${title}</div><div class="hz-zone-meta">${rows.length} 檔｜USD ${fmt(sum(rows),0)}</div></div><div class="hz-zone-amt">USD ${fmt(sum(rows),0)}<div class="hz-zone-count">${rows.length} FCN</div></div></div>${rows.length?rows.map(f=>legacyFCNCard(f,zoneKey)).join(''):`<div class="hz-empty">${empty}</div>`}</section>`;
 }
 function bindLegacyExpand(root=document){
-  root.querySelectorAll('.expand-btn').forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      const box=btn.closest('.fcn-card')?.querySelector('.detail-box');
-      if(box)box.classList.toggle('show');
-    });
+  root.querySelectorAll('.hz-expand').forEach(btn=>{
+    btn.onclick=()=>btn.closest('.hz-card')?.classList.toggle('open');
   });
+  root.querySelector('[data-hz-action="expand-all"]')?.addEventListener('click',()=>root.querySelectorAll('.hz-card').forEach(c=>c.classList.add('open')));
+  root.querySelector('[data-hz-action="collapse-all"]')?.addEventListener('click',()=>root.querySelectorAll('.hz-card').forEach(c=>c.classList.remove('open')));
+  root.querySelector('[data-hz-action="risk-only"]')?.addEventListener('click',()=>root.querySelectorAll('.hz-card').forEach(c=>{c.classList.toggle('open',c.classList.contains('hz-card-danger')||c.classList.contains('hz-card-watch')||c.classList.contains('hz-card-exit'));}));
 }
 
 export function renderLegacyHoldingZones({runtime,groups,rightDetail,rightInsight,bottomQuery}){
+  injectLegacyCSS();
   const g=groups;
   const exitRows=[...(g.ready||[]),...(g.maturity||[])];
   const candidateRows=g.candidate||[];
   const dangerRows=runtime.danger||[];
   const watchRows=runtime.watch||[];
   const healthyRows=runtime.healthy||[];
-  rightDetail.innerHTML=`<div class="zone-grid">
-    ${zoneSummaryCard('到期 / 提前 Ready',exitRows,'正式出場與本月現金流主來源','zone-exit-blue')}
-    ${zoneSummaryCard('預計提前到期',candidateRows,'候選觀察，不等於正式 ready','zone-watch')}
-    ${zoneSummaryCard('積極處理｜破下限價',dangerRows,'Danger / KI / 接股壓力','zone-danger')}
-    ${zoneSummaryCard('持續追蹤',watchRows,'Watch / Strike 壓力','zone-watch')}
-    ${zoneSummaryCard('健康',healthyRows,'正常續抱，預設降權','zone-healthy')}
-  </div>`;
-  rightInsight.innerHTML=`<div class="decision-note">Holding Zones 已改回舊 M2 小卡閱讀方式：主畫面優先看出場、Danger、Watch；Healthy 降權收合。每張卡保留 entry/type、amount/rate/tenor、worst-of、P/L snapshot、decision 與展開明細。</div>`;
-  bottomQuery.innerHTML=`<div class="zone-grid">
-    ${legacyZonePanel('到期 / 提前 Ready',exitRows,'exit')}
-    ${legacyZonePanel('積極處理｜Danger',dangerRows,'danger')}
-    ${legacyZonePanel('持續追蹤｜Watch',watchRows,'watch')}
-    ${legacyZonePanel('預計提前到期｜Candidate',candidateRows,'watch')}
-  </div>
-  <details class="panel" style="margin-top:14px;"><summary><b>健康持倉 Healthy｜${healthyRows.length} 檔｜USD ${fmt(sum(healthyRows),0)}</b>（預設收合）</summary><div class="zone-grid" style="margin-top:12px;">${legacyZonePanel('健康｜Healthy',healthyRows,'healthy')}</div></details>`;
+  rightDetail.innerHTML=`<div class="zone-grid">${zoneSummaryCard('到期 / 提前 Ready',exitRows,'正式出場與本月現金流主來源','zone-exit-blue')}${zoneSummaryCard('預計提前到期',candidateRows,'候選觀察，不等於正式 ready','zone-watch')}${zoneSummaryCard('積極處理｜破下限價',dangerRows,'Danger / KI / 接股壓力','zone-danger')}${zoneSummaryCard('持續追蹤',watchRows,'Watch / Strike 壓力','zone-watch')}${zoneSummaryCard('健康',healthyRows,'正常續抱，預設降權','zone-healthy')}</div>`;
+  rightInsight.innerHTML=`<div class="decision-note">Holding Zones 先回到 M2 作戰閱讀：出場 / Danger / Watch 優先，Healthy 降權。價格基準改為日收盤價，每天早上 runtime 更新；距 Strike / KI 每日重新計算。</div>`;
+  bottomQuery.innerHTML=`<div class="hz-toolbar"><button data-hz-action="expand-all" type="button">全部展開</button><button data-hz-action="collapse-all" type="button">全部收合</button><button data-hz-action="risk-only" type="button">只展開出場 / Danger / Watch</button></div><div class="hz-board">${legacyZonePanel('到期 / 提前 Ready',exitRows,'exit')}${legacyZonePanel('積極處理｜Danger',dangerRows,'danger')}${legacyZonePanel('持續追蹤｜Watch',watchRows,'watch')}${legacyZonePanel('預計提前到期｜Candidate',candidateRows,'watch')}</div><details class="hz-healthy-wrap"><summary>健康持倉 Healthy｜${healthyRows.length} 檔｜USD ${fmt(sum(healthyRows),0)}（預設收合）</summary><div class="hz-board" style="margin-top:12px;">${legacyZonePanel('健康｜Healthy',healthyRows,'healthy')}</div></details>`;
   bindLegacyExpand(bottomQuery);
 }
