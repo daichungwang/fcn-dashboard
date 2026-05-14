@@ -1,6 +1,6 @@
 // ============================================================
-// MM/M2 新作戰中心 Engine v0.4.3
-// Patch: Type-aware maturity payoff logic + Holding Zones left subnav display
+// MM/M2 新作戰中心 Engine v0.4.5
+// Patch: Type-aware maturity payoff logic + Holding Zones left subnav control
 // ============================================================
 import { runM2HealthEngine } from '../../core/m2_health_engine_v1.js';
 import { renderLegacyHoldingZones } from './m2_holding_zones_legacy_cards.js';
@@ -61,8 +61,37 @@ function renderManagement(){rightDetail.innerHTML=`<div class="flow-panel">${flo
 function renderManagementTables(){const q=(document.getElementById('fcnSearch')?.value||'').toUpperCase(),tag=document.getElementById('fcnTagFilter')?.value||'all',light=document.getElementById('stockLightFilter')?.value||'all';const stocks=stockCapacityRowsData.filter(x=>(light==='all'||x.light===light)&&(x.symbol.includes(q)||x.category.toUpperCase().includes(q)));const fcns=plannerRows.filter(x=>(tag==='all'||x.planner_tag===tag)&&(`${x.fcn_id} ${x.tw_bank} ${(x.basket||[]).join(' ')}`.toUpperCase().includes(q)));managementTables.innerHTML=`<div class="table-wrap"><table><thead><tr><th>Stock</th><th>Category</th><th>Max</th><th>Active</th><th>Exit Release</th><th>Planning Base</th><th>Static Rem.</th><th>Dynamic</th><th>Light</th><th>Comment</th></tr></thead><tbody>${stocks.map(x=>`<tr class="${x.light==='RED'?'row-bad':x.light==='YELLOW'?'row-warn':'row-good'}"><td><b>${x.symbol}</b></td><td>${x.category}</td><td>USD ${fmt(x.max)}</td><td>USD ${fmt(x.active)}</td><td>USD ${fmt(x.release)}</td><td>USD ${fmt(x.base)}</td><td>USD ${fmt(x.staticRemain)}</td><td>USD ${fmt(x.dynamic)}</td><td><span class="pill ${x.light==='GREEN'?'pill-good':x.light==='YELLOW'?'pill-warn':'pill-bad'}">${x.light}</span></td><td>${x.comment}</td></tr>`).join('')}</tbody></table></div><div style="height:12px"></div>${renderFCNTable(fcns)}`}
 function renderFCNTable(rows=plannerRows){return `<div class="table-wrap"><table><thead><tr><th>FCN ID</th><th>Bank</th><th>Amount</th><th>Rate</th><th>Tenor</th><th>Basket</th><th>Worst-of</th><th>Health</th><th>Planner Tag</th><th>Days to Maturity</th></tr></thead><tbody>${rows.map(x=>`<tr class="${x.fcn_health==='danger'?'row-bad':x.fcn_health==='watch'?'row-warn':'row-good'}"><td><b>${x.fcn_id}</b></td><td>${x.tw_bank||''}</td><td>USD ${fmt(x.amt)}</td><td>${fmt(x.rate,2)}%</td><td>${x.tenor||''}M</td><td>${(x.basket||[]).join(' / ')}</td><td>${x.worst_of||''}</td><td>${x.maturity_state||x.decision_label||''}</td><td>${x.planner_tag}</td><td>${x.maturity?.days_to_maturity??'-'}</td></tr>`).join('')}</tbody></table></div>`}
 function renderPool(){rightDetail.innerHTML=`<div class="note">第6區來源是舊 m2 / 6. FCN Pool 管理。此區未來放手動建新單、編輯、複製、Soft Delete、匯出。</div>`;rightInsight.innerHTML=`<div class="decision-note">這是後台作業區，不應混在 Summary 或 Planner。新版會先把手動鍵新單流程整理乾淨，再考慮寫回。</div>`;bottomQuery.innerHTML=`<div class="grid-3"><div class="panel"><h3>手動建新單</h3><div class="table-tools"><input placeholder="fcn_id"><input placeholder="basket"><input placeholder="amount"><input placeholder="coupon"><select><option>active</option><option>draft</option></select></div><div class="muted">待搬 m2 6.2 表單。</div></div><div class="panel"><h3>FCN 清單</h3><div class="muted">待搬 m2 6.1 清單 / 搜尋 / filter</div></div><div class="panel"><h3>匯出 / Soft Delete</h3><button class="light">匯出 JSON</button> <button class="light">Soft Delete</button><div class="muted" style="margin-top:8px">保留舊 M2 作業邏輯，暫不寫回。</div></div></div>`}
+function bindHoldingZonesSubnav(){
+  document.querySelectorAll('#m2HoldingZonesSubnav [data-hz-nav]').forEach(btn=>{
+    btn.onclick=()=>{
+      const key=btn.dataset.hzNav;
+      setModule('zones');
+      setTimeout(()=>{
+        const el=document.getElementById(`hz-zone-${key}`)||(key==='healthy'?document.querySelector('.hz-healthy-wrap'):null);
+        if(key==='healthy')document.querySelector('.hz-healthy-wrap')?.setAttribute('open','open');
+        (el||document.getElementById('bottomQuery'))?.scrollIntoView({behavior:'smooth',block:'start'});
+      },220);
+    };
+  });
+  document.querySelectorAll('#m2HoldingZonesSubnav [data-hz-action]').forEach(btn=>{
+    btn.onclick=()=>{
+      setModule('zones');
+      setTimeout(()=>{
+        const action=btn.dataset.hzAction;
+        if(action==='expand-all')document.querySelectorAll('.hz-card').forEach(c=>c.classList.add('open'));
+        if(action==='collapse-all')document.querySelectorAll('.hz-card').forEach(c=>c.classList.remove('open'));
+        if(action==='risk-only')document.querySelectorAll('.hz-card').forEach(c=>{
+          c.classList.toggle('open',c.classList.contains('hz-card-danger')||c.classList.contains('hz-card-watch')||c.classList.contains('hz-card-exit'));
+        });
+        document.getElementById('bottomQuery')?.scrollIntoView({behavior:'smooth',block:'start'});
+      },220);
+    };
+  });
+}
+
 function bindMenu(){document.querySelectorAll('.menu-btn').forEach(btn=>btn.addEventListener('click',()=>setModule(btn.dataset.module)))}
 function bindFilters(){['fcnSearch','fcnTagFilter','stockLightFilter'].forEach(id=>{const el=document.getElementById(id);if(el)el.oninput=renderManagementTables;if(el)el.onchange=renderManagementTables})}
 async function loadData(){try{runtimeMeta.textContent='載入資料中...';const [poolRes,marketRes,pool30Res]=await Promise.all([fetch('../../data/fcn_pool.json'),fetch('../../data/market_runtime.json'),fetch('../../data/pool30.json')]);const fcnPool=await poolRes.json(),marketRuntime=await marketRes.json(),pool30=await pool30Res.json();poolMap={};pool30.forEach(p=>poolMap[p.symbol]=p);runtime=runM2HealthEngine({fcnPool,marketRuntime:marketRuntime.rows||marketRuntime,pool30});buildPlannerRows(runtime.fcns);buildStockCapacityRows();renderTopDashboard();renderCurrentModule();runtimeMeta.innerHTML=`最後更新：${marketRuntime.generated_at||'unknown'}｜Active FCN ${runtime.total} 檔｜Stock Exposure ${runtime.stockMap.length} 檔`;}catch(err){console.error(err);runtimeMeta.innerHTML=`<span class="bad">載入失敗：${err.message}</span>`}}
-runBtn.addEventListener('click',loadData);reloadBtn.addEventListener('click',loadData);bindMenu();loadData();
+runBtn.addEventListener('click',loadData);reloadBtn.addEventListener('click',loadData);bindMenu();bindHoldingZonesSubnav();loadData();
+
 
