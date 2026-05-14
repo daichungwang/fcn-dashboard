@@ -1,5 +1,5 @@
 // ============================================================
-// MM/M2 Holding Zones Legacy Cards Renderer v0.3.1
+// MM/M2 Holding Zones Legacy Cards Renderer v0.3.4
 // Scope: complete old-M2 card migration inside MM/M2 only.
 // Allowed files only. No new engine, no m2.html/core health changes.
 // ============================================================
@@ -30,7 +30,7 @@ function stockKiVal(s){return n(s.ki_price??s.ki??s.knock_in_price??s.lower_barr
 function worstStock(f){const stocks=f.stocks||[];const declared=String(f.worst_of||pick(f,['worst.symbol','worst_stock.symbol'],'')).toUpperCase();return stocks.find(s=>String(s.symbol).toUpperCase()===declared)||stocks.slice().sort((a,b)=>{const ak=distPct(stockNowVal(a),stockKiVal(a));const bk=distPct(stockNowVal(b),stockKiVal(b));return (ak??999)-(bk??999)})[0]||null;}
 function estimatePL(f,w){if(!w)return{loss:null,interest:null,net:null};const amt=n(f.amt,0),rate=n(f.rate,0),now=stockNowVal(w),strike=stockStrikeVal(w);const lossRatio=Number.isFinite(now)&&Number.isFinite(strike)&&strike>0?Math.max(0,1-now/strike):0;const loss=-amt*lossRatio;const fullInterest=amt*rate/100;return{loss,interest:fullInterest,net:loss+fullInterest};}
 function monthsBetween(start,end=new Date()){const d=dateValue(start);if(!d)return 0;const days=Math.max(0,(end.getTime()-d.getTime())/86400000);return Math.max(0,Math.floor(days/30));}
-function productDisplayType(f){return f.maturity_type_rule||fcnType(f)||'-';}
+function productDisplayType(f){if(f.eki===true)return 'EKI';if(f.eki===false)return 'AKI';return f.maturity_type_rule||fcnType(f)||'-';}
 function snapshotPL(f,w){if(!w)return{loss:null,interest:null,balance:null,paidMonths:0};const amt=n(f.amt,0),rate=n(f.rate,0),now=stockNowVal(w),entry=stockEntryVal(w),strike=stockStrikeVal(w);const paidMonths=n(f.paid_months??f.interest_paid_months??f.months_paid??0,0);const elapsed=monthsBetween(entryDateRawFromFCN(f));const months=Math.max(paidMonths,Math.min(n(f.tenor,999),elapsed));const interest=amt*(rate/100)*(months/12);let loss=0;if(Number.isFinite(now)&&Number.isFinite(strike)&&strike>0&&now<strike){loss=-amt*(1-now/strike);}else if(Number.isFinite(now)&&Number.isFinite(entry)&&entry>0&&now<entry){loss=-amt*Math.max(0,1-now/entry);}return{loss,interest,balance:loss+interest,paidMonths:months};}
 function entryDateRawFromFCN(f){return pick(f,['entry_date','create_date','trade_date','start_date','date','created_at','issue_date'],null);}
 function endPL(f,w){const pl=estimatePL(f,w);return{loss:pl.loss,interest:pl.interest,net:pl.net};}
