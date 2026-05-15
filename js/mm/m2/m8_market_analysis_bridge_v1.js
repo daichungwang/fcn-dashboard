@@ -1,10 +1,10 @@
 // ============================================================
 // M8 Market Analysis Bridge v1
-// Path: js/mm/modules/m8_market_analysis_bridge_v1.js
+// Path: js/mm/m2/m8_market_analysis_bridge_v1.js
 // Purpose: bridge M2 Market FCN Analysis to M8 batch + calibration workspace
 // ============================================================
 import { runM8Case } from '../../core/m8_batch_engine.js';
-import { buildM8CalibrationDataset, buildCalibrationRegressionRows } from './m8_calibration_engine_v1.js';
+import { buildM8CalibrationDataset, buildCalibrationRegressionRows } from '../modules/m8_calibration_engine_v1.js';
 
 const toNum=(v,d=null)=>Number.isFinite(Number(v))?Number(v):d;
 const round2=v=>Number.isFinite(Number(v))?Math.round(Number(v)*100)/100:null;
