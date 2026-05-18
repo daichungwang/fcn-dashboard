@@ -1,18 +1,34 @@
 // ============================================================
-// M2 Market Row Classifier v70
+// M2 Market Row Classifier v71
 // Path: js/mm/m2/m2_market_row_classifier.js
 // Purpose: classify market_fcn_history rows for M2/4D selector.
+// Core idea: FCN is a worst-of product. Basket type is decided by
+// worst-of risk hierarchy, not by single stock labels or coupon sorting.
 // ============================================================
 (function(){
   if(window.M2MarketRowClassifier) return;
 
   const n=(v,d=null)=>Number.isFinite(Number(v))?Number(v):d;
 
-  const SPECULATIVE_MOMENTUM=['COIN','SOFI','ALAB','CRDO','PLTR','COHR','LITE'];
-  const MEMORY_TACTICAL=['MU','SNDK','WDC'];
-  const TURNAROUND_TACTICAL=['INTC'];
-  const AI_CORE=['NVDA','TSM','AVGO','AMAT','QCOM','SMH','AMD','MRVL','ARM'];
-  const DEFENSIVE_PLATFORM=['AAPL','GOOG','GOOGL','MSFT','LQD','UNH','REGN'];
+  const STOCK_RISK_CLASS={
+    // Defensive / stabilizers
+    GOOG:'DEFENSIVE', GOOGL:'DEFENSIVE', AAPL:'DEFENSIVE', MSFT:'DEFENSIVE',
+    LQD:'DEFENSIVE', UNH:'DEFENSIVE', REGN:'DEFENSIVE', QQQ:'DEFENSIVE',
+
+    // Core AI / institutional liquid growth
+    NVDA:'CORE_AI', TSM:'CORE_AI', AVGO:'CORE_AI', SMH:'CORE_AI',
+    AMAT:'CORE_AI', QCOM:'CORE_AI', AMD:'CORE_AI', ORCL:'CORE_AI', META:'CORE_AI', AMZN:'CORE_AI',
+
+    // Aggressive / tactical / cyclical / turnaround
+    MU:'AGGRESSIVE', SNDK:'AGGRESSIVE', WDC:'AGGRESSIVE', INTC:'AGGRESSIVE',
+    MRVL:'AGGRESSIVE', ARM:'AGGRESSIVE', TSLA:'AGGRESSIVE',
+
+    // Speculative / narrative / high beta
+    COIN:'SPECULATIVE', SOFI:'SPECULATIVE', ALAB:'SPECULATIVE', CRDO:'SPECULATIVE',
+    PLTR:'SPECULATIVE', COHR:'SPECULATIVE', LITE:'SPECULATIVE', SMCI:'SPECULATIVE'
+  };
+
+  const RISK_RANK={UNKNOWN:0,DEFENSIVE:1,CORE_AI:2,AGGRESSIVE:3,SPECULATIVE:4};
 
   function normalizeSymbol(x){
     return String(x||'')
@@ -38,68 +54,95 @@
     return source||'-';
   }
 
-  function detectTemplate(symbols){
-    const set=new Set(normalizeBasketSymbols(symbols));
-    if(MEMORY_TACTICAL.some(s=>set.has(s))) return 'B_MEMORY';
-    if(SPECULATIVE_MOMENTUM.some(s=>set.has(s))) return 'D_SPECULATIVE';
-    if(DEFENSIVE_PLATFORM.some(s=>set.has(s))) return 'E_DEFENSIVE';
-    if(AI_CORE.some(s=>set.has(s))) return 'A_AI_CORE';
-    if(TURNAROUND_TACTICAL.some(s=>set.has(s))) return 'T_TURNAROUND';
-    if(['TSLA'].some(s=>set.has(s))) return 'C_TSLA_MOMENTUM';
-    return 'F_OTHERS';
+  function getStockRiskClass(symbol){
+    return STOCK_RISK_CLASS[normalizeSymbol(symbol)]||'UNKNOWN';
+  }
+
+  function getBasketRiskBreakdown(symbols){
+    return (symbols||[]).map(symbol=>({
+      symbol,
+      risk_class:getStockRiskClass(symbol),
+      rank:RISK_RANK[getStockRiskClass(symbol)]||0
+    }));
+  }
+
+  function getWorstOfRiskClass(symbols){
+    const breakdown=getBasketRiskBreakdown(symbols);
+    if(!breakdown.length) return 'UNKNOWN';
+    return breakdown.slice().sort((a,b)=>b.rank-a.rank)[0].risk_class;
   }
 
   function classifyBasketDNA(symbols){
-    const set=new Set(symbols||[]);
+    const list=normalizeBasketSymbols(symbols);
+    const breakdown=getBasketRiskBreakdown(list);
+    const worst_class=getWorstOfRiskClass(list);
+    const classes=new Set(breakdown.map(x=>x.risk_class));
+
     const dna={
-      personality:'F_OTHERS',
+      engine:'worst_of_base_v71',
+      worst_of_risk_class:worst_class,
+      risk_breakdown:breakdown,
       basket_tags:[],
-      final_fcn_type:'aggressive',
-      aggressive_allowed:true,
+      basket_type:'watch',
+      final_fcn_type:'watch',
+      aggressive_allowed:false,
       speculative_required:false,
-      dual_type_allowed:false
+      dual_type_allowed:false,
+      conservative_income_allowed:false,
+      defensive_income_allowed:false
     };
 
-    if([...set].some(s=>SPECULATIVE_MOMENTUM.includes(s))){
-      dna.personality='SPECULATIVE_MOMENTUM';
-      dna.basket_tags=['HIGH_BETA','NARRATIVE'];
+    if(worst_class==='SPECULATIVE'){
+      dna.basket_type='SPECULATIVE';
       dna.final_fcn_type='short_spec';
-      dna.aggressive_allowed=false;
+      dna.basket_tags=['WORST_OF_SPECULATIVE','HIGH_BETA'];
       dna.speculative_required=true;
       return dna;
     }
 
-    if([...set].some(s=>MEMORY_TACTICAL.includes(s))){
-      dna.personality='MEMORY_TACTICAL';
-      dna.basket_tags=['MEMORY','TACTICAL'];
+    if(worst_class==='AGGRESSIVE'){
+      dna.basket_type='AGGRESSIVE';
       dna.final_fcn_type='dual';
+      dna.basket_tags=['WORST_OF_AGGRESSIVE','TACTICAL'];
+      dna.aggressive_allowed=true;
       dna.dual_type_allowed=true;
       return dna;
     }
 
-    if([...set].some(s=>TURNAROUND_TACTICAL.includes(s))){
-      dna.personality='TURNAROUND_TACTICAL';
-      dna.basket_tags=['TURNAROUND','TACTICAL'];
-      dna.final_fcn_type='dual';
-      dna.dual_type_allowed=true;
+    if(classes.has('CORE_AI') && classes.has('DEFENSIVE')){
+      dna.basket_type='CONSERVATIVE_INCOME';
+      dna.final_fcn_type='conservative_income';
+      dna.basket_tags=['DEFENSIVE_PLUS_CORE_AI','CASHFLOW'];
+      dna.conservative_income_allowed=true;
       return dna;
     }
 
-    if([...set].some(s=>DEFENSIVE_PLATFORM.includes(s))){
-      dna.personality='DEFENSIVE_PLATFORM';
-      dna.basket_tags=['LOW_VOL','PLATFORM'];
-      dna.final_fcn_type='defensive_balance';
+    if(worst_class==='CORE_AI'){
+      dna.basket_type='CONSERVATIVE_INCOME';
+      dna.final_fcn_type='conservative_income';
+      dna.basket_tags=['CORE_AI_CASHFLOW'];
+      dna.conservative_income_allowed=true;
       return dna;
     }
 
-    if([...set].some(s=>AI_CORE.includes(s))){
-      dna.personality='AI_CORE';
-      dna.basket_tags=['AI','INSTITUTIONAL'];
-      dna.final_fcn_type='aggressive';
+    if(worst_class==='DEFENSIVE'){
+      dna.basket_type='DEFENSIVE_INCOME';
+      dna.final_fcn_type='defensive_income';
+      dna.basket_tags=['DEFENSIVE_ONLY','LOW_VOL'];
+      dna.defensive_income_allowed=true;
       return dna;
     }
 
     return dna;
+  }
+
+  function detectTemplate(symbols){
+    const dna=classifyBasketDNA(symbols);
+    if(dna.basket_type==='SPECULATIVE') return 'D_SPECULATIVE';
+    if(dna.basket_type==='AGGRESSIVE') return 'B_TACTICAL_AGGRESSIVE';
+    if(dna.basket_type==='CONSERVATIVE_INCOME') return 'A_CONSERVATIVE_INCOME';
+    if(dna.basket_type==='DEFENSIVE_INCOME') return 'E_DEFENSIVE_INCOME';
+    return 'F_OTHERS';
   }
 
   function tenorBucket(tenor){
@@ -131,28 +174,10 @@
     const out=[];
     const dna=row.basket_dna||{};
 
-    if(dna.speculative_required){
-      out.push('short_spec');
-      return out;
-    }
-
-    if(dna.personality==='MEMORY_TACTICAL' || dna.personality==='TURNAROUND_TACTICAL'){
-      out.push('short_spec');
-      out.push('aggressive');
-      return out;
-    }
-
-    if(dna.personality==='DEFENSIVE_PLATFORM'){
-      out.push('defensive_balance');
-      out.push('core_income');
-      return out;
-    }
-
-    if(dna.personality==='AI_CORE'){
-      out.push('aggressive');
-      out.push('core_income');
-      return out;
-    }
+    if(dna.basket_type==='SPECULATIVE') return ['short_spec'];
+    if(dna.basket_type==='AGGRESSIVE') return ['short_spec','aggressive'];
+    if(dna.basket_type==='CONSERVATIVE_INCOME') return ['core_income','conservative_income'];
+    if(dna.basket_type==='DEFENSIVE_INCOME') return ['defensive_balance','core_income'];
 
     out.push('watch');
     return out;
@@ -183,6 +208,9 @@
       memory_type:row.memory_type||row.memory||'',
       upstream_bank:row.upstream_bank||'-',
       basket_dna,
+      basket_type:basket_dna.basket_type,
+      worst_of_risk_class:basket_dna.worst_of_risk_class,
+      risk_breakdown:basket_dna.risk_breakdown,
       m1_score:n(row.m1_score,6),
       m7_score:n(row.m7_score,6),
       m1_fallback:!Number.isFinite(Number(row.m1_score)),
@@ -202,6 +230,9 @@
     normalizeBasketSymbols,
     normalizedBasketKey,
     sourceToBank,
+    getStockRiskClass,
+    getBasketRiskBreakdown,
+    getWorstOfRiskClass,
     detectTemplate,
     classifyBasketDNA,
     tenorBucket,
