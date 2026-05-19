@@ -19,50 +19,6 @@
     .table-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.table-tools input,.table-tools select{border:1px solid #cbd5e1;border-radius:10px;padding:8px 10px;background:#fff;min-width:160px}.table-wrap{overflow:auto;border:1px solid #e5e5e5;border-radius:14px}table{width:100%;border-collapse:collapse;min-width:1080px}th,td{border-bottom:1px solid #eee;padding:8px;text-align:left;white-space:nowrap;font-size:13px}th{background:#fafafa;color:#555;position:sticky;top:0}.row-bad{background:#fff7f7}.row-warn{background:#fffdf7}.row-good{background:#fbfffb}.pill{display:inline-block;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:900;border:1px solid #ddd;background:#fafafa}.pill-good{background:#ecfff1;color:#188b58;border-color:#a9e2b4}.pill-warn{background:#fff7e8;color:#b9770e;border-color:#f0d298}.pill-bad{background:#fff0f0;color:#c62828;border-color:#f1b5b5}.pill-blue{background:#eef6ff;color:#1e3a8a;border-color:#cfe1ff}
     .zone-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.zone-card{border:1px solid #e5e7eb;border-radius:16px;padding:13px;background:#fff;min-height:150px}.zone-card.danger{background:#fff7f7;border-color:#f1b5b5}.zone-card.watch{background:#fffaf0;border-color:#ecd7a3}.zone-card.good{background:#f5fff7;border-color:#b9e2c0}.zone-card.blue{background:#f0fdfa;border-color:#99f6e4}.zone-num{font-size:24px;font-weight:950;margin:5px 0}.hidden-detail{margin-top:8px;padding-top:8px;border-top:1px dashed #ddd;color:#555;font-size:12px;line-height:1.45}.zone-card .pill{margin-top:6px}.compact-fcn{display:grid;grid-template-columns:1.2fr auto auto auto;gap:8px;align-items:center;border-bottom:1px solid #eee;padding:8px 0;font-size:13px}.compact-fcn:last-child{border-bottom:0}.compact-main{font-weight:900}.compact-sub{color:#666;font-size:12px;margin-top:2px}.compact-amt{font-weight:900}.detail-toggle{background:#f1f5f9;color:#111;border:1px solid #d8dde6;padding:5px 8px;border-radius:9px}.fcn-more{display:none;grid-column:1/-1;background:#fbfdff;border:1px dashed #dbeafe;border-radius:10px;padding:8px;line-height:1.55;color:#444}.compact-fcn.open .fcn-more{display:block}
     @media(max-width:1180px){.dashboard{grid-template-columns:repeat(3,1fr)}.cockpit,.detail-grid{grid-template-columns:1fr}.side{position:static}.alloc-layout,.broker-grid,.zone-grid{grid-template-columns:1fr}.flow-panel,.grid-3,.grid-2,.cash-grid{grid-template-columns:1fr}}@media(max-width:680px){.dashboard{grid-template-columns:1fr}.toolbar{flex-direction:column;align-items:stretch}.btn,button{width:100%}.compact-fcn{grid-template-columns:1fr}}
-
-
-    /* ============================================================
-       MM/M2 Selector UI Hotfix v067B
-       修正 D. FCN遴選系統候選卡 UI 跑版：只影響 #marketWorkspaceContent
-       ============================================================ */
-    #marketWorkspaceContent .dsel{display:grid!important;gap:14px!important;width:100%!important;max-width:100%!important}
-    #marketWorkspaceContent .dsel *{box-sizing:border-box!important}
-    #marketWorkspaceContent .dsel-banner{border:1px solid #dbeafe!important;background:#f8fbff!important;border-radius:16px!important;padding:14px!important;line-height:1.65!important;font-size:14px!important}
-    #marketWorkspaceContent .dslot{border:1px solid #e5e7eb!important;border-radius:18px!important;padding:14px!important;background:#fff!important;box-shadow:0 2px 8px rgba(15,23,42,.04)!important;width:100%!important;max-width:100%!important;overflow:hidden!important}
-    #marketWorkspaceContent .dslot-head{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:flex-start!important;margin-bottom:12px!important}
-    #marketWorkspaceContent .dslot-title{font-size:17px!important;font-weight:950!important;line-height:1.35!important}
-    #marketWorkspaceContent .dslot-sub{font-size:13px!important;color:#64748b!important;margin-top:4px!important;line-height:1.45!important}
-    #marketWorkspaceContent .dslot-status{font-weight:950!important;color:#0f766e!important;background:#ecfdf5!important;border:1px solid #bbf7d0!important;border-radius:999px!important;padding:6px 10px!important;white-space:nowrap!important;font-size:12px!important}
-    #marketWorkspaceContent .dcards{display:flex!important;flex-wrap:nowrap!important;gap:12px!important;overflow-x:auto!important;overflow-y:hidden!important;padding:4px 2px 10px!important;width:100%!important;max-width:100%!important}
-    #marketWorkspaceContent .dcard{display:block!important;flex:0 0 310px!important;width:310px!important;max-width:310px!important;min-width:310px!important;border:1px solid #e5e7eb!important;border-radius:18px!important;background:#fff!important;padding:12px!important;box-shadow:0 2px 8px rgba(15,23,42,.05)!important;overflow:hidden!important;white-space:normal!important}
-    #marketWorkspaceContent .dcard.selected{outline:3px solid #bbf7d0!important;border-color:#22c55e!important}
-    #marketWorkspaceContent .dcard-a{border-left:6px solid #16a34a!important}
-    #marketWorkspaceContent .dcard-b{border-left:6px solid #2563eb!important}
-    #marketWorkspaceContent .dcard-c{border-left:6px solid #f59e0b!important}
-    #marketWorkspaceContent .dcard-top{display:flex!important;justify-content:space-between!important;gap:8px!important;align-items:flex-start!important}
-    #marketWorkspaceContent .dcard-title{display:flex!important;gap:6px!important;align-items:center!important;font-weight:950!important;font-size:13px!important;line-height:1.35!important;min-width:0!important;white-space:normal!important}
-    #marketWorkspaceContent .dcard-title input{flex:0 0 auto!important;margin:0!important}
-    #marketWorkspaceContent .dcard-amt{display:flex!important;align-items:center!important;gap:4px!important;font-size:12px!important;color:#334155!important;white-space:nowrap!important}
-    #marketWorkspaceContent .dcard-amt input{width:58px!important;min-width:58px!important;border:1px solid #cbd5e1!important;border-radius:8px!important;padding:5px!important;text-align:right!important;font-weight:900!important;background:#fff!important;color:#111!important}
-    #marketWorkspaceContent .chips{display:flex!important;gap:5px!important;flex-wrap:wrap!important;margin:8px 0!important}
-    #marketWorkspaceContent .chip{display:inline-block!important;border-radius:999px!important;background:#f1f5f9!important;color:#334155!important;padding:3px 7px!important;font-size:11px!important;font-weight:900!important;line-height:1.25!important;white-space:nowrap!important}
-    #marketWorkspaceContent .chip.good{background:#dcfce7!important;color:#166534!important}
-    #marketWorkspaceContent .chip.warn{background:#fef3c7!important;color:#92400e!important}
-    #marketWorkspaceContent .chip.bad{background:#fee2e2!important;color:#991b1b!important}
-    #marketWorkspaceContent .dterms,#marketWorkspaceContent .dfair,#marketWorkspaceContent .dwhy{font-size:13px!important;line-height:1.55!important;color:#334155!important;margin-top:7px!important;word-break:break-word!important;white-space:normal!important}
-    #marketWorkspaceContent .dterms b{font-size:16px!important}
-    #marketWorkspaceContent .dfair{border-top:1px dashed #e5e7eb!important;padding-top:7px!important}
-    #marketWorkspaceContent .dwhy{background:#f8fafc!important;border:1px solid #e5e7eb!important;border-radius:12px!important;padding:8px!important}
-    #marketWorkspaceContent .blueprint{border:1px solid #d8dde6!important;border-radius:18px!important;background:linear-gradient(135deg,#fff,#f8fafc)!important;padding:14px!important}
-    #marketWorkspaceContent .bp-grid{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:10px!important;margin-top:10px!important}
-    #marketWorkspaceContent .bp-card{border:1px solid #e5e7eb!important;border-radius:14px!important;background:#fff!important;padding:10px!important}
-    #marketWorkspaceContent .bp-card label{display:block!important;font-size:12px!important;color:#64748b!important;font-weight:900!important}
-    #marketWorkspaceContent .bp-card b{font-size:20px!important}
-    #marketWorkspaceContent .bp-list{margin-top:10px!important;display:grid!important;gap:8px!important}
-    #marketWorkspaceContent .bp-row{border:1px solid #e5e7eb!important;background:#fff!important;border-radius:12px!important;padding:9px!important;font-size:13px!important;line-height:1.55!important;white-space:normal!important}
-    #marketWorkspaceContent .dsel details{border:1px solid #e5e7eb!important;border-radius:16px!important;background:#fff!important;padding:12px!important}
-    #marketWorkspaceContent .dsel summary{font-weight:950!important;cursor:pointer!important}
-    @media(max-width:900px){#marketWorkspaceContent .bp-grid{grid-template-columns:1fr!important}#marketWorkspaceContent .dslot-head{display:block!important}#marketWorkspaceContent .dslot-status{display:inline-block!important;margin-top:8px!important}#marketWorkspaceContent .dcard{flex-basis:285px!important;width:285px!important;max-width:285px!important;min-width:285px!important}}
   </style>
 </head>
 <body>
@@ -149,14 +105,111 @@
       </main>
     </div>
   </div>
+
+  <script>
+  // ============================================================
+  // MM/M2 Market FCN History Window Filter v069
+  // Purpose: D. FCN遴選系統可切換 market_fcn_history 取樣範圍：2天 / 5天 / ALL
+  // ============================================================
+  (function(){
+    if(window.__M2_MARKET_HISTORY_WINDOW_V069__) return;
+    window.__M2_MARKET_HISTORY_WINDOW_V069__ = true;
+    var STORAGE_KEY='m2_market_history_window_days_v069';
+    var currentMode=localStorage.getItem(STORAGE_KEY)||'all';
+    var rawCache=null;
+
+    function normalizeMode(v){
+      v=String(v||'all').toLowerCase();
+      return v==='2'||v==='5'||v==='all'?v:'all';
+    }
+    function getRowDate(row){
+      return row && (row.generated_at||row.date||row.trade_date||row.quote_date||row.created_at||row.updated_at);
+    }
+    function parseDate(v){
+      if(!v) return null;
+      var d=new Date(v);
+      if(Number.isNaN(d.getTime())) return null;
+      return d;
+    }
+    function filterRows(rows,mode){
+      rows=Array.isArray(rows)?rows:[];
+      mode=normalizeMode(mode);
+      if(mode==='all') return rows.slice();
+      var dates=rows.map(getRowDate).map(parseDate).filter(Boolean).map(function(d){return d.getTime();});
+      if(!dates.length) return rows.slice();
+      var maxTime=Math.max.apply(null,dates);
+      var days=Number(mode);
+      var cutoff=maxTime-(days-1)*86400000;
+      return rows.filter(function(row){
+        var d=parseDate(getRowDate(row));
+        return !d || d.getTime()>=cutoff;
+      });
+    }
+    function modeLabel(mode){
+      mode=normalizeMode(mode);
+      if(mode==='2') return '近2天';
+      if(mode==='5') return '近5天';
+      return 'ALL';
+    }
+    var nativeFetch=window.fetch.bind(window);
+    window.fetch=function(input,init){
+      var url=typeof input==='string'?input:(input&&input.url)||'';
+      var isMarketHistory=url.indexOf('data/mm/market_fcn_history.json')>=0 || url.indexOf('market_fcn_history.json')>=0;
+      if(!isMarketHistory) return nativeFetch(input,init);
+      return nativeFetch(input,init).then(function(resp){
+        return resp.clone().json().then(function(data){
+          rawCache=Array.isArray(data)?data:(data&&Array.isArray(data.rows)?data.rows:[]);
+          var filtered=filterRows(rawCache,currentMode);
+          var body=Array.isArray(data)?filtered:Object.assign({},data,{rows:filtered,_window_filter:{mode:currentMode,label:modeLabel(currentMode),raw_count:rawCache.length,filtered_count:filtered.length}});
+          return new Response(JSON.stringify(body),{status:resp.status,statusText:resp.statusText,headers:{'Content-Type':'application/json'}});
+        }).catch(function(){return resp;});
+      });
+    };
+    function injectPanel(){
+      var market=document.getElementById('m2MarketFcnSubnav');
+      if(!market || document.getElementById('m2MarketWindowFilterV069')) return;
+      var box=document.createElement('div');
+      box.id='m2MarketWindowFilterV069';
+      box.style.cssText='margin-top:8px;padding:8px;border:1px solid #dbeafe;background:#f8fbff;border-radius:12px;display:grid;gap:6px;';
+      box.innerHTML='<div style="font-size:12px;font-weight:950;color:#334155">History Data Window</div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px"><button type="button" data-m2-window="2" class="m2-hz-subnav-btn">2天</button><button type="button" data-m2-window="5" class="m2-hz-subnav-btn">5天</button><button type="button" data-m2-window="all" class="m2-hz-subnav-btn">ALL</button></div><div id="m2MarketWindowHintV069" style="font-size:11px;color:#64748b;line-height:1.4"></div>';
+      market.appendChild(box);
+      box.addEventListener('click',function(ev){
+        var btn=ev.target.closest('[data-m2-window]');
+        if(!btn) return;
+        currentMode=normalizeMode(btn.getAttribute('data-m2-window'));
+        localStorage.setItem(STORAGE_KEY,currentMode);
+        updateActive();
+        var rb=document.getElementById('reloadBtn')||document.getElementById('runBtn');
+        if(rb) rb.click(); else location.reload();
+      });
+      updateActive();
+    }
+    function updateActive(){
+      var root=document.getElementById('m2MarketWindowFilterV069');
+      if(!root) return;
+      root.querySelectorAll('[data-m2-window]').forEach(function(b){
+        var on=normalizeMode(b.getAttribute('data-m2-window'))===normalizeMode(currentMode);
+        b.style.background=on?'#111':'#fff';
+        b.style.color=on?'#fff':'#111';
+        b.style.borderColor=on?'#111':'#d8dde6';
+      });
+      var hint=document.getElementById('m2MarketWindowHintV069');
+      if(hint) hint.textContent='目前推薦資料範圍：'+modeLabel(currentMode)+(rawCache?'｜原始 '+rawCache.length+' 筆':'')+'。切換後會重新載入推薦。';
+    }
+    document.addEventListener('DOMContentLoaded',injectPanel);
+    document.addEventListener('click',function(){setTimeout(injectPanel,120)},true);
+    new MutationObserver(injectPanel).observe(document.documentElement,{childList:true,subtree:true});
+  })();
+  </script>
   <script src="../../js/mm/modules/m8_overlay_engine_v1.js"></script>
   <script src="../../js/mm/modules/m8_regression_engine_v1.js"></script>
   <script src="../../js/mm/m2/m8_single_ui_mirror.js?v=20260515_v106"></script>
   <script src="../../js/mm/m2/m8_batch_decision_ui_v061.js?v=20260516_v063"></script>
   <script src="../../js/mm/m2/m2_v067b_selector_runtime.js?v=20260518_v067b"></script>
   <script src="../../js/mm/m2/m2_v068_allocation_decision_engine.js?v=20260518_v068"></script>
-  <script src="../../js/mm/m2/m2_pool_manual_ops.js?v=20260519_v074"></script>
+  <script src="../../js/mm/m2/m2_selector_ui_hotfix_v067b.js?v=20260518_hotfix1"></script>
   <script type="module" src="../../js/mm/m2/m2_mm_engine.js?v=20260518_v067b_v068"></script>
 </body>
 </html>
+
 
