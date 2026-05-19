@@ -111,7 +111,30 @@ function bindMaturitySubnav(){
   });
 }
 
-function renderPlanning(){const g=getGroups();rightDetail.innerHTML=`<div class="flow-panel">${flowCard('本月可用',`USD ${fmt(sum(g.hard))}`,'保守：Hard Release','#0f766e')}${flowCard('積極可用',`USD ${fmt(sum(g.hard)+sum(g.candidate)*0.5)}`,'Hard + 50% Candidate','#7c3aed')}${flowCard('觀察釋放',`USD ${fmt(sum(g.candidate))}`,`${g.candidate.length} 檔 candidate`,'#f97316')}${flowCard('Planning Base',`USD ${fmt(sum(g.base))}`,`${g.base.length} 檔扣除後母體`,'#2563eb')}</div>`;rightInsight.innerHTML=`<div class="decision-note">Maturity Cashflow 只回答三件事：本月多少錢會回來、哪家銀行有空間、扣除後應該補哪一類 FCN。Candidate 先列觀察，不全數視為現金。</div>`;bottomQuery.innerHTML=`${planningDecisionBlock()}${renderCashInBlock()}${renderBankCapacityBlock()}${renderPlanningBaseBlock()}${renderReleaseDetailsBlock()}`;bindMaturitySubnav()}
+function exposeM2RuntimeContext(){
+  try{
+    const g=getGroups();
+    const base=g.base||[];
+    const strategy_amounts={};
+    const strategy_amounts_wan={};
+    ['長期穩定現金流','合理投資型','積極單','短期投機單'].forEach(k=>{
+      const amt=sum(base.filter(x=>bucket(x)===k));
+      strategy_amounts[k]=amt;
+      strategy_amounts_wan[k]=Math.floor(amt/10000);
+    });
+    window.__M2_RUNTIME_CONTEXT__={
+      version:'v070d_runtime_context',
+      groups:g,
+      strategy_amounts,
+      strategy_amounts_wan,
+      target_bank:TARGET_BANK,
+      updated_at:new Date().toISOString()
+    };
+  }catch(err){
+    console.warn('M2 runtime context expose failed',err);
+  }
+}
+function renderPlanning(){const g=getGroups();exposeM2RuntimeContext();rightDetail.innerHTML=`<div class="flow-panel">${flowCard('本月可用',`USD ${fmt(sum(g.hard))}`,'保守：Hard Release','#0f766e')}${flowCard('積極可用',`USD ${fmt(sum(g.hard)+sum(g.candidate)*0.5)}`,'Hard + 50% Candidate','#7c3aed')}${flowCard('觀察釋放',`USD ${fmt(sum(g.candidate))}`,`${g.candidate.length} 檔 candidate`,'#f97316')}${flowCard('Planning Base',`USD ${fmt(sum(g.base))}`,`${g.base.length} 檔扣除後母體`,'#2563eb')}</div>`;rightInsight.innerHTML=`<div class="decision-note">Maturity Cashflow 只回答三件事：本月多少錢會回來、哪家銀行有空間、扣除後應該補哪一類 FCN。Candidate 先列觀察，不全數視為現金。</div>`;bottomQuery.innerHTML=`${planningDecisionBlock()}${renderCashInBlock()}${renderBankCapacityBlock()}${renderPlanningBaseBlock()}${renderReleaseDetailsBlock()}`;bindMaturitySubnav()}
 
 function normalizeBasket(symbols=[]){return [...new Set((symbols||[]).map(s=>String(s||'').trim().toUpperCase()).filter(Boolean).map(s=>s==='GOOGL'?'GOOG':s))].sort().join('+')}
 function safeVal(obj,keys){for(const k of keys){if(obj&&obj[k]!==undefined&&obj[k]!==null)return obj[k]}return null}
