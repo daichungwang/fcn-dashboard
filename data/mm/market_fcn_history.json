@@ -798,6 +798,612 @@
     "upstream_bank": "DBS"
   },
   {
+    "generated_at": "2026-05-19",
+    "source": "dbs",
+    "product_id": "FCN2602014",
+    "symbols": [
+      "NVDA",
+      "TSM",
+      "AMZN"
+    ],
+    "coupon_pct": 10,
+    "tenor_month": 12,
+    "strike_pct": 82.5,
+    "ki_pct": 60,
+    "barrier_type": "AKI",
+    "upstream_bank": "DBS",
+    "currency": "USD",
+    "issue_price_pct": 95,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "dbs",
+    "product_id": "FCN2602036",
+    "symbols": [
+      "NVDA",
+      "AVGO",
+      "ARM"
+    ],
+    "coupon_pct": 13.84,
+    "tenor_month": 10,
+    "strike_pct": 65,
+    "ki_pct": 50,
+    "barrier_type": "EKI",
+    "upstream_bank": "DBS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "dbs",
+    "product_id": "FCN2602043",
+    "symbols": [
+      "AVGO",
+      "TSM",
+      "NVDA"
+    ],
+    "coupon_pct": 15,
+    "tenor_month": 5,
+    "strike_pct": 83.71,
+    "ki_pct": 70,
+    "barrier_type": "AKI",
+    "upstream_bank": "DBS",
+    "currency": "USD",
+    "issue_price_pct": 95,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "dbs",
+    "product_id": "FCN2602049",
+    "symbols": [
+      "AVGO",
+      "TSM",
+      "NVDA",
+      "META"
+    ],
+    "coupon_pct": 12,
+    "tenor_month": 5,
+    "strike_pct": 77.85,
+    "ki_pct": 70,
+    "barrier_type": "AKI",
+    "upstream_bank": "DBS",
+    "currency": "USD",
+    "issue_price_pct": 95,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "dbs",
+    "product_id": "FCN2602045",
+    "symbols": [
+      "INTC",
+      "AAPL",
+      "TSLA"
+    ],
+    "coupon_pct": 18.16,
+    "tenor_month": 6,
+    "strike_pct": 68,
+    "ki_pct": 55,
+    "barrier_type": "AKI",
+    "upstream_bank": "DBS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "ms",
+    "product_id": "FCN2602041",
+    "symbols": [
+      "MU",
+      "AMD"
+    ],
+    "coupon_pct": 10,
+    "tenor_month": 4,
+    "strike_pct": 60.65,
+    "ki_pct": 55,
+    "barrier_type": "EKI",
+    "upstream_bank": "MS",
+    "currency": "USD",
+    "issue_price_pct": 90,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "ms",
+    "product_id": "FCN2602048",
+    "symbols": [
+      "NVDA",
+      "TSM",
+      "LITE"
+    ],
+    "coupon_pct": 18.34,
+    "tenor_month": 6,
+    "strike_pct": 60,
+    "ki_pct": 55,
+    "barrier_type": "EKI",
+    "upstream_bank": "MS",
+    "currency": "USD",
+    "issue_price_pct": 95,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "gs",
+    "product_id": "FCN2602027",
+    "symbols": [
+      "TSM"
+    ],
+    "coupon_pct": 16.27,
+    "tenor_month": 3,
+    "strike_pct": 95,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "upstream_bank": "GS",
+    "currency": "JPY",
+    "issue_price_pct": 120,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "citi",
+    "product_id": "FCN2602029",
+    "symbols": [
+      "TSLA",
+      "AMD"
+    ],
+    "coupon_pct": 18.69,
+    "tenor_month": 3,
+    "strike_pct": 80,
+    "ki_pct": 75,
+    "barrier_type": "EKI",
+    "upstream_bank": "CITI",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "citi",
+    "product_id": "FCN2602015",
+    "symbols": [
+      "TSLA",
+      "NVDA",
+      "TSM",
+      "AVGO"
+    ],
+    "coupon_pct": 12.5,
+    "tenor_month": 6,
+    "strike_pct": 81.41,
+    "ki_pct": 66,
+    "barrier_type": "EKI",
+    "upstream_bank": "CITI",
+    "currency": "USD",
+    "issue_price_pct": 92,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "natixis",
+    "product_id": "FCN2602039",
+    "symbols": [
+      "NVDA",
+      "AMD",
+      "AVGO"
+    ],
+    "coupon_pct": 13.41,
+    "tenor_month": 12,
+    "strike_pct": 65,
+    "ki_pct": 55,
+    "barrier_type": "EKI",
+    "upstream_bank": "NATIXIS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "citi",
+    "product_id": "FCN2602051",
+    "symbols": [
+      "TSLA",
+      "NVDA",
+      "AMAT",
+      "TSM"
+    ],
+    "coupon_pct": 11.5,
+    "tenor_month": 3,
+    "strike_pct": 89,
+    "ki_pct": 68,
+    "barrier_type": "EKI",
+    "upstream_bank": "CITI",
+    "currency": "USD",
+    "issue_price_pct": 90,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "dbs",
+    "product_id": "FCN2602017",
+    "symbols": [
+      "TSM",
+      "AMD",
+      "TSLA",
+      "INTC"
+    ],
+    "coupon_pct": 23.75,
+    "tenor_month": 7,
+    "strike_pct": 65,
+    "ki_pct": 55,
+    "barrier_type": "EKI",
+    "upstream_bank": "DBS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "jpm",
+    "product_id": "FCN2602003",
+    "symbols": [
+      "MU",
+      "NVDA",
+      "TSM"
+    ],
+    "coupon_pct": 12.07,
+    "tenor_month": 3,
+    "strike_pct": 75,
+    "ki_pct": 55,
+    "barrier_type": "EKI",
+    "upstream_bank": "JPM",
+    "currency": "USD",
+    "issue_price_pct": 90,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "ubs",
+    "product_id": "FCN2601988",
+    "symbols": [
+      "NKE",
+      "MSFT",
+      "DIS"
+    ],
+    "coupon_pct": 12,
+    "tenor_month": 12,
+    "strike_pct": 78.53,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "upstream_bank": "UBS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "gs",
+    "product_id": "FCN2602037",
+    "symbols": [
+      "AMAT",
+      "ASML",
+      "LRCX"
+    ],
+    "coupon_pct": 12,
+    "tenor_month": 4,
+    "strike_pct": 72.56,
+    "ki_pct": 60,
+    "barrier_type": "AKI",
+    "upstream_bank": "GS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "gs",
+    "product_id": "FCN2602040",
+    "symbols": [
+      "NVDA",
+      "TSM",
+      "MU",
+      "AVGO"
+    ],
+    "coupon_pct": 24,
+    "tenor_month": 5,
+    "strike_pct": 70,
+    "ki_pct": 60,
+    "barrier_type": "EKI",
+    "upstream_bank": "GS",
+    "currency": "USD",
+    "issue_price_pct": 95,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "citi",
+    "product_id": "FCN2602025",
+    "symbols": [
+      "NVDA",
+      "TSM"
+    ],
+    "coupon_pct": 6,
+    "tenor_month": 6,
+    "strike_pct": 85,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "upstream_bank": "CITI",
+    "currency": "USD",
+    "issue_price_pct": 91,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "ubs",
+    "product_id": "FCN2602026",
+    "symbols": [
+      "NVDA",
+      "META",
+      "AMZN"
+    ],
+    "coupon_pct": 6,
+    "tenor_month": 6,
+    "strike_pct": 85,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "upstream_bank": "UBS",
+    "currency": "USD",
+    "issue_price_pct": 91,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "dbs",
+    "product_id": "FCN2602056",
+    "symbols": [
+      "INTC",
+      "UAL"
+    ],
+    "coupon_pct": 20.8,
+    "tenor_month": 5,
+    "strike_pct": 75,
+    "ki_pct": 55,
+    "barrier_type": "EKI",
+    "upstream_bank": "DBS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "barclays",
+    "product_id": "FCN2602022",
+    "symbols": [
+      "AVGO",
+      "NVDA",
+      "TSM"
+    ],
+    "coupon_pct": 12,
+    "tenor_month": 6,
+    "strike_pct": 75.77,
+    "ki_pct": 75,
+    "barrier_type": "EKI",
+    "upstream_bank": "BARCLAYS",
+    "currency": "USD",
+    "issue_price_pct": 92,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "barclays",
+    "product_id": "FCN2602020",
+    "symbols": [
+      "NVDA",
+      "TSM",
+      "SMH"
+    ],
+    "coupon_pct": 10,
+    "tenor_month": 6,
+    "strike_pct": 79.94,
+    "ki_pct": 75,
+    "barrier_type": "EKI",
+    "upstream_bank": "BARCLAYS",
+    "currency": "USD",
+    "issue_price_pct": 92,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "barclays",
+    "product_id": "FCN2602042",
+    "symbols": [
+      "GOOG",
+      "AVGO",
+      "PLTR"
+    ],
+    "coupon_pct": 12,
+    "tenor_month": 6,
+    "strike_pct": 69.25,
+    "ki_pct": 60,
+    "barrier_type": "EKI",
+    "upstream_bank": "BARCLAYS",
+    "currency": "USD",
+    "issue_price_pct": 96,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "dbs",
+    "product_id": "FCN2602054",
+    "symbols": [
+      "AVGO",
+      "NVDA",
+      "TSM"
+    ],
+    "coupon_pct": 17.63,
+    "tenor_month": 6,
+    "strike_pct": 78,
+    "ki_pct": 75,
+    "barrier_type": "EKI",
+    "upstream_bank": "DBS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "dbs",
+    "product_id": "FCN2602055",
+    "symbols": [
+      "AVGO",
+      "GOOG",
+      "NVDA",
+      "AMD"
+    ],
+    "coupon_pct": 20,
+    "tenor_month": 6,
+    "strike_pct": 70.02,
+    "ki_pct": 65,
+    "barrier_type": "EKI",
+    "upstream_bank": "DBS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "gs",
+    "product_id": "FCN2602053",
+    "symbols": [
+      "MU",
+      "NVDA",
+      "TSM"
+    ],
+    "coupon_pct": 24.1,
+    "tenor_month": 6,
+    "strike_pct": 65,
+    "ki_pct": 60,
+    "barrier_type": "EKI",
+    "upstream_bank": "GS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "citi",
+    "product_id": "FCN2602023",
+    "symbols": [
+      "GOOG",
+      "NVDA",
+      "TSM"
+    ],
+    "coupon_pct": 10,
+    "tenor_month": 6,
+    "strike_pct": 79.95,
+    "ki_pct": 75,
+    "barrier_type": "EKI",
+    "upstream_bank": "CITI",
+    "currency": "USD",
+    "issue_price_pct": 92,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "citi",
+    "product_id": "FCN2602021",
+    "symbols": [
+      "TSM",
+      "QQQ",
+      "SPY"
+    ],
+    "coupon_pct": 10,
+    "tenor_month": 6,
+    "strike_pct": 88.95,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "upstream_bank": "CITI",
+    "currency": "USD",
+    "issue_price_pct": 95,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "nomura",
+    "product_id": "FCN2602047",
+    "symbols": [
+      "NVDA",
+      "TSM",
+      "GOOGL"
+    ],
+    "coupon_pct": 12,
+    "tenor_month": 9,
+    "strike_pct": 75,
+    "ki_pct": 65,
+    "barrier_type": "EKI",
+    "upstream_bank": "NOMURA",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "gs",
+    "product_id": "FCN2602018",
+    "symbols": [
+      "TSM"
+    ],
+    "coupon_pct": 11.39,
+    "tenor_month": 2,
+    "strike_pct": 90,
+    "ki_pct": null,
+    "barrier_type": "NA",
+    "upstream_bank": "GS",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "gs",
+    "product_id": "FCN2602024",
+    "symbols": [
+      "MU",
+      "TSLA",
+      "TSM"
+    ],
+    "coupon_pct": 16.04,
+    "tenor_month": 2,
+    "strike_pct": 75,
+    "ki_pct": 55,
+    "barrier_type": "EKI",
+    "upstream_bank": "GS",
+    "currency": "USD",
+    "issue_price_pct": 92,
+    "memory_type": "monthly"
+  },
+  {
+    "generated_at": "2026-05-19",
+    "source": "nomura",
+    "product_id": "FCN2602046",
+    "symbols": [
+      "AVGO",
+      "TSM",
+      "AMZN"
+    ],
+    "coupon_pct": 16,
+    "tenor_month": 9,
+    "strike_pct": 75,
+    "ki_pct": 65,
+    "barrier_type": "EKI",
+    "upstream_bank": "NOMURA",
+    "currency": "USD",
+    "issue_price_pct": 100,
+    "memory_type": "monthly"
+  },
+  {
     "generated_at": "2026-05-07",
     "source": "manual_market_quotes",
     "product_id": "MKT_20260507_014",
