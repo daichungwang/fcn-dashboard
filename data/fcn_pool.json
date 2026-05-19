@@ -2013,7 +2013,7 @@
   },
   {
   "date": "2026-05-12",
-  "fcn_id": "FCN849 睿睿",
+  "fcn_id": "FCN849N 睿睿",
   "basket": [
     "AMD",
     "TSLA",
@@ -2040,11 +2040,11 @@
   "is_portfolio": true,
   "note": "",
   "entry_prices": {
-    "AMD": 450,
-    "TSLA": 445,
-    "AVGO": 440,
-    "NVDA": 236,
-    "TSM": 418
+    "AMD": 445,
+    "TSLA": 433.281,
+    "AVGO": 418.761,
+    "NVDA": 219.8758,
+    "TSM":  395.0249
   },
   "maturity_time": "",
   "has_ki_breach": false,
