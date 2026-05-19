@@ -2458,6 +2458,61 @@
     }
   },
   {
+  "date": "2026-05-08",
+  "fcn_id": "FCN749N 富邦",
+  "basket": [
+    "AMD",
+    "ORCL",
+    "QCOM",
+    "INTC"
+  ],
+  "tenor": 10,
+  "rate": 22.19,
+  "autocall": 100,
+  "strike": 60,
+  "ki": 50,
+  "eki": true,
+  "bank": "法國外貌銀行",
+  "has_position": true,
+  "amt": 20000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-05-08T16:24",
+  "entry_time": "2026-05-08T16:24",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "AMD": 410.2843,
+    "ORCL": 196.7127,
+    "QCOM": 204.348,
+    "INTC": 110.6948
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "AMD": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "ORCL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "QCOM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "INTC": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-05-08",
     "fcn_id": "DACN2600117 永豐",
     "basket": [
