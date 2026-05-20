@@ -1,6 +1,7 @@
 // ============================================================
 // MM/M2 v070 E1/E2 Stage Execution Module (isolated)
 // Safe add-on: does not replace planner or FCN main render.
+// v070g fix: no global MutationObserver render loop.
 // ============================================================
 (function(){
   if(window.__M2_V070_STAGE_EXECUTION_E1E2__) return;
@@ -16,6 +17,7 @@
   let rows = [];
   let loaded = false;
   let loading = false;
+  let rendering = false;
   const n = (v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
   const wan = v => `${Math.floor(n(v,0)).toLocaleString('en-US')}萬`;
   const pct = v => `${n(v,0).toFixed(1)}%`;
@@ -104,12 +106,18 @@
     return `<details class="m2e-panel" id="planner-e2"${open}><summary>E2. FCN 階段執行彙整｜Execution Summary</summary><div class="m2e-grid"><div class="m2e-kpi"><label>總階段目標</label><b>${wan(s.target_total_wan)}</b></div><div class="m2e-kpi"><label>已勾選</label><b>${wan(s.selected_total_wan)}</b></div><div class="m2e-kpi"><label>達成率</label><b>${pct(s.achievement_pct)}</b></div><div class="m2e-kpi"><label>History Window</label><b>${s.history_window}</b></div></div><h3>階段達成率</h3><table class="m2e-table"><thead><tr><th>階段</th><th>目標</th><th>已選</th><th>達成率</th></tr></thead><tbody>${rowsHtml(s.stage_summary)}</tbody></table><h3>策略達成率</h3><table class="m2e-table"><thead><tr><th>策略</th><th>目標</th><th>已選</th><th>達成率</th></tr></thead><tbody>${rowsHtml(s.strategy_summary)}</tbody></table><h3>銀行達成率</h3><table class="m2e-table"><thead><tr><th>銀行</th><th>目標</th><th>已選</th><th>達成率</th></tr></thead><tbody>${rowsHtml(s.bank_summary)}</tbody></table></details>`;
   }
   function render(){
-    css(); load();
-    const p=plan(); const anchor=document.getElementById('planner-output') || document.getElementById('planner-stage-simulation');
-    if(!p || !anchor) return;
-    let root=document.getElementById('m2StageExecutionE1E2');
-    if(!root){root=document.createElement('div');root.id='m2StageExecutionE1E2'; anchor.insertAdjacentElement('afterend', root);}
-    root.innerHTML=e1(p)+e2(p);
+    if(rendering) return;
+    rendering = true;
+    try{
+      css(); load();
+      const p=plan(); const anchor=document.getElementById('planner-output') || document.getElementById('planner-stage-simulation');
+      if(!p || !anchor) return;
+      let root=document.getElementById('m2StageExecutionE1E2');
+      if(!root){root=document.createElement('div');root.id='m2StageExecutionE1E2'; anchor.insertAdjacentElement('afterend', root);}
+      root.innerHTML=e1(p)+e2(p);
+    } finally {
+      setTimeout(()=>{rendering=false;},60);
+    }
   }
   document.addEventListener('click',function(ev){
     const w=ev.target.closest('[data-m2e-window]'); if(w){STATE.window=w.getAttribute('data-m2e-window'); render(); return;}
@@ -124,7 +132,8 @@
     if(ev.target.id==='planner-e1') STATE.openE1=ev.target.open;
     if(ev.target.id==='planner-e2') STATE.openE2=ev.target.open;
   },true);
-  document.addEventListener('DOMContentLoaded',()=>setTimeout(render,800));
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(render,900));
   document.addEventListener('click',()=>setTimeout(render,500),true);
-  new MutationObserver(()=>setTimeout(render,600)).observe(document.documentElement,{childList:true,subtree:true});
+  let tries=0;
+  const timer=setInterval(()=>{tries++; render(); if(document.getElementById('m2StageExecutionE1E2') || tries>10) clearInterval(timer);},800);
 })();
