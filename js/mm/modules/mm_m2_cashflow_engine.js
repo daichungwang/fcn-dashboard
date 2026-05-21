@@ -25,7 +25,7 @@
     if(raw.includes('fubon')||raw.includes('富邦')) return '富邦';
     return '';
   }
-  function countAmt(rows,pred){const r=arr(rows).filter(pred);return {qty:r.length,amt_wan:sum(r,amountWan)}}
+  function countAmt(rows){return {qty:arr(rows).length,amt_wan:sum(rows,amountWan)}}
   function inputByBank(rows){
     const out={"富邦":0,"永豐":0};
     arr(rows).forEach(r=>{const b=getBank(r); if(out[b]!=null) out[b]+=amountWan(r);});
@@ -34,21 +34,28 @@
   function buildPlanner(){
     const steps=[
       {step:1,stage:STAGES[0].title,strategy:'長期穩定現金流',bank:'永豐',source:'sinopac',amount_wan:3},
-      {step:2,stage:STAGES[0].title,strategy:'積極單',bank:'富邦',source:'fubon',amount_wan:2},
+      {step:2,stage:STAGES[0].title,strategy:'長期穩定現金流',bank:'富邦',source:'fubon',amount_wan:2},
       {step:3,stage:STAGES[1].title,strategy:'長期穩定現金流',bank:'富邦',source:'fubon',amount_wan:3},
       {step:4,stage:STAGES[1].title,strategy:'積極單',bank:'富邦',source:'fubon',amount_wan:3},
       {step:5,stage:STAGES[1].title,strategy:'長期穩定現金流',bank:'永豐',source:'sinopac',amount_wan:3},
-      {step:6,stage:STAGES[1].title,strategy:'積極單',bank:'富邦',source:'fubon',amount_wan:3},
-      {step:7,stage:STAGES[1].title,strategy:'長期穩定現金流',bank:'永豐',source:'sinopac',amount_wan:3},
-      {step:8,stage:STAGES[2].title,strategy:'積極單',bank:'富邦',source:'fubon',amount_wan:3},
-      {step:9,stage:STAGES[2].title,strategy:'長期穩定現金流',bank:'富邦',source:'fubon',amount_wan:3},
-      {step:10,stage:STAGES[2].title,strategy:'合理投資型',bank:'永豐',source:'sinopac',amount_wan:3},
-      {step:11,stage:STAGES[2].title,strategy:'短期投機單',bank:'富邦',source:'fubon',amount_wan:3},
-      {step:12,stage:STAGES[2].title,strategy:'短期投機單',bank:'富邦',source:'fubon',amount_wan:3}
+      {step:6,stage:STAGES[1].title,strategy:'短期投機單',bank:'富邦',source:'fubon',amount_wan:3},
+      {step:7,stage:STAGES[1].title,strategy:'積極單',bank:'永豐',source:'sinopac',amount_wan:3},
+      {step:8,stage:STAGES[2].title,strategy:'合理投資型',bank:'富邦',source:'fubon',amount_wan:3},
+      {step:9,stage:STAGES[2].title,strategy:'短期投機單',bank:'富邦',source:'fubon',amount_wan:3},
+      {step:10,stage:STAGES[2].title,strategy:'長期穩定現金流',bank:'永豐',source:'sinopac',amount_wan:3},
+      {step:11,stage:STAGES[2].title,strategy:'合理投資型',bank:'富邦',source:'fubon',amount_wan:2},
+      {step:12,stage:STAGES[2].title,strategy:'積極單',bank:'富邦',source:'fubon',amount_wan:1},
+      {step:13,stage:STAGES[2].title,strategy:'長期穩定現金流',bank:'富邦',source:'fubon',amount_wan:1}
     ];
     const stageSummary={},strategySummary={},bankSummary={};
     steps.forEach(s=>{stageSummary[s.stage]=(stageSummary[s.stage]||0)+s.amount_wan;strategySummary[s.strategy]=(strategySummary[s.strategy]||0)+s.amount_wan;bankSummary[s.bank]=(bankSummary[s.bank]||0)+s.amount_wan;});
     return {steps,stageSummary,strategySummary,bankSummary,firstStage:steps.filter(s=>s.stage===STAGES[0].title)};
+  }
+  function getRuntimeZones(data,activeRows){
+    const rt=data.m2Runtime||data.m2_runtime||data.runtime||data.healthRuntime||data.health_runtime||{};
+    const has=Array.isArray(rt.danger)||Array.isArray(rt.watch)||Array.isArray(rt.healthy);
+    if(has) return {danger:countAmt(rt.danger||[]),tracking:countAmt(rt.watch||[]),health:countAmt(rt.healthy||[]),source:'m2_runtime'};
+    return {danger:{qty:0,amt_wan:0},tracking:{qty:0,amt_wan:0},health:{qty:arr(activeRows).length,amt_wan:sum(activeRows,amountWan)},source:'active_fcn_fallback'};
   }
   function build(state){
     const data=(state&&state.data)||{};
@@ -61,14 +68,12 @@
     const bankInput=inputByBank(activeRows);
     const inputAmtWan=bankInput['富邦']+bankInput['永豐'];
     const achieveRatePct=totalPlanWan?inputAmtWan/totalPlanWan*100:0;
-    const output=countAmt(allRows,x=>/hard|release|maturity|exit|到期|出場/.test(statusText(x))||(x&&x.has_position===false&&!!x.exit_time));
-    const danger=countAmt(activeRows,x=>x&&x.has_ki_breach===true);
-    const tracking=countAmt(activeRows,x=>/watch|tracking|追蹤|觀察/.test(statusText(x)));
-    const health=countAmt(activeRows,x=>!(x&&x.has_ki_breach===true)&&!/watch|tracking|追蹤|觀察/.test(statusText(x)));
+    const output={qty:arr(allRows).filter(x=>/hard|release|maturity|exit|到期|出場/.test(statusText(x))||(x&&x.has_position===false&&!!x.exit_time)).length,amt_wan:sum(arr(allRows).filter(x=>/hard|release|maturity|exit|到期|出場/.test(statusText(x))||(x&&x.has_position===false&&!!x.exit_time)),amountWan)};
+    const zones=getRuntimeZones(data,activeRows);
     const planner=buildPlanner();
     const selected=window.__M2_MARKET_FCN_SELECTION_SUMMARY__||null;
     return {
-      version:'mm_m2_cashflow_engine_v1_fixed_units',
+      version:'mm_m2_cashflow_engine_v1_follow_m2_logic',
       total_amt_wan:totalPlanWan,
       input_amt_wan:inputAmtWan,
       achieve_rate_pct:achieveRatePct,
@@ -83,8 +88,8 @@
       strategy_plan_wan:planner.strategySummary,
       bank_plan_wan:planner.bankSummary,
       all_steps:planner.steps,
-      fcn_pool_evaluation: danger.qty>0?'需處理風險':tracking.qty>0?'需追蹤':'健康',
-      danger,tracking,health,
+      fcn_pool_evaluation: zones.danger.qty>0?'需處理風險':zones.tracking.qty>0?'需追蹤':'健康',
+      danger:zones.danger,tracking:zones.tracking,health:zones.health,zone_source:zones.source,
       selected_total_wan:n(selected&&selected.selected_total_wan,0),
       selected_summary:selected||null,
       source_rows:allRows.length,
