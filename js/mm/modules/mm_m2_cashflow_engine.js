@@ -31,6 +31,36 @@
   }
   function pickRuntime(data){return data.m2Runtime||data.m2_runtime||data.runtime||data.healthRuntime||data.health_runtime||{};}
   function firstNumber(){for(const v of arguments){const x=n(v,NaN);if(Number.isFinite(x))return x;}return 0;}
+  function monthlyPlanFromHandoff(){
+    const h=window.__M2_TO_MARKET_FCN_HANDOFF__;
+    const steps=arr(h&&h.steps);
+    if(!steps.length) return null;
+    const stageOrder=['第一階段','第二階段','第三階段'];
+    const short={'短期投機單':'投機單','積極單':'積極單','長期穩定現金流':'現金流','合理投資型':'合理單'};
+    const groups={};
+    steps.forEach(s=>{
+      const stage=stageOrder.find(x=>String(s.stage||'').includes(x))||String(s.stage||'未分階段');
+      const strategy=short[s.strategy]||s.strategy||'未分類';
+      groups[stage]=groups[stage]||{total_wan:0,strategies:{}};
+      groups[stage].total_wan+=n(s.amount_wan,0);
+      groups[stage].strategies[strategy]=(groups[stage].strategies[strategy]||0)+n(s.amount_wan,0);
+    });
+    const lines=stageOrder.map(stage=>{
+      const g=groups[stage];
+      if(!g||g.total_wan<=0) return `${stage}：無投資規劃`;
+      const parts=Object.entries(g.strategies).filter(([,v])=>v>0).map(([k,v])=>`${k} ${wan(v)}萬`).join(' / ');
+      return `${stage}：預計投入 ${wan(g.total_wan)}萬｜${parts}`;
+    });
+    return {source:'__M2_TO_MARKET_FCN_HANDOFF__',total_wan:sum(steps,x=>n(x.amount_wan,0)),lines,by_stage:groups};
+  }
+  function fallbackMonthlyPlan(inputPlanWan,softOutputWan,strategicOutputWan){
+    const lines=[
+      inputPlanWan>0?`第一階段：預計投入 ${wan(inputPlanWan)}萬`:'第一階段：無投資規劃',
+      softOutputWan>0?`第二階段：預計投入 ${wan(softOutputWan)}萬`:'第二階段：無投資規劃',
+      strategicOutputWan>0?`第三階段：預計投入 ${wan(strategicOutputWan)}萬`:'第三階段：無投資規劃'
+    ];
+    return {source:'cashflow_stage_summary',total_wan:inputPlanWan+softOutputWan+strategicOutputWan,lines,by_stage:{}};
+  }
 
   function build(state){
     const data=(state&&state.data)||{};
@@ -50,11 +80,13 @@
     const softOutputWan=Math.max(0,Math.floor(expectedPoolWan*0.5));
     const strategicOutputWan=Math.max(0,Math.floor(expectedPoolWan-softOutputWan));
     const inputPlanWan=Math.max(0,Math.floor(confirmedOutWan));
-    const inPlanWan=inputPlanWan+softOutputWan+strategicOutputWan;
+    const stagePlanWan=inputPlanWan+softOutputWan+strategicOutputWan;
+    const monthlyActionPlan=monthlyPlanFromHandoff()||fallbackMonthlyPlan(inputPlanWan,softOutputWan,strategicOutputWan);
+    const inPlanWan=monthlyActionPlan.total_wan||stagePlanWan;
     const signal=evalSignal(achieveRatePct);
 
     return {
-      version:'mm_m2_cashflow_engine_v2_dashboard_summary_only',
+      version:'mm_m2_cashflow_engine_v3_monthly_action_plan',
       total_amt_wan:TOTAL_TARGET_WAN,
       fcn_target_amt_wan:TOTAL_TARGET_WAN,
       input_amt_wan:inputAmtWan,
@@ -65,6 +97,9 @@
       soft_output_amt_wan:softOutputWan,
       strategic_output_amt_wan:strategicOutputWan,
       in_plan_wan:inPlanWan,
+      monthly_action_plan:monthlyActionPlan,
+      monthly_action_plan_lines:monthlyActionPlan.lines,
+      monthly_action_plan_text:monthlyActionPlan.lines.join('\n'),
       stages:{'第一階段｜確定資金':inputPlanWan,'第二階段｜預計資金50%':softOutputWan,'第三階段｜本月投資計畫':strategicOutputWan},
       bank_target_wan:TARGET_BANK_WAN,
       bank_input_wan:bankInput,
@@ -73,7 +108,7 @@
       fcn_pool_evaluation:signal.label,
       fcn_pool_signal:signal,
       dashboard_note:confirmedOutWan>0?'本月已有確定出場資金，可進入第一階段投入規劃。':'目前無確定出場金額，第一階段無需投入規劃。',
-      planner_hint:inPlanWan>0?'本月投資計畫以預計出場資金為主，仍需等實際出場確認。':'目前沒有本月投入規劃。',
+      planner_hint:inPlanWan>0?'本月投資計畫已同步 M2 Action Plan 摘要。':'目前沒有本月投入規劃。',
       selected_total_wan:n(window.__M2_MARKET_FCN_SELECTION_SUMMARY__&&window.__M2_MARKET_FCN_SELECTION_SUMMARY__.selected_total_wan,0),
       selected_summary:window.__M2_MARKET_FCN_SELECTION_SUMMARY__||null,
       source_rows:allRows.length,
