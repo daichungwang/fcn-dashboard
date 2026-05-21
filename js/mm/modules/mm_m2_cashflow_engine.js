@@ -9,13 +9,16 @@
   const n=(v,d=0)=>Number.isFinite(Number(v))?Number(v):d;
   const arr=v=>Array.isArray(v)?v:[];
   const sum=(list,fn)=>arr(list).reduce((s,x)=>s+n(fn(x),0),0);
-  const statusText=x=>String(x&& (x.status||x.zone||x.state||x.label)||'').toLowerCase();
+  const statusText=x=>String(x&&(x.status||x.lifecycle||x.zone||x.state||x.label)||'').toLowerCase();
   const amountWan=x=>{
-    const v=n(x&& (x.amount_wan??x.amount??x.principal_wan??x.principal??x.exposure??x.total_exposure),0);
+    const v=n(x&&(x.amt??x.amount_usd??x.notional_usd??x.principal_usd??x.amount_wan??x.amount??x.principal_wan??x.principal??x.exposure??x.total_exposure),0);
     return v>10000?v/10000:v;
   };
+  function isActive(row){
+    return row&&row.status==='active'&&row.has_position===true&&row.is_portfolio===true;
+  }
   function getBank(row){
-    const raw=String(row&& (row.bank||row.broker||row.source||row.bank_source)||'').toLowerCase();
+    const raw=String(row&&(row.tw_bank||row.broker_tw||row.channel_bank||row.bank_channel||row.bank||row.broker||row.source||row.bank_source)||'').toLowerCase();
     if(raw.includes('sinopac')||raw.includes('永豐')) return '永豐';
     if(raw.includes('fubon')||raw.includes('富邦')) return '富邦';
     return '';
@@ -26,12 +29,7 @@
     arr(rows).forEach(r=>{const b=getBank(r); if(out[b]!=null) out[b]+=amountWan(r);});
     return out;
   }
-  function strategyAmountsFromRows(rows){
-    const out={};
-    arr(rows).forEach(r=>{const k=r.strategy||r.strategy_title||r.category||r.operation_type; if(k) out[k]=(out[k]||0)+amountWan(r);});
-    return out;
-  }
-  function buildPlanner(inputBank){
+  function buildPlanner(){
     const steps=[
       {step:1,stage:STAGES[0].title,strategy:'長期穩定現金流',bank:'永豐',source:'sinopac',amount_wan:3},
       {step:2,stage:STAGES[0].title,strategy:'積極單',bank:'富邦',source:'fubon',amount_wan:2},
@@ -46,7 +44,7 @@
       {step:11,stage:STAGES[2].title,strategy:'短期投機單',bank:'富邦',source:'fubon',amount_wan:3},
       {step:12,stage:STAGES[2].title,strategy:'短期投機單',bank:'富邦',source:'fubon',amount_wan:3}
     ];
-    const stageSummary={}; const strategySummary={}; const bankSummary={};
+    const stageSummary={},strategySummary={},bankSummary={};
     steps.forEach(s=>{stageSummary[s.stage]=(stageSummary[s.stage]||0)+s.amount_wan;strategySummary[s.strategy]=(strategySummary[s.strategy]||0)+s.amount_wan;bankSummary[s.bank]=(bankSummary[s.bank]||0)+s.amount_wan;});
     return {steps,stageSummary,strategySummary,bankSummary,firstStage:steps.filter(s=>s.stage===STAGES[0].title)};
   }
@@ -55,23 +53,20 @@
     const fcn=arr(data.fcnPool||data.fcn_pool);
     const pos=arr(data.positions);
     const runtime=arr(data.marketRuntime||data.market_runtime);
-    const rows=fcn.length?fcn:(pos.length?pos:runtime);
+    const allRows=fcn.length?fcn:(pos.length?pos:runtime);
+    const activeRows=fcn.length?fcn.filter(isActive):allRows;
     const totalPlanWan=TARGET_BANK_WAN['富邦']+TARGET_BANK_WAN['永豐'];
-    let bankInput=inputByBank(rows);
-    if(!bankInput['富邦']&&!bankInput['永豐']){
-      const total=sum(rows,amountWan);
-      if(total>0) bankInput={'富邦':Math.round(total*0.75),'永豐':Math.round(total*0.25)};
-    }
+    const bankInput=inputByBank(activeRows);
     const inputAmtWan=bankInput['富邦']+bankInput['永豐'];
     const achieveRatePct=totalPlanWan?inputAmtWan/totalPlanWan*100:0;
-    const output=countAmt(rows,x=>/hard|release|maturity|exit|到期|出場/.test(statusText(x)));
-    const danger=countAmt(rows,x=>/danger|ki|risk|破|下限|危險/.test(statusText(x))||n(x&&x.total_exposure,0)>=15);
-    const tracking=countAmt(rows,x=>/watch|tracking|追蹤|觀察/.test(statusText(x))||(n(x&&x.total_exposure,0)>=8&&n(x&&x.total_exposure,0)<15));
-    const health=countAmt(rows,x=>/healthy|safe|健康|安全/.test(statusText(x))||(n(x&&x.total_exposure,0)>0&&n(x&&x.total_exposure,0)<8));
-    const planner=buildPlanner(bankInput);
+    const output=countAmt(allRows,x=>/hard|release|maturity|exit|到期|出場/.test(statusText(x))||(x&&x.has_position===false&&!!x.exit_time));
+    const danger=countAmt(activeRows,x=>x&&x.has_ki_breach===true);
+    const tracking=countAmt(activeRows,x=>/watch|tracking|追蹤|觀察/.test(statusText(x)));
+    const health=countAmt(activeRows,x=>!(x&&x.has_ki_breach===true)&&!/watch|tracking|追蹤|觀察/.test(statusText(x)));
+    const planner=buildPlanner();
     const selected=window.__M2_MARKET_FCN_SELECTION_SUMMARY__||null;
     return {
-      version:'mm_m2_cashflow_engine_v1_full',
+      version:'mm_m2_cashflow_engine_v1_full_active_fcn_pool',
       total_amt_wan:totalPlanWan,
       input_amt_wan:inputAmtWan,
       achieve_rate_pct:achieveRatePct,
@@ -90,7 +85,8 @@
       danger,tracking,health,
       selected_total_wan:n(selected&&selected.selected_total_wan,0),
       selected_summary:selected||null,
-      source_rows:rows.length
+      source_rows:allRows.length,
+      active_rows:activeRows.length
     };
   }
   window.MMM2CashflowEngine={build};
