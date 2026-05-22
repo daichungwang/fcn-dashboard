@@ -111,6 +111,126 @@
       }
     }
   },
+  "SNPS": {
+    "symbol": "SNPS",
+    "name": "Synopsys Inc.",
+    "type": "research_raw",
+    "company_overview": "SNPS 是半導體設計的『工具層』公司，不是賣晶片的硬體股；FY2024 營收約 61.3 億美元、Design Automation 約占 64%、Design IP 約占 25%，代表它直接吃到 AI ASIC、chiplet、3nm/2nm 與驗證複雜度上升。對投資決策來說，SNPS 的價值在於 recurring EDA 軟體與 IP 授權，而不是單一 AI 晶片出貨。",
+    "basic_info": {
+      "founded": "1986 年成立，超過 35 年專注 EDA、IP 與晶片設計驗證工具。",
+      "headquarters": "Sunnyvale, California, U.S.；主市場 Nasdaq。",
+      "industry": "Electronic Design Automation, Semiconductor IP, Verification, Simulation；核心受益於 AI ASIC、advanced node、chiplet 與 system simulation。",
+      "market_cap": "屬大型 EDA 軟體公司，市值通常在 800 億美元以上區間波動；估值常用 forward PE / EV-sales 衡量，而不是用傳統半導體週期股 PE。"
+    },
+    "business_model": {
+      "summary": "SNPS 靠 3 條主線賺錢：EDA 訂閱工具、Design IP 授權、以及軟硬體驗證與系統模擬。FY2024 營收約 61.3 億美元，且多數來自多年期合約與 recurring license，這讓它比晶片硬體股更適合做中長線 pool30 候選。",
+      "segments": [
+        "Design Automation：FY2024 約占營收 64%，核心產品包含 synthesis、place-and-route、verification、signoff；AI ASIC 與 2nm/3nm 專案越複雜，工具使用量與合約價值越高。",
+        "Design IP：約占 FY2024 營收 25%，包括 PCIe、DDR、HBM、USB、Ethernet 等 IP；AI accelerator、chiplet 與高速 I/O 專案增加時，IP reuse 需求會提高。",
+        "Software Integrity / Simulation / Ansys extension：原本 software integrity 比重較低，但 Ansys 交易完成後，SNPS 將從晶片設計工具擴大到多物理 simulation，TAM 會從 EDA 擴到 silicon-to-system。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "SNPS 的客戶不是一般消費者，而是全球晶片設計與系統公司；客戶集中在大型半導體、hyperscaler 自研晶片、晶圓廠生態與電子系統廠。EDA 的優點是工具切換成本高，但風險是大型客戶與先進製程投資節奏會影響訂單成長。",
+      "key_customers": [
+        {
+          "name": "NVIDIA / AI accelerator ecosystem",
+          "role": "GPU、ASIC、chiplet 與高速 I/O 設計工具需求來源",
+          "importance": "AI accelerator 設計通常需要數十億電晶體、HBM、高速 SerDes 與複雜驗證流程；這會提高 EDA usage、verification runtime 與 signoff 需求，是 SNPS 長期受益的核心邏輯。"
+        },
+        {
+          "name": "Broadcom / custom ASIC supply chain",
+          "role": "客製 AI ASIC、networking silicon 與高速 IP 使用者",
+          "importance": "custom silicon 專案通常需要 PCIe、Ethernet、DDR/HBM controller 與完整 verification flow；Broadcom 類客製 ASIC 擴張，會拉動 EDA 與 Design IP 需求。"
+        },
+        {
+          "name": "TSMC / foundry ecosystem",
+          "role": "先進製程 design enablement 與 EDA signoff 生態",
+          "importance": "3nm/2nm 節點需要與 EDA vendor 深度合作，design rule、power integrity、thermal 與 timing closure 更複雜；先進製程每往下一代走，EDA 工具價值通常提高。"
+        }
+      ],
+      "conclusion": "SNPS 客戶品質高，但它不是完全無風險的分散型 SaaS；如果 AI ASIC 專案延後、hyperscaler capex 降溫、或中國 EDA 限制加嚴，成長預期會被下修。投資上要把它視為『高品質半導體軟體平台』，不是低估值防守股。"
+    },
+    "why_this_company": [
+      "AI 投資從 GPU 擴散到 custom ASIC、chiplet 與高速 I/O，這些專案都需要 EDA、IP、verification 與 signoff；SNPS 是賣設計工具，不需要承擔單一晶片庫存風險。",
+      "FY2024 營收約 61.3 億美元，Design Automation 約 64%、Design IP 約 25%，表示主體收入來自高黏著工具與 IP，而不是一次性硬體出貨。",
+      "Ansys 交易若順利整合，SNPS 可從 chip-level EDA 擴到 system-level simulation；這對 AI server、車用、電源與散熱設計都有延伸價值。"
+    ],
+    "market_view": "市場正在 pricing 的是『AI 晶片設計複雜度上升 + custom silicon 增加 + Ansys 擴大 TAM』，不是單純半導體景氣循環。市場同時擔心 3 件事：第一，EDA 雙雄 SNPS/CDNS 估值長期偏高；第二，Ansys 交易金額大、整合期可能壓縮短期 EPS；第三，中國與出口管制可能限制部分 EDA/IP 銷售。",
+    "financial_summary": {
+      "revenue": "FY2024 營收約 61.3 億美元。",
+      "growth": "FY2024 營收年增約 15%，代表先進製程與 AI 設計需求仍支撐 EDA/IP 成長。",
+      "net_margin": "GAAP net margin 受股權薪酬與併購費用影響，通常低於 non-GAAP；投資上更應追蹤 non-GAAP operating margin 與 FCF margin。",
+      "fcf_margin": "EDA 軟體模式通常具高現金轉換率；SNPS 長期 FCF margin 常落在 25%~35% 區間，優於多數硬體半導體股。",
+      "eps": "EPS 需區分 GAAP 與 non-GAAP；Ansys 交易期間，短期 EPS 可能受併購、利息與整合費用扭曲。",
+      "pe": "估值通常高於傳統半導體股，forward PE 常在 30~45 倍區間波動；若高於 45 倍，買點容錯率會下降。",
+      "dividend_yield": "0%；公司不以配息為主，資本配置重點是研發、併購與回購。",
+      "beta": "波動通常低於小型 AI 半導體股，但高於防守型軟體；FCN 風險應以高估值科技股處理。"
+    },
+    "competition": {
+      "summary": "SNPS 的核心對手是 Cadence，不是 NVIDIA 或 AMD。EDA 市場是高集中雙寡頭結構，競爭焦點在 verification、digital implementation、analog/RF、IP 與 system simulation。SNPS 的估值溢價來自工具黏著度與 IP portfolio，但高估值也會放大回檔。",
+      "peers": [
+        {
+          "name": "Cadence Design Systems",
+          "position": "EDA 雙寡頭對手",
+          "comparison": "CDNS 與 SNPS 都受益於 AI ASIC 與先進製程；Cadence 在 analog/mixed-signal 與 system design 強，Synopsys 在 Design Compiler、verification、IP 與 signoff 生態強。若 SNPS forward PE 高於 CDNS 太多，市場會要求 Ansys synergies 給出更明確數字。"
+        },
+        {
+          "name": "Siemens EDA",
+          "position": "大型工業軟體與 EDA 競爭者",
+          "comparison": "Siemens EDA 在 PCB、hardware verification 與工業 simulation 有優勢，但 SNPS/CDNS 在先進晶片設計流程的市占與設計黏著度較高。Siemens 的威脅在 system-level 與工業客戶整合。"
+        },
+        {
+          "name": "Ansys",
+          "position": "simulation platform，併購目標",
+          "comparison": "Ansys 不是傳統 EDA 對手，而是把 thermal、mechanical、fluid、electromagnetic simulation 拉進 silicon-to-system；併購後若整合成功，可提高 SNPS TAM，但若監管或整合延遲，短期估值會承壓。"
+        }
+      ],
+      "conclusion": "SNPS 的競爭優勢在高切換成本與完整 design flow，但不是便宜股；投資決策要同時看 EDA 雙寡頭護城河與 Ansys 併購執行風險。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "SNPS 的合理買點不該用一般半導體 PE 20 倍去判斷；它是 EDA 軟體平台，forward PE 30~40 倍仍可接受，但若接近或高於 45 倍，就需要更高營收成長與 Ansys synergy 支撐。",
+      "buy_strategy": "策略上適合分批布局，不適合一次追滿。第一筆可在估值回到 forward PE 35~40 倍或股價距 52 週高點回檔 12%~18% 時建立；若 Ansys 監管或整合雜音造成 20% 以上回檔，但 EDA 訂單未惡化，反而是加碼區。",
+      "sweet_zone": "甜蜜區設定為 forward PE 35 倍以下，或股價自 52 週高點回檔 18%~25%；若 FY2025/FY2026 revenue growth 仍維持雙位數，這區間可視為布局重心。",
+      "technical_view": {
+        "mid_trend": "中期趨勢通常跟 AI 半導體與軟體估值同步；若股價維持在 200 日均線之上，代表市場仍接受 EDA/Ansys 故事。",
+        "short_term": "短線若快速突破前高但 PE 同步升到 45 倍以上，屬於不追價區；較好的進場點是財報後回測支撐且營收指引未下修。",
+        "structure": "結構上屬高品質成長股，不是投機股；但高估值意味著 10%~20% 回檔不需要基本面壞掉，只要利率或 AI capex 情緒轉弱就可能發生。",
+        "conclusion": "Timing 判斷：可列為布局重心，但分批，不追高；FCN 若要做，優先選 6~9 個月、較低 strike/KI，不用激進結構。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "core",
+      "reason": "SNPS 具備 EDA 雙寡頭、FY2024 約 61.3 億美元營收、Design Automation 約 64% 與 Design IP 約 25% 的高黏著結構；它能補足 pool30 裡 AI 硬體之外的『設計工具層』。",
+      "upgrade_condition": [
+        "若 Ansys 交易順利完成且 FY2025/FY2026 revenue growth 維持 10% 以上，可提高到 AI infrastructure core 權重。",
+        "若 forward PE 回到 35 倍以下且 EDA backlog / guide 未惡化，可從觀察升為積極分批布局。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "估值風險：forward PE 若高於 45 倍，任何營收指引低於雙位數或 Ansys synergy 延後，都可能造成 10%~20% 估值壓縮。",
+        "併購風險：Ansys 交易涉及大型軟體整合與監管審查，若整合費用或反壟斷條件高於預期，短期 EPS 與股價會承壓。",
+        "中國與出口管制：EDA/IP 可能受到地緣政治限制，若中國半導體設計需求被限制，部分成長會受影響。"
+      ],
+      "opportunity": [
+        "AI ASIC 複雜度提升：HBM、chiplet、2nm/3nm、SerDes 與 power integrity 都會增加 EDA usage，SNPS 可受益於每個 AI 設計案的工具需求上升。",
+        "Ansys 擴大 TAM：若 silicon-to-system simulation 成功整合，SNPS 可從晶片設計延伸到 thermal、mechanical、electromagnetic 與系統驗證。",
+        "FCN 適配性優於小型 AI 股：SNPS 沒有單一晶片庫存風險，現金流與 recurring revenue 較穩，適合做中等風險 FCN 底層，但不適合用高 strike 追高。"
+      ]
+    },
+    "final_view": "SNPS 是你接下來布局重心可以成立的標的，因為它卡在 AI 供應鏈最上游的設計工具層；相較 NVDA/AVGO，它不是賣一顆晶片，而是賣所有晶片設計都要用的工具與 IP。投資結論是『公司等級可進 pool30，適合分批布局；估值若未回落，不要一次加滿，也不要用激進 FCN 結構追價』。",
+    "quality_check": {
+      "completeness": 9,
+      "specificity": 9,
+      "data_support": 8,
+      "decision_usefulness": 9,
+      "fcn_alignment": 9,
+      "total_score": 8.8,
+      "fail_reasons": []
+    },
   "AVGO": {
     "status": "ok",
     "model": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
