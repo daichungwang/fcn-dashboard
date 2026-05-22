@@ -1,7 +1,7 @@
 // ============================================================
 // MM/M2 作戰中心 - V69 Planner Driven Market FCN Selector Runtime
 // Purpose: D. FCN 遴選系統 uses handoff steps x market_fcn_history x M8 Fair.
-// v69h: render by 3 stages / allocation steps from window.__M2_TO_MARKET_FCN_HANDOFF__.
+// v69i: listen to History Data Window changes, clear cache, rerender D selector.
 // ============================================================
 (function(){
   const PATCH_ID='m2-v069-selector-runtime';
@@ -14,12 +14,13 @@
   const pct=v=>`${n(v,0)>=0?'+':''}${fmt(v,2)}%`;
   let marketRowsCache=null;
 
-  async function loadMarketRows(){
-    if(marketRowsCache) return marketRowsCache;
+  async function loadMarketRows(force=false){
+    if(marketRowsCache && !force) return marketRowsCache;
     const res=await fetch('../../data/mm/market_fcn_history.json',{cache:'no-store'});
     marketRowsCache=await res.json();
     return Array.isArray(marketRowsCache)?marketRowsCache:(Array.isArray(marketRowsCache?.rows)?marketRowsCache.rows:[]);
   }
+  function resetMarketRowsCache(){marketRowsCache=null;}
 
   function normalizeSymbols(v){
     if(Array.isArray(v)) return v.map(x=>String(x||'').trim().toUpperCase()).filter(Boolean);
@@ -33,7 +34,6 @@
   function rowSymbols(r){return normalizeSymbols(r.symbols||r.underlyings||r.basket||r.basket_display||r.tickers);}
   function rowId(r,idx){return r.product_id||r.fcn_id||r.id||r.code||r.name||`FCN${idx+1}`;}
   function rowDate(r){return r.generated_at||r.date||r.trade_date||r.quote_date||r.updated_at||r.created_at||'-';}
-  function bankForSource(source){source=String(source||'').toLowerCase(); if(source.includes('sinopac')) return '永豐'; if(source.includes('fubon')) return '富邦'; return '-';}
   function templateFor(symbols){
     if(symbols.some(s=>['NVDA','TSM','AVGO','SMH','AMD','MRVL','ARM','MU'].includes(s))) return 'B_TACTICAL_AGGRESSIVE';
     if(symbols.some(s=>['COIN','SOFI','ALAB','CRDO','PLTR'].includes(s))) return 'D_SPECULATIVE';
@@ -51,7 +51,7 @@
 
   function css(){return `<style id="${PATCH_ID}-css">
 #marketWorkspaceContent .v69{display:grid!important;gap:14px!important;width:100%!important;max-width:100%!important}#marketWorkspaceContent .v69 *{box-sizing:border-box!important}
-#marketWorkspaceContent .v69-banner{border:1px solid #bfdbfe!important;background:#eff6ff!important;border-radius:16px!important;padding:14px!important;line-height:1.65!important;font-size:14px!important}#marketWorkspaceContent .v69-banner b{font-size:15px!important}.v69-mark{display:inline-block;margin-left:8px;border-radius:999px;background:#dcfce7;color:#166534;border:1px solid #86efac;padding:3px 8px;font-size:12px;font-weight:950}
+#marketWorkspaceContent .v69-banner{border:1px solid #bfdbfe!important;background:#eff6ff!important;border-radius:16px!important;padding:14px!important;line-height:1.65!important;font-size:14px!important}#marketWorkspaceContent .v69-banner b{font-size:15px!important}.v69-mark{display:inline-block;margin-left:8px;border-radius:999px;background:#dcfce7;color:#166534;border:1px solid #86efac;padding:3px 8px;font-size:12px;font-weight:950}.v69-window{display:inline-block;margin-left:6px;border-radius:999px;background:#fef3c7;color:#92400e;border:1px solid #fbbf24;padding:3px 8px;font-size:12px;font-weight:950}
 #marketWorkspaceContent .v69-stage{border:1px solid #cbd5e1!important;border-radius:20px!important;background:linear-gradient(135deg,#fff,#f8fafc)!important;padding:14px!important;display:grid!important;gap:12px!important}#marketWorkspaceContent .v69-stage-title{font-size:18px!important;font-weight:950!important}.v69-stage-sub{font-size:12px!important;color:#64748b!important;margin-top:3px!important}
 #marketWorkspaceContent .v69-slot{border:1px solid #e5e7eb!important;border-radius:18px!important;padding:14px!important;background:#fff!important;box-shadow:0 2px 8px rgba(15,23,42,.04)!important;overflow:hidden!important}#marketWorkspaceContent .v69-slot-head{display:flex!important;justify-content:space-between!important;gap:12px!important;align-items:flex-start!important;margin-bottom:10px!important}#marketWorkspaceContent .v69-slot-title{font-size:16px!important;font-weight:950!important;line-height:1.35!important}#marketWorkspaceContent .v69-slot-sub{font-size:13px!important;color:#64748b!important;margin-top:4px!important;line-height:1.45!important}#marketWorkspaceContent .v69-slot-status{font-weight:950!important;color:#0f766e!important;background:#ecfdf5!important;border:1px solid #bbf7d0!important;border-radius:999px!important;padding:6px 10px!important;white-space:nowrap!important;font-size:12px!important}
 #marketWorkspaceContent .v69-diag{display:flex!important;gap:6px!important;flex-wrap:wrap!important;margin:8px 0 10px!important}#marketWorkspaceContent .v69-diag span{display:inline-block!important;border-radius:999px!important;background:#f8fafc!important;color:#334155!important;border:1px solid #e2e8f0!important;padding:4px 8px!important;font-size:11px!important;font-weight:900!important}
@@ -94,9 +94,11 @@
     const grade=String(c.action||'Watch').toLowerCase(); const amount=n(step.amount_wan,3); const kiText=Number.isFinite(Number(c.ki_pct))?fmt(c.ki_pct,1):'NA'; const strikeText=Number.isFinite(Number(c.strike_pct))?fmt(c.strike_pct,1):'NA'; const finalRef=Number.isFinite(Number(c.final_fair_ref))?`${fmt(c.final_fair_ref,2)}%`:'-';
     return `<div class="v69-card v69-grade-${grade}" data-v69-step="${step.step}" data-v69-candidate="${c.product_id}"><div class="v69-card-top"><label class="v69-card-title"><input type="checkbox" class="v69-check" data-v69-step="${step.step}" data-v69-candidate="${c.product_id}"> ${c.action}｜${c.product_id}</label><div class="v69-amt"><span>建議</span><input class="v69-amt-input" data-v69-step="${step.step}" data-v69-candidate="${c.product_id}" type="number" min="0" step="1" value="${amount}"><span>萬</span></div></div><div class="v69-source">${c.source}｜${c.generated_at||'-'}｜上手 ${c.upstream_bank||'-'}｜Score ${fmt(c.candidate_score,2)}</div><div class="v69-chips">${(c.symbols||[]).slice(0,6).map(s=>`<span class="v69-chip">${s}</span>`).join('')}</div><div class="v69-terms"><b>${fmt(c.coupon_pct,2)}%</b>｜${fmt(c.tenor_month,0)}M｜${c.barrier_type||'NA'} ${c.memory_type||''}<br>Strike/KI ${strikeText}/${kiText}</div><div class="v69-fair"><b>Market ${fmt(c.coupon_pct,2)}%</b>｜M8 Fair ${fmt(c.m8_fair_rate,2)}%<br>Gap ${pct(c.fair_gap)}｜Final Ref ${finalRef}</div><div class="v69-chips"><span class="v69-chip ${c.action==='Update'?'blue':'warn'}">${c.action}</span><span class="v69-chip">${c.template_group}</span><span class="v69-chip">${c.risk_bucket}</span><span class="v69-chip">${c.tenor_bucket}</span></div><div class="v69-why">配對 ${fmt(c.planner_need_match,1)}/10｜Risk ${fmt(c.risk_fit_score,1)}/10｜Bank ${fmt(bankScore(c),1)}/10</div></div>`;
   }
+  function getWindowMode(){return localStorage.getItem('m2_market_history_window_days_v079')||'2';}
   function renderWorkspace(pack){
     const totalSteps=pack.stages.reduce((s,g)=>s+g.steps.length,0);
-    return `${css()}<div class="v69" data-v69="1"><div class="v69-banner"><b>D. FCN遴選系統｜v69h Handoff Step Driven</b><span class="v69-mark">3 stages × ${totalSteps} steps</span><br>第 3 區 D 輸出 handoff steps；第 4 區 D 依 <b>Stage → Step → Bank Source</b> 展開小卡。永豐只抓 sinopac；富邦只抓 fubon。</div>${pack.stages.map(stage=>`<section class="v69-stage"><div><div class="v69-stage-title">${stage.title}</div><div class="v69-stage-sub">${stage.steps.length} steps｜按補單順序展開</div></div>${stage.steps.map(group=>{const st=group.step;return `<section class="v69-slot"><div class="v69-slot-head"><div><div class="v69-slot-title">Step ${st.step}｜${st.strategy}｜${st.bank}｜需求 ${wan(st.amount_wan)}</div><div class="v69-slot-sub">source=${st.source}｜stage=${st.stage}｜rank=${st.rank_rule||'market coupon - m8 fair'}</div></div><div class="v69-slot-status" id="v69-status-${st.step}">未勾選</div></div>${diagnosticsHtml(group.diagnostics)}<div class="v69-cards">${group.candidates.map(c=>candidateCard(st,c)).join('')||'<div class="v69-empty">目前沒有符合此 step/source 的 market_fcn_history 候選。</div>'}</div></section>`;}).join('')}</section>`).join('')}<div id="v69Blueprint"></div><details><summary>分析過程｜v69h Step Candidate Diagnostics</summary><div class="muted" style="line-height:1.7;margin-top:8px">已讀 handoff steps ${totalSteps}；market rows ${pack.rows.length}。每個 Step 硬套 source：永豐/sinopac、富邦/fubon。</div></details></div>`;
+    const mode=getWindowMode();
+    return `${css()}<div class="v69" data-v69="1"><div class="v69-banner"><b>D. FCN遴選系統｜v69i Handoff Step Driven</b><span class="v69-mark">3 stages × ${totalSteps} steps</span><span class="v69-window">History ${mode==='all'?'ALL':mode+'日'}</span><br>第 3 區 D 輸出 handoff steps；第 4 區 D 依 <b>Stage → Step → Bank Source</b> 展開小卡。永豐只抓 sinopac；富邦只抓 fubon。候選資料會跟 History Data Window 即時連動。</div>${pack.stages.map(stage=>`<section class="v69-stage"><div><div class="v69-stage-title">${stage.title}</div><div class="v69-stage-sub">${stage.steps.length} steps｜按補單順序展開</div></div>${stage.steps.map(group=>{const st=group.step;return `<section class="v69-slot"><div class="v69-slot-head"><div><div class="v69-slot-title">Step ${st.step}｜${st.strategy}｜${st.bank}｜需求 ${wan(st.amount_wan)}</div><div class="v69-slot-sub">source=${st.source}｜stage=${st.stage}｜rank=${st.rank_rule||'market coupon - m8 fair'}</div></div><div class="v69-slot-status" id="v69-status-${st.step}">未勾選</div></div>${diagnosticsHtml(group.diagnostics)}<div class="v69-cards">${group.candidates.map(c=>candidateCard(st,c)).join('')||'<div class="v69-empty">目前沒有符合此 step/source 的 market_fcn_history 候選。</div>'}</div></section>`;}).join('')}</section>`).join('')}<div id="v69Blueprint"></div><details><summary>分析過程｜v69i Step Candidate Diagnostics</summary><div class="muted" style="line-height:1.7;margin-top:8px">已讀 handoff steps ${totalSteps}；History ${mode==='all'?'ALL':mode+'日'} market rows ${pack.rows.length}。每個 Step 硬套 source：永豐/sinopac、富邦/fubon。</div></details></div>`;
   }
 
   function bindEvents(box,pack){
@@ -105,7 +107,7 @@
       const selected=[]; box.querySelectorAll('.v69-check:checked').forEach(ch=>{const key=`${ch.dataset.v69Step}::${ch.dataset.v69Candidate}`; const item=flat[key]; const amt=n(box.querySelector(`.v69-amt-input[data-v69-step="${ch.dataset.v69Step}"][data-v69-candidate="${ch.dataset.v69Candidate}"]`)?.value,0); if(item) selected.push({...item,amount_wan:amt});});
       const total=selected.reduce((s,x)=>s+x.amount_wan,0); const byBank=b=>selected.filter(x=>x.step.bank===b).reduce((s,x)=>s+x.amount_wan,0); const byStage={}; pack.stages.forEach(stage=>byStage[stage.title]=selected.filter(x=>x.step.stage===stage.title).reduce((s,x)=>s+x.amount_wan,0));
       const rows=selected.map(x=>`<div class="v69-bp-row"><b>Step ${x.step.step}｜${x.step.bank}｜${x.step.strategy}｜${x.candidate.product_id}</b>｜${(x.candidate.symbols||[]).join('/')}｜${wan(x.amount_wan)}<br><span class="muted">Market ${fmt(x.candidate.coupon_pct,2)}%｜M8 Fair ${fmt(x.candidate.m8_fair_rate,2)}%｜Gap ${pct(x.candidate.fair_gap)}｜${x.candidate.template_group}｜${x.candidate.risk_bucket}</span></div>`).join('')||'<div class="v69-bp-row muted">尚未勾選 FCN，今日投資藍圖暫為待分配。</div>';
-      const bp=box.querySelector('#v69Blueprint'); if(bp) bp.innerHTML=`<div class="v69-blueprint"><h3>OUTPUT｜今日投資藍圖｜V69h</h3><div class="decision-note"><b>一句話：</b>${selected.length?'今日可依 12-step handoff 補市場單；每一步只看指定銀行 source。':'尚未勾選候選，先保留現金等待更合適市場單。'}</div><div class="v69-bp-grid"><div class="v69-bp-card"><label>總投入</label><b>${wan(total)}</b></div><div class="v69-bp-card"><label>永豐</label><b>${wan(byBank('永豐'))}</b></div><div class="v69-bp-card"><label>富邦</label><b>${wan(byBank('富邦'))}</b></div><div class="v69-bp-card"><label>階段</label><b>${Object.entries(byStage).map(([k,v])=>`${k.replace('｜',' ')} ${wan(v)}`).join(' / ')}</b></div></div><div class="v69-bp-list">${rows}</div></div>`;
+      const bp=box.querySelector('#v69Blueprint'); if(bp) bp.innerHTML=`<div class="v69-blueprint"><h3>OUTPUT｜今日投資藍圖｜V69i</h3><div class="decision-note"><b>一句話：</b>${selected.length?'今日可依 12-step handoff 補市場單；每一步只看指定銀行 source。':'尚未勾選候選，先保留現金等待更合適市場單。'}</div><div class="v69-bp-grid"><div class="v69-bp-card"><label>總投入</label><b>${wan(total)}</b></div><div class="v69-bp-card"><label>永豐</label><b>${wan(byBank('永豐'))}</b></div><div class="v69-bp-card"><label>富邦</label><b>${wan(byBank('富邦'))}</b></div><div class="v69-bp-card"><label>階段</label><b>${Object.entries(byStage).map(([k,v])=>`${k.replace('｜',' ')} ${wan(v)}`).join(' / ')}</b></div></div><div class="v69-bp-list">${rows}</div></div>`;
       box.querySelectorAll('.v69-card').forEach(card=>{const checked=box.querySelector(`.v69-check[data-v69-step="${card.dataset.v69Step}"][data-v69-candidate="${card.dataset.v69Candidate}"]`)?.checked; card.classList.toggle('selected',!!checked);});
       pack.stages.forEach(stage=>stage.steps.forEach(g=>{const used=selected.filter(x=>x.step.step===g.step.step).reduce((s,x)=>s+x.amount_wan,0); const el=box.querySelector(`#v69-status-${g.step.step}`); if(el) el.textContent=used>0?`已選 ${wan(used)}｜剩餘 ${wan(Math.max(0,g.step.amount_wan-used))}`:'未勾選';}));
     };
@@ -115,9 +117,20 @@
   async function renderV69Selector(force=false){
     const box=document.getElementById('marketWorkspaceContent'); if(!box) return;
     const text=box.textContent||''; const shouldPatch=force||text.includes('FCN遴選系統')||box.querySelector('.dsel')||box.dataset.v69Target==='1'; if(!shouldPatch) return; if(box.dataset.v69Patched==='1'&&!force) return;
-    box.dataset.v69Patched='1'; box.dataset.v69Target='1'; box.innerHTML='<div class="muted">V69h：載入 handoff steps × market_fcn_history 候選...</div>';
-    try{const rows=await loadMarketRows(); const pack=buildPack(rows); if(!pack) throw new Error('No window.__M2_TO_MARKET_FCN_HANDOFF__ steps. 請先開第 3 區 Maturity Cashflow 產生 handoff。'); box.innerHTML=renderWorkspace(pack); bindEvents(box,pack);}catch(err){console.error(err); box.innerHTML=`<div class="decision-note bad"><b>V69h 載入失敗</b><br>${err.message}</div>`; box.dataset.v69Patched='0';}
+    box.dataset.v69Patched='1'; box.dataset.v69Target='1'; box.innerHTML='<div class="muted">V69i：載入 handoff steps × History Window 候選...</div>';
+    try{const rows=await loadMarketRows(force); const pack=buildPack(rows); if(!pack) throw new Error('No window.__M2_TO_MARKET_FCN_HANDOFF__ steps. 請先開第 3 區 Maturity Cashflow 產生 handoff。'); box.innerHTML=renderWorkspace(pack); bindEvents(box,pack);}catch(err){console.error(err); box.innerHTML=`<div class="decision-note bad"><b>V69i 載入失敗</b><br>${err.message}</div>`; box.dataset.v69Patched='0';}
   }
-  function install(){document.addEventListener('click',ev=>{const btn=ev.target.closest('[data-market-tab]'); if(!btn) return; if(btn.dataset.marketTab==='selector'){setTimeout(()=>renderV69Selector(true),180);setTimeout(()=>renderV69Selector(true),650);}}); const obs=new MutationObserver(()=>renderV69Selector(false)); obs.observe(document.body,{childList:true,subtree:true}); setInterval(()=>renderV69Selector(false),1200); renderV69Selector(false);}
+  function rerenderFromWindowChange(){
+    resetMarketRowsCache();
+    const box=document.getElementById('marketWorkspaceContent');
+    if(box){box.dataset.v69Patched='0';box.dataset.v69Target='1';}
+    setTimeout(()=>renderV69Selector(true),80);
+  }
+  function install(){
+    document.addEventListener('click',ev=>{const btn=ev.target.closest('[data-market-tab]'); if(!btn) return; if(btn.dataset.marketTab==='selector'){setTimeout(()=>renderV69Selector(true),180);setTimeout(()=>renderV69Selector(true),650);}});
+    window.addEventListener('m2:market-history-window-change',rerenderFromWindowChange);
+    window.M2V69SelectorRuntime={rerender:rerenderFromWindowChange,clearCache:resetMarketRowsCache};
+    const obs=new MutationObserver(()=>renderV69Selector(false)); obs.observe(document.body,{childList:true,subtree:true}); setInterval(()=>renderV69Selector(false),1200); renderV69Selector(false);
+  }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',install); else install();
 })();
