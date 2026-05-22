@@ -1804,5 +1804,260 @@
     "category_sub": "RERATING_TURNAROUND_GROWTH",
     "Anchor": 18,
     "volatility": "MID"
+  },
+  {
+    "symbol": "CRDO",
+    "category": "speculative",
+    "sector": "AI_SEMI",
+    "style": [
+      "high_beta",
+      "ai_connectivity"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "ASIC_CUSTOM_SILICON",
+    "Anchor": 28,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "ALAB",
+    "category": "speculative",
+    "sector": "AI_SEMI",
+    "style": [
+      "high_beta",
+      "ai_connectivity",
+      "pcie_cxl"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "ASIC_CUSTOM_SILICON",
+    "Anchor": 28,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "SNPS",
+    "category": "core",
+    "sector": "AI_SEMI",
+    "style": [
+      "eda",
+      "ai_design",
+      "high_margin"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "ENTERPRISE_SOFTWARE_SAAS",
+    "Anchor": 22,
+    "volatility": "MID"
+  },
+  {
+    "symbol": "ANET",
+    "category": "core",
+    "sector": "AI_INFRA",
+    "style": [
+      "datacenter_networking",
+      "ai_infra",
+      "quality"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "ASIC_CUSTOM_SILICON",
+    "Anchor": 28,
+    "volatility": "MID"
+  },
+  {
+    "symbol": "GLW",
+    "category": "growth",
+    "sector": "AI_INFRA",
+    "style": [
+      "optical_fiber",
+      "ai_infra",
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
+    "Anchor": 18,
+    "volatility": "MID"
+  },
+  {
+    "symbol": "COHR",
+    "category": "growth",
+    "sector": "AI_INFRA",
+    "style": [
+      "optical_components",
+      "ai_infra",
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "RERATING_TURNAROUND_GROWTH",
+    "Anchor": 18,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "LITE",
+    "category": "speculative",
+    "sector": "AI_INFRA",
+    "style": [
+      "optical_components",
+      "high_beta",
+      "turnaround"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "RERATING_TURNAROUND_GROWTH",
+    "Anchor": 18,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "CIEN",
+    "category": "growth",
+    "sector": "AI_INFRA",
+    "style": [
+      "optical_networking",
+      "ai_infra",
+      "cyclical"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
+    "Anchor": 18,
+    "volatility": "MID"
+  },
+  {
+    "symbol": "VRT",
+    "category": "core",
+    "sector": "AI_INFRA",
+    "style": [
+      "power_cooling",
+      "ai_infra",
+      "high_growth"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
+    "Anchor": 18,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "PWR",
+    "category": "growth",
+    "sector": "AI_POWER",
+    "style": [
+      "grid_engineering",
+      "power",
+      "ai_infra"
+    ],
+    "type": "STOCK",
+    "category_main": "GROWTH",
+    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
+    "Anchor": 18,
+    "volatility": "MID"
+  },
+  {
+    "symbol": "BE",
+    "category": "speculative",
+    "sector": "AI_POWER",
+    "style": [
+      "fuel_cell_power",
+      "high_beta",
+      "ai_power"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "UTILITY_LOWVOL_DEFENSIVE",
+    "Anchor": 16,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "APLD",
+    "category": "speculative",
+    "sector": "AI_HOSTING",
+    "style": [
+      "gpu_hosting",
+      "high_beta",
+      "ai_datacenter"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "SPEC_THEMATIC_ETF",
+    "Anchor": 26,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "IREN",
+    "category": "speculative",
+    "sector": "AI_HOSTING",
+    "style": [
+      "btc_miner_to_ai_hosting",
+      "high_beta",
+      "ai_datacenter"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "CRYPTO_MINERS",
+    "Anchor": 20,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "CORZ",
+    "category": "speculative",
+    "sector": "AI_HOSTING",
+    "style": [
+      "btc_miner_to_ai_hosting",
+      "high_beta",
+      "ai_datacenter"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "CRYPTO_MINERS",
+    "Anchor": 20,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "CLSK",
+    "category": "speculative",
+    "sector": "AI_HOSTING",
+    "style": [
+      "btc_miner_to_ai_hosting",
+      "high_beta",
+      "ai_datacenter"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "CRYPTO_MINERS",
+    "Anchor": 20,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "BTDR",
+    "category": "speculative",
+    "sector": "AI_HOSTING",
+    "style": [
+      "btc_miner_to_ai_hosting",
+      "high_beta",
+      "ai_datacenter"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "CRYPTO_MINERS",
+    "Anchor": 20,
+    "volatility": "HIGH"
+  },
+  {
+    "symbol": "HIVE",
+    "category": "speculative",
+    "sector": "AI_HOSTING",
+    "style": [
+      "btc_miner_to_ai_hosting",
+      "high_beta",
+      "ai_datacenter"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "CRYPTO_MINERS",
+    "Anchor": 20,
+    "volatility": "HIGH"
   }
 ]
+
