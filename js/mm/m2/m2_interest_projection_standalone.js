@@ -12,6 +12,7 @@
   let selectedTemplate='all';
   let projectionRows=[];
   const cfg={firstOffset:41,interval:31,cashBuffer:3,months:12};
+  const ui={bank:'',single:'',custom:''};
 
   function first(...vals){return vals.find(v=>v!==undefined&&v!==null&&String(v)!=='')}
   function addDays(date,days){const d=new Date(date);d.setDate(d.getDate()+days);return d}
@@ -35,26 +36,53 @@
     }
   }
 
+  function syncUiFromDom(){
+    const bankEl=document.getElementById('ipBank');
+    const singleEl=document.getElementById('ipSingle');
+    const customEl=document.getElementById('ipCustom');
+    const monthsEl=document.getElementById('ipMonths');
+    const firstEl=document.getElementById('ipFirst');
+    const intervalEl=document.getElementById('ipInterval');
+    const bufferEl=document.getElementById('ipBuffer');
+    if(bankEl) ui.bank=bankEl.value||'';
+    if(singleEl) ui.single=singleEl.value||'';
+    if(customEl) ui.custom=customEl.value||'';
+    if(monthsEl) cfg.months=n(monthsEl.value,12);
+    if(firstEl) cfg.firstOffset=n(firstEl.value,41);
+    if(intervalEl) cfg.interval=n(intervalEl.value,31);
+    if(bufferEl) cfg.cashBuffer=n(bufferEl.value,3);
+  }
+
+  function setTemplate(next){
+    syncUiFromDom();
+    selectedTemplate=next;
+    if(next==='all'){
+      ui.bank='';
+      ui.single='';
+      ui.custom='';
+    }
+    if(next==='bank' && !ui.bank) ui.bank='富邦';
+    render();
+  }
+
   function templateRows(){
-    const bank=document.getElementById('ipBank')?.value||'';
-    const single=(document.getElementById('ipSingle')?.value||'').trim().toUpperCase();
-    const custom=(document.getElementById('ipCustom')?.value||'').trim().toUpperCase();
     let rows=poolRows.filter(activePosition);
 
-    if(selectedTemplate==='bank'&&bank){
-      rows=rows.filter(f=>String(f.tw_bank||f.bank||'').includes(bank));
+    if(selectedTemplate==='bank'&&ui.bank){
+      rows=rows.filter(f=>String(f.tw_bank||f.bank||'').includes(ui.bank));
     }
 
     if(selectedTemplate==='rayray'){
       rows=rows.filter(f=>String(f.fcn_id||'').includes('睿睿'));
     }
 
-    if(selectedTemplate==='single'&&single){
+    if(selectedTemplate==='single'&&ui.single){
+      const single=String(ui.single||'').trim().toUpperCase();
       rows=rows.filter(f=>String(f.fcn_id||'').toUpperCase().includes(single));
     }
 
-    if(selectedTemplate==='custom'&&custom){
-      const ids=custom.split(/[\n, ]+/).map(x=>x.trim()).filter(Boolean);
+    if(selectedTemplate==='custom'&&ui.custom){
+      const ids=String(ui.custom||'').toUpperCase().split(/[\n, ]+/).map(x=>x.trim()).filter(Boolean);
       rows=rows.filter(f=>ids.some(id=>String(f.fcn_id||'').toUpperCase().includes(id)));
     }
 
@@ -62,11 +90,6 @@
   }
 
   function buildProjection(){
-    cfg.firstOffset=n(document.getElementById('ipFirst')?.value,41);
-    cfg.interval=n(document.getElementById('ipInterval')?.value,31);
-    cfg.cashBuffer=n(document.getElementById('ipBuffer')?.value,3);
-    cfg.months=n(document.getElementById('ipMonths')?.value,12);
-
     const start=new Date();
     const end=new Date();
     end.setMonth(end.getMonth()+cfg.months);
@@ -149,8 +172,11 @@
 
   function render(){
     buildProjection();
+    const bankDisabled=selectedTemplate!=='bank'?'disabled':'';
+    const singleDisabled=selectedTemplate!=='single'?'disabled':'';
+    const customDisabled=selectedTemplate!=='custom'?'disabled':'';
 
-    app.innerHTML=`<div class="ip-wrap"><aside class="ip-card"><div class="ip-title">7A. 快速模板</div><div class="ip-sub">按一下即可重算未來每月入帳利息。</div><div class="ip-btns">${btn('all','ALL 全部 FCN')}${btn('bank','By Bank 銀行別')}${btn('rayray','睿睿專區')}${btn('single','Single FCN')}${btn('custom','Custom 自訂')}</div><div class="ip-note">日期規則：第一次理論配息 = entry + 41 days；預估入帳 = 配息 + 3 days；之後每 31 days 一次。</div><div class="decision-note"><b>獨立頁模式：</b>本頁不接入 m2_mm_engine.js，因此第七區不會再影響 MM/M2 主頁穩定。</div></aside><main class="ip-card"><div class="ip-title">7B. FCN 利息推估</div><div class="ip-tools"><label>Bank <select id="ipBank"><option value="">全部</option><option>富邦</option><option>永豐</option></select></label><label>Single <input id="ipSingle" placeholder="FCN849N"></label><label>Months <input id="ipMonths" type="number" value="${cfg.months}"></label><label>First +days <input id="ipFirst" type="number" value="${cfg.firstOffset}"></label><label>Interval <input id="ipInterval" type="number" value="${cfg.interval}"></label><label>Cash buffer <input id="ipBuffer" type="number" value="${cfg.cashBuffer}"></label></div><textarea id="ipCustom" rows="2" style="width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:8px" placeholder="Custom FCN IDs，用逗號或換行：FCN849N 睿睿, FCN981N 睿睿"></textarea><div class="ip-tools"><button id="ipRun">重新計算</button><button class="light" id="ipCopyJson">複製 JSON</button><button class="light" id="ipCopyCsv">複製 CSV</button></div><div id="ipResult">${renderKpis()}${renderTables()}<h3>7E. JSON Preview</h3><pre class="ip-json">${esc(JSON.stringify({template:selectedTemplate,config:cfg,rows:projectionRows},null,2))}</pre></div></main></div>`;
+    app.innerHTML=`<div class="ip-wrap"><aside class="ip-card"><div class="ip-title">7A. 快速模板</div><div class="ip-sub">按一下即可重算未來每月入帳利息。</div><div class="ip-btns">${btn('all','ALL 全部 FCN')}${btn('bank','By Bank 銀行別')}${btn('rayray','睿睿專區')}${btn('single','Single FCN')}${btn('custom','Custom 自訂')}</div><div class="ip-note">日期規則：第一次理論配息 = entry + 41 days；預估入帳 = 配息 + 3 days；之後每 31 days 一次。</div><div class="decision-note"><b>獨立頁模式：</b>本頁不接入 m2_mm_engine.js，因此第七區不會再影響 MM/M2 主頁穩定。</div></aside><main class="ip-card"><div class="ip-title">7B. FCN 利息推估</div><div class="ip-tools"><label>Bank <select id="ipBank" ${bankDisabled}><option value="">全部</option><option ${ui.bank==='富邦'?'selected':''}>富邦</option><option ${ui.bank==='永豐'?'selected':''}>永豐</option></select></label><label>Single <input id="ipSingle" ${singleDisabled} value="${esc(ui.single)}" placeholder="FCN849N"></label><label>Months <input id="ipMonths" type="number" value="${cfg.months}"></label><label>First +days <input id="ipFirst" type="number" value="${cfg.firstOffset}"></label><label>Interval <input id="ipInterval" type="number" value="${cfg.interval}"></label><label>Cash buffer <input id="ipBuffer" type="number" value="${cfg.cashBuffer}"></label></div><textarea id="ipCustom" ${customDisabled} rows="2" style="width:100%;border:1px solid #cbd5e1;border-radius:10px;padding:8px" placeholder="Custom FCN IDs，用逗號或換行：FCN849N 睿睿, FCN981N 睿睿">${esc(ui.custom)}</textarea><div class="ip-tools"><button id="ipRun">重新計算</button><button class="light" id="ipCopyJson">複製 JSON</button><button class="light" id="ipCopyCsv">複製 CSV</button></div><div id="ipResult">${renderKpis()}${renderTables()}<h3>7E. JSON Preview</h3><pre class="ip-json">${esc(JSON.stringify({template:selectedTemplate,filters:ui,config:cfg,rows:projectionRows},null,2))}</pre></div></main></div>`;
 
     bind();
   }
@@ -161,19 +187,19 @@
   }
 
   function bind(){
-    document.querySelectorAll('[data-ip-template]').forEach(b=>b.addEventListener('click',()=>{
-      selectedTemplate=b.dataset.ipTemplate;
-      render();
-    }));
+    document.querySelectorAll('[data-ip-template]').forEach(b=>b.addEventListener('click',()=>setTemplate(b.dataset.ipTemplate)));
 
     ['ipBank','ipSingle','ipCustom','ipMonths','ipFirst','ipInterval','ipBuffer'].forEach(id=>{
-      document.getElementById(id)?.addEventListener('input',()=>setTimeout(render,0));
+      const el=document.getElementById(id);
+      if(!el) return;
+      el.addEventListener('input',()=>{syncUiFromDom();setTimeout(render,0)});
+      el.addEventListener('change',()=>{syncUiFromDom();setTimeout(render,0)});
     });
 
-    document.getElementById('ipRun')?.addEventListener('click',render);
+    document.getElementById('ipRun')?.addEventListener('click',()=>{syncUiFromDom();render()});
 
     document.getElementById('ipCopyJson')?.addEventListener('click',()=>{
-      navigator.clipboard?.writeText(JSON.stringify({template:selectedTemplate,config:cfg,rows:projectionRows},null,2));
+      navigator.clipboard?.writeText(JSON.stringify({template:selectedTemplate,filters:ui,config:cfg,rows:projectionRows},null,2));
     });
 
     document.getElementById('ipCopyCsv')?.addEventListener('click',()=>{
