@@ -9,6 +9,17 @@
   { "symbol": "CRDO", "name": "Credo", "sector": "AI_SEMI", "subsector": "CONNECTIVITY", "category": "speculative" },
   { "symbol": "ALAB", "name": "Astera Labs", "sector": "AI_SEMI", "subsector": "CONNECTIVITY", "category": "speculative" },
   { "symbol": "SNPS", "name": "Synopsys", "sector": "AI_SEMI", "subsector": "EDA_SOFTWARE", "category": "core" },
+  { "symbol": "ASML", "name": "ASML", "sector": "AI_SEMI", "subsector": "EQUIPMENT_LITHOGRAPHY", "category": "core" },
+  { "symbol": "ANET", "name": "Arista Networks", "sector": "AI_INFRA", "subsector": "DATACENTER_NETWORKING", "category": "core" },
+  { "symbol": "GLW", "name": "Corning", "sector": "AI_INFRA", "subsector": "OPTICAL_FIBER", "category": "growth" },
+  { "symbol": "COHR", "name": "Coherent", "sector": "AI_INFRA", "subsector": "OPTICAL_COMPONENTS", "category": "growth" },
+  { "symbol": "LITE", "name": "Lumentum", "sector": "AI_INFRA", "subsector": "OPTICAL_COMPONENTS", "category": "speculative" },
+  { "symbol": "CIEN", "name": "Ciena", "sector": "AI_INFRA", "subsector": "OPTICAL_NETWORKING", "category": "growth" },
+  { "symbol": "VRT", "name": "Vertiv", "sector": "AI_INFRA", "subsector": "POWER_COOLING", "category": "core" },
+  { "symbol": "ETN", "name": "Eaton", "sector": "AI_POWER", "subsector": "ELECTRIFICATION", "category": "core" },
+  { "symbol": "PWR", "name": "Quanta Services", "sector": "AI_POWER", "subsector": "GRID_ENGINEERING", "category": "growth" },
+  { "symbol": "CEG", "name": "Constellation Energy", "sector": "AI_POWER", "subsector": "NUCLEAR_POWER", "category": "defensive" },
+  { "symbol": "BE", "name": "Bloom Energy", "sector": "AI_POWER", "subsector": "FUEL_CELL_POWER", "category": "speculative" },
 
   { "symbol": "MSFT", "name": "Microsoft", "sector": "AI_APPLICATION", "subsector": "CLOUD_PLATFORM", "category": "core" },
   { "symbol": "GOOG", "name": "Google", "sector": "AI_APPLICATION", "subsector": "AI_CLOUD", "category": "growth" },
@@ -21,14 +32,24 @@
   { "symbol": "META", "name": "Meta", "sector": "PLATFORM", "subsector": "SOCIAL_AD", "category": "growth" },
   { "symbol": "AAPL", "name": "Apple", "sector": "PLATFORM", "subsector": "ECOSYSTEM", "category": "core" },
 
-  { "symbol": "COST", "name": "Costco", "sector": "CONSUMER", "subsector": "RETAIL", "category": "defensive" },
-  { "symbol": "TGT", "name": "Target", "sector": "CONSUMER", "subsector": "RETAIL", "category": "defensive" },
-  { "symbol": "EL", "name": "Estee Lauder", "sector": "CONSUMER", "subsector": "BEAUTY", "category": "income" },
+  { "symbol": "APLD", "name": "Applied Digital", "sector": "AI_HOSTING", "subsector": "GPU_HOSTING", "category": "speculative" },
+  { "symbol": "IREN", "name": "IREN", "sector": "AI_HOSTING", "subsector": "BTC_MINER_TO_AI_HOSTING", "category": "speculative" },
+  { "symbol": "CORZ", "name": "Core Scientific", "sector": "AI_HOSTING", "subsector": "BTC_MINER_TO_AI_HOSTING", "category": "speculative" },
+  { "symbol": "CLSK", "name": "CleanSpark", "sector": "AI_HOSTING", "subsector": "BTC_MINER_TO_AI_HOSTING", "category": "speculative" },
+  { "symbol": "RIOT", "name": "Riot Platforms", "sector": "AI_HOSTING", "subsector": "BTC_MINER_TO_AI_HOSTING", "category": "speculative" },
+  { "symbol": "BTDR", "name": "Bitdeer", "sector": "AI_HOSTING", "subsector": "BTC_MINER_TO_AI_HOSTING", "category": "speculative" },
+  { "symbol": "HIVE", "name": "HIVE Digital", "sector": "AI_HOSTING", "subsector": "BTC_MINER_TO_AI_HOSTING", "category": "speculative" },
 
   { "symbol": "COIN", "name": "Coinbase", "sector": "FINANCIAL", "subsector": "CRYPTO_FINANCE", "category": "speculative" },
   { "symbol": "SOFI", "name": "SoFi", "sector": "FINANCIAL", "subsector": "FINTECH", "category": "speculative" },
 
+  { "symbol": "COST", "name": "Costco", "sector": "CONSUMER", "subsector": "RETAIL", "category": "defensive" },
+  { "symbol": "TGT", "name": "Target", "sector": "CONSUMER", "subsector": "RETAIL", "category": "defensive" },
+  { "symbol": "EL", "name": "Estee Lauder", "sector": "CONSUMER", "subsector": "BEAUTY", "category": "income" },
+  { "symbol": "NKE", "name": "Nike", "sector": "CONSUMER", "subsector": "APPAREL", "category": "speculative" },
+
   { "symbol": "UNH", "name": "UnitedHealth", "sector": "HEALTHCARE", "subsector": "INSURANCE", "category": "defensive" },
+  { "symbol": "REGN", "name": "Regeneron", "sector": "HEALTHCARE", "subsector": "BIOTECH", "category": "income" },
 
   { "symbol": "CCL", "name": "Carnival", "sector": "TRAVEL", "subsector": "CRUISE", "category": "income" },
   { "symbol": "AAL", "name": "American Airlines", "sector": "TRAVEL", "subsector": "AIRLINE", "category": "income" },
@@ -38,6 +59,5 @@
   { "symbol": "QQQ", "name": "Invesco QQQ", "sector": "ETF", "subsector": "TECH_ETF", "category": "defensive" },
   { "symbol": "LQD", "name": "iShares iBoxx Investment Grade Corporate Bond ETF", "sector": "ETF", "subsector": "BOND_ETF", "category": "income" },
   { "symbol": "INTC", "name": "Intel", "sector": "AI_SEMI", "subsector": "CPU_FOUNDRY", "category": "defensive" },
-  { "symbol": "NKE", "name": "Nike", "sector": "CONSUMER", "subsector": "APPAREL", "category": "speculative" },
-  { "symbol": "REGN", "name": "Regeneron", "sector": "HEALTHCARE", "subsector": "BIOTECH", "category": "income" }
+  { "symbol": "ON", "name": "ON Semiconductor", "sector": "AUTO_POWER_SEMI", "subsector": "EV_INDUSTRIAL_POWER", "category": "watch" }
 ]
