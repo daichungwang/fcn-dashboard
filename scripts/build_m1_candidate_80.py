@@ -2,16 +2,17 @@
 # build_m1_candidate_80.py
 # 功能：
 # 1. 讀取 universe_150.json
-# 2. 讀取 m1_market_runtime.json
-# 3. 用 M7-lite 邏輯計算 market score
-# 4. 輸出 top 80 到 data/m1/m1_candidate_80.json
+# 2. 讀取主 runtime：data/market_runtime.json
+# 3. 支援 runtime 兩種格式：{ rows: {SYMBOL: ...} } 或 {SYMBOL: ...}
+# 4. 用 M7-lite 邏輯計算 market score
+# 5. 輸出 top 80 到 data/m1/m1_candidate_80.json
 # ==========================================
 
 import json
 from pathlib import Path
 
 UNIVERSE_PATH = "data/m1/universe_150.json"
-RUNTIME_PATH = "data/m1/m1_market_runtime.json"
+RUNTIME_PATH = "data/market_runtime.json"
 OUTPUT_PATH = "data/m1/m1_candidate_80.json"
 
 
@@ -26,6 +27,19 @@ def to_num(v, d=0):
 
 def clamp(x, lo=0, hi=10):
     return max(lo, min(hi, x))
+
+
+def load_runtime(path):
+    with open(path, "r", encoding="utf-8") as f:
+        payload = json.load(f)
+
+    runtime = payload.get("rows", payload)
+
+    if not isinstance(runtime, dict):
+        raise ValueError(f"Runtime format error: {path}")
+
+    print(f"Loaded runtime from {path}, symbols={len(runtime)}")
+    return runtime
 
 
 # ---------- M7-lite scoring ----------
@@ -137,10 +151,10 @@ def main():
     with open(UNIVERSE_PATH, "r", encoding="utf-8") as f:
         universe = json.load(f)
 
-    with open(RUNTIME_PATH, "r", encoding="utf-8") as f:
-        runtime = json.load(f)
+    runtime = load_runtime(RUNTIME_PATH)
 
     scored = []
+    missing_runtime = []
 
     for stock in universe:
         sym = stock.get("symbol")
@@ -149,6 +163,7 @@ def main():
 
         rt = runtime.get(sym)
         if not rt:
+            missing_runtime.append(sym)
             continue
 
         s = m7_lite_score(stock, rt)
@@ -179,7 +194,11 @@ def main():
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(top80, f, indent=2, ensure_ascii=False)
 
+    print(f"Universe total: {len(universe)}")
     print(f"Total scored: {len(scored)}")
+    print(f"Missing runtime: {len(missing_runtime)}")
+    if missing_runtime:
+        print("Missing runtime symbols:", ", ".join(missing_runtime[:80]))
     print(f"Saved top 80 to {OUTPUT_PATH}")
     print("Top 10:")
     for row in top80[:10]:
