@@ -29,7 +29,7 @@
       <button class="menu-btn active" data-module="summary"><div class="menu-title">1. Summary Dashboard</div><div class="menu-sub">資金水位 / 配置 / 健康 / 預計出場</div></button><button class="menu-btn" data-module="zones"><div class="menu-title">2. Holding Zones</div><div class="menu-sub">到期專區 / 預計提前到期 / Danger / Watch</div></button><div id="m2HoldingZonesSubnav" class="m2-hz-subnav"><div class="m2-hz-subnav-title">Holding Zones 快速導航</div><button class="m2-hz-subnav-btn" data-hz-nav="exit" type="button">📌 到期專區</button><button class="m2-hz-subnav-btn" data-hz-nav="danger" type="button">🚨 Danger</button><button class="m2-hz-subnav-btn" data-hz-nav="watch" type="button">⚠️ Watch</button><button class="m2-hz-subnav-btn" data-hz-nav="healthy" type="button">✅ Healthy</button><button class="m2-hz-subnav-btn action" data-hz-action="expand-all" type="button">全部展開</button><button class="m2-hz-subnav-btn action" data-hz-action="collapse-all" type="button">全部收合</button><button class="m2-hz-subnav-btn action" data-hz-action="risk-only" type="button">只展開風險</button></div>
       <button class="menu-btn" data-module="planning"><div class="menu-title">3. Maturity Cashflow</div><div class="menu-sub">Planner A/B/C/D/E0</div></button><div id="m2MaturityCashflowSubnav" class="m2-hz-subnav"><div class="m2-hz-subnav-title">Maturity Cashflow 快速導航</div><button class="m2-hz-subnav-btn action" data-planner-action="toggle-dashboard" type="button">Dashboard 展開 / 收合</button><button class="m2-hz-subnav-btn" data-planner-nav="decision" type="button">Planner Decision</button><button class="m2-hz-subnav-btn" data-planner-nav="cash" type="button">A. 本月可用資金</button><button class="m2-hz-subnav-btn" data-planner-nav="bank" type="button">B. 銀行資金水位</button><button class="m2-hz-subnav-btn" data-planner-nav="alloc" type="button">配置重建</button><button class="m2-hz-subnav-btn" data-planner-nav="detail" type="button">FCN 明細</button><button class="m2-hz-subnav-btn" data-planner-nav="hard" type="button">Hard Release</button><button class="m2-hz-subnav-btn" data-planner-nav="soft" type="button">Soft Candidate</button><button class="m2-hz-subnav-btn" data-planner-nav="base" type="button">Planning Base</button></div>
       <button class="menu-btn" data-module="market"><div class="menu-title">4. Market FCN Analysis</div><div class="menu-sub">市場單分析與推薦</div></button><div id="m2MarketFcnSubnav" class="m2-hz-subnav"><div class="m2-hz-subnav-title">Market FCN Analysis 快速導航</div><button class="m2-hz-subnav-btn action" data-market-tab="single" type="button">A. Single FCN Check</button><button class="m2-hz-subnav-btn" data-market-tab="b1" type="button">B1. Template List</button><button class="m2-hz-subnav-btn" data-market-tab="b2" type="button">B2. Template Update Radar</button><button class="m2-hz-subnav-btn" data-market-tab="recommendation" type="button">C. Recommendation Planner</button></div>
-      <button class="menu-btn" data-module="management"><div class="menu-title">5. FCN / Stock Management</div><div class="menu-sub">FCN 查詢 + 股票風險</div></button><button class="menu-btn" data-module="pool"><div class="menu-title">6. Pool Manual Ops</div><div class="menu-sub">手動建新單 / 編輯 / 匯出</div></button>
+      <button class="menu-btn" data-module="management"><div class="menu-title">5. FCN / Stock Management</div><div class="menu-sub">FCN 查詢 + 股票風險</div></button><button class="menu-btn" data-module="pool"><div class="menu-title">6. Pool Manual Ops</div><div class="menu-sub">手動建新單 / 編輯 / 匯出</div></button><button class="menu-btn" data-module="interest"><div class="menu-title">7. FCN 利息推估</div><div class="menu-sub">ALL / Bank / 睿睿 / 自訂模板</div></button>
     </div></aside><main class="main"><div class="detail-grid"><section class="card detail-panel"><div class="panel-title"><div><div id="activeTitle" class="module-title">1. Summary Dashboard</div><div id="activeSub" class="module-sub">資金水位 / 配置 / 健康 / 預計出場</div></div></div><div id="rightDetail"></div></section><section class="card detail-panel"><div class="panel-title"><div><div class="module-title">模組重點判讀</div><div class="module-sub">把結果說成人話，避免只看表格。</div></div></div><div id="rightInsight"></div></section></div><section class="card query-panel"><div class="panel-title"><div><div id="bottomTitle" class="module-title">大型資訊查詢區</div><div id="bottomSub" class="module-sub">依左側主選單切換卡片、明細與表格。</div></div></div><div id="bottomQuery"></div></section></main></div>
   </div>
   <script>
@@ -46,6 +46,25 @@
   <script src="../../js/mm/m2/m2_bank_runtime_patch_v072.js?v=20260521_v072"></script>
   <script src="../../js/mm/m2/m2_v075_stage_aware_bank_strategy_patch.js?v=20260521_v075"></script>
   <script src="../../js/mm/m2/m2_pool_manual_ops.js?v=20260522_v78"></script>
+  <script src="../../js/mm/m2/m2_interest_projection.js?v=20260522_v1"></script>
   <script type="module" src="../../js/mm/m2/m2_mm_engine.js?v=20260518_v067b_v068"></script>
+  <script>
+    (function(){
+      document.addEventListener('click',function(ev){
+        var btn=ev.target.closest('[data-module="interest"]');
+        if(!btn)return;
+        setTimeout(function(){
+          document.querySelectorAll('.menu-btn').forEach(function(b){b.classList.toggle('active',b.dataset.module==='interest')});
+          document.getElementById('activeTitle').textContent='7. FCN 利息推估';
+          document.getElementById('activeSub').textContent='ALL / Bank / 睿睿 / Single / Custom 模板月配息推估';
+          document.getElementById('bottomTitle').textContent='7. FCN 利息推估｜大型資訊查詢區';
+          document.getElementById('bottomSub').textContent='entry + 41 天首次配息，配息 +3 天入帳，之後每 31 天。';
+          document.getElementById('rightDetail').innerHTML='<div class="flow-panel"><div class="flow-card" style="--accent:#2563eb"><div class="flow-label">Templates</div><div class="flow-value">5</div><div class="flow-sub">ALL / Bank / 睿睿 / Single / Custom</div></div><div class="flow-card" style="--accent:#0f766e"><div class="flow-label">First Coupon</div><div class="flow-value">+41d</div><div class="flow-sub">entry_time 起算</div></div><div class="flow-card" style="--accent:#f97316"><div class="flow-label">Cash In</div><div class="flow-value">+3d</div><div class="flow-sub">配息後 3 天入帳</div></div><div class="flow-card" style="--accent:#7c3aed"><div class="flow-label">Next</div><div class="flow-value">31d</div><div class="flow-sub">後續每 31 天</div></div></div>';
+          document.getElementById('rightInsight').innerHTML='<div class="decision-note"><b>第七區用途：</b>用 fcn_pool.json 直接推估未來每月 FCN 利息入帳。月別歸屬以 cash_in_date 為準，不以 coupon_date 為準。</div>';
+          var bq=document.getElementById('bottomQuery'); if(bq)bq.dataset.ipMounted='0';
+        },80);
+      },true);
+    })();
+  </script>
 </body>
 </html>
