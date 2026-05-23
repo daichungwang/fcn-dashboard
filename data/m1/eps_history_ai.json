@@ -1,1 +1,5 @@
-$(cat /mnt/data/eps_history_ai_snps_added.json)
+$(python - <<'PY'
+from pathlib import Path
+print(Path('/mnt/data/eps_history_ai_pool30_backfilled.json').read_text(encoding='utf-8'))
+PY
+)
