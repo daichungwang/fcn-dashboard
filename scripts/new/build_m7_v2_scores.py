@@ -640,6 +640,19 @@ def return_from_ref(price_now: Any, price_ref: Any) -> float | None:
     return p_now / p_ref - 1.0
 
 
+def first_valid(*values: Any) -> Any:
+    """Return the first numeric, finite, non-null value.
+
+    This is different from dict.get(a, b): when a key exists but its
+    value is null, we still continue to the next fallback.
+    """
+    for value in values:
+        num = safe_num(value, None)
+        if num is not None:
+            return num
+    return None
+
+
 def round2(v: float) -> float:
     return round(safe_num(v, 0.0), 2)
 
@@ -841,19 +854,24 @@ def build_feature_row(symbol: str, bundle: InputBundle) -> dict[str, Any]:
 
     price_now_rt = safe_num(m.get("price_now"), safe_num(b.get("股價"), None))
     returns_market = {
-        "1d": safe_num(m.get("ret_d1", m.get("ret_1d")), return_from_ref(price_now_rt, m.get("price_ref_d1"))),
-        "d2": safe_num(m.get("ret_d2"), return_from_ref(price_now_rt, m.get("price_ref_d2"))),
-        "d3": safe_num(m.get("ret_d3"), return_from_ref(price_now_rt, m.get("price_ref_d3"))),
-        "d4": safe_num(m.get("ret_d4"), return_from_ref(price_now_rt, m.get("price_ref_d4"))),
-        "d5": safe_num(m.get("ret_d5"), return_from_ref(price_now_rt, m.get("price_ref_d5"))),
-        "1w": safe_num(m.get("ret_1w"), return_from_ref(price_now_rt, m.get("price_ref_1w"))),
-        "1m": safe_num(m.get("ret_1m"), return_from_ref(price_now_rt, m.get("price_ref_1m"))),
-        "3m": safe_num(m.get("ret_3m"), return_from_ref(price_now_rt, m.get("price_ref_3m"))),
-        "6m": safe_num(m.get("ret_6m"), return_from_ref(price_now_rt, m.get("price_ref_6m"))),
-        "12m": safe_num(m.get("ret_12m"), return_from_ref(price_now_rt, m.get("price_ref_12m"))),
-        "3y": safe_num(m.get("ret_3y"), return_from_ref(price_now_rt, m.get("price_ref_3y"))),
-        "5y": safe_num(m.get("ret_5y"), return_from_ref(price_now_rt, m.get("price_ref_5y"))),
-        "10y": safe_num(m.get("ret_10y"), return_from_ref(price_now_rt, m.get("price_ref_10y"))),
+        "1d": first_valid(
+            m.get("ret_d1"),
+            m.get("ret_1d"),
+            return_from_ref(price_now_rt, m.get("price_ref_d1")),
+            return_from_ref(price_now_rt, m.get("price_ref_1d")),
+        ),
+        "d2": first_valid(m.get("ret_d2"), return_from_ref(price_now_rt, m.get("price_ref_d2"))),
+        "d3": first_valid(m.get("ret_d3"), return_from_ref(price_now_rt, m.get("price_ref_d3"))),
+        "d4": first_valid(m.get("ret_d4"), return_from_ref(price_now_rt, m.get("price_ref_d4"))),
+        "d5": first_valid(m.get("ret_d5"), return_from_ref(price_now_rt, m.get("price_ref_d5"))),
+        "1w": first_valid(m.get("ret_1w"), return_from_ref(price_now_rt, m.get("price_ref_1w"))),
+        "1m": first_valid(m.get("ret_1m"), return_from_ref(price_now_rt, m.get("price_ref_1m"))),
+        "3m": first_valid(m.get("ret_3m"), return_from_ref(price_now_rt, m.get("price_ref_3m"))),
+        "6m": first_valid(m.get("ret_6m"), return_from_ref(price_now_rt, m.get("price_ref_6m"))),
+        "12m": first_valid(m.get("ret_12m"), return_from_ref(price_now_rt, m.get("price_ref_12m"))),
+        "3y": first_valid(m.get("ret_3y"), return_from_ref(price_now_rt, m.get("price_ref_3y"))),
+        "5y": first_valid(m.get("ret_5y"), return_from_ref(price_now_rt, m.get("price_ref_5y"))),
+        "10y": first_valid(m.get("ret_10y"), return_from_ref(price_now_rt, m.get("price_ref_10y"))),
     }
 
     rets = {}
@@ -995,7 +1013,10 @@ def build_feature_row(symbol: str, bundle: InputBundle) -> dict[str, Any]:
             "size_proxy": size_proxy,
             "coverage_pct": safe_num(m.get("coverage_pct"), None),
             "data_warning": m.get("data_warning"),
-            "missing_price_refs": m.get("missing_price_refs") if isinstance(m.get("missing_price_refs"), list) else [],
+            "missing_price_refs": [
+                ref for ref in (m.get("missing_price_refs") if isinstance(m.get("missing_price_refs"), list) else [])
+                if not (ref == "price_ref_d1" and safe_num(m.get("price_ref_1d"), None) is not None)
+            ],
         },
         "runtime_fundamentals": {
             "trailing_eps": safe_num(m.get("trailing_eps"), None),
