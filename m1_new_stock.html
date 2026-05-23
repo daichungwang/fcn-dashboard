@@ -729,6 +729,58 @@ function getList(type){
       const x = Number(v);
       return Number.isFinite(x) ? x : null;
     }
+
+    function getRuntimePriceSnapshot(symbol, market={}, m7=null){
+      const priceNow =
+        toNum(market?.price_now) ??
+        toNum(market?.last_price) ??
+        toNum(market?.regularMarketPrice) ??
+        toNum(m7?.regression_actual_price_now) ??
+        null;
+
+      const ret1w = toNum(market?.ret_1w);
+      const ret1m = toNum(market?.ret_1m);
+      const ret3m = toNum(market?.ret_3m);
+      const ret12m = toNum(market?.ret_12m);
+      const volumeRatio = toNum(market?.volume_ratio);
+
+      const low52 =
+        toNum(market?.price_52w_low) ??
+        toNum(market?.fifty_two_week_low) ??
+        toNum(market?.low_52w) ??
+        null;
+
+      const high52 =
+        toNum(market?.price_52w_high) ??
+        toNum(market?.fifty_two_week_high) ??
+        toNum(market?.high_52w) ??
+        null;
+
+      let position52 = null;
+      if(priceNow != null && low52 != null && high52 != null && high52 > low52){
+        position52 = clamp((priceNow - low52) / (high52 - low52) * 100, 0, 100);
+      }
+
+      let priceSource = 'missing';
+      if(toNum(market?.price_now) != null) priceSource = 'market.price_now';
+      else if(toNum(market?.last_price) != null) priceSource = 'market.last_price';
+      else if(toNum(market?.regularMarketPrice) != null) priceSource = 'market.regularMarketPrice';
+      else if(toNum(m7?.regression_actual_price_now) != null) priceSource = 'm7.regression_actual_price_now';
+
+      return {
+        priceNow,
+        ret1w,
+        ret1m,
+        ret3m,
+        ret12m,
+        volumeRatio,
+        low52,
+        high52,
+        position52,
+        priceSource
+      };
+    }
+
     function r2Confidence(r2){
       const x = toNum(r2);
       if(x == null) return 'Low / warning';
@@ -1507,14 +1559,16 @@ function getList(type){
       const profile = normalizeLightProfile(rawProfile, symbol);
       const category = String(profile?.pool30_fit?.category || u?.category_main || '--').toUpperCase();
       const summaryText = profile.company_overview || '--';
-      const positionPct = inferPositionPct(profile, m);
-      const hiLo = inferHighLow(profile, m);
-      const priceNow = hiLo.cur ?? n(m?.price_now, null);
-      const returns1w = Number.isFinite(m?.ret_1w) ? pctDecimal(m.ret_1w) : '--';
-      const returns1m = Number.isFinite(m?.ret_1m) ? pctDecimal(m.ret_1m) : '--';
-      const returns3m = Number.isFinite(m?.ret_3m) ? pctDecimal(m.ret_3m) : '--';
-      const returns12m = Number.isFinite(m?.ret_12m) ? pctDecimal(m.ret_12m) : '--';
-      const volumeRatio = Number.isFinite(m?.volume_ratio) ? fmt(m.volume_ratio,2) : '--';
+      const m7 = getM7(symbol);
+      const px = getRuntimePriceSnapshot(symbol, m, m7);
+      const positionPct = px.position52;
+      const hiLo = { low: px.low52, high: px.high52, cur: px.priceNow };
+      const priceNow = px.priceNow;
+      const returns1w = px.ret1w != null ? pctDecimal(px.ret1w) : '--';
+      const returns1m = px.ret1m != null ? pctDecimal(px.ret1m) : '--';
+      const returns3m = px.ret3m != null ? pctDecimal(px.ret3m) : '--';
+      const returns12m = px.ret12m != null ? pctDecimal(px.ret12m) : '--';
+      const volumeRatio = px.volumeRatio != null ? fmt(px.volumeRatio,2) : '--';
       const oneLiners = [profile.one_line_1, profile.one_line_2, profile.one_line_3].filter(Boolean).map(x => `<div class="section-note" style="margin-top:6px">${esc(x)}</div>`).join('');
       const html = `
         <section class="panel header-panel">
@@ -1539,18 +1593,18 @@ function getList(type){
               </div>
 
               <div class="price-strip">
-                <div class="mini-kpi"><div class="k">Price Now</div><div class="v">${money(priceNow,2)}</div><div class="d">現價 / 觀察位階</div></div>
+                <div class="mini-kpi"><div class="k">Price Now</div><div class="v">${money(priceNow,2)}</div><div class="d">Source：${esc(px.priceSource)}</div></div>
                 <div class="mini-kpi"><div class="k">1W / 1M</div><div class="v">${esc(returns1w)} / ${esc(returns1m)}</div><div class="d">短期變化</div></div>
                 <div class="mini-kpi"><div class="k">3M / 12M</div><div class="v">${esc(returns3m)} / ${esc(returns12m)}</div><div class="d">中長期變化</div></div>
                 <div class="mini-kpi"><div class="k">Volume Ratio</div><div class="v">${esc(volumeRatio)}</div><div class="d">量能強弱</div></div>
-                <div class="mini-kpi"><div class="k">52W Position</div><div class="v">${fmt(positionPct,0)}%</div><div class="d">越高越接近高位</div></div>
+                <div class="mini-kpi"><div class="k">52W Position</div><div class="v">${px.position52 == null ? '--' : fmt(px.position52,0) + '%'}</div><div class="d">${px.low52 == null || px.high52 == null ? '52W資料不足' : '越高越接近高位'}</div></div>
               </div>
 
               <div class="range-wrap">
                 <div class="range-top"><span>價格位置</span><span>52W Low → Current → 52W High</span></div>
                 <div class="range-bar">
-                  <div class="range-fill" style="width:${fmt(positionPct,0)}%"></div>
-                  <div class="range-pin" style="left:${fmt(positionPct,0)}%"></div>
+                  <div class="range-fill" style="width:${px.position52 == null ? 0 : fmt(px.position52,0)}%"></div>
+                  <div class="range-pin" style="left:${px.position52 == null ? 0 : fmt(px.position52,0)}%"></div>
                 </div>
                 <div class="range-label"><span>Low ${money(hiLo.low,2)}</span><span>Current ${money(priceNow,2)}</span><span>High ${money(hiLo.high,2)}</span></div>
               </div>
@@ -1681,8 +1735,9 @@ function getList(type){
       const revMix = buildRevenueMix(profile);
       const cusMix = buildCustomerMix(profile);
       const contracts = inferContracts(profile);
-      const positionPct = inferPositionPct(profile, m);
-      const hiLo = inferHighLow(profile, m);
+      const px = getRuntimePriceSnapshot(symbol, m, m7);
+      const positionPct = px.position52;
+      const hiLo = { low: px.low52, high: px.high52, cur: px.priceNow };
       const q = inferQualityScores(profile);
       const val = inferValuationPin(profile);
       const heat = inferHeat(profile);
@@ -1731,12 +1786,12 @@ function getList(type){
       const kpiNetMargin = parsePercent(profile?.financial_summary?.net_margin);
       const kpiFcfMargin = parsePercent(profile?.financial_summary?.fcf_margin);
 
-      const priceNow = hiLo.cur ?? n(m?.price_now, null);
-      const returns1w = Number.isFinite(m?.ret_1w) ? pctDecimal(m.ret_1w) : '--';
-      const returns1m = Number.isFinite(m?.ret_1m) ? pctDecimal(m.ret_1m) : '--';
-      const returns3m = Number.isFinite(m?.ret_3m) ? pctDecimal(m.ret_3m) : '--';
-      const returns12m = Number.isFinite(m?.ret_12m) ? pctDecimal(m.ret_12m) : '--';
-      const volumeRatio = Number.isFinite(m?.volume_ratio) ? fmt(m.volume_ratio,2) : '--';
+      const priceNow = px.priceNow;
+      const returns1w = px.ret1w != null ? pctDecimal(px.ret1w) : '--';
+      const returns1m = px.ret1m != null ? pctDecimal(px.ret1m) : '--';
+      const returns3m = px.ret3m != null ? pctDecimal(px.ret3m) : '--';
+      const returns12m = px.ret12m != null ? pctDecimal(px.ret12m) : '--';
+      const volumeRatio = px.volumeRatio != null ? fmt(px.volumeRatio,2) : '--';
 
       const riskHtml = (profile?.risk_opportunity?.risk || []).map(x => `
         <div class="bullet-item"><div class="t">Risk</div><div class="m">${esc(x)}</div></div>
@@ -1808,18 +1863,18 @@ function getList(type){
               </div>
 
               <div class="price-strip">
-                <div class="mini-kpi"><div class="k">Price Now</div><div class="v">${money(priceNow,2)}</div><div class="d">現價 / 觀察位階</div></div>
+                <div class="mini-kpi"><div class="k">Price Now</div><div class="v">${money(priceNow,2)}</div><div class="d">Source：${esc(px.priceSource)}</div></div>
                 <div class="mini-kpi"><div class="k">1W / 1M</div><div class="v">${esc(returns1w)} / ${esc(returns1m)}</div><div class="d">短期變化</div></div>
                 <div class="mini-kpi"><div class="k">3M / 12M</div><div class="v">${esc(returns3m)} / ${esc(returns12m)}</div><div class="d">中長期變化</div></div>
                 <div class="mini-kpi"><div class="k">Volume Ratio</div><div class="v">${esc(volumeRatio)}</div><div class="d">量能強弱</div></div>
-                <div class="mini-kpi"><div class="k">52W Position</div><div class="v">${fmt(positionPct,0)}%</div><div class="d">越高越接近高位</div></div>
+                <div class="mini-kpi"><div class="k">52W Position</div><div class="v">${px.position52 == null ? '--' : fmt(px.position52,0) + '%'}</div><div class="d">${px.low52 == null || px.high52 == null ? '52W資料不足' : '越高越接近高位'}</div></div>
               </div>
 
               <div class="range-wrap">
                 <div class="range-top"><span>價格位置</span><span>52W Low → Current → 52W High</span></div>
                 <div class="range-bar">
-                  <div class="range-fill" style="width:${fmt(positionPct,0)}%"></div>
-                  <div class="range-pin" style="left:${fmt(positionPct,0)}%"></div>
+                  <div class="range-fill" style="width:${px.position52 == null ? 0 : fmt(px.position52,0)}%"></div>
+                  <div class="range-pin" style="left:${px.position52 == null ? 0 : fmt(px.position52,0)}%"></div>
                 </div>
                 <div class="range-label"><span>Low ${money(hiLo.low,2)}</span><span>Current ${money(priceNow,2)}</span><span>High ${money(hiLo.high,2)}</span></div>
               </div>
@@ -2093,3 +2148,4 @@ function getList(type){
   </script>
 </body>
 </html>
+
