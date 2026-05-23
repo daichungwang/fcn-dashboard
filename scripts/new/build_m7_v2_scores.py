@@ -418,6 +418,58 @@ UNIVERSE_BY_SYMBOL = {
     if isinstance(row, dict)
 }
 
+
+# -------------------------
+# M1 score input adapter
+# -------------------------
+M1_SCORES_DATA = load_optional_json(Path("data/m1/m1_scores.json"), {})
+
+
+def _iter_m1_score_rows(payload: Any) -> list[dict[str, Any]]:
+    if isinstance(payload, list):
+        return [x for x in payload if isinstance(x, dict)]
+    if isinstance(payload, dict):
+        for key in ["rows", "data", "stocks", "items", "scores"]:
+            part = payload.get(key)
+            if isinstance(part, list):
+                return [x for x in part if isinstance(x, dict)]
+            if isinstance(part, dict):
+                out = []
+                for sym, row in part.items():
+                    if isinstance(row, dict):
+                        r = dict(row)
+                        r.setdefault("symbol", sym)
+                        out.append(r)
+                return out
+        out = []
+        for sym, row in payload.items():
+            if isinstance(row, dict):
+                r = dict(row)
+                r.setdefault("symbol", sym)
+                out.append(r)
+        return out
+    return []
+
+
+def get_m1_score_from_source(symbol: str, fallback: Any = None) -> float:
+    sym = normalize_symbol(symbol)
+    for row in _iter_m1_score_rows(M1_SCORES_DATA):
+        if normalize_symbol(row.get("symbol") or row.get("ticker") or row.get("Symbol")) != sym:
+            continue
+        for key in [
+            "m1_score",
+            "m1_final_score",
+            "m1_raw_score",
+            "final_score",
+            "score",
+            "today_score",
+        ]:
+            val = row.get(key)
+            if safe_num(val, None) is not None:
+                return normalize_m1_score_to_10(val)
+    return normalize_m1_score_to_10(fallback)
+
+
 MONEY_LIQUIDITY_BENCHMARK: dict[str, float] = {
     "mean": 0.0,
     "p25": 0.0,
@@ -3051,6 +3103,19 @@ def compute_historical_score(feature: dict[str, Any]) -> float:
     return total / weights_sum
 
 
+
+def strip_heavy_m7_fields(row: dict[str, Any]) -> dict[str, Any]:
+    out = dict(row)
+    out.pop("weekly_prices", None)
+    out.pop("weekly_returns", None)
+    fs = out.get("feature_snapshot")
+    if isinstance(fs, dict):
+        fs = dict(fs)
+        fs.pop("weekly_prices", None)
+        fs.pop("weekly_returns", None)
+        out["feature_snapshot"] = fs
+    return out
+
 # -------------------------
 # Main
 # -------------------------
@@ -3138,7 +3203,7 @@ def main() -> int:
                 + RAW_WEIGHTS["money"] * money["score_10"]
             )
             historical_score = compute_historical_score(feature)
-            m1_score = normalize_m1_score_to_10(feature.get("baseline", {}).get("today_score"))
+            m1_score = get_m1_score_from_source(norm_sym, feature.get("baseline", {}).get("today_score"))
             m7_v2_weights = M7_PARAM_CONFIG.get("m7_v2_weights", {}) if isinstance(M7_PARAM_CONFIG, dict) else {}
             w_val = safe_num(m7_v2_weights.get("valuation"), 0.45)
             w_trend = safe_num(m7_v2_weights.get("trend"), 0.25)
@@ -3350,6 +3415,7 @@ def main() -> int:
 
         rows_out.sort(key=lambda r: r["m7_final_score"], reverse=True)
         ab_rows.sort(key=lambda r: r["m7_final_score"], reverse=True)
+        rows_out = [strip_heavy_m7_fields(row) for row in rows_out]
 
         scores_payload = {
             "generated_at": now_iso(),
@@ -3426,4 +3492,6 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
 
