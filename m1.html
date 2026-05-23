@@ -1055,10 +1055,57 @@
       };
     }
 
+    function getComponentScores(row) {
+      const fallback = 5.999;
+
+      const c2pRaw =
+        row.capex_score ??
+        row.breakdown?.capex_score ??
+        row.breakdown?.c2p_score ??
+        row.c2p_score ??
+        null;
+
+      const ccRaw =
+        row.competitive_score ??
+        row.breakdown?.competitive_score ??
+        row.eps_engine?.cc_score ??
+        null;
+
+      const m7Raw =
+        row.m7_v2_score ??
+        row.breakdown?.m7_v2_score ??
+        row.breakdown?.m7_score ??
+        null;
+
+      return {
+        c2p: n(c2pRaw, fallback),
+        cc: n(ccRaw, fallback),
+        m7n: n(m7Raw, fallback),
+        fallback_used: {
+          capex_score: c2pRaw === null || c2pRaw === undefined,
+          competitive_score: ccRaw === null || ccRaw === undefined,
+          m7_v2_score: m7Raw === null || m7Raw === undefined
+        },
+        fallback_default: fallback
+      };
+    }
+
+    function fallbackChip(isFallback) {
+      return isFallback
+        ? '<span class="chip orange">default</span>'
+        : '<span class="chip green">data</span>';
+    }
+
+    function metricWithFallback(label, value, isFallback, starOnly = false) {
+      const suffix = isFallback ? (starOnly ? '*' : ' default') : '';
+      return `${label} ${fmt(value)}${suffix}`;
+    }
+
     function computeNewM1(row) {
-      const c2p = n(row.capex_score ?? row.breakdown?.capex_score, 5.999);
-      const cc = n(row.competitive_score, 5.999);
-      const m7n = n(row.m7_v2_score, n(row.breakdown?.m7_score, 5.999));
+      const comp = getComponentScores(row);
+      const c2p = comp.c2p;
+      const cc = comp.cc;
+      const m7n = comp.m7n;
       const raw = 0.45 * c2p + 0.30 * cc + 0.25 * m7n;
       return {
         raw_m1_score: +raw.toFixed(2),
@@ -1068,7 +1115,9 @@
           competitive_score: cc,
           m7_v2_score: m7n,
           m3_score: null,
-          m7_score: m7n
+          m7_score: m7n,
+          fallback_used: comp.fallback_used,
+          fallback_default: comp.fallback_default
         }
       };
     }
@@ -1209,6 +1258,11 @@
           competitive_score: n(eps.cc_score, null),
           competitive_raw_score: n(eps.cc_raw_score ?? eps.cc_score, null),
           m7_v2_score: n(m7row?.m7_v2_score, null),
+          component_fallback_hint: {
+            capex_score: capexScore === null,
+            competitive_score: !Number.isFinite(Number(eps.cc_score)),
+            m7_v2_score: !Number.isFinite(Number(m7row?.m7_v2_score))
+          },
           eps_coverage_grade: coverage.grade,
           eps_rank_label: coverage.label,
           eps_cc_source: coverage.source,
@@ -1374,11 +1428,12 @@
         ? ((row.M1_score / cfg.strong) - 1) * 100
         : null;
 
+      const fb = row.breakdown?.fallback_used || row.component_fallback_hint || {};
       return [
         `M1 ${fmt(row.M1_score)}`,
-        `C2P ${fmt(row.breakdown?.capex_score)}`,
-        `CC ${fmt(row.breakdown?.competitive_score)}`,
-        `M7n ${fmt(row.breakdown?.m7_v2_score)}`,
+        metricWithFallback("C2P", row.breakdown?.capex_score, fb.capex_score, true),
+        metricWithFallback("CC", row.breakdown?.competitive_score, fb.competitive_score, true),
+        metricWithFallback("M7n", row.breakdown?.m7_v2_score, fb.m7_v2_score, true),
         `vs p50 ${diffP50 !== null ? (diffP50 >= 0 ? "+" : "") + fmt(diffP50) : "-"}`,
         `p75 ${fmt(cfg?.strong)}`,
         `${ratioP75 !== null ? (ratioP75 >= 0 ? "+" : "") + fmt(ratioP75) + "%" : "-"}`
@@ -2153,6 +2208,7 @@ timing 判斷
       const cfg = state.filterConfig[row.category] || {};
       const reasons = Array.isArray(row.filter_reason) ? row.filter_reason : [];
       const shortReason = buildShortReason(row);
+      const fb = row.breakdown?.fallback_used || row.component_fallback_hint || {};
 
       $("detailBox").innerHTML = `
         <div class="detail-head">
@@ -2188,9 +2244,9 @@ timing 判斷
             <div class="detail-grid">
               <div class="detail-card"><div class="k">M1 Score</div><div class="v" style="${scoreColor(row.M1_score)}">${fmt(row.M1_score)}</div></div>
               <div class="detail-card"><div class="k">Raw M1</div><div class="v">${fmt(row.raw_m1_score)}</div></div>
-              <div class="detail-card"><div class="k">C2P｜Capex_to_Profit (45%)</div><div class="v" style="${scoreColor(row.breakdown?.capex_score)}">${fmt(row.breakdown?.capex_score)}</div></div>
-              <div class="detail-card"><div class="k">CC｜Competitive Score (30%)</div><div class="v" style="${scoreColor(row.breakdown?.competitive_score)}">${fmt(row.breakdown?.competitive_score)}</div></div>
-              <div class="detail-card"><div class="k">M7n｜M7_v2 Score (25%)</div><div class="v" style="${scoreColor(row.breakdown?.m7_v2_score)}">${fmt(row.breakdown?.m7_v2_score)}</div></div>
+              <div class="detail-card"><div class="k">C2P｜Capex_to_Profit (45%)</div><div class="v" style="${scoreColor(row.breakdown?.capex_score)}">${fmt(row.breakdown?.capex_score)} ${fallbackChip(fb.capex_score)}</div></div>
+              <div class="detail-card"><div class="k">CC｜Competitive Score (30%)</div><div class="v" style="${scoreColor(row.breakdown?.competitive_score)}">${fmt(row.breakdown?.competitive_score)} ${fallbackChip(fb.competitive_score)}</div></div>
+              <div class="detail-card"><div class="k">M7n｜M7_v2 Score (25%)</div><div class="v" style="${scoreColor(row.breakdown?.m7_v2_score)}">${fmt(row.breakdown?.m7_v2_score)} ${fallbackChip(fb.m7_v2_score)}</div></div>
               <div class="detail-card"><div class="k">CC Rank / EPS Coverage</div><div class="v">Rank ${escapeHtml(row.eps_coverage_grade || "D")} ｜ ${escapeHtml(row.eps_rank_label || "-")}<br>H${row.eps_history_count ?? 0} / F${row.eps_forward_count ?? 0}<br>${escapeHtml(row.eps_cc_source || "-")} / ${escapeHtml(row.eps_cc_confidence || "-")}</div></div>
               <div class="detail-card"><div class="k">Forward Growth / Profit</div><div class="v">${fmt(row.eps_future_growth_score)} / ${fmt(row.eps_future_profit_score)}</div></div>
               <div class="detail-card"><div class="k">EPS Consistency / Quality</div><div class="v">${fmt(row.eps_consistency_score)} / ${fmt(row.eps_quality_score)}</div></div>
@@ -2224,7 +2280,7 @@ timing 判斷
               <div class="detail-card"><div class="k">Snapshot</div><div class="v">${fmt(row.snapshot_score)}</div></div>
               <div class="detail-card"><div class="k">Style</div><div class="v">${escapeHtml((row.style || []).join(", ") || "-")}</div></div>
               <div class="detail-card"><div class="k">Sector / Subsector</div><div class="v">${escapeHtml(row.sector || "-")} ${row.subsector ? " / " + escapeHtml(row.subsector) : ""}</div></div>
-              <div class="detail-card"><div class="k">Capex Ratio Prev Y</div><div class="v">${fmt(row.capex_ratio_prev_y)}</div></div>
+              <div class="detail-card"><div class="k">Capex Ratio Prev Y</div><div class="v">${fmt(row.capex_ratio_prev_y)} ${fb.capex_score ? '<span class="chip orange">fundamental missing</span>' : ''}</div></div>
               <div class="detail-card"><div class="k">Revenue / OI Growth</div><div class="v">${fmt(row.revenue_growth_q)} / ${fmt(row.operating_income_growth_q)}</div></div>
             </div>
           </div>
@@ -2585,5 +2641,8 @@ function exportPool30() {
   </script>
 </body>
 </html>
+
+
+
 
 
