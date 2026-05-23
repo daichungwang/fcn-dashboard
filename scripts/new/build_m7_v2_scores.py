@@ -3279,8 +3279,6 @@ def main() -> int:
                 "feature_snapshot": {
                     "valuation": feature["valuation"],
                     "returns": feature["returns"],
-                    "weekly_prices": feature.get("weekly_prices", []),
-                    "weekly_returns": feature.get("weekly_returns", []),
                     "market_acceptance": feature.get("market_acceptance", {}),
                 },
             })
