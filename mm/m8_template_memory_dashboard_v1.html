@@ -4,286 +4,78 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <base href="../" />
-<title>M8 Template Memory Dashboard v1.2</title>
+<title>M8 Template Memory Dashboard v1.3</title>
 <style>
-:root{--bg:#f6f7f9;--panel:#fff;--ink:#111827;--muted:#64748b;--line:#dbe1ea;--blue:#2563eb;--green:#047857;--yellow:#b7791f;--red:#b91c1c;--teal:#0f766e;--soft-blue:#eff6ff;--soft-green:#ecfdf5;--soft-yellow:#fffbeb;--soft-red:#fef2f2}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Microsoft JhengHei","Noto Sans TC",sans-serif}
-.page{max-width:1580px;margin:0 auto;padding:22px 16px 48px}
-.topbar{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:16px}
-h1{margin:0;font-size:30px}.subtitle{margin-top:6px;color:var(--muted);font-size:14px;line-height:1.6}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap}
-button,a.btn{border:1px solid #cbd5e1;border-radius:10px;background:#111827;color:#fff;padding:9px 12px;font-weight:800;cursor:pointer;text-decoration:none}
-button.light,a.light{background:#fff;color:#111827}
-.grid{display:grid;gap:12px}.summary{grid-template-columns:repeat(5,minmax(140px,1fr))}
-.kpi,.card{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;box-shadow:0 4px 14px rgba(15,23,42,.04)}
-.kpi-label{font-size:12px;color:var(--muted);font-weight:900}.kpi-value{font-size:28px;font-weight:950;margin-top:5px}.kpi-note{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.45}
-.layout{display:grid;grid-template-columns:1.18fr .82fr;gap:14px;align-items:start}.section-title{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px}
-h2{font-size:19px;margin:0}.small{font-size:12px;color:var(--muted);line-height:1.55}.rule{background:#f8fbff;border:1px solid #dbeafe;border-radius:8px;padding:10px;margin-top:8px;color:#334155}
-.table-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}input,select{border:1px solid #cbd5e1;border-radius:10px;padding:8px 10px;background:#fff;min-width:170px}
-.table-wrap{overflow:auto;max-height:660px;border:1px solid var(--line);border-radius:8px}table{width:100%;border-collapse:collapse;min-width:1220px;background:#fff}
-th,td{border-bottom:1px solid #edf1f7;padding:8px;text-align:left;white-space:nowrap;font-size:13px}th{position:sticky;top:0;background:#f8fafc;color:#334155;z-index:1}
-tr.memory-row{cursor:pointer}tr.memory-row:hover{background:#f8fbff}tr.memory-row.active{background:#eff6ff}.detail-row td{background:#fbfdff;white-space:normal}
-.pill{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:900;border:1px solid #d8dee8;background:#f8fafc}
-.pill.good{color:var(--green);background:var(--soft-green);border-color:#b7ead3}.pill.warn{color:var(--yellow);background:var(--soft-yellow);border-color:#f1d99b}.pill.bad{color:var(--red);background:var(--soft-red);border-color:#fecaca}.pill.blue{color:var(--blue);background:var(--soft-blue);border-color:#bfdbfe}
-.panel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.mini-panel{border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff}.mini-panel h3{font-size:14px;margin:0 0 8px}
-.list{display:grid;gap:7px;max-height:250px;overflow:auto}.list-item{border:1px solid #edf1f7;border-radius:8px;padding:8px;background:#fbfdff;font-size:12px;line-height:1.45}
-.candidate-list{display:grid;gap:8px}.candidate{border:1px solid #f1d99b;border-left:5px solid #d97706;border-radius:8px;background:#fffbeb;padding:10px}
-.detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:10px 0}.metric{border:1px solid #edf1f7;border-radius:8px;background:#fbfdff;padding:10px}.metric-label{font-size:11px;color:var(--muted);font-weight:900}.metric-value{font-size:18px;font-weight:950;margin-top:4px}
-.chips{display:flex;gap:6px;flex-wrap:wrap}.bar{height:9px;background:#edf2f7;border-radius:999px;overflow:hidden;margin-top:6px}.bar span{display:block;height:100%;background:var(--teal);border-radius:999px}
-.explain{background:#f8fbff;border:1px solid #dbeafe;border-radius:8px;padding:12px;line-height:1.75;font-size:14px}.empty{color:var(--muted);font-size:13px;padding:10px;border:1px dashed #cbd5e1;border-radius:8px;background:#fff}.error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:8px;padding:12px;margin-bottom:12px}
-.mini-details{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}.mini-details summary{cursor:pointer;padding:10px 12px;font-weight:900;color:#0f172a}.mini-details-body{padding:10px;border-top:1px solid var(--line)}
-.included-table{min-width:1120px}.included-table th,.included-table td{font-size:11px;padding:6px}.included-table th{position:static}.trace-line{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #edf1f7;padding:6px 0;font-size:12px}.trace-line span:first-child{color:var(--muted)}
-@media(max-width:1100px){.summary,.layout,.panel-grid{grid-template-columns:1fr}.topbar{display:block}.toolbar{margin-top:10px}.detail-grid{grid-template-columns:1fr}}
+:root{--bg:#f6f7f9;--panel:#fff;--ink:#111827;--muted:#64748b;--line:#dbe1ea;--blue:#2563eb;--green:#047857;--yellow:#b7791f;--red:#b91c1c;--soft-blue:#eff6ff;--soft-green:#ecfdf5;--soft-yellow:#fffbeb;--soft-red:#fef2f2}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Microsoft JhengHei","Noto Sans TC",sans-serif}.page{max-width:1580px;margin:0 auto;padding:22px 16px 48px}.topbar{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:16px}h1{margin:0;font-size:30px}.subtitle{margin-top:6px;color:var(--muted);font-size:14px;line-height:1.6}.toolbar{display:flex;gap:8px;flex-wrap:wrap}button,a.btn{border:1px solid #cbd5e1;border-radius:10px;background:#111827;color:#fff;padding:9px 12px;font-weight:800;cursor:pointer;text-decoration:none}button.light,a.light{background:#fff;color:#111827}.card,.kpi{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px;box-shadow:0 4px 14px rgba(15,23,42,.04)}.grid{display:grid;gap:12px}.summary{grid-template-columns:repeat(5,minmax(140px,1fr))}.kpi-label{font-size:12px;color:var(--muted);font-weight:900}.kpi-value{font-size:28px;font-weight:950;margin-top:5px}.kpi-note{font-size:12px;color:var(--muted);margin-top:4px}.layout{display:grid;grid-template-columns:1.18fr .82fr;gap:14px;align-items:start}.section-title{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px}h2{font-size:19px;margin:0}.small{font-size:12px;color:var(--muted);line-height:1.55}.rule{background:#f8fbff;border:1px solid #dbeafe;border-radius:8px;padding:10px;margin-top:8px;color:#334155;line-height:1.6}.table-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}input,select{border:1px solid #cbd5e1;border-radius:10px;padding:8px 10px;background:#fff;min-width:170px}.table-wrap{overflow:auto;max-height:680px;border:1px solid var(--line);border-radius:8px}table{width:100%;border-collapse:collapse;min-width:1380px;background:#fff}th,td{border-bottom:1px solid #edf1f7;padding:8px;text-align:left;white-space:nowrap;font-size:13px}th{position:sticky;top:0;background:#f8fafc;color:#334155;z-index:1}tr.memory-row{cursor:pointer}tr.memory-row:hover{background:#f8fbff}tr.memory-row.active{background:#eff6ff}.detail-row td{background:#fbfdff;white-space:normal}.pill{display:inline-flex;align-items:center;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:900;border:1px solid #d8dee8;background:#f8fafc}.pill.good{color:var(--green);background:var(--soft-green);border-color:#b7ead3}.pill.warn{color:var(--yellow);background:var(--soft-yellow);border-color:#f1d99b}.pill.bad{color:var(--red);background:var(--soft-red);border-color:#fecaca}.pill.blue{color:var(--blue);background:var(--soft-blue);border-color:#bfdbfe}.detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:10px 0}.metric{border:1px solid #edf1f7;border-radius:8px;background:#fbfdff;padding:10px}.metric-label{font-size:11px;color:var(--muted);font-weight:900}.metric-value{font-size:18px;font-weight:950;margin-top:4px}.chips{display:flex;gap:6px;flex-wrap:wrap}.mini-details{margin-top:10px;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}.mini-details summary{cursor:pointer;padding:10px 12px;font-weight:900;color:#0f172a}.mini-details-body{padding:10px;border-top:1px solid var(--line)}.included-table{min-width:1280px}.included-table th,.included-table td{font-size:11px;padding:6px}.included-table th{position:static}.panel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.mini-panel{border:1px solid var(--line);border-radius:8px;padding:12px;background:#fff}.mini-panel h3{font-size:14px;margin:0 0 8px}.list{display:grid;gap:7px;max-height:250px;overflow:auto}.list-item{border:1px solid #edf1f7;border-radius:8px;padding:8px;background:#fbfdff;font-size:12px;line-height:1.45}.candidate-list{display:grid;gap:8px}.candidate{border:1px solid #f1d99b;border-left:5px solid #d97706;border-radius:8px;background:#fffbeb;padding:10px}.explain{background:#f8fbff;border:1px solid #dbeafe;border-radius:8px;padding:12px;line-height:1.75;font-size:14px}.empty{color:var(--muted);font-size:13px;padding:10px;border:1px dashed #cbd5e1;border-radius:8px;background:#fff}.error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;border-radius:8px;padding:12px;margin-bottom:12px}@media(max-width:1100px){.summary,.layout,.panel-grid{grid-template-columns:1fr}.topbar{display:block}.toolbar{margin-top:10px}.detail-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="page">
   <div class="topbar">
     <div>
-      <h1>M8 Template Memory Dashboard v1.2</h1>
-      <div class="subtitle">FCN -> 父階模板 -> 主題家族 -> 完全/模糊比對小模板 -> record -> rule。資料直接來自 market FCN history 與 M8 template surface。</div>
+      <h1>M8 Template Memory Dashboard v1.3</h1>
+      <div class="subtitle">FCN -> 父階模板 -> 主題家族 -> 小模板比對 -> record -> rule。此版把 FCN pool、市場單、old fair、new fair、final fair 一起帶入，目標是找出你的偏好。</div>
     </div>
     <div class="toolbar">
       <button id="reloadBtn" class="light" type="button">Reload</button>
+      <a class="btn light" href="data/fcn_pool.json" target="_blank">FCN Pool</a>
       <a class="btn light" href="data/mm/market_fcn_history.json" target="_blank">Market History</a>
       <a class="btn light" href="data/mm/m8_template_surface.json" target="_blank">Template Surface</a>
       <a class="btn light" href="mm/m8_calibration_dashboard_v1.html">M8 Calibration</a>
     </div>
   </div>
   <div id="errorBox"></div>
-
   <section class="card" style="margin-bottom:14px">
-    <div class="section-title">
-      <div>
-        <h2>A. Template Memory Summary</h2>
-        <div class="small" id="sourceNote">Loading source data...</div>
-        <div class="rule">Rule: 可歸類就不歸 Other。比對順序是完全命中 -> 4 檔模糊命中 -> 3 檔核心命中 -> 回到父階 record -> 判斷是否建立新小模板。</div>
-      </div>
-    </div>
+    <div class="section-title"><div><h2>A. Template Memory Summary</h2><div class="small" id="sourceNote">Loading source data...</div><div class="rule">為什麼要帶 old/new/final fair：市場 coupon 是外部報價，old fair 代表原本模型或偏好錨點，new fair 代表模板 surface，final fair 代表校準後結果。把這些放在同一列，才看得出你常接受哪種 basket、哪種 gap、哪種 bank/source。</div></div></div>
     <div class="grid summary" id="summary"></div>
   </section>
-
   <section class="layout">
     <div class="card">
-      <div class="section-title">
-        <div>
-          <h2>B. FCN Template Memory Table</h2>
-          <div class="small">點一列可以直接展開「計入 FCN 明細」，格式參考 M8 Calibration 頁。</div>
-        </div>
-      </div>
-      <div class="table-tools">
-        <input id="searchInput" placeholder="Search symbol / family / match" />
-        <select id="filterSelect">
-          <option value="all">All records</option>
-          <option value="exact">Exact only</option>
-          <option value="fuzzy">Fuzzy only</option>
-          <option value="parent_only">Parent-only only</option>
-          <option value="candidate">Candidate only</option>
-          <option value="breakthrough">Breakthrough watch</option>
-        </select>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>parent_template</th><th>theme_family</th><th>small_template_key</th><th>match_type</th><th>matched_child</th><th>sample_count</th><th>coupon</th><th>new_fair</th><th>final_fair</th><th>residual</th><th>FCN 明細</th><th>promote</th></tr></thead>
-          <tbody id="memoryRows"></tbody>
-        </table>
-      </div>
+      <div class="section-title"><div><h2>B. FCN Template Memory Table</h2><div class="small">點一列展開 Included FCN Rows；每筆 row 會顯示 source、fair source、market/old/new/final/gap。</div></div></div>
+      <div class="table-tools"><input id="searchInput" placeholder="Search symbol / source / family" /><select id="filterSelect"><option value="all">All records</option><option value="current_pool">current_pool</option><option value="market_history">market_history</option><option value="exact">Exact only</option><option value="fuzzy">Fuzzy only</option><option value="parent_only">Parent-only</option><option value="candidate">Candidate</option></select></div>
+      <div class="table-wrap"><table><thead><tr><th>parent_template</th><th>theme_family</th><th>small_template_key</th><th>match</th><th>matched_child</th><th>sample</th><th>source_mix</th><th>coupon</th><th>old</th><th>new</th><th>final</th><th>residual</th><th>FCN</th><th>promote</th></tr></thead><tbody id="memoryRows"></tbody></table></div>
     </div>
-    <div class="grid">
-      <div class="card"><div class="section-title"><h2>E. Match Trace Card</h2></div><div id="memoryCard" class="empty">Select a record from the table.</div></div>
-      <div class="card"><div class="section-title"><h2>F. Explainability</h2></div><div id="explainBox" class="explain">點選一筆模板後，這裡會說明為什麼它被歸到該父階與小模板。</div></div>
-    </div>
+    <div class="grid"><div class="card"><div class="section-title"><h2>E. Match Trace Card</h2></div><div id="memoryCard" class="empty">Select a record from the table.</div></div><div class="card"><div class="section-title"><h2>F. Explainability</h2></div><div id="explainBox" class="explain">點選一筆模板後，這裡會說明它如何被歸類，以及這些 FCN 對偏好學習的意義。</div></div></div>
   </section>
-
-  <section class="card" style="margin-top:14px">
-    <div class="section-title"><div><h2>C. Latest FCN Theme Discovery</h2><div class="small">用最新市場 FCN 反推規則，不只硬寫分類。</div></div></div>
-    <div class="panel-grid">
-      <div class="mini-panel"><h3>AI Core / Semi</h3><div id="aiList" class="list"></div></div>
-      <div class="mini-panel"><h3>Memory / MU</h3><div id="muList" class="list"></div></div>
-      <div class="mini-panel"><h3>Breakthrough Watch</h3><div id="breakList" class="list"></div></div>
-    </div>
-  </section>
-
-  <section class="card" style="margin-top:14px">
-    <div class="section-title"><div><h2>D. Candidate Template Zone</h2><div class="small">模糊比對失敗或只有父階可收納時，進入 record；樣本與方向足夠才升級成新小模板候選。</div></div></div>
-    <div id="candidateZone" class="candidate-list"></div>
-  </section>
+  <section class="card" style="margin-top:14px"><div class="section-title"><div><h2>C. Latest Theme Discovery</h2><div class="small">用你的 pool 與市場單一起看，避免只看市場或只看舊模板。</div></div></div><div class="panel-grid"><div class="mini-panel"><h3>AI Core / Semi</h3><div id="aiList" class="list"></div></div><div class="mini-panel"><h3>Memory / MU</h3><div id="muList" class="list"></div></div><div class="mini-panel"><h3>Candidate / Watch</h3><div id="breakList" class="list"></div></div></div></section>
+  <section class="card" style="margin-top:14px"><div class="section-title"><div><h2>D. Candidate Template Zone</h2><div class="small">模糊比對失敗或 parent-only 的 FCN 會先 record；樣本夠多且方向一致才升級。</div></div></div><div id="candidateZone" class="candidate-list"></div></section>
 </div>
-
 <script>
-const MARKET_PATH="data/mm/market_fcn_history.json";
-const SURFACE_PATH="data/mm/m8_template_surface.json";
-let payload=null, records=[], selectedKey=null;
-
+const POOL_PATH="data/fcn_pool.json",OLD_POOL_PATH="data/fcn_pool_old.json",MARKET_PATH="data/mm/market_fcn_history.json",SURFACE_PATH="data/mm/m8_template_surface.json";let payload=null,records=[],selectedKey=null;
 const fmt=(v,d=2)=>{if(v===null||v===undefined||v==="")return"N/A";const n=Number(v);return Number.isFinite(n)?n.toFixed(d):String(v)};
-const pct=v=>fmt(v);
 const num=v=>v===null||v===undefined||v===""?null:(Number.isFinite(Number(v))?Number(v):null);
-const avg=a=>{const xs=a.filter(x=>x!==null&&Number.isFinite(x));return xs.length?xs.reduce((s,x)=>s+x,0)/xs.length:null};
-const escapeHtml=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const pickNum=(...xs)=>{for(const x of xs){const n=num(x);if(n!==null)return n}return null};
+const avg=a=>{const xs=a.filter(x=>Number.isFinite(x));return xs.length?xs.reduce((s,x)=>s+x,0)/xs.length:null};
+const gap=(m,f)=>{m=num(m);f=num(f);return m===null||f===null||m===0?null:Number((((m-f)/m)*100).toFixed(2))};
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const norm=v=>{let raw=Array.isArray(v)?v:(typeof v==="string"?v.replace(/\uFF0C/g,",").replace(/[+/]/g,",").split(","):[]);return Array.from(new Set(raw.map(x=>String(x).trim().toUpperCase()).filter(Boolean))).sort()};
-const keyOf=s=>s.length?s.join("+"):"UNKNOWN";
-const pill=(t,type="")=>`<span class="pill ${type}">${escapeHtml(t)}</span>`;
-const residualValue=i=>i.residual_market_minus_final??i.residual_market_minus_new;
-
+const keyOf=s=>s.length?s.join("+"):"UNKNOWN", pill=(t,type="")=>`<span class="pill ${type}">${esc(t)}</span>`, rv=i=>i.residual_market_minus_final??i.residual_market_minus_new;
+const countBy=(xs,fn)=>xs.reduce((a,x)=>{const k=fn(x)||"unknown";a[k]=(a[k]||0)+1;return a},{});
 function has(s,x){return s.includes(x)}
-function classifyParent(s){
-  if(has(s,"MU"))return"B_MEMORY_SEMI_TACTICAL_MU_PARENT";
-  if(has(s,"TSLA"))return"D_SPECULATIVE_MOMENTUM_TSLA_PARENT";
-  const ai=["NVDA","TSM","AVGO","BAC","QQQ","SMH","SNPS","AAPL","MSFT","GOOG","GOOGL","ASML","AMD","ARM","MRVL","QCOM","META","AMZN"];
-  const hits=s.filter(x=>ai.includes(x)).length;
-  if((has(s,"TSM")&&has(s,"NVDA"))||(has(s,"TSM")&&(has(s,"AVGO")||has(s,"SNPS")||has(s,"SMH")))||(has(s,"NVDA")&&(has(s,"AVGO")||has(s,"SMH")||has(s,"BAC")))||hits>=3)return"A_AI_CORE_INSTITUTIONAL";
-  return"F_OTHERS_M7_BASKET_DRIVEN";
-}
-function themeFamilies(s){
-  const out=[];const count=xs=>xs.filter(x=>s.includes(x)).length;
-  if(count(["TSM","SMH","NVDA"])>=2)out.push("AI_CORE_TSM_SMH_NVDA");
-  if(count(["AVGO","MRVL","AMD","ARM"])>=2)out.push("SEMI_IP_AVGO_MRVL_AMD_ARM");
-  if(count(["AAPL","MSFT","GOOG","GOOGL"])>=2)out.push("MEGA_SOFTWARE_AAPL_MSFT_GOOG");
-  if(count(["MU","INTC","ARM"])>=2||s.includes("MU"))out.push("MEMORY_MU_INTC_ARM");
-  if(count(["TSLA","PLTR","META"])>=2||s.includes("TSLA"))out.push("TSLA_PLTR_MOMENTUM");
-  if(s.includes("SNPS"))out.push("SNPS_BREAKTHROUGH_WATCH");
-  return out.length?out:["UNCLASSIFIED_THEME"];
-}
-function dir(v){return v===null?"unknown":v>=1?"market_higher":v<=-1?"market_lower":"near_fair"}
-function directionLabel(d){if(d==="market_higher")return pill("market higher","bad");if(d==="market_lower")return pill("market lower","warn");if(d==="near_fair")return pill("near fair","good");return pill("observe","blue")}
+function classifyParent(s){if(has(s,"MU"))return"B_MEMORY_SEMI_TACTICAL_MU_PARENT";if(has(s,"TSLA"))return"D_SPECULATIVE_MOMENTUM_TSLA_PARENT";const ai=["NVDA","TSM","AVGO","BAC","QQQ","SMH","SNPS","AAPL","MSFT","GOOG","GOOGL","ASML","AMD","ARM","MRVL","QCOM","META","AMZN"];const hits=s.filter(x=>ai.includes(x)).length;if((has(s,"TSM")&&has(s,"NVDA"))||(has(s,"TSM")&&(has(s,"AVGO")||has(s,"SNPS")||has(s,"SMH")))||(has(s,"NVDA")&&(has(s,"AVGO")||has(s,"SMH")||has(s,"BAC")))||hits>=3)return"A_AI_CORE_INSTITUTIONAL";return"F_OTHERS_M7_BASKET_DRIVEN"}
+function themeFamilies(s){const out=[],c=xs=>xs.filter(x=>s.includes(x)).length;if(c(["TSM","SMH","NVDA"])>=2)out.push("AI_CORE_TSM_SMH_NVDA");if(c(["AVGO","MRVL","AMD","ARM"])>=2)out.push("SEMI_IP_AVGO_MRVL_AMD_ARM");if(c(["AAPL","MSFT","GOOG","GOOGL"])>=2)out.push("MEGA_SOFTWARE_AAPL_MSFT_GOOG");if(c(["MU","INTC","ARM"])>=2||s.includes("MU"))out.push("MEMORY_MU_INTC_ARM");if(c(["TSLA","PLTR","META"])>=2||s.includes("TSLA"))out.push("TSLA_PLTR_MOMENTUM");if(s.includes("SNPS"))out.push("SNPS_BREAKTHROUGH_WATCH");return out.length?out:["UNCLASSIFIED_THEME"]}
+function direction(v){return v===null?"unknown":v>=1?"market_higher":v<=-1?"market_lower":"near_fair"}
+function dirPill(d){return d==="market_higher"?pill("market higher","bad"):d==="market_lower"?pill("market lower","warn"):d==="near_fair"?pill("near fair","good"):pill("observe","blue")}
 function overlap(a,b){const A=new Set(a),B=new Set(b),hit=[...A].filter(x=>B.has(x));return{hit,score:hit.length/Math.max(A.size,B.size),count:hit.length,extra:a.filter(x=>!B.has(x)),missing:b.filter(x=>!A.has(x))}}
-function findChildMatch(symbols,parent,small){
-  const key=keyOf(symbols);
-  if(small[key])return{match_type:"exact",matched_child:key,matched_symbols:symbols,extra_symbols:[],missing_symbols:[],fuzzy_score:1,overlap_count:symbols.length};
-  const candidates=Object.entries(small).filter(([,v])=>(v.parent_template||classifyParent(norm(v.match_symbols||"")))===parent).map(([k,v])=>({key:k,syms:norm(v.match_symbols||k)}));
-  let best=null;
-  for(const c of candidates){
-    const o=overlap(symbols,c.syms);
-    const rec={match_type:"parent_only",matched_child:null,matched_symbols:o.hit,extra_symbols:o.extra,missing_symbols:o.missing,fuzzy_score:o.score,overlap_count:o.count,candidate_key:c.key};
-    if(!best||rec.overlap_count>best.overlap_count||(rec.overlap_count===best.overlap_count&&rec.fuzzy_score>best.fuzzy_score))best=rec;
-  }
-  if(best&&best.overlap_count>=4)return{...best,match_type:"strong_fuzzy_4",matched_child:best.candidate_key};
-  if(best&&best.overlap_count>=3)return{...best,match_type:"valid_fuzzy_core_3",matched_child:best.candidate_key};
-  return{match_type:"parent_only",matched_child:null,matched_symbols:[],extra_symbols:symbols,missing_symbols:[],fuzzy_score:0,overlap_count:0};
-}
-function explain(r){
-  const action=r.match_type==="exact"?"完全命中既有小模板，所以直接 DONE。":r.match_type.includes("fuzzy")?"模糊比對命中核心組合，所以 DONE 並留下 record。":"沒有命中小模板，因此先收進父階，累積 record 後再判斷是否建立新模板。";
-  return `${r.small_template_key} 先被歸到 ${r.parent_template}，再歸到 ${r.theme_family}。${action}目前下一步是 ${r.rule_next_action}。`;
-}
-function rowId(row){return String(row.product_id||row.fcn_id||row.id||"").trim()}
-function normalizeTrade(row){
-  const symbols=norm(row.symbols||row.basket);
-  return {
-    fcn_id: rowId(row)||"N/A",
-    source_type: row.source||row.source_type||"market_history",
-    bank: row.upstream_bank||row.bank||"",
-    date: row.generated_at||row.date||"",
-    basket: symbols.join(", "),
-    market_coupon: num(row.coupon_pct||row.coupon),
-    old_fair: num(row.old_fair_rate||row.old_fair),
-    new_fair: num(row.new_fair_rate||row.new_fair),
-    final_fair: num(row.final_fair_rate||row.final_fair),
-    beta: num(row.beta),
-    confidence: num(row.confidence),
-    ki: num(row.ki_pct||row.ki),
-    strike: num(row.strike_pct||row.strike),
-    tenor: num(row.tenor_month||row.tenor),
-    barrier_type: row.barrier_type||"",
-    memory_type: row.memory_type||"",
-    fallback_level: row.fallback_level||"market_history"
-  };
-}
-function renderIncludedFcnRowsTable(rows){
-  const xs=rows||[];
-  if(!xs.length)return'<div class="small">No included FCN rows. 這筆目前只有 surface sample id，沒有 market_fcn_history 明細。</div>';
-  return `<div class="table-wrap" style="max-height:280px;margin-top:8px"><table class="included-table">
-    <tr><th>FCN</th><th>Src</th><th>Bank</th><th>Date</th><th>Basket</th><th>Market</th><th>Old</th><th>New</th><th>Final</th><th>Beta</th><th>Conf</th><th>K/S/T</th><th>Barrier</th><th>Memory</th><th>Level</th></tr>
-    ${xs.map(x=>`<tr>
-      <td><b>${escapeHtml(x.fcn_id)}</b></td><td>${escapeHtml(x.source_type)}</td><td>${escapeHtml(x.bank)}</td><td>${escapeHtml(x.date)}</td><td>${escapeHtml(x.basket)}</td>
-      <td>${pct(x.market_coupon)}</td><td>${pct(x.old_fair)}</td><td>${pct(x.new_fair)}</td><td>${pct(x.final_fair)}</td>
-      <td>${fmt(x.beta)}</td><td>${fmt(x.confidence)}</td><td>${fmt(x.ki)} / ${fmt(x.strike)} / ${fmt(x.tenor)}M</td>
-      <td>${escapeHtml(x.barrier_type)}</td><td>${escapeHtml(x.memory_type)}</td><td>${escapeHtml(x.fallback_level)}</td>
-    </tr>`).join("")}
-  </table></div>`;
-}
-function renderTrace(r){
-  return `<div class="mini-details-body">
-    <div class="trace-line"><span>FCN Basket</span><b>${escapeHtml(r.small_template_key)}</b></div>
-    <div class="trace-line"><span>Parent</span><b>${escapeHtml(r.parent_template)}</b></div>
-    <div class="trace-line"><span>Theme Family</span><b>${escapeHtml(r.theme_family)}</b></div>
-    <div class="trace-line"><span>Child Match</span><b>${escapeHtml(r.match_type)}${r.matched_child_template?" -> "+escapeHtml(r.matched_child_template):""}</b></div>
-    <div class="trace-line"><span>Matched Symbols</span><b>${escapeHtml((r.matched_symbols||[]).join(", ")||"-")}</b></div>
-    <div class="trace-line"><span>Enhancement / New Symbols</span><b>${escapeHtml((r.enhancement_symbols||[]).join(", ")||"-")}</b></div>
-    <div class="trace-line"><span>Rule Next Action</span><b>${escapeHtml(r.rule_next_action)}</b></div>
-  </div>`;
-}
-function buildMemory(marketRaw,surface){
-  const market=Array.isArray(marketRaw)?marketRaw:(Array.isArray(marketRaw?.rows)?marketRaw.rows:[]);
-  const small=surface?.small_templates&&!Array.isArray(surface.small_templates)?surface.small_templates:{};
-  const grouped=new Map();
-  market.forEach(row=>{const syms=norm(row.symbols||row.basket);const k=keyOf(syms);if(!grouped.has(k))grouped.set(k,[]);grouped.get(k).push(row)});
-  const keys=Array.from(new Set([...grouped.keys(),...Object.keys(small)])).sort();
-  const memories=keys.map(k=>{
-    const rs=grouped.get(k)||[], surfaceRow=small[k]||{}, symbols=norm(surfaceRow.match_symbols||k);
-    const parent=classifyParent(symbols), families=themeFamilies(symbols), family=families[0], match=findChildMatch(symbols,parent,small);
-    const trades=rs.map(normalizeTrade);
-    const coupons=trades.map(r=>r.market_coupon);let mc=avg(coupons);if(mc===null)mc=num(surfaceRow.avg_market_coupon);
-    const nf=num(surfaceRow.avg_new_fair_rate), ff=num(surfaceRow.avg_final_fair_rate), rn=mc===null||nf===null?null:mc-nf, rf=mc===null||ff===null?null:mc-ff, res=rf??rn, d=dir(res);
-    const latest=trades.slice().sort((a,b)=>String(b.date).localeCompare(String(a.date)))[0]||{};
-    let ids=trades.map(r=>r.fcn_id).filter(x=>x&&x!=="N/A");if(!ids.length&&Array.isArray(surfaceRow.sample_ids))ids=surfaceRow.sample_ids.map(String).filter(Boolean);
-    const count=trades.length||Number(surfaceRow.count||0), breakthrough=families.includes("SNPS_BREAKTHROUGH_WATCH")||(match.match_type==="parent_only"&&count>=2), promote=count>=3&&match.match_type==="parent_only";
-    const out={template_id:surfaceRow.template_id||k,parent_template:parent,theme_family:family,theme_families:families,small_template_key:k,symbols,sample_count:count,last_market_coupon:latest.market_coupon??mc,avg_market_coupon:mc===null?null:Number(mc.toFixed(4)),avg_new_fair:nf,avg_final_fair:ff,residual_market_minus_new:rn===null?null:Number(rn.toFixed(4)),residual_market_minus_final:rf===null?null:Number(rf.toFixed(4)),residual_direction:d,match_type:match.match_type,matched_child_template:match.matched_child,matched_symbols:match.matched_symbols,enhancement_symbols:match.extra_symbols,missing_symbols:match.missing_symbols,fuzzy_score:match.fuzzy_score,source_trade_ids:ids,source_rows:trades,surface_hit:!!surfaceRow,promote_to_template_candidate:promote,breakthrough_watch:breakthrough,needs_overlay:res!==null&&Math.abs(res)>=2,memory_trend:d==="near_fair"?"stable":count>=3?"persistent":"forming",rule_next_action:promote?"build_new_child_template_candidate":breakthrough?"breakthrough_watch":"observe"};
-    out.explainability=explain(out);return out;
-  });
-  return{summary:{template_count:memories.length,active_memory_count:memories.filter(x=>x.sample_count>0).length,candidate_template_count:memories.filter(x=>x.promote_to_template_candidate).length,breakthrough_watch_count:memories.filter(x=>x.breakthrough_watch).length,exact_match_count:memories.filter(x=>x.match_type==="exact").length,fuzzy_match_count:memories.filter(x=>x.match_type.includes("fuzzy")).length,market_trade_count:market.length,surface_small_template_count:Object.keys(small).length},memories};
-}
+function findChild(symbols,parent,small){const key=keyOf(symbols);if(small[key])return{match_type:"exact",matched_child:key,matched_symbols:symbols,extra_symbols:[],fuzzy_score:1,count:symbols.length};const cs=Object.entries(small).filter(([,v])=>(v.parent_template||classifyParent(norm(v.match_symbols||"")))===parent).map(([k,v])=>({key:k,syms:norm(v.match_symbols||k)}));let best=null;for(const c of cs){const o=overlap(symbols,c.syms),rec={matched_child:c.key,matched_symbols:o.hit,extra_symbols:o.extra,fuzzy_score:o.score,count:o.count};if(!best||rec.count>best.count||(rec.count===best.count&&rec.fuzzy_score>best.fuzzy_score))best=rec}if(best&&best.count>=4)return{...best,match_type:"strong_fuzzy_4"};if(best&&best.count>=3)return{...best,match_type:"valid_fuzzy_core_3"};return{match_type:"parent_only",matched_child:null,matched_symbols:[],extra_symbols:symbols,fuzzy_score:0,count:0}}
+function poolRow(row,type,idx){const syms=norm(row.basket||row.symbols||row.underlyings);return{fcn_id:row.fcn_id||row.id||`${type}_${idx+1}`,source_type:type,bank:row.bank||row.tw_bank||"",date:row.date||row.created_time||row.entry_time||"",basket:syms.join(", "),symbols:syms,market_coupon:pickNum(row.market_coupon,row.market_rate,row.rate,row.coupon_pct),old_fair:pickNum(row.fair_yield,row.my_preference_rate,row.old_fair_rate),new_fair:pickNum(row.clean_global_fair,row.new_fair_rate),final_fair:pickNum(row.final_fair_rate,row.clean_global_fair,row.new_fair_rate),beta:pickNum(row.overlay_beta,row.beta),confidence:pickNum(row.overlay_confidence,row.surface_confidence,row.confidence),ki:pickNum(row.ki,row.KI,row.ki_pct,row.knock_in),strike:pickNum(row.strike,row.Strike,row.strike_pct),tenor:pickNum(row.tenor,row.T,row.tenor_month),barrier_type:row.type||(row.eki?"EKI":"AKI"),memory_type:row.memory_type||row.memory||"",fallback_level:row.fallback_level||"raw_pool"}}
+function marketRow(row,idx){const syms=norm(row.symbols||row.basket);return{fcn_id:row.product_id||row.fcn_id||row.record_id||`market_history_${idx+1}`,source_type:row.source_type||"market_history",bank:row.upstream_bank||row.bank||"",date:row.generated_at||row.date||"",basket:syms.join(", "),symbols:syms,market_coupon:pickNum(row.market_coupon,row.market_rate,row.coupon_pct,row.coupon,row.rate),old_fair:pickNum(row.fair_yield,row.my_preference_rate,row.old_fair_rate,row.old_fair),new_fair:pickNum(row.clean_global_fair,row.new_fair_rate,row.new_fair),final_fair:pickNum(row.final_fair_rate,row.clean_global_fair,row.new_fair_rate,row.final_fair),beta:pickNum(row.overlay_beta,row.beta),confidence:pickNum(row.overlay_confidence,row.surface_confidence,row.confidence),ki:pickNum(row.ki_pct,row.ki),strike:pickNum(row.strike_pct,row.strike),tenor:pickNum(row.tenor_month,row.tenor,row.T),barrier_type:row.barrier_type||"",memory_type:row.memory_type||"",fallback_level:row.fallback_level||"market_history"}}
+function rowsFrom(json,type){const arr=Array.isArray(json)?json:(Array.isArray(json?.data)?json.data:(Array.isArray(json?.records)?json.records:[]));return arr.map((r,i)=>type==="market_history"?marketRow(r,i):poolRow(r,type,i))}
+function addFair(row,surface){const old=pickNum(row.old_fair,surface?.avg_old_fair_rate),neu=pickNum(row.new_fair,surface?.avg_new_fair_rate),fin=pickNum(row.final_fair,surface?.avg_final_fair_rate,neu);return{...row,old_fair:old,new_fair:neu,final_fair:fin,gap_old_pct:gap(row.market_coupon,old),gap_new_pct:gap(row.market_coupon,neu),gap_final_pct:gap(row.market_coupon,fin),fair_source:row.old_fair!==null||row.new_fair!==null||row.final_fair!==null?"row_value":surface?"template_surface_avg":"missing",fallback_level:row.fallback_level||surface?"template_surface_avg":"missing"}}
+function includedTable(xs){if(!xs?.length)return'<div class="small">No included FCN rows.</div>';return`<div class="table-wrap" style="max-height:280px;margin-top:8px"><table class="included-table"><tr><th>FCN</th><th>Src</th><th>Fair Src</th><th>Bank</th><th>Date</th><th>Basket</th><th>Market</th><th>Old</th><th>New</th><th>Final</th><th>Gap Old</th><th>Gap New</th><th>Gap Final</th><th>Beta</th><th>Conf</th><th>K/S/T</th><th>Barrier</th><th>Memory</th></tr>${xs.map(x=>`<tr><td><b>${esc(x.fcn_id)}</b></td><td>${esc(x.source_type)}</td><td>${esc(x.fair_source)}</td><td>${esc(x.bank)}</td><td>${esc(x.date)}</td><td>${esc(x.basket)}</td><td>${fmt(x.market_coupon)}</td><td>${fmt(x.old_fair)}</td><td>${fmt(x.new_fair)}</td><td>${fmt(x.final_fair)}</td><td>${fmt(x.gap_old_pct)}</td><td>${fmt(x.gap_new_pct)}</td><td>${fmt(x.gap_final_pct)}</td><td>${fmt(x.beta)}</td><td>${fmt(x.confidence)}</td><td>${fmt(x.ki)} / ${fmt(x.strike)} / ${fmt(x.tenor)}M</td><td>${esc(x.barrier_type)}</td><td>${esc(x.memory_type)}</td></tr>`).join("")}</table></div>`}
+function explain(r){const a=r.match_type==="exact"?"完全命中既有小模板。":r.match_type.includes("fuzzy")?"模糊比對命中核心組合。":"目前只能收進父階，等待更多樣本。";return`${r.small_template_key} 被歸到 ${r.parent_template} / ${r.theme_family}。${a}同時保留 source mix 與 old/new/final fair，是為了觀察你偏好接受哪種來源、basket 與模型 gap。`}
+function buildMemory(src,surface){const small=surface?.small_templates&&!Array.isArray(surface.small_templates)?surface.small_templates:{},group=new Map();src.forEach(r=>{const k=keyOf(r.symbols);if(!group.has(k))group.set(k,[]);group.get(k).push(r)});const keys=Array.from(new Set([...group.keys(),...Object.keys(small)])).sort();const mem=keys.map(k=>{const raw=group.get(k)||[],sf=small[k]||{},syms=norm(sf.match_symbols||k),parent=classifyParent(syms),family=themeFamilies(syms)[0],m=findChild(syms,parent,small),trades=raw.map(r=>addFair(r,sf)),mc=avg(trades.map(r=>r.market_coupon))??num(sf.avg_market_coupon),old=avg(trades.map(r=>r.old_fair))??num(sf.avg_old_fair_rate),neu=avg(trades.map(r=>r.new_fair))??num(sf.avg_new_fair_rate),fin=avg(trades.map(r=>r.final_fair))??num(sf.avg_final_fair_rate),res=mc===null||fin===null?null:mc-fin,dist=countBy(trades,r=>r.source_type),count=trades.length||Number(sf.count||0),promote=count>=3&&m.match_type==="parent_only",watch=syms.includes("SNPS")||promote;const out={small_template_key:k,parent_template:parent,theme_family:family,symbols:syms,source_rows:trades,source_distribution:dist,sample_count:count,avg_market_coupon:mc,avg_old_fair:old,avg_new_fair:neu,avg_final_fair:fin,residual_market_minus_final:res,residual_direction:direction(res),match_type:m.match_type,matched_child_template:m.matched_child,matched_symbols:m.matched_symbols,enhancement_symbols:m.extra_symbols,fuzzy_score:m.fuzzy_score,source_trade_ids:trades.map(r=>r.fcn_id),promote_to_template_candidate:promote,breakthrough_watch:watch,rule_next_action:promote?"build_new_child_template_candidate":watch?"watch":"observe"};out.explainability=explain(out);return out});const d=countBy(src,r=>r.source_type);return{summary:{template_count:mem.length,current_pool_count:d.current_pool||0,old_pool_count:d.old_pool||0,market_trade_count:d.market_history||0,source_record_count:src.length,exact_match_count:mem.filter(x=>x.match_type==="exact").length,fuzzy_match_count:mem.filter(x=>x.match_type.includes("fuzzy")).length,breakthrough_watch_count:mem.filter(x=>x.breakthrough_watch).length},memories:mem}}
 async function loadJson(p){const r=await fetch(`${p}?v=${Date.now()}`);if(!r.ok)throw new Error(`${p} HTTP ${r.status}`);return r.json()}
-async function loadMemory(){
-  document.getElementById("errorBox").innerHTML="";
-  try{
-    const [market,surface]=await Promise.all([loadJson(MARKET_PATH),loadJson(SURFACE_PATH)]);
-    payload=buildMemory(market,surface);records=payload.memories;selectedKey=records[0]?.small_template_key||null;
-    const dates=Array.from(new Set((Array.isArray(market)?market:[]).map(r=>r.generated_at||r.date).filter(Boolean))).sort().reverse();
-    document.getElementById("sourceNote").textContent=`Source: market history + template surface; memory rows: ${records.length}; market FCN rows: ${payload.summary.market_trade_count}; latest FCN date: ${dates[0]||"N/A"}`;
-    renderAll();
-  }catch(e){document.getElementById("errorBox").innerHTML=`<div class="error">Cannot build memory. ${escapeHtml(e.message)}</div>`}
-}
-function renderSummary(){
-  const s=payload?.summary||{};
-  document.getElementById("summary").innerHTML=[["template count",s.template_count,"all memory records"],["exact match",s.exact_match_count,"exact child hits"],["fuzzy match",s.fuzzy_match_count,"4/3 core child hits"],["breakthrough",s.breakthrough_watch_count,"watch records"],["market trades",s.market_trade_count,"source FCN rows"]].map(([l,v,n])=>`<div class="kpi"><div class="kpi-label">${l}</div><div class="kpi-value">${v??0}</div><div class="kpi-note">${n}</div></div>`).join("");
-}
-function filtered(){
-  const q=document.getElementById("searchInput").value.trim().toUpperCase(),f=document.getElementById("filterSelect").value;
-  return records.filter(r=>{const text=`${r.parent_template} ${r.theme_family} ${r.small_template_key} ${r.match_type} ${r.matched_child_template||""} ${r.symbols.join(" ")} ${(r.source_trade_ids||[]).join(" ")}`.toUpperCase();if(q&&!text.includes(q))return false;if(f==="exact"&&r.match_type!=="exact")return false;if(f==="fuzzy"&&!r.match_type.includes("fuzzy"))return false;if(f==="parent_only"&&r.match_type!=="parent_only")return false;if(f==="candidate"&&!r.promote_to_template_candidate)return false;if(f==="breakthrough"&&!r.breakthrough_watch)return false;return true});
-}
-function renderTable(){
-  const body=document.getElementById("memoryRows"),data=filtered();
-  body.innerHTML=data.map(r=>{
-    const active=r.small_template_key===selectedKey;
-    const main=`<tr class="memory-row ${active?"active":""}" data-key="${escapeHtml(r.small_template_key)}"><td>${escapeHtml(r.parent_template)}</td><td>${escapeHtml(r.theme_family)}</td><td><b>${escapeHtml(r.small_template_key)}</b></td><td>${pill(r.match_type,r.match_type==="exact"?"good":r.match_type.includes("fuzzy")?"blue":"warn")}</td><td>${escapeHtml(r.matched_child_template||"-")}</td><td>${r.sample_count}</td><td>${fmt(r.avg_market_coupon)}</td><td>${fmt(r.avg_new_fair)}</td><td>${fmt(r.avg_final_fair)}</td><td>${fmt(residualValue(r))} ${directionLabel(r.residual_direction)}</td><td>${r.source_rows.length?pill(`${r.source_rows.length} rows`,"blue"):pill("sample ids only","warn")}</td><td>${r.promote_to_template_candidate?pill("YES","good"):r.breakthrough_watch?pill("WATCH","warn"):pill("NO")}</td></tr>`;
-    const detail=active?`<tr class="detail-row"><td colspan="12"><details class="mini-details" open><summary>Included FCN Rows / 計入 FCN 明細</summary><div class="mini-details-body">${renderIncludedFcnRowsTable(r.source_rows)}</div></details><details class="mini-details"><summary>Match Trace / 父階與小模板比對</summary>${renderTrace(r)}</details></td></tr>`:"";
-    return main+detail;
-  }).join("")||`<tr><td colspan="12">No records.</td></tr>`;
-}
-function renderCard(){
-  const r=records.find(x=>x.small_template_key===selectedKey),card=document.getElementById("memoryCard"),ex=document.getElementById("explainBox");
-  if(!r){card.className="empty";card.textContent="Select a record.";return}
-  card.className="";
-  const stability=r.memory_trend==="stable"?85:r.memory_trend==="persistent"?68:42;
-  card.innerHTML=`<h3 style="margin:0 0 8px">${escapeHtml(r.small_template_key)}</h3>
-    <div class="chips">${pill(r.parent_template,"blue")}${pill(r.theme_family,"blue")}${pill(r.match_type,r.match_type==="exact"?"good":r.match_type.includes("fuzzy")?"blue":"warn")}${r.breakthrough_watch?pill("breakthrough","warn"):""}</div>
-    <div class="detail-grid"><div class="metric"><div class="metric-label">matched child</div><div class="metric-value" style="font-size:14px">${escapeHtml(r.matched_child_template||"parent only")}</div></div><div class="metric"><div class="metric-label">fuzzy score</div><div class="metric-value">${fmt(r.fuzzy_score)}</div></div><div class="metric"><div class="metric-label">source FCN rows</div><div class="metric-value">${r.source_rows.length}</div></div><div class="metric"><div class="metric-label">market coupon</div><div class="metric-value">${fmt(r.avg_market_coupon)}</div></div></div>
-    <div class="metric"><div class="metric-label">memory trend</div><div class="metric-value">${escapeHtml(r.memory_trend||"observe")}</div><div class="bar"><span style="width:${stability}%"></span></div></div>
-    <div class="rule">Rule next action: <b>${escapeHtml(r.rule_next_action)}</b></div>
-    <details class="mini-details" open><summary>Included FCN Rows / 計入 FCN 明細</summary><div class="mini-details-body">${renderIncludedFcnRowsTable(r.source_rows)}</div></details>
-    <details class="mini-details"><summary>Source Trade IDs</summary><div class="mini-details-body"><div class="chips">${(r.source_trade_ids||[]).slice(0,40).map(x=>pill(x,"blue")).join("")||pill("N/A")}</div></div></details>`;
-  ex.textContent=r.explainability;
-}
-function list(id,data){document.getElementById(id).innerHTML=data.length?data.map(r=>`<div class="list-item"><b>${escapeHtml(r.small_template_key)}</b><br>${escapeHtml(r.theme_family)}<br>${escapeHtml(r.match_type)} -> ${escapeHtml(r.matched_child_template||"parent only")}<br>sample ${r.sample_count} / FCN rows ${r.source_rows.length}</div>`).join(""):`<div class="empty">No data.</div>`}
-function renderDiscovery(){list("aiList",records.filter(r=>r.parent_template==="A_AI_CORE_INSTITUTIONAL").slice(0,10));list("muList",records.filter(r=>r.parent_template.includes("MU")).slice(0,10));list("breakList",records.filter(r=>r.breakthrough_watch).slice(0,10))}
-function renderCandidate(){const c=records.filter(r=>r.promote_to_template_candidate||r.breakthrough_watch);document.getElementById("candidateZone").innerHTML=c.length?c.map(r=>`<div class="candidate"><b>${escapeHtml(r.small_template_key)}</b><div class="small">${escapeHtml(r.parent_template)} -> ${escapeHtml(r.theme_family)}; ${escapeHtml(r.match_type)}; next: ${escapeHtml(r.rule_next_action)}; FCN rows: ${r.source_rows.length}</div></div>`).join(""):`<div class="empty">No candidate yet.</div>`}
+async function loadMemory(){try{const [pool,oldPool,market,surface]=await Promise.all([loadJson(POOL_PATH).catch(()=>[]),loadJson(OLD_POOL_PATH).catch(()=>[]),loadJson(MARKET_PATH),loadJson(SURFACE_PATH)]);const marketRows=rowsFrom(market,"market_history"),all=[...rowsFrom(pool,"current_pool"),...rowsFrom(oldPool,"old_pool"),...marketRows];payload=buildMemory(all,surface);records=payload.memories;selectedKey=records[0]?.small_template_key||null;document.getElementById("sourceNote").textContent=`Source: current_pool + old_pool + market_history + template surface; source rows: ${payload.summary.source_record_count}`;renderAll()}catch(e){document.getElementById("errorBox").innerHTML=`<div class="error">Cannot build memory. ${esc(e.message)}</div>`}}
+function renderSummary(){const s=payload?.summary||{};document.getElementById("summary").innerHTML=[["template count",s.template_count,"memory records"],["current pool",s.current_pool_count,"your FCN rows"],["market rows",s.market_trade_count,"market quote rows"],["exact / fuzzy",`${s.exact_match_count??0} / ${s.fuzzy_match_count??0}`,"child hits"],["watch",s.breakthrough_watch_count,"candidate/watch"]].map(([l,v,n])=>`<div class="kpi"><div class="kpi-label">${l}</div><div class="kpi-value">${v??0}</div><div class="kpi-note">${n}</div></div>`).join("")}
+function filtered(){const q=document.getElementById("searchInput").value.trim().toUpperCase(),f=document.getElementById("filterSelect").value;return records.filter(r=>{const src=Object.keys(r.source_distribution||{});const text=`${r.parent_template} ${r.theme_family} ${r.small_template_key} ${r.match_type} ${src.join(" ")} ${r.symbols.join(" ")}`.toUpperCase();if(q&&!text.includes(q))return false;if(f==="current_pool"&&!src.includes("current_pool"))return false;if(f==="market_history"&&!src.includes("market_history"))return false;if(f==="exact"&&r.match_type!=="exact")return false;if(f==="fuzzy"&&!r.match_type.includes("fuzzy"))return false;if(f==="parent_only"&&r.match_type!=="parent_only")return false;if(f==="candidate"&&!r.promote_to_template_candidate)return false;return true})}
+function renderTable(){const body=document.getElementById("memoryRows"),data=filtered();body.innerHTML=data.map(r=>{const active=r.small_template_key===selectedKey,sm=Object.entries(r.source_distribution||{}).map(([k,v])=>`${k}:${v}`).join(" / ")||"-";const row=`<tr class="memory-row ${active?"active":""}" data-key="${esc(r.small_template_key)}"><td>${esc(r.parent_template)}</td><td>${esc(r.theme_family)}</td><td><b>${esc(r.small_template_key)}</b></td><td>${pill(r.match_type,r.match_type==="exact"?"good":r.match_type.includes("fuzzy")?"blue":"warn")}</td><td>${esc(r.matched_child_template||"-")}</td><td>${r.sample_count}</td><td>${esc(sm)}</td><td>${fmt(r.avg_market_coupon)}</td><td>${fmt(r.avg_old_fair)}</td><td>${fmt(r.avg_new_fair)}</td><td>${fmt(r.avg_final_fair)}</td><td>${fmt(rv(r))} ${dirPill(r.residual_direction)}</td><td>${pill(`${r.source_rows.length} rows`,"blue")}</td><td>${r.promote_to_template_candidate?pill("YES","good"):r.breakthrough_watch?pill("WATCH","warn"):pill("NO")}</td></tr>`;const detail=active?`<tr class="detail-row"><td colspan="14"><details class="mini-details" open><summary>Included FCN Rows / 計入 FCN 明細</summary><div class="mini-details-body">${includedTable(r.source_rows)}</div></details></td></tr>`:"";return row+detail}).join("")||`<tr><td colspan="14">No records.</td></tr>`}
+function renderCard(){const r=records.find(x=>x.small_template_key===selectedKey),card=document.getElementById("memoryCard"),ex=document.getElementById("explainBox");if(!r){card.className="empty";card.textContent="Select a record.";return}card.className="";const sm=Object.entries(r.source_distribution||{}).map(([k,v])=>`${k}:${v}`).join(" / ")||"-";card.innerHTML=`<h3 style="margin:0 0 8px">${esc(r.small_template_key)}</h3><div class="chips">${pill(r.parent_template,"blue")}${pill(r.theme_family,"blue")}${pill(r.match_type,"blue")}</div><div class="detail-grid"><div class="metric"><div class="metric-label">source mix</div><div class="metric-value" style="font-size:13px">${esc(sm)}</div></div><div class="metric"><div class="metric-label">market coupon</div><div class="metric-value">${fmt(r.avg_market_coupon)}</div></div><div class="metric"><div class="metric-label">old / new / final</div><div class="metric-value" style="font-size:14px">${fmt(r.avg_old_fair)} / ${fmt(r.avg_new_fair)} / ${fmt(r.avg_final_fair)}</div></div><div class="metric"><div class="metric-label">next action</div><div class="metric-value" style="font-size:14px">${esc(r.rule_next_action)}</div></div></div><details class="mini-details" open><summary>Included FCN Rows / 計入 FCN 明細</summary><div class="mini-details-body">${includedTable(r.source_rows)}</div></details>`;ex.textContent=r.explainability}
+function list(id,data){document.getElementById(id).innerHTML=data.length?data.slice(0,10).map(r=>`<div class="list-item"><b>${esc(r.small_template_key)}</b><br>${esc(r.theme_family)}<br>${esc(Object.entries(r.source_distribution||{}).map(([k,v])=>`${k}:${v}`).join(" / "))}<br>${esc(r.match_type)} / sample ${r.sample_count}</div>`).join(""):`<div class="empty">No data.</div>`}
+function renderDiscovery(){list("aiList",records.filter(r=>r.parent_template==="A_AI_CORE_INSTITUTIONAL"));list("muList",records.filter(r=>r.parent_template.includes("MU")));list("breakList",records.filter(r=>r.breakthrough_watch||r.promote_to_template_candidate))}
+function renderCandidate(){const c=records.filter(r=>r.promote_to_template_candidate||r.breakthrough_watch);document.getElementById("candidateZone").innerHTML=c.length?c.map(r=>`<div class="candidate"><b>${esc(r.small_template_key)}</b><div class="small">${esc(r.parent_template)} -> ${esc(r.theme_family)}; ${esc(r.match_type)}; next: ${esc(r.rule_next_action)}; rows: ${r.source_rows.length}</div></div>`).join(""):`<div class="empty">No candidate yet.</div>`}
 function renderAll(){renderSummary();renderTable();renderCard();renderDiscovery();renderCandidate()}
-document.getElementById("reloadBtn").addEventListener("click",loadMemory);
-document.getElementById("searchInput").addEventListener("input",renderTable);
-document.getElementById("filterSelect").addEventListener("change",renderTable);
-document.getElementById("memoryRows").addEventListener("click",e=>{const tr=e.target.closest("tr[data-key]");if(!tr)return;selectedKey=tr.getAttribute("data-key");renderTable();renderCard()});
-loadMemory();
+document.getElementById("reloadBtn").addEventListener("click",loadMemory);document.getElementById("searchInput").addEventListener("input",renderTable);document.getElementById("filterSelect").addEventListener("change",renderTable);document.getElementById("memoryRows").addEventListener("click",e=>{const tr=e.target.closest("tr[data-key]");if(!tr)return;selectedKey=tr.getAttribute("data-key");renderTable();renderCard()});loadMemory();
 </script>
 </body>
 </html>
