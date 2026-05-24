@@ -1,5 +1,5 @@
 # ==========================================
-# update_market_runtime.py V4.4 FUNDAMENTAL FALLBACK FINAL
+# update_market_runtime.py V4.5 DAILY RUNTIME ONLY
 # 功能：
 # 1. 從 Yahoo Finance 抓歷史價格
 # 2. 用 fast_info / info 優先取得當前價格，避免最後一筆 Close 異常
@@ -7,7 +7,7 @@
 # 4. 保留 Money v2 欄位：volume / avg_volume / avg_volume_10d / today_dollar_volume / avg_dollar_volume / volume_ratio
 # 5. 新增 Yahoo Finance runtime fallback 基本面欄位：EPS / PE / growth / margins / cashflow / sector / industry
 # 6. 這些欄位只作 runtime fallback，不取代 data/m1/eps_history_ai.json
-# 7. 不破壞原本 data/market_runtime.json 與 data/runtime_staging/market_runtime_long_horizon.json 輸出格式
+# 7. Daily runtime 只輸出 data/market_runtime.json；long-horizon staging 由 weekly workflow 負責
 # ==========================================
 
 #!/usr/bin/env python3
@@ -35,7 +35,6 @@ ROOT = Path(".")
 POOL30_PATH = ROOT / "data/pool30.json"
 UNIVERSE_PATH = ROOT / "data/m1/universe_150.json"
 OUT_PATH = ROOT / "data/market_runtime.json"
-STAGING_OUT_PATH = ROOT / "data/runtime_staging/market_runtime_long_horizon.json"
 
 
 def now_iso() -> str:
@@ -294,7 +293,7 @@ def build_row(symbol: str, old_row: dict[str, Any] | None = None) -> dict[str, A
 
 def main() -> int:
     symbols = symbols_from_files()
-    old_payload = load_json(STAGING_OUT_PATH, load_json(OUT_PATH, {}))
+    old_payload = load_json(OUT_PATH, {})
     old_rows = old_payload.get("rows", old_payload) if isinstance(old_payload, dict) else {}
     if not isinstance(old_rows, dict):
         old_rows = {}
@@ -306,19 +305,21 @@ def main() -> int:
     payload = {
         "generated_at": now_iso(),
         "source": "scripts/update_market_runtime.py",
-        "version": "V4.4_fundamental_fallback",
+        "version": "V4.5_daily_runtime_only",
         "fundamental_policy": "Yahoo Finance fields are runtime fallback only; do not replace data/m1/eps_history_ai.json.",
+        "long_horizon_policy": "Daily runtime does not write data/runtime_staging/market_runtime_long_horizon.json. Weekly long-horizon regression is handled separately.",
         "symbol_count": len(rows),
         "rows": rows,
     }
     save_json(OUT_PATH, payload)
-    save_json(STAGING_OUT_PATH, payload)
-    print(f"✅ market runtime updated: {len(rows)} symbols")
-    print(f"✅ {OUT_PATH}")
-    print(f"✅ {STAGING_OUT_PATH}")
+    print(f"daily market runtime updated: {len(rows)} symbols")
+    print(f"saved {OUT_PATH}")
+    print("skipped long-horizon staging; owned by weekly workflow")
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
+
 
