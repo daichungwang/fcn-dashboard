@@ -1,47 +1,83 @@
-# MM Operation Queue Layer v1 設計
+# MM System Operations & Evolution Center v1
 
 更新日期：2026-05-25  
-範圍：MM / System Health / Data Pipeline Health / Daily Operation  
-模式：detect-only + operation-assist
+範圍：MM system operations / data pipeline / workflow / runtime / M8 evolution / observation queue  
+模式：detect-only + operation-assist + observation-assist
 
 ## 1. 核心定位
 
-System Data Pipeline Health Dashboard v1.1 已經做到：
+MM System Operations & Evolution Center v1 不是第二個 MM 投資 dashboard，也不是用來直接判斷某張 FCN 單是否要做。
+
+它是：
 
 ```text
-Detect -> Display
+MM 系統營運與演化中心
 ```
 
-MM Operation Queue Layer v1 的下一步是：
+目前方向不再新增大量獨立 dashboard，而是把以下 layer 收斂進同一個中心：
+
+- Data Pipeline Health
+- Workflow Health
+- Operation Queue
+- M8 Template Memory
+- Runtime Monitoring
+- Observation Queue
+
+核心流程仍是：
 
 ```text
 Detect -> Prioritize -> Suggest Action -> Human Confirm -> Execute -> Verify
 ```
 
-這不是自動修復系統，也不是 AI 自動改參數。它是 MM 作戰中心的每日工作派發層，負責把已偵測到的問題變成可排序、可確認、可執行、可驗證的 operation queue。
+但 v1 會多一個重要分流：
 
-## 2. 明確限制
+```text
+Observation only -> accumulate evidence -> wait for enough confidence -> future evolution candidate
+```
 
-v1 不做以下行為：
+## 2. 邊界
 
-- 不自動修復。
+目前不做：
+
+- 不新增第四個主 dashboard。
+- 不做 auto repair。
 - 不自動 rerun scripts。
 - 不自動 commit / push。
-- 不自動修改 M1 / M7 / M8 / MM engine。
-- 不修改 `data/m1/m1_scores.json`。
-- 不修改 `data/m7_sandbox/m7_v2_scores.json`。
+- 不自動修改 M8 / M1 / M7 engine。
+- 不修改正式 fair rate。
+- 不把 observation 當成正式結論。
 
-v1 只做以下行為：
+目前只做：detect-only、operation-assist、observation-assist、人工 daily operation 排序、系統演化候選觀察、修復後 verification target 定義。
 
-- 問題優先排序。
-- 建議下一步。
-- 建立 operation queue。
-- 協助人工 daily operation。
-- 修復後定義 verification target。
+## 3. Queue Type
 
-## 3. Dashboard Console Layout
+Operation Queue 不只處理 maintenance，也要能處理 onboarding、runtime、observation、evolution。
 
-Operation Queue Dashboard 使用作戰中心式版面：
+| queue_type | 定義 |
+| --- | --- |
+| `maintenance` | workflow failure、dependency issues、stale M1/M7、stale runtime |
+| `onboarding` | new stock onboarding incomplete、missing research card、missing EPS、missing M7/M1 |
+| `runtime` | runtime freshness、runtime coverage、workflow monitoring、stale market runtime |
+| `observation` | 樣本不足、outcome observation、M8 abnormal but insufficient confidence、template observation only |
+| `evolution` | M8 beta evolution candidate、new template split candidate、template premium adjustment observation、suppressor/enhancer candidate observation、market coupon structural drift |
+
+## 4. Observation Queue
+
+Observation Queue 的目的不是立即修復，而是持續觀察。很多現象目前樣本不足，不能太早修正，例如 M8 beta 看起來偏低、某 template coupon drift、某 basket outcome 異常、outcome sample 不夠，或 suppressor / enhancer role 可能變化但證據還不夠。
+
+這些項目必須先進 observation queue，不直接改 beta、premium、fair rate、size 或 engine。
+
+## 5. Confidence Layer
+
+每個 operation / observation 都要有 `confidence`，範圍是 0 到 1。
+
+範例：workflow dependency failure = 0.98；M8 beta too low observation = 0.42。
+
+目的：避免 observation 被誤認為正式結論。低 confidence 的 observation 可以提醒人工注意，但不能直接推動正式公式、beta、premium 或 fair rate 修正。
+
+## 6. Dashboard Layout
+
+保留目前 console layout：
 
 ```text
 Top:
@@ -50,15 +86,15 @@ Top:
   Next Recommended Operations
 
 Left:
-  Modules
-    - Data Pipeline
-    - Runtime Health
-    - Workflow Health
-    - M8 Evolution
-    - Template Memory
-    - Improvement Queue
-    - New Stock Onboarding
-    - Market FCN Intake (future)
+  Data Pipeline
+  Runtime Health
+  Workflow Health
+  M8 Evolution
+  Template Memory
+  Improvement Queue
+  Observation Queue
+  New Stock Onboarding
+  Market FCN Intake (future)
 
 Right:
   Selected module details
@@ -67,90 +103,42 @@ Bottom:
   Raw Data / JSON / Search / Logs
 ```
 
-這個 layout 的目的，是讓使用者先看到今天最重要的風險，再從左側模組切入細節，最後在底部檢查原始 JSON、搜尋 operation 或查看 logs。
+## 7. 新增欄位
 
-## 4. 資料檔
-
-```text
-docs/codegraph/mm_operation_queue_design.md
-data/mm/mm_operation_queue.json
-mm/mm_operation_queue_dashboard.html
-```
-
-## 5. Today Operations 欄位
-
-每個 operation 至少包含：
+每筆 queue item 至少支援：
 
 | 欄位 | 說明 |
 | --- | --- |
-| `priority` | P0 / P1 / P2 / P3 |
-| `issue` | 問題類型 |
-| `reason` | 為什麼進入 queue |
-| `affected_file` | 受影響資料或 workflow |
-| `affected_symbols` | 受影響股票 |
-| `suggested_action` | 建議人工下一步 |
-| `suggested_script` | 可能需要執行或檢查的 script |
-| `expected_impact` | 修復後預期改善 |
-| `verification_target` | 修復後要驗證什麼 |
-| `operation_status` | detected / reviewing / approved / executing / verifying / completed / rejected |
+| `queue_type` | maintenance / onboarding / runtime / observation / evolution |
+| `confidence` | 0 到 1，代表系統對此判斷的信心 |
+| `observation_reason` | 若是 observation，說明為什麼只能觀察 |
+| `observation_required_samples` | 需要多少樣本才可能升級成正式 calibration / evolution |
+| `evolution_candidate_reason` | 若是 evolution candidate，說明未來可能演化的原因 |
 
-## 6. Priority Levels
+## 8. Priority 與 Queue Type
 
-P0：workflow failure、runtime pipeline broken、stale runtime causing stale M1/M7/MM。  
-P1：stale M1/M7、missing runtime、onboarding incomplete。  
-P2：missing research card、missing EPS、partial coverage、stale support data。  
-P3：document / mapping improvements。
+`priority` 表示今天處理順序，`queue_type` 表示問題本質。P0 + maintenance 代表 workflow failure 應優先處理；P2 + observation 代表 M8 beta 可能偏低但樣本不足，只能觀察；P2 + evolution 代表未來可能修 template 或 beta，但現在不能直接改正式參數。
 
-## 7. Suggested Action Layer
+## 9. 下一階段 Daily Operation Automation
 
-Operation Queue 會把 issue 對應到下一步建議：
-
-| Issue | Suggested Action |
-| --- | --- |
-| `workflow_dependency_failure` | fix workflow dependency install |
-| `m1_scores_stale` | run `scripts/build_m1_scores.py` |
-| `m7_scores_stale` | run `scripts/new/build_m7_v2_scores.py` |
-| `new_stock_onboarding_incomplete` | complete M7 + M1 generation |
-| `missing_research_card` | update stock profile / research card workflow |
-| `missing_script_mapping` | document the producing script or mark manual owner |
-
-## 8. Verification Layer
-
-每個 operation 必須定義修完後要驗證什麼。
-
-| Operation | Verification Target |
-| --- | --- |
-| workflow fixed | GitHub Actions success、`market_runtime.json` updated、stale count reduced |
-| M1 rerun | symbol appears in `m1_scores.json`、dashboard coverage improved |
-| M7 rerun | symbol appears in `m7_v2_scores.json`、M7 freshness no longer stale |
-| onboarding completed | universe / candidate / pool / runtime / M1 / M7 coverage aligned |
-| mapping documented | `MISSING_SCRIPT_MAPPING` count reduced |
-
-## 9. Human Confirmation
-
-`operation_status` 是人工流程狀態：detected、reviewing、approved、executing、verifying、completed、rejected。v1 dashboard 只顯示狀態，不會自動改狀態或自動執行。
-
-## 10. Queue Ordering
-
-Queue 根據以下順序排序：
-
-1. 是否影響正式 judgment。
-2. 是否影響 runtime freshness。
-3. 是否影響多模組。
-4. 是否會造成錯誤 GOOD。
-5. 是否重複發生。
-
-建議 sort score：
+本 center 是下一階段自動化的前置層。未來流程會是：
 
 ```text
-priority base
-+ formal_judgment_impact
-+ runtime_freshness_impact
-+ multi_module_impact
-+ false_good_risk
-+ recurrence_penalty
+AI 接收 LINE / market FCN
+-> M1 / M2 / M6 / M7 / M8 readiness check
+-> 系統資料與 runtime 診斷
+-> output 綜合分析、推薦或 reject
+-> maintain fcn_pool / market_fcn_history
 ```
 
-## 11. v1 結論
+在進入 automation 前，必須先讓系統能說清楚：今天哪些資料鏈沒補、哪些 workflow 沒正常跑、哪些 runtime stale、哪些 template / memory 只是 observation、哪些 M8 evolution candidate 需要更多樣本。
 
-MM Operation Queue v1 是「逐一改善」的工作派發中心。它不急著自動修復，而是先讓系統知道：今天最該處理什麼、為什麼、怎麼處理、修完後怎麼驗證。
+## 10. v1 結論
+
+MM System Operations & Evolution Center v1 的價值是把系統從「看得到問題」推進到「知道今天該先處理什麼，以及哪些只能繼續觀察」。
+
+核心不是自動修復，而是：
+
+```text
+逐一改善 + 持續觀察 + 為未來自動化鋪路
+```
