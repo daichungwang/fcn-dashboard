@@ -1,0 +1,103 @@
+{
+  "version": "mm_system_operations_evolution_center_v1",
+  "generated_at": "2026-05-25T00:00:00+08:00",
+  "scope": {
+    "target": "system_operations_and_evolution",
+    "not_target": "single_investment_decision_or_fcn_recommendation",
+    "description": "本中心用來管理 MM 系統營運、資料補足、runtime 運轉、workflow health、M8 template memory、observation queue 與 evolution candidates。它不是第二個 MM 投資 dashboard。"
+  },
+  "policy": {
+    "auto_repair": false,
+    "auto_rerun_scripts": false,
+    "auto_commit": false,
+    "auto_push": false,
+    "auto_modify_engine": false,
+    "auto_modify_m1_scores": false,
+    "auto_modify_m7_scores": false,
+    "auto_modify_m8_engine": false,
+    "auto_modify_fair_rate": false,
+    "observation_is_formal_conclusion": false,
+    "mode": "detect_only_operation_assist_observation_assist"
+  },
+  "summary": {
+    "today_p0_count": 1,
+    "today_p1_count": 0,
+    "maintenance_count": 5,
+    "onboarding_count": 1,
+    "runtime_count": 1,
+    "observation_count": 3,
+    "evolution_count": 3,
+    "pending_operations": 10,
+    "completed_today": 0
+  },
+  "top_console": {
+    "system_health_summary": "本中心聚焦 MM 系統營運與演化：資料補足、workflow、runtime、M8 template memory、observation queue 與 evolution candidates。目前最急的是 daily-runtime-refresh P0；M8 beta/template/coupon 相關項目先進 observation，不進正式公式。",
+    "todays_critical_issues": [
+      "daily-runtime-refresh dependency install / requirements 問題是 P0 maintenance，會影響 daily runtime refresh。",
+      "M7 formula input audit 與 M1 support data 有 stale 狀態，需逐一改善。",
+      "M8 beta / template coupon drift / outcome sample 目前屬 observation 或 evolution candidate，不是正式結論。"
+    ],
+    "next_recommended_operations": [
+      "先修 daily-runtime-refresh workflow dependency。",
+      "確認 workflow 成功後再處理 M7 formula input audit。",
+      "接著補 M1 stock profile / research card / competitive card freshness。",
+      "M8 beta 與 template coupon drift 先累積 observation samples，不直接改 fair rate 或 beta。"
+    ]
+  },
+  "queue_type_definitions": [
+    {"queue_type":"maintenance","definition":"workflow failure / stale runtime / stale M1-M7 / dependency issues"},
+    {"queue_type":"onboarding","definition":"new stock onboarding incomplete / missing research card / missing EPS / missing M7-M1"},
+    {"queue_type":"runtime","definition":"runtime freshness / runtime coverage / workflow monitoring / stale market runtime"},
+    {"queue_type":"observation","definition":"樣本不足、outcome observation、M8 abnormal but insufficient confidence、template observation only"},
+    {"queue_type":"evolution","definition":"M8 beta evolution candidate / new template split candidate / template premium adjustment observation / suppressor-enhancer candidate / market coupon structural drift"}
+  ],
+  "modules": [
+    {"module_id":"data_pipeline","module_name":"Data Pipeline","status":"watch","summary":"追蹤 M1 150 檔 universe、新股補資料、深度研究卡、script mapping、coverage 與 pipeline health。","operation_ids":["op-20260525-002","op-20260525-003","op-20260525-004","op-20260525-005","op-20260525-006","op-20260525-007"],"next_focus":"先處理 stale support data，再補 script mapping ownership。"},
+    {"module_id":"runtime_health","module_name":"Runtime Health","status":"ok","summary":"追蹤 daily / weekly 必跑程式，例如 market runtime、long horizon runtime、M7 score、M1 score 是否正常運作。","operation_ids":["op-20260525-001"],"next_focus":"確認 workflow 修復後 runtime 更新鏈能持續運轉。"},
+    {"module_id":"workflow_health","module_name":"Workflow Health","status":"critical","summary":"daily-runtime-refresh 因 dependency install / requirements 問題被列為 P0。","operation_ids":["op-20260525-001"],"next_focus":"修復 workflow dependency install，並以 GitHub Actions success 作為驗證。"},
+    {"module_id":"m8_evolution","module_name":"M8 Evolution","status":"watch","summary":"追蹤 M8 fair rate 偏好起點、market coupon 水準、beta evolution candidate 與模板利率是否逐步修正。","operation_ids":["op-20260525-008","op-20260525-009","op-20260525-010"],"next_focus":"先 observation，不直接改 beta、premium 或 fair rate。"},
+    {"module_id":"template_memory","module_name":"Template Memory","status":"watch","summary":"追蹤父輩大模板、子輩小模板是否有記憶、能否啟動推薦、是否可進入正式使用。","operation_ids":["op-20260525-009","op-20260525-010"],"next_focus":"累積 template observation samples，未來判斷是否拆模板或推出新模板。"},
+    {"module_id":"improvement_queue","module_name":"Improvement Queue","status":"watch","summary":"把 P2/P3 問題轉成逐一改善項目，避免一次大改。","operation_ids":["op-20260525-002","op-20260525-003","op-20260525-004","op-20260525-005","op-20260525-006","op-20260525-007"],"next_focus":"依 sort_score 逐一處理，不改核心 engine。"},
+    {"module_id":"observation_queue","module_name":"Observation Queue","status":"watch","summary":"管理樣本不足、M8 異常但信心不足、outcome observation、template observation only 的項目。","operation_ids":["op-20260525-008","op-20260525-009","op-20260525-010"],"next_focus":"累積 evidence，避免 observation 被誤認為正式結論。"},
+    {"module_id":"new_stock_onboarding","module_name":"New Stock Onboarding","status":"watch","summary":"新增股票時追蹤 universe、runtime、M7、M1、EPS、research card、pool/candidate 是否一致。","operation_ids":["op-20260525-006"],"next_focus":"未來將 onboarding checklist 轉成可追蹤 operation。"},
+    {"module_id":"market_fcn_intake","module_name":"Market FCN Intake (future)","status":"future","summary":"未來承接 AI 接收 LINE / market FCN 後的 M1/M2/M6/M7/M8 readiness check、綜合分析、推薦或 reject。","operation_ids":[],"next_focus":"等待 fcn_pool、market_fcn_history 與 MM Integrated AI Judgment Engine 穩定。"}
+  ],
+  "priority_levels": [
+    {"priority":"P0","definition":"workflow failure / runtime pipeline broken / stale runtime causing stale M1-M7-MM","action_bias":"優先處理，因為會阻斷 daily operation 或正式 judgment readiness"},
+    {"priority":"P1","definition":"stale M1-M7 / missing runtime / onboarding incomplete","action_bias":"影響正式 judgment readiness，需排在 research 類問題前"},
+    {"priority":"P2","definition":"missing research card / missing EPS / partial coverage / stale support data / observation queue","action_bias":"補強資料完整性、explainability 或累積 observation evidence"},
+    {"priority":"P3","definition":"document / mapping improvements","action_bias":"改善維護性與後續追蹤"}
+  ],
+  "queue_ordering_rules": [
+    "是否影響正式 judgment readiness",
+    "是否影響 runtime freshness",
+    "是否影響多模組",
+    "是否會造成錯誤 GOOD",
+    "是否重複發生",
+    "confidence 是否足夠",
+    "是否只是 observation 而非正式結論"
+  ],
+  "today_operations": [
+    {"operation_id":"op-20260525-001","queue_type":"maintenance","priority":"P0","confidence":0.98,"issue":"workflow_dependency_failure","reason":"daily-runtime-refresh 今日失敗；requirements.txt 缺失或 dependency install 失敗會阻斷每日 runtime 更新。","affected_file":".github/workflows/daily-runtime-refresh.yml / requirements.txt","affected_symbols":[],"suggested_action":"fix workflow dependency install","suggested_script":"manual workflow fix, then rerun daily-runtime-refresh","expected_impact":"恢復 daily runtime refresh，避免 market_runtime / long horizon runtime 逐步過期。","verification_target":["GitHub Actions daily-runtime-refresh success","data/market_runtime.json generated_at updated","data/runtime_staging/market_runtime_long_horizon.json generated_at updated","stale runtime count remains 0"],"operation_status":"detected","sort_score":100,"ordering_reason":"P0 + high confidence + runtime freshness + multi-module impact","observation_reason":"","observation_required_samples":0,"evolution_candidate_reason":""},
+    {"operation_id":"op-20260525-002","queue_type":"maintenance","priority":"P2","confidence":0.86,"issue":"stale_json_file","reason":"data/m7_sandbox/m7_formula_input_audit.json age is 30 days; recommended update cadence is 7 days.","affected_file":"data/m7_sandbox/m7_formula_input_audit.json","affected_symbols":[],"suggested_action":"refresh M7 formula input audit","suggested_script":"scripts/new/build_m7_formula_input_audit.py","expected_impact":"讓 M7 formula input audit 回到可觀察狀態，降低 M7 debug blind spot。","verification_target":["data/m7_sandbox/m7_formula_input_audit.json modified_at updated","freshness stale flag becomes false","dashboard stale_file_count reduced"],"operation_status":"detected","sort_score":54,"ordering_reason":"P2 + M7 support layer + stale beyond cadence","observation_reason":"","observation_required_samples":0,"evolution_candidate_reason":""},
+    {"operation_id":"op-20260525-003","queue_type":"maintenance","priority":"P2","confidence":0.82,"issue":"stale_json_file","reason":"data/m1/m1_stock_profile.json age is 32 days; recommended update cadence is 30 days.","affected_file":"data/m1/m1_stock_profile.json","affected_symbols":[],"suggested_action":"refresh stock profile workflow","suggested_script":"manual stock profile workflow","expected_impact":"改善 M1 explainability 與新增股票 onboarding 的基本資料完整性。","verification_target":["data/m1/m1_stock_profile.json modified_at updated","stock profile coverage reviewed","dashboard stale_file_count reduced"],"operation_status":"detected","sort_score":48,"ordering_reason":"P2 + M1 support data + stale beyond cadence","observation_reason":"","observation_required_samples":0,"evolution_candidate_reason":""},
+    {"operation_id":"op-20260525-004","queue_type":"maintenance","priority":"P2","confidence":0.82,"issue":"stale_json_file","reason":"data/m1/research_cards_raw.json age is 32 days; recommended update cadence is 30 days.","affected_file":"data/m1/research_cards_raw.json","affected_symbols":[],"suggested_action":"refresh research card source data","suggested_script":"manual research card workflow","expected_impact":"改善人工判斷與 M1/M7 間支援資料的可讀性。","verification_target":["data/m1/research_cards_raw.json modified_at updated","research card source count reviewed","dashboard stale_file_count reduced"],"operation_status":"detected","sort_score":46,"ordering_reason":"P2 + research support data + stale beyond cadence","observation_reason":"","observation_required_samples":0,"evolution_candidate_reason":""},
+    {"operation_id":"op-20260525-005","queue_type":"maintenance","priority":"P2","confidence":0.82,"issue":"stale_json_file","reason":"data/m1/competitive_cards.json age is 32 days; recommended update cadence is 30 days.","affected_file":"data/m1/competitive_cards.json","affected_symbols":[],"suggested_action":"refresh competitive cards","suggested_script":"scripts/generate_competitive_cards.js","expected_impact":"改善 competitive score explainability，避免 M1 支援資料過期。","verification_target":["data/m1/competitive_cards.json modified_at updated","competitive card count reviewed","dashboard stale_file_count reduced"],"operation_status":"detected","sort_score":45,"ordering_reason":"P2 + M1 explainability data + stale beyond cadence","observation_reason":"","observation_required_samples":0,"evolution_candidate_reason":""},
+    {"operation_id":"op-20260525-006","queue_type":"onboarding","priority":"P3","confidence":0.74,"issue":"missing_script_mapping","reason":"data/m1/universe_150.json currently has MISSING_SCRIPT_MAPPING and is likely manually maintained.","affected_file":"data/m1/universe_150.json","affected_symbols":[],"suggested_action":"document universe owner and update rule","suggested_script":"manual documentation","expected_impact":"降低新增股票時忘記維護 universe 的風險。","verification_target":["script mapping status documented","manual owner or producing workflow recorded","MISSING_SCRIPT_MAPPING count reduced if appropriate"],"operation_status":"detected","sort_score":30,"ordering_reason":"P3 + onboarding governance + maintenance clarity","observation_reason":"","observation_required_samples":0,"evolution_candidate_reason":""},
+    {"operation_id":"op-20260525-007","queue_type":"maintenance","priority":"P3","confidence":0.72,"issue":"missing_script_mapping","reason":"data/pool30.json currently has MISSING_SCRIPT_MAPPING and likely needs manual ownership documented.","affected_file":"data/pool30.json","affected_symbols":[],"suggested_action":"document pool30 owner and update rule","suggested_script":"manual pool review documentation","expected_impact":"讓 pool / candidate 更新責任更清楚，降低人工維護遺漏。","verification_target":["pool30 producing or manual review process documented","MISSING_SCRIPT_MAPPING count reduced if appropriate","MM / M1 dashboard links remain readable"],"operation_status":"detected","sort_score":28,"ordering_reason":"P3 + pool maintenance clarity","observation_reason":"","observation_required_samples":0,"evolution_candidate_reason":""},
+    {"operation_id":"op-20260525-008","queue_type":"observation","priority":"P2","confidence":0.42,"issue":"m8_beta_possible_under_adjustment","reason":"部分 market coupon 與目前 fair rate / beta intuition 可能出現落差，但樣本不足，不能直接改 beta。","affected_file":"data/mm/market_fcn_history.json / data/mm/m8_template_memory.json","affected_symbols":[],"suggested_action":"keep observing beta vs market coupon gap","suggested_script":"manual M8 observation review","expected_impact":"累積 beta evolution evidence，避免過早修正正式 beta。","verification_target":["至少累積 10 筆同類 template market coupon observations","標記是否存在穩定 coupon drift","不回寫 beta 或 fair rate"],"operation_status":"detected","sort_score":44,"ordering_reason":"P2 + observation + low confidence + future M8 evolution candidate","observation_reason":"目前只有方向性跡象，樣本不足以形成正式校準。","observation_required_samples":10,"evolution_candidate_reason":"若 market coupon 長期高於或低於 template fair level，未來可能形成 beta evolution candidate。"},
+    {"operation_id":"op-20260525-009","queue_type":"observation","priority":"P2","confidence":0.38,"issue":"template_coupon_drift_observation","reason":"某些 template coupon 水準可能與既有 template memory 不一致，但目前不能判定是市場 regime 還是樣本噪音。","affected_file":"data/mm/m8_template_surface.json / data/mm/market_fcn_history.json","affected_symbols":[],"suggested_action":"track template coupon drift without premium change","suggested_script":"manual template memory review","expected_impact":"建立 template premium adjustment 的觀察基礎。","verification_target":["至少累積 8 筆同 parent_template observations","記錄 market coupon range","不修改 template premium"],"operation_status":"detected","sort_score":41,"ordering_reason":"P2 + observation + template memory watch","observation_reason":"coupon drift 尚未有足夠樣本，不可視為正式 template premium adjustment。","observation_required_samples":8,"evolution_candidate_reason":"若 drift 持續，未來可能拆分子模板或建立新的 template premium rule。"},
+    {"operation_id":"op-20260525-010","queue_type":"evolution","priority":"P2","confidence":0.46,"issue":"template_split_candidate","reason":"部分 basket 可能同屬父模板但風險角色不同，未來可能需要拆成子模板。","affected_file":"data/mm/m8_template_memory.json / data/mm/m8_outcome_memory.json","affected_symbols":["NVDA","TSM","AMD","MU","GOOG","AAPL"],"suggested_action":"observe basket role and outcome before template split","suggested_script":"manual outcome observation review","expected_impact":"避免父模板過度泛化，為未來新模板推出做準備。","verification_target":["至少累積 6 筆同父模板 outcome observations","區分 structural core / tactical premium / suppressor / enhancer role","不立即拆模板"],"operation_status":"detected","sort_score":39,"ordering_reason":"P2 + evolution candidate + insufficient confidence","observation_reason":"目前是 evolution candidate，不是正式模板修正。","observation_required_samples":6,"evolution_candidate_reason":"若不同 basket role 的 outcome 長期分化，未來可拆小模板或推出新模板。"}
+  ],
+  "status_definitions": ["detected","reviewing","approved","executing","verifying","completed","rejected"],
+  "next_stage_automation": {
+    "name": "daily_operation_automation",
+    "target_flow": ["AI 接收 LINE / market FCN","M1 / M2 / M6 / M7 / M8 readiness check","系統資料與 runtime 診斷","output 綜合分析、推薦或 reject","maintain fcn_pool / market_fcn_history"],
+    "current_boundary": "v1 只建立人工 operation / observation center，不自動執行、不自動修復、不直接輸出投資建議。"
+  },
+  "raw_data_tools": {
+    "json_path": "data/mm/mm_operation_queue.json",
+    "search_fields": ["operation_id","queue_type","priority","confidence","issue","affected_file","suggested_action","suggested_script","operation_status"],
+    "logs": ["v1 does not execute operations automatically.","Observation is not a formal conclusion.","Confidence below 0.6 should stay observation-only unless manually promoted.","Verification targets are shown before any future execution layer is added."]
+  }
+}
