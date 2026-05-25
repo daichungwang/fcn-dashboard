@@ -7,108 +7,37 @@
 <title>MM Operation Queue Dashboard</title>
 <style>
 :root{--bg:#f4f6f8;--panel:#fff;--ink:#142033;--muted:#667085;--line:#d7dee8;--green:#057a55;--blue:#2563eb;--amber:#b7791f;--red:#b91c1c;--gray:#475467;--soft-green:#ecfdf3;--soft-blue:#eff6ff;--soft-amber:#fffbeb;--soft-red:#fef3f2;--soft-gray:#f8fafc;--shadow:0 6px 18px rgba(16,24,40,.06)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Microsoft JhengHei","Noto Sans TC",sans-serif}
-.page{max-width:1560px;margin:0 auto;padding:22px 16px 48px}
-.topbar{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:16px}
-h1{font-size:30px;margin:0}.subtitle{font-size:14px;color:var(--muted);line-height:1.65;margin-top:6px;max-width:980px}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-a.btn,button{border:1px solid #cbd5e1;border-radius:8px;background:#172033;color:#fff;padding:9px 12px;text-decoration:none;font-weight:800;cursor:pointer}
-a.btn.light,button.light{background:#fff;color:#172033}
-.card,.kpi{background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
-.card{padding:14px;margin-bottom:14px}.grid{display:grid;gap:12px}.summary{grid-template-columns:repeat(6,1fr);margin-bottom:14px}.priority-grid{grid-template-columns:repeat(4,1fr)}
-.kpi{padding:14px}.kpi-label{font-size:12px;color:var(--muted);font-weight:900}.kpi-value{font-size:28px;font-weight:950;margin-top:5px}.kpi-note{font-size:12px;color:var(--muted);line-height:1.45;margin-top:4px}
-.section-title{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}h2{font-size:18px;margin:0}.small{font-size:12px;color:var(--muted);line-height:1.55}
-.pill{display:inline-flex;align-items:center;border:1px solid #d8dee8;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:900;background:#f8fafc}
-.pill.p0{color:var(--red);background:var(--soft-red);border-color:#fecaca}.pill.p1{color:var(--amber);background:var(--soft-amber);border-color:#f1d99b}.pill.p2{color:var(--blue);background:var(--soft-blue);border-color:#bfdbfe}.pill.p3{color:var(--gray);background:var(--soft-gray);border-color:#d8dee8}.pill.good{color:var(--green);background:var(--soft-green);border-color:#b7ead3}
-.table-wrap{overflow:auto;max-height:560px;border:1px solid var(--line);border-radius:8px}table{width:100%;min-width:1380px;border-collapse:collapse;background:#fff}th,td{border-bottom:1px solid #edf1f7;padding:8px;text-align:left;vertical-align:top;font-size:12px}th{position:sticky;top:0;background:#f8fafc;color:#344054;z-index:1}
-.explain{background:#f8fbff;border:1px solid #dbeafe;border-radius:8px;padding:12px;line-height:1.75;font-size:14px;margin-bottom:12px}.error{background:#fef3f2;border:1px solid #fecaca;color:#991b1b;border-radius:8px;padding:12px;margin-bottom:12px}
-ul.clean{margin:0;padding-left:18px;line-height:1.65}
-@media(max-width:1100px){.topbar{display:block}.toolbar{margin-top:10px;justify-content:flex-start}.summary,.priority-grid{grid-template-columns:1fr}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,"Microsoft JhengHei","Noto Sans TC",sans-serif}.page{max-width:1680px;margin:0 auto;padding:18px 16px 40px}.topbar{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;margin-bottom:12px}h1{font-size:28px;margin:0}.subtitle{font-size:14px;color:var(--muted);line-height:1.6;margin-top:6px;max-width:1050px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}a.btn,button{border:1px solid #cbd5e1;border-radius:8px;background:#172033;color:#fff;padding:9px 12px;text-decoration:none;font-weight:800;cursor:pointer}a.btn.light,button.light{background:#fff;color:#172033}.card,.kpi,.module-btn{background:var(--panel);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}.card{padding:14px}.grid{display:grid;gap:12px}.top-grid{grid-template-columns:1.05fr 1fr 1fr;margin-bottom:12px}.summary-grid{grid-template-columns:repeat(6,1fr);margin-bottom:12px}.console{display:grid;grid-template-columns:280px 1fr;gap:12px;align-items:start}.left-nav{position:sticky;top:12px}.module-list{display:grid;gap:8px}.module-btn{width:100%;text-align:left;padding:11px;background:#fff;cursor:pointer}.module-btn.active{border-color:#2563eb;background:#eff6ff}.module-name{font-weight:900}.module-meta{font-size:12px;color:var(--muted);line-height:1.45;margin-top:4px}.bottom-panel{margin-top:12px}.kpi{padding:13px}.kpi-label{font-size:12px;color:var(--muted);font-weight:900}.kpi-value{font-size:26px;font-weight:950;margin-top:5px}.kpi-note{font-size:12px;color:var(--muted);line-height:1.45;margin-top:4px}.section-title{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}h2{font-size:18px;margin:0}h3{font-size:14px;margin:0 0 8px}.small{font-size:12px;color:var(--muted);line-height:1.55}.pill{display:inline-flex;align-items:center;border:1px solid #d8dee8;border-radius:999px;padding:4px 9px;font-size:12px;font-weight:900;background:#f8fafc;white-space:nowrap}.pill.p0,.pill.critical{color:var(--red);background:var(--soft-red);border-color:#fecaca}.pill.p1,.pill.watch{color:var(--amber);background:var(--soft-amber);border-color:#f1d99b}.pill.p2{color:var(--blue);background:var(--soft-blue);border-color:#bfdbfe}.pill.p3,.pill.future{color:var(--gray);background:var(--soft-gray);border-color:#d8dee8}.pill.good,.pill.ok{color:var(--green);background:var(--soft-green);border-color:#b7ead3}.table-wrap{overflow:auto;max-height:520px;border:1px solid var(--line);border-radius:8px}table{width:100%;min-width:1180px;border-collapse:collapse;background:#fff}th,td{border-bottom:1px solid #edf1f7;padding:8px;text-align:left;vertical-align:top;font-size:12px}th{position:sticky;top:0;background:#f8fafc;color:#344054;z-index:1}.explain{background:#f8fbff;border:1px solid #dbeafe;border-radius:8px;padding:12px;line-height:1.75;font-size:14px}.error{background:#fef3f2;border:1px solid #fecaca;color:#991b1b;border-radius:8px;padding:12px;margin-bottom:12px}ul.clean{margin:0;padding-left:18px;line-height:1.65}.raw-tools{display:grid;grid-template-columns:280px 1fr;gap:12px}.searchbox{width:100%;border:1px solid #cbd5e1;border-radius:8px;padding:10px;font-size:14px}pre{margin:0;white-space:pre-wrap;word-break:break-word;background:#0f172a;color:#e2e8f0;border-radius:8px;padding:12px;max-height:360px;overflow:auto;font-size:12px;line-height:1.5}@media(max-width:1180px){.topbar{display:block}.toolbar{margin-top:10px;justify-content:flex-start}.top-grid,.summary-grid,.console,.raw-tools{grid-template-columns:1fr}.left-nav{position:static}}
 </style>
 </head>
 <body>
 <div class="page">
-  <div class="topbar">
-    <div>
-      <h1>MM Operation Queue Dashboard</h1>
-      <div class="subtitle">把 System Data Pipeline Health 的 detect 結果轉成每日人工操作清單：排序、建議下一步、定義驗證目標，但不自動修復、不自動執行 scripts、不自動 commit。</div>
-    </div>
-    <div class="toolbar">
-      <button id="reloadBtn" class="light" type="button">Reload</button>
-      <a class="btn light" href="docs/codegraph/mm_operation_queue_design.md" target="_blank">Design Doc</a>
-      <a class="btn light" href="data/mm/mm_operation_queue.json" target="_blank">Queue JSON</a>
-      <a class="btn light" href="mm/data_pipeline_health_dashboard.html" target="_blank">Pipeline Health</a>
-    </div>
-  </div>
-
+  <div class="topbar"><div><h1>MM Operation Queue Dashboard</h1><div class="subtitle">Detect → Prioritize → Suggest Action → Human Confirm → Execute → Verify。v1 是工作派發中心，只協助排序、建議與驗證，不自動修復、不自動 rerun scripts、不自動 commit/push。</div></div><div class="toolbar"><button id="reloadBtn" class="light" type="button">Reload</button><a class="btn light" href="docs/codegraph/mm_operation_queue_design.md" target="_blank">Design Doc</a><a class="btn light" href="data/mm/mm_operation_queue.json" target="_blank">Queue JSON</a><a class="btn light" href="mm/data_pipeline_health_dashboard.html" target="_blank">Pipeline Health</a></div></div>
   <div id="errorBox"></div>
-  <section class="grid summary" id="summary"></section>
-
-  <section class="card">
-    <div class="section-title"><div><h2>A. Today Operations</h2><div class="small">今天的人工 operation queue，依 priority 與 sort_score 排序。v1 只輔助，不執行。</div></div></div>
-    <div class="table-wrap"><table><thead><tr><th>Priority</th><th>Status</th><th>Issue</th><th>Reason</th><th>Affected File</th><th>Symbols</th><th>Suggested Action</th><th>Suggested Script</th><th>Expected Impact</th><th>Verification Target</th><th>Score</th></tr></thead><tbody id="operationRows"></tbody></table></div>
-  </section>
-
-  <section class="card">
-    <div class="section-title"><div><h2>B. Priority Levels</h2><div class="small">P0 先處理，P3 偏維護性。這裡只定義排序，不代表自動執行。</div></div></div>
-    <div class="grid priority-grid" id="priorityGrid"></div>
-  </section>
-
-  <section class="card">
-    <div class="section-title"><div><h2>C. Suggested Action Layer</h2><div class="small">把 issue 翻成下一步人工動作。</div></div></div>
-    <div class="table-wrap"><table><thead><tr><th>Issue</th><th>Suggested Action</th><th>Suggested Script</th><th>Expected Impact</th></tr></thead><tbody id="actionRows"></tbody></table></div>
-  </section>
-
-  <section class="card">
-    <div class="section-title"><div><h2>D. Verification Layer</h2><div class="small">每個 operation 都要先定義修完後怎麼驗證。</div></div></div>
-    <div class="table-wrap"><table><thead><tr><th>Operation</th><th>Verification Target</th></tr></thead><tbody id="verificationRows"></tbody></table></div>
-  </section>
-
-  <section class="card">
-    <div class="section-title"><div><h2>E. Human Confirmation</h2><div class="small">operation status 只顯示流程位置，不觸發自動修復。</div></div></div>
-    <div class="explain" id="statusBox"></div>
-  </section>
-
-  <section class="card">
-    <div class="section-title"><div><h2>F. Queue Ordering</h2><div class="small">排序依據：正式 judgment、runtime freshness、多模組影響、錯誤 GOOD 風險、重複發生。</div></div></div>
-    <div class="explain" id="orderingBox"></div>
-  </section>
+  <section class="grid top-grid"><div class="card"><h2>System Health Summary</h2><div class="explain" id="systemHealthSummary"></div></div><div class="card"><h2>Today's Critical Issues</h2><div id="criticalIssues"></div></div><div class="card"><h2>Next Recommended Operations</h2><div id="nextOperations"></div></div></section>
+  <section class="grid summary-grid" id="summary"></section>
+  <main class="console"><aside class="card left-nav"><div class="section-title"><div><h2>Modules</h2><div class="small">左側選模組，右側看細節與相關 operation。</div></div></div><div class="module-list" id="moduleList"></div></aside>
+    <section class="card"><div class="section-title"><div><h2 id="moduleTitle">Selected Module Details</h2><div class="small" id="moduleSubtitle"></div></div><div id="moduleStatus"></div></div><div class="explain" id="moduleDetail"></div><div class="section-title" style="margin-top:12px"><div><h2>Today Operations</h2><div class="small">依 priority 與 sort_score 排序，協助人工逐一改善。</div></div></div><div class="table-wrap"><table><thead><tr><th>Priority</th><th>Status</th><th>Issue</th><th>Reason</th><th>Affected File</th><th>Symbols</th><th>Suggested Action</th><th>Suggested Script</th><th>Expected Impact</th><th>Verification Target</th><th>Score</th></tr></thead><tbody id="operationRows"></tbody></table></div><div class="grid top-grid" style="margin-top:12px"><div class="card"><h3>Priority Levels</h3><div id="priorityGrid"></div></div><div class="card"><h3>Human Confirmation</h3><div id="statusBox"></div></div><div class="card"><h3>Queue Ordering</h3><div id="orderingBox"></div></div></div></section></main>
+  <section class="card bottom-panel"><div class="section-title"><div><h2>Raw Data / JSON / Search / Logs</h2><div class="small">底部保留原始資料、搜尋與操作紀錄，方便檢查 dashboard 顯示是否對得上 JSON。</div></div></div><div class="raw-tools"><div><input id="searchBox" class="searchbox" type="search" placeholder="Search operation / file / action" /><div class="explain" style="margin-top:10px" id="logsBox"></div></div><pre id="rawJson"></pre></div></section>
 </div>
-
 <script>
 const QUEUE_PATH="data/mm/mm_operation_queue.json";
-const $=id=>document.getElementById(id);
+const $=id=>document.getElementById(id);let state={data:null,selectedModule:"data_pipeline",query:""};
 const value=(v,fallback="")=>v===undefined||v===null?fallback:v;
 const esc=v=>String(value(v)).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
 const priorityClass=p=>String(p||"").toLowerCase();
 const pill=(text,type="p3")=>`<span class="pill ${type}">${esc(text)}</span>`;
 const list=items=>`<ul class="clean">${(items||[]).map(item=>`<li>${esc(item)}</li>`).join("")}</ul>`;
 async function loadJson(path){const res=await fetch(path,{cache:"no-store"});if(!res.ok)throw new Error(`${path} ${res.status}`);return res.json();}
-function render(data){
-  const s=data.summary||{};
-  $("summary").innerHTML=[
-    ["today_p0_count",value(s.today_p0_count,0),"今天 P0"],
-    ["today_p1_count",value(s.today_p1_count,0),"今天 P1"],
-    ["stale_runtime_count",value(s.stale_runtime_count,0),"runtime 過期"],
-    ["onboarding_incomplete_count",value(s.onboarding_incomplete_count,0),"onboarding 未完成"],
-    ["pending_operations",value(s.pending_operations,0),"待處理"],
-    ["completed_today",value(s.completed_today,0),"今日完成"]
-  ].map(([a,b,c])=>`<div class="kpi"><div class="kpi-label">${a}</div><div class="kpi-value">${esc(b)}</div><div class="kpi-note">${esc(c)}</div></div>`).join("");
-
-  const operations=[...(data.today_operations||[])].sort((a,b)=>(b.sort_score||0)-(a.sort_score||0));
-  $("operationRows").innerHTML=operations.map(op=>`<tr><td>${pill(op.priority,priorityClass(op.priority))}</td><td>${pill(op.operation_status,"p3")}</td><td>${esc(op.issue)}</td><td>${esc(op.reason)}</td><td>${esc(op.affected_file)}</td><td>${esc((op.affected_symbols||[]).join(", "))}</td><td>${esc(op.suggested_action)}</td><td>${esc(op.suggested_script)}</td><td>${esc(op.expected_impact)}</td><td>${list(op.verification_target)}</td><td>${esc(op.sort_score)}</td></tr>`).join("");
-
-  $("priorityGrid").innerHTML=(data.priority_levels||[]).map(p=>`<div class="kpi"><div class="kpi-label">${pill(p.priority,priorityClass(p.priority))}</div><div class="kpi-note">${esc(p.definition)}</div><div class="kpi-note">${esc(p.action_bias)}</div></div>`).join("");
-
-  $("actionRows").innerHTML=operations.map(op=>`<tr><td>${esc(op.issue)}</td><td>${esc(op.suggested_action)}</td><td>${esc(op.suggested_script)}</td><td>${esc(op.expected_impact)}</td></tr>`).join("");
-  $("verificationRows").innerHTML=operations.map(op=>`<tr><td>${esc(op.operation_id)}<br>${esc(op.issue)}</td><td>${list(op.verification_target)}</td></tr>`).join("");
-  $("statusBox").innerHTML=list(data.status_definitions||[]);
-  $("orderingBox").innerHTML=`${list(data.queue_ordering_rules||[])}<div class="small">目前所有 operations 都停在 detected；人工確認後才可進入 reviewing / approved / executing / verifying / completed。</div>`;
-}
-async function init(){try{$("errorBox").innerHTML="";render(await loadJson(QUEUE_PATH));}catch(err){$("errorBox").innerHTML=`<div class="error">資料載入失敗：${esc(err.message)}</div>`;}}
-$("reloadBtn").addEventListener("click",init);
-init();
+function getOperations(data){const operations=[...(data.today_operations||[])].sort((a,b)=>(b.sort_score||0)-(a.sort_score||0));const module=(data.modules||[]).find(m=>m.module_id===state.selectedModule);const ids=new Set(module?.operation_ids||[]);let rows=ids.size?operations.filter(op=>ids.has(op.operation_id)):operations;if(state.query){const q=state.query.toLowerCase();rows=rows.filter(op=>JSON.stringify(op).toLowerCase().includes(q));}return rows;}
+function renderTop(data){const top=data.top_console||{};$("systemHealthSummary").textContent=top.system_health_summary||"尚無 summary。";$("criticalIssues").innerHTML=list(top.todays_critical_issues||[]);$("nextOperations").innerHTML=list(top.next_recommended_operations||[]);const s=data.summary||{};$("summary").innerHTML=[["today_p0_count",value(s.today_p0_count,0),"今日 P0"],["today_p1_count",value(s.today_p1_count,0),"今日 P1"],["stale_runtime_count",value(s.stale_runtime_count,0),"Runtime 過期"],["onboarding_incomplete_count",value(s.onboarding_incomplete_count,0),"Onboarding 未完成"],["pending_operations",value(s.pending_operations,0),"待處理"],["completed_today",value(s.completed_today,0),"今日完成"]].map(([a,b,c])=>`<div class="kpi"><div class="kpi-label">${a}</div><div class="kpi-value">${esc(b)}</div><div class="kpi-note">${esc(c)}</div></div>`).join("");}
+function renderModules(data){$("moduleList").innerHTML=(data.modules||[]).map(m=>`<button class="module-btn ${m.module_id===state.selectedModule?"active":""}" type="button" data-module="${esc(m.module_id)}"><div class="module-name">${esc(m.module_name)} ${pill(m.status,m.status)}</div><div class="module-meta">${esc(m.summary)}</div></button>`).join("");document.querySelectorAll("[data-module]").forEach(btn=>btn.addEventListener("click",()=>{state.selectedModule=btn.dataset.module;render(state.data);}));}
+function renderSelectedModule(data){const module=(data.modules||[]).find(m=>m.module_id===state.selectedModule)||(data.modules||[])[0]||{};$("moduleTitle").textContent=module.module_name||"Selected Module Details";$("moduleSubtitle").textContent=module.next_focus||"";$("moduleStatus").innerHTML=pill(module.status||"unknown",module.status||"p3");$("moduleDetail").innerHTML=`<strong>模組狀態：</strong>${esc(module.summary||"")}<br><strong>下一步：</strong>${esc(module.next_focus||"")}`;}
+function renderOperations(data){const rows=getOperations(data);$("operationRows").innerHTML=rows.map(op=>`<tr><td>${pill(op.priority,priorityClass(op.priority))}</td><td>${pill(op.operation_status,"p3")}</td><td>${esc(op.issue)}</td><td>${esc(op.reason)}</td><td>${esc(op.affected_file)}</td><td>${esc((op.affected_symbols||[]).join(", "))}</td><td>${esc(op.suggested_action)}</td><td>${esc(op.suggested_script)}</td><td>${esc(op.expected_impact)}</td><td>${list(op.verification_target)}</td><td>${esc(op.sort_score)}</td></tr>`).join("")||`<tr><td colspan="11">此模組目前沒有符合條件的 operation。</td></tr>`;}
+function renderSupport(data){$("priorityGrid").innerHTML=(data.priority_levels||[]).map(p=>`<div style="margin-bottom:10px">${pill(p.priority,priorityClass(p.priority))}<div class="small">${esc(p.definition)}</div><div class="small">${esc(p.action_bias)}</div></div>`).join("");$("statusBox").innerHTML=list(data.status_definitions||[]);$("orderingBox").innerHTML=list(data.queue_ordering_rules||[]);$("logsBox").innerHTML=list(data.raw_data_tools?.logs||[]);$("rawJson").textContent=JSON.stringify(data,null,2);}
+function render(data){state.data=data;renderTop(data);renderModules(data);renderSelectedModule(data);renderOperations(data);renderSupport(data);}
+async function init(){try{$("errorBox").innerHTML="";render(await loadJson(QUEUE_PATH));}catch(err){$("errorBox").innerHTML=`<div class="error">資料讀取失敗：${esc(err.message)}</div>`;}}
+$("reloadBtn").addEventListener("click",init);$("searchBox").addEventListener("input",event=>{state.query=event.target.value.trim();if(state.data)renderOperations(state.data);});init();
 </script>
 </body>
 </html>
