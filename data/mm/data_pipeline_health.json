@@ -1,0 +1,364 @@
+{
+  "version": "data_pipeline_health_v1",
+  "generated_at": "2026-05-25T00:00:00+08:00",
+  "policy": {
+    "auto_repair": false,
+    "auto_add_stock_data": false,
+    "auto_modify_m1_scores": false,
+    "auto_modify_m7_scores": false,
+    "mode": "detect_inventory_dashboard_only"
+  },
+  "health_score": {
+    "pipeline_health_score": 80,
+    "critical_missing_count": 0,
+    "stale_file_count": 4,
+    "missing_symbol_count": 0,
+    "next_action_priority": "stale_json_file"
+  },
+  "stock_coverage": {
+    "universe_count": 154,
+    "candidate_count": 100,
+    "pool30_count": 53,
+    "market_runtime_count": 155,
+    "m7_v2_scores_count": 155,
+    "m1_scores_count": 219,
+    "universe_candidate_overlap": 100,
+    "universe_pool30_overlap": 52,
+    "universe_runtime_overlap": 154,
+    "universe_m7_overlap": 154,
+    "universe_m1_overlap": 154
+  },
+  "missing_symbols": {
+    "universe_in_market_runtime_missing": {
+      "count": 0,
+      "symbols": []
+    },
+    "universe_in_m7_v2_scores_missing": {
+      "count": 0,
+      "symbols": []
+    },
+    "universe_in_m1_scores_missing": {
+      "count": 0,
+      "symbols": []
+    },
+    "candidate_in_m1_scores_missing": {
+      "count": 0,
+      "symbols": []
+    },
+    "pool30_in_m7_missing": {
+      "count": 0,
+      "symbols": []
+    },
+    "pool30_in_m1_missing": {
+      "count": 0,
+      "symbols": []
+    }
+  },
+  "freshness_check": [
+    {
+      "file": "data/m1/universe_150.json",
+      "updated_at": null,
+      "generated_at": null,
+      "modified_at": "2026-05-22T13:22:42.246Z",
+      "age_days": 2,
+      "recommended_update_days": 30,
+      "stale": false,
+      "source": null,
+      "symbol_count": 154
+    },
+    {
+      "file": "data/m1/m1_candidate_80.json",
+      "updated_at": null,
+      "generated_at": null,
+      "modified_at": "2026-05-23T08:43:08.399Z",
+      "age_days": 1,
+      "recommended_update_days": 7,
+      "stale": false,
+      "source": null,
+      "symbol_count": 100
+    },
+    {
+      "file": "data/pool30.json",
+      "updated_at": null,
+      "generated_at": null,
+      "modified_at": "2026-05-22T13:23:52.496Z",
+      "age_days": 2,
+      "recommended_update_days": 7,
+      "stale": false,
+      "source": null,
+      "symbol_count": 53
+    },
+    {
+      "file": "data/market_runtime.json",
+      "updated_at": null,
+      "generated_at": "2026-05-23T08:33:04.995217+00:00",
+      "modified_at": "2026-05-23T08:33:05.068Z",
+      "age_days": 1,
+      "recommended_update_days": 2,
+      "stale": false,
+      "source": "scripts/update_market_runtime.py",
+      "symbol_count": 155
+    },
+    {
+      "file": "data/runtime_staging/market_runtime_long_horizon.json",
+      "updated_at": null,
+      "generated_at": "2026-05-23T08:33:04.995217+00:00",
+      "modified_at": "2026-05-23T08:33:05.143Z",
+      "age_days": 1,
+      "recommended_update_days": 2,
+      "stale": false,
+      "source": "scripts/update_market_runtime.py",
+      "symbol_count": 155
+    },
+    {
+      "file": "data/m7_sandbox/m7_v2_scores.json",
+      "updated_at": null,
+      "generated_at": "2026-05-23T14:35:47.449691+00:00",
+      "modified_at": "2026-05-23T14:35:47.519Z",
+      "age_days": 1,
+      "recommended_update_days": 7,
+      "stale": false,
+      "source": null,
+      "symbol_count": 155
+    },
+    {
+      "file": "data/m7_sandbox/m7_formula_input_audit.json",
+      "updated_at": null,
+      "generated_at": null,
+      "modified_at": "2026-04-24T12:47:03.873Z",
+      "age_days": 30,
+      "recommended_update_days": 7,
+      "stale": true,
+      "source": null,
+      "symbol_count": 33
+    },
+    {
+      "file": "data/m1/m1_scores.json",
+      "updated_at": "2026-05-23T04:09:16.431896+00:00",
+      "generated_at": null,
+      "modified_at": "2026-05-23T04:09:17.288Z",
+      "age_days": 1,
+      "recommended_update_days": 7,
+      "stale": false,
+      "source": "scripts/build_m1_scores.py",
+      "symbol_count": 219
+    },
+    {
+      "file": "data/m1/m1_stock_profile.json",
+      "updated_at": null,
+      "generated_at": null,
+      "modified_at": "2026-04-23T03:45:53.745Z",
+      "age_days": 32,
+      "recommended_update_days": 30,
+      "stale": true,
+      "source": null,
+      "symbol_count": 11
+    },
+    {
+      "file": "data/m1/research_cards_raw.json",
+      "updated_at": null,
+      "generated_at": null,
+      "modified_at": "2026-04-23T03:45:53.745Z",
+      "age_days": 32,
+      "recommended_update_days": 30,
+      "stale": true,
+      "source": null,
+      "symbol_count": 1
+    },
+    {
+      "file": "data/m1/eps_history_ai.json",
+      "updated_at": null,
+      "generated_at": null,
+      "modified_at": "2026-05-23T13:02:50.357Z",
+      "age_days": 1,
+      "recommended_update_days": 30,
+      "stale": false,
+      "source": null,
+      "symbol_count": 3
+    },
+    {
+      "file": "data/m1/competitive_cards.json",
+      "updated_at": null,
+      "generated_at": null,
+      "modified_at": "2026-04-23T03:45:53.729Z",
+      "age_days": 32,
+      "recommended_update_days": 30,
+      "stale": true,
+      "source": null,
+      "symbol_count": 5
+    }
+  ],
+  "required_script_map": [
+    {
+      "file": "data/m1/universe_150.json",
+      "scripts": [],
+      "mapping_status": "MISSING_SCRIPT_MAPPING"
+    },
+    {
+      "file": "data/m1/m1_candidate_80.json",
+      "scripts": [
+        "scripts/build_m1_candidate_80.py"
+      ],
+      "mapping_status": "mapped"
+    },
+    {
+      "file": "data/pool30.json",
+      "scripts": [],
+      "mapping_status": "MISSING_SCRIPT_MAPPING"
+    },
+    {
+      "file": "data/market_runtime.json",
+      "scripts": [
+        "scripts/update_market_runtime.py"
+      ],
+      "mapping_status": "mapped"
+    },
+    {
+      "file": "data/runtime_staging/market_runtime_long_horizon.json",
+      "scripts": [
+        "scripts/update_market_runtime.py",
+        "scripts/runtime/build_market_runtime_long_horizon.py"
+      ],
+      "mapping_status": "mapped"
+    },
+    {
+      "file": "data/m7_sandbox/m7_v2_scores.json",
+      "scripts": [
+        "scripts/new/build_m7_v2_scores.py"
+      ],
+      "mapping_status": "mapped"
+    },
+    {
+      "file": "data/m7_sandbox/m7_formula_input_audit.json",
+      "scripts": [
+        "scripts/new/build_m7_formula_input_audit.py"
+      ],
+      "mapping_status": "mapped"
+    },
+    {
+      "file": "data/m1/m1_scores.json",
+      "scripts": [
+        "scripts/build_m1_scores.py"
+      ],
+      "mapping_status": "mapped"
+    },
+    {
+      "file": "data/m1/m1_stock_profile.json",
+      "scripts": [
+        "manual stock profile workflow"
+      ],
+      "mapping_status": "mapped"
+    },
+    {
+      "file": "data/m1/research_cards_raw.json",
+      "scripts": [
+        "manual research card workflow"
+      ],
+      "mapping_status": "mapped"
+    },
+    {
+      "file": "data/m1/eps_history_ai.json",
+      "scripts": [
+        "scripts/m1/build_eps_history.py"
+      ],
+      "mapping_status": "mapped"
+    },
+    {
+      "file": "data/m1/competitive_cards.json",
+      "scripts": [
+        "scripts/generate_competitive_cards.js"
+      ],
+      "mapping_status": "mapped"
+    }
+  ],
+  "new_stock_onboarding_checklist": [
+    {
+      "step": 1,
+      "item": "?? universe_150.json",
+      "target_file": "data/m1/universe_150.json",
+      "script": "manual"
+    },
+    {
+      "step": 2,
+      "item": "? stock profile / research card",
+      "target_file": "data/m1/m1_stock_profile.json / data/m1/research_cards_raw.json",
+      "script": "manual or research-card builder"
+    },
+    {
+      "step": 3,
+      "item": "?? market_runtime",
+      "target_file": "data/market_runtime.json",
+      "script": "scripts/update_market_runtime.py"
+    },
+    {
+      "step": 4,
+      "item": "?? long horizon runtime",
+      "target_file": "data/runtime_staging/market_runtime_long_horizon.json",
+      "script": "scripts/runtime/build_market_runtime_long_horizon.py"
+    },
+    {
+      "step": 5,
+      "item": "?? EPS / competitive score",
+      "target_file": "data/m1/eps_history_ai.json / data/m1/competitive_cards.json",
+      "script": "scripts/m1/build_eps_history.py / scripts/generate_competitive_cards.js"
+    },
+    {
+      "step": 6,
+      "item": "?? M7 v2 score",
+      "target_file": "data/m7_sandbox/m7_v2_scores.json",
+      "script": "scripts/new/build_m7_v2_scores.py"
+    },
+    {
+      "step": 7,
+      "item": "?? M1 score",
+      "target_file": "data/m1/m1_scores.json",
+      "script": "scripts/build_m1_scores.py"
+    },
+    {
+      "step": 8,
+      "item": "?? pool/candidate",
+      "target_file": "data/pool30.json / data/m1/m1_candidate_80.json",
+      "script": "scripts/build_m1_candidate_80.py or manual pool review"
+    },
+    {
+      "step": 9,
+      "item": "?? MM / M1 ????",
+      "target_file": "mm dashboards / m1 pages",
+      "script": "manual dashboard check"
+    }
+  ],
+  "next_10_fix_items": [
+    {
+      "issue": "stale_json_file",
+      "affected_file": "data/m7_sandbox/m7_formula_input_audit.json",
+      "affected_symbols": [],
+      "suggested_script": "scripts/new/build_m7_formula_input_audit.py",
+      "priority": "P2",
+      "reason": "data/m7_sandbox/m7_formula_input_audit.json age is 30 days; recommended update cadence is 7 days."
+    },
+    {
+      "issue": "stale_json_file",
+      "affected_file": "data/m1/m1_stock_profile.json",
+      "affected_symbols": [],
+      "suggested_script": "manual stock profile workflow",
+      "priority": "P2",
+      "reason": "data/m1/m1_stock_profile.json age is 32 days; recommended update cadence is 30 days."
+    },
+    {
+      "issue": "stale_json_file",
+      "affected_file": "data/m1/research_cards_raw.json",
+      "affected_symbols": [],
+      "suggested_script": "manual research card workflow",
+      "priority": "P2",
+      "reason": "data/m1/research_cards_raw.json age is 32 days; recommended update cadence is 30 days."
+    },
+    {
+      "issue": "stale_json_file",
+      "affected_file": "data/m1/competitive_cards.json",
+      "affected_symbols": [],
+      "suggested_script": "scripts/generate_competitive_cards.js",
+      "priority": "P2",
+      "reason": "data/m1/competitive_cards.json age is 32 days; recommended update cadence is 30 days."
+    }
+  ]
+}
