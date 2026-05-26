@@ -148,15 +148,29 @@ function exposeM2RuntimeContext(){
       bank_planning_base_wan[bank]=Math.floor(bankBase/10000);
     });
 
-    const confirmed_maturity=sum(maturity);
+    // Stage logic：
+    // 1) 第一階段只吃「確認出場」= 提早出場 + 滿期安全。
+    // 2) 第二 / 三階段吃「預計出場」= 預計滿期/觀察 + 預計提前到期，並以萬為單位切半。
+    //    第二階段 = floor(預計出場萬 / 2)，第三階段 = 預計出場萬 - 第二階段。
+    const safeMaturity=maturity.filter(x=>x.maturity_state==='safe_maturity');
+    const expectedMaturityRows=maturity.filter(x=>x.maturity_state!=='safe_maturity');
+
+    const confirmed_maturity=sum(safeMaturity);
     const confirmed_early_exit=sum(ready);
     const confirmed_assignment=0;
-    const expected_maturity=0;
+    const expected_maturity=sum(expectedMaturityRows);
     const expected_early_exit=sum(candidate);
     const expected_assignment=0;
 
+    const confirmedTotal=confirmed_maturity+confirmed_early_exit-confirmed_assignment;
+    const expectedTotal=expected_maturity+expected_early_exit-expected_assignment;
+    const stage1Wan=Math.max(0,Math.floor(confirmedTotal/10000));
+    const expectedPoolWan=Math.max(0,Math.floor(expectedTotal/10000));
+    const stage2Wan=Math.floor(expectedPoolWan/2);
+    const stage3Wan=expectedPoolWan-stage2Wan;
+
     window.__M2_RUNTIME_CONTEXT__={
-      version:'v070d_runtime_context_stage_caps',
+      version:'v070e_runtime_context_stage_split',
       groups:g,
 
       strategy_amounts,
@@ -180,8 +194,10 @@ function exposeM2RuntimeContext(){
       expected_early_exit_wan:Math.floor(expected_early_exit/10000),
       expected_assignment_wan:Math.floor(expected_assignment/10000),
 
-      stage1_available_wan:Math.max(0,Math.floor((confirmed_maturity+confirmed_early_exit-confirmed_assignment)/10000)),
-      expected_pool_wan:Math.max(0,Math.floor((expected_maturity+expected_early_exit-expected_assignment)/10000)),
+      stage1_available_wan:stage1Wan,
+      stage2_available_wan:stage2Wan,
+      stage3_available_wan:stage3Wan,
+      expected_pool_wan:expectedPoolWan,
 
       updated_at:new Date().toISOString()
     };
