@@ -1,6 +1,6 @@
 {
-  "version": "mm_system_operations_evolution_center_v1_approval_lifecycle",
-  "generated_at": "2026-05-25T00:00:00+08:00",
+  "version": "mm_system_operations_evolution_center_v1_1_focused_layout",
+  "generated_at": "2026-05-26T00:00:00+08:00",
   "scope": {
     "target": "ai_assisted_system_operations_center",
     "not_target": "single_investment_decision_or_fcn_recommendation",
@@ -20,28 +20,22 @@
     "mode": "detect_only_operation_assist_observation_assist_human_lifecycle"
   },
   "summary": {
-    "today_p0_count": 1,
     "waiting_approval_count": 4,
     "executing_operations_count": 1,
     "verifying_operations_count": 1,
     "completed_today": 1,
     "rejected_or_observation_count": 3,
-    "maintenance_count": 5,
-    "onboarding_count": 1,
-    "runtime_count": 1,
-    "observation_count": 3,
-    "evolution_count": 3,
     "pending_operations": 9
   },
-  "top_console": {
-    "system_health_summary": "本中心已加入 Approval & Execution Lifecycle：系統發現問題後，先提出建議，等待人工核可，再進入執行、驗證與結果回饋。v1 只做 UI / JSON state，不自動修復。",
+  "system_summary": {
+    "system_health_summary": "目前中心已收斂為系統營運與演化 console：頂部只保留 5 個 action KPI，其餘資訊依 module 呈現。v1.1 仍只做 UI / JSON state，不自動修復。",
     "todays_critical_issues": [
       "daily-runtime-refresh dependency issue 目前進入 verifying，需確認 GitHub Actions 與 runtime freshness。",
       "M7 formula input audit 與 M1 support data 有 stale 狀態，部分項目等待人工核可。",
-      "M8 beta/template/coupon 相關項目維持 observation，不進正式公式。"
+      "M8 beta / template / coupon 相關項目維持 observation，不進正式公式。"
     ],
     "next_recommended_operations": [
-      "先看 Waiting For Approval，核可或拒絕今日要處理的 operation。",
+      "先處理 Waiting For Approval 的 4 個資料鏈 operation。",
       "確認 verifying operation 的 verification_result 是否 passed。",
       "M8 observation 項目只累積樣本，不直接改 fair rate、beta 或 premium。"
     ]
@@ -53,25 +47,9 @@
     "completed_today": ["op-20260525-007"],
     "rejected_or_observation_only": ["op-20260525-008", "op-20260525-009", "op-20260525-010"]
   },
-  "operation_status_definitions": [
-    "detected",
-    "reviewing",
-    "waiting_approval",
-    "approved",
-    "executing",
-    "verifying",
-    "completed",
-    "rejected",
-    "observation"
-  ],
-  "queue_type_definitions": [
-    {"queue_type":"maintenance","definition":"workflow failure / stale runtime / stale M1-M7 / dependency issues"},
-    {"queue_type":"onboarding","definition":"new stock onboarding incomplete / missing research card / missing EPS / missing M7-M1"},
-    {"queue_type":"runtime","definition":"runtime freshness / runtime coverage / workflow monitoring / stale market runtime"},
-    {"queue_type":"observation","definition":"樣本不足、outcome observation、M8 abnormal but insufficient confidence、template observation only"},
-    {"queue_type":"evolution","definition":"M8 beta evolution candidate / new template split candidate / template premium adjustment observation / market coupon structural drift"}
-  ],
   "modules": [
+    {"module_id":"today_action_center","module_name":"Today Action Center","status":"watch","summary":"今日核可、執行、驗證與完成狀態。","operation_ids":["op-20260525-001","op-20260525-002","op-20260525-003","op-20260525-004","op-20260525-005","op-20260525-006","op-20260525-007","op-20260525-008","op-20260525-009","op-20260525-010"],"next_focus":"先看 waiting approval，再看 verifying result。"},
+    {"module_id":"system_summary","module_name":"System Summary","status":"watch","summary":"系統健康摘要、今日關鍵問題與下一步建議。","operation_ids":[],"next_focus":"只做總覽，不直接執行。"},
     {"module_id":"data_pipeline","module_name":"Data Pipeline","status":"watch","summary":"追蹤 M1 150 檔 universe、新股補資料、深度研究卡、script mapping、coverage 與 pipeline health。","operation_ids":["op-20260525-002","op-20260525-003","op-20260525-004","op-20260525-005","op-20260525-006","op-20260525-007"],"next_focus":"先處理等待核可的 stale support data，再補 script mapping ownership。"},
     {"module_id":"runtime_health","module_name":"Runtime Health","status":"verifying","summary":"追蹤 daily / weekly 必跑程式，例如 market runtime、long horizon runtime、M7 score、M1 score 是否正常運作。","operation_ids":["op-20260525-001"],"next_focus":"確認 workflow 修復後 runtime 更新鏈能持續運轉。"},
     {"module_id":"workflow_health","module_name":"Workflow Health","status":"verifying","summary":"daily-runtime-refresh dependency issue 進入 verifying。","operation_ids":["op-20260525-001"],"next_focus":"確認 GitHub Actions rerun success 與 runtime freshness。"},
@@ -102,6 +80,6 @@
   "raw_data_tools": {
     "json_path": "data/mm/mm_operation_queue.json",
     "search_fields": ["operation_id","queue_type","priority","confidence","issue","affected_file","suggested_action","operation_status","verification_result"],
-    "logs": ["v1 does not execute operations automatically.","Approval buttons are UI-only placeholders in v1.","Observation is not a formal conclusion.","Verification result and result feedback are recorded as JSON state."]
+    "logs": ["v1.1 focused layout keeps only 5 KPI boxes on top.","Today Action Center and System Summary are now modules.","Approval buttons are UI-only placeholders.","Observation is not a formal conclusion."]
   }
 }
