@@ -1,88 +1,77 @@
 # MM System Operations & Evolution Center v1
 
 更新日期：2026-05-26  
-範圍：MM system operations / approval lifecycle / execution lifecycle / verification / result feedback  
-模式：detect-only + operation-assist + observation-assist + human-in-the-loop lifecycle
+範圍：MM system operations / local approval lifecycle / browser state  
+模式：detect-only + operation-assist + local-only approval state
 
-## 1. 版面收斂
+## 1. Focused Layout
 
-目前 dashboard 的上方區塊已經太重，容易失焦。v1.1 版面改成：
-
-```text
-Top:
-  只保留 5 個 KPI 框
-  - Waiting For Approval
-  - Executing
-  - Verifying
-  - Completed Today
-  - Rejected / Observation Only
-
-Left Modules:
-  1. Today Action Center
-  2. System Summary
-  3. Data Pipeline
-  4. Runtime Health
-  5. Workflow Health
-  6. M8 Evolution
-  7. Template Memory
-  8. Improvement Queue
-  9. Observation Queue
-  10. New Stock Onboarding
-  11. Market FCN Intake (future)
-
-Right:
-  Selected module details
-
-Bottom:
-  Raw Data / JSON / Search / Logs
-```
-
-## 2. 模組責任
-
-`Today Action Center` 是第一個 module，負責顯示：
+Dashboard 頂部只保留 5 個 KPI：
 
 - Waiting For Approval
-- Executing Operations
-- Verification Results
-- Approval Queue placeholder buttons
+- Executing
+- Verifying
+- Completed Today
+- Rejected / Observation Only
 
-`System Summary` 是第二個 module，負責顯示原本 dashboard 上方三個主框：
+其他資訊都放進 modules：
 
-- System Health Summary
-- Today's Critical Issues
-- Next Recommended Operations
+1. Today Action Center
+2. System Summary
+3. Data Pipeline
+4. Runtime Health
+5. Workflow Health
+6. M8 Evolution
+7. Template Memory
+8. Improvement Queue
+9. Observation Queue
+10. New Stock Onboarding
+11. Market FCN Intake (future)
 
-因此 dashboard 頂部不再放大段文字，只保留 5 個 action KPI，讓使用者一打開就知道今天最需要處理什麼。
+## 2. Local Approval State
 
-## 3. Lifecycle
+v1 按鈕只改瀏覽器本機狀態，不修改 GitHub 檔案、不改 JSON、不執行 script。
 
-完整 lifecycle 仍保留：
+狀態保存在：
 
 ```text
-Detect -> Analyze -> Recommend -> Human Approve -> Execute -> Verify -> Result Feedback
+window.localStorage["mm_operation_queue_local_state_v1"]
 ```
 
-operation status：
+## 3. Button Behavior
 
-- `detected`
-- `reviewing`
-- `waiting_approval`
-- `approved`
-- `executing`
-- `verifying`
-- `completed`
-- `rejected`
-- `observation`
+### Approve
+
+- `operation_status` 改成 `approved`
+- `approved_by` 改成 `manual`
+- `approved_at` 改成目前時間
+- 從 Waiting For Approval 移出
+- 顯示在 Approved / Ready to Execute
+
+### Reject
+
+- `operation_status` 改成 `rejected`
+- `verification_result` 改成 `not_started`
+- 移到 Rejected / Observation
+
+### Observation Only
+
+- `operation_status` 改成 `observation`
+- `verification_result` 改成 `observation_only`
+- 移到 Observation
+
+### Reset Local State
+
+清除 localStorage，回到 JSON 原始狀態。
 
 ## 4. Guardrails
 
 目前不做：
 
-- 不做 auto repair。
-- 不自動 rerun scripts。
+- 不自動 rerun script。
 - 不自動 commit / push。
-- 不自動修改 M8 / M1 / M7 engine。
+- 不修改 GitHub 檔案。
+- 不改 engine。
 - 不修改正式 fair rate。
-- 不把 observation 當成正式結論。
 
-Approval buttons 目前只是 UI placeholder，不會真的寫回 JSON 或執行 script。
+UI 必須明確提示：目前只是 local approval，不會真的執行 script。
