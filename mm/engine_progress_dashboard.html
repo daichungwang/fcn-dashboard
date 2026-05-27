@@ -28,23 +28,819 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);color:var(--ink);font-family:"Segoe UI","Noto Sans TC",Arial,sans-serif;font-size:14px}
+body{
+  margin:0;
+  background:linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);
+  color:var(--ink);
+  font-family:"Segoe UI","Noto Sans TC",Arial,sans-serif;
+  font-size:14px;
+}
 a{color:#174ea6;text-decoration:none;font-weight:800}
 a:hover{text-decoration:underline}
-.hero{background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);color:#fff;padding:24px 26px 28px;box-shadow:var(--shadow)}
-.hero h1{margin:0;font-size:34px;letter-spacing:.2px}.hero p{margin:8px 0 0;color:rgba(255,255,255,.86);line-height:1.65}.hero-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.hero-links a,.hero-links span{color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:900}.hero-links .ops-link{background:#fff4df;color:#9a5b00;border-color:#f1dfb5}.app{max-width:1680px;margin:0 auto;padding:18px 18px 48px}.section{background:var(--panel);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}.section>summary{cursor:pointer;list-style:none;padding:15px 18px;font-size:18px;font-weight:900;border-bottom:1px solid var(--line)}.section>summary::-webkit-details-marker{display:none}.section>summary:before{content:"▸ ";font-weight:900}.section[open]>summary:before{content:"▾ "}.section-body{padding:16px}.a-macro-grid{display:grid;grid-template-columns:repeat(5,minmax(180px,1fr));gap:12px}.mm-a-card{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 22px rgba(16,24,40,.045);overflow:hidden}.mm-a-card summary{list-style:none;cursor:pointer;padding:13px 14px;font-weight:900;border-bottom:1px solid #eef3f8;display:flex;align-items:center;justify-content:space-between;gap:10px}.mm-a-card summary::-webkit-details-marker{display:none}.mm-a-card summary:after{content:"▸";color:var(--muted);font-weight:900}.mm-a-card[open] summary:after{content:"▾"}.mm-a-card-body{padding:12px 14px}.mm-a-lines{display:grid;gap:6px}.mm-a-line{display:flex;justify-content:space-between;gap:8px;font-size:12px;line-height:1.45}.mm-a-line span:first-child{color:var(--muted);font-weight:800}.mm-a-line b{font-weight:900}.mm-a-mini-delta{font-size:11px;color:#667085;margin-left:4px}.mm-a-note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:8px}.mm-a-detail{display:grid;gap:7px;margin-top:10px;padding-top:10px;border-top:1px dashed #e6eef6}.mm-status-pill{display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:900;white-space:nowrap;border:1px solid #d0d5dd;background:#f8fafc;color:#334155}.mm-status-pill.yellow{background:#fff4df;color:#b9770e;border-color:#f1dfb5}.mm-status-pill.gray{background:#f2f4f7;color:#667085;border-color:#d0d5dd}.main-workspace{display:grid;grid-template-columns:340px minmax(0,1fr);gap:16px;align-items:start}.module-card,.cockpit-shell,.radar-wrap{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 8px 22px rgba(16,24,40,.045);padding:14px}.left-summary{display:flex;flex-direction:column;gap:12px}.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn,button{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:8px 11px;font-size:13px;font-weight:900;cursor:pointer}.btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border:none}input,select{border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;padding:9px 10px;font-weight:700;outline:none;min-width:0}#mm-debug-panel{display:none}#ui-check-toggle{position:fixed;right:18px;top:18px;z-index:9999;opacity:.75}@media(max-width:1260px){.a-macro-grid{grid-template-columns:repeat(2,1fr)}.main-workspace{grid-template-columns:1fr}}@media(max-width:760px){.a-macro-grid{grid-template-columns:1fr}}
+button,.btn{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  border-radius:12px;
+  padding:8px 11px;
+  font-size:13px;
+  font-weight:900;
+  cursor:pointer;
+}
+.btn.primary,button.primary{
+  background:linear-gradient(135deg,var(--brand),var(--brand2));
+  color:#fff;
+  border:none;
+}
+input,select{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  border-radius:12px;
+  padding:9px 10px;
+  font-weight:700;
+  outline:none;
+  min-width:0;
+}
+.app{max-width:1680px;margin:0 auto;padding:18px 18px 48px}
+
+/* HERO */
+.hero{
+  background:linear-gradient(135deg,var(--brand) 0%,var(--brand2) 100%);
+  color:#fff;
+  border-radius:28px;
+  padding:24px 26px;
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
+}
+.hero-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.hero h1{margin:0;font-size:34px;letter-spacing:.2px}
+.hero p{margin:8px 0 0;color:rgba(255,255,255,.86);line-height:1.65}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.hero-pill{
+  padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);
+  font-size:12px;font-weight:900;color:#fff;
+}
+.hero-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hero-links a{
+  color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.15);
+  padding:7px 10px;border-radius:999px;font-size:12px;
+}
+
+/* SECTION */
+.section{
+  background:var(--panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  margin-bottom:16px;
+  overflow:hidden;
+}
+.section>summary{
+  cursor:pointer;
+  list-style:none;
+  padding:15px 18px;
+  font-size:18px;
+  font-weight:900;
+  border-bottom:1px solid var(--line);
+  user-select:none;
+}
+.section>summary::-webkit-details-marker{display:none}
+.section>summary:before{content:"▸ ";font-weight:900}
+.section[open]>summary:before{content:"▾ "}
+.section-body{padding:16px}
+
+/* LAYOUT */
+.a-grid{display:grid;grid-template-columns:repeat(6,minmax(150px,1fr));gap:12px}
+.main-workspace{
+  display:grid;
+  grid-template-columns:340px minmax(0,1fr);
+  gap:16px;
+  align-items:start;
+}
+.left-summary{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.right-cockpit{min-width:0}
+.full-width{width:100%}
+
+/* CARDS */
+.module-card,.panel,.mini-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 8px 22px rgba(16,24,40,.045);
+}
+.module-card{padding:14px}
+.module-card h3,.panel h3{margin:0 0 10px;font-size:16px}
+.compact-module{
+  padding:12px;
+}
+.metric{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  padding:6px 0;
+  border-bottom:1px dashed #e8eef5;
+}
+.metric:last-child{border-bottom:0}
+.metric span{color:var(--muted);font-size:12px}
+.metric b{font-size:13px}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  border-radius:999px;
+  padding:5px 9px;
+  font-size:11px;
+  font-weight:900;
+  border:1px solid #d0d5dd;
+}
+.ok{background:var(--good-bg);color:var(--good);border-color:#ccead9}
+.warn{background:var(--warn-bg);color:var(--warn);border-color:#f1dfb5}
+.bad{background:var(--bad-bg);color:var(--bad);border-color:#f0cfcf}
+.sub{font-size:12px;color:var(--muted);line-height:1.6}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+
+/* C1 COCKPIT */
+.cockpit-shell{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+}
+.cockpit-topbar{
+  display:grid;
+  grid-template-columns:170px 1fr auto;
+  gap:10px;
+  align-items:center;
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#fbfdff,#f5f9fe);
+}
+.cockpit-links{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.stock-header{
+  padding:18px;
+}
+.stock-header-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(340px,.85fr);
+  gap:18px;
+  align-items:start;
+}
+.stock-title-row{
+  display:flex;
+  gap:16px;
+  align-items:flex-start;
+}
+.logo-pill{
+  width:92px;
+  min-width:92px;
+  height:92px;
+  border-radius:22px;
+  background:linear-gradient(180deg,#0f2238,#294c73);
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+.logo-pill .sym{font-size:27px;font-weight:900;line-height:1}
+.logo-pill .cat{font-size:11px;margin-top:7px;opacity:.82;font-weight:900}
+.stock-title h2{margin:0;font-size:30px;line-height:1.1}
+.stock-title .one-line{
+  margin-top:10px;
+  line-height:1.75;
+  color:#304457;
+  font-size:14px;
+  font-weight:700;
+}
+.meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#eef5fc;
+  border:1px solid #d9e7f5;
+  font-size:12px;
+  font-weight:900;
+  color:#294561;
+}
+.decision-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.decision-card{
+  padding:13px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  background:#f8fbff;
+}
+.decision-card .k{font-size:12px;color:var(--muted)}
+.decision-card .v{font-size:20px;font-weight:900;margin-top:5px}
+.decision-card .d{font-size:12px;color:var(--muted);line-height:1.55;margin-top:4px}
+.decision-card.yes{background:var(--good-bg);border-color:#ccead9}.decision-card.yes .v{color:var(--good)}
+.decision-card.wait{background:var(--warn-bg);border-color:#f1dfb5}.decision-card.wait .v{color:var(--warn)}
+.decision-card.limited{background:#fff4df;border-color:#f1dfb5}.decision-card.limited .v{color:#b9770e}
+.price-strip{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+  margin-top:16px;
+}
+.mini-kpi{
+  padding:12px;
+  border-radius:15px;
+  background:#f8fbff;
+  border:1px solid #e4edf6;
+}
+.mini-kpi .k{font-size:11px;color:var(--muted)}
+.mini-kpi .v{font-size:20px;font-weight:900;margin-top:5px}
+.mini-kpi .d{font-size:12px;color:var(--muted);line-height:1.45;margin-top:4px}
+.range-wrap{
+  margin-top:16px;
+  background:#f8fbff;
+  border:1px solid #e4edf6;
+  border-radius:16px;
+  padding:14px;
+}
+.range-top,.range-label{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  font-size:12px;
+  color:var(--muted);
+}
+.range-bar{
+  height:15px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#dfeaf5,#edf5fb);
+  position:relative;
+  overflow:hidden;
+  margin:10px 0 7px;
+}
+.range-fill{height:100%;background:linear-gradient(90deg,#7bc6ff,#2f80ed);width:62%}
+.range-pin{
+  position:absolute;top:50%;left:62%;
+  transform:translate(-50%,-50%);
+  width:18px;height:18px;border-radius:50%;
+  background:#103253;border:3px solid #fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.15)
+}
+.score-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:10px;
+}
+.score-box{
+  background:#fff;
+  border:1px solid #e4edf6;
+  border-radius:14px;
+  padding:12px;
+}
+.score-box .k{font-size:12px;color:var(--muted)}
+.score-box .v{font-size:22px;font-weight:900;margin-top:5px}
+.score-box .d{font-size:12px;color:var(--muted);line-height:1.45;margin-top:4px}
+.c1-details{
+  padding:0 18px 18px;
+  display:grid;
+  gap:10px;
+}
+.c1-details details{
+  border:1px solid #e4edf6;
+  border-radius:14px;
+  background:#f9fbfe;
+  padding:10px 12px;
+}
+.c1-details summary{cursor:pointer;font-weight:900}
+
+/* C2 */
+.radar-wrap{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:14px;
+}
+.search-row{
+  display:grid;
+  grid-template-columns:1.2fr 1fr 1fr 1fr 1fr;
+  gap:8px;
+  margin:8px 0 10px;
+}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th,td{border-bottom:1px solid #e5e7eb;padding:8px;font-size:12px;white-space:nowrap}
+th{background:#f8fafc}
+
+/* Debug panel is hidden by default; can be used by JS */
+#mm-debug-panel{display:none}
+#ui-check-toggle{
+  position:fixed;right:18px;top:18px;z-index:9999;
+  opacity:.75;
+}
+
+
+/* A. Macro Context / A5 System Status */
+.a-macro-grid{
+  display:grid;
+  grid-template-columns:repeat(5,minmax(180px,1fr));
+  gap:12px;
+}
+.mm-a-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 8px 22px rgba(16,24,40,.045);
+  overflow:hidden;
+}
+.mm-a-card summary{
+  list-style:none;
+  cursor:pointer;
+  padding:13px 14px;
+  font-weight:900;
+  border-bottom:1px solid #eef3f8;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.mm-a-card summary::-webkit-details-marker{display:none}
+.mm-a-card summary:after{content:"▸";color:var(--muted);font-weight:900}
+.mm-a-card[open] summary:after{content:"▾"}
+.mm-a-card-body{padding:12px 14px}
+.mm-a-lines{display:grid;gap:6px}
+.mm-a-line{display:flex;justify-content:space-between;gap:8px;font-size:12px;line-height:1.45}
+.mm-a-line span:first-child{color:var(--muted);font-weight:800}
+.mm-a-line b{font-weight:900}
+.mm-a-note{font-size:12px;color:var(--muted);line-height:1.55;margin-top:8px}
+.mm-a-detail{display:grid;gap:7px;margin-top:10px;padding-top:10px;border-top:1px dashed #e6eef6}
+.mm-status-pill{
+  display:inline-flex;align-items:center;justify-content:center;
+  border-radius:999px;padding:4px 8px;font-size:11px;font-weight:900;white-space:nowrap;
+  border:1px solid #d0d5dd;background:#f8fafc;color:#334155;
+}
+.mm-status-pill.green{background:#eaf8f1;color:#188b58;border-color:#ccead9}
+.mm-status-pill.yellow{background:#fff4df;color:#b9770e;border-color:#f1dfb5}
+.mm-status-pill.red{background:#fff0f0;color:#be3f3f;border-color:#f0cfcf}
+.mm-status-pill.gray{background:#f2f4f7;color:#667085;border-color:#d0d5dd}
+.mm-a5-confidence{
+  margin-bottom:10px;
+  padding:10px 12px;
+  border-radius:14px;
+  font-weight:900;
+  font-size:13px;
+}
+.mm-a5-confidence.green{background:#eaf8f1;color:#188b58;border:1px solid #ccead9}
+.mm-a5-confidence.yellow{background:#fff4df;color:#b9770e;border:1px solid #f1dfb5}
+.mm-a5-confidence.red{background:#fff0f0;color:#be3f3f;border:1px solid #f0cfcf}
+.mm-a5-module{
+  border:1px solid #e6eef6;
+  border-radius:14px;
+  padding:10px;
+  background:#fbfdff;
+  margin-top:8px;
+}
+.mm-a5-module-title{display:flex;justify-content:space-between;gap:8px;align-items:center;font-weight:900;margin-bottom:6px}
+.mm-a5-module-note{font-size:12px;color:#475569;line-height:1.55}
+.mm-a5-module.green{border-color:#ccead9;background:#f7fffb}
+.mm-a5-module.yellow{border-color:#f1dfb5;background:#fffaf0}
+.mm-a5-module.red{border-color:#f0cfcf;background:#fff7f7}
+.mm-a5-module.gray{border-color:#d0d5dd;background:#f8fafc}
+@media(max-width:1260px){.a-macro-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.a-macro-grid{grid-template-columns:1fr}}
+
+/* responsive */
+@media(max-width:1260px){
+  .main-workspace{grid-template-columns:1fr}
+  .stock-header-grid{grid-template-columns:1fr}
+}
+@media(max-width:960px){
+  .a-grid,.price-strip,.score-grid,.decision-grid{grid-template-columns:1fr 1fr}
+  .cockpit-topbar{grid-template-columns:1fr}
+  .cockpit-links{justify-content:flex-start}
+}
 </style>
 </head>
+
 <body>
-<button id="ui-check-toggle">UI Check Mode</button><div id="mm-debug-panel">Loading...</div>
-<section class="hero"><h1>MM Dashboard v2 — Decision Cockpit</h1><p>總表只看最重要摘要：模組 summary、單股決策卡、全股票 radar；細節回各模組處理。</p><div class="hero-links"><a href="../m1.html">M1</a><a href="../m2.html">M2</a><a href="../m7_basket.html">M3 / Basket</a><a href="../m6.html">M6</a><a href="./m7.html">M7</a><a href="./formula_test.html">Formula Test</a><a href="./mm_operation_queue_dashboard.html" class="ops-link">Operation Queue</a><span id="mm-warning-badge"></span></div></section>
+<button id="ui-check-toggle">UI Check Mode</button>
+<div id="mm-debug-panel">Loading...</div>
+
 <div class="app">
-<details class="section" open><summary>A. Macro Context / 投資前 10 秒必看區</summary><div class="section-body"><div class="a-macro-grid"><details class="mm-a-card"><summary><span>A1 全球股市</span><span class="mm-status-pill gray">Market Pulse</span></summary><div class="mm-a-card-body"><div id="a1-market-pulse" class="mm-a-lines"><div class="mm-a-line"><span>Market Runtime</span><b>Loading...</b></div></div><div class="mm-a-detail"><div id="a1-market-runtime-note" class="mm-a-note">source：data/market_runtime.json</div><div class="mm-a-note">其他市場：歐洲、日本、中國、香港等可後續接資料後放在展開區。</div></div></div></details><details class="mm-a-card"><summary><span>A2 總經指標</span><span class="mm-status-pill yellow">Macro</span></summary><div class="mm-a-card-body"><div id="a2-macro-pulse" class="mm-a-lines"><div class="mm-a-line"><span>Macro Runtime</span><b>Loading...</b></div></div><div class="mm-a-detail"><div id="a2-market-runtime-note" class="mm-a-note">source：data/market_runtime.json</div><div class="mm-a-note">展開後放：2Y / 10Y、DXY、MOVE、HY/IG spread、其他匯率。</div></div></div></details><details class="mm-a-card"><summary><span>A3 收支 / 現金流</span><span class="mm-status-pill gray">M9</span></summary><div class="mm-a-card-body"><div class="mm-a-lines"><div class="mm-a-line"><span>月收入</span><b>待接 M9</b></div><div class="mm-a-line"><span>月支出</span><b>待接 M9</b></div><div class="mm-a-line"><span>淨流</span><b>待接 M9</b></div></div></div></details><details class="mm-a-card"><summary><span>A4 AI Agent 任務</span><span class="mm-status-pill yellow">Roadmap</span></summary><div class="mm-a-card-body"><div class="mm-a-lines"><div class="mm-a-line"><span>Priority 1</span><b>M2 風險監控</b></div><div class="mm-a-line"><span>Priority 2</span><b>M7 估值重算</b></div><div class="mm-a-line"><span>Priority 3</span><b>M6 timing 判斷</b></div></div></div></details><details class="mm-a-card"><summary><span>A5 M&M 開發進度</span><span id="a5-confidence-pill" class="mm-status-pill yellow">Medium</span></summary><div class="mm-a-card-body" id="a5-system-status"></div></details></div><div id="top-dashboard" style="display:none"></div></div></details>
-<details class="section" open><summary>B + C1 Decision Workspace / 模組摘要 + 單股決策</summary><div class="section-body main-workspace"><aside class="left-summary"><div id="b-zone"></div><div class="module-card"><h3>B1 M2 / FCN 全貌</h3><div id="b1-m2-summary"></div><div class="card-actions"><a href="../m2.html" class="btn">Go M2</a></div></div><div class="module-card"><h3>B2 M6 / 股票持倉</h3><div id="b2-m6-summary"></div><div class="card-actions"><a href="../m6.html" class="btn">Go M6</a></div></div><div class="module-card"><h3>B3 M3 / Basket</h3><div id="b3-m3-summary"></div><div class="card-actions"><a href="../m7_basket.html" class="btn">Go Basket</a></div></div><div class="module-card"><h3>B4 M7 / 今日評分</h3><div id="b4-m7-summary"></div><div class="card-actions"><a href="./m7.html" class="btn">Go M7</a><a href="./formula_test.html" class="btn">Formula Test</a></div></div><div class="module-card"><h3>B5 M1 / 股票品質</h3><div id="b5-m1-summary"></div><div class="card-actions"><a href="../m1.html" class="btn">Go M1</a><a href="../m1_new_stock.html" class="btn">Research</a><a href="../m1_test.html" class="btn">M1 Test</a></div></div></aside><main><section class="cockpit-shell"><div><select id="mm-c1-symbol-fallback"><option>NVDA</option></select><input id="mm-c1-search-fallback" placeholder="Search symbol"/><a href="../m1_new_stock.html" class="btn primary">Go M1 Research</a><a href="../m1.html" class="btn">M1</a><a href="./m7.html" class="btn">M7</a><a href="../m2.html" class="btn">M2</a><a href="../m6.html" class="btn">M6</a></div><div id="c1-stock-cockpit"><p>Loading C1 cockpit...</p></div></section></main></div></details>
-<details class="section"><summary>C2. All Stocks Radar / 全股票雷達</summary><div class="section-body"><div class="radar-wrap" id="c2-all-stock-radar">資料載入後顯示 alerts、M7 ranking、M1/M7/exposure filters。</div></div></details>
-<details class="section"><summary>D. Governance / 維運</summary><div class="section-body"><details><summary>D1 Stocks Display / legacy compatibility</summary><input id="stock-table-search" placeholder="Search"/><select id="stock-table-sort"></select><select id="stock-table-category"></select><button id="stock-table-refresh">Refresh</button><table id="stocks-display-table"><tbody id="stocks-display-tbody"></tbody></table></details><details><summary>D2 Blueprint</summary><div id="m7-formula-registry"></div><div id="param-controller"></div><div id="m7-readiness"></div></details><details><summary>D3 Ops Memory</summary><div id="active-build-context"></div><div id="handoff-memory"></div><div id="risk-list"></div><div id="milestone-list"></div><div id="overview"></div><table><tbody id="engine-table"></tbody></table><table><tbody id="data-table"></tbody></table><table><tbody id="formula-table"></tbody></table><table><tbody id="module-table"></tbody></table></details></div></details>
+
+  <section class="hero">
+    <div class="hero-top">
+      <div>
+        <h1>MM Dashboard v2 — Decision Cockpit</h1>
+        <p>總表只看最重要摘要：模組 summary、單股決策卡、全股票 radar；細節回各模組處理。</p>
+      </div>
+      <div class="hero-actions">
+        <span class="hero-pill">Summary Wall</span>
+        <span class="hero-pill">Single Stock Cockpit</span>
+        <span class="hero-pill">All Stocks Radar</span>
+      </div>
+    </div>
+    <div class="hero-links">
+      <a href="../m1.html">M1</a>
+      <a href="../m2.html">M2</a>
+      <a href="../m7_basket.html">M3 / Basket</a>
+      <a href="../m6.html">M6</a>
+      <a href="./m7.html">M7</a>
+      <a href="./formula_test.html">Formula Test</a>
+      <span id="mm-warning-badge"></span>
+    </div>
+  </section>
+
+  <!-- A -->
+  <details class="section" open>
+    <summary>A. Macro Context / 投資前 10 秒必看區</summary>
+    <div class="section-body">
+      <div class="a-macro-grid">
+        <details class="mm-a-card">
+          <summary><span>A1 全球股市</span><span class="mm-status-pill gray">Market Pulse</span></summary>
+          <div class="mm-a-card-body">
+            <div id="a1-market-pulse" class="mm-a-lines">
+              <div class="mm-a-line"><span>Market Pulse</span><b>Loading...</b></div>
+            </div>
+            <div class="mm-a-detail">
+              <div id="a1-market-runtime-note" class="mm-a-note">source：data/market_runtime.json</div>
+              <div class="mm-a-note">其他市場：歐洲、日本、中國、香港等可後續接資料後放在展開區。</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="mm-a-card">
+          <summary><span>A2 總經指標</span><span class="mm-status-pill yellow">Macro</span></summary>
+          <div class="mm-a-card-body">
+            <div id="a2-macro-pulse" class="mm-a-lines">
+              <div class="mm-a-line"><span>Macro Runtime</span><b>Loading...</b></div>
+            </div>
+            <div class="mm-a-detail">
+              <div id="a2-market-runtime-note" class="mm-a-note">source：data/market_runtime.json</div>
+              <div class="mm-a-note">展開後放：2Y / 10Y、DXY、MOVE、HY/IG spread、其他匯率。</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="mm-a-card">
+          <summary><span>A3 收支 / 現金流</span><span class="mm-status-pill gray">M9</span></summary>
+          <div class="mm-a-card-body">
+            <div class="mm-a-lines">
+              <div class="mm-a-line"><span>月收入</span><b>待接 M9</b></div>
+              <div class="mm-a-line"><span>月支出</span><b>待接 M9</b></div>
+              <div class="mm-a-line"><span>淨流</span><b>待接 M9</b></div>
+            </div>
+            <div class="mm-a-detail">
+              <div class="mm-a-note">展開後放：FCN利息、股息、房貸、生活費、現金水位與可投資餘額。</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="mm-a-card">
+          <summary><span>A4 AI Agent 任務</span><span class="mm-status-pill yellow">Roadmap</span></summary>
+          <div class="mm-a-card-body">
+            <div class="mm-a-lines">
+              <div class="mm-a-line"><span>Priority 1</span><b>M2 風險監控</b></div>
+              <div class="mm-a-line"><span>Priority 2</span><b>M7 估值重算</b></div>
+              <div class="mm-a-line"><span>Priority 3</span><b>M6 timing 判斷</b></div>
+            </div>
+            <div class="mm-a-detail">
+              <div class="mm-a-note">後續可放：自動 alert、news 摘要、analyst consensus、FCN 結構建議。</div>
+            </div>
+          </div>
+        </details>
+
+        <details class="mm-a-card">
+          <summary><span>A5 M&M 開發進度</span><span id="a5-confidence-pill" class="mm-status-pill yellow">Medium</span></summary>
+          <div class="mm-a-card-body" id="a5-system-status">
+            <div class="mm-a5-confidence yellow">系統可信度：🟡 Medium（可用但需人工判斷）</div>
+            <div class="mm-a-lines">
+              <div class="mm-a-line"><span>M1</span><b>資料不足</b></div>
+              <div class="mm-a-line"><span>M2</span><b>開發中</b></div>
+              <div class="mm-a-line"><span>M6</span><b>未完成</b></div>
+              <div class="mm-a-line"><span>M7</span><b>V2 測試中</b></div>
+              <div class="mm-a-line"><span>MM</span><b>整合中</b></div>
+            </div>
+          </div>
+        </details>
+      </div>
+      <div id="top-dashboard" class="a-grid" style="display:none"></div>
+    </div>
+  </details>
+
+  <!-- B + C1 -->
+  <details class="section" open>
+    <summary>B + C1 Decision Workspace / 模組摘要 + 單股決策</summary>
+    <div class="section-body main-workspace">
+
+      <!-- B LEFT -->
+      <aside class="left-summary">
+        <!-- B Zone v3 / Portfolio Brain -->
+        <div id="b-zone"></div>
+
+        <div class="module-card compact-module">
+          <h3>B1 M2 / FCN 全貌</h3>
+          <div id="b1-m2-summary"></div>
+          <div class="card-actions"><a href="../m2.html" class="btn">Go M2</a></div>
+        </div>
+
+        <div class="module-card compact-module">
+          <h3>B2 M6 / 股票持倉</h3>
+          <div id="b2-m6-summary"></div>
+          <div class="card-actions"><a href="../m6.html" class="btn">Go M6</a></div>
+        </div>
+
+        <div class="module-card compact-module">
+          <h3>B3 M3 / Basket</h3>
+          <div id="b3-m3-summary"></div>
+          <div class="card-actions"><a href="../m7_basket.html" class="btn">Go Basket</a></div>
+        </div>
+
+        <div class="module-card compact-module">
+          <h3>B4 M7 / 今日評分</h3>
+          <div id="b4-m7-summary"></div>
+          <div class="card-actions">
+            <a href="./m7.html" class="btn">Go M7</a>
+            <a href="./formula_test.html" class="btn">Formula Test</a>
+          </div>
+        </div>
+
+        <div class="module-card compact-module">
+          <h3>B5 M1 / 股票品質</h3>
+          <div id="b5-m1-summary"></div>
+          <div class="card-actions">
+            <a href="../m1.html" class="btn">Go M1</a>
+            <a href="../m1_new_stock.html" class="btn">Research</a>
+            <a href="../m1_test.html" class="btn">M1 Test</a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- C1 RIGHT -->
+      <main class="right-cockpit">
+        <section class="cockpit-shell" id="c1-cockpit-shell">
+          <div class="cockpit-topbar">
+            <select id="mm-c1-symbol-fallback">
+              <option>NVDA</option>
+            </select>
+            <input id="mm-c1-search-fallback" placeholder="Search symbol"/>
+            <div class="cockpit-links">
+              <a href="../m1_new_stock.html" class="btn primary">Go M1 Research</a>
+              <a href="../m1.html" class="btn">M1</a>
+              <a href="./m7.html" class="btn">M7</a>
+              <a href="../m2.html" class="btn">M2</a>
+              <a href="../m6.html" class="btn">M6</a>
+            </div>
+          </div>
+
+          <!-- JS will render here. Static skeleton below keeps layout visible if JS fails. -->
+          <div id="c1-stock-cockpit">
+            <div class="stock-header">
+              <div class="stock-header-grid">
+                <div>
+                  <div class="stock-title-row">
+                    <div class="logo-pill">
+                      <div class="sym">NVDA</div>
+                      <div class="cat">CORE</div>
+                    </div>
+                    <div class="stock-title">
+                      <h2>NVIDIA Corp.</h2>
+                      <div class="one-line">NVDA：等待資料載入；這裡會顯示 M1 品質、M7 今日判斷、曝險與是否適合做 FCN / 接股。</div>
+                      <div class="meta-row">
+                        <span class="chip">Category：--</span>
+                        <span class="chip">Sub-category：--</span>
+                        <span class="chip">Source：MM Summary</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="price-strip">
+                    <div class="mini-kpi"><div class="k">Today Price</div><div class="v">--</div><div class="d">現價</div></div>
+                    <div class="mini-kpi"><div class="k">Δ%</div><div class="v">--</div><div class="d">今日變化</div></div>
+                    <div class="mini-kpi"><div class="k">1W / 1M</div><div class="v">-- / --</div><div class="d">短期表現</div></div>
+                    <div class="mini-kpi"><div class="k">3M / 12M</div><div class="v">-- / --</div><div class="d">中長期表現</div></div>
+                    <div class="mini-kpi"><div class="k">Volume / Position</div><div class="v">--</div><div class="d">量能 / 歷史位置</div></div>
+                  </div>
+
+                  <div class="range-wrap">
+                    <div class="range-top"><span>Today price vs Regression / Historical Position</span><span>Low → Current → High</span></div>
+                    <div class="range-bar"><div class="range-fill"></div><div class="range-pin"></div></div>
+                    <div class="range-label"><span>Regression: --</span><span>Confidence: --</span><span>Since Dec: --</span></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="decision-grid">
+                    <div class="decision-card yes"><div class="k">Pool30</div><div class="v">--</div><div class="d">是否可進核心池</div></div>
+                    <div class="decision-card yes"><div class="k">Category</div><div class="v">--</div><div class="d">M1 類別</div></div>
+                    <div class="decision-card wait"><div class="k">Timing</div><div class="v">--</div><div class="d">M7 今日時點</div></div>
+                  </div>
+                  <div class="decision-card limited" style="margin-top:10px">
+                    <div class="k">FCN View</div><div class="v">--</div><div class="d">是否適合做 FCN / 是否追高</div>
+                  </div>
+
+                  <div class="score-grid">
+                    <div class="score-box"><div class="k">M1 Score</div><div class="v">--</div><div class="d">vs Sub / Pool30</div></div>
+                    <div class="score-box"><div class="k">M7 Score</div><div class="v">--</div><div class="d">vs Sub / Pool30</div></div>
+                    <div class="score-box"><div class="k">Valuation</div><div class="v">--</div><div class="d">vs Anchor</div></div>
+                    <div class="score-box"><div class="k">Trend</div><div class="v">--</div><div class="d">中期方向</div></div>
+                    <div class="score-box"><div class="k">Structure</div><div class="v">--</div><div class="d">穩定度</div></div>
+                    <div class="score-box"><div class="k">Money</div><div class="v">--</div><div class="d">資金 / 量能</div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="c1-details">
+              <details><summary>M1 quality detail</summary><div class="sub">M1 品質細節由資料載入後顯示。</div></details>
+              <details><summary>M7 today decision detail</summary><div class="sub">M7 今日判斷由資料載入後顯示。</div></details>
+              <details><summary>Technical detail</summary><div class="sub">技術與回歸資料由 runtime / long horizon 載入後顯示。</div></details>
+              <details><summary>Exposure detail</summary><div class="sub">M2/M6 曝險由 FCN pool / positions 載入後顯示。</div></details>
+              <details><summary>Research note detail</summary><div class="sub">研究摘要連回 m1_new_stock.html。</div></details>
+            </div>
+          </div>
+        </section>
+      </main>
+
+    </div>
+  </details>
+
+  <!-- C2 -->
+  <details class="section">
+    <summary>C2. All Stocks Radar / 全股票雷達</summary>
+    <div class="section-body">
+      <div class="radar-wrap" id="c2-all-stock-radar">
+        <div class="sub">資料載入後顯示 alerts、M7 ranking、M1/M7/exposure filters。</div>
+      </div>
+    </div>
+  </details>
+
+  <!-- D -->
+  <details class="section">
+    <summary>D. Governance / 維運</summary>
+    <div class="section-body">
+      <details>
+        <summary>D1 Stocks Display / legacy compatibility</summary>
+        <div class="section-body">
+          <input id="stock-table-search" placeholder="Search"/>
+          <select id="stock-table-sort"></select>
+          <select id="stock-table-category"></select>
+          <button id="stock-table-refresh">Refresh</button>
+          <div class="table-wrap"><table id="stocks-display-table"><tbody id="stocks-display-tbody"></tbody></table></div>
+        </div>
+      </details>
+      <details>
+        <summary>D2 Blueprint</summary>
+        <div class="section-body">
+          <div id="m7-formula-registry"></div>
+          <div id="param-controller"></div>
+          <div id="m7-readiness"></div>
+        </div>
+      </details>
+      <details>
+        <summary>D3 Ops Memory</summary>
+        <div class="section-body">
+          <div id="active-build-context"></div>
+          <div id="handoff-memory"></div>
+          <div id="risk-list"></div>
+          <div id="milestone-list"></div>
+          <div id="overview"></div>
+          <table><tbody id="engine-table"></tbody></table>
+          <table><tbody id="data-table"></tbody></table>
+          <table><tbody id="formula-table"></tbody></table>
+          <table><tbody id="module-table"></tbody></table>
+        </div>
+      </details>
+    </div>
+  </details>
+
 </div>
-<script>(function(){const A5_DEFAULT_MODULES={M1:{status:"partial",note:"程式開發完成；EPS / fundamental / 研究卡資料仍未全部到位，需顯示資料卡完成率與選股完成率。"},M2:{status:"partial",note:"fcn_pool 可用；FCN 風險、worst-of、risk score 與 MM double-check 邏輯仍在整合。"},M6:{status:"not_ready",note:"問題最多；目前只放一小部分展示，timing / allocation / 決策資訊尚未完整，不可完全作為決策依據。"},M7:{status:"testing",note:"舊 M7 已完成；新 M7V2 開發接近完成，但評選與校準尚未 finalize。"},MM:{status:"partial",note:"C1 cockpit 已成型；A 區 Macro Context、L1 decision engine、M2/M6/M7 整合仍在優化。"}};function renderA5SystemStatus(data){const modules=Object.assign({},A5_DEFAULT_MODULES,data&&data.modules?data.modules:data||{});const el=document.getElementById("a5-system-status");if(!el)return;el.innerHTML='<div class="mm-a-lines">'+Object.entries(modules).map(([name,m])=>`<div class="mm-a-line"><span>${name}</span><b>${m.note?m.note.split(/[；。]/)[0]:m.status}</b></div>`).join("")+'</div>';}window.renderA5SystemStatus=renderA5SystemStatus;document.addEventListener("DOMContentLoaded",function(){renderA5SystemStatus(A5_DEFAULT_MODULES);fetch("../data/mm/engine_progress_dashboard.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(json=>{if(json){const modules=json.a5_modules||json.system_status||json.modules;if(modules)renderA5SystemStatus(modules);}}).catch(()=>{});});})();</script>
-<script src="../js/mm/modules/mm_parameter_brain.js"></script><script src="../js/mm/modules/mm_stock_explainability.js"></script><script src="../js/mm/modules/mm_ranking_impact.js"></script><script src="../js/mm/modules/mm_stock_table.js"></script><script src="../js/mm/modules/mm_blueprint.js"></script><script src="../js/mm/modules/mm_ops_memory.js"></script><script src="../js/mm/core/mm_data_loader.js"></script><script src="../js/mm/core/mm_state_manager.js"></script><script src="../js/mm/core/mm_ui_helpers.js"></script><script src="../js/mm/modules/mm_top_dashboard.js"></script><script src="../js/mm/modules/mm_m2_cashflow_engine.js"></script><script src="../js/mm/modules/mm_m2_summary.js"></script><script src="../js/mm/modules/mm_m6_summary.js"></script><script src="../js/mm/modules/mm_m3_summary.js"></script><script src="../js/mm/modules/mm_m7_summary.js"></script><script src="../js/mm/modules/mm_m1_summary.js"></script><script src="../js/mm/modules/mm_stock_cockpit.js"></script><script src="../js/mm/modules/mm_alert_engine.js"></script><script src="../js/mm/modules/mm_all_stock_radar.js"></script><script src="../js/mm/modules/mm_dashboard_app.js"></script><script src="../js/mm/modules/mm_b_zone_v3.js"></script><script src="../js/mm/modules/mm_macro_context.js"></script>
-<script>(function(){function pickData(){const mm=window.MM_DATA||window.MM_DASHBOARD_DATA||window.mmDashboardData||{};return{fcn_pool:mm.fcn_pool||mm.fcnPool||mm.FCN_POOL||window.fcn_pool_data||[],m1_scores:mm.m1_scores||mm.m1Scores||window.m1_scores_data||{}};}function runBZone(){if(typeof window.renderBZone!=="function")return;window.renderBZone(pickData());}document.addEventListener("DOMContentLoaded",function(){runBZone();setTimeout(runBZone,500);setTimeout(runBZone,1500);});})();</script>
-</body></html>
+
+<script>
+(function(){
+  const A5_DEFAULT_MODULES = {
+    M1: { status: "partial", note: "程式開發完成；EPS / fundamental / 研究卡資料仍未全部到位，需顯示資料卡完成率與選股完成率。" },
+    M2: { status: "partial", note: "fcn_pool 可用；FCN 風險、worst-of、risk score 與 MM double-check 邏輯仍在整合。" },
+    M6: { status: "not_ready", note: "問題最多；目前只放一小部分展示，timing / allocation / 決策資訊尚未完整，不可完全作為決策依據。" },
+    M7: { status: "testing", note: "舊 M7 已完成；新 M7V2 開發接近完成，但評選與校準尚未 finalize。" },
+    MM: { status: "partial", note: "C1 cockpit 已成型；A 區 Macro Context、L1 decision engine、M2/M6/M7 整合仍在優化。" }
+  };
+
+  function colorOf(status){
+    if(status === "ready") return "green";
+    if(status === "testing") return "yellow";
+    if(status === "partial") return "gray";
+    if(status === "not_ready") return "red";
+    return "gray";
+  }
+  function labelOf(status){
+    if(status === "ready") return "Ready";
+    if(status === "testing") return "Testing";
+    if(status === "partial") return "Partial";
+    if(status === "not_ready") return "Not Ready";
+    return "Unknown";
+  }
+  function computeConfidence(modules){
+    const scores = { ready:1, testing:.6, partial:.4, not_ready:.1 };
+    const vals = Object.values(modules || {});
+    const ratio = vals.length ? vals.reduce((s,m)=>s+(scores[m.status] ?? .2),0)/vals.length : .3;
+    if(ratio >= .8) return { color:"green", label:"🟢 High（可依系統執行）", short:"High" };
+    if(ratio >= .5) return { color:"yellow", label:"🟡 Medium（可用但需人工判斷）", short:"Medium" };
+    return { color:"red", label:"🔴 Low（不可依賴）", short:"Low" };
+  }
+  function renderA5SystemStatus(data){
+    const modules = Object.assign({}, A5_DEFAULT_MODULES, data && data.modules ? data.modules : data || {});
+    const confidence = computeConfidence(modules);
+    const el = document.getElementById("a5-system-status");
+    const pill = document.getElementById("a5-confidence-pill");
+    if(pill){
+      pill.className = `mm-status-pill ${confidence.color}`;
+      pill.textContent = confidence.short;
+    }
+    if(!el) return;
+    el.innerHTML = `
+      <div class="mm-a5-confidence ${confidence.color}">系統可信度：${confidence.label}</div>
+      <div class="mm-a-lines">
+        ${Object.entries(modules).map(([name,m])=>`
+          <div class="mm-a-line"><span>${name}</span><b>${m.note ? m.note.split(/[；。]/)[0] : labelOf(m.status)}</b></div>
+        `).join("")}
+      </div>
+      <div class="mm-a-detail">
+        ${Object.entries(modules).map(([name,m])=>`
+          <div class="mm-a5-module ${colorOf(m.status)}">
+            <div class="mm-a5-module-title">
+              <span>${name}</span>
+              <span class="mm-status-pill ${colorOf(m.status)}">${labelOf(m.status)}</span>
+            </div>
+            <div class="mm-a5-module-note">${m.note || ""}</div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }
+  window.renderA5SystemStatus = renderA5SystemStatus;
+  document.addEventListener("DOMContentLoaded", function(){
+    renderA5SystemStatus(A5_DEFAULT_MODULES);
+    fetch("../data/mm/engine_progress_dashboard.json", { cache:"no-store" })
+      .then(r => r.ok ? r.json() : null)
+      .then(json => {
+        if(!json) return;
+        const modules = json.a5_modules || json.system_status || json.modules;
+        if(modules) renderA5SystemStatus(modules);
+      })
+      .catch(()=>{});
+  });
+})();
+</script>
+
+<!-- Existing modules retained -->
+<script src="../js/mm/modules/mm_parameter_brain.js"></script>
+<script src="../js/mm/modules/mm_stock_explainability.js"></script>
+<script src="../js/mm/modules/mm_ranking_impact.js"></script>
+<script src="../js/mm/modules/mm_stock_table.js"></script>
+<script src="../js/mm/modules/mm_blueprint.js"></script>
+<script src="../js/mm/modules/mm_ops_memory.js"></script>
+
+<script src="../js/mm/core/mm_data_loader.js"></script>
+<script src="../js/mm/core/mm_state_manager.js"></script>
+<script src="../js/mm/core/mm_ui_helpers.js"></script>
+
+<script src="../js/mm/modules/mm_top_dashboard.js"></script>
+<script src="../js/mm/modules/mm_m2_cashflow_engine.js"></script>  
+<script src="../js/mm/modules/mm_m2_summary.js"></script>
+<script src="../js/mm/modules/mm_m6_summary.js"></script>
+<script src="../js/mm/modules/mm_m3_summary.js"></script>
+<script src="../js/mm/modules/mm_m7_summary.js"></script>
+<script src="../js/mm/modules/mm_m1_summary.js"></script>
+<script src="../js/mm/modules/mm_stock_cockpit.js"></script>
+<script src="../js/mm/modules/mm_alert_engine.js"></script>
+<script src="../js/mm/modules/mm_all_stock_radar.js"></script>
+<script src="../js/mm/modules/mm_dashboard_app.js"></script>
+<script src="../js/mm/modules/mm_b_zone_v3.js"></script>
+<script src="../js/mm/modules/mm_macro_context.js"></script>
+
+<script>
+(function(){
+  function pickData(){
+    const mm = window.MM_DATA || window.MM_DASHBOARD_DATA || window.mmDashboardData || {};
+    return {
+      fcn_pool: mm.fcn_pool || mm.fcnPool || mm.FCN_POOL || window.fcn_pool_data || [],
+      m1_scores: mm.m1_scores || mm.m1Scores || window.m1_scores_data || {}
+    };
+  }
+
+  function runBZone(){
+    if (typeof window.renderBZone !== "function") return;
+    window.renderBZone(pickData());
+  }
+
+  document.addEventListener("DOMContentLoaded", function(){
+    runBZone();
+    setTimeout(runBZone, 500);
+    setTimeout(runBZone, 1500);
+  });
+})();
+</script>
+</body>
+</html>
