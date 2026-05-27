@@ -31,8 +31,13 @@ jobs:
 
       - name: Install Python dependencies
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "requirements.txt not found; M6 builder currently uses Python stdlib."
+          fi
 
       - name: Build M6 price forecast debug runtime
         run: |

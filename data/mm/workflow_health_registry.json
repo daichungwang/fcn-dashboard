@@ -1,0 +1,64 @@
+{
+  "version": "workflow_health_registry_v1",
+  "generated_at": "2026-05-27T17:55:00+08:00",
+  "policy": {
+    "auto_repair": false,
+    "auto_rerun_workflow": false,
+    "auto_commit": false,
+    "mode": "detect_only_workflow_monitoring"
+  },
+  "registry": [
+    {
+      "workflow_name": "daily-runtime-refresh",
+      "workflow_file": ".github/workflows/daily-runtime-refresh.yml",
+      "module": "runtime_health",
+      "expected_outputs": [
+        "data/market_runtime.json",
+        "data/runtime_staging/market_runtime_long_horizon.json"
+      ],
+      "failure_priority": "P0"
+    },
+    {
+      "workflow_name": "M6 Price Forecast Refresh",
+      "workflow_file": ".github/workflows/m6-price-forecast-refresh.yml",
+      "module": "runtime_health",
+      "expected_outputs": [
+        "data/m6/price_forecast_debug.json"
+      ],
+      "failure_priority": "P0"
+    },
+    {
+      "workflow_name": "prepost-runtime",
+      "workflow_file": ".github/workflows/prepost_runtime.yml",
+      "module": "runtime_health",
+      "expected_outputs": [
+        "data/mm/prepost_runtime.json"
+      ],
+      "failure_priority": "P1"
+    },
+    {
+      "workflow_name": "pages build and deployment",
+      "workflow_file": "GitHub Pages default workflow",
+      "module": "workflow_health",
+      "expected_outputs": [
+        "GitHub Pages deployment"
+      ],
+      "failure_priority": "P1"
+    }
+  ],
+  "latest_observations": [
+    {
+      "workflow_name": "M6 Price Forecast Refresh",
+      "run_id": 26485969689,
+      "last_run_status": "failed",
+      "failed_step": "Install Python dependencies",
+      "error_message": "ERROR: Could not open requirements file: [Errno 2] No such file or directory: 'requirements.txt'",
+      "detected_issue": "m6_workflow_dependency_failure",
+      "priority": "P0",
+      "suggested_fix": "Restore requirements.txt and harden M6 workflow dependency install step.",
+      "expected_output": "data/m6/price_forecast_debug.json",
+      "output_health": "empty_or_stale",
+      "operation_id": "op-20260527-m6-001"
+    }
+  ]
+}
