@@ -1,0 +1,97 @@
+name: Pre/Post Runtime Refresh
+
+on:
+  schedule:
+    # Taiwan time 20:00, 21:00, 21:40, 22:30, 23:00, 06:00 on weekdays.
+    - cron: "0 12 * * 1-5"
+    - cron: "0 13 * * 1-5"
+    - cron: "40 13 * * 1-5"
+    - cron: "30 14 * * 1-5"
+    - cron: "0 15 * * 1-5"
+    - cron: "0 22 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: prepost-runtime-refresh
+  cancel-in-progress: false
+
+jobs:
+  prepost-runtime-refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          pip install yfinance pandas
+
+      - name: Run pre/post runtime refresh
+        run: |
+          set -euo pipefail
+          python scripts/runtime/update_prepost_runtime.py
+
+      - name: Validate pre/post runtime output
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          import os
+          import sys
+
+          path = "data/mm/prepost_runtime.json"
+          focus = {"NVDA", "TSM", "AMD", "TSLA"}
+
+          if not os.path.exists(path):
+              print(f"missing_required={path}")
+              sys.exit(1)
+
+          with open(path, "r", encoding="utf-8") as fp:
+              payload = json.load(fp)
+
+          generated_at = payload.get("generated_at")
+          rows = payload.get("rows", {})
+          symbol_count = payload.get("symbol_count", 0)
+
+          print(f"generated_at={generated_at}")
+          print(f"symbol_count={symbol_count}")
+          print("focus_symbols=" + ", ".join(sorted(focus.intersection(rows))))
+
+          if not generated_at:
+              print("generated_at_is_null")
+              sys.exit(1)
+          if not isinstance(rows, dict) or symbol_count <= 0 or len(rows) <= 0:
+              print("prepost_runtime_has_no_rows")
+              sys.exit(1)
+          if not focus.intersection(rows):
+              print("missing_focus_symbols=NVDA/TSM/AMD/TSLA")
+              sys.exit(1)
+          PY
+
+      - name: Commit pre/post runtime data
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/mm/prepost_runtime.json
+          if git diff --cached --quiet; then
+            echo "No pre/post runtime changes to commit."
+            exit 0
+          fi
+          git commit -m "refresh prepost runtime data"
+          git pull --rebase origin main
+          git push origin HEAD:main
