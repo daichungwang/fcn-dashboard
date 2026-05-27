@@ -15,6 +15,7 @@
   const EXCLUDED = new Set(["DX-Y.NYB", "TWD=X", "JPY=X", "CL=F", "GC=F", "SPY", "QQQ", "SMH", "DIA", "0050.TW", "^TWII", "^VIX", "^TNX"]);
   const SPECIAL_TARGETS = new Set(["NVDA", "TSM", "SMH", "GOOG"]);
   const CACHE = {};
+  let ALL_ROWS = [];
 
   function esc(v) {
     return String(v ?? "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m]));
@@ -86,28 +87,42 @@
     return CACHE[path];
   }
 
+  function safeNum(value) {
+    if (value === null || value === undefined || value === "") return null;
+    const n = Number(value);
+    return Number.isFinite(n) ? n : null;
+  }
+
   function num(v, digits = 2) {
-    const n = Number(v);
-    if (!Number.isFinite(n)) return "--";
+    const n = safeNum(v);
+    if (n === null) return "--";
     return n.toLocaleString(undefined, { maximumFractionDigits: digits, minimumFractionDigits: digits });
   }
 
   function pct(v) {
-    const n = Number(v);
-    if (!Number.isFinite(n)) return "--";
+    const n = safeNum(v);
+    if (n === null) return "--";
     return `${n.toFixed(2)}%`;
   }
 
   function firstNum(...values) {
     for (const value of values) {
-      const n = Number(value);
-      if (Number.isFinite(n)) return n;
+      const n = safeNum(value);
+      if (n !== null) return n;
+    }
+    return null;
+  }
+
+  function firstPositiveNum(...values) {
+    for (const value of values) {
+      const n = safeNum(value);
+      if (n !== null && n > 0) return n;
     }
     return null;
   }
 
   function getAmount(deal) {
-    return firstNum(deal.amount, deal.notional, deal.principal, deal.investment_amount, deal.face_value, deal.amt) || 0;
+    return firstPositiveNum(deal.amount, deal.notional, deal.principal, deal.investment_amount, deal.face_value, deal.amt) || 0;
   }
 
   function buildInvestedMap(fcnPool) {
@@ -144,8 +159,8 @@
 
   function pickScore(row, ...keys) {
     for (const key of keys) {
-      const n = Number(row?.[key]);
-      if (Number.isFinite(n)) return n;
+      const n = safeNum(row?.[key]);
+      if (n !== null) return n;
     }
     return null;
   }
@@ -175,14 +190,14 @@
       const m7 = m7Map.get(symbol) || {};
       return {
         symbol,
-        name: runtime.name || pool30Map.get(symbol)?.name || universeMap.get(symbol)?.name || symbol,
         source: sourceLabel(symbol, fcnSymbols, pool30Symbols),
-        price: firstNum(runtime.price, runtime.last_price, runtime.close, runtime.current_price),
+        category,
+        price: firstPositiveNum(runtime.price, runtime.last_price, runtime.close, runtime.current_price, runtime.regularMarketPrice, runtime.price_now, pp.price_regular, pp.price_active),
         delta: firstNum(runtime.change, runtime.change_1d, runtime.delta_1d),
         deltaPct: firstNum(runtime.change_pct, runtime.change_1d_pct, runtime.ret_1d),
         oneWeek: firstNum(runtime.ret_1w, runtime.change_1w_pct),
         oneMonth: firstNum(runtime.ret_1m, runtime.change_1m_pct),
-        prepost: firstNum(pp.price_active, pp.price_pre, pp.price_post),
+        prepost: firstPositiveNum(pp.price_active, pp.price_pre, pp.price_post),
         session: pp.session || "regular",
         invested,
         target,
@@ -194,8 +209,81 @@
     });
   }
 
+  function deltaClass(value) {
+    const n = safeNum(value);
+    if (n === null || n === 0) return "c2-flat";
+    return n > 0 ? "c2-up" : "c2-down";
+  }
+
+  function filterRows(rows) {
+    const query = normalizeSymbol(document.getElementById("c2-radar-search")?.value || "");
+    const source = document.getElementById("c2-radar-source")?.value || "all";
+    const session = document.getElementById("c2-radar-session")?.value || "all";
+    const minM1 = safeNum(document.getElementById("c2-radar-m1min")?.value);
+    const minM7 = safeNum(document.getElementById("c2-radar-m7min")?.value);
+
+    return rows.filter(row => {
+      if (query && !row.symbol.includes(query)) return false;
+      if (source !== "all" && row.source !== source) return false;
+      if (session !== "all" && row.session !== session) return false;
+      if (minM1 !== null && (row.m1 === null || row.m1 < minM1)) return false;
+      if (minM7 !== null && (row.m7 === null || row.m7 < minM7)) return false;
+      return true;
+    });
+  }
+
+  function renderRows() {
+    const body = document.getElementById("c2-radar-body");
+    const count = document.getElementById("c2-radar-count");
+    if (!body) return;
+    const rows = filterRows(ALL_ROWS);
+    if (count) count.textContent = `${rows.length} / ${ALL_ROWS.length}`;
+    body.innerHTML = rows.map(row => `<tr>
+      <td><a href="../m1_new_stock.html?symbol=${encodeURIComponent(row.symbol)}">研究</a></td>
+      <td class="c2-symbol">${esc(row.symbol)}</td>
+      <td>${esc(row.source)}</td>
+      <td>${num(row.price)}</td>
+      <td>${num(row.delta)}</td>
+      <td class="${deltaClass(row.deltaPct)}">${pct(row.deltaPct)}</td>
+      <td>${pct(row.oneWeek)}</td>
+      <td>${pct(row.oneMonth)}</td>
+      <td>${num(row.prepost)}</td>
+      <td>${esc(row.session)}</td>
+      <td>${num(row.invested, 0)}</td>
+      <td>${num(row.target, 0)}</td>
+      <td>${row.available < 0 ? `Over ${num(Math.abs(row.available), 0)}` : num(row.available, 0)}</td>
+      <td>${num(row.m1)}</td>
+      <td>${num(row.m7)}</td>
+      <td>${esc(row.fcnView)}</td>
+    </tr>`).join("");
+  }
+
   function renderTable(el, rows) {
-    el.innerHTML = `<div class="table-wrap"><table><thead><tr><th>Link</th><th>Symbol</th><th>Name</th><th>Source</th><th>Price</th><th>Delta</th><th>Delta%</th><th>1W</th><th>1M</th><th>Pre/Post</th><th>Session</th><th>FCN Invested</th><th>Target Amount</th><th>Available Amount</th><th>M1</th><th>M7</th><th>FCN View</th></tr></thead><tbody>${rows.map(row => `<tr><td><a href="../m1_new_stock.html?symbol=${encodeURIComponent(row.symbol)}">研究</a></td><td>${esc(row.symbol)}</td><td>${esc(row.name)}</td><td>${esc(row.source)}</td><td>${num(row.price)}</td><td>${num(row.delta)}</td><td>${pct(row.deltaPct)}</td><td>${pct(row.oneWeek)}</td><td>${pct(row.oneMonth)}</td><td>${num(row.prepost)}</td><td>${esc(row.session)}</td><td>${num(row.invested, 0)}</td><td>${num(row.target, 0)}</td><td>${row.available < 0 ? `Over ${num(Math.abs(row.available), 0)}` : num(row.available, 0)}</td><td>${num(row.m1)}</td><td>${num(row.m7)}</td><td>${esc(row.fcnView)}</td></tr>`).join("")}</tbody></table></div>`;
+    ALL_ROWS = rows;
+    el.innerHTML = `
+      <style>
+        .c2-filter-bar{display:grid;grid-template-columns:1.4fr repeat(4,minmax(110px,.7fr)) auto;gap:8px;margin-bottom:10px;align-items:center}
+        .c2-filter-bar input,.c2-filter-bar select{min-width:0}
+        .c2-symbol{font-size:16px;font-weight:950;letter-spacing:.3px}
+        .c2-up{color:#188b58;font-weight:950}
+        .c2-down{color:#be3f3f;font-weight:950}
+        .c2-flat{color:#667085;font-weight:900}
+        @media(max-width:960px){.c2-filter-bar{grid-template-columns:1fr 1fr}}
+      </style>
+      <div class="c2-filter-bar">
+        <input id="c2-radar-search" placeholder="Search Symbol" />
+        <select id="c2-radar-source"><option value="all">All Source</option><option value="FCN">FCN</option><option value="Pool30">Pool30</option><option value="Universe">Universe</option></select>
+        <select id="c2-radar-session"><option value="all">All Session</option><option value="pre_market">Pre</option><option value="post_market">Post</option><option value="regular">Regular</option></select>
+        <input id="c2-radar-m1min" type="number" step="0.1" placeholder="M1 min" />
+        <input id="c2-radar-m7min" type="number" step="0.1" placeholder="M7 min" />
+        <span id="c2-radar-count" class="sub"></span>
+      </div>
+      <div class="table-wrap"><table><thead><tr><th>Link</th><th>Symbol</th><th>Source</th><th>Price</th><th>Delta</th><th>Delta%</th><th>1W</th><th>1M</th><th>Pre/Post</th><th>Session</th><th>FCN Invested</th><th>Target Amount</th><th>Available Amount</th><th>M1</th><th>M7</th><th>FCN View</th></tr></thead><tbody id="c2-radar-body"></tbody></table></div>`;
+    ["c2-radar-search", "c2-radar-source", "c2-radar-session", "c2-radar-m1min", "c2-radar-m7min"].forEach(id => {
+      document.getElementById(id)?.addEventListener("input", renderRows);
+      document.getElementById(id)?.addEventListener("change", renderRows);
+    });
+    renderRows();
   }
 
   async function render() {
@@ -235,6 +323,7 @@
   }
 
   window.MMModuleRadarV2 = { render, isTradableStockSymbol };
+  window.MM_C2_STOCK_RADAR_V2_LOADED = true;
   document.addEventListener("DOMContentLoaded", () => {
     watchC1Select();
     render();
