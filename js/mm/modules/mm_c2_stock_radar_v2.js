@@ -17,7 +17,32 @@
   const CACHE = {};
   const RISK_RANK = { Low: 0, Fair: 1, High: 2, "Very High": 3, Extreme: 4 };
   const SOURCE_RANK = { FCN: 0, Pool30: 1, Universe: 2 };
+  const TV_SYMBOL_MAP = {
+    NVDA: "NASDAQ:NVDA",
+    AMD: "NASDAQ:AMD",
+    AAPL: "NASDAQ:AAPL",
+    MSFT: "NASDAQ:MSFT",
+    META: "NASDAQ:META",
+    GOOG: "NASDAQ:GOOG",
+    GOOGL: "NASDAQ:GOOGL",
+    AMZN: "NASDAQ:AMZN",
+    TSLA: "NASDAQ:TSLA",
+    AVGO: "NASDAQ:AVGO",
+    MRVL: "NASDAQ:MRVL",
+    ARM: "NASDAQ:ARM",
+    MU: "NASDAQ:MU",
+    INTC: "NASDAQ:INTC",
+    ORCL: "NYSE:ORCL",
+    TSM: "NYSE:TSM",
+    SNPS: "NASDAQ:SNPS",
+    ASML: "NASDAQ:ASML",
+    AMAT: "NASDAQ:AMAT",
+    COIN: "NASDAQ:COIN",
+    ALAB: "NASDAQ:ALAB",
+    CRDO: "NASDAQ:CRDO"
+  };
   let ALL_ROWS = [];
+  let TV_WATCHLIST = [];
 
   function esc(v) {
     return String(v ?? "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m]));
@@ -224,6 +249,60 @@
     return rank !== null && rank <= RISK_RANK[maxRisk];
   }
 
+  function buildPool30Watchlist(pool30, m1Map) {
+    const rawRows = asArray(pool30);
+    if (!rawRows.length) return [];
+    const hasNativeOrder = Array.isArray(pool30) || Array.isArray(pool30?.rows) || Array.isArray(pool30?.data) || Array.isArray(pool30?.stocks);
+    const seen = new Set();
+    const rows = rawRows.map((row, index) => {
+      const symbol = normalizeSymbol(row.symbol || row.ticker || row.underlying);
+      return { symbol, index, m1: pickScore(m1Map.get(symbol) || {}, "M1_score", "m1_score", "score") };
+    }).filter(row => row.symbol && TV_SYMBOL_MAP[row.symbol] && !seen.has(row.symbol) && seen.add(row.symbol));
+
+    if (!hasNativeOrder) {
+      rows.sort((a, b) => (safeNum(b.m1) ?? -Infinity) - (safeNum(a.m1) ?? -Infinity) || a.symbol.localeCompare(b.symbol));
+    }
+    return rows.slice(0, 20).map(row => ({ symbol: row.symbol, tv: TV_SYMBOL_MAP[row.symbol] }));
+  }
+
+  function renderTradingViewWatchlist() {
+    const el = document.getElementById("c2-tv-widget");
+    if (!el) return;
+    el.innerHTML = "";
+    if (!TV_WATCHLIST.length) {
+      el.innerHTML = "<div class='c2-tv-empty'>Pool30 watchlist not available.</div>";
+      return;
+    }
+
+    const container = document.createElement("div");
+    container.className = "tradingview-widget-container__widget";
+    el.appendChild(container);
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.async = true;
+    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js";
+    script.textContent = JSON.stringify({
+      colorTheme: "light",
+      dateRange: "1D",
+      showChart: true,
+      locale: "en",
+      width: "100%",
+      height: 360,
+      largeChartUrl: "",
+      isTransparent: false,
+      showSymbolLogo: true,
+      showFloatingTooltip: true,
+      tabs: [{
+        title: "Pool30",
+        symbols: TV_WATCHLIST.map(item => ({ s: item.tv, d: item.symbol }))
+      }]
+    });
+    script.onerror = () => {
+      el.innerHTML = "<div class='c2-tv-empty'>TradingView watchlist not available.</div>";
+    };
+    el.appendChild(script);
+  }
+
   function buildValuationRisk(runtime, m1, m7, price, oneMonth) {
     let score = 0;
     let hasData = false;
@@ -358,6 +437,7 @@
     const m1Map = bySymbol(m1Scores);
     const m7Map = bySymbol(m7Scores);
     const investedMap = buildInvestedMap(fcnPool);
+    TV_WATCHLIST = buildPool30Watchlist(pool30, m1Map);
     const ordered = [...new Set([...fcnSymbols, ...pool30Symbols, ...universeSymbols])].filter(sym => isTradableStockSymbol(sym, runtimeMap.get(sym) || {}));
 
     return ordered.map(symbol => {
@@ -598,6 +678,13 @@
     ALL_ROWS = rows;
     el.innerHTML = `
       <style>
+        .c2-tv-box{border:1px solid #d8e4ef;border-radius:16px;background:#fff;margin-bottom:12px;overflow:hidden}
+        .c2-tv-box summary{cursor:pointer;list-style:none;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;background:#f8fbff;border-bottom:1px solid #e4edf6}
+        .c2-tv-box summary::-webkit-details-marker{display:none}
+        .c2-tv-title{font-size:15px;font-weight:950;color:#162434}
+        .c2-tv-sub{font-size:12px;color:#667085;font-weight:800;margin-top:2px}
+        .c2-tv-widget{min-height:280px;padding:10px;background:#fff}
+        .c2-tv-empty{padding:16px;color:#667085;font-weight:900}
         .c2-filter-bar{display:grid;grid-template-columns:1.4fr repeat(6,minmax(112px,.75fr));gap:8px;margin-bottom:8px;align-items:center}
         .c2-filter-row{display:grid;grid-template-columns:repeat(6,minmax(112px,1fr)) auto;gap:8px;margin-bottom:10px;align-items:center}
         .c2-filter-bar input,.c2-filter-bar select,.c2-filter-row select{min-width:0}
@@ -613,6 +700,10 @@
         .c2-risk-note{margin-top:3px;color:#be3f3f;font-size:11px;font-weight:900;white-space:nowrap}
         @media(max-width:1180px){.c2-filter-bar,.c2-filter-row{grid-template-columns:1fr 1fr}}
       </style>
+      <details class="c2-tv-box" open>
+        <summary><div><div class="c2-tv-title">C2 Live Watch / TradingView</div><div class="c2-tv-sub">Source = Pool30 / Stock Pool; Max 20</div></div><span class="sub">visual only</span></summary>
+        <div id="c2-tv-widget" class="c2-tv-widget"><div class="c2-tv-empty">Loading TradingView watchlist...</div></div>
+      </details>
       <div class="c2-filter-bar">
         <input id="c2-radar-search" placeholder="Search Symbol" />
         <select id="c2-radar-source"><option value="all">All Source</option><option value="FCN">FCN</option><option value="Pool30">Pool30</option><option value="Universe">Universe</option></select>
@@ -632,6 +723,7 @@
         <select id="c2-radar-direction"><option value="desc">Desc</option><option value="asc">Asc</option></select>
       </div>
       <div class="table-wrap"><table><thead><tr><th>Link</th><th>Symbol</th><th>Source</th><th>Price</th><th>Delta</th><th>Delta%</th><th>1W</th><th>1M</th><th>Pre/Post</th><th>Session</th><th>FCN Invested</th><th>Target Amount</th><th>Available Amount</th><th>M1</th><th>M7</th><th>Valuation Risk</th><th>FCN View</th></tr></thead><tbody id="c2-radar-body"></tbody></table></div>`;
+    renderTradingViewWatchlist();
     ["c2-radar-search", "c2-radar-source", "c2-radar-session", "c2-radar-valuation", "c2-radar-m1min", "c2-radar-m7min", "c2-radar-invested", "c2-radar-available", "c2-radar-move", "c2-radar-momentum", "c2-radar-score", "c2-radar-sort", "c2-radar-direction"].forEach(id => {
       document.getElementById(id)?.addEventListener("input", renderRows);
       document.getElementById(id)?.addEventListener("change", renderRows);
