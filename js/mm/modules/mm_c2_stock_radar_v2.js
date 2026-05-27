@@ -12,7 +12,8 @@
     m7Scores: `${ROOT}data/m7_sandbox/m7_v2_scores.json`
   };
 
-  const EXCLUDED = new Set(["DX-Y.NYB", "TWD=X", "JPY=X", "CL=F", "GC=F", "SPY", "QQQ", "SMH", "DIA", "0050.TW", "^TWII", "^VIX", "^TNX"]);
+  const EXCLUDED = new Set(["DX-Y.NYB", "TWD=X", "JPY=X", "CL=F", "GC=F", "SPY", "DIA", "0050.TW", "^TWII", "^VIX", "^TNX"]);
+  const ALLOWED_ETF_SYMBOLS = new Set(["SMH", "QQQ", "LQD"]);
   const SPECIAL_TARGETS = new Set(["NVDA", "TSM", "SMH", "GOOG"]);
   const CACHE = {};
   const RISK_RANK = { Low: 0, Fair: 1, High: 2, "Very High": 3, Extreme: 4 };
@@ -39,7 +40,8 @@
     AMAT: "NASDAQ:AMAT",
     COIN: "NASDAQ:COIN",
     ALAB: "NASDAQ:ALAB",
-    CRDO: "NASDAQ:CRDO"
+    CRDO: "NASDAQ:CRDO",
+    SMH: ["AMEX:SMH", "NASDAQ:SMH"]
   };
   let ALL_ROWS = [];
   let TV_WATCHLIST = [];
@@ -52,12 +54,29 @@
     return String(v || "").trim().toUpperCase();
   }
 
+  function isDebugEnabled() {
+    try {
+      return window.C2_RADAR_DEBUG === true || new URLSearchParams(location.search).has("c2debug");
+    } catch (err) {
+      return window.C2_RADAR_DEBUG === true;
+    }
+  }
+
+  function debugLog(...args) {
+    if (isDebugEnabled()) console.log(...args);
+  }
+
+  function tradingViewSymbol(symbol) {
+    const mapped = TV_SYMBOL_MAP[symbol];
+    return Array.isArray(mapped) ? mapped[0] : mapped;
+  }
+
   function isTradableStockSymbol(symbol, row = {}) {
     const sym = normalizeSymbol(symbol);
     if (!sym) return false;
-    if (row.runtime_category && row.runtime_category !== "stock") return false;
-    if (sym.startsWith("^")) return false;
     if (EXCLUDED.has(sym)) return false;
+    if (sym.startsWith("^") && !ALLOWED_ETF_SYMBOLS.has(sym)) return false;
+    if (row.runtime_category && row.runtime_category !== "stock" && !ALLOWED_ETF_SYMBOLS.has(sym)) return false;
     return /^[A-Z][A-Z0-9.\-]{0,9}$/.test(sym);
   }
 
@@ -169,8 +188,12 @@
     return invested;
   }
 
+  function rowProfile(symbol, pool30Map, universeMap) {
+    return pool30Map.get(symbol) || universeMap.get(symbol) || {};
+  }
+
   function rowCategory(symbol, pool30Map, universeMap) {
-    const row = pool30Map.get(symbol) || universeMap.get(symbol) || {};
+    const row = rowProfile(symbol, pool30Map, universeMap);
     return String(row.category || row.category_main || "").toLowerCase();
   }
 
@@ -249,20 +272,29 @@
     return rank !== null && rank <= RISK_RANK[maxRisk];
   }
 
-  function buildPool30Watchlist(pool30, m1Map) {
+  function buildPool30Watchlist(pool30, m1Map, investedMap) {
     const rawRows = asArray(pool30);
     if (!rawRows.length) return [];
     const hasNativeOrder = Array.isArray(pool30) || Array.isArray(pool30?.rows) || Array.isArray(pool30?.data) || Array.isArray(pool30?.stocks);
     const seen = new Set();
     const rows = rawRows.map((row, index) => {
       const symbol = normalizeSymbol(row.symbol || row.ticker || row.underlying);
-      return { symbol, index, m1: pickScore(m1Map.get(symbol) || {}, "M1_score", "m1_score", "score") };
+      return {
+        symbol,
+        index,
+        invested: investedMap.get(symbol) || 0,
+        m1: pickScore(m1Map.get(symbol) || {}, "M1_score", "m1_score", "score")
+      };
     }).filter(row => row.symbol && TV_SYMBOL_MAP[row.symbol] && !seen.has(row.symbol) && seen.add(row.symbol));
 
-    if (!hasNativeOrder) {
-      rows.sort((a, b) => (safeNum(b.m1) ?? -Infinity) - (safeNum(a.m1) ?? -Infinity) || a.symbol.localeCompare(b.symbol));
-    }
-    return rows.slice(0, 20).map(row => ({ symbol: row.symbol, tv: TV_SYMBOL_MAP[row.symbol] }));
+    rows.sort((a, b) => {
+      const aPriority = a.symbol === "SMH" && a.invested >= 100000 ? 0 : 1;
+      const bPriority = b.symbol === "SMH" && b.invested >= 100000 ? 0 : 1;
+      if (aPriority !== bPriority) return aPriority - bPriority;
+      if (hasNativeOrder) return a.index - b.index;
+      return (safeNum(b.m1) ?? -Infinity) - (safeNum(a.m1) ?? -Infinity) || a.symbol.localeCompare(b.symbol);
+    });
+    return rows.slice(0, 20).map(row => ({ symbol: row.symbol, tv: tradingViewSymbol(row.symbol) }));
   }
 
   function renderTradingViewWatchlist() {
@@ -437,13 +469,16 @@
     const m1Map = bySymbol(m1Scores);
     const m7Map = bySymbol(m7Scores);
     const investedMap = buildInvestedMap(fcnPool);
-    TV_WATCHLIST = buildPool30Watchlist(pool30, m1Map);
+    TV_WATCHLIST = buildPool30Watchlist(pool30, m1Map, investedMap);
     const ordered = [...new Set([...fcnSymbols, ...pool30Symbols, ...universeSymbols])].filter(sym => isTradableStockSymbol(sym, runtimeMap.get(sym) || {}));
+    debugLog("[C2Radar] pool30 symbols count", pool30Symbols.size);
+    debugLog("[C2Radar] has SMH in pool30", pool30Symbols.has("SMH"));
 
-    return ordered.map(symbol => {
+    const rows = ordered.map(symbol => {
       const runtime = runtimeMap.get(symbol) || {};
       const pp = prepostMap.get(symbol) || {};
       const quote = buildQuote(pp, runtime);
+      const profile = rowProfile(symbol, pool30Map, universeMap);
       const category = rowCategory(symbol, pool30Map, universeMap);
       const invested = investedMap.get(symbol) || 0;
       const target = targetAmount(symbol, category);
@@ -453,11 +488,18 @@
       const oneWeek = firstNum(runtime.ret_1w, runtime.change_1w_pct);
       const oneMonth = firstNum(runtime.ret_1m, runtime.change_1m_pct);
       const source = sourceLabel(symbol, fcnSymbols, pool30Symbols);
+      const name = String(profile.name || profile.company_name || runtime.name || runtime.longName || runtime.shortName || "");
+      const sector = String(profile.sector || runtime.sector || "");
+      const subsector = String(profile.subsector || profile.industry || runtime.industry || "");
       const baseRow = {
         symbol,
         source,
         sourcePriority: SOURCE_RANK[source] ?? 9,
+        name,
+        sector,
+        subsector,
         category,
+        searchText: `${symbol} ${name} ${sector} ${subsector} ${category}`.toLowerCase(),
         price: quote.price,
         regularPrice: quote.regularPrice,
         delta: quote.delta,
@@ -477,6 +519,8 @@
       baseRow.fcnView = buildFcnView(baseRow);
       return baseRow;
     });
+    debugLog("[C2Radar] has SMH in rows", rows.some(row => row.symbol === "SMH"));
+    return rows;
   }
 
   function moveClass(value) {
@@ -569,7 +613,7 @@
   }
 
   function filterRows(rows) {
-    const query = normalizeSymbol(document.getElementById("c2-radar-search")?.value || "");
+    const query = String(document.getElementById("c2-radar-search")?.value || "").trim().toLowerCase();
     const source = document.getElementById("c2-radar-source")?.value || "all";
     const session = document.getElementById("c2-radar-session")?.value || "all";
     const valuation = document.getElementById("c2-radar-valuation")?.value || "all";
@@ -581,8 +625,8 @@
     const minM1 = safeNum(document.getElementById("c2-radar-m1min")?.value);
     const minM7 = safeNum(document.getElementById("c2-radar-m7min")?.value);
 
-    return rows.filter(row => {
-      if (query && !row.symbol.includes(query)) return false;
+    const filtered = rows.filter(row => {
+      if (query && !(row.searchText || row.symbol.toLowerCase()).includes(query)) return false;
       if (source !== "all" && row.source !== source) return false;
       if (session !== "all" && row.session !== session) return false;
       if (minM1 !== null && (row.m1 === null || row.m1 < minM1)) return false;
@@ -595,6 +639,8 @@
       if (!filterByScore(row, scorePreset)) return false;
       return true;
     });
+    if (query) debugLog("[C2Radar] filtered count after search", filtered.length);
+    return filtered;
   }
 
   function sortValue(row, sortBy) {
