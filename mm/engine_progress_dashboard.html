@@ -460,14 +460,11 @@ th{background:#f8fafc}
         <details class="mm-a-card">
           <summary><span>A1 全球股市</span><span class="mm-status-pill gray">Market Pulse</span></summary>
           <div class="mm-a-card-body">
-            <div class="mm-a-lines">
-              <div class="mm-a-line"><span>美股（S&P500）</span><b>↑ +0.8%</b></div>
-              <div class="mm-a-line"><span>NASDAQ</span><b>↑ +1.2%</b></div>
-              <div class="mm-a-line"><span>費半 / SMH</span><b>↑ +2.1%</b></div>
-              <div class="mm-a-line"><span>道瓊</span><b>↑ +0.4%</b></div>
-              <div class="mm-a-line"><span>台股</span><b>↓ -0.3%</b></div>
+            <div id="a1-market-pulse" class="mm-a-lines">
+              <div class="mm-a-line"><span>Market Pulse</span><b>Loading...</b></div>
             </div>
             <div class="mm-a-detail">
+              <div id="a1-market-runtime-note" class="mm-a-note">source：data/market_runtime.json</div>
               <div class="mm-a-note">其他市場：歐洲、日本、中國、香港等可後續接資料後放在展開區。</div>
             </div>
           </div>
@@ -476,13 +473,11 @@ th{background:#f8fafc}
         <details class="mm-a-card">
           <summary><span>A2 總經指標</span><span class="mm-status-pill yellow">Macro</span></summary>
           <div class="mm-a-card-body">
-            <div class="mm-a-lines">
-              <div class="mm-a-line"><span>VIX</span><b>待接資料</b></div>
-              <div class="mm-a-line"><span>10Y Yield</span><b>待接資料</b></div>
-              <div class="mm-a-line"><span>USD/TWD</span><b>待接資料</b></div>
-              <div class="mm-a-line"><span>USD/JPY</span><b>待接資料</b></div>
+            <div id="a2-macro-pulse" class="mm-a-lines">
+              <div class="mm-a-line"><span>Macro Runtime</span><b>Loading...</b></div>
             </div>
             <div class="mm-a-detail">
+              <div id="a2-market-runtime-note" class="mm-a-note">source：data/market_runtime.json</div>
               <div class="mm-a-note">展開後放：2Y / 10Y、DXY、MOVE、HY/IG spread、其他匯率。</div>
             </div>
           </div>
@@ -823,6 +818,7 @@ th{background:#f8fafc}
 <script src="../js/mm/modules/mm_all_stock_radar.js"></script>
 <script src="../js/mm/modules/mm_dashboard_app.js"></script>
 <script src="../js/mm/modules/mm_b_zone_v3.js"></script>
+<script src="../js/mm/modules/mm_macro_context.js"></script>
 
 <script>
 (function(){
@@ -848,4 +844,6 @@ th{background:#f8fafc}
 </script>
 </body>
 </html>
+
+
 
