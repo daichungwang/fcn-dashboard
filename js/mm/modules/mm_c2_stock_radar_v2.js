@@ -319,6 +319,30 @@
     return "Watch";
   }
 
+  function buildPrepostQuote(pp, runtime) {
+    const active = firstPositiveNum(pp.price_active, pp.price_pre, pp.price_post);
+    const fallback = firstPositiveNum(runtime.price_now);
+    const price = active !== null ? active : fallback;
+    const basePrice = firstPositiveNum(pp.price_regular, pp.previous_close);
+    let delta = firstNum(pp.change_active);
+    let deltaPct = firstNum(pp.change_active_pct);
+
+    if (delta === null && active !== null && basePrice !== null) {
+      delta = active - basePrice;
+    }
+    if (deltaPct === null && active !== null && basePrice !== null && basePrice !== 0) {
+      deltaPct = (active / basePrice - 1) * 100;
+    }
+
+    return {
+      price,
+      prepost: active,
+      delta,
+      deltaPct,
+      session: pp.session || (active !== null ? "prepost" : "regular")
+    };
+  }
+
   async function buildRows() {
     const [fcnPool, pool30, universe, marketRuntime, prepost, m1Scores, m7Scores] = await Promise.all(Object.values(PATHS).map(fetchJson));
     const fcnSymbols = collectSymbols(fcnPool);
@@ -336,32 +360,32 @@
     return ordered.map(symbol => {
       const runtime = runtimeMap.get(symbol) || {};
       const pp = prepostMap.get(symbol) || {};
+      const quote = buildPrepostQuote(pp, runtime);
       const category = rowCategory(symbol, pool30Map, universeMap);
       const invested = investedMap.get(symbol) || 0;
       const target = targetAmount(symbol, category);
       const available = target - invested;
       const m1 = m1Map.get(symbol) || {};
       const m7 = m7Map.get(symbol) || {};
-      const price = firstPositiveNum(runtime.price, runtime.last_price, runtime.close, runtime.current_price, runtime.regularMarketPrice, runtime.price_now, pp.price_regular, pp.price_active);
       const oneMonth = firstNum(runtime.ret_1m, runtime.change_1m_pct);
       const baseRow = {
         symbol,
         source: sourceLabel(symbol, fcnSymbols, pool30Symbols),
         category,
-        price,
-        delta: firstNum(runtime.change, runtime.change_1d, runtime.delta_1d),
-        deltaPct: firstNum(runtime.change_pct, runtime.change_1d_pct, runtime.ret_1d),
+        price: quote.price,
+        delta: quote.delta,
+        deltaPct: quote.deltaPct,
         oneWeek: firstNum(runtime.ret_1w, runtime.change_1w_pct),
         oneMonth,
-        prepost: firstPositiveNum(pp.price_active, pp.price_pre, pp.price_post),
-        session: pp.session || "regular",
+        prepost: quote.prepost,
+        session: quote.session,
         invested,
         target,
         available,
         m1: pickScore(m1, "M1_score", "m1_score", "score"),
         m7: pickScore(m7, "m7_v2_score", "M7_score", "m7_score", "score")
       };
-      baseRow.valuationRisk = buildValuationRisk(runtime, m1, m7, price, oneMonth);
+      baseRow.valuationRisk = buildValuationRisk(runtime, m1, m7, quote.price, oneMonth);
       baseRow.goodButExpensive = safeNum(baseRow.m1) !== null && baseRow.m1 >= 8 && isRiskAtLeast(baseRow.valuationRisk.label, "Very High");
       baseRow.fcnView = buildFcnView(baseRow);
       return baseRow;
