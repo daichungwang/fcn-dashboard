@@ -3063,6 +3063,55 @@
   }
 },
   {
+  "date": "2026-05-27",
+  "fcn_id": "FCN2602267 永豐",
+  "basket": [
+    "NVDA",
+    "TSM",
+    "AVGO"
+  ],
+  "tenor": 6,
+  "rate": 22.41,
+  "autocall": 100,
+  "strike": 80,
+  "ki": 65,
+  "eki": true,
+  "bank": "香港野村國際證券",
+  "has_position": true,
+  "amt": 90000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "永豐",
+  "created_time": "2026-05-27T19:27",
+  "entry_time": "2026-05-27T19:27",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "NVDA": 212.60000610351562,
+    "TSM": 422.7300109863281,
+    "AVGO": 421.8599853515625
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
