@@ -45,6 +45,8 @@
   };
   let ALL_ROWS = [];
   let TV_WATCHLIST = [];
+  let SELECTED_SYMBOL = "NVDA";
+  let ALL_STOCKS_OPEN = false;
 
   function esc(v) {
     return String(v ?? "").replace(/[&<>"']/g, m => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[m]));
@@ -693,6 +695,76 @@
     return `<span class="c2-risk ${riskClass(risk.label)}" title="${title}">${esc(risk.label)} ${score}</span>${note}`;
   }
 
+  function chartSymbol(symbol) {
+    const sym = normalizeSymbol(symbol || "NVDA");
+    const mapped = tradingViewSymbol(sym);
+    if (mapped) return mapped;
+    if (sym.endsWith(".TW")) return `TWSE:${sym.replace(".TW", "")}`;
+    return `NASDAQ:${sym}`;
+  }
+
+  function tradingViewChartUrl(symbol) {
+    return `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(chartSymbol(symbol))}`;
+  }
+
+  function setSelectedSymbol(symbol) {
+    SELECTED_SYMBOL = normalizeSymbol(symbol || "NVDA") || "NVDA";
+    window.MM_SELECTED_SYMBOL = SELECTED_SYMBOL;
+    const url = tradingViewChartUrl(SELECTED_SYMBOL);
+    const frame = document.getElementById("c2-tv-frame");
+    const link = document.getElementById("c2-tv-link");
+    const label = document.getElementById("c2-tv-selected");
+    if (frame) frame.src = url;
+    if (link) link.href = url;
+    if (label) label.textContent = chartSymbol(SELECTED_SYMBOL);
+    document.querySelectorAll(".c2-pool-card").forEach(card => {
+      card.classList.toggle("selected", card.dataset.symbol === SELECTED_SYMBOL);
+    });
+  }
+
+  function marketWatchRows(rows) {
+    const preferred = ["NVDA", "TSM", "MRVL", "AVGO", "AMD", "AAPL", "MSFT", "AMZN", "GOOG", "META", "TSLA", "SMH"];
+    const bySymbolMap = new Map(rows.map(row => [row.symbol, row]));
+    const picked = new Set();
+    const ordered = [];
+    preferred.forEach(symbol => {
+      const row = bySymbolMap.get(symbol);
+      if (row) {
+        ordered.push(row);
+        picked.add(symbol);
+      }
+    });
+    const ranked = rows
+      .filter(row => !picked.has(row.symbol))
+      .sort((a, b) => a.sourcePriority - b.sourcePriority || (safeNum(b.invested) || 0) - (safeNum(a.invested) || 0) || (safeNum(b.m1) || 0) - (safeNum(a.m1) || 0) || a.symbol.localeCompare(b.symbol));
+    return [...ordered, ...ranked].slice(0, 24);
+  }
+
+  function renderPoolCard(row) {
+    return `<button class="c2-pool-card ${row.symbol === SELECTED_SYMBOL ? "selected" : ""}" type="button" data-symbol="${esc(row.symbol)}">
+      <div class="c2-card-top"><b>${esc(row.symbol)}</b><strong>${num(row.price)}</strong></div>
+      <div class="c2-card-delta ${moveClass(row.deltaPct)}"><span>${num(row.delta)}</span><span>${pct(row.deltaPct)}</span></div>
+      <div class="c2-card-line"><span>1W ${pct(row.oneWeek)}</span><span>1M ${pct(row.oneMonth)}</span></div>
+      <div class="c2-card-line"><span>M1 ${num(row.m1, 1)}</span><span>M7 ${num(row.m7, 1)}</span><em>${esc(row.fcnView)}</em></div>
+    </button>`;
+  }
+
+  function bindMarketWatch() {
+    document.querySelectorAll(".c2-pool-card").forEach(card => {
+      card.addEventListener("click", () => setSelectedSymbol(card.dataset.symbol));
+    });
+    document.getElementById("c2-all-stocks-toggle")?.addEventListener("click", () => {
+      ALL_STOCKS_OPEN = !ALL_STOCKS_OPEN;
+      const panel = document.getElementById("c2-all-stocks-panel");
+      const button = document.getElementById("c2-all-stocks-toggle");
+      if (panel) panel.hidden = !ALL_STOCKS_OPEN;
+      if (button) {
+        button.setAttribute("aria-expanded", String(ALL_STOCKS_OPEN));
+        button.textContent = ALL_STOCKS_OPEN ? "收合全股票區" : "展開全股票區";
+      }
+    });
+  }
+
   function renderRows() {
     const body = document.getElementById("c2-radar-body");
     const count = document.getElementById("c2-radar-count");
@@ -722,15 +794,32 @@
 
   function renderTable(el, rows) {
     ALL_ROWS = rows;
+    if (!rows.some(row => row.symbol === SELECTED_SYMBOL)) SELECTED_SYMBOL = rows[0]?.symbol || "NVDA";
+    const watchRows = marketWatchRows(rows);
+    const selected = watchRows.find(row => row.symbol === SELECTED_SYMBOL) || watchRows[0] || rows[0];
+    SELECTED_SYMBOL = selected?.symbol || "NVDA";
+    window.MM_SELECTED_SYMBOL = SELECTED_SYMBOL;
     el.innerHTML = `
       <style>
-        .c2-tv-box{border:1px solid #d8e4ef;border-radius:16px;background:#fff;margin-bottom:12px;overflow:hidden}
-        .c2-tv-box summary{cursor:pointer;list-style:none;padding:12px 14px;display:flex;justify-content:space-between;gap:12px;align-items:center;background:#f8fbff;border-bottom:1px solid #e4edf6}
-        .c2-tv-box summary::-webkit-details-marker{display:none}
-        .c2-tv-title{font-size:15px;font-weight:950;color:#162434}
-        .c2-tv-sub{font-size:12px;color:#667085;font-weight:800;margin-top:2px}
-        .c2-tv-widget{min-height:280px;padding:10px;background:#fff}
-        .c2-tv-empty{padding:16px;color:#667085;font-weight:900}
+        .c2-market-watch{display:grid;grid-template-columns:minmax(280px,340px) minmax(0,1fr);gap:14px;align-items:start}
+        .c2-pool-list{display:grid;gap:8px;max-height:620px;overflow:auto;padding-right:2px}
+        .c2-pool-card{width:100%;text-align:left;border:1px solid #e5e7eb;background:#fff;border-radius:10px;padding:10px;cursor:pointer;color:#111827}
+        .c2-pool-card:hover{border-color:#93c5fd;background:#f8fbff}
+        .c2-pool-card.selected{border-color:#2563eb;background:#eff6ff;box-shadow:0 0 0 2px rgba(37,99,235,.12)}
+        .c2-card-top,.c2-card-delta,.c2-card-line{display:flex;align-items:center;justify-content:space-between;gap:10px}
+        .c2-card-top b,.c2-card-top strong{font-size:15px;font-weight:950}
+        .c2-card-delta{margin-top:6px;font-weight:900}
+        .c2-card-line{margin-top:6px;color:#475569;font-size:12px;font-weight:800}
+        .c2-card-line em{font-style:normal;border:1px solid #d0d5dd;border-radius:999px;padding:2px 7px;color:#334155;background:#f8fafc}
+        .c2-chart-panel{border:1px solid #d8e4ef;border-radius:16px;background:#fff;overflow:hidden;min-height:620px}
+        .c2-chart-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-bottom:1px solid #e4edf6;background:#f8fbff}
+        .c2-chart-head b{font-size:15px}
+        .c2-chart-head a{border:1px solid #d0d5dd;background:#fff;color:#111827;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:900;text-decoration:none}
+        .c2-tv-frame{width:100%;height:620px;border:0;display:block}
+        .c2-all-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 10px;padding-top:14px;border-top:1px solid #e5e7eb}
+        .c2-all-head h3{margin:0;font-size:16px}
+        .c2-all-toggle{border:1px solid #d0d5dd;background:#fff;color:#111827;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:900;cursor:pointer}
+        .c2-all-panel[hidden]{display:none}
         .c2-filter-bar{display:grid;grid-template-columns:1.4fr repeat(6,minmax(112px,.75fr));gap:8px;margin-bottom:8px;align-items:center}
         .c2-filter-row{display:grid;grid-template-columns:repeat(6,minmax(112px,1fr)) auto;gap:8px;margin-bottom:10px;align-items:center}
         .c2-filter-bar input,.c2-filter-bar select,.c2-filter-row select{min-width:0}
@@ -744,37 +833,54 @@
         .c2-risk-high{background:#fff0f0;color:#be3f3f;border-color:#f0cfcf}
         .c2-risk-nodata{background:#f2f4f7;color:#667085;border-color:#d0d5dd}
         .c2-risk-note{margin-top:3px;color:#be3f3f;font-size:11px;font-weight:900;white-space:nowrap}
+        @media(max-width:1040px){.c2-market-watch{grid-template-columns:1fr}.c2-pool-list{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}}
         @media(max-width:1180px){.c2-filter-bar,.c2-filter-row{grid-template-columns:1fr 1fr}}
+        @media(max-width:680px){.c2-pool-list{grid-template-columns:1fr}.c2-chart-head,.c2-all-head{align-items:flex-start;flex-direction:column}.c2-tv-frame{height:560px}}
       </style>
-      <details class="c2-tv-box" open>
-        <summary><div><div class="c2-tv-title">C2 Live Watch / TradingView</div><div class="c2-tv-sub">Source = Pool30 / Stock Pool; Max 20</div></div><span class="sub">visual only</span></summary>
-        <div id="c2-tv-widget" class="c2-tv-widget"><div class="c2-tv-empty">Loading TradingView watchlist...</div></div>
-      </details>
-      <div class="c2-filter-bar">
-        <input id="c2-radar-search" placeholder="Search Symbol" />
-        <select id="c2-radar-source"><option value="all">All Source</option><option value="FCN">FCN</option><option value="Pool30">Pool30</option><option value="Universe">Universe</option></select>
-        <select id="c2-radar-session"><option value="all">All Session</option><option value="pre_market">Pre</option><option value="post_market">Post</option><option value="prepost">Pre/Post</option><option value="regular">Regular</option></select>
-        <select id="c2-radar-valuation"><option value="all">All Valuation</option><option value="low_fair">Low / Fair</option><option value="high">High</option><option value="very_high">Very High</option><option value="extreme">Extreme</option><option value="good_expensive">Good Company but Expensive</option><option value="avoid_chase">Avoid Chase</option></select>
-        <input id="c2-radar-m1min" type="number" step="0.1" placeholder="M1 min" />
-        <input id="c2-radar-m7min" type="number" step="0.1" placeholder="M7 min" />
-        <span id="c2-radar-count" class="sub"></span>
+      <div class="c2-market-watch">
+        <div class="c2-pool-list" aria-label="FCN Pool stocks">
+          ${watchRows.map(renderPoolCard).join("") || "<div class='c2-tv-empty'>No FCN Pool stocks.</div>"}
+        </div>
+        <div class="c2-chart-panel">
+          <div class="c2-chart-head">
+            <b>C2-0 FCN Basket Market Watch | <span id="c2-tv-selected">${esc(chartSymbol(SELECTED_SYMBOL))}</span></b>
+            <a id="c2-tv-link" href="${esc(tradingViewChartUrl(SELECTED_SYMBOL))}" target="_blank" rel="noopener">Open TradingView for selected symbol</a>
+          </div>
+          <iframe id="c2-tv-frame" class="c2-tv-frame" src="${esc(tradingViewChartUrl(SELECTED_SYMBOL))}" title="TradingView Full Chart View"></iframe>
+        </div>
       </div>
-      <div class="c2-filter-row">
-        <select id="c2-radar-invested"><option value="all">All Invested</option><option value="none">No Position</option><option value="gt0">Invested &gt; 0</option><option value="gte100">Invested &gt;= 100K</option><option value="gte300">Invested &gt;= 300K</option><option value="gte500">Invested &gt;= 500K</option><option value="gte700">Invested &gt;= 700K</option></select>
-        <select id="c2-radar-available"><option value="all">All Available</option><option value="gt0">Available &gt; 0</option><option value="gte100">Available &gt;= 100K</option><option value="gte300">Available &gt;= 300K</option><option value="full">Full / No Room</option><option value="over">Over Target</option></select>
-        <select id="c2-radar-move"><option value="all">All Move</option><option value="today_up">Today Up</option><option value="today_down">Today Down</option><option value="move2">Move &gt; 2%</option><option value="move5">Move &gt; 5%</option><option value="prepost_up">PrePost Up</option><option value="prepost_down">PrePost Down</option><option value="prepost_move2">PrePost Move &gt; 2%</option><option value="prepost_move5">PrePost Move &gt; 5%</option></select>
-        <select id="c2-radar-momentum"><option value="all">All Momentum</option><option value="w_up">1W Up</option><option value="w_down">1W Down</option><option value="m_up">1M Up</option><option value="m_down">1M Down</option><option value="w_down_m_up">1W Down + 1M Up</option><option value="m_gt10">1M &gt; 10%</option><option value="m_gt20">1M &gt; 20%</option></select>
-        <select id="c2-radar-score"><option value="all">All Scores</option><option value="m1_8">M1 &gt;= 8</option><option value="m1_7">M1 &gt;= 7</option><option value="m7_8">M7 &gt;= 8</option><option value="m7_7">M7 &gt;= 7</option><option value="m1_8_m7_7">M1 &gt;= 8 and M7 &gt;= 7</option></select>
-        <select id="c2-radar-sort"><option value="source">Source Priority</option><option value="invested">FCN Invested</option><option value="available">Available Amount</option><option value="price">Price</option><option value="m1">M1</option><option value="m7">M7</option><option value="delta_pct">Delta%</option><option value="one_week">1W</option><option value="one_month">1M</option><option value="valuation">Valuation Risk</option></select>
-        <select id="c2-radar-direction"><option value="desc">Desc</option><option value="asc">Asc</option></select>
+      <div class="c2-all-head">
+        <div><h3>All Stocks Radar / 全股票區</h3><div class="sub">預設隱藏，需要時一鍵展開檢查全部股票。</div></div>
+        <button id="c2-all-stocks-toggle" class="c2-all-toggle" type="button" aria-expanded="${String(ALL_STOCKS_OPEN)}">${ALL_STOCKS_OPEN ? "收合全股票區" : "展開全股票區"}</button>
       </div>
-      <div class="table-wrap"><table><thead><tr><th>Link</th><th>Symbol</th><th>Source</th><th>Price</th><th>Delta</th><th>Delta%</th><th>1W</th><th>1M</th><th>Pre/Post</th><th>Session</th><th>FCN Invested</th><th>Target Amount</th><th>Available Amount</th><th>M1</th><th>M7</th><th>Valuation Risk</th><th>FCN View</th></tr></thead><tbody id="c2-radar-body"></tbody></table></div>`;
-    renderTradingViewWatchlist();
+      <div id="c2-all-stocks-panel" class="c2-all-panel" ${ALL_STOCKS_OPEN ? "" : "hidden"}>
+        <div class="c2-filter-bar">
+          <input id="c2-radar-search" placeholder="Search Symbol" />
+          <select id="c2-radar-source"><option value="all">All Source</option><option value="FCN">FCN</option><option value="Pool30">Pool30</option><option value="Universe">Universe</option></select>
+          <select id="c2-radar-session"><option value="all">All Session</option><option value="pre_market">Pre</option><option value="post_market">Post</option><option value="prepost">Pre/Post</option><option value="regular">Regular</option></select>
+          <select id="c2-radar-valuation"><option value="all">All Valuation</option><option value="low_fair">Low / Fair</option><option value="high">High</option><option value="very_high">Very High</option><option value="extreme">Extreme</option><option value="good_expensive">Good Company but Expensive</option><option value="avoid_chase">Avoid Chase</option></select>
+          <input id="c2-radar-m1min" type="number" step="0.1" placeholder="M1 min" />
+          <input id="c2-radar-m7min" type="number" step="0.1" placeholder="M7 min" />
+          <span id="c2-radar-count" class="sub"></span>
+        </div>
+        <div class="c2-filter-row">
+          <select id="c2-radar-invested"><option value="all">All Invested</option><option value="none">No Position</option><option value="gt0">Invested &gt; 0</option><option value="gte100">Invested &gt;= 100K</option><option value="gte300">Invested &gt;= 300K</option><option value="gte500">Invested &gt;= 500K</option><option value="gte700">Invested &gt;= 700K</option></select>
+          <select id="c2-radar-available"><option value="all">All Available</option><option value="gt0">Available &gt; 0</option><option value="gte100">Available &gt;= 100K</option><option value="gte300">Available &gt;= 300K</option><option value="full">Full / No Room</option><option value="over">Over Target</option></select>
+          <select id="c2-radar-move"><option value="all">All Move</option><option value="today_up">Today Up</option><option value="today_down">Today Down</option><option value="move2">Move &gt; 2%</option><option value="move5">Move &gt; 5%</option><option value="prepost_up">PrePost Up</option><option value="prepost_down">PrePost Down</option><option value="prepost_move2">PrePost Move &gt; 2%</option><option value="prepost_move5">PrePost Move &gt; 5%</option></select>
+          <select id="c2-radar-momentum"><option value="all">All Momentum</option><option value="w_up">1W Up</option><option value="w_down">1W Down</option><option value="m_up">1M Up</option><option value="m_down">1M Down</option><option value="w_down_m_up">1W Down + 1M Up</option><option value="m_gt10">1M &gt; 10%</option><option value="m_gt20">1M &gt; 20%</option></select>
+          <select id="c2-radar-score"><option value="all">All Scores</option><option value="m1_8">M1 &gt;= 8</option><option value="m1_7">M1 &gt;= 7</option><option value="m7_8">M7 &gt;= 8</option><option value="m7_7">M7 &gt;= 7</option><option value="m1_8_m7_7">M1 &gt;= 8 and M7 &gt;= 7</option></select>
+          <select id="c2-radar-sort"><option value="source">Source Priority</option><option value="invested">FCN Invested</option><option value="available">Available Amount</option><option value="price">Price</option><option value="m1">M1</option><option value="m7">M7</option><option value="delta_pct">Delta%</option><option value="one_week">1W</option><option value="one_month">1M</option><option value="valuation">Valuation Risk</option></select>
+          <select id="c2-radar-direction"><option value="desc">Desc</option><option value="asc">Asc</option></select>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>Link</th><th>Symbol</th><th>Source</th><th>Price</th><th>Delta</th><th>Delta%</th><th>1W</th><th>1M</th><th>Pre/Post</th><th>Session</th><th>FCN Invested</th><th>Target Amount</th><th>Available Amount</th><th>M1</th><th>M7</th><th>Valuation Risk</th><th>FCN View</th></tr></thead><tbody id="c2-radar-body"></tbody></table></div>
+      </div>`;
     ["c2-radar-search", "c2-radar-source", "c2-radar-session", "c2-radar-valuation", "c2-radar-m1min", "c2-radar-m7min", "c2-radar-invested", "c2-radar-available", "c2-radar-move", "c2-radar-momentum", "c2-radar-score", "c2-radar-sort", "c2-radar-direction"].forEach(id => {
       document.getElementById(id)?.addEventListener("input", renderRows);
       document.getElementById(id)?.addEventListener("change", renderRows);
     });
+    bindMarketWatch();
     renderRows();
+    setSelectedSymbol(SELECTED_SYMBOL);
   }
 
   async function render() {
