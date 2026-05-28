@@ -864,7 +864,7 @@
         .c2-chart-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-bottom:1px solid #e4edf6;background:#f8fbff}
         .c2-chart-head b{font-size:15px}
         .c2-chart-head a{border:1px solid #d0d5dd;background:#fff;color:#111827;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:900;text-decoration:none}
-        .c2-tv-note{padding:8px 12px;border-bottom:1px solid #e4edf6;background:#fff;color:#475569;font-size:12px;font-weight:800;line-height:1.45}
+        .c2-tv-note{display:block;margin:10px 12px 8px;padding:8px 10px;border:1px solid #f5c66b;border-radius:10px;background:#fff7e6;color:#7a4b00;font-size:12px;font-weight:800;line-height:1.5}
         .c2-tv-widget{height:620px;min-height:620px}
         .c2-tv-frame{width:100%;height:620px;border:0;display:block;background:#fff}
         .c2-tv-blocked{display:flex;align-items:center;justify-content:center;min-height:620px;padding:24px;color:#667085;font-weight:900;text-align:center;background:#f8fafc}
@@ -898,7 +898,7 @@
             <b>C2-0 FCN Basket Market Watch | <span id="c2-tv-selected">${esc(chartSymbol(SELECTED_SYMBOL))}</span></b>
             <a id="c2-tv-link" href="${esc(tradingViewChartUrl(SELECTED_SYMBOL))}" target="_blank" rel="noopener">Open TradingView for selected symbol</a>
           </div>
-          <div class="c2-tv-note">TradingView external market view｜右側資訊為 TradingView 外部市場資訊，可能顯示市場排行；FCN 判斷請以左側小卡為準。</div>
+          <div class="c2-tv-note">⚠ TradingView 外部市場視窗<br>右側資訊由 TradingView 自動產生，可能顯示市場排行或非本股票資料；FCN 判斷請以左側 MM 小卡為準：Price / 1W / 1M / M1 / M7 / FCN View。</div>
           <div id="c2-tv-widget" class="c2-tv-widget"></div>
         </div>
       </div>
