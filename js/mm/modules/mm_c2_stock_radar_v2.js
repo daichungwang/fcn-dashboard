@@ -785,6 +785,28 @@
     `;
   }
 
+  function updateTodaySummary(row) {
+    const el = document.getElementById("c2-today-summary");
+    if (!el) return;
+    if (!row) {
+      el.innerHTML = "<div class='c2-info-empty'>Today summary is not available.</div>";
+      return;
+    }
+    el.innerHTML = `
+      <div class="c2-info-head">
+        <b>Today Summary / 今日摘要</b>
+        <span>${esc(row.symbol)}</span>
+      </div>
+      <div class="c2-summary-list">
+        <div><span>Price</span><b>${num(row.price)}</b></div>
+        <div><span>Delta</span><b class="${moveClass(row.deltaPct)}">${num(row.delta)} / ${pct(row.deltaPct)}</b></div>
+        <div><span>1W / 1M</span><b>${pct(row.oneWeek)} / ${pct(row.oneMonth)}</b></div>
+        <div><span>M1 / M7</span><b>${num(row.m1, 1)} / ${num(row.m7, 1)}</b></div>
+        <div><span>FCN View</span><b>${esc(row.fcnView)}</b></div>
+      </div>
+    `;
+  }
+
   function updateSelectedFcnInfo(row) {
     const el = document.getElementById("c2-selected-fcn-info");
     if (!el) return;
@@ -812,6 +834,7 @@
 
   function updateSelectedRightBlocks() {
     const row = selectedRow();
+    updateTodaySummary(row);
     updateSelectedNews(row);
     updateSelectedFcnInfo(row);
   }
@@ -910,7 +933,7 @@
     window.MM_SELECTED_SYMBOL = SELECTED_SYMBOL;
     el.innerHTML = `
       <style>
-        .c2-market-watch{display:grid;grid-template-columns:minmax(280px,340px) minmax(0,1fr);gap:14px;align-items:start}
+        .c2-market-watch{display:grid;grid-template-columns:minmax(260px,320px) minmax(460px,1fr) minmax(300px,360px);gap:14px;align-items:start}
         .c2-pool-list{display:grid;gap:8px;max-height:620px;overflow:auto;padding-right:2px}
         .c2-pool-card{width:100%;text-align:left;border:1px solid #e5e7eb;background:#fff;border-radius:10px;padding:10px;cursor:pointer;color:#111827}
         .c2-pool-card:hover{border-color:#93c5fd;background:#f8fbff}
@@ -920,7 +943,7 @@
         .c2-card-delta{margin-top:6px;font-weight:900}
         .c2-card-line{margin-top:6px;color:#475569;font-size:12px;font-weight:800}
         .c2-card-line em{font-style:normal;border:1px solid #d0d5dd;border-radius:999px;padding:2px 7px;color:#334155;background:#f8fafc}
-        .c2-right-stack{display:grid;gap:12px}
+        .c2-side-stack{display:grid;gap:12px}
         .c2-chart-panel,.c2-info-panel{border:1px solid #d8e4ef;border-radius:16px;background:#fff;overflow:hidden}
         .c2-chart-panel{min-height:620px}
         .c2-chart-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-bottom:1px solid #e4edf6;background:#f8fbff}
@@ -942,6 +965,11 @@
         .c2-fcn-grid div{border:1px solid #e5e7eb;border-radius:10px;background:#f8fafc;padding:8px}
         .c2-fcn-grid span{display:block;color:#667085;font-size:11px;font-weight:800;margin-bottom:4px}
         .c2-fcn-grid b{font-size:13px;font-weight:950;color:#111827}
+        .c2-summary-list{display:grid;gap:8px}
+        .c2-summary-list div{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #eef2f7;padding-bottom:7px}
+        .c2-summary-list div:last-child{border-bottom:0;padding-bottom:0}
+        .c2-summary-list span{color:#667085;font-size:12px;font-weight:800}
+        .c2-summary-list b{font-size:13px;font-weight:950;color:#111827;text-align:right}
         .c2-all-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 10px;padding-top:14px;border-top:1px solid #e5e7eb}
         .c2-all-head h3{margin:0;font-size:16px}
         .c2-all-toggle{border:1px solid #d0d5dd;background:#fff;color:#111827;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:900;cursor:pointer}
@@ -959,7 +987,8 @@
         .c2-risk-high{background:#fff0f0;color:#be3f3f;border-color:#f0cfcf}
         .c2-risk-nodata{background:#f2f4f7;color:#667085;border-color:#d0d5dd}
         .c2-risk-note{margin-top:3px;color:#be3f3f;font-size:11px;font-weight:900;white-space:nowrap}
-        @media(max-width:1040px){.c2-market-watch{grid-template-columns:1fr}.c2-pool-list{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}}
+        @media(max-width:1240px){.c2-market-watch{grid-template-columns:minmax(260px,320px) minmax(0,1fr)}.c2-side-stack{grid-column:1/-1;grid-template-columns:repeat(3,minmax(0,1fr))}}
+        @media(max-width:1040px){.c2-market-watch{grid-template-columns:1fr}.c2-pool-list{grid-template-columns:repeat(2,minmax(0,1fr));max-height:none}.c2-side-stack{grid-template-columns:1fr}}
         @media(max-width:1180px){.c2-filter-bar,.c2-filter-row{grid-template-columns:1fr 1fr}}
         @media(max-width:860px){.c2-fcn-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
         @media(max-width:680px){.c2-pool-list{grid-template-columns:1fr}.c2-chart-head,.c2-all-head,.c2-info-head{align-items:flex-start;flex-direction:column}.c2-fcn-grid{grid-template-columns:1fr}}
@@ -968,8 +997,7 @@
         <div class="c2-pool-list" aria-label="FCN Pool stocks">
           ${watchRows.map(renderPoolCard).join("") || "<div class='c2-tv-empty'>No FCN Pool stocks.</div>"}
         </div>
-        <div class="c2-right-stack">
-          <div class="c2-chart-panel">
+        <div class="c2-chart-panel">
           <div class="c2-chart-head">
             <b>TradingView Today Technical View / 今日技術圖 | <span id="c2-tv-selected">${esc(chartSymbol(SELECTED_SYMBOL))}</span></b>
             <a id="c2-tv-link" href="${esc(tradingViewChartUrl(SELECTED_SYMBOL))}" target="_blank" rel="noopener">Open TradingView for selected symbol</a>
@@ -978,7 +1006,9 @@
           <div id="c2-tv-widget" class="c2-tv-widget">
             <div class="c2-tv-side-label">TradingView 外部資訊<br>非 MM / FCN 判斷資料</div>
           </div>
-          </div>
+        </div>
+        <div class="c2-side-stack">
+          <div id="c2-today-summary" class="c2-info-panel"></div>
           <div id="c2-selected-news" class="c2-info-panel"></div>
           <div id="c2-selected-fcn-info" class="c2-info-panel"></div>
         </div>
@@ -1060,4 +1090,3 @@
     render();
   });
 })();
-
