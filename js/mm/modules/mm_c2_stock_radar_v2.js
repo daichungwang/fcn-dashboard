@@ -707,36 +707,54 @@
     return `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(chartSymbol(symbol))}`;
   }
 
+  function tradingViewWidgetUrl(symbol) {
+    const tvSymbol = chartSymbol(symbol);
+    return "https://s.tradingview.com/widgetembed/?" + [
+      "hideideas=1",
+      "overrides=%7B%7D",
+      "enabled_features=%5B%5D",
+      "disabled_features=%5B%5D",
+      "locale=zh_TW",
+      "utm_source=daichungwang-wq.github.io",
+      "utm_medium=widget",
+      "utm_campaign=chart",
+      "utm_term=" + encodeURIComponent(tvSymbol),
+      "symbol=" + encodeURIComponent(tvSymbol),
+      "interval=D",
+      "range=12M",
+      "hidesidetoolbar=1",
+      "symboledit=0",
+      "saveimage=0",
+      "toolbarbg=f1f3f6",
+      "studies=%5B%5D",
+      "theme=light",
+      "style=1",
+      "timezone=Asia%2FTaipei",
+      "withdateranges=1",
+      "hidevolume=0",
+      "allow_symbol_change=0",
+      "details=0",
+      "calendar=0",
+      "hotlist=0"
+    ].join("&");
+  }
+
   function renderTradingViewWidget(symbol) {
     const container = document.getElementById("c2-tv-widget");
     if (!container) return;
     const selectedTvSymbol = chartSymbol(symbol);
     container.innerHTML = "";
 
-    const widget = document.createElement("div");
-    widget.className = "tradingview-widget-container__widget";
-    container.appendChild(widget);
-
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.async = true;
-    script.src = "https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";
-    script.textContent = JSON.stringify({
-      autosize: true,
-      symbol: selectedTvSymbol,
-      interval: "D",
-      timezone: "Asia/Taipei",
-      theme: "light",
-      style: "1",
-      locale: "en",
-      allow_symbol_change: true,
-      calendar: false,
-      support_host: "https://www.tradingview.com"
-    });
-    script.onerror = () => {
+    const frame = document.createElement("iframe");
+    frame.title = `${selectedTvSymbol} price chart`;
+    frame.src = tradingViewWidgetUrl(symbol);
+    frame.loading = "lazy";
+    frame.referrerPolicy = "origin";
+    frame.className = "c2-tv-frame";
+    frame.onerror = () => {
       container.innerHTML = "<div class='c2-tv-blocked'>TradingView widget was blocked. Use the link above to open the selected symbol.</div>";
     };
-    container.appendChild(script);
+    container.appendChild(frame);
   }
 
   function setSelectedSymbol(symbol) {
@@ -847,7 +865,7 @@
         .c2-chart-head b{font-size:15px}
         .c2-chart-head a{border:1px solid #d0d5dd;background:#fff;color:#111827;border-radius:8px;padding:7px 10px;font-size:12px;font-weight:900;text-decoration:none}
         .c2-tv-widget{height:620px;min-height:620px}
-        .c2-tv-widget .tradingview-widget-container__widget{height:100%}
+        .c2-tv-frame{width:100%;height:620px;border:0;display:block;background:#fff}
         .c2-tv-blocked{display:flex;align-items:center;justify-content:center;min-height:620px;padding:24px;color:#667085;font-weight:900;text-align:center;background:#f8fafc}
         .c2-all-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0 10px;padding-top:14px;border-top:1px solid #e5e7eb}
         .c2-all-head h3{margin:0;font-size:16px}
