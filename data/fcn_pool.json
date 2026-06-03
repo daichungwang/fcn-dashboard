@@ -3491,6 +3491,104 @@
   }
 },
   {
+  "date": "2026-06-01",
+  "fcn_id": "FCN339P 富邦",
+  "basket": [
+    "NVDA",
+    "MU",
+    "AMD"
+  ],
+  "tenor": 9,
+  "rate": 21.29,
+  "autocall": 100,
+  "strike": 60,
+  "ki": 50,
+  "eki": true,
+  "bank": "法國外貿",
+  "has_position": true,
+  "amt": 10000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-06-01T20:25",
+  "entry_time": "2026-06-01T20:25",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "NVDA": 222.2939,
+    "MU": 1030.75,
+    "AMD": 504.98
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AMD": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-06-01",
+  "fcn_id": "FCN339P 睿睿",
+  "basket": [
+    "NVDA",
+    "MU",
+    "AMD"
+  ],
+  "tenor": 9,
+  "rate": 21.29,
+  "autocall": 100,
+  "strike": 60,
+  "ki": 50,
+  "eki": true,
+  "bank": "法國外貿",
+  "has_position": true,
+  "amt": 10000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-06-01T20:25",
+  "entry_time": "2026-06-01T20:25",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "NVDA": 222.2939,
+    "MU": 1030.75,
+    "AMD": 504.98
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AMD": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+ },
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
