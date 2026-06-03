@@ -3278,6 +3278,61 @@
 },
   {
   "date": "2026-05-29",
+  "fcn_id": "FCN291P 富邦",
+  "basket": [
+    "ARM",
+    "AVGO",
+    "TSLA",
+    "PLTR"
+  ],
+  "tenor": 12,
+  "rate": 22.02,
+  "autocall": 100,
+  "strike": 50,
+  "ki": 50,
+  "eki": false,
+  "bank": "法國外貌銀行",
+  "has_position": true,
+  "amt": 50000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-05-29T20:31",
+  "entry_time": "2026-05-29T20:31",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "ARM": 349.1685,
+    "AVGO": 445.6797,
+    "TSLA": 435.6872,
+    "PLTR": 155.4252
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSLA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "PLTR": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-05-29",
   "fcn_id": "FCN2602351 永豐",
   "basket": [
     "MU",
@@ -3326,6 +3381,128 @@
       "first_hit_time": ""
     },
     "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-06-01",
+  "fcn_id": "FCN390P 富邦",
+  "basket": [
+    "IBM",
+    "MRVL",
+    "AVGO",
+    "TSM",
+    "SMH"
+  ],
+  "tenor": 12,
+  "rate": 21.64,
+  "autocall": 100,
+  "strike": 65,
+  "ki": 50,
+  "eki": true,
+  "bank": "NOMURA",
+  "has_position": true,
+  "amt": 70000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-06-01T20:31",
+  "entry_time": "2026-06-01T20:31",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "IBM": 319.634,
+    "MRVL": 214.8876,
+    "AVGO": 457.5232,
+    "TSM": 438.5068,
+    "SMH": 606.1382
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "IBM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MRVL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SMH": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-06-01",
+  "fcn_id": "FCN390P 睿睿",
+  "basket": [
+    "IBM",
+    "MRVL",
+    "AVGO",
+    "TSM",
+    "SMH"
+  ],
+  "tenor": 12,
+  "rate": 21.64,
+  "autocall": 100,
+  "strike": 65,
+  "ki": 50,
+  "eki": true,
+  "bank": "NOMURA",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-06-01T20:31",
+  "entry_time": "2026-06-01T20:31",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "IBM": 319.634,
+    "MRVL": 214.8876,
+    "AVGO": 457.5232,
+    "TSM": 438.5068,
+    "SMH": 606.1382
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "IBM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MRVL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SMH": {
       "hit": false,
       "first_hit_time": ""
     }
