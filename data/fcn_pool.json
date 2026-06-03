@@ -3430,6 +3430,67 @@
   }
 },
   {
+  "date": "2026-05-29",
+  "fcn_id": "FCN269P 富邦",
+  "basket": [
+    "PLTR",
+    "SNPS",
+    "SMH",
+    "TSM",
+    "UNH"
+  ],
+  "tenor": 7,
+  "rate": 20.49,
+  "autocall": 100,
+  "strike": 75,
+  "ki": 60,
+  "eki": true,
+  "bank": "Barclays",
+  "has_position": true,
+  "amt": 100000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-05-29T19:38",
+  "entry_time": "2026-05-29T19:38",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "PLTR": 154.9421,
+    "SNPS": 476.0316,
+    "SMH": 602.1643,
+    "TSM": 422.658,
+    "UNH": 380.194
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "PLTR": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SNPS": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SMH": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "UNH": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
