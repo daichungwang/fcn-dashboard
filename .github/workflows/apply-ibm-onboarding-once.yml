@@ -1,0 +1,76 @@
+name: Apply IBM onboarding once
+
+on:
+  push:
+    branches: [codex/ibm-onboarding-base-data]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/ibm-onboarding-base-data
+      - name: Apply IBM base data
+        shell: bash
+        run: |
+          python - <<'PY'
+          import base64, json, pathlib, zlib
+
+          payload_b64 = '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'
+          p = json.loads(zlib.decompress(base64.b64decode(payload_b64)))
+
+          def read_json(path):
+              return json.loads(pathlib.Path(path).read_text(encoding='utf-8'))
+          def write_json(path, value):
+              pathlib.Path(path).write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+          pool_path = pathlib.Path('data/pool30.json')
+          pool_text = pool_path.read_text(encoding='utf-8')
+          if '"symbol": "IBM"' not in pool_text:
+              needle = '  { "symbol": "ORCL", "name": "Oracle", "sector": "AI_APPLICATION", "subsector": "ENTERPRISE_SOFTWARE", "category": "growth" },\n'
+              ibm_line = '  { "symbol": "IBM", "name": "IBM", "sector": "SOFTWARE", "subsector": "ENTERPRISE_SOFTWARE", "category": "core" },\n'
+              if needle not in pool_text:
+                  raise RuntimeError('pool30 insertion point missing')
+              pool_path.write_text(pool_text.replace(needle, needle + ibm_line, 1), encoding='utf-8')
+
+          universe = read_json('data/m1/universe_150.json')
+          universe = [row for row in universe if row.get('symbol') != 'IBM'] + [p['universe']]
+          write_json('data/m1/universe_150.json', universe)
+
+          profile = read_json('data/m1/m1_stock_profile.json')
+          profile['IBM'] = p['profile']
+          write_json('data/m1/m1_stock_profile.json', profile)
+
+          eps = read_json('data/m1/eps_history_ai.json')
+          eps['meta'] = p['eps_meta']
+          eps['data']['IBM'] = p['eps']
+          eps['summary'] = p['eps_summary']
+          write_json('data/m1/eps_history_ai.json', eps)
+
+          radar_path = pathlib.Path('js/mm/modules/mm_c2_stock_radar_v2.js')
+          radar = radar_path.read_text(encoding='utf-8')
+          if 'IBM:"NYSE:IBM"' not in radar:
+              needle = 'SMH:["AMEX:SMH","NASDAQ:SMH"]'
+              if needle not in radar:
+                  raise RuntimeError('TradingView symbol map insertion point missing')
+              radar_path.write_text(radar.replace(needle, 'IBM:"NYSE:IBM", ' + needle, 1), encoding='utf-8')
+
+          assert any(row.get('symbol') == 'IBM' for row in read_json('data/pool30.json'))
+          assert any(row.get('symbol') == 'IBM' for row in read_json('data/m1/universe_150.json'))
+          assert 'IBM' in read_json('data/m1/m1_stock_profile.json')
+          assert 'IBM' in read_json('data/m1/eps_history_ai.json')['data']
+          assert 'IBM:"NYSE:IBM"' in radar_path.read_text(encoding='utf-8')
+          PY
+      - name: Commit IBM onboarding files and remove publisher
+        shell: bash
+        run: |
+          rm .github/workflows/apply-ibm-onboarding-once.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/pool30.json data/m1/universe_150.json data/m1/m1_stock_profile.json data/m1/eps_history_ai.json js/mm/modules/mm_c2_stock_radar_v2.js .github/workflows/apply-ibm-onboarding-once.yml
+          git commit -m "feat: onboard IBM base data"
+          git push origin HEAD:codex/ibm-onboarding-base-data
