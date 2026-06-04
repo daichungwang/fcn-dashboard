@@ -1371,537 +1371,537 @@
       "total_score": 9.0,
       "fail_reasons": []
     },
-    "TSLA": {
-      "symbol": "TSLA",
-      "name": "Tesla, Inc.",
-      "type": "research_raw",
-      "company_overview": "TSLA 已經不是單純 EV 車廠，而是 EV、energy storage、charging network、FSD / robotaxi、AI compute 與 robotics 的混合型高 beta 標的。投資判斷不能只看交車數，因為市場給 TSLA 的估值主要來自 autonomy / robotaxi / Optimus 選擇權；但短期財報仍由 automotive revenue、gross margin 與 pricing pressure 決定。對 FCN 來說，TSLA 是高票息來源，但不是保守接股標的。",
-      "basic_info": {
-        "founded": "2003。",
-        "headquarters": "Austin, Texas, U.S.。",
-        "industry": "Electric vehicles, energy storage, charging infrastructure, AI autonomy, robotics。",
-        "market_cap": "大型 mega-cap 高波動成長股；市值高度反映 FSD、robotaxi、energy storage 與 AI / robotics 的長期預期。"
-      },
-      "business_model": {
-        "summary": "TSLA 的商業模式由三層組成：第一層是 Model Y / Model 3 等 automotive sales，仍是營收主體；第二層是 energy generation and storage，包含 Megapack、Powerwall 與 grid storage；第三層是 FSD、robotaxi、Optimus 與 AI compute，這些是估值彈性來源，但財報兌現仍不穩定。",
-        "segments": [
-          "Automotive：車輛銷售仍是最大收入來源，Model 3 / Model Y 對交付量與毛利率影響最大；若降價換量，短期 revenue 可守住，但 automotive gross margin 會受壓。",
-          "Energy Generation and Storage：Megapack 與 Powerwall 對 AI data center、電網穩定與再生能源需求有結構成長性；這一塊可降低純 EV 價格戰對估值的壓力。",
-          "Services / FSD / Robotaxi / Optimus：FSD subscription、robotaxi network 與 Optimus 是市場給高估值的主要選擇權；但目前仍需用實際商業化里程碑驗證，不能直接視為穩定現金流。"
-        ]
-      },
-      "customer_analysis": {
-        "summary": "TSLA 客戶不是單一 B2B 大客戶，而是全球 EV 消費者、能源儲存客戶與未來 FSD / robotaxi 使用者。單一客戶集中度低是優點，但產品集中度高，Model 3 / Model Y 仍決定大部分交付與毛利。FCN 風險主要不是客戶違約，而是需求、價格與市場對 AI 敘事的重新定價。",
-        "key_customers": [
-          {
-            "name": "Global EV consumers",
-            "role": "Model 3 / Model Y / Cybertruck 等車輛消費者",
-            "importance": "車輛需求受利率、補貼、車價、品牌形象與競品影響；若用降價維持交付，會直接壓縮 automotive gross margin，這對股價與 FCN KI 風險都很重要。"
-          },
-          {
-            "name": "Utility and commercial energy customers",
-            "role": "Megapack / grid storage / commercial energy storage 客戶",
-            "importance": "AI data center 與電網負載增加使大型儲能需求提高，energy storage 是 TSLA 不同於傳統車廠的重要第二曲線。若 Megapack backlog 與 margin 持續改善，TSLA 的估值就不只靠車。"
-          },
-          {
-            "name": "FSD / robotaxi future users",
-            "role": "自動駕駛軟體與未來 mobility network 使用者",
-            "importance": "FSD / robotaxi 是高估值來源；一旦監管核准與商業化速度低於市場預期，股價會先修正 valuation，而不是等財報明顯惡化。"
-          }
-        ],
-        "conclusion": "TSLA 的客戶面看似分散，但營收與毛利仍高度依賴車輛需求與少數主力車型。它的 FCN 吸引力來自高波動帶來的高 coupon，但接股風險也來自同一件事：AI / robotaxi 敘事若降溫，股價可在短期快速下修。"
-      },
-      "why_this_company": [
-        "TSLA 是少數同時具備 EV fleet、energy storage、charging network、FSD data 與 AI compute 敘事的上市公司，這使它在 FCN 市場常被當成高 coupon 成長型標的。",
-        "Energy storage 可提供 automotive 以外的第二成長曲線，若 Megapack 隨 AI data center / grid demand 擴張，TSLA 不必完全依賴車輛 ASP 與交付量。",
-        "FSD / robotaxi / Optimus 若有商業化進展，估值彈性遠高於傳統車廠；但這也代表投資人必須承擔未兌現選擇權的高波動。"
-      ],
-      "market_view": "市場現在對 TSLA pricing 的不是傳統車廠 PE，而是 EV + energy + autonomy + robotics 的總和。市場在期待的是 FSD / robotaxi 進入可驗證商業化、energy storage 持續放量、AI compute 投資轉成服務收入；市場在擔心的是 EV 價格戰、毛利率下滑、競爭者如 BYD 擴張、以及自動駕駛法規或技術進度低於預期。對 FCN 來說，TSLA 的好處是 coupon 常常漂亮，壞處是 worst-of 風險很容易被 TSLA 自己主導。",
-      "financial_summary": {
-        "revenue": "TSLA revenue 仍以 automotive 為主，energy generation and storage 為第二成長曲線；實際年度數字建議以最新 10-K / 10-Q 更新。",
-        "growth": "成長來源從單純交車量轉向 energy storage 與 autonomy option；車輛端若進入成熟期，營收增速可能低於市場對 AI 敘事的期待。",
-        "net_margin": "短期淨利率受 vehicle pricing、production ramp、AI / compute investment 與營運費用影響；若降價換量，margin 會先承壓。",
-        "fcf_margin": "TSLA 需要持續投資工廠、AI compute、energy capacity 與新產品，FCF 波動會高於成熟軟體股。",
-        "eps": "需以最新財報更新 diluted EPS；不建議單用 EPS 評估 TSLA，因市場估值含大量 FSD / robotaxi 選擇權。",
-        "pe": "估值長期高於傳統車廠，原因是市場給 autonomy / software / energy storage 溢價；若只用汽車 PE 會顯得非常貴。",
-        "dividend_yield": "0%；公司不配息，報酬完全來自成長與估值變化。",
-        "beta": "高 beta mega-cap，波動明顯高於 MSFT、GOOG、COST 等核心股。"
-      },
-      "competition": {
-        "summary": "TSLA 的競爭對手不是只有車廠，而是 BYD、傳統車廠、Waymo、能源儲存供應商與未來 AI mobility 平台。BYD 在中國與低價 EV 的成本優勢最直接，會迫使 TSLA 用價格或產品升級防守。Waymo 在 robotaxi 實際營運上比 TSLA 更早落地，代表自動駕駛不是 TSLA 單方面壟斷。傳統車廠雖軟體能力較弱，但在區域通路、產品多元與政策補貼上仍能分食需求。TSLA 的競爭優勢在 fleet data、品牌、充電網與垂直整合，但估值也要求它不只是一家好車廠，而要證明自己是 AI mobility 平台。",
-        "peers": [
-          {
-            "name": "BYD",
-            "position": "全球 EV 與中國市場主要競爭者",
-            "comparison": "BYD 具備電池、供應鏈與中國市場成本優勢，對 TSLA 的低價車與中國銷售形成壓力；若 TSLA 降價防守，短期毛利率會先受傷。"
-          },
-          {
-            "name": "Waymo",
-            "position": "Robotaxi / autonomous driving 對手",
-            "comparison": "Waymo 已在部分城市累積 robotaxi 實際營運資料，TSLA 則押注 vision-based FSD 與龐大車隊規模；兩者技術路線與商業化節奏不同。"
-          },
-          {
-            "name": "GM / Ford / Hyundai / Volkswagen",
-            "position": "傳統車廠與 EV 轉型競爭者",
-            "comparison": "傳統車廠在品牌、區域通路與車型覆蓋上仍有優勢，但軟體、充電與 OTA 生態不如 TSLA 一體化。"
-          },
-          {
-            "name": "Fluence / CATL / BYD Energy Storage",
-            "position": "Energy storage 競爭者",
-            "comparison": "Megapack 面對大型電池與儲能系統競爭，若電池價格下行，有利需求但也會壓縮硬體 margin。"
-          }
-        ],
-        "conclusion": "TSLA 的優勢是跨車、能源、AI 與軟體的整合能力；劣勢是每一個戰場都有強競爭者。若 robotaxi / FSD 兌現，TSLA 可維持高估值；若只剩 EV 車廠邏輯，估值下修空間會很大。"
-      },
-      "valuation_and_timing": {
-        "valuation_view": "TSLA 不能用傳統車廠低 PE 估值，因為市場買的是 FSD / robotaxi / Optimus / energy storage 的未來現金流；但也不能完全忽略 automotive margin，因為現金流仍靠車輛業務支撐。",
-        "buy_strategy": "不適合追高。較合理策略是等交付、毛利、法規或 CEO 事件造成回檔，再用小比例分批；若做 FCN，應用深 KI、低權重、短中天期，不適合高 strike 接股。",
-        "sweet_zone": "甜區條件不是單一股價，而是三項同時改善：automotive gross margin 止跌、energy storage 營收與 margin 持續改善、FSD / robotaxi 有可驗證里程碑；若只有題材上漲但財務沒跟上，不算甜區。",
-        "technical_view": {
-          "mid_trend": "中期取決於 AI / robotaxi 敘事是否延續，若市場相信 autonomy 商業化，TSLA 可以維持高 beta 多頭結構。",
-          "short_term": "短線容易受交付數字、毛利率、FSD 監管、robotaxi 測試與 CEO 訊息影響，單週波動可能大於多數 mega-cap。",
-          "structure": "屬高波動、事件驅動、敘事型成長股；不是 COST / MSFT 這類保守接股核心。",
-          "conclusion": "FCN 判斷：可做，但只能當積極單或 coupon enhancer；不建議當保守型 worst-of 主標的。"
+      "TSLA": {
+    "symbol": "TSLA",
+    "name": "Tesla, Inc.",
+    "type": "research_raw",
+    "company_overview": "TSLA 已經不是單純 EV 車廠，而是 EV、energy storage、charging network、FSD / robotaxi、AI compute 與 robotics 的混合型高 beta 標的。投資判斷不能只看交車數，因為市場給 TSLA 的估值主要來自 autonomy / robotaxi / Optimus 選擇權；但短期財報仍由 automotive revenue、gross margin 與 pricing pressure 決定。對 FCN 來說，TSLA 是高票息來源，但不是保守接股標的。",
+    "basic_info": {
+      "founded": "2003。",
+      "headquarters": "Austin, Texas, U.S.。",
+      "industry": "Electric vehicles, energy storage, charging infrastructure, AI autonomy, robotics。",
+      "market_cap": "大型 mega-cap 高波動成長股；市值高度反映 FSD、robotaxi、energy storage 與 AI / robotics 的長期預期。"
+    },
+    "business_model": {
+      "summary": "TSLA 的商業模式由三層組成：第一層是 Model Y / Model 3 等 automotive sales，仍是營收主體；第二層是 energy generation and storage，包含 Megapack、Powerwall 與 grid storage；第三層是 FSD、robotaxi、Optimus 與 AI compute，這些是估值彈性來源，但財報兌現仍不穩定。",
+      "segments": [
+        "Automotive：車輛銷售仍是最大收入來源，Model 3 / Model Y 對交付量與毛利率影響最大；若降價換量，短期 revenue 可守住，但 automotive gross margin 會受壓。",
+        "Energy Generation and Storage：Megapack 與 Powerwall 對 AI data center、電網穩定與再生能源需求有結構成長性；這一塊可降低純 EV 價格戰對估值的壓力。",
+        "Services / FSD / Robotaxi / Optimus：FSD subscription、robotaxi network 與 Optimus 是市場給高估值的主要選擇權；但目前仍需用實際商業化里程碑驗證，不能直接視為穩定現金流。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "TSLA 客戶不是單一 B2B 大客戶，而是全球 EV 消費者、能源儲存客戶與未來 FSD / robotaxi 使用者。單一客戶集中度低是優點，但產品集中度高，Model 3 / Model Y 仍決定大部分交付與毛利。FCN 風險主要不是客戶違約，而是需求、價格與市場對 AI 敘事的重新定價。",
+      "key_customers": [
+        {
+          "name": "Global EV consumers",
+          "role": "Model 3 / Model Y / Cybertruck 等車輛消費者",
+          "importance": "車輛需求受利率、補貼、車價、品牌形象與競品影響；若用降價維持交付，會直接壓縮 automotive gross margin，這對股價與 FCN KI 風險都很重要。"
+        },
+        {
+          "name": "Utility and commercial energy customers",
+          "role": "Megapack / grid storage / commercial energy storage 客戶",
+          "importance": "AI data center 與電網負載增加使大型儲能需求提高，energy storage 是 TSLA 不同於傳統車廠的重要第二曲線。若 Megapack backlog 與 margin 持續改善，TSLA 的估值就不只靠車。"
+        },
+        {
+          "name": "FSD / robotaxi future users",
+          "role": "自動駕駛軟體與未來 mobility network 使用者",
+          "importance": "FSD / robotaxi 是高估值來源；一旦監管核准與商業化速度低於市場預期，股價會先修正 valuation，而不是等財報明顯惡化。"
         }
-      },
-      "pool30_fit": {
-        "stock_pool": true,
-        "pool30": true,
-        "category": "growth",
-        "reason": "TSLA 是 pool30 中少數能提供 EV、energy storage 與 AI mobility 選擇權的高 beta 標的，可提高組合成長性與 FCN coupon，但不應給防守型高權重。",
-        "upgrade_condition": [
-          "Automotive gross margin 連續 2 季止跌，且不再主要靠降價維持交付。",
-          "Energy storage revenue / margin 持續放大，證明第二曲線能分擔車輛週期。",
-          "Robotaxi / FSD 有商業化與監管進展，而不是只停留在產品展示。"
-        ]
-      },
-      "risk_opportunity": {
-        "risk": [
-          "EV 價格戰會壓縮 automotive gross margin，若降價仍無法推動交付，市場會同時下修營收與估值。",
-          "估值高度依賴 FSD / robotaxi / Optimus 未來兌現，若商業化時間延後，股價可能先大幅修正。",
-          "BYD、Waymo 與傳統車廠分別從低價 EV、自動駕駛與區域市場競爭 TSLA，競爭不是單線風險。"
-        ],
-        "opportunity": [
-          "Energy storage 可受惠 AI data center、電網升級與再生能源波動需求，提供車輛以外成長來源。",
-          "FSD / robotaxi 若通過監管並開始商業化，TSLA 估值框架可能從車廠轉向 AI mobility network。",
-          "龐大車隊與充電網形成資料、服務與能源生態，有機會提高長期 recurring revenue。"
-        ]
-      },
-      "final_view": "TSLA 是 FCN 主力高票息標的，但不是保守接股標的。它適合 pool30 的 growth / momentum 角色，能拉高 coupon 與成長曝險；但 strike、KI 與權重必須保守，否則 worst-of 風險很容易被 TSLA 主導。Timing：等回檔，不追高；FCN 建議深 KI、短中天期、低權重。",
-      "warning": [
-        "TSLA 估值高度依賴 FSD / robotaxi / Optimus 等未兌現選擇權。",
-        "Automotive margin 若持續下滑，AI 敘事也可能無法抵消股價修正。",
-        "FCN 可提供高 coupon，但不適合保守接股型投資人。"
       ],
-      "data_quality": {
-        "profile_completeness": 8.5,
-        "specificity": 8.2,
-        "data_support": 8.0,
-        "decision_usefulness": 9.0,
-        "fcn_alignment": 9.2,
-        "source_quality": "company_10k_ir_and_market_context",
-        "warning": "部分即時估值、EPS 與最新股價需在正式 merge 前用 market_runtime / 最新財報補齊。"
+      "conclusion": "TSLA 的客戶面看似分散，但營收與毛利仍高度依賴車輛需求與少數主力車型。它的 FCN 吸引力來自高波動帶來的高 coupon，但接股風險也來自同一件事：AI / robotaxi 敘事若降溫，股價可在短期快速下修。"
+    },
+    "why_this_company": [
+      "TSLA 是少數同時具備 EV fleet、energy storage、charging network、FSD data 與 AI compute 敘事的上市公司，這使它在 FCN 市場常被當成高 coupon 成長型標的。",
+      "Energy storage 可提供 automotive 以外的第二成長曲線，若 Megapack 隨 AI data center / grid demand 擴張，TSLA 不必完全依賴車輛 ASP 與交付量。",
+      "FSD / robotaxi / Optimus 若有商業化進展，估值彈性遠高於傳統車廠；但這也代表投資人必須承擔未兌現選擇權的高波動。"
+    ],
+    "market_view": "市場現在對 TSLA pricing 的不是傳統車廠 PE，而是 EV + energy + autonomy + robotics 的總和。市場在期待的是 FSD / robotaxi 進入可驗證商業化、energy storage 持續放量、AI compute 投資轉成服務收入；市場在擔心的是 EV 價格戰、毛利率下滑、競爭者如 BYD 擴張、以及自動駕駛法規或技術進度低於預期。對 FCN 來說，TSLA 的好處是 coupon 常常漂亮，壞處是 worst-of 風險很容易被 TSLA 自己主導。",
+    "financial_summary": {
+      "revenue": "TSLA revenue 仍以 automotive 為主，energy generation and storage 為第二成長曲線；實際年度數字建議以最新 10-K / 10-Q 更新。",
+      "growth": "成長來源從單純交車量轉向 energy storage 與 autonomy option；車輛端若進入成熟期，營收增速可能低於市場對 AI 敘事的期待。",
+      "net_margin": "短期淨利率受 vehicle pricing、production ramp、AI / compute investment 與營運費用影響；若降價換量，margin 會先承壓。",
+      "fcf_margin": "TSLA 需要持續投資工廠、AI compute、energy capacity 與新產品，FCF 波動會高於成熟軟體股。",
+      "eps": "需以最新財報更新 diluted EPS；不建議單用 EPS 評估 TSLA，因市場估值含大量 FSD / robotaxi 選擇權。",
+      "pe": "估值長期高於傳統車廠，原因是市場給 autonomy / software / energy storage 溢價；若只用汽車 PE 會顯得非常貴。",
+      "dividend_yield": "0%；公司不配息，報酬完全來自成長與估值變化。",
+      "beta": "高 beta mega-cap，波動明顯高於 MSFT、GOOG、COST 等核心股。"
+    },
+    "competition": {
+      "summary": "TSLA 的競爭對手不是只有車廠，而是 BYD、傳統車廠、Waymo、能源儲存供應商與未來 AI mobility 平台。BYD 在中國與低價 EV 的成本優勢最直接，會迫使 TSLA 用價格或產品升級防守。Waymo 在 robotaxi 實際營運上比 TSLA 更早落地，代表自動駕駛不是 TSLA 單方面壟斷。傳統車廠雖軟體能力較弱，但在區域通路、產品多元與政策補貼上仍能分食需求。TSLA 的競爭優勢在 fleet data、品牌、充電網與垂直整合，但估值也要求它不只是一家好車廠，而要證明自己是 AI mobility 平台。",
+      "peers": [
+        {
+          "name": "BYD",
+          "position": "全球 EV 與中國市場主要競爭者",
+          "comparison": "BYD 具備電池、供應鏈與中國市場成本優勢，對 TSLA 的低價車與中國銷售形成壓力；若 TSLA 降價防守，短期毛利率會先受傷。"
+        },
+        {
+          "name": "Waymo",
+          "position": "Robotaxi / autonomous driving 對手",
+          "comparison": "Waymo 已在部分城市累積 robotaxi 實際營運資料，TSLA 則押注 vision-based FSD 與龐大車隊規模；兩者技術路線與商業化節奏不同。"
+        },
+        {
+          "name": "GM / Ford / Hyundai / Volkswagen",
+          "position": "傳統車廠與 EV 轉型競爭者",
+          "comparison": "傳統車廠在品牌、區域通路與車型覆蓋上仍有優勢，但軟體、充電與 OTA 生態不如 TSLA 一體化。"
+        },
+        {
+          "name": "Fluence / CATL / BYD Energy Storage",
+          "position": "Energy storage 競爭者",
+          "comparison": "Megapack 面對大型電池與儲能系統競爭，若電池價格下行，有利需求但也會壓縮硬體 margin。"
+        }
+      ],
+      "conclusion": "TSLA 的優勢是跨車、能源、AI 與軟體的整合能力；劣勢是每一個戰場都有強競爭者。若 robotaxi / FSD 兌現，TSLA 可維持高估值；若只剩 EV 車廠邏輯，估值下修空間會很大。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "TSLA 不能用傳統車廠低 PE 估值，因為市場買的是 FSD / robotaxi / Optimus / energy storage 的未來現金流；但也不能完全忽略 automotive margin，因為現金流仍靠車輛業務支撐。",
+      "buy_strategy": "不適合追高。較合理策略是等交付、毛利、法規或 CEO 事件造成回檔，再用小比例分批；若做 FCN，應用深 KI、低權重、短中天期，不適合高 strike 接股。",
+      "sweet_zone": "甜區條件不是單一股價，而是三項同時改善：automotive gross margin 止跌、energy storage 營收與 margin 持續改善、FSD / robotaxi 有可驗證里程碑；若只有題材上漲但財務沒跟上，不算甜區。",
+      "technical_view": {
+        "mid_trend": "中期取決於 AI / robotaxi 敘事是否延續，若市場相信 autonomy 商業化，TSLA 可以維持高 beta 多頭結構。",
+        "short_term": "短線容易受交付數字、毛利率、FSD 監管、robotaxi 測試與 CEO 訊息影響，單週波動可能大於多數 mega-cap。",
+        "structure": "屬高波動、事件驅動、敘事型成長股；不是 COST / MSFT 這類保守接股核心。",
+        "conclusion": "FCN 判斷：可做，但只能當積極單或 coupon enhancer；不建議當保守型 worst-of 主標的。"
       }
     },
-    "COHR": {
-      "symbol": "COHR",
-      "name": "Coherent Corp.",
-      "type": "research_raw",
-      "company_overview": "COHR 是光通訊、雷射、光學材料與 photonics 公司，近年市場重新關注它，是因為 AI data center 對 800G / 1.6T optical transceiver、VCSEL、InP、silicon photonics 與高速光互連需求上升。COHR 不是純軟體 AI 股，而是 AI infrastructure 的光學硬體供應鏈；對 FCN 來說，它提供比大型科技股更高 coupon，但波動與景氣循環風險也明顯更高。",
-      "basic_info": {
-        "founded": "Coherent 前身成立於 1966；現有公司結構包含 II-VI 與 Coherent 合併後的光學 / laser / photonics 平台。",
-        "headquarters": "Saxonburg, Pennsylvania, U.S.。",
-        "industry": "Optical communications, lasers, engineered materials, photonics, compound semiconductors。",
-        "market_cap": "中大型 photonics / optical components 股，市值與估值受 AI optical cycle、毛利率修復與負債去化影響。"
-      },
-      "business_model": {
-        "summary": "COHR 的商業模式分成 optical communications、industrial lasers、materials / networking components 等多條線。AI data center 帶動的是 datacom transceiver、VCSEL、InP、光模組與高速光互連；但公司仍有 industrial、telecom、consumer electronics 與 materials exposure，因此景氣敏感度高於純 AI 軟體。",
-        "segments": [
-          "Networking / Optical Communications：受 AI cluster、800G / 1.6T transceiver 與 hyperscaler data center capex 影響，是目前市場最在意的成長來源。",
-          "Lasers：包含工業加工、醫療與半導體應用，需求較循環，對總體景氣與資本支出敏感。",
-          "Materials / Compound Semiconductors：提供 InP、SiC、光學材料與元件，是 COHR 與一般光模組組裝商不同的垂直整合基礎。",
-          "Consumer / Industrial legacy exposure：部分業務仍受消費電子、工業設備與 telecom 庫存循環影響，這會讓財報不像純 AI networking 股那麼乾淨。"
-        ]
-      },
-      "customer_analysis": {
-        "summary": "COHR 的最終需求來自 hyperscaler data centers、telecom OEM、industrial equipment makers、consumer electronics 與半導體供應鏈。它不一定直接揭露所有 hyperscaler 客戶，但 AI optical demand 最終由 NVIDIA、Meta、Microsoft、Amazon、Google 等 AI cluster capex 拉動。FCN 上要注意，COHR 可能同時受益 AI 光通訊，也可能被 telecom / industrial 弱需求拖累。",
-        "key_customers": [
-          {
-            "name": "Hyperscaler AI data center ecosystem",
-            "role": "800G / 1.6T optical interconnect 最終需求來源",
-            "importance": "AI training / inference cluster 需要大量高速光互連，資料中心每升級一代 GPU / switch 架構，光模組與光元件需求會跟著提升。這是 COHR 近期估值上修的核心。"
-          },
-          {
-            "name": "Networking OEMs and module partners",
-            "role": "光模組、transceiver、VCSEL / InP 元件客戶與通路",
-            "importance": "COHR 可能透過模組商、系統商與網通設備鏈出貨給終端資料中心，因此需追蹤 design win、capacity ramp 與 ASP 變化。"
-          },
-          {
-            "name": "Industrial and semiconductor equipment customers",
-            "role": "雷射與光學材料需求來源",
-            "importance": "Industrial laser 與材料業務提供多元化收入，但也讓 COHR 受工業景氣、半導體設備週期與庫存修正影響。"
-          }
-        ],
-        "conclusion": "COHR 的客戶結構不是單純消費端，而是 B2B infrastructure supply chain。優點是 AI optical demand 可快速推升成長與估值，缺點是客戶訂單、庫存與 capex cycle 會讓股價波動比 MSFT / COST 這類核心股大很多。"
-      },
-      "why_this_company": [
-        "AI cluster 從 400G / 800G 往 1.6T 升級，光互連需求增加，COHR 是可直接受惠的 photonics / optical components 標的。",
-        "COHR 具備光學材料、compound semiconductor、雷射與光通訊整合能力，不只是單一模組組裝商；若 AI optical demand 放大，營運槓桿可能明顯。",
-        "對 FCN 而言，COHR 波動高於大型科技股，能拉高 coupon；但也因此需要更深 KI 與更低權重。"
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "growth",
+      "reason": "TSLA 是 pool30 中少數能提供 EV、energy storage 與 AI mobility 選擇權的高 beta 標的，可提高組合成長性與 FCN coupon，但不應給防守型高權重。",
+      "upgrade_condition": [
+        "Automotive gross margin 連續 2 季止跌，且不再主要靠降價維持交付。",
+        "Energy storage revenue / margin 持續放大，證明第二曲線能分擔車輛週期。",
+        "Robotaxi / FSD 有商業化與監管進展，而不是只停留在產品展示。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "EV 價格戰會壓縮 automotive gross margin，若降價仍無法推動交付，市場會同時下修營收與估值。",
+        "估值高度依賴 FSD / robotaxi / Optimus 未來兌現，若商業化時間延後，股價可能先大幅修正。",
+        "BYD、Waymo 與傳統車廠分別從低價 EV、自動駕駛與區域市場競爭 TSLA，競爭不是單線風險。"
       ],
-      "market_view": "市場在 pricing 的是 AI data center 光互連需求，特別是 800G / 1.6T optical transceiver、VCSEL、InP 與 silicon photonics 供應鏈；市場在擔心的是 AI optical 是否短期過熱、telecom / industrial 庫存是否拖累、以及公司合併後負債與 margin 修復能否跟上。COHR 不應被當作穩定防守股，它更像 AI infrastructure cycle 中的高 beta optical supplier。",
-      "financial_summary": {
-        "revenue": "COHR revenue 來自 networking / optical communications、lasers、materials 等多個 segment；正式 merge 前建議補入最新 fiscal year revenue。",
-        "growth": "成長主要來自 AI data center optical demand，但 legacy telecom / industrial cycle 可能抵消部分成長。",
-        "net_margin": "淨利率受產品 mix、合併攤銷、重整費用、利息費用與產能利用率影響；不宜只看 GAAP 單季數字。",
-        "fcf_margin": "FCF 需觀察 capex、庫存、負債利息與 AI optical ramp；若 optical demand 放量且庫存控制改善，FCF 可修復。",
-        "eps": "需以最新財報補齊 GAAP / adjusted EPS；COHR 常需要同時看 adjusted EPS 與 FCF。",
-        "pe": "估值會隨 AI optical cycle 大幅波動；若用 trough EPS 看會偏貴，若 AI optical ramp 成功則 forward multiple 可快速下降。",
-        "dividend_yield": "一般不作為配息標的；投資重點是成長與 cycle recovery。",
-        "beta": "高波動 optical / photonics 股，beta 與單日波動通常高於 mega-cap tech。"
-      },
-      "competition": {
-        "summary": "COHR 的競爭對手包含 Lumentum、Fabrinet、Broadcom、Marvell、Applied Optoelectronics，以及部分中國光模組供應鏈。Lumentum 在 optical components / lasers 上有重疊，但 COHR 的材料與 photonics 整合較廣。Fabrinet 偏製造代工與光模組組裝，商業模式比 COHR 更接近高階製造服務。Broadcom / Marvell 在 DSP、switch ASIC 與 AI networking 平台更強，可能吃走更多系統價值。COHR 的優勢是光學材料與元件深度，風險是若市場把價值轉移到 DSP / switch / system vendor，COHR 的估值彈性會被限制。",
-        "peers": [
-          {
-            "name": "Lumentum",
-            "position": "Optical components / lasers 競爭者",
-            "comparison": "Lumentum 與 COHR 都受 AI optical demand 影響，但 COHR 的材料、雷射與 photonics 組合更廣，財報也更受多元業務週期影響。"
-          },
-          {
-            "name": "Fabrinet",
-            "position": "Optical manufacturing / module assembly 供應鏈",
-            "comparison": "Fabrinet 偏光通訊製造服務與模組組裝，COHR 則更偏材料、元件與 photonics 技術平台；兩者都受 800G / 1.6T cycle 影響。"
-          },
-          {
-            "name": "Broadcom / Marvell",
-            "position": "DSP / switch ASIC / AI networking 平台競爭者",
-            "comparison": "Broadcom 與 Marvell 更靠近 AI networking control point，COHR 更靠近光學硬體與材料；若系統價值集中在 ASIC / DSP，COHR 議價力可能受限。"
-          },
-          {
-            "name": "Chinese optical module suppliers",
-            "position": "低成本光模組與 transceiver 競爭者",
-            "comparison": "中國供應商可能壓低部分 optical module ASP，COHR 必須靠高階材料、性能與客戶認證維持 margin。"
-          }
-        ],
-        "conclusion": "COHR 是 AI optical chain 中值得追蹤的高 beta 標的，但不是無風險壟斷者。它的投資價值在於 AI optical ramp + margin recovery，風險在於 legacy cycle、競爭壓價與估值已先反映成長。"
-      },
-      "valuation_and_timing": {
-        "valuation_view": "COHR 估值應用 cycle-adjusted forward earnings / FCF 來看，不適合只看單季 GAAP PE。若 AI optical demand 持續、margin 修復、負債下降，估值可被重估；若 AI capex 轉弱，multiple 會快速壓縮。",
-        "buy_strategy": "不追 AI optical 急漲段。較好的買法是等財報確認 optical demand，同時股價因總體或庫存雜音回檔時分批；FCN 應避免高 strike，適合深 KI、短中天期。",
-        "sweet_zone": "甜區條件：AI optical backlog / revenue 持續成長，legacy telecom / industrial 不再拖累，且 valuation 沒有超過同業過多；若股價只靠 1.6T 題材急漲但財報未跟上，不算甜區。",
-        "technical_view": {
-          "mid_trend": "中期趨勢取決於 AI optical cycle 是否延續，若 hyperscaler capex 持續上修，COHR 可維持強勢。",
-          "short_term": "短線容易受 NVIDIA / hyperscaler capex、800G / 1.6T 訂單、光模組 ASP 與同業財報影響。",
-          "structure": "屬 AI infrastructure 高 beta 零組件股，不是 MSFT / GOOG 類平台股。",
-          "conclusion": "FCN 判斷：可作 coupon enhancer，但需控制權重與 KI；不適合當保守接股核心。"
+      "opportunity": [
+        "Energy storage 可受惠 AI data center、電網升級與再生能源波動需求，提供車輛以外成長來源。",
+        "FSD / robotaxi 若通過監管並開始商業化，TSLA 估值框架可能從車廠轉向 AI mobility network。",
+        "龐大車隊與充電網形成資料、服務與能源生態，有機會提高長期 recurring revenue。"
+      ]
+    },
+    "final_view": "TSLA 是 FCN 主力高票息標的，但不是保守接股標的。它適合 pool30 的 growth / momentum 角色，能拉高 coupon 與成長曝險；但 strike、KI 與權重必須保守，否則 worst-of 風險很容易被 TSLA 主導。Timing：等回檔，不追高；FCN 建議深 KI、短中天期、低權重。",
+    "warning": [
+      "TSLA 估值高度依賴 FSD / robotaxi / Optimus 等未兌現選擇權。",
+      "Automotive margin 若持續下滑，AI 敘事也可能無法抵消股價修正。",
+      "FCN 可提供高 coupon，但不適合保守接股型投資人。"
+    ],
+    "data_quality": {
+      "profile_completeness": 8.5,
+      "specificity": 8.2,
+      "data_support": 8.0,
+      "decision_usefulness": 9.0,
+      "fcn_alignment": 9.2,
+      "source_quality": "company_10k_ir_and_market_context",
+      "warning": "部分即時估值、EPS 與最新股價需在正式 merge 前用 market_runtime / 最新財報補齊。"
+    }
+  },
+  "COHR": {
+    "symbol": "COHR",
+    "name": "Coherent Corp.",
+    "type": "research_raw",
+    "company_overview": "COHR 是光通訊、雷射、光學材料與 photonics 公司，近年市場重新關注它，是因為 AI data center 對 800G / 1.6T optical transceiver、VCSEL、InP、silicon photonics 與高速光互連需求上升。COHR 不是純軟體 AI 股，而是 AI infrastructure 的光學硬體供應鏈；對 FCN 來說，它提供比大型科技股更高 coupon，但波動與景氣循環風險也明顯更高。",
+    "basic_info": {
+      "founded": "Coherent 前身成立於 1966；現有公司結構包含 II-VI 與 Coherent 合併後的光學 / laser / photonics 平台。",
+      "headquarters": "Saxonburg, Pennsylvania, U.S.。",
+      "industry": "Optical communications, lasers, engineered materials, photonics, compound semiconductors。",
+      "market_cap": "中大型 photonics / optical components 股，市值與估值受 AI optical cycle、毛利率修復與負債去化影響。"
+    },
+    "business_model": {
+      "summary": "COHR 的商業模式分成 optical communications、industrial lasers、materials / networking components 等多條線。AI data center 帶動的是 datacom transceiver、VCSEL、InP、光模組與高速光互連；但公司仍有 industrial、telecom、consumer electronics 與 materials exposure，因此景氣敏感度高於純 AI 軟體。",
+      "segments": [
+        "Networking / Optical Communications：受 AI cluster、800G / 1.6T transceiver 與 hyperscaler data center capex 影響，是目前市場最在意的成長來源。",
+        "Lasers：包含工業加工、醫療與半導體應用，需求較循環，對總體景氣與資本支出敏感。",
+        "Materials / Compound Semiconductors：提供 InP、SiC、光學材料與元件，是 COHR 與一般光模組組裝商不同的垂直整合基礎。",
+        "Consumer / Industrial legacy exposure：部分業務仍受消費電子、工業設備與 telecom 庫存循環影響，這會讓財報不像純 AI networking 股那麼乾淨。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "COHR 的最終需求來自 hyperscaler data centers、telecom OEM、industrial equipment makers、consumer electronics 與半導體供應鏈。它不一定直接揭露所有 hyperscaler 客戶，但 AI optical demand 最終由 NVIDIA、Meta、Microsoft、Amazon、Google 等 AI cluster capex 拉動。FCN 上要注意，COHR 可能同時受益 AI 光通訊，也可能被 telecom / industrial 弱需求拖累。",
+      "key_customers": [
+        {
+          "name": "Hyperscaler AI data center ecosystem",
+          "role": "800G / 1.6T optical interconnect 最終需求來源",
+          "importance": "AI training / inference cluster 需要大量高速光互連，資料中心每升級一代 GPU / switch 架構，光模組與光元件需求會跟著提升。這是 COHR 近期估值上修的核心。"
+        },
+        {
+          "name": "Networking OEMs and module partners",
+          "role": "光模組、transceiver、VCSEL / InP 元件客戶與通路",
+          "importance": "COHR 可能透過模組商、系統商與網通設備鏈出貨給終端資料中心，因此需追蹤 design win、capacity ramp 與 ASP 變化。"
+        },
+        {
+          "name": "Industrial and semiconductor equipment customers",
+          "role": "雷射與光學材料需求來源",
+          "importance": "Industrial laser 與材料業務提供多元化收入，但也讓 COHR 受工業景氣、半導體設備週期與庫存修正影響。"
         }
-      },
-      "pool30_fit": {
-        "stock_pool": true,
-        "pool30": false,
-        "category": "growth",
-        "reason": "COHR 不在原始 pool30，但作為 AI optical / photonics FCN 主力候選，值得放入 stock_pool 觀察。它可補強 AI connectivity 曝險，但因波動、負債、cycle 與非 AI legacy 業務仍高，不建議直接視為 pool30 core。",
-        "upgrade_condition": [
-          "AI optical revenue 連續 2 季成長，且不是只靠一次性拉貨。",
-          "Gross margin / operating margin 明顯改善，證明 AI product mix 可轉成獲利。",
-          "Debt / interest burden 下降，FCF 轉強，降低 cycle 股折價。"
-        ]
-      },
-      "risk_opportunity": {
-        "risk": [
-          "AI optical 題材若短期過熱，股價可能先反映 800G / 1.6T 成長，財報稍有不及就修正。",
-          "Telecom、industrial、consumer 與材料 legacy 業務可能拖累整體 revenue / margin，讓 AI 成長不完全反映在 EPS。",
-          "競爭來自 Lumentum、Fabrinet、Broadcom、Marvell 與中國光模組鏈，ASP 與 margin 壓力不可忽略。"
-        ],
-        "opportunity": [
-          "AI data center 對高速光互連需求持續升級，800G / 1.6T cycle 可推升 COHR 光通訊產品需求。",
-          "公司具備材料、光學元件、雷射與 photonics 整合能力，若供應鏈緊張，議價力可能改善。",
-          "若 margin recovery 與 FCF 修復同時出現，市場可從 cycle stock 轉向 AI infrastructure supplier 重新評價。"
-        ]
-      },
-      "final_view": "COHR 是 FCN 高票息與 AI optical 曝險標的，但不是保守核心股。它適合放入 stock_pool / FCN watchlist，搭配 CRDO、ALAB、MRVL 做 AI connectivity basket；但 strike / KI 需保守，避免在 AI optical 熱度最高時做高 strike 長天期單。Timing：等回檔或財報確認，不追急漲。",
-      "warning": [
-        "COHR 不在原始 pool30，建議先作為 stock_pool / FCN 主力候選，不直接升 core。",
-        "AI optical 高成長與 legacy cycle 可能同時存在，財報解讀需拆 segment。",
-        "波動高，FCN 不適合高 strike 或重倉。"
       ],
-      "data_quality": {
-        "profile_completeness": 8.2,
-        "specificity": 8.0,
-        "data_support": 7.8,
-        "decision_usefulness": 9.0,
-        "fcn_alignment": 9.1,
-        "source_quality": "company_ir_market_context_and_ai_optical_supply_chain",
-        "warning": "正式 merge 前建議補入最新 fiscal year revenue、segment revenue、gross margin、debt 與 FCF 數字。"
+      "conclusion": "COHR 的客戶結構不是單純消費端，而是 B2B infrastructure supply chain。優點是 AI optical demand 可快速推升成長與估值，缺點是客戶訂單、庫存與 capex cycle 會讓股價波動比 MSFT / COST 這類核心股大很多。"
+    },
+    "why_this_company": [
+      "AI cluster 從 400G / 800G 往 1.6T 升級，光互連需求增加，COHR 是可直接受惠的 photonics / optical components 標的。",
+      "COHR 具備光學材料、compound semiconductor、雷射與光通訊整合能力，不只是單一模組組裝商；若 AI optical demand 放大，營運槓桿可能明顯。",
+      "對 FCN 而言，COHR 波動高於大型科技股，能拉高 coupon；但也因此需要更深 KI 與更低權重。"
+    ],
+    "market_view": "市場在 pricing 的是 AI data center 光互連需求，特別是 800G / 1.6T optical transceiver、VCSEL、InP 與 silicon photonics 供應鏈；市場在擔心的是 AI optical 是否短期過熱、telecom / industrial 庫存是否拖累、以及公司合併後負債與 margin 修復能否跟上。COHR 不應被當作穩定防守股，它更像 AI infrastructure cycle 中的高 beta optical supplier。",
+    "financial_summary": {
+      "revenue": "COHR revenue 來自 networking / optical communications、lasers、materials 等多個 segment；正式 merge 前建議補入最新 fiscal year revenue。",
+      "growth": "成長主要來自 AI data center optical demand，但 legacy telecom / industrial cycle 可能抵消部分成長。",
+      "net_margin": "淨利率受產品 mix、合併攤銷、重整費用、利息費用與產能利用率影響；不宜只看 GAAP 單季數字。",
+      "fcf_margin": "FCF 需觀察 capex、庫存、負債利息與 AI optical ramp；若 optical demand 放量且庫存控制改善，FCF 可修復。",
+      "eps": "需以最新財報補齊 GAAP / adjusted EPS；COHR 常需要同時看 adjusted EPS 與 FCF。",
+      "pe": "估值會隨 AI optical cycle 大幅波動；若用 trough EPS 看會偏貴，若 AI optical ramp 成功則 forward multiple 可快速下降。",
+      "dividend_yield": "一般不作為配息標的；投資重點是成長與 cycle recovery。",
+      "beta": "高波動 optical / photonics 股，beta 與單日波動通常高於 mega-cap tech。"
+    },
+    "competition": {
+      "summary": "COHR 的競爭對手包含 Lumentum、Fabrinet、Broadcom、Marvell、Applied Optoelectronics，以及部分中國光模組供應鏈。Lumentum 在 optical components / lasers 上有重疊，但 COHR 的材料與 photonics 整合較廣。Fabrinet 偏製造代工與光模組組裝，商業模式比 COHR 更接近高階製造服務。Broadcom / Marvell 在 DSP、switch ASIC 與 AI networking 平台更強，可能吃走更多系統價值。COHR 的優勢是光學材料與元件深度，風險是若市場把價值轉移到 DSP / switch / system vendor，COHR 的估值彈性會被限制。",
+      "peers": [
+        {
+          "name": "Lumentum",
+          "position": "Optical components / lasers 競爭者",
+          "comparison": "Lumentum 與 COHR 都受 AI optical demand 影響，但 COHR 的材料、雷射與 photonics 組合更廣，財報也更受多元業務週期影響。"
+        },
+        {
+          "name": "Fabrinet",
+          "position": "Optical manufacturing / module assembly 供應鏈",
+          "comparison": "Fabrinet 偏光通訊製造服務與模組組裝，COHR 則更偏材料、元件與 photonics 技術平台；兩者都受 800G / 1.6T cycle 影響。"
+        },
+        {
+          "name": "Broadcom / Marvell",
+          "position": "DSP / switch ASIC / AI networking 平台競爭者",
+          "comparison": "Broadcom 與 Marvell 更靠近 AI networking control point，COHR 更靠近光學硬體與材料；若系統價值集中在 ASIC / DSP，COHR 議價力可能受限。"
+        },
+        {
+          "name": "Chinese optical module suppliers",
+          "position": "低成本光模組與 transceiver 競爭者",
+          "comparison": "中國供應商可能壓低部分 optical module ASP，COHR 必須靠高階材料、性能與客戶認證維持 margin。"
+        }
+      ],
+      "conclusion": "COHR 是 AI optical chain 中值得追蹤的高 beta 標的，但不是無風險壟斷者。它的投資價值在於 AI optical ramp + margin recovery，風險在於 legacy cycle、競爭壓價與估值已先反映成長。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "COHR 估值應用 cycle-adjusted forward earnings / FCF 來看，不適合只看單季 GAAP PE。若 AI optical demand 持續、margin 修復、負債下降，估值可被重估；若 AI capex 轉弱，multiple 會快速壓縮。",
+      "buy_strategy": "不追 AI optical 急漲段。較好的買法是等財報確認 optical demand，同時股價因總體或庫存雜音回檔時分批；FCN 應避免高 strike，適合深 KI、短中天期。",
+      "sweet_zone": "甜區條件：AI optical backlog / revenue 持續成長，legacy telecom / industrial 不再拖累，且 valuation 沒有超過同業過多；若股價只靠 1.6T 題材急漲但財報未跟上，不算甜區。",
+      "technical_view": {
+        "mid_trend": "中期趨勢取決於 AI optical cycle 是否延續，若 hyperscaler capex 持續上修，COHR 可維持強勢。",
+        "short_term": "短線容易受 NVIDIA / hyperscaler capex、800G / 1.6T 訂單、光模組 ASP 與同業財報影響。",
+        "structure": "屬 AI infrastructure 高 beta 零組件股，不是 MSFT / GOOG 類平台股。",
+        "conclusion": "FCN 判斷：可作 coupon enhancer，但需控制權重與 KI；不適合當保守接股核心。"
       }
     },
-    "SOFI": {
-      "symbol": "SOFI",
-      "name": "SoFi Technologies, Inc.",
-      "type": "research_raw",
-      "company_overview": "SOFI 是美國數位金融平台，業務包含 lending、financial services、technology platform 與會員金融生態。它不是傳統銀行，也不是單純 fintech app；投資判斷重點在 member growth、deposit growth、loan origination、credit quality 與 GAAP profitability 能否同時改善。對 FCN 來說，SOFI 是高 beta fintech 標的，coupon 通常有吸引力，但接股風險高於大型銀行與成熟科技股。",
-      "basic_info": {
-        "founded": "2011。",
-        "headquarters": "San Francisco, California, U.S.。",
-        "industry": "Digital banking, consumer lending, fintech platform, financial services technology。",
-        "market_cap": "中大型高波動 fintech 成長股；市值與估值高度受利率、信用品質、會員成長與 fintech sentiment 影響。"
-      },
-      "business_model": {
-        "summary": "SOFI 的商業模式分成三大塊：Lending 賺利差與貸款銷售收益，Financial Services 透過存款、信用卡、投資、保險、支付與會員產品擴大使用頻率，Technology Platform 則透過 Galileo / Technisys 提供金融科技基礎設施。真正的投資重點，是公司能否從高波動 lending 轉成多產品、高頻、低資金成本的數位金融平台。",
-        "segments": [
-          "Lending：包含 personal loans、student loans、home loans，是獲利核心但也最受利率、信用損失、資本市場與失業率影響。",
-          "Financial Services：包含 SoFi Money、存款、投資、信用卡、保險與支付，重點是提高會員黏著度與低成本 deposit base。",
-          "Technology Platform：Galileo / Technisys 服務其他 fintech 與金融機構，理論上可提供較輕資產收入，但成長曾受 fintech 客戶預算與競爭影響。",
-          "Deposit / bank charter model：銀行牌照使 SOFI 能用存款資金支持放款，降低 funding cost，但也使其暴露於金融監管與信用週期。"
-        ]
-      },
-      "customer_analysis": {
-        "summary": "SOFI 的客戶是美國年輕專業族群、中高信用消費者、借款人、存款用戶與 fintech 平台客戶。單一客戶集中風險不高，但 lending portfolio 對消費者信用週期高度敏感。若失業率上升或高利率延續，SOFI 的 loan losses、fair value marks 與資本市場出售貸款能力會影響股價。",
-        "key_customers": [
-          {
-            "name": "Prime and near-prime consumer borrowers",
-            "role": "Personal loans / student loans / home loans 借款客戶",
-            "importance": "Lending 是 SOFI 主要獲利來源，高信用客戶可降低損失率，但景氣下行時 personal loan delinquency 仍會被市場放大檢視。"
-          },
-          {
-            "name": "SoFi members and deposit customers",
-            "role": "數位銀行、存款、投資與金融服務用戶",
-            "importance": "會員與存款成長可降低 funding cost，並提高交叉銷售機會；這是 SOFI 從貸款公司轉型成金融平台的核心。"
-          },
-          {
-            "name": "Fintech / financial institution clients",
-            "role": "Galileo / Technisys technology platform 客戶",
-            "importance": "Technology Platform 能提供 B2B 收入，但客戶多為 fintech / neobank / 金融機構，若 fintech funding 環境轉弱，成長會放慢。"
-          }
-        ],
-        "conclusion": "SOFI 的客戶成長與產品交叉銷售是最大優勢，但信用週期與 funding market 是最大風險。這檔股票不適合用傳統銀行低波動邏輯看，也不能只用 fintech app 下載量判斷。"
-      },
-      "why_this_company": [
-        "SOFI 是少數同時有 lending、digital bank deposit、financial services 與 fintech infrastructure 的上市 fintech，業務組合比單一放款平台更完整。",
-        "銀行牌照讓 SOFI 能用 deposit funding 支撐放款，若利率環境轉佳且存款成本可控，利差與獲利彈性會改善。",
-        "FCN 市場喜歡 SOFI，是因為它波動高、題材清楚、散戶與機構關注度高；但這也代表 KI / strike 必須更保守。"
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": false,
+      "category": "growth",
+      "reason": "COHR 不在原始 pool30，但作為 AI optical / photonics FCN 主力候選，值得放入 stock_pool 觀察。它可補強 AI connectivity 曝險，但因波動、負債、cycle 與非 AI legacy 業務仍高，不建議直接視為 pool30 core。",
+      "upgrade_condition": [
+        "AI optical revenue 連續 2 季成長，且不是只靠一次性拉貨。",
+        "Gross margin / operating margin 明顯改善，證明 AI product mix 可轉成獲利。",
+        "Debt / interest burden 下降，FCF 轉強，降低 cycle 股折價。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "AI optical 題材若短期過熱，股價可能先反映 800G / 1.6T 成長，財報稍有不及就修正。",
+        "Telecom、industrial、consumer 與材料 legacy 業務可能拖累整體 revenue / margin，讓 AI 成長不完全反映在 EPS。",
+        "競爭來自 Lumentum、Fabrinet、Broadcom、Marvell 與中國光模組鏈，ASP 與 margin 壓力不可忽略。"
       ],
-      "market_view": "市場在 pricing 的是 SOFI 能否從高 beta lending fintech 轉型成獲利穩定的數位銀行平台。市場期待 member growth、deposit growth、GAAP profitability、loan sales 與 credit quality 同時改善；市場擔心的是 personal loan 信用品質、利率高檔、資本市場對 loan buyer 的 appetite、以及 fintech valuation sentiment。對 FCN 來說，SOFI 的高 coupon 來自高波動與高不確定性，不能只看股價便宜。 ",
-      "financial_summary": {
-        "revenue": "SOFI revenue 由 lending、financial services 與 technology platform 組成；正式 merge 前建議補最新年度 adjusted net revenue。",
-        "growth": "成長核心看 member growth、product growth、deposit growth 與 non-lending revenue mix；若只靠 personal loan 增長，品質不足。",
-        "net_margin": "公司已朝 GAAP profitability 轉型，但淨利率仍受 credit provision、fair value adjustment、marketing 與 funding cost 影響。",
-        "fcf_margin": "金融公司 FCF 與一般科技公司不可直接比較，需看 tangible book、capital、loan origination、deposit funding 與信用損失。",
-        "eps": "需以最新財報補齊 GAAP EPS / forward EPS；高成長 fintech EPS 波動大。",
-        "pe": "若 EPS 剛轉正，PE 可能看起來偏高或不穩，實務上應搭配 revenue growth、book value 與 credit metrics。",
-        "dividend_yield": "0%；公司不配息，投資報酬來自成長與估值重評。",
-        "beta": "高 beta fintech，波動高於大型銀行與 mega-cap tech。"
-      },
-      "competition": {
-        "summary": "SOFI 同時面對傳統銀行、信用卡公司、Robinhood、Chime、LendingClub、Upstart 與其他數位金融平台競爭。JPMorgan / Bank of America 等大型銀行擁有更低資金成本、更大資本與更完整產品，但 SOFI 在年輕高收入族群與數位體驗上較靈活。Robinhood 在投資與交易流量更強，但 SOFI 的銀行牌照與貸款產品更完整。Upstart / LendingClub 更偏 lending cycle，SOFI 若能提高 non-lending revenue，估值品質會比單一貸款平台好。SOFI 的最大挑戰是證明自己不是景氣好時的高 beta lending 股，而是能穿越信用週期的數位金融平台。",
-        "peers": [
-          {
-            "name": "JPMorgan / Bank of America",
-            "position": "大型傳統銀行競爭者",
-            "comparison": "大型銀行資本、存款與風控優勢明顯，但數位成長與品牌年輕化不如 SOFI；SOFI 必須用成長補償較高風險。"
-          },
-          {
-            "name": "Robinhood",
-            "position": "消費金融與投資 app 競爭者",
-            "comparison": "Robinhood 在交易、投資與 crypto 流量強，SOFI 則在 lending、deposit 與綜合金融服務更完整。"
-          },
-          {
-            "name": "LendingClub / Upstart",
-            "position": "消費貸款與 AI lending 對手",
-            "comparison": "LendingClub / Upstart 更受 loan origination cycle 影響；SOFI 若能靠 deposits 與 financial services 分散收入，風險結構較佳。"
-          },
-          {
-            "name": "Chime / neobanks",
-            "position": "數位銀行與年輕用戶競爭者",
-            "comparison": "Chime 等 neobank 在低門檻日常 banking 有優勢，SOFI 則更偏中高收入會員與多產品交叉銷售。"
-          }
-        ],
-        "conclusion": "SOFI 的競爭優勢在於銀行牌照 + lending + deposit + fintech platform 的組合；弱點是信用週期與估值波動。若 non-lending revenue 占比提高，SOFI 可從高風險 lending fintech 升級；若獲利仍主要靠 personal loans，FCN 風險要打折。"
-      },
-      "valuation_and_timing": {
-        "valuation_view": "SOFI 不能只用 PE 判斷，因為它處於從高成長虧損 / 微利 fintech 轉向 GAAP profit 的過程。應同時看 revenue growth、deposit growth、credit loss、loan sale gain、member growth 與 tangible book。",
-        "buy_strategy": "不適合追高。較佳策略是等市場擔心信用或利率造成回檔，但公司 credit metrics 沒有惡化時分批；FCN 應用較深 KI，避免因 fintech sentiment 急跌被敲入。",
-        "sweet_zone": "甜區條件：member / deposit 持續成長、personal loan delinquency 沒有惡化、GAAP profit 維持正數、股價因市場風險回落而非基本面惡化。",
-        "technical_view": {
-          "mid_trend": "中期取決於 profitability 與 credit quality 是否同步改善；若市場相信 SOFI 轉型成 digital bank platform，估值可維持溢價。",
-          "short_term": "短線受利率、CPI、銀行股情緒、fintech sentiment、loan loss 與財報指引影響大。",
-          "structure": "高 beta fintech，不是防守型金融股；適合積極型配置與高 coupon FCN。",
-          "conclusion": "FCN 判斷：可做，但需低權重、深 KI、避免長天期高 strike。"
+      "opportunity": [
+        "AI data center 對高速光互連需求持續升級，800G / 1.6T cycle 可推升 COHR 光通訊產品需求。",
+        "公司具備材料、光學元件、雷射與 photonics 整合能力，若供應鏈緊張，議價力可能改善。",
+        "若 margin recovery 與 FCF 修復同時出現，市場可從 cycle stock 轉向 AI infrastructure supplier 重新評價。"
+      ]
+    },
+    "final_view": "COHR 是 FCN 高票息與 AI optical 曝險標的，但不是保守核心股。它適合放入 stock_pool / FCN watchlist，搭配 CRDO、ALAB、MRVL 做 AI connectivity basket；但 strike / KI 需保守，避免在 AI optical 熱度最高時做高 strike 長天期單。Timing：等回檔或財報確認，不追急漲。",
+    "warning": [
+      "COHR 不在原始 pool30，建議先作為 stock_pool / FCN 主力候選，不直接升 core。",
+      "AI optical 高成長與 legacy cycle 可能同時存在，財報解讀需拆 segment。",
+      "波動高，FCN 不適合高 strike 或重倉。"
+    ],
+    "data_quality": {
+      "profile_completeness": 8.2,
+      "specificity": 8.0,
+      "data_support": 7.8,
+      "decision_usefulness": 9.0,
+      "fcn_alignment": 9.1,
+      "source_quality": "company_ir_market_context_and_ai_optical_supply_chain",
+      "warning": "正式 merge 前建議補入最新 fiscal year revenue、segment revenue、gross margin、debt 與 FCF 數字。"
+    }
+  },
+  "SOFI": {
+    "symbol": "SOFI",
+    "name": "SoFi Technologies, Inc.",
+    "type": "research_raw",
+    "company_overview": "SOFI 是美國數位金融平台，業務包含 lending、financial services、technology platform 與會員金融生態。它不是傳統銀行，也不是單純 fintech app；投資判斷重點在 member growth、deposit growth、loan origination、credit quality 與 GAAP profitability 能否同時改善。對 FCN 來說，SOFI 是高 beta fintech 標的，coupon 通常有吸引力，但接股風險高於大型銀行與成熟科技股。",
+    "basic_info": {
+      "founded": "2011。",
+      "headquarters": "San Francisco, California, U.S.。",
+      "industry": "Digital banking, consumer lending, fintech platform, financial services technology。",
+      "market_cap": "中大型高波動 fintech 成長股；市值與估值高度受利率、信用品質、會員成長與 fintech sentiment 影響。"
+    },
+    "business_model": {
+      "summary": "SOFI 的商業模式分成三大塊：Lending 賺利差與貸款銷售收益，Financial Services 透過存款、信用卡、投資、保險、支付與會員產品擴大使用頻率，Technology Platform 則透過 Galileo / Technisys 提供金融科技基礎設施。真正的投資重點，是公司能否從高波動 lending 轉成多產品、高頻、低資金成本的數位金融平台。",
+      "segments": [
+        "Lending：包含 personal loans、student loans、home loans，是獲利核心但也最受利率、信用損失、資本市場與失業率影響。",
+        "Financial Services：包含 SoFi Money、存款、投資、信用卡、保險與支付，重點是提高會員黏著度與低成本 deposit base。",
+        "Technology Platform：Galileo / Technisys 服務其他 fintech 與金融機構，理論上可提供較輕資產收入，但成長曾受 fintech 客戶預算與競爭影響。",
+        "Deposit / bank charter model：銀行牌照使 SOFI 能用存款資金支持放款，降低 funding cost，但也使其暴露於金融監管與信用週期。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "SOFI 的客戶是美國年輕專業族群、中高信用消費者、借款人、存款用戶與 fintech 平台客戶。單一客戶集中風險不高，但 lending portfolio 對消費者信用週期高度敏感。若失業率上升或高利率延續，SOFI 的 loan losses、fair value marks 與資本市場出售貸款能力會影響股價。",
+      "key_customers": [
+        {
+          "name": "Prime and near-prime consumer borrowers",
+          "role": "Personal loans / student loans / home loans 借款客戶",
+          "importance": "Lending 是 SOFI 主要獲利來源，高信用客戶可降低損失率，但景氣下行時 personal loan delinquency 仍會被市場放大檢視。"
+        },
+        {
+          "name": "SoFi members and deposit customers",
+          "role": "數位銀行、存款、投資與金融服務用戶",
+          "importance": "會員與存款成長可降低 funding cost，並提高交叉銷售機會；這是 SOFI 從貸款公司轉型成金融平台的核心。"
+        },
+        {
+          "name": "Fintech / financial institution clients",
+          "role": "Galileo / Technisys technology platform 客戶",
+          "importance": "Technology Platform 能提供 B2B 收入，但客戶多為 fintech / neobank / 金融機構，若 fintech funding 環境轉弱，成長會放慢。"
         }
-      },
-      "pool30_fit": {
-        "stock_pool": true,
-        "pool30": true,
-        "category": "speculative",
-        "reason": "SOFI 可提供 fintech growth 與高 coupon 曝險，適合作為 pool30 speculative / FCN enhancer；但信用週期與估值波動高，不適合作 core。",
-        "upgrade_condition": [
-          "GAAP profitability 連續維持，且不是靠一次性 fair value gain。",
-          "Deposit growth 與 non-lending revenue mix 提升，降低 personal loan 依賴。",
-          "Delinquency / charge-off 控制良好，證明能穿越信用週期。"
-        ]
-      },
-      "risk_opportunity": {
-        "risk": [
-          "Personal loan credit risk 是最大基本面風險；若失業率上升或 charge-off 惡化，股價會快速反應。",
-          "利率高檔會影響借款需求、funding cost、loan sale market 與 fintech 估值。",
-          "SOFI 高 beta、高散戶關注，股價可能因市場情緒而非基本面單日大幅波動。"
-        ],
-        "opportunity": [
-          "Deposit growth 可降低資金成本，讓 SOFI 比純貸款平台更有韌性。",
-          "多產品交叉銷售若成功，member lifetime value 可提高，估值可從 lending company 升到 digital finance platform。",
-          "若 GAAP profitability 穩定，市場可能重新定價 SOFI，FCN coupon 與股價彈性都會提高。"
-        ]
-      },
-      "final_view": "SOFI 是 FCN 主力高票息 fintech 標的，但本質是 speculative growth，不是保守金融股。可以放 pool30，但定位應是高波動小權重；若做 FCN，重點是深 KI、低權重、避免信用週期轉差時接股。Timing：等利率或金融股情緒回檔，但 credit metrics 仍穩時再做。",
-      "warning": [
-        "SOFI 對信用週期、利率與 fintech sentiment 高度敏感。",
-        "PE 對 SOFI 解釋力有限，需搭配 deposit、credit loss、member growth 與 revenue mix。",
-        "FCN coupon 高，但敲入後接股波動大。"
       ],
-      "data_quality": {
-        "profile_completeness": 8.4,
-        "specificity": 8.1,
-        "data_support": 7.8,
-        "decision_usefulness": 9.0,
-        "fcn_alignment": 9.3,
-        "source_quality": "company_ir_bank_fintech_market_context",
-        "warning": "正式 merge 前建議補入最新 adjusted net revenue、member count、deposits、charge-off、delinquency、GAAP EPS。"
+      "conclusion": "SOFI 的客戶成長與產品交叉銷售是最大優勢，但信用週期與 funding market 是最大風險。這檔股票不適合用傳統銀行低波動邏輯看，也不能只用 fintech app 下載量判斷。"
+    },
+    "why_this_company": [
+      "SOFI 是少數同時有 lending、digital bank deposit、financial services 與 fintech infrastructure 的上市 fintech，業務組合比單一放款平台更完整。",
+      "銀行牌照讓 SOFI 能用 deposit funding 支撐放款，若利率環境轉佳且存款成本可控，利差與獲利彈性會改善。",
+      "FCN 市場喜歡 SOFI，是因為它波動高、題材清楚、散戶與機構關注度高；但這也代表 KI / strike 必須更保守。"
+    ],
+    "market_view": "市場在 pricing 的是 SOFI 能否從高 beta lending fintech 轉型成獲利穩定的數位銀行平台。市場期待 member growth、deposit growth、GAAP profitability、loan sales 與 credit quality 同時改善；市場擔心的是 personal loan 信用品質、利率高檔、資本市場對 loan buyer 的 appetite、以及 fintech valuation sentiment。對 FCN 來說，SOFI 的高 coupon 來自高波動與高不確定性，不能只看股價便宜。 ",
+    "financial_summary": {
+      "revenue": "SOFI revenue 由 lending、financial services 與 technology platform 組成；正式 merge 前建議補最新年度 adjusted net revenue。",
+      "growth": "成長核心看 member growth、product growth、deposit growth 與 non-lending revenue mix；若只靠 personal loan 增長，品質不足。",
+      "net_margin": "公司已朝 GAAP profitability 轉型，但淨利率仍受 credit provision、fair value adjustment、marketing 與 funding cost 影響。",
+      "fcf_margin": "金融公司 FCF 與一般科技公司不可直接比較，需看 tangible book、capital、loan origination、deposit funding 與信用損失。",
+      "eps": "需以最新財報補齊 GAAP EPS / forward EPS；高成長 fintech EPS 波動大。",
+      "pe": "若 EPS 剛轉正，PE 可能看起來偏高或不穩，實務上應搭配 revenue growth、book value 與 credit metrics。",
+      "dividend_yield": "0%；公司不配息，投資報酬來自成長與估值重評。",
+      "beta": "高 beta fintech，波動高於大型銀行與 mega-cap tech。"
+    },
+    "competition": {
+      "summary": "SOFI 同時面對傳統銀行、信用卡公司、Robinhood、Chime、LendingClub、Upstart 與其他數位金融平台競爭。JPMorgan / Bank of America 等大型銀行擁有更低資金成本、更大資本與更完整產品，但 SOFI 在年輕高收入族群與數位體驗上較靈活。Robinhood 在投資與交易流量更強，但 SOFI 的銀行牌照與貸款產品更完整。Upstart / LendingClub 更偏 lending cycle，SOFI 若能提高 non-lending revenue，估值品質會比單一貸款平台好。SOFI 的最大挑戰是證明自己不是景氣好時的高 beta lending 股，而是能穿越信用週期的數位金融平台。",
+      "peers": [
+        {
+          "name": "JPMorgan / Bank of America",
+          "position": "大型傳統銀行競爭者",
+          "comparison": "大型銀行資本、存款與風控優勢明顯，但數位成長與品牌年輕化不如 SOFI；SOFI 必須用成長補償較高風險。"
+        },
+        {
+          "name": "Robinhood",
+          "position": "消費金融與投資 app 競爭者",
+          "comparison": "Robinhood 在交易、投資與 crypto 流量強，SOFI 則在 lending、deposit 與綜合金融服務更完整。"
+        },
+        {
+          "name": "LendingClub / Upstart",
+          "position": "消費貸款與 AI lending 對手",
+          "comparison": "LendingClub / Upstart 更受 loan origination cycle 影響；SOFI 若能靠 deposits 與 financial services 分散收入，風險結構較佳。"
+        },
+        {
+          "name": "Chime / neobanks",
+          "position": "數位銀行與年輕用戶競爭者",
+          "comparison": "Chime 等 neobank 在低門檻日常 banking 有優勢，SOFI 則更偏中高收入會員與多產品交叉銷售。"
+        }
+      ],
+      "conclusion": "SOFI 的競爭優勢在於銀行牌照 + lending + deposit + fintech platform 的組合；弱點是信用週期與估值波動。若 non-lending revenue 占比提高，SOFI 可從高風險 lending fintech 升級；若獲利仍主要靠 personal loans，FCN 風險要打折。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "SOFI 不能只用 PE 判斷，因為它處於從高成長虧損 / 微利 fintech 轉向 GAAP profit 的過程。應同時看 revenue growth、deposit growth、credit loss、loan sale gain、member growth 與 tangible book。",
+      "buy_strategy": "不適合追高。較佳策略是等市場擔心信用或利率造成回檔，但公司 credit metrics 沒有惡化時分批；FCN 應用較深 KI，避免因 fintech sentiment 急跌被敲入。",
+      "sweet_zone": "甜區條件：member / deposit 持續成長、personal loan delinquency 沒有惡化、GAAP profit 維持正數、股價因市場風險回落而非基本面惡化。",
+      "technical_view": {
+        "mid_trend": "中期取決於 profitability 與 credit quality 是否同步改善；若市場相信 SOFI 轉型成 digital bank platform，估值可維持溢價。",
+        "short_term": "短線受利率、CPI、銀行股情緒、fintech sentiment、loan loss 與財報指引影響大。",
+        "structure": "高 beta fintech，不是防守型金融股；適合積極型配置與高 coupon FCN。",
+        "conclusion": "FCN 判斷：可做，但需低權重、深 KI、避免長天期高 strike。"
       }
     },
-    "INTC": {
-      "symbol": "INTC",
-      "name": "Intel Corporation",
-      "type": "research_raw",
-      "company_overview": "INTC 是傳統 CPU 與半導體製造巨頭，現在投資故事不是單純 PC / server CPU，而是 IDM 2.0、Intel Foundry、製程追趕、政府補貼、AI PC 與資料中心產品修復。這檔股票目前不是高品質成長股，而是 turnaround / restructuring / strategic semiconductor asset。對 FCN 來說，INTC coupon 通常比 MSFT / COST 好，但基本面不確定性也高於成熟 core。",
-      "basic_info": {
-        "founded": "1968。",
-        "headquarters": "Santa Clara, California, U.S.。",
-        "industry": "Semiconductors, CPUs, data center processors, foundry manufacturing, advanced packaging。",
-        "market_cap": "大型半導體 turnaround 股；市值與估值受 PC cycle、data center share、foundry losses、製程進度與政府補貼影響。"
-      },
-      "business_model": {
-        "summary": "INTC 的商業模式包含 Client Computing、Data Center and AI、Network and Edge、Mobileye、Altera / programmable solutions，以及 Intel Foundry。傳統 CPU 業務仍提供主要營收，但公司估值關鍵在於能否止住 server share 流失、讓 foundry losses 收斂，並證明先進製程能重新取得外部客戶信任。",
-        "segments": [
-          "Client Computing Group：PC CPU 是 Intel 現金流基礎，AI PC 週期可提供更新需求，但競爭來自 AMD、Apple silicon 與 ARM PC。",
-          "Data Center and AI：Xeon 與 AI accelerator 需要對抗 AMD EPYC、NVIDIA GPU 與 hyperscaler 自研晶片，這是市場最在意的市占防守戰。",
-          "Intel Foundry：IDM 2.0 核心，目標是把內部製造能力轉成外部 foundry revenue；但短期虧損、capex 與客戶信任是壓力。",
-          "Advanced Packaging / U.S. manufacturing：政府補貼與地緣供應鏈重組可提供戰略價值，但不等於短期獲利。"
-        ]
-      },
-      "customer_analysis": {
-        "summary": "INTC 客戶包含 PC OEM、cloud / enterprise server customers、政府與未來 foundry customers。傳統上 PC OEM 與 server 客戶分散，但真正風險在市占與產品競爭力，而不是單一客戶集中。若 Microsoft、Dell、HP、Lenovo、雲端客戶採用 AMD / ARM / 自研晶片比例提高，Intel revenue 與 margin 會受壓。",
-        "key_customers": [
-          {
-            "name": "PC OEMs: Dell, HP, Lenovo and others",
-            "role": "Client CPU 主要客戶",
-            "importance": "PC cycle 與 OEM 採購決定 Client Computing revenue；AI PC 可帶動更新，但若 AMD / ARM PC 滲透提高，Intel share 仍會受壓。"
-          },
-          {
-            "name": "Cloud and enterprise data center customers",
-            "role": "Xeon server CPU 與 data center platform 客戶",
-            "importance": "Data center 客戶正在增加 AMD EPYC、NVIDIA GPU、ARM CPU 與自研 ASIC 使用比例，Intel 必須用製程、效能與平台綁定守住 share。"
-          },
-          {
-            "name": "Potential foundry customers",
-            "role": "Intel Foundry 外部晶片設計客戶",
-            "importance": "Foundry 轉型需要大型外部客戶驗證先進製程；若只有內部產品支撐，foundry valuation 很難被市場完全認可。"
-          }
-        ],
-        "conclusion": "INTC 的客戶基礎仍大，但客戶忠誠度不再等於壟斷。投資判斷要看產品競爭力、製程節點、foundry 客戶與虧損收斂，而不是只看 Intel 品牌。"
-      },
-      "why_this_company": [
-        "INTC 是美國半導體製造戰略資產，受惠供應鏈在地化與政府補貼，這給它不同於一般 CPU 股的政策價值。",
-        "若 Intel Foundry 成功取得外部大客戶，市場會重新評價 INTC，不再只把它當 PC / server CPU 老公司。",
-        "對 FCN 來說，INTC 波動與 turnaround 故事可提供 coupon，但接股後需要承擔長期轉型失敗風險。"
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "speculative",
+      "reason": "SOFI 可提供 fintech growth 與高 coupon 曝險，適合作為 pool30 speculative / FCN enhancer；但信用週期與估值波動高，不適合作 core。",
+      "upgrade_condition": [
+        "GAAP profitability 連續維持，且不是靠一次性 fair value gain。",
+        "Deposit growth 與 non-lending revenue mix 提升，降低 personal loan 依賴。",
+        "Delinquency / charge-off 控制良好，證明能穿越信用週期。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "Personal loan credit risk 是最大基本面風險；若失業率上升或 charge-off 惡化，股價會快速反應。",
+        "利率高檔會影響借款需求、funding cost、loan sale market 與 fintech 估值。",
+        "SOFI 高 beta、高散戶關注，股價可能因市場情緒而非基本面單日大幅波動。"
       ],
-      "market_view": "市場在 pricing 的是 Intel 是否能完成製程與組織重整，而不是短期 EPS 好不好。市場期待 AI PC、server product refresh、foundry external customer wins、cost cutting 與 capex discipline；市場擔心的是 foundry losses、AMD / ARM share gain、NVIDIA 在 data center 的支配力、以及製程時程再度延誤。INTC 目前更像『有政策底的 turnaround』，不是高確定性 AI growth。",
-      "financial_summary": {
-        "revenue": "INTC revenue 由 Client Computing、Data Center and AI、Network and Edge、Mobileye / Altera 與 Foundry 組成；正式 merge 前建議補入最新 FY revenue。",
-        "growth": "成長取決於 PC recovery、AI PC adoption、server CPU share、foundry ramp 與 cost reduction；不是單一 AI accelerator 故事。",
-        "net_margin": "短期淨利率受 foundry losses、重整費用、製程投資與競爭壓力影響，不能用成熟期 Intel margin 外推。",
-        "fcf_margin": "Foundry / fab capex 使 FCF 壓力大；若 capex discipline 與補貼入帳改善，FCF 才會修復。",
-        "eps": "EPS 需用最新 GAAP / non-GAAP 分開看；turnaround 期間一次性費用會扭曲 GAAP EPS。",
-        "pe": "PE 對 INTC 解釋力有限，因為 earnings depressed；需搭配 price-to-sales、book value、foundry loss trajectory 與 FCF。",
-        "dividend_yield": "配息已不是主要投資理由，過去高股息形象已因轉型與資本支出壓力改變。",
-        "beta": "半導體 turnaround 股，波動高於防守股但通常低於小型 AI optical / fintech。"
-      },
-      "competition": {
-        "summary": "INTC 的競爭對手分成三組：CPU 對手 AMD / ARM，製造對手 TSM / Samsung，AI data center 對手 NVIDIA / hyperscaler ASIC。AMD EPYC 持續搶 server share，是 Intel data center 最大現實壓力。TSM 在先進製程與客戶信任上領先，Intel Foundry 必須證明良率、成本與交付能力。NVIDIA 則改變 data center spending mix，使 CPU 不再是資料中心價值核心。Intel 的優勢是 x86 installed base、政府戰略支持與製造資產；弱點是轉型時間長、capex 大、執行風險高。",
-        "peers": [
-          {
-            "name": "AMD",
-            "position": "PC / server CPU 主要競爭者",
-            "comparison": "AMD EPYC 在 data center 持續取得份額，Intel 必須用 Xeon roadmap、製程改善與平台整合守住企業客戶。"
-          },
-          {
-            "name": "TSMC",
-            "position": "Foundry 製造標竿",
-            "comparison": "TSM 在先進製程、良率與外部客戶信任上仍領先 Intel Foundry；Intel 若要被重新評價，必須拿到明確外部客戶。"
-          },
-          {
-            "name": "NVIDIA",
-            "position": "AI data center spending 主導者",
-            "comparison": "AI capex 大量流向 NVIDIA GPU / networking，壓縮傳統 CPU 在資料中心預算中的相對地位。"
-          },
-          {
-            "name": "ARM ecosystem",
-            "position": "低功耗 CPU 與 custom silicon 架構競爭者",
-            "comparison": "ARM 在 cloud custom CPU、Apple silicon 與 AI edge 上提高滲透，長期威脅 Intel x86 share。"
-          }
-        ],
-        "conclusion": "INTC 的競爭位置比過去困難很多，但也因此具 turnaround 彈性。若 foundry 與產品 roadmap 成功，股價可大幅修復；若製程再延誤或外部客戶不足，估值會繼續被折價。"
-      },
-      "valuation_and_timing": {
-        "valuation_view": "INTC 不能用成熟期 PE 看，因為 earnings 被重整、foundry losses 與 capex 壓低。比較合理的方法是看 revenue base、book value、foundry loss 收斂、FCF 修復與是否取得外部 foundry 客戶。",
-        "buy_strategy": "適合事件型分批，不適合重倉追高。若市場因財報虧損下殺，但同時看到 cost cutting、foundry customer 或 PC / server recovery，可小比例布局；FCN 要避免太高 strike。",
-        "sweet_zone": "甜區條件：foundry losses 開始收斂、外部客戶進展明確、PC recovery 支撐 Client revenue、且股價仍反映高度悲觀。若只有政策補貼新聞但營運沒有改善，不算甜區。",
-        "technical_view": {
-          "mid_trend": "中期是修復 / 轉型格局，不是明確成長多頭。",
-          "short_term": "短線受財報、foundry update、政府補貼、裁員 / 重整、AMD / NVIDIA 消息影響。",
-          "structure": "turnaround semiconductor，風險低於小型投機股，但基本面壓力高於成熟 core。",
-          "conclusion": "FCN 判斷：可做中等偏積極單，但需低 strike / 深 KI；不適合當核心接股。"
+      "opportunity": [
+        "Deposit growth 可降低資金成本，讓 SOFI 比純貸款平台更有韌性。",
+        "多產品交叉銷售若成功，member lifetime value 可提高，估值可從 lending company 升到 digital finance platform。",
+        "若 GAAP profitability 穩定，市場可能重新定價 SOFI，FCN coupon 與股價彈性都會提高。"
+      ]
+    },
+    "final_view": "SOFI 是 FCN 主力高票息 fintech 標的，但本質是 speculative growth，不是保守金融股。可以放 pool30，但定位應是高波動小權重；若做 FCN，重點是深 KI、低權重、避免信用週期轉差時接股。Timing：等利率或金融股情緒回檔，但 credit metrics 仍穩時再做。",
+    "warning": [
+      "SOFI 對信用週期、利率與 fintech sentiment 高度敏感。",
+      "PE 對 SOFI 解釋力有限，需搭配 deposit、credit loss、member growth 與 revenue mix。",
+      "FCN coupon 高，但敲入後接股波動大。"
+    ],
+    "data_quality": {
+      "profile_completeness": 8.4,
+      "specificity": 8.1,
+      "data_support": 7.8,
+      "decision_usefulness": 9.0,
+      "fcn_alignment": 9.3,
+      "source_quality": "company_ir_bank_fintech_market_context",
+      "warning": "正式 merge 前建議補入最新 adjusted net revenue、member count、deposits、charge-off、delinquency、GAAP EPS。"
+    }
+  },
+  "INTC": {
+    "symbol": "INTC",
+    "name": "Intel Corporation",
+    "type": "research_raw",
+    "company_overview": "INTC 是傳統 CPU 與半導體製造巨頭，現在投資故事不是單純 PC / server CPU，而是 IDM 2.0、Intel Foundry、製程追趕、政府補貼、AI PC 與資料中心產品修復。這檔股票目前不是高品質成長股，而是 turnaround / restructuring / strategic semiconductor asset。對 FCN 來說，INTC coupon 通常比 MSFT / COST 好，但基本面不確定性也高於成熟 core。",
+    "basic_info": {
+      "founded": "1968。",
+      "headquarters": "Santa Clara, California, U.S.。",
+      "industry": "Semiconductors, CPUs, data center processors, foundry manufacturing, advanced packaging。",
+      "market_cap": "大型半導體 turnaround 股；市值與估值受 PC cycle、data center share、foundry losses、製程進度與政府補貼影響。"
+    },
+    "business_model": {
+      "summary": "INTC 的商業模式包含 Client Computing、Data Center and AI、Network and Edge、Mobileye、Altera / programmable solutions，以及 Intel Foundry。傳統 CPU 業務仍提供主要營收，但公司估值關鍵在於能否止住 server share 流失、讓 foundry losses 收斂，並證明先進製程能重新取得外部客戶信任。",
+      "segments": [
+        "Client Computing Group：PC CPU 是 Intel 現金流基礎，AI PC 週期可提供更新需求，但競爭來自 AMD、Apple silicon 與 ARM PC。",
+        "Data Center and AI：Xeon 與 AI accelerator 需要對抗 AMD EPYC、NVIDIA GPU 與 hyperscaler 自研晶片，這是市場最在意的市占防守戰。",
+        "Intel Foundry：IDM 2.0 核心，目標是把內部製造能力轉成外部 foundry revenue；但短期虧損、capex 與客戶信任是壓力。",
+        "Advanced Packaging / U.S. manufacturing：政府補貼與地緣供應鏈重組可提供戰略價值，但不等於短期獲利。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "INTC 客戶包含 PC OEM、cloud / enterprise server customers、政府與未來 foundry customers。傳統上 PC OEM 與 server 客戶分散，但真正風險在市占與產品競爭力，而不是單一客戶集中。若 Microsoft、Dell、HP、Lenovo、雲端客戶採用 AMD / ARM / 自研晶片比例提高，Intel revenue 與 margin 會受壓。",
+      "key_customers": [
+        {
+          "name": "PC OEMs: Dell, HP, Lenovo and others",
+          "role": "Client CPU 主要客戶",
+          "importance": "PC cycle 與 OEM 採購決定 Client Computing revenue；AI PC 可帶動更新，但若 AMD / ARM PC 滲透提高，Intel share 仍會受壓。"
+        },
+        {
+          "name": "Cloud and enterprise data center customers",
+          "role": "Xeon server CPU 與 data center platform 客戶",
+          "importance": "Data center 客戶正在增加 AMD EPYC、NVIDIA GPU、ARM CPU 與自研 ASIC 使用比例，Intel 必須用製程、效能與平台綁定守住 share。"
+        },
+        {
+          "name": "Potential foundry customers",
+          "role": "Intel Foundry 外部晶片設計客戶",
+          "importance": "Foundry 轉型需要大型外部客戶驗證先進製程；若只有內部產品支撐，foundry valuation 很難被市場完全認可。"
         }
-      },
-      "pool30_fit": {
-        "stock_pool": true,
-        "pool30": true,
-        "category": "defensive",
-        "reason": "INTC 在 pool30 中不應被視為高成長 AI core，而是半導體戰略資產與 turnaround 標的。它可提供不同於 NVDA / TSM / AVGO 的修復型曝險，但權重應受控。",
-        "upgrade_condition": [
-          "Intel Foundry 外部客戶明確增加，且 foundry operating loss 開始收斂。",
-          "Client / Data Center revenue 同步改善，不再只靠 cost cutting 支撐 EPS。",
-          "FCF 壓力下降，capex 與政府補貼節奏更清楚。"
-        ]
-      },
-      "risk_opportunity": {
-        "risk": [
-          "Foundry 轉型需要大量 capex，若外部客戶不足，會長期拖累 FCF 與 margin。",
-          "AMD / ARM / NVIDIA 改變 data center 與 PC 架構，Intel 既有 x86 優勢被削弱。",
-          "轉型期 GAAP earnings 可能持續受重整費用、虧損與製程投資影響，股價容易受財報 headline 衝擊。"
-        ],
-        "opportunity": [
-          "美國半導體在地化與政府補貼給 Intel 戰略價值，降低最壞情境風險。",
-          "AI PC / enterprise refresh 若啟動，可支撐 Client Computing 修復。",
-          "若 Intel Foundry 拿到大型外部客戶，市場可能從低估值 turnaround 重新定價。"
-        ]
-      },
-      "final_view": "INTC 是 FCN 可用的 turnaround semiconductor 標的，但不是高品質 AI core。它適合 pool30 的 defensive / event-driven 角落，用來取得半導體修復與政策資產曝險；但 FCN 必須用深 KI、低 strike、低權重，不建議當接股型核心。Timing：等 foundry loss 收斂或外部客戶進展，不追單純政策新聞。",
-      "warning": [
-        "INTC 轉型期財報會非常不乾淨，GAAP EPS / PE 解釋力有限。",
-        "Foundry capex 與虧損若無法收斂，股價可能長期低迷。",
-        "FCN coupon 有吸引力，但接股後可能變成長期 turnaround 持股。"
       ],
-      "data_quality": {
-        "profile_completeness": 8.6,
-        "specificity": 8.3,
-        "data_support": 8.0,
-        "decision_usefulness": 9.1,
-        "fcn_alignment": 9.0,
-        "source_quality": "company_10k_ir_semiconductor_market_context",
-        "warning": "正式 merge 前建議補入最新 FY revenue、segment revenue、foundry operating loss、FCF、capex 與 non-GAAP EPS。"
+      "conclusion": "INTC 的客戶基礎仍大，但客戶忠誠度不再等於壟斷。投資判斷要看產品競爭力、製程節點、foundry 客戶與虧損收斂，而不是只看 Intel 品牌。"
+    },
+    "why_this_company": [
+      "INTC 是美國半導體製造戰略資產，受惠供應鏈在地化與政府補貼，這給它不同於一般 CPU 股的政策價值。",
+      "若 Intel Foundry 成功取得外部大客戶，市場會重新評價 INTC，不再只把它當 PC / server CPU 老公司。",
+      "對 FCN 來說，INTC 波動與 turnaround 故事可提供 coupon，但接股後需要承擔長期轉型失敗風險。"
+    ],
+    "market_view": "市場在 pricing 的是 Intel 是否能完成製程與組織重整，而不是短期 EPS 好不好。市場期待 AI PC、server product refresh、foundry external customer wins、cost cutting 與 capex discipline；市場擔心的是 foundry losses、AMD / ARM share gain、NVIDIA 在 data center 的支配力、以及製程時程再度延誤。INTC 目前更像『有政策底的 turnaround』，不是高確定性 AI growth。",
+    "financial_summary": {
+      "revenue": "INTC revenue 由 Client Computing、Data Center and AI、Network and Edge、Mobileye / Altera 與 Foundry 組成；正式 merge 前建議補入最新 FY revenue。",
+      "growth": "成長取決於 PC recovery、AI PC adoption、server CPU share、foundry ramp 與 cost reduction；不是單一 AI accelerator 故事。",
+      "net_margin": "短期淨利率受 foundry losses、重整費用、製程投資與競爭壓力影響，不能用成熟期 Intel margin 外推。",
+      "fcf_margin": "Foundry / fab capex 使 FCF 壓力大；若 capex discipline 與補貼入帳改善，FCF 才會修復。",
+      "eps": "EPS 需用最新 GAAP / non-GAAP 分開看；turnaround 期間一次性費用會扭曲 GAAP EPS。",
+      "pe": "PE 對 INTC 解釋力有限，因為 earnings depressed；需搭配 price-to-sales、book value、foundry loss trajectory 與 FCF。",
+      "dividend_yield": "配息已不是主要投資理由，過去高股息形象已因轉型與資本支出壓力改變。",
+      "beta": "半導體 turnaround 股，波動高於防守股但通常低於小型 AI optical / fintech。"
+    },
+    "competition": {
+      "summary": "INTC 的競爭對手分成三組：CPU 對手 AMD / ARM，製造對手 TSM / Samsung，AI data center 對手 NVIDIA / hyperscaler ASIC。AMD EPYC 持續搶 server share，是 Intel data center 最大現實壓力。TSM 在先進製程與客戶信任上領先，Intel Foundry 必須證明良率、成本與交付能力。NVIDIA 則改變 data center spending mix，使 CPU 不再是資料中心價值核心。Intel 的優勢是 x86 installed base、政府戰略支持與製造資產；弱點是轉型時間長、capex 大、執行風險高。",
+      "peers": [
+        {
+          "name": "AMD",
+          "position": "PC / server CPU 主要競爭者",
+          "comparison": "AMD EPYC 在 data center 持續取得份額，Intel 必須用 Xeon roadmap、製程改善與平台整合守住企業客戶。"
+        },
+        {
+          "name": "TSMC",
+          "position": "Foundry 製造標竿",
+          "comparison": "TSM 在先進製程、良率與外部客戶信任上仍領先 Intel Foundry；Intel 若要被重新評價，必須拿到明確外部客戶。"
+        },
+        {
+          "name": "NVIDIA",
+          "position": "AI data center spending 主導者",
+          "comparison": "AI capex 大量流向 NVIDIA GPU / networking，壓縮傳統 CPU 在資料中心預算中的相對地位。"
+        },
+        {
+          "name": "ARM ecosystem",
+          "position": "低功耗 CPU 與 custom silicon 架構競爭者",
+          "comparison": "ARM 在 cloud custom CPU、Apple silicon 與 AI edge 上提高滲透，長期威脅 Intel x86 share。"
+        }
+      ],
+      "conclusion": "INTC 的競爭位置比過去困難很多，但也因此具 turnaround 彈性。若 foundry 與產品 roadmap 成功，股價可大幅修復；若製程再延誤或外部客戶不足，估值會繼續被折價。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "INTC 不能用成熟期 PE 看，因為 earnings 被重整、foundry losses 與 capex 壓低。比較合理的方法是看 revenue base、book value、foundry loss 收斂、FCF 修復與是否取得外部 foundry 客戶。",
+      "buy_strategy": "適合事件型分批，不適合重倉追高。若市場因財報虧損下殺，但同時看到 cost cutting、foundry customer 或 PC / server recovery，可小比例布局；FCN 要避免太高 strike。",
+      "sweet_zone": "甜區條件：foundry losses 開始收斂、外部客戶進展明確、PC recovery 支撐 Client revenue、且股價仍反映高度悲觀。若只有政策補貼新聞但營運沒有改善，不算甜區。",
+      "technical_view": {
+        "mid_trend": "中期是修復 / 轉型格局，不是明確成長多頭。",
+        "short_term": "短線受財報、foundry update、政府補貼、裁員 / 重整、AMD / NVIDIA 消息影響。",
+        "structure": "turnaround semiconductor，風險低於小型投機股，但基本面壓力高於成熟 core。",
+        "conclusion": "FCN 判斷：可做中等偏積極單，但需低 strike / 深 KI；不適合當核心接股。"
       }
     },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "defensive",
+      "reason": "INTC 在 pool30 中不應被視為高成長 AI core，而是半導體戰略資產與 turnaround 標的。它可提供不同於 NVDA / TSM / AVGO 的修復型曝險，但權重應受控。",
+      "upgrade_condition": [
+        "Intel Foundry 外部客戶明確增加，且 foundry operating loss 開始收斂。",
+        "Client / Data Center revenue 同步改善，不再只靠 cost cutting 支撐 EPS。",
+        "FCF 壓力下降，capex 與政府補貼節奏更清楚。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "Foundry 轉型需要大量 capex，若外部客戶不足，會長期拖累 FCF 與 margin。",
+        "AMD / ARM / NVIDIA 改變 data center 與 PC 架構，Intel 既有 x86 優勢被削弱。",
+        "轉型期 GAAP earnings 可能持續受重整費用、虧損與製程投資影響，股價容易受財報 headline 衝擊。"
+      ],
+      "opportunity": [
+        "美國半導體在地化與政府補貼給 Intel 戰略價值，降低最壞情境風險。",
+        "AI PC / enterprise refresh 若啟動，可支撐 Client Computing 修復。",
+        "若 Intel Foundry 拿到大型外部客戶，市場可能從低估值 turnaround 重新定價。"
+      ]
+    },
+    "final_view": "INTC 是 FCN 可用的 turnaround semiconductor 標的，但不是高品質 AI core。它適合 pool30 的 defensive / event-driven 角落，用來取得半導體修復與政策資產曝險；但 FCN 必須用深 KI、低 strike、低權重，不建議當接股型核心。Timing：等 foundry loss 收斂或外部客戶進展，不追單純政策新聞。",
+    "warning": [
+      "INTC 轉型期財報會非常不乾淨，GAAP EPS / PE 解釋力有限。",
+      "Foundry capex 與虧損若無法收斂，股價可能長期低迷。",
+      "FCN coupon 有吸引力，但接股後可能變成長期 turnaround 持股。"
+    ],
+    "data_quality": {
+      "profile_completeness": 8.6,
+      "specificity": 8.3,
+      "data_support": 8.0,
+      "decision_usefulness": 9.1,
+      "fcn_alignment": 9.0,
+      "source_quality": "company_10k_ir_semiconductor_market_context",
+      "warning": "正式 merge 前建議補入最新 FY revenue、segment revenue、foundry operating loss、FCF、capex 與 non-GAAP EPS。"
+    }
+  },
     "MSFT": {
       "symbol": "MSFT",
       "name": "Microsoft Corporation",
@@ -2134,7 +2134,7 @@
       "fail_reasons": []
     }
   },
-  "SNPS": {
+   "SNPS": {
     "symbol": "SNPS",
     "name": "Synopsys Inc.",
     "type": "research_raw",
@@ -2474,7 +2474,7 @@
       "AI accelerator and EPYC demand remain major drivers"
     ]
   },
-  "ARM": {
+    "ARM": {
     "symbol": "ARM",
     "name": "Arm Holdings plc",
     "type": "research_raw",
