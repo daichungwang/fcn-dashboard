@@ -1,0 +1,43 @@
+name: Fix IBM profile formatting once
+on:
+  push:
+    branches: [codex/ibm-onboarding-base-data]
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/ibm-onboarding-base-data
+      - name: Preserve latest main profile and append IBM
+        shell: bash
+        run: |
+          git fetch origin main --depth=1
+          python - <<'PY'
+          import base64, json, pathlib, subprocess, zlib
+          payload = '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'
+          ibm = json.loads(zlib.decompress(base64.b64decode(payload)))
+          base = subprocess.check_output(['git','show','origin/main:data/m1/m1_stock_profile.json']).decode('utf-8')
+          obj = json.loads(base)
+          if 'IBM' in obj:
+              raise RuntimeError('IBM already exists on main; manual reconciliation required')
+          entry = json.dumps({'IBM': ibm}, ensure_ascii=False, indent=2)
+          entry = entry[2:-2]
+          pos = base.rfind('\n}')
+          if pos < 0:
+              raise RuntimeError('profile closing brace missing')
+          out = base[:pos] + ',\n' + entry + base[pos:]
+          pathlib.Path('data/m1/m1_stock_profile.json').write_text(out, encoding='utf-8')
+          json.loads(out)
+          PY
+      - name: Commit clean profile diff and remove workflow
+        shell: bash
+        run: |
+          rm .github/workflows/fix-ibm-profile-once.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/m1/m1_stock_profile.json .github/workflows/fix-ibm-profile-once.yml
+          git commit -m "fix: preserve main profile formatting"
+          git push origin HEAD:codex/ibm-onboarding-base-data
