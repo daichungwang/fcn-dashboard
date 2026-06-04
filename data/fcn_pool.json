@@ -3607,6 +3607,116 @@
   }
 },
   {
+  "date": "2026-06-02",
+  "fcn_id": "DACN2600155 永豐",
+  "basket": [
+    "NVDA",
+    "TSM",
+    "AVGO",
+    "SIMO"
+  ],
+  "tenor": 12,
+  "rate": 39.67,
+  "autocall": 95,
+  "strike": 63.23,
+  "ki": 63.23,
+  "eki": false,
+  "bank": "BNP法國巴黎銀行",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "永豐",
+  "created_time": "2026-06-02T17:29",
+  "entry_time": "2026-06-02T17:29",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "NVDA": 222.82,
+    "TSM": 446.69,
+    "AVGO": 481.57,
+    "SIMO": 301.27
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SIMO": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-06-02",
+  "fcn_id": "FCN2602452 永豐",
+  "basket": [
+    "NVDA",
+    "AMD",
+    "MU",
+    "ARM"
+  ],
+  "tenor": 4,
+  "rate": 50.62,
+  "autocall": 100,
+  "strike": 75,
+  "ki": 50,
+  "eki": false,
+  "bank": "法國外貿銀行",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "永豐",
+  "created_time": "2026-06-02T17:34",
+  "entry_time": "2026-06-02T17:34",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "NVDA": 222.82,
+    "AMD": 521.54,
+    "MU": 1064.1,
+    "ARM": 402.71
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AMD": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
   "date": "2026-05-29",
   "fcn_id": "FCN269P 富邦",
   "basket": [
