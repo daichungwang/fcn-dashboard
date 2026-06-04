@@ -25,6 +25,7 @@
   { "symbol": "GOOG", "name": "Google", "sector": "AI_APPLICATION", "subsector": "AI_CLOUD", "category": "growth" },
   { "symbol": "AMZN", "name": "Amazon", "sector": "AI_APPLICATION", "subsector": "CLOUD_COMMERCE", "category": "core" },
   { "symbol": "ORCL", "name": "Oracle", "sector": "AI_APPLICATION", "subsector": "ENTERPRISE_SOFTWARE", "category": "growth" },
+  { "symbol": "IBM", "name": "IBM", "sector": "SOFTWARE", "subsector": "ENTERPRISE_SOFTWARE", "category": "core" },
   { "symbol": "PLTR", "name": "Palantir", "sector": "AI_APPLICATION", "subsector": "AI_SOFTWARE", "category": "growth" },
   { "symbol": "ARM", "name": "ARM", "sector": "AI_APPLICATION", "subsector": "AI_IP", "category": "growth" },
   { "symbol": "TSLA", "name": "Tesla", "sector": "AI_APPLICATION", "subsector": "AI_AUTO", "category": "growth" },
