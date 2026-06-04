@@ -5742,12 +5742,76 @@
         "valid_forward_year_list": [],
         "reason": "ETF/no single-company EPS"
       }
+    },
+    "IBM": {
+      "symbol": "IBM",
+      "name": "International Business Machines Corporation",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "gaap_diluted_eps_continuing_operations",
+      "eps_history": [
+        {
+          "fiscal_year": 2021,
+          "eps": 5.21
+        },
+        {
+          "fiscal_year": 2022,
+          "eps": 1.95
+        },
+        {
+          "fiscal_year": 2023,
+          "eps": 8.15
+        },
+        {
+          "fiscal_year": 2024,
+          "eps": 6.42
+        },
+        {
+          "fiscal_year": 2025,
+          "eps": 11.14
+        }
+      ],
+      "eps_forward": [],
+      "quality_flag": [
+        "official_ibm_results",
+        "continuing_operations",
+        "pension_and_tax_items_affect_comparability"
+      ],
+      "source_note": "IBM official full-year results: 2021-2025 GAAP diluted EPS from continuing operations. Forward EPS intentionally not populated without a governed analyst-consensus source.",
+      "eps_current": {
+        "latest_fiscal_year": 2025,
+        "latest_eps": 11.14,
+        "ttm_eps": 11.14
+      },
+      "data_quality": {
+        "history_years": 5,
+        "has_forward_eps": false,
+        "forward_years_with_analyst_count_ge_5": 0,
+        "confidence": "high",
+        "warning": [
+          "2022 and 2024 GAAP EPS include material pension settlement impacts; 2025 includes a tax benefit.",
+          "Forward EPS remains pending because no governed analyst-consensus source was supplied."
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 0,
+        "history_years_strict": 5
+      },
+      "engine_flags": {
+        "use_in_competition": true,
+        "sandbox_ready": true,
+        "engine_ready_v3": false,
+        "quality_level": "B",
+        "history_years": 5,
+        "valid_forward_years": 0,
+        "valid_forward_year_list": [],
+        "reason": "Official history ready; governed forward EPS pending."
+      }
     }
   },
   "summary": {
-    "total_symbols": 70,
+    "total_symbols": 71,
     "pool30_backfilled_symbols": [
       "SNPS",
+      "IBM",
       "ALAB",
       "ANET",
       "GLW",
@@ -5779,7 +5843,8 @@
       "JSON syntax validated by python json.loads.",
       "SNPS uses user-provided EPS 2012-2025 and 2026/2027 forward estimates.",
       "Several Pool30 records are v1 backfill estimates and should be verified before production scoring.",
-      "ETF records use skip_eps=true."
+      "ETF records use skip_eps=true.",
+      "IBM history uses official IBM full-year results; forward EPS is intentionally pending."
     ]
   }
 }

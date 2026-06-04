@@ -2610,5 +2610,128 @@
       "Fiscal 2025 revenue growth exceeded 100%",
       "AI optical DSP and AEC demand remain strong"
     ]
+  },
+  "IBM": {
+    "symbol": "IBM",
+    "name": "International Business Machines Corporation",
+    "type": "research_raw",
+    "company_overview": "IBM 是以企業軟體、顧問服務與基礎設施整合為核心的科技公司。FY2025 營收 675.35 億美元、年增 8%，生成式 AI book of business 超過 125 億美元，投資判斷重點是 Software 成長能否持續快於 Consulting。",
+    "basic_info": {
+      "founded": "1911 年成立，具超過 100 年企業科技營運歷史。",
+      "headquarters": "Armonk, New York, United States；股票於 NYSE 交易，代號 IBM。",
+      "industry": "Enterprise software、hybrid cloud、AI、consulting 與 infrastructure；FY2025 Software 營收 299.62 億美元。",
+      "market_cap": "即時市值由 market_runtime 更新；IBM 官方年度結果不提供即時市值，因此本研究卡不自行估算。"
+    },
+    "business_model": {
+      "summary": "IBM 以高毛利 Software 結合 Consulting 與 Infrastructure 交付企業轉型；FY2025 Software 毛利率 83.5%，明顯高於 Consulting 的 28.1% 與 Infrastructure 的 58.6%。",
+      "segments": [
+        "Software：FY2025 營收 299.62 億美元、年增 11%，其中第四季 Automation 年增 18%、Data 年增 22%。",
+        "Consulting：FY2025 營收 210.55 億美元、年增 2%，成長低於 Software，顯示服務需求仍較溫和。",
+        "Infrastructure：FY2025 營收 157.18 億美元、年增 12%；第四季 IBM Z 年增 67%，但產品週期可能造成波動。"
+      ]
+    },
+    "customer_analysis": {
+      "summary": "IBM 面向大型企業與政府的關鍵工作負載，客戶價值來自混合雲、AI 與主機整合；官方揭露生成式 AI book of business 已超過 125 億美元。",
+      "key_customers": [
+        {
+          "name": "Honda",
+          "role": "IBM Client Engineering 與 watsonx.ai 客戶案例",
+          "importance": "IBM 官方案例表示 Honda 使用生成式 AI，將技術文件建立時間由 4 年縮短至 1 年。"
+        },
+        {
+          "name": "Wix",
+          "role": "watsonx.ai 與 IBM Client Engineering 客戶案例",
+          "importance": "Wix 使用 IBM watsonx.ai 分析大量客服互動情緒，驗證 IBM AI 能嵌入企業工作流。"
+        },
+        {
+          "name": "IBM Global Sales Incentives",
+          "role": "watsonx Assistant 內部大型部署",
+          "importance": "AskIncentives 在 2021 年處理超過 278,000 個問題，2022 年超過 340,000 個問題，提供可量化的企業 AI 採用案例。"
+        }
+      ],
+      "conclusion": "IBM 的客戶採用證據偏企業級且可量化，但個別客戶營收集中度未由 FY2025 結果揭露；決策上應追蹤 AI book of business 轉換為 Software revenue 的速度。"
+    },
+    "why_this_company": [
+      "FY2025 Software 營收年增 11%，高於全公司營收年增 8%，組合正在往高毛利軟體移動。",
+      "FY2025 free cash flow 為 147.34 億美元、年增約 20 億美元，支援股息與併購能力。",
+      "生成式 AI book of business 超過 125 億美元，已具商業規模，不只是產品發布題材。"
+    ],
+    "market_view": "市場主要在 pricing Software、Red Hat 與 AI 成長；FY2025 Software 年增 11%、第四季 Red Hat 年增 10%。市場同時會擔心 Consulting 全年僅增 2%，以及總債務升至 613 億美元。",
+    "financial_summary": {
+      "revenue": "FY2025 revenue 675.35 億美元。",
+      "growth": "FY2025 revenue 年增 8%，固定匯率年增 6%。",
+      "net_margin": "FY2025 GAAP net income 106 億美元，約為營收的 15.7%。",
+      "fcf_margin": "FY2025 free cash flow 147.34 億美元，約為營收的 21.8%。",
+      "eps": "FY2025 GAAP diluted EPS from continuing operations 為 11.14 美元。",
+      "pe": "即時 PE 由 market_runtime 更新；本卡不使用未經治理的即時估值數值。",
+      "dividend_yield": "即時 dividend yield 由 market_runtime 更新；FY2025 第四季 IBM 向股東支付 16 億美元股息。",
+      "beta": "即時 beta 由 market_runtime 更新；本卡將 IBM volatility 分類為 MID，需由 runtime 驗證。"
+    },
+    "competition": {
+      "summary": "IBM 同時面對雲端平台、企業軟體與顧問競爭；其差異是把 Software、Consulting 與 Infrastructure 一起交付，但整合模式也使成長速度受到低成長服務業務拖累。",
+      "peers": [
+        {
+          "name": "Microsoft",
+          "position": "企業雲端與 AI 平台競爭者",
+          "comparison": "IBM 的差異在混合雲、Red Hat 與主機整合；IBM FY2025 Software 毛利率 83.5%，但 Consulting 全年僅增 2%。"
+        },
+        {
+          "name": "Oracle",
+          "position": "企業資料庫與雲端基礎設施競爭者",
+          "comparison": "IBM 以 Red Hat、watsonx 與 Consulting 提供跨環境整合，FY2025 生成式 AI book of business 已超過 125 億美元。"
+        },
+        {
+          "name": "Accenture",
+          "position": "企業顧問與數位轉型競爭者",
+          "comparison": "IBM 除顧問外還擁有 Software 與 Infrastructure；FY2025 Consulting 營收 210.55 億美元、僅年增 2%，是需改善的部分。"
+        }
+      ],
+      "conclusion": "IBM 的護城河是混合雲與關鍵工作負載整合，但估值溢價能否成立取決於 Software 維持雙位數成長，而不是只靠主機週期。"
+    },
+    "valuation_and_timing": {
+      "valuation_view": "IBM 使用 repo 既有 ENTERPRISE_SOFTWARE_SAAS Anchor 22 作為分類基準；即時 PE 與歷史區間需由 market_runtime/M7 生成，本卡不自行填值。",
+      "buy_strategy": "先要求 M7 以官方 EPS history、Anchor 22 與 runtime forward PE 完成估值，再決定加重比例；在 forward EPS 尚未治理前不以模型 fair price 作唯一依據。",
+      "sweet_zone": "明確條件為 M7 forward PE 不高於既有 Anchor 22，且 Software 年增維持至少 10%；價格數值由 runtime 生成。",
+      "technical_view": {
+        "mid_trend": "由 market_runtime 的 6 月與 12 月報酬判定；研究卡不自行製造技術數值。",
+        "short_term": "由 market_runtime 的 1 週與 1 月報酬判定；加入 universe 後由每日流程自然生成。",
+        "structure": "基本面結構偏正面：FY2025 Software 年增 11%、全公司營收年增 8%、FCF 增加約 20 億美元。",
+        "conclusion": "Timing 先列觀察；完成 runtime 與 M7 重建後，再依 Anchor 22 與市場資料決定加權。"
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "core",
+      "reason": "IBM FY2025 營收 675.35 億美元、Software 年增 11%、FCF 147.34 億美元，具核心池需要的規模與現金流；但加重比例仍應受 forward EPS coverage 約束。",
+      "upgrade_condition": [
+        "Software 年增維持至少 10%，且生成式 AI book of business 能持續轉換為收入。",
+        "補齊受治理的 forward EPS 後，M7 valuation 不高於 ENTERPRISE_SOFTWARE_SAAS Anchor 22。"
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "FY2025 Consulting 營收僅年增 2%，若企業支出放緩，整體成長可能再次低於 Software。",
+        "FY2025 年底總債務 613 億美元，較 2024 年底增加 63 億美元，併購與資本配置需持續追蹤。",
+        "2022、2024 的 GAAP EPS 受退休金結算影響，2025 EPS 亦含稅務利益，跨年回歸需標示可比性風險。"
+      ],
+      "opportunity": [
+        "FY2025 生成式 AI book of business 超過 125 億美元，若轉換為 Software revenue，可支援更高品質的成長。",
+        "FY2025 Software 營收年增 11%，其中第四季 Automation 年增 18%、Data 年增 22%，高毛利組合仍在擴張。"
+      ]
+    },
+    "final_view": "IBM 適合作為繼 SNPS 後逐步加重的 core stock：FY2025 Software 年增 11%、FCF 147.34 億美元、AI book of business 超過 125 億美元。建議先完成 runtime/M7 重建並補治理後 forward EPS，再決定實際加權。",
+    "quality_check": {
+      "completeness": 9.2,
+      "specificity": 9.1,
+      "data_support": 9.2,
+      "decision_usefulness": 9.0,
+      "fcn_alignment": 9.0,
+      "total_score": 9.1,
+      "fail_reasons": [
+        "Forward EPS 尚無受治理的 analyst-consensus source，因此 M7 engine_ready_v3 暫為 false。",
+        "即時 PE、市值、beta 與技術數值留給 runtime 生成，未在研究卡自行估算。"
+      ]
+    }
   }
 }

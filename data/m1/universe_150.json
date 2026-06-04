@@ -2058,6 +2058,21 @@
     "category_sub": "CRYPTO_MINERS",
     "Anchor": 20,
     "volatility": "HIGH"
+  },
+  {
+    "symbol": "IBM",
+    "category": "core",
+    "sector": "SOFTWARE",
+    "style": [
+      "enterprise_software",
+      "hybrid_cloud",
+      "ai",
+      "cashflow"
+    ],
+    "type": "STOCK",
+    "category_main": "CORE",
+    "category_sub": "ENTERPRISE_SOFTWARE_SAAS",
+    "Anchor": 22,
+    "volatility": "MID"
   }
 ]
-
