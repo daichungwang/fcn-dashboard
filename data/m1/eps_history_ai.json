@@ -5770,12 +5770,19 @@
           "fiscal_year": 2025,
           "eps": 11.14
         }
-      ],
-      "eps_forward": [],
-      "quality_flag": [
-        "official_ibm_results",
-        "continuing_operations",
-        "pension_and_tax_items_affect_comparability"
+       "eps_forward": [
+        {
+          "fiscal_year": 2025,
+          "eps_estimate": 12.0
+        },
+        {
+          "fiscal_year": 2026,
+          "eps_estimate": 12.43
+        },
+        {
+          "fiscal_year": 2027,
+          "eps_estimate": 13.42
+        }
       ],
       "source_note": "IBM official full-year results: 2021-2025 GAAP diluted EPS from continuing operations. Forward EPS intentionally not populated without a governed analyst-consensus source.",
       "eps_current": {
