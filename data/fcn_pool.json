@@ -3778,6 +3778,55 @@
   }
 },
   {
+  "date": "2026-06-03",
+  "fcn_id": "FCN513P 富邦",
+  "basket": [
+    "AMD",
+    "ARM",
+    "SMH"
+  ],
+  "tenor": 6,
+  "rate": 22.35,
+  "autocall": 100,
+  "strike": 60,
+  "ki": 45,
+  "eki": true,
+  "bank": "法國巴黎銀行",
+  "has_position": true,
+  "amt": 10000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-06-03T16:00",
+  "entry_time": "2026-06-03T16:00",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "AMD": 536.5034,
+    "ARM": 396.801,
+    "SMH": 633.6742
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "AMD": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SMH": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
   "date": "2026-05-29",
   "fcn_id": "FCN269P 富邦",
   "basket": [
