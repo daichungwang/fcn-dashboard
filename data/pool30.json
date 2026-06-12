@@ -6,6 +6,7 @@
   { "symbol": "MU", "name": "Micron", "sector": "AI_SEMI", "subsector": "MEMORY", "category": "core" },
   { "symbol": "AMD", "name": "AMD", "sector": "AI_SEMI", "subsector": "CPU_GPU", "category": "growth" },
   { "symbol": "MRVL", "name": "Marvell", "sector": "AI_SEMI", "subsector": "NETWORKING", "category": "growth" },
+  { "symbol": "QCOM", "name": "Qualcomm", "sector": "AI_SEMI", "subsector": "EDGE_AI_CONNECTIVITY", "category": "core" },
   { "symbol": "CRDO", "name": "Credo", "sector": "AI_SEMI", "subsector": "CONNECTIVITY", "category": "speculative" },
   { "symbol": "ALAB", "name": "Astera Labs", "sector": "AI_SEMI", "subsector": "CONNECTIVITY", "category": "speculative" },
   { "symbol": "SNPS", "name": "Synopsys", "sector": "AI_SEMI", "subsector": "EDA_SOFTWARE", "category": "core" },
