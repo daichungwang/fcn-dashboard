@@ -1,201 +1,247 @@
 {
-  "generated_at": "2026-06-12T09:45:32.900Z",
+  "generated_at": "2026-06-12T11:26:27.625922+00:00",
   "source": "scripts/mm/build_item8_stock_allocation_health.py",
   "version": "v1_item8_stock_allocation_health",
   "summary": {
-    "total_worst_of_exposure": 4410000,
+    "total_worst_of_exposure": 8110000.0,
     "overall_health": "Risk",
     "top_warnings": [
       {
         "severity": "Risk",
         "code": "AI_SEMI_CONCENTRATION_HIGH",
-        "message": "AI_SEMI theme > 45% -> Theme Concentration High",
-        "weight": 51.7
+        "message": "AI_SEMI theme > 45% → Theme Concentration High",
+        "weight": 54.5
       }
     ]
   },
   "category_allocation": [
     {
       "name": "Core",
-      "exposure": 1760000,
-      "weight": 39.91
+      "exposure": 3730000.0,
+      "weight": 45.99
     },
     {
       "name": "Growth",
-      "exposure": 1250000,
-      "weight": 28.34
+      "exposure": 2320000.0,
+      "weight": 28.61
     },
     {
       "name": "Defensive / Income",
-      "exposure": 540000,
-      "weight": 12.24
+      "exposure": 1030000.0,
+      "weight": 12.7
     },
     {
       "name": "Speculative",
-      "exposure": 150000,
-      "weight": 3.4
+      "exposure": 170000.0,
+      "weight": 2.1
     },
     {
       "name": "ETF",
-      "exposure": 710000,
-      "weight": 16.1
+      "exposure": 670000.0,
+      "weight": 8.26
     }
   ],
   "theme_allocation": [
     {
       "name": "AI_SEMI",
-      "exposure": 2280000,
-      "weight": 51.7
+      "exposure": 4420000.0,
+      "weight": 54.5
     },
     {
       "name": "AI_APPLICATION",
-      "exposure": 750000,
-      "weight": 17.01
+      "exposure": 1650000.0,
+      "weight": 20.35
     },
     {
       "name": "ETF",
-      "exposure": 710000,
-      "weight": 16.1
-    },
-    {
-      "name": "CONSUMER",
-      "exposure": 300000,
-      "weight": 6.8
+      "exposure": 670000.0,
+      "weight": 8.26
     },
     {
       "name": "HEALTHCARE",
-      "exposure": 200000,
-      "weight": 4.54
+      "exposure": 500000.0,
+      "weight": 6.17
+    },
+    {
+      "name": "CONSUMER",
+      "exposure": 300000.0,
+      "weight": 3.7
+    },
+    {
+      "name": "Unknown",
+      "exposure": 190000.0,
+      "weight": 2.34
     },
     {
       "name": "TRAVEL",
-      "exposure": 100000,
-      "weight": 2.27
+      "exposure": 160000.0,
+      "weight": 1.97
     },
     {
-      "name": "FINANCIAL",
-      "exposure": 40000,
-      "weight": 0.91
+      "name": "AI_INFRA",
+      "exposure": 120000.0,
+      "weight": 1.48
     },
     {
       "name": "PLATFORM",
-      "exposure": 30000,
-      "weight": 0.68
+      "exposure": 70000.0,
+      "weight": 0.86
+    },
+    {
+      "name": "FINANCIAL",
+      "exposure": 30000.0,
+      "weight": 0.37
     }
   ],
   "single_name_concentration": [
     {
-      "symbol": "NVDA",
-      "exposure": 650000,
-      "weight": 14.74,
+      "symbol": "TSM",
+      "exposure": 1070000.0,
+      "weight": 13.19,
       "category": "Core",
       "theme": "AI_SEMI",
-      "deal_count": 18,
+      "deal_count": 28,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "NVDA",
+      "exposure": 1000000.0,
+      "weight": 12.33,
+      "category": "Core",
+      "theme": "AI_SEMI",
+      "deal_count": 29,
       "concentration": "Normal"
     },
     {
       "symbol": "AVGO",
-      "exposure": 400000,
-      "weight": 9.07,
+      "exposure": 550000.0,
+      "weight": 6.78,
       "category": "Core",
       "theme": "AI_SEMI",
-      "deal_count": 11,
-      "concentration": "Normal"
-    },
-    {
-      "symbol": "TSM",
-      "exposure": 380000,
-      "weight": 8.62,
-      "category": "Core",
-      "theme": "AI_SEMI",
-      "deal_count": 14,
+      "deal_count": 16,
       "concentration": "Normal"
     },
     {
       "symbol": "SMH",
-      "exposure": 370000,
-      "weight": 8.39,
+      "exposure": 530000.0,
+      "weight": 6.54,
       "category": "ETF",
       "theme": "ETF",
+      "deal_count": 9,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "UNH",
+      "exposure": 500000.0,
+      "weight": 6.17,
+      "category": "Defensive / Income",
+      "theme": "HEALTHCARE",
       "deal_count": 5,
       "concentration": "Normal"
     },
     {
-      "symbol": "MRVL",
-      "exposure": 330000,
-      "weight": 7.48,
+      "symbol": "AMD",
+      "exposure": 450000.0,
+      "weight": 5.55,
       "category": "Growth",
       "theme": "AI_SEMI",
-      "deal_count": 5,
+      "deal_count": 21,
       "concentration": "Normal"
     },
     {
       "symbol": "MU",
-      "exposure": 300000,
-      "weight": 6.8,
+      "exposure": 400000.0,
+      "weight": 4.93,
       "category": "Core",
       "theme": "AI_SEMI",
-      "deal_count": 13,
+      "deal_count": 19,
       "concentration": "Normal"
     },
     {
-      "symbol": "QQQ",
-      "exposure": 280000,
-      "weight": 6.35,
-      "category": "ETF",
-      "theme": "ETF",
-      "deal_count": 4,
-      "concentration": "Normal"
-    },
-    {
-      "symbol": "TSLA",
-      "exposure": 230000,
-      "weight": 5.22,
+      "symbol": "MRVL",
+      "exposure": 390000.0,
+      "weight": 4.81,
       "category": "Growth",
-      "theme": "AI_APPLICATION",
-      "deal_count": 13,
+      "theme": "AI_SEMI",
+      "deal_count": 7,
       "concentration": "Normal"
     },
     {
       "symbol": "ARM",
-      "exposure": 210000,
-      "weight": 4.76,
+      "exposure": 380000.0,
+      "weight": 4.69,
+      "category": "Growth",
+      "theme": "AI_APPLICATION",
+      "deal_count": 11,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "PLTR",
+      "exposure": 330000.0,
+      "weight": 4.07,
+      "category": "Growth",
+      "theme": "AI_APPLICATION",
+      "deal_count": 12,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "SNPS",
+      "exposure": 330000.0,
+      "weight": 4.07,
+      "category": "Core",
+      "theme": "AI_SEMI",
+      "deal_count": 5,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "TSLA",
+      "exposure": 320000.0,
+      "weight": 3.95,
+      "category": "Growth",
+      "theme": "AI_APPLICATION",
+      "deal_count": 16,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "ORCL",
+      "exposure": 220000.0,
+      "weight": 2.71,
       "category": "Growth",
       "theme": "AI_APPLICATION",
       "deal_count": 6,
       "concentration": "Normal"
     },
     {
-      "symbol": "UNH",
-      "exposure": 200000,
-      "weight": 4.54,
+      "symbol": "IBM",
+      "exposure": 200000.0,
+      "weight": 2.47,
+      "category": "Core",
+      "theme": "AI_APPLICATION",
+      "deal_count": 3,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "INTC",
+      "exposure": 170000.0,
+      "weight": 2.1,
       "category": "Defensive / Income",
-      "theme": "HEALTHCARE",
+      "theme": "AI_SEMI",
+      "deal_count": 7,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "AMZN",
+      "exposure": 130000.0,
+      "weight": 1.6,
+      "category": "Core",
+      "theme": "AI_APPLICATION",
       "deal_count": 2,
       "concentration": "Normal"
     },
     {
-      "symbol": "PLTR",
-      "exposure": 190000,
-      "weight": 4.31,
-      "category": "Growth",
-      "theme": "AI_APPLICATION",
-      "deal_count": 11,
-      "concentration": "Normal"
-    },
-    {
-      "symbol": "AMD",
-      "exposure": 170000,
-      "weight": 3.85,
-      "category": "Growth",
-      "theme": "AI_SEMI",
-      "deal_count": 10,
-      "concentration": "Normal"
-    },
-    {
       "symbol": "CCL",
-      "exposure": 100000,
-      "weight": 2.27,
+      "exposure": 100000.0,
+      "weight": 1.23,
       "category": "Defensive / Income",
       "theme": "TRAVEL",
       "deal_count": 1,
@@ -203,8 +249,8 @@
     },
     {
       "symbol": "EL",
-      "exposure": 100000,
-      "weight": 2.27,
+      "exposure": 100000.0,
+      "weight": 1.23,
       "category": "Defensive / Income",
       "theme": "CONSUMER",
       "deal_count": 1,
@@ -212,89 +258,152 @@
     },
     {
       "symbol": "NKE",
-      "exposure": 100000,
-      "weight": 2.27,
+      "exposure": 100000.0,
+      "weight": 1.23,
       "category": "Speculative",
       "theme": "CONSUMER",
       "deal_count": 1,
       "concentration": "Normal"
     },
     {
+      "symbol": "SVGO",
+      "exposure": 100000.0,
+      "weight": 1.23,
+      "category": "Unknown",
+      "theme": "Unknown",
+      "deal_count": 2,
+      "concentration": "Normal"
+    },
+    {
       "symbol": "TGT",
-      "exposure": 100000,
-      "weight": 2.27,
+      "exposure": 100000.0,
+      "weight": 1.23,
       "category": "Defensive / Income",
       "theme": "CONSUMER",
       "deal_count": 1,
       "concentration": "Normal"
     },
     {
+      "symbol": "QQQ",
+      "exposure": 80000.0,
+      "weight": 0.99,
+      "category": "ETF",
+      "theme": "ETF",
+      "deal_count": 2,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "GOOG",
+      "exposure": 70000.0,
+      "weight": 0.86,
+      "category": "Growth",
+      "theme": "AI_APPLICATION",
+      "deal_count": 3,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "META",
+      "exposure": 70000.0,
+      "weight": 0.86,
+      "category": "Growth",
+      "theme": "PLATFORM",
+      "deal_count": 2,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "AAL",
+      "exposure": 60000.0,
+      "weight": 0.74,
+      "category": "Defensive / Income",
+      "theme": "TRAVEL",
+      "deal_count": 1,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "COHR",
+      "exposure": 60000.0,
+      "weight": 0.74,
+      "category": "Growth",
+      "theme": "AI_INFRA",
+      "deal_count": 3,
+      "concentration": "Normal"
+    },
+    {
       "symbol": "LQD",
-      "exposure": 60000,
-      "weight": 1.36,
+      "exposure": 60000.0,
+      "weight": 0.74,
       "category": "ETF",
       "theme": "ETF",
       "deal_count": 1,
       "concentration": "Normal"
     },
     {
-      "symbol": "ORCL",
-      "exposure": 50000,
-      "weight": 1.13,
-      "category": "Growth",
-      "theme": "AI_APPLICATION",
-      "deal_count": 2,
-      "concentration": "Normal"
-    },
-    {
-      "symbol": "COIN",
-      "exposure": 40000,
-      "weight": 0.91,
-      "category": "Speculative",
-      "theme": "FINANCIAL",
-      "deal_count": 3,
-      "concentration": "Normal"
-    },
-    {
-      "symbol": "GOOG",
-      "exposure": 40000,
-      "weight": 0.91,
-      "category": "Growth",
-      "theme": "AI_APPLICATION",
-      "deal_count": 2,
-      "concentration": "Normal"
-    },
-    {
-      "symbol": "INTC",
-      "exposure": 40000,
-      "weight": 0.91,
-      "category": "Defensive / Income",
+      "symbol": "QCOM",
+      "exposure": 50000.0,
+      "weight": 0.62,
+      "category": "Core",
       "theme": "AI_SEMI",
       "deal_count": 2,
       "concentration": "Normal"
     },
     {
-      "symbol": "AMZN",
-      "exposure": 30000,
-      "weight": 0.68,
-      "category": "Core",
-      "theme": "AI_APPLICATION",
+      "symbol": "COIN",
+      "exposure": 30000.0,
+      "weight": 0.37,
+      "category": "Speculative",
+      "theme": "FINANCIAL",
+      "deal_count": 2,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "GLW",
+      "exposure": 30000.0,
+      "weight": 0.37,
+      "category": "Growth",
+      "theme": "AI_INFRA",
       "deal_count": 1,
       "concentration": "Normal"
     },
     {
-      "symbol": "META",
-      "exposure": 30000,
-      "weight": 0.68,
-      "category": "Growth",
-      "theme": "PLATFORM",
+      "symbol": "LITE",
+      "exposure": 30000.0,
+      "weight": 0.37,
+      "category": "Speculative",
+      "theme": "AI_INFRA",
+      "deal_count": 1,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "SIMO",
+      "exposure": 30000.0,
+      "weight": 0.37,
+      "category": "Unknown",
+      "theme": "Unknown",
+      "deal_count": 1,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "SNDK",
+      "exposure": 30000.0,
+      "weight": 0.37,
+      "category": "Unknown",
+      "theme": "Unknown",
+      "deal_count": 1,
+      "concentration": "Normal"
+    },
+    {
+      "symbol": "SOXX",
+      "exposure": 30000.0,
+      "weight": 0.37,
+      "category": "Unknown",
+      "theme": "Unknown",
       "deal_count": 1,
       "concentration": "Normal"
     },
     {
       "symbol": "ALAB",
-      "exposure": 10000,
-      "weight": 0.23,
+      "exposure": 10000.0,
+      "weight": 0.12,
       "category": "Speculative",
       "theme": "AI_SEMI",
       "deal_count": 1,
@@ -303,16 +412,21 @@
   ],
   "market_mainstream_gap": {
     "mainstream_invested": [
+      "AAL",
       "ALAB",
       "AMD",
       "AMZN",
       "ARM",
       "AVGO",
       "CCL",
+      "COHR",
       "COIN",
       "EL",
+      "GLW",
       "GOOG",
+      "IBM",
       "INTC",
+      "LITE",
       "LQD",
       "META",
       "MRVL",
@@ -321,15 +435,16 @@
       "NVDA",
       "ORCL",
       "PLTR",
+      "QCOM",
       "QQQ",
       "SMH",
+      "SNPS",
       "TGT",
       "TSLA",
       "TSM",
       "UNH"
     ],
     "mainstream_not_invested": [
-      "AAL",
       "AAPL",
       "AMAT",
       "ANET",
@@ -340,32 +455,32 @@
       "CEG",
       "CIEN",
       "CLSK",
-      "COHR",
       "CORZ",
       "COST",
       "CRDO",
       "ETN",
-      "GLW",
       "HIVE",
-      "IBM",
       "IREN",
-      "LITE",
       "LVS",
       "MSFT",
       "ON",
       "PWR",
       "REGN",
       "RIOT",
-      "SNPS",
       "SOFI",
       "VRT"
     ],
-    "invested_non_mainstream": [],
+    "invested_non_mainstream": [
+      "SIMO",
+      "SNDK",
+      "SOXX",
+      "SVGO"
+    ],
     "speculative_exposure": [
       {
         "symbol": "NKE",
-        "exposure": 100000,
-        "weight": 2.27,
+        "exposure": 100000.0,
+        "weight": 1.23,
         "category": "Speculative",
         "theme": "CONSUMER",
         "deal_count": 1,
@@ -373,17 +488,26 @@
       },
       {
         "symbol": "COIN",
-        "exposure": 40000,
-        "weight": 0.91,
+        "exposure": 30000.0,
+        "weight": 0.37,
         "category": "Speculative",
         "theme": "FINANCIAL",
-        "deal_count": 3,
+        "deal_count": 2,
+        "concentration": "Normal"
+      },
+      {
+        "symbol": "LITE",
+        "exposure": 30000.0,
+        "weight": 0.37,
+        "category": "Speculative",
+        "theme": "AI_INFRA",
+        "deal_count": 1,
         "concentration": "Normal"
       },
       {
         "symbol": "ALAB",
-        "exposure": 10000,
-        "weight": 0.23,
+        "exposure": 10000.0,
+        "weight": 0.12,
         "category": "Speculative",
         "theme": "AI_SEMI",
         "deal_count": 1,
@@ -397,10 +521,10 @@
       "score": 93.26,
       "category": "Core",
       "theme": "AI_INFRA",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 9.63,
-      "m7_score": 10,
+      "m7_score": 10.0,
       "reason": [
         "pool30 symbol",
         "M1 >= 7 (9.63)",
@@ -413,10 +537,10 @@
       "score": 92.62,
       "category": "Growth",
       "theme": "AI_POWER",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 9.31,
-      "m7_score": 10,
+      "m7_score": 10.0,
       "reason": [
         "pool30 symbol",
         "M1 >= 7 (9.31)",
@@ -429,7 +553,7 @@
       "score": 92.5,
       "category": "Core",
       "theme": "AI_INFRA",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 9.71,
       "m7_score": 9.54,
@@ -445,7 +569,7 @@
       "score": 91.18,
       "category": "Defensive / Income",
       "theme": "AI_POWER",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 9.26,
       "m7_score": 9.33,
@@ -461,7 +585,7 @@
       "score": 90.42,
       "category": "Growth",
       "theme": "AI_INFRA",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 8.68,
       "m7_score": 9.53,
@@ -477,10 +601,10 @@
       "score": 89.96,
       "category": "Speculative",
       "theme": "AI_HOSTING",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 7.98,
-      "m7_score": 10,
+      "m7_score": 10.0,
       "reason": [
         "pool30 symbol",
         "M1 >= 7 (7.98)",
@@ -493,10 +617,10 @@
       "score": 89.76,
       "category": "Speculative",
       "theme": "AI_HOSTING",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 7.88,
-      "m7_score": 10,
+      "m7_score": 10.0,
       "reason": [
         "pool30 symbol",
         "M1 >= 7 (7.88)",
@@ -509,7 +633,7 @@
       "score": 89.56,
       "category": "Core",
       "theme": "AI_POWER",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 9.39,
       "m7_score": 8.39,
@@ -525,7 +649,7 @@
       "score": 89.54,
       "category": "Core",
       "theme": "PLATFORM",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 8.32,
       "m7_score": 9.45,
@@ -537,27 +661,11 @@
       ]
     },
     {
-      "symbol": "COHR",
-      "score": 88.7,
-      "category": "Growth",
-      "theme": "AI_INFRA",
-      "invested": 0,
-      "available": 1,
-      "m1_score": 8.67,
-      "m7_score": 8.68,
-      "reason": [
-        "pool30 symbol",
-        "M1 >= 7 (8.67)",
-        "M7 >= 7 (8.68)",
-        "not currently invested"
-      ]
-    },
-    {
       "symbol": "BE",
       "score": 88.08,
       "category": "Speculative",
       "theme": "AI_POWER",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 7.73,
       "m7_score": 9.31,
@@ -573,7 +681,7 @@
       "score": 88.02,
       "category": "Growth",
       "theme": "Unknown",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 7.98,
       "m7_score": 9.03,
@@ -589,7 +697,7 @@
       "score": 87.52,
       "category": "Core",
       "theme": "AI_APPLICATION",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 9.38,
       "m7_score": 7.38,
@@ -601,27 +709,11 @@
       ]
     },
     {
-      "symbol": "GLW",
-      "score": 86.14,
-      "category": "Growth",
-      "theme": "AI_INFRA",
-      "invested": 0,
-      "available": 1,
-      "m1_score": 7.42,
-      "m7_score": 8.65,
-      "reason": [
-        "pool30 symbol",
-        "M1 >= 7 (7.42)",
-        "M7 >= 7 (8.65)",
-        "not currently invested"
-      ]
-    },
-    {
       "symbol": "REGN",
       "score": 84.78,
       "category": "Defensive / Income",
       "theme": "HEALTHCARE",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 7.85,
       "m7_score": 7.54,
@@ -633,27 +725,11 @@
       ]
     },
     {
-      "symbol": "LITE",
-      "score": 84.66,
-      "category": "Speculative",
-      "theme": "AI_INFRA",
-      "invested": 0,
-      "available": 1,
-      "m1_score": 7.8,
-      "m7_score": 7.53,
-      "reason": [
-        "pool30 symbol",
-        "M1 >= 7 (7.80)",
-        "M7 >= 7 (7.53)",
-        "not currently invested"
-      ]
-    },
-    {
       "symbol": "GOOG",
       "score": 83.78,
       "category": "Growth",
       "theme": "AI_APPLICATION",
-      "invested": 40000,
+      "invested": 70000.0,
       "available": 0,
       "m1_score": 9.23,
       "m7_score": 9.66,
@@ -668,7 +744,7 @@
       "score": 83.52,
       "category": "Speculative",
       "theme": "AI_HOSTING",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 7.33,
       "m7_score": 7.43,
@@ -684,7 +760,7 @@
       "score": 83.38,
       "category": "Core",
       "theme": "AI_SEMI",
-      "invested": 0,
+      "invested": 0.0,
       "available": 1,
       "m1_score": 9.05,
       "m7_score": 9.64,
@@ -697,20 +773,63 @@
       ]
     },
     {
-      "symbol": "SNPS",
-      "score": 82.08,
-      "category": "Core",
-      "theme": "AI_SEMI",
-      "invested": 0,
-      "available": 1,
-      "m1_score": 9.68,
-      "m7_score": 8.36,
+      "symbol": "ORCL",
+      "score": 81.18,
+      "category": "Growth",
+      "theme": "AI_APPLICATION",
+      "invested": 220000.0,
+      "available": 0,
+      "m1_score": 9.19,
+      "m7_score": 8.4,
       "reason": [
         "pool30 symbol",
-        "M1 >= 7 (9.68)",
-        "M7 >= 7 (8.36)",
-        "not currently invested",
-        "AI_SEMI theme overweight penalty"
+        "M1 >= 7 (9.19)",
+        "M7 >= 7 (8.40)"
+      ]
+    },
+    {
+      "symbol": "SMH",
+      "score": 81.0,
+      "category": "ETF",
+      "theme": "ETF",
+      "invested": 530000.0,
+      "available": 0,
+      "m1_score": 7.5,
+      "m7_score": 10.0,
+      "reason": [
+        "pool30 symbol",
+        "M1 >= 7 (7.50)",
+        "M7 >= 7 (10.00)"
+      ]
+    },
+    {
+      "symbol": "COHR",
+      "score": 80.7,
+      "category": "Growth",
+      "theme": "AI_INFRA",
+      "invested": 60000.0,
+      "available": 0,
+      "m1_score": 8.67,
+      "m7_score": 8.68,
+      "reason": [
+        "pool30 symbol",
+        "M1 >= 7 (8.67)",
+        "M7 >= 7 (8.68)"
+      ]
+    },
+    {
+      "symbol": "CORZ",
+      "score": 79.42,
+      "category": "Speculative",
+      "theme": "AI_HOSTING",
+      "invested": 0.0,
+      "available": 1,
+      "m1_score": 6.75,
+      "m7_score": 9.96,
+      "reason": [
+        "pool30 symbol",
+        "M7 >= 7 (9.96)",
+        "not currently invested"
       ]
     }
   ]
