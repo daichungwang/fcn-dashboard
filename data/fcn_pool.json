@@ -3986,6 +3986,128 @@
   }
  },
   {
+  "date": "2026-06-10",
+  "fcn_id": "FCN675P 睿睿",
+  "basket": [
+    "MRVL",
+    "ARM",
+    "TSM",
+    "NVDA",
+    "SMH"
+  ],
+  "tenor": 7,
+  "rate": 25,
+  "autocall": 100,
+  "strike": 50.69,
+  "ki": 50.69,
+  "eki": true,
+  "bank": "NOMURA",
+  "has_position": true,
+  "amt": 20000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-06-10T11:29",
+  "entry_time": "2026-06-10T11:29",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "MRVL": 259.6193,
+    "ARM": 314.0709,
+    "TSM": 414.8417,
+    "NVDA": 202.9226,
+    "SMH": 579.7107
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "MRVL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SMH": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-06-10",
+  "fcn_id": "FCN675P 富邦",
+  "basket": [
+    "MRVL",
+    "ARM",
+    "TSM",
+    "NVDA",
+    "SMH"
+  ],
+  "tenor": 7,
+  "rate": 25,
+  "autocall": 100,
+  "strike": 50.69,
+  "ki": 50.69,
+  "eki": true,
+  "bank": "NOMURA",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-06-10T11:29",
+  "entry_time": "2026-06-10T11:29",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "MRVL": 259.6193,
+    "ARM": 314.0709,
+    "TSM": 414.8417,
+    "NVDA": 202.9226,
+    "SMH": 579.7107
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "MRVL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SMH": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
