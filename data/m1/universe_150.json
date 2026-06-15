@@ -2074,5 +2074,21 @@
     "category_sub": "ENTERPRISE_SOFTWARE_SAAS",
     "Anchor": 22,
     "volatility": "MID"
+  },
+  {
+    "symbol": "SPCX",
+    "category": "speculative",
+    "sector": "SPACE_INFRA",
+    "style": [
+      "spacex",
+      "space_infrastructure",
+      "starlink",
+      "high_beta"
+    ],
+    "type": "STOCK",
+    "category_main": "SPEC",
+    "category_sub": "INDUSTRIAL_CAPITAL_GOODS_LOGISTICS",
+    "Anchor": 18,
+    "volatility": "HIGH"
   }
 ]

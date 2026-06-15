@@ -219,6 +219,36 @@ def m7_lite_score(stock, rt):
     }
 
 
+def missing_runtime_candidate_row(stock):
+    sym = str(stock.get("symbol", "")).upper()
+    quality = quality_score(stock, {})
+    return {
+        "symbol": sym,
+        "category": stock.get("category", ""),
+        "sector": stock.get("sector", ""),
+        "style": stock.get("style", []),
+        "m7_lite_score": round(0.35 * 5.0 + 0.20 * quality, 2),
+        "valuation_score": 5.0,
+        "trend_score": None,
+        "quality_score": round(quality, 2),
+        "snapshot_score": None,
+        "mandatory_candidate": True,
+        "in_candidate_core_80": False,
+        "candidate_source": "mandatory_missing_runtime",
+        "ret_1d": None,
+        "ret_1w": None,
+        "ret_1m": None,
+        "ret_3m": None,
+        "ret_6m": None,
+        "ret_12m": None,
+        "volume_ratio": None,
+        "price_source": "unavailable",
+        "runtime_status": "missing",
+        "data_status": "pending",
+        "warning": "mandatory symbol included without market_runtime; price/return fields intentionally null"
+    }
+
+
 def main():
     with open(UNIVERSE_PATH, "r", encoding="utf-8") as f:
         universe = json.load(f)
@@ -243,6 +273,7 @@ def main():
             missing_runtime.append(sym)
             if sym in mandatory_symbols:
                 mandatory_missing_runtime.append(sym)
+                scored.append(missing_runtime_candidate_row(stock))
             continue
 
         s = m7_lite_score(stock, rt)

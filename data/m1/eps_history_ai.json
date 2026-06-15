@@ -41,7 +41,7 @@
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 24.0
+          "eps_estimate": 24
         },
         {
           "fiscal_year": 2026,
@@ -182,13 +182,13 @@
         },
         {
           "fiscal_year": 2024,
-          "eps": 42.0
+          "eps": 42
         }
       ],
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 45.0
+          "eps_estimate": 45
         },
         {
           "fiscal_year": 2026,
@@ -204,8 +204,8 @@
       ],
       "eps_current": {
         "latest_fiscal_year": 2024,
-        "latest_eps": 42.0,
-        "ttm_eps": 42.0
+        "latest_eps": 42,
+        "ttm_eps": 42
       },
       "data_quality": {
         "history_years": 6,
@@ -471,13 +471,13 @@
         },
         {
           "fiscal_year": 2023,
-          "eps": 12.0
+          "eps": 12
         }
       ],
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 12.0
+          "eps_estimate": 12
         },
         {
           "fiscal_year": 2026,
@@ -493,8 +493,8 @@
       ],
       "eps_current": {
         "latest_fiscal_year": 2023,
-        "latest_eps": 12.0,
-        "ttm_eps": 12.0
+        "latest_eps": 12,
+        "ttm_eps": 12
       },
       "data_quality": {
         "history_years": 5,
@@ -696,7 +696,7 @@
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 16.0
+          "eps_estimate": 16
         },
         {
           "fiscal_year": 2026,
@@ -774,7 +774,7 @@
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 7.0,
+          "eps_estimate": 7,
           "analyst_count": 35
         },
         {
@@ -1184,7 +1184,7 @@
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 6.0,
+          "eps_estimate": 6,
           "analyst_count": 22
         },
         {
@@ -1511,7 +1511,7 @@
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 18.0,
+          "eps_estimate": 18,
           "analyst_count": 30
         },
         {
@@ -1723,7 +1723,7 @@
       "eps_history": [
         {
           "fiscal_year": 2019,
-          "eps": 14.0
+          "eps": 14
         },
         {
           "fiscal_year": 2020,
@@ -1749,7 +1749,7 @@
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 32.0,
+          "eps_estimate": 32,
           "analyst_count": 26
         },
         {
@@ -1998,7 +1998,7 @@
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 13.0,
+          "eps_estimate": 13,
           "analyst_count": 25
         },
         {
@@ -2163,7 +2163,7 @@
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 6.0,
+          "eps_estimate": 6,
           "analyst_count": null
         },
         {
@@ -2977,7 +2977,7 @@
         },
         {
           "fiscal_year": 2026,
-          "eps_estimate": 8.0,
+          "eps_estimate": 8,
           "analyst_count": 26
         },
         {
@@ -3051,7 +3051,7 @@
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 8.0,
+          "eps_estimate": 8,
           "analyst_count": 28
         },
         {
@@ -3813,15 +3813,15 @@
       "eps_history": [
         {
           "fiscal_year": 2019,
-          "eps": 6.0
+          "eps": 6
         },
         {
           "fiscal_year": 2020,
-          "eps": 4.0
+          "eps": 4
         },
         {
           "fiscal_year": 2021,
-          "eps": 3.0
+          "eps": 3
         },
         {
           "fiscal_year": 2022,
@@ -4011,7 +4011,7 @@
       "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 3.0,
+          "eps_estimate": 3,
           "analyst_count": 16
         },
         {
@@ -4021,7 +4021,7 @@
         },
         {
           "fiscal_year": 2027,
-          "eps_estimate": 4.0,
+          "eps_estimate": 4,
           "analyst_count": 12
         }
       ],
@@ -4248,7 +4248,7 @@
         },
         {
           "fiscal_year": 2022,
-          "eps": 6.0
+          "eps": 6
         },
         {
           "fiscal_year": 2023,
@@ -4319,7 +4319,7 @@
       "eps_history": [
         {
           "fiscal_year": 2021,
-          "eps": 2.0
+          "eps": 2
         },
         {
           "fiscal_year": 2022,
@@ -4335,7 +4335,7 @@
         },
         {
           "fiscal_year": 2025,
-          "eps": 9.0
+          "eps": 9
         }
       ],
       "eps_forward": [
@@ -4351,7 +4351,7 @@
         },
         {
           "fiscal_year": 2028,
-          "eps_estimate": 12.0,
+          "eps_estimate": 12,
           "analyst_count": 10
         }
       ],
@@ -4363,8 +4363,8 @@
       "source_note": "Pool30 v1 backfill estimate; verify before production.",
       "eps_current": {
         "latest_fiscal_year": 2025,
-        "latest_eps": 9.0,
-        "ttm_eps": 9.0
+        "latest_eps": 9,
+        "ttm_eps": 9
       },
       "data_quality": {
         "history_years": 5,
@@ -4780,7 +4780,7 @@
         },
         {
           "fiscal_year": 2027,
-          "eps_estimate": 1.0,
+          "eps_estimate": 1,
           "analyst_count": 6
         }
       ],
@@ -4841,7 +4841,7 @@
         },
         {
           "fiscal_year": 2022,
-          "eps": -1.0
+          "eps": -1
         },
         {
           "fiscal_year": 2023,
@@ -5290,7 +5290,7 @@
         },
         {
           "fiscal_year": 2027,
-          "eps_estimate": 31.0,
+          "eps_estimate": 31,
           "analyst_count": 20
         }
       ],
@@ -5355,11 +5355,11 @@
         },
         {
           "fiscal_year": 2023,
-          "eps": 40.0
+          "eps": 40
         },
         {
           "fiscal_year": 2024,
-          "eps": 42.0
+          "eps": 42
         }
       ],
       "eps_forward": [
@@ -5370,12 +5370,12 @@
         },
         {
           "fiscal_year": 2026,
-          "eps_estimate": 48.0,
+          "eps_estimate": 48,
           "analyst_count": 18
         },
         {
           "fiscal_year": 2027,
-          "eps_estimate": 52.0,
+          "eps_estimate": 52,
           "analyst_count": 16
         }
       ],
@@ -5386,8 +5386,8 @@
       "source_note": "Pool30 v1 backfill estimate; verify before production.",
       "eps_current": {
         "latest_fiscal_year": 2024,
-        "latest_eps": 42.0,
-        "ttm_eps": 42.0
+        "latest_eps": 42,
+        "ttm_eps": 42
       },
       "data_quality": {
         "history_years": 6,
@@ -5455,7 +5455,7 @@
         },
         {
           "fiscal_year": 2026,
-          "eps_estimate": 3.0,
+          "eps_estimate": 3,
           "analyst_count": 16
         },
         {
@@ -5770,10 +5770,11 @@
           "fiscal_year": 2025,
           "eps": 11.14
         }
-       "eps_forward": [
+      ],
+      "eps_forward": [
         {
           "fiscal_year": 2025,
-          "eps_estimate": 12.0
+          "eps_estimate": 12
         },
         {
           "fiscal_year": 2026,
@@ -5812,13 +5813,56 @@
         "valid_forward_year_list": [],
         "reason": "Official history ready; governed forward EPS pending."
       }
+    },
+    "SPCX": {
+      "symbol": "SPCX",
+      "name": "Space Exploration Technologies Corp.",
+      "type": "STOCK",
+      "skip_eps": false,
+      "eps_basis": "pending_governed_filing_source",
+      "eps_history": [],
+      "eps_forward": [],
+      "quality_flag": [
+        "ipo_stage",
+        "governed_eps_source_pending",
+        "do_not_infer_financials"
+      ],
+      "source_note": "SPCX / SpaceX EPS history and forward EPS are intentionally pending until a governed filing or analyst-consensus source is mapped into the project.",
+      "eps_current": {
+        "latest_fiscal_year": null,
+        "latest_eps": null,
+        "ttm_eps": null
+      },
+      "data_quality": {
+        "history_years": 0,
+        "has_forward_eps": false,
+        "forward_years_with_analyst_count_ge_5": 0,
+        "confidence": "low",
+        "warning": [
+          "No governed EPS history source has been supplied.",
+          "Forward EPS remains pending; do not use ungoverned IPO/news estimates for scoring."
+        ],
+        "forward_years_with_analyst_count_ge_5_strict": 0,
+        "history_years_strict": 0
+      },
+      "engine_flags": {
+        "use_in_competition": false,
+        "sandbox_ready": false,
+        "engine_ready_v3": false,
+        "quality_level": "PENDING",
+        "history_years": 0,
+        "valid_forward_years": 0,
+        "valid_forward_year_list": [],
+        "reason": "SPCX is onboarded for Pool30 visibility; EPS scoring stays pending until governed data exists."
+      }
     }
   },
   "summary": {
-    "total_symbols": 71,
+    "total_symbols": 72,
     "pool30_backfilled_symbols": [
       "SNPS",
       "IBM",
+      "SPCX",
       "ALAB",
       "ANET",
       "GLW",
@@ -5851,7 +5895,8 @@
       "SNPS uses user-provided EPS 2012-2025 and 2026/2027 forward estimates.",
       "Several Pool30 records are v1 backfill estimates and should be verified before production scoring.",
       "ETF records use skip_eps=true.",
-      "IBM history uses official IBM full-year results; forward EPS is intentionally pending."
+      "IBM history uses official IBM full-year results; forward EPS is intentionally pending.",
+      "SPCX / SpaceX EPS history and forward EPS are pending; no financial values were inferred."
     ]
   }
 }

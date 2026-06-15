@@ -1,37 +1,85 @@
 {
   "summary": {
-    "total_symbols": 33,
+    "total_symbols": 157,
     "symbols_fully_calculable": 0,
     "symbols_partial": 33,
-    "symbols_blocked": 0,
+    "symbols_blocked": 124,
     "most_common_missing_fields": [
       {
-        "field": "price_ref_10y",
-        "count": 66
-      },
-      {
-        "field": "price_ref_5y",
-        "count": 66
-      },
-      {
-        "field": "price_ref_3y",
-        "count": 66
+        "field": "ret_d1",
+        "count": 157
       },
       {
         "field": "ret_d2",
-        "count": 33
+        "count": 157
       },
       {
         "field": "ret_d3",
-        "count": 33
+        "count": 157
       },
       {
         "field": "ret_d4",
-        "count": 33
+        "count": 157
       },
       {
         "field": "ret_d5",
-        "count": 33
+        "count": 157
+      },
+      {
+        "field": "forward_pe",
+        "count": 124
+      },
+      {
+        "field": "price_now",
+        "count": 12
+      },
+      {
+        "field": "price_ref_12m",
+        "count": 10
+      },
+      {
+        "field": "price_ref_10y",
+        "count": 8
+      },
+      {
+        "field": "price_ref_5y",
+        "count": 8
+      },
+      {
+        "field": "price_ref_3y",
+        "count": 8
+      },
+      {
+        "field": "price_ref_6m",
+        "count": 8
+      },
+      {
+        "field": "price_ref_3m",
+        "count": 8
+      },
+      {
+        "field": "price_ref_1m",
+        "count": 8
+      },
+      {
+        "field": "regression inputs",
+        "count": 4
+      },
+      {
+        "field": "ret_1w",
+        "count": 4
+      },
+      {
+        "field": "volume_ratio",
+        "count": 4
+      },
+      {
+        "field": "volume",
+        "count": 4
+      },
+      {
+        "field": "ADV",
+        "count": 4
       }
     ]
   },
@@ -41,17 +89,10 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -66,17 +107,90 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ABBV",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ABNB",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ADBE",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "AIPO",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -91,17 +205,10 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -117,16 +224,13 @@
       "missing_inputs": {
         "valuation": [],
         "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
+          "price_ref_12m"
         ],
         "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
+          "price_ref_12m"
         ],
         "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -141,17 +245,30 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "AMT",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -166,17 +283,70 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ANET",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "APD",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "APLD",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -191,17 +361,30 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ASML",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -216,17 +399,190 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "AXP",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "BA",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "BABA",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "BE",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "BKNG",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "BLK",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "BMY",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "BTDR",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CAT",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -241,17 +597,110 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CEG",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CI",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CIEN",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CLSK",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "COHR",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -266,17 +715,50 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "COP",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CORZ",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -291,17 +773,10 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -316,17 +791,250 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CRM",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CRWD",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "CVX",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "DAL",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "DDOG",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "DE",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "DHR",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "DIA",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "DIS",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "DOCU",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "DUK",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ECL",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -341,17 +1049,110 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ELV",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ETN",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "FDX",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "GE",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "GLW",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -366,17 +1167,10 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -387,21 +1181,399 @@
       }
     },
     {
+      "symbol": "GS",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "HCA",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "HD",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "HIVE",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "HOOD",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "IBM",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [
+          "price_now",
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y",
+          "price_ref_12m",
+          "price_ref_6m",
+          "price_ref_3m",
+          "price_ref_1m"
+        ],
+        "structure": [
+          "price_now",
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y",
+          "price_ref_12m",
+          "price_ref_6m",
+          "price_ref_3m",
+          "price_ref_1m",
+          "regression inputs"
+        ],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5",
+          "ret_1w"
+        ],
+        "money": [
+          "volume_ratio",
+          "price_now",
+          "volume",
+          "ADV"
+        ],
+        "compare": []
+      }
+    },
+    {
       "symbol": "INTC",
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "IREN",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ISRG",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "IWM",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "JNJ",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "JPM",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "KLAC",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "KO",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "LCID",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "LIN",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "LITE",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "LLY",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "LOW",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -416,17 +1588,30 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "LRCX",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -441,17 +1626,110 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "MA",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "MARA",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "MCD",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "MDB",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "MDT",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -467,16 +1745,54 @@
       "missing_inputs": {
         "valuation": [],
         "trend": [
+          "price_now",
           "price_ref_10y",
           "price_ref_5y",
-          "price_ref_3y"
+          "price_ref_3y",
+          "price_ref_12m",
+          "price_ref_6m",
+          "price_ref_3m",
+          "price_ref_1m"
         ],
         "structure": [
+          "price_now",
           "price_ref_10y",
           "price_ref_5y",
-          "price_ref_3y"
+          "price_ref_3y",
+          "price_ref_12m",
+          "price_ref_6m",
+          "price_ref_3m",
+          "price_ref_1m",
+          "regression inputs"
         ],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5",
+          "ret_1w"
+        ],
+        "money": [
+          "volume_ratio",
+          "price_now",
+          "volume",
+          "ADV"
+        ],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "MMM",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -491,17 +1807,30 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "MS",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -516,17 +1845,10 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -541,17 +1863,70 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "NEE",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "NET",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "NFLX",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -566,17 +1941,30 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "NOW",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -591,17 +1979,90 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "NVO",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "O",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "OKTA",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ON",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -616,17 +2077,170 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "OXY",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "PANW",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "PDD",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "PEP",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "PFE",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "PG",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "PH",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "PLD",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -641,17 +2255,70 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "PWR",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "PYPL",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "QCOM",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -666,17 +2333,10 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -691,17 +2351,130 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "RIOT",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "RIVN",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ROKU",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SBUX",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SCHW",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SHOP",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -716,17 +2489,90 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SNAP",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SNOW",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SNPS",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SO",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -741,17 +2587,10 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -762,21 +2601,144 @@
       }
     },
     {
+      "symbol": "SPCX",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [
+          "price_now",
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y",
+          "price_ref_12m",
+          "price_ref_6m",
+          "price_ref_3m",
+          "price_ref_1m"
+        ],
+        "structure": [
+          "price_now",
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y",
+          "price_ref_12m",
+          "price_ref_6m",
+          "price_ref_3m",
+          "price_ref_1m",
+          "regression inputs"
+        ],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5",
+          "ret_1w"
+        ],
+        "money": [
+          "volume_ratio",
+          "price_now",
+          "volume",
+          "ADV"
+        ],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SPY",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "SQ",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [
+          "price_now",
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y",
+          "price_ref_12m",
+          "price_ref_6m",
+          "price_ref_3m",
+          "price_ref_1m"
+        ],
+        "structure": [
+          "price_now",
+          "price_ref_10y",
+          "price_ref_5y",
+          "price_ref_3y",
+          "price_ref_12m",
+          "price_ref_6m",
+          "price_ref_3m",
+          "price_ref_1m",
+          "regression inputs"
+        ],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5",
+          "ret_1w"
+        ],
+        "money": [
+          "volume_ratio",
+          "price_now",
+          "volume",
+          "ADV"
+        ],
+        "compare": []
+      }
+    },
+    {
       "symbol": "TGT",
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "TMO",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -791,17 +2753,10 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -816,17 +2771,110 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "TTD",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "TWLO",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "TXN",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "UAL",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "UBER",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
@@ -841,17 +2889,370 @@
       "status": "partial",
       "missing_inputs": {
         "valuation": [],
-        "trend": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
-        "structure": [
-          "price_ref_10y",
-          "price_ref_5y",
-          "price_ref_3y"
-        ],
+        "trend": [],
+        "structure": [],
         "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "UPS",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "V",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "VOLT",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "VPU",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "VRT",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "VRTX",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "VST",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "WMT",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "WYNN",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "XLE",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "XLF",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "XLP",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "XLU",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "XLV",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "XOM",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ZAP",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ZM",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
+          "ret_d2",
+          "ret_d3",
+          "ret_d4",
+          "ret_d5"
+        ],
+        "money": [],
+        "compare": []
+      }
+    },
+    {
+      "symbol": "ZS",
+      "status": "blocked",
+      "missing_inputs": {
+        "valuation": [
+          "forward_pe"
+        ],
+        "trend": [],
+        "structure": [],
+        "timing": [
+          "ret_d1",
           "ret_d2",
           "ret_d3",
           "ret_d4",
