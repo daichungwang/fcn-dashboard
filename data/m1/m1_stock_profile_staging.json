@@ -1,0 +1,126 @@
+{
+  "SPCX": {
+    "symbol": "SPCX",
+    "name": "Space Exploration Technologies Corp.",
+    "type": "research_raw",
+    "company_overview": "SPCX is tracked as SpaceX / Space Infrastructure exposure after its Nasdaq listing. The profile is intentionally conservative: public reporting indicates SpaceX began trading under SPCX on Nasdaq in June 2026, but realtime market data, audited runtime fields, forward EPS, and full historical trading data must be supplied by the normal runtime and governed data flows rather than invented in the research card.",
+    "basic_info": {
+      "founded": "2002, founded by Elon Musk.",
+      "headquarters": "United States; operating center includes Starbase, Texas and launch/engineering facilities across the U.S. Exchange mapping is Nasdaq:SPCX pending runtime confirmation.",
+      "industry": "Space launch, reusable rockets, satellite internet, defense/government space services, Starship, and space infrastructure.",
+      "market_cap": "unavailable; use market_runtime once SPCX quote coverage is available."
+    },
+    "business_model": {
+      "summary": "SpaceX combines reusable launch services, Starlink connectivity, government/defense space contracts, Dragon crew/cargo transport, and Starship development. For FCN work it should be treated as a high-volatility space infrastructure equity, not an ETF.",
+      "segments": [
+        "Launch services: Falcon 9, Falcon Heavy, Dragon, and related commercial/government launch operations.",
+        "Starlink connectivity: satellite broadband and direct-to-device/network infrastructure revenue, subject to subscriber, spectrum, and capex execution risk.",
+        "Starship and future infrastructure: lunar/Mars transport, in-space logistics, and longer-horizon space infrastructure opportunities that remain highly execution-dependent."
+      ]
+    },
+    "customer_analysis": {
+      "summary": "Demand is tied to NASA and government missions, commercial launch customers, telecom/connectivity partners, enterprise connectivity, consumers using Starlink, and potential future defense or space-infrastructure buyers.",
+      "key_customers": [
+        {
+          "name": "NASA and U.S. government agencies",
+          "role": "Commercial crew, cargo, launch, and exploration partner",
+          "importance": "Government space demand provides mission validation and recurring launch/transport relevance, but contract timing and program risk remain important."
+        },
+        {
+          "name": "Starlink subscribers and connectivity partners",
+          "role": "Satellite broadband and network customers",
+          "importance": "Starlink is the clearest recurring-revenue engine, but official runtime metrics and audited profitability should be treated as pending until supplied by governed sources."
+        },
+        {
+          "name": "Commercial satellite and enterprise launch customers",
+          "role": "Payload launch and space access buyers",
+          "importance": "Reusable Falcon operations support cost and cadence advantages, while launch demand remains cyclical and capacity constrained by operational execution."
+        }
+      ],
+      "conclusion": "Customer breadth is strong, but the FCN decision should treat SPCX as event-sensitive because IPO timing, valuation, Starship milestones, launch incidents, and regulatory decisions can dominate short-term price behavior."
+    },
+    "why_this_company": [
+      "SpaceX is a direct pure-play exposure to reusable launch, Starlink, and space infrastructure.",
+      "SPCX fills a Pool30 thematic gap because the current pool has AI infrastructure and aerospace proxies but no direct SpaceX / space infrastructure stock.",
+      "The company has high strategic relevance, but investment sizing should remain speculative until runtime coverage, forward EPS, and post-IPO trading history mature."
+    ],
+    "market_view": "Market attention is likely dominated by the June 2026 IPO, Starlink profitability, Starship milestones, AI/data-center narrative, valuation multiple, and Elon Musk governance concentration. Treat early trading as momentum/price-discovery rather than stable FCN comfort.",
+    "financial_summary": {
+      "revenue": "pending; do not populate until the project has a governed S-1/filing source or runtime fundamental source.",
+      "growth": "pending; use unavailable until governed filings are mapped into M1/M7.",
+      "net_margin": "pending; reported loss/profitability details need governed filing ingestion before scoring.",
+      "fcf_margin": "pending; high capex and segment investment make free-cash-flow comfort unavailable.",
+      "eps": "unavailable; EPS history and forward EPS are not populated without a governed filing/analyst-consensus source.",
+      "pe": "unavailable; realtime PE must come from market_runtime/M7 after quote and fundamentals coverage exist.",
+      "dividend_yield": "unavailable; no dividend assumption should be made.",
+      "beta": "unavailable; beta requires enough post-listing trading history."
+    },
+    "competition": {
+      "summary": "SpaceX competes across launch, satellite internet, and future space infrastructure. Its differentiator is launch cadence and vertical integration, but it faces capable state, commercial, telecom, and defense competitors.",
+      "peers": [
+        {
+          "name": "Blue Origin / ULA / Rocket Lab",
+          "position": "Launch and space systems competitors",
+          "comparison": "SpaceX has scale and cadence advantages, while competitors may win government, lunar, or specialized launch work."
+        },
+        {
+          "name": "Viasat / AST SpaceMobile / telecom operators",
+          "position": "Satellite connectivity and direct-to-device competitors or partners",
+          "comparison": "Starlink's constellation scale is a strength, but spectrum rights, pricing, capacity, and local regulatory approvals drive adoption."
+        },
+        {
+          "name": "Traditional defense primes",
+          "position": "Government space and defense contractors",
+          "comparison": "Defense primes bring procurement relationships and mission heritage; SpaceX brings cost/cadence disruption and integrated launch assets."
+        }
+      ],
+      "conclusion": "The competitive edge is strongest in reusable launch and constellation deployment, but valuation may already price in Starship, Starlink, and future infrastructure success."
+    },
+    "valuation_and_timing": {
+      "valuation_view": "Use SPEC / industrial capital goods anchor until a dedicated Space Infrastructure anchor exists. No IPO valuation, market cap, PE, or fair price is hard-coded here.",
+      "buy_strategy": "Allowed only as a speculative watch/FCN-capped candidate until market_runtime, M7, and post-IPO history are populated.",
+      "sweet_zone": "pending; require governed runtime price history, valuation fields, and M7 pullback/overheat metrics before defining a numeric zone.",
+      "technical_view": {
+        "mid_trend": "pending; not enough governed price history.",
+        "short_term": "pending; early IPO trading can be volatile and should be read from runtime only.",
+        "structure": "Space infrastructure theme is strategically attractive, but current FCN comfort is low because valuation and trading history are incomplete.",
+        "conclusion": "Add to Pool30 for visibility, but keep FCN sizing capped and avoid automatic comfort upgrades until data coverage improves."
+      }
+    },
+    "pool30_fit": {
+      "stock_pool": true,
+      "pool30": true,
+      "category": "speculative",
+      "reason": "SPCX provides direct SpaceX / Space Infrastructure exposure and fills a thematic gap, but IPO-stage volatility, valuation uncertainty, and missing governed EPS/quote history require speculative treatment.",
+      "upgrade_condition": [
+        "market_runtime has stable SPCX quote, valuation, and return coverage.",
+        "M7 can read governed fundamentals and at least several weeks of trading history.",
+        "FCN comfort remains capped until volatility and valuation risk are measurable."
+      ]
+    },
+    "risk_opportunity": {
+      "risk": [
+        "IPO-stage valuation and momentum can overwhelm fundamentals.",
+        "Starship execution, launch failures, regulatory approvals, and spectrum policy can create abrupt drawdowns.",
+        "Forward EPS, beta, valuation, and long-horizon price history are pending, limiting model confidence."
+      ],
+      "opportunity": [
+        "Direct exposure to reusable launch, Starlink connectivity, and space infrastructure.",
+        "Potential long-duration growth if Starlink, Starship, and government/commercial space demand compound successfully."
+      ]
+    },
+    "final_view": "SPCX should be onboarded as a speculative SpaceX / Space Infrastructure Pool30 name with FCN allowed only in capped/watch mode. The dashboard may display it, but missing realtime price, historical data, EPS, and valuation fields must remain null/unavailable/pending until the existing runtime and scoring flows populate them.",
+    "quality_check": {
+      "completeness": 8.2,
+      "specificity": 8.0,
+      "data_support": 8.0,
+      "decision_usefulness": 8.4,
+      "fcn_alignment": 8.5,
+      "total_score": 8.2,
+      "fail_reasons": [
+        "Realtime price, EPS history, forward EPS, beta, and valuation are pending until governed data sources and runtime coverage are available.",
+        "Early IPO trading means FCN comfort should remain capped even though the symbol is allowed into Pool30."
+      ]
+    }
+  }
+}

@@ -2247,6 +2247,32 @@
     "volume_ratio": 0.6560419932833866
   },
   {
+    "symbol": "SPCX",
+    "category": "speculative",
+    "sector": "SPACE_INFRA",
+    "style": [
+      "spacex",
+      "space_infrastructure",
+      "starlink",
+      "high_beta"
+    ],
+    "m7_lite_score": 4.97,
+    "valuation_score": 5.0,
+    "trend_score": 5.5,
+    "quality_score": 3.5,
+    "snapshot_score": 6,
+    "mandatory_candidate": true,
+    "in_candidate_core_80": false,
+    "candidate_source": "mandatory_addon",
+    "ret_1d": 0,
+    "ret_1w": 0,
+    "ret_1m": 0,
+    "ret_3m": 0,
+    "ret_6m": 0,
+    "ret_12m": 0,
+    "volume_ratio": 1.0
+  },
+  {
     "symbol": "NKE",
     "category": "income",
     "sector": "CONSUMER",

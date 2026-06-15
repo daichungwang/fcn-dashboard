@@ -1,7 +1,7 @@
 {
-  "run_id": "M7V2-09ad94257133",
-  "started_at": "2026-05-23T13:29:13.891282+00:00",
-  "finished_at": "2026-05-23T13:29:15.799047+00:00",
+  "run_id": "M7V2-2e85dbd273fc",
+  "started_at": "2026-06-15T12:00:06.681383+00:00",
+  "finished_at": "2026-06-15T12:00:36.493648+00:00",
   "inputs": {
     "baseline": "data/m7/m7_new_stock_today.json",
     "market_runtime": "data/runtime_staging/market_runtime_long_horizon.json",
@@ -9,11 +9,12 @@
   },
   "outputs": {
     "scores": "data\\m7_sandbox\\m7_v2_scores.json",
+    "scores_debug": "data\\m7_sandbox\\m7_v2_scores_v1.json",
     "ab_compare": "data\\m7_sandbox\\m7_v2_ab_compare.json",
     "manifest": "data\\m7_sandbox\\m7_v2_run_manifest.json"
   },
   "summary": {
-    "symbol_count": 155,
+    "symbol_count": 157,
     "baseline_coverage": 0,
     "warnings": 0,
     "notes": 0
@@ -106,10 +107,6 @@
         ],
         "score_floor": 0.0,
         "score_cap": 100.0
-      },
-      "M6_placeholder": {
-        "enabled": false,
-        "notes": "placeholder for future execution-specific parameter set"
       }
     },
     "curve_params": {
