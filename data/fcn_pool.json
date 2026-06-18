@@ -4218,6 +4218,55 @@
   }
 },
   {
+  "date": "2026-06-16",
+  "fcn_id": "FCN780P 富邦",
+  "basket": [
+    "MU",
+    "TSM",
+    "NVDA"
+  ],
+  "tenor": 6,
+  "rate": 16.5,
+  "autocall": 100,
+  "strike": 55,
+  "ki": 45,
+  "eki": true,
+  "bank": "M.S",
+  "has_position": true,
+  "amt": 10000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-06-16T21:32",
+  "entry_time": "2026-06-16T21:32",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "MU": 1058.7677,
+    "TSM": 432.2513,
+    "NVDA": 209.3258
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
