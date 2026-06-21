@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-14T04:01:49.703Z",
+  "generated_at": "2026-06-21T04:10:10.019Z",
   "source_files": {
     "candidate": "data/m1/pool_stock_candidate_v1.json",
     "runtime": "data/market_runtime.json",
@@ -8,8 +8,8 @@
   "summary": {
     "total_count": 155,
     "pool30_candidate_count": 0,
-    "stock_pool_candidate_count": 128,
-    "watch_candidate_count": 27,
+    "stock_pool_candidate_count": 126,
+    "watch_candidate_count": 29,
     "reject_candidate_count": 0,
     "new_stock_count": 122,
     "existing_stock_count": 33,
@@ -1284,6 +1284,80 @@
       }
     },
     {
+      "symbol": "AXP",
+      "name": "American Express",
+      "sector": "FINANCIAL",
+      "subsector": "CARD_NETWORK",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "income",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "core",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "income"
+      },
+      "engine_score": {
+        "baseline": 8.5,
+        "vol_score": 1,
+        "pure": 9.5,
+        "valuation": 6,
+        "trend": 5,
+        "raw": 7.95,
+        "std": 1.95
+      },
+      "system_reason": {
+        "why_yes": [
+          "Pure 分數高",
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [
+          "可提供收益 / 防禦視角，利於大池風格平衡"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可提供收益 / 防禦視角，利於大池風格平衡",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "COST",
       "name": "Costco",
       "sector": "CONSUMER",
@@ -1486,6 +1560,79 @@
       ],
       "ai_reason_detail": {
         "growth": "AI 算力、先進製程、網通與設備需求延續，是大池擴張的核心來源。 若後續基本面與訂單驗證持續，適合提升權重。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "TMO",
+      "name": "Thermo Fisher",
+      "sector": "HEALTHCARE",
+      "subsector": "LIFE_SCIENCE_TOOLS",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "high"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": true,
+        "final_category": "core",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "core",
+        "seed_bucket": "pool30_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": true,
+        "seed_category": "core"
+      },
+      "engine_score": {
+        "baseline": 8.5,
+        "vol_score": 1,
+        "pure": 9.5,
+        "valuation": 6,
+        "trend": 5,
+        "raw": 7.95,
+        "std": 1.95
+      },
+      "system_reason": {
+        "why_yes": [
+          "Pure 分數高",
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [
+          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+          "系統評估接近 pool30 標準，可先列核心候選"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "具備升入 Pool30 的結構潛力",
+        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+        "系統評估接近 pool30 標準，可先列核心候選"
+      ],
+      "ai_reason_detail": {
+        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
@@ -3483,77 +3630,6 @@
       }
     },
     {
-      "symbol": "AXP",
-      "name": "American Express",
-      "sector": "FINANCIAL",
-      "subsector": "CARD_NETWORK",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "income",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "income"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可提供收益 / 防禦視角，利於大池風格平衡"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "BAC",
       "name": "Bank of America",
       "sector": "FINANCIAL",
@@ -3747,76 +3823,6 @@
       ],
       "ai_reason_detail": {
         "growth": "平台型公司具資料、流量與生態優勢，可作為 AI 與消費交叉觀察。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "BLK",
-      "name": "BlackRock",
-      "sector": "FINANCIAL",
-      "subsector": "ASSET_MANAGER",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "medium"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "core",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "stock_pool_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "core"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-          "適合納入大池，先作 extended pool 樣本"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "適合先納入大池，再觀察是否升核心",
-        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-        "適合納入大池，先作 extended pool 樣本"
-      ],
-      "ai_reason_detail": {
-        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
@@ -5378,76 +5384,6 @@
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "HOOD",
-      "name": "Robinhood",
-      "sector": "FINANCIAL",
-      "subsector": "BROKERAGE",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": false,
-        "into_pool30": false,
-        "final_category": "speculative",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "reject_candidate",
-        "seed_into_stock_pool": false,
-        "seed_into_pool30": false,
-        "seed_category": "speculative"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [],
-        "seed_why_no": [
-          "投機屬性較強，應提高納入門檻",
-          "波動 / 題材屬性偏高，暫不建議納入正式核心池",
-          "需要更完整研究或更佳時機再重新審核"
-        ]
-      },
-      "ai_reason_short": [
-        "暫不建議納入核心池",
-        "投機屬性較強，應提高納入門檻"
-      ],
-      "ai_reason_detail": {
-        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "估值與波動可能已反映題材，若要重啟評估，需等待更完整研究或更佳位置。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
       "research": {
@@ -8522,149 +8458,6 @@
       }
     },
     {
-      "symbol": "TMO",
-      "name": "Thermo Fisher",
-      "sector": "HEALTHCARE",
-      "subsector": "LIFE_SCIENCE_TOOLS",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "high"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": true,
-        "final_category": "core",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "pool30_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": true,
-        "seed_category": "core"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-          "系統評估接近 pool30 標準，可先列核心候選"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "具備升入 Pool30 的結構潛力",
-        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-        "系統評估接近 pool30 標準，可先列核心候選"
-      ],
-      "ai_reason_detail": {
-        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "UAL",
-      "name": "United Airlines",
-      "sector": "TRAVEL",
-      "subsector": "AIRLINE",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "income",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "income"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
-          "可提供收益 / 防禦視角，利於大池風格平衡"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
-        "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "旅遊股對油價、景氣與風險偏好高度敏感，適合作為事件與周期樣本。 但高度受油價、景氣與事件影響，需配合週期判讀。",
-        "industry": "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "UBER",
       "name": "Uber",
       "sector": "AI_APPLICATION",
@@ -9002,6 +8795,76 @@
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "WMT",
+      "name": "Walmart",
+      "sector": "CONSUMER",
+      "subsector": "RETAIL",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "high"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": true,
+        "final_category": "core",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "pool30_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": true,
+        "seed_category": "core"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+          "系統評估接近 pool30 標準，可先列核心候選"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "具備升入 Pool30 的結構潛力",
+        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+        "系統評估接近 pool30 標準，可先列核心候選"
+      ],
+      "ai_reason_detail": {
+        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
       },
       "research": {
         "status": "not_started",
@@ -9457,6 +9320,78 @@
       }
     },
     {
+      "symbol": "HOOD",
+      "name": "Robinhood",
+      "sector": "FINANCIAL",
+      "subsector": "BROKERAGE",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": false,
+        "into_pool30": false,
+        "final_category": "speculative",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "watch_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "reject_candidate",
+        "seed_into_stock_pool": false,
+        "seed_into_pool30": false,
+        "seed_category": "speculative"
+      },
+      "engine_score": {
+        "baseline": 4.5,
+        "vol_score": 1,
+        "pure": 5.5,
+        "valuation": 7.5,
+        "trend": 5,
+        "raw": 5.92,
+        "std": -0.08
+      },
+      "system_reason": {
+        "why_yes": [
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [],
+        "seed_why_no": [
+          "投機屬性較強，應提高納入門檻",
+          "波動 / 題材屬性偏高，暫不建議納入正式核心池",
+          "需要更完整研究或更佳時機再重新審核"
+        ]
+      },
+      "ai_reason_short": [
+        "暫不建議納入核心池",
+        "投機屬性較強，應提高納入門檻"
+      ],
+      "ai_reason_detail": {
+        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "估值與波動可能已反映題材，若要重啟評估，需等待更完整研究或更佳位置。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "SOFI",
       "name": "SoFi",
       "sector": "FINANCIAL",
@@ -9823,6 +9758,81 @@
       }
     },
     {
+      "symbol": "UAL",
+      "name": "United Airlines",
+      "sector": "TRAVEL",
+      "subsector": "AIRLINE",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "income",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "watch_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "income"
+      },
+      "engine_score": {
+        "baseline": 4.5,
+        "vol_score": 1,
+        "pure": 5.5,
+        "valuation": 6,
+        "trend": 5,
+        "raw": 5.55,
+        "std": -0.45
+      },
+      "system_reason": {
+        "why_yes": [
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [
+          "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
+          "可提供收益 / 防禦視角，利於大池風格平衡"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
+        "可提供收益 / 防禦視角，利於大池風格平衡",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "旅遊股對油價、景氣與風險偏好高度敏感，適合作為事件與周期樣本。 但高度受油價、景氣與事件影響，需配合週期判讀。",
+        "industry": "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "WYNN",
       "name": "Wynn Resorts",
       "sector": "TRAVEL",
@@ -9949,6 +9959,76 @@
         "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "BLK",
+      "name": "BlackRock",
+      "sector": "FINANCIAL",
+      "subsector": "ASSET_MANAGER",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "medium"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "core",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "watch_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "stock_pool_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "core"
+      },
+      "engine_score": {
+        "baseline": 4.5,
+        "vol_score": 1,
+        "pure": 5.5,
+        "valuation": 5,
+        "trend": 5,
+        "raw": 5.3,
+        "std": -0.7
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+          "適合納入大池，先作 extended pool 樣本"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "適合先納入大池，再觀察是否升核心",
+        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+        "適合納入大池，先作 extended pool 樣本"
+      ],
+      "ai_reason_detail": {
+        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -10584,76 +10664,6 @@
         "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
         "industry": "保險類股兼具防禦、政策敏感與現金流穩定特性。",
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "WMT",
-      "name": "Walmart",
-      "sector": "CONSUMER",
-      "subsector": "RETAIL",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "high"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": true,
-        "final_category": "core",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "pool30_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": true,
-        "seed_category": "core"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-          "系統評估接近 pool30 標準，可先列核心候選"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "具備升入 Pool30 的結構潛力",
-        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-        "系統評估接近 pool30 標準，可先列核心候選"
-      ],
-      "ai_reason_detail": {
-        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
       },
@@ -12433,6 +12443,80 @@
       }
     },
     {
+      "symbol": "AXP",
+      "name": "American Express",
+      "sector": "FINANCIAL",
+      "subsector": "CARD_NETWORK",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "income",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "core",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "income"
+      },
+      "engine_score": {
+        "baseline": 8.5,
+        "vol_score": 1,
+        "pure": 9.5,
+        "valuation": 6,
+        "trend": 5,
+        "raw": 7.95,
+        "std": 1.95
+      },
+      "system_reason": {
+        "why_yes": [
+          "Pure 分數高",
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [
+          "可提供收益 / 防禦視角，利於大池風格平衡"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可提供收益 / 防禦視角，利於大池風格平衡",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "COST",
       "name": "Costco",
       "sector": "CONSUMER",
@@ -12635,6 +12719,79 @@
       ],
       "ai_reason_detail": {
         "growth": "AI 算力、先進製程、網通與設備需求延續，是大池擴張的核心來源。 若後續基本面與訂單驗證持續，適合提升權重。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "TMO",
+      "name": "Thermo Fisher",
+      "sector": "HEALTHCARE",
+      "subsector": "LIFE_SCIENCE_TOOLS",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "high"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": true,
+        "final_category": "core",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "core",
+        "seed_bucket": "pool30_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": true,
+        "seed_category": "core"
+      },
+      "engine_score": {
+        "baseline": 8.5,
+        "vol_score": 1,
+        "pure": 9.5,
+        "valuation": 6,
+        "trend": 5,
+        "raw": 7.95,
+        "std": 1.95
+      },
+      "system_reason": {
+        "why_yes": [
+          "Pure 分數高",
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [
+          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+          "系統評估接近 pool30 標準，可先列核心候選"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "具備升入 Pool30 的結構潛力",
+        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+        "系統評估接近 pool30 標準，可先列核心候選"
+      ],
+      "ai_reason_detail": {
+        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
@@ -14141,6 +14298,78 @@
       }
     },
     {
+      "symbol": "HOOD",
+      "name": "Robinhood",
+      "sector": "FINANCIAL",
+      "subsector": "BROKERAGE",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": false,
+        "into_pool30": false,
+        "final_category": "speculative",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "watch_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "reject_candidate",
+        "seed_into_stock_pool": false,
+        "seed_into_pool30": false,
+        "seed_category": "speculative"
+      },
+      "engine_score": {
+        "baseline": 4.5,
+        "vol_score": 1,
+        "pure": 5.5,
+        "valuation": 7.5,
+        "trend": 5,
+        "raw": 5.92,
+        "std": -0.08
+      },
+      "system_reason": {
+        "why_yes": [
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [],
+        "seed_why_no": [
+          "投機屬性較強，應提高納入門檻",
+          "波動 / 題材屬性偏高，暫不建議納入正式核心池",
+          "需要更完整研究或更佳時機再重新審核"
+        ]
+      },
+      "ai_reason_short": [
+        "暫不建議納入核心池",
+        "投機屬性較強，應提高納入門檻"
+      ],
+      "ai_reason_detail": {
+        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "估值與波動可能已反映題材，若要重啟評估，需等待更完整研究或更佳位置。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "SOFI",
       "name": "SoFi",
       "sector": "FINANCIAL",
@@ -14507,6 +14736,81 @@
       }
     },
     {
+      "symbol": "UAL",
+      "name": "United Airlines",
+      "sector": "TRAVEL",
+      "subsector": "AIRLINE",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "income",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "watch_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "income"
+      },
+      "engine_score": {
+        "baseline": 4.5,
+        "vol_score": 1,
+        "pure": 5.5,
+        "valuation": 6,
+        "trend": 5,
+        "raw": 5.55,
+        "std": -0.45
+      },
+      "system_reason": {
+        "why_yes": [
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [
+          "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
+          "可提供收益 / 防禦視角，利於大池風格平衡"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
+        "可提供收益 / 防禦視角，利於大池風格平衡",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "旅遊股對油價、景氣與風險偏好高度敏感，適合作為事件與周期樣本。 但高度受油價、景氣與事件影響，需配合週期判讀。",
+        "industry": "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "WYNN",
       "name": "Wynn Resorts",
       "sector": "TRAVEL",
@@ -14633,6 +14937,76 @@
         "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "BLK",
+      "name": "BlackRock",
+      "sector": "FINANCIAL",
+      "subsector": "ASSET_MANAGER",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "medium"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "core",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "watch_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "stock_pool_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "core"
+      },
+      "engine_score": {
+        "baseline": 4.5,
+        "vol_score": 1,
+        "pure": 5.5,
+        "valuation": 5,
+        "trend": 5,
+        "raw": 5.3,
+        "std": -0.7
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+          "適合納入大池，先作 extended pool 樣本"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "適合先納入大池，再觀察是否升核心",
+        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+        "適合納入大池，先作 extended pool 樣本"
+      ],
+      "ai_reason_detail": {
+        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -15268,76 +15642,6 @@
         "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
         "industry": "保險類股兼具防禦、政策敏感與現金流穩定特性。",
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "WMT",
-      "name": "Walmart",
-      "sector": "CONSUMER",
-      "subsector": "RETAIL",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "high"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": true,
-        "final_category": "core",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "pool30_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": true,
-        "seed_category": "core"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-          "系統評估接近 pool30 標準，可先列核心候選"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "具備升入 Pool30 的結構潛力",
-        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-        "系統評估接近 pool30 標準，可先列核心候選"
-      ],
-      "ai_reason_detail": {
-        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
       },
@@ -16282,77 +16586,6 @@
       }
     },
     {
-      "symbol": "AXP",
-      "name": "American Express",
-      "sector": "FINANCIAL",
-      "subsector": "CARD_NETWORK",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "income",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "income"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可提供收益 / 防禦視角，利於大池風格平衡"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "BAC",
       "name": "Bank of America",
       "sector": "FINANCIAL",
@@ -16546,76 +16779,6 @@
       ],
       "ai_reason_detail": {
         "growth": "平台型公司具資料、流量與生態優勢，可作為 AI 與消費交叉觀察。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "BLK",
-      "name": "BlackRock",
-      "sector": "FINANCIAL",
-      "subsector": "ASSET_MANAGER",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "medium"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "core",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "stock_pool_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "core"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-          "適合納入大池，先作 extended pool 樣本"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "適合先納入大池，再觀察是否升核心",
-        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-        "適合納入大池，先作 extended pool 樣本"
-      ],
-      "ai_reason_detail": {
-        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
@@ -18177,76 +18340,6 @@
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "HOOD",
-      "name": "Robinhood",
-      "sector": "FINANCIAL",
-      "subsector": "BROKERAGE",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": false,
-        "into_pool30": false,
-        "final_category": "speculative",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "reject_candidate",
-        "seed_into_stock_pool": false,
-        "seed_into_pool30": false,
-        "seed_category": "speculative"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [],
-        "seed_why_no": [
-          "投機屬性較強，應提高納入門檻",
-          "波動 / 題材屬性偏高，暫不建議納入正式核心池",
-          "需要更完整研究或更佳時機再重新審核"
-        ]
-      },
-      "ai_reason_short": [
-        "暫不建議納入核心池",
-        "投機屬性較強，應提高納入門檻"
-      ],
-      "ai_reason_detail": {
-        "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "估值與波動可能已反映題材，若要重啟評估，需等待更完整研究或更佳位置。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
       "research": {
@@ -21321,149 +21414,6 @@
       }
     },
     {
-      "symbol": "TMO",
-      "name": "Thermo Fisher",
-      "sector": "HEALTHCARE",
-      "subsector": "LIFE_SCIENCE_TOOLS",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "high"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": true,
-        "final_category": "core",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "pool30_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": true,
-        "seed_category": "core"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-          "系統評估接近 pool30 標準，可先列核心候選"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "具備升入 Pool30 的結構潛力",
-        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
-        "系統評估接近 pool30 標準，可先列核心候選"
-      ],
-      "ai_reason_detail": {
-        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "UAL",
-      "name": "United Airlines",
-      "sector": "TRAVEL",
-      "subsector": "AIRLINE",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "income",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "income"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
-          "可提供收益 / 防禦視角，利於大池風格平衡"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
-        "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "旅遊股對油價、景氣與風險偏好高度敏感，適合作為事件與周期樣本。 但高度受油價、景氣與事件影響，需配合週期判讀。",
-        "industry": "高 beta 景氣股，利於事件測試，但 pool30 要求需更高。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "UBER",
       "name": "Uber",
       "sector": "AI_APPLICATION",
@@ -21801,6 +21751,76 @@
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "WMT",
+      "name": "Walmart",
+      "sector": "CONSUMER",
+      "subsector": "RETAIL",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "high"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": true,
+        "final_category": "core",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "pool30_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": true,
+        "seed_category": "core"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+          "系統評估接近 pool30 標準，可先列核心候選"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "具備升入 Pool30 的結構潛力",
+        "分類屬核心型，適合作為大池與 pool30 的標準樣本",
+        "系統評估接近 pool30 標準，可先列核心候選"
+      ],
+      "ai_reason_detail": {
+        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
       },
       "research": {
         "status": "not_started",
