@@ -4218,6 +4218,43 @@
   }
 },
   {
+  "date": "2026-06-17",
+  "fcn_id": "FCN809P 富邦",
+  "basket": [
+    "SPCX"
+  ],
+  "tenor": 6,
+  "rate": 25,
+  "autocall": 100,
+  "strike": 55.16,
+  "ki": 55.16,
+  "eki": false,
+  "bank": "BBVA",
+  "has_position": true,
+  "amt": 20000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-06-17T16:11",
+  "entry_time": "2026-06-17T16:11",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "SPCX": 209.74
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "SPCX": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
   "date": "2026-06-16",
   "fcn_id": "FCN780P 富邦",
   "basket": [
