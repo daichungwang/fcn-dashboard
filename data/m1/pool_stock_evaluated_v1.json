@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-21T04:10:10.019Z",
+  "generated_at": "2026-06-28T03:45:28.537Z",
   "source_files": {
     "candidate": "data/m1/pool_stock_candidate_v1.json",
     "runtime": "data/market_runtime.json",
@@ -8,8 +8,8 @@
   "summary": {
     "total_count": 155,
     "pool30_candidate_count": 0,
-    "stock_pool_candidate_count": 126,
-    "watch_candidate_count": 29,
+    "stock_pool_candidate_count": 130,
+    "watch_candidate_count": 25,
     "reject_candidate_count": 0,
     "new_stock_count": 122,
     "existing_stock_count": 33,
@@ -297,80 +297,6 @@
       ],
       "ai_reason_detail": {
         "growth": "AI 算力、先進製程、網通與設備需求延續，是大池擴張的核心來源。 若後續基本面與訂單驗證持續，適合提升權重。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "DDOG",
-      "name": "Datadog",
-      "sector": "AI_APPLICATION",
-      "subsector": "OBSERVABILITY",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "medium"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "growth",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "core",
-        "seed_bucket": "stock_pool_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "growth"
-      },
-      "engine_score": {
-        "baseline": 8.5,
-        "vol_score": 1,
-        "pure": 9.5,
-        "valuation": 7.5,
-        "trend": 5,
-        "raw": 8.32,
-        "std": 2.32
-      },
-      "system_reason": {
-        "why_yes": [
-          "Pure 分數高",
-          "估值合理"
-        ],
-        "why_no": [],
-        "seed_why_yes": [
-          "位於 AI / 雲端主鏈，具長期觀察價值",
-          "具成長屬性，適合擴充大池並觀察是否升核心",
-          "適合納入大池，先作 extended pool 樣本"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "適合先納入大池，再觀察是否升核心",
-        "位於 AI / 雲端主鏈，具長期觀察價值",
-        "具成長屬性，適合擴充大池並觀察是否升核心"
-      ],
-      "ai_reason_detail": {
-        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
@@ -1060,6 +986,79 @@
       }
     },
     {
+      "symbol": "VRTX",
+      "name": "Vertex Pharmaceuticals",
+      "sector": "HEALTHCARE",
+      "subsector": "BIOTECH",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "medium"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "growth",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "core",
+        "seed_bucket": "stock_pool_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "growth"
+      },
+      "engine_score": {
+        "baseline": 8.5,
+        "vol_score": 1,
+        "pure": 9.5,
+        "valuation": 7.5,
+        "trend": 5,
+        "raw": 8.32,
+        "std": 2.32
+      },
+      "system_reason": {
+        "why_yes": [
+          "Pure 分數高",
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [
+          "具成長屬性，適合擴充大池並觀察是否升核心",
+          "適合納入大池，先作 extended pool 樣本"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "適合先納入大池，再觀察是否升核心",
+        "具成長屬性，適合擴充大池並觀察是否升核心",
+        "適合納入大池，先作 extended pool 樣本"
+      ],
+      "ai_reason_detail": {
+        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "AAPL",
       "name": "Apple",
       "sector": "PLATFORM",
@@ -1727,6 +1726,80 @@
       }
     },
     {
+      "symbol": "ABNB",
+      "name": "Airbnb",
+      "sector": "AI_APPLICATION",
+      "subsector": "TRAVEL_PLATFORM",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "medium"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "growth",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "core",
+        "seed_bucket": "stock_pool_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "growth"
+      },
+      "engine_score": {
+        "baseline": 7,
+        "vol_score": 1,
+        "pure": 8,
+        "valuation": 7.5,
+        "trend": 5,
+        "raw": 7.42,
+        "std": 1.42
+      },
+      "system_reason": {
+        "why_yes": [
+          "Pure 分數高",
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [
+          "位於 AI / 雲端主鏈，具長期觀察價值",
+          "具成長屬性，適合擴充大池並觀察是否升核心",
+          "適合納入大池，先作 extended pool 樣本"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "適合先納入大池，再觀察是否升核心",
+        "位於 AI / 雲端主鏈，具長期觀察價值",
+        "具成長屬性，適合擴充大池並觀察是否升核心"
+      ],
+      "ai_reason_detail": {
+        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "AMZN",
       "name": "Amazon",
       "sector": "AI_APPLICATION",
@@ -2082,80 +2155,6 @@
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "MDB",
-      "name": "MongoDB",
-      "sector": "AI_APPLICATION",
-      "subsector": "DATABASE",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "medium"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "growth",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "core",
-        "seed_bucket": "stock_pool_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "growth"
-      },
-      "engine_score": {
-        "baseline": 7,
-        "vol_score": 1,
-        "pure": 8,
-        "valuation": 7.5,
-        "trend": 5,
-        "raw": 7.42,
-        "std": 1.42
-      },
-      "system_reason": {
-        "why_yes": [
-          "Pure 分數高",
-          "估值合理"
-        ],
-        "why_no": [],
-        "seed_why_yes": [
-          "位於 AI / 雲端主鏈，具長期觀察價值",
-          "具成長屬性，適合擴充大池並觀察是否升核心",
-          "適合納入大池，先作 extended pool 樣本"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "適合先納入大池，再觀察是否升核心",
-        "位於 AI / 雲端主鏈，具長期觀察價值",
-        "具成長屬性，適合擴充大池並觀察是否升核心"
-      ],
-      "ai_reason_detail": {
-        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
       "research": {
         "status": "not_started",
@@ -2842,80 +2841,6 @@
       }
     },
     {
-      "symbol": "SBUX",
-      "name": "Starbucks",
-      "sector": "CONSUMER",
-      "subsector": "RESTAURANT",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "income",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "core",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "income"
-      },
-      "engine_score": {
-        "baseline": 7,
-        "vol_score": 1,
-        "pure": 8,
-        "valuation": 6,
-        "trend": 5,
-        "raw": 7.05,
-        "std": 1.05
-      },
-      "system_reason": {
-        "why_yes": [
-          "Pure 分數高",
-          "估值合理"
-        ],
-        "why_no": [],
-        "seed_why_yes": [
-          "可提供收益 / 防禦視角，利於大池風格平衡"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "AAOI",
       "name": "Applied Optoelectronics",
       "sector": "AI_SEMI",
@@ -2989,20 +2914,20 @@
       }
     },
     {
-      "symbol": "ABNB",
-      "name": "Airbnb",
-      "sector": "AI_APPLICATION",
-      "subsector": "TRAVEL_PLATFORM",
+      "symbol": "ABBV",
+      "name": "AbbVie",
+      "sector": "HEALTHCARE",
+      "subsector": "PHARMA",
       "identity": {
         "is_new_stock": true,
         "already_in_pool30": false,
         "source": "ai_suggested",
-        "priority": "medium"
+        "priority": "low"
       },
       "human_override": {
         "into_stock_pool": true,
         "into_pool30": false,
-        "final_category": "growth",
+        "final_category": "income",
         "note": ""
       },
       "system_recommendation": {
@@ -3010,10 +2935,10 @@
         "into_stock_pool": true,
         "into_pool30": false,
         "suggested_category": "defensive",
-        "seed_bucket": "stock_pool_candidate",
+        "seed_bucket": "watch_candidate",
         "seed_into_stock_pool": true,
         "seed_into_pool30": false,
-        "seed_category": "growth"
+        "seed_category": "income"
       },
       "engine_score": {
         "baseline": 5,
@@ -3028,21 +2953,21 @@
         "why_yes": [],
         "why_no": [],
         "seed_why_yes": [
-          "位於 AI / 雲端主鏈，具長期觀察價值",
-          "具成長屬性，適合擴充大池並觀察是否升核心",
-          "適合納入大池，先作 extended pool 樣本"
+          "可提供收益 / 防禦視角，利於大池風格平衡"
         ],
-        "seed_why_no": []
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
       },
       "ai_reason_short": [
-        "適合先納入大池，再觀察是否升核心",
-        "位於 AI / 雲端主鏈，具長期觀察價值",
-        "具成長屬性，適合擴充大池並觀察是否升核心"
+        "保留觀察價值，但目前不是優先升級對象",
+        "可提供收益 / 防禦視角，利於大池風格平衡",
+        "目前較適合觀察，不急著升入 pool30"
       ],
       "ai_reason_detail": {
-        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
+        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -4411,6 +4336,77 @@
       }
     },
     {
+      "symbol": "DDOG",
+      "name": "Datadog",
+      "sector": "AI_APPLICATION",
+      "subsector": "OBSERVABILITY",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "medium"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "growth",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "stock_pool_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "growth"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "位於 AI / 雲端主鏈，具長期觀察價值",
+          "具成長屬性，適合擴充大池並觀察是否升核心",
+          "適合納入大池，先作 extended pool 樣本"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "適合先納入大池，再觀察是否升核心",
+        "位於 AI / 雲端主鏈，具長期觀察價值",
+        "具成長屬性，適合擴充大池並觀察是否升核心"
+      ],
+      "ai_reason_detail": {
+        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "DECK",
       "name": "Deckers",
       "sector": "CONSUMER",
@@ -5755,6 +5751,77 @@
       }
     },
     {
+      "symbol": "JNJ",
+      "name": "Johnson & Johnson",
+      "sector": "HEALTHCARE",
+      "subsector": "PHARMA_MEDTECH",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "defensive",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "defensive"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可平衡大池波動，補足防禦與對照組"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可平衡大池波動，補足防禦與對照組",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "KKR",
       "name": "KKR",
       "sector": "FINANCIAL",
@@ -5808,6 +5875,77 @@
         "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "KO",
+      "name": "Coca-Cola",
+      "sector": "CONSUMER",
+      "subsector": "BEVERAGE",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "defensive",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "defensive"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可平衡大池波動，補足防禦與對照組"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可平衡大池波動，補足防禦與對照組",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -6232,6 +6370,77 @@
         "growth": "AI 算力、先進製程、網通與設備需求延續，是大池擴張的核心來源。 若後續基本面與訂單驗證持續，適合提升權重。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "MDB",
+      "name": "MongoDB",
+      "sector": "AI_APPLICATION",
+      "subsector": "DATABASE",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "medium"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "growth",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "stock_pool_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "growth"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "位於 AI / 雲端主鏈，具長期觀察價值",
+          "具成長屬性，適合擴充大池並觀察是否升核心",
+          "適合納入大池，先作 extended pool 樣本"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "適合先納入大池，再觀察是否升核心",
+        "位於 AI / 雲端主鏈，具長期觀察價值",
+        "具成長屬性，適合擴充大池並觀察是否升核心"
+      ],
+      "ai_reason_detail": {
+        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -7034,77 +7243,6 @@
       }
     },
     {
-      "symbol": "PG",
-      "name": "Procter & Gamble",
-      "sector": "CONSUMER",
-      "subsector": "STAPLES",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "defensive",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "defensive"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可平衡大池波動，補足防禦與對照組"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可平衡大池波動，補足防禦與對照組",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "PINS",
       "name": "Pinterest",
       "sector": "PLATFORM",
@@ -7517,6 +7655,77 @@
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "SBUX",
+      "name": "Starbucks",
+      "sector": "CONSUMER",
+      "subsector": "RESTAURANT",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "income",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "income"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可提供收益 / 防禦視角，利於大池風格平衡"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可提供收益 / 防禦視角，利於大池風格平衡",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
       "research": {
         "status": "not_started",
@@ -8669,76 +8878,6 @@
       }
     },
     {
-      "symbol": "VRTX",
-      "name": "Vertex Pharmaceuticals",
-      "sector": "HEALTHCARE",
-      "subsector": "BIOTECH",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "medium"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "growth",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "stock_pool_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "growth"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "具成長屬性，適合擴充大池並觀察是否升核心",
-          "適合納入大池，先作 extended pool 樣本"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "適合先納入大池，再觀察是否升核心",
-        "具成長屬性，適合擴充大池並觀察是否升核心",
-        "適合納入大池，先作 extended pool 樣本"
-      ],
-      "ai_reason_detail": {
-        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "WFC",
       "name": "Wells Fargo",
       "sector": "FINANCIAL",
@@ -8954,6 +9093,77 @@
       }
     },
     {
+      "symbol": "XLE",
+      "name": "Energy Select Sector SPDR",
+      "sector": "ETF",
+      "subsector": "ENERGY_ETF",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "income",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "income"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可提供收益 / 防禦視角，利於大池風格平衡"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可提供收益 / 防禦視角，利於大池風格平衡",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "ETF 提供 market proxy 與籃子視角，有助於校準大池與題材偏差。 ETF 更偏校準與對照，不宜只用單一新聞判定。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "XLK",
       "name": "Technology Select Sector SPDR",
       "sector": "ETF",
@@ -9007,6 +9217,77 @@
         "growth": "ETF 提供 market proxy 與籃子視角，有助於校準大池與題材偏差。 ETF 更偏校準與對照，不宜只用單一新聞判定。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "XLV",
+      "name": "Health Care Select Sector SPDR",
+      "sector": "ETF",
+      "subsector": "HEALTHCARE_ETF",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "defensive",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "defensive"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可平衡大池波動，補足防禦與對照組"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可平衡大池波動，補足防禦與對照組",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "ETF 提供 market proxy 與籃子視角，有助於校準大池與題材偏差。 ETF 更偏校準與對照，不宜只用單一新聞判定。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -9905,77 +10186,6 @@
       }
     },
     {
-      "symbol": "ABBV",
-      "name": "AbbVie",
-      "sector": "HEALTHCARE",
-      "subsector": "PHARMA",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "income",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "income"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可提供收益 / 防禦視角，利於大池風格平衡"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "BLK",
       "name": "BlackRock",
       "sector": "FINANCIAL",
@@ -10029,77 +10239,6 @@
         "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "JNJ",
-      "name": "Johnson & Johnson",
-      "sector": "HEALTHCARE",
-      "subsector": "PHARMA_MEDTECH",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "defensive",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "defensive"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可平衡大池波動，補足防禦與對照組"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可平衡大池波動，補足防禦與對照組",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -10172,77 +10311,6 @@
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "KO",
-      "name": "Coca-Cola",
-      "sector": "CONSUMER",
-      "subsector": "BEVERAGE",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "defensive",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "defensive"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可平衡大池波動，補足防禦與對照組"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可平衡大池波動，補足防禦與對照組",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
       "research": {
         "status": "not_started",
@@ -10384,6 +10452,77 @@
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "PG",
+      "name": "Procter & Gamble",
+      "sector": "CONSUMER",
+      "subsector": "STAPLES",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "defensive",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "watch_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "defensive"
+      },
+      "engine_score": {
+        "baseline": 4.5,
+        "vol_score": 1,
+        "pure": 5.5,
+        "valuation": 5,
+        "trend": 5,
+        "raw": 5.3,
+        "std": -0.7
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可平衡大池波動，補足防禦與對照組"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可平衡大池波動，補足防禦與對照組",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
       "research": {
         "status": "not_started",
@@ -10681,77 +10820,6 @@
       }
     },
     {
-      "symbol": "XLE",
-      "name": "Energy Select Sector SPDR",
-      "sector": "ETF",
-      "subsector": "ENERGY_ETF",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "income",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "income"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可提供收益 / 防禦視角，利於大池風格平衡"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "ETF 提供 market proxy 與籃子視角，有助於校準大池與題材偏差。 ETF 更偏校準與對照，不宜只用單一新聞判定。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "XLF",
       "name": "Financial Select Sector SPDR",
       "sector": "ETF",
@@ -10800,77 +10868,6 @@
       "ai_reason_short": [
         "保留觀察價值，但目前不是優先升級對象",
         "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "ETF 提供 market proxy 與籃子視角，有助於校準大池與題材偏差。 ETF 更偏校準與對照，不宜只用單一新聞判定。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "XLV",
-      "name": "Health Care Select Sector SPDR",
-      "sector": "ETF",
-      "subsector": "HEALTHCARE_ETF",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "defensive",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "defensive"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可平衡大池波動，補足防禦與對照組"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可平衡大池波動，補足防禦與對照組",
         "目前較適合觀察，不急著升入 pool30"
       ],
       "ai_reason_detail": {
@@ -11456,80 +11453,6 @@
       ],
       "ai_reason_detail": {
         "growth": "AI 算力、先進製程、網通與設備需求延續，是大池擴張的核心來源。 若後續基本面與訂單驗證持續，適合提升權重。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "DDOG",
-      "name": "Datadog",
-      "sector": "AI_APPLICATION",
-      "subsector": "OBSERVABILITY",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "medium"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "growth",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "core",
-        "seed_bucket": "stock_pool_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "growth"
-      },
-      "engine_score": {
-        "baseline": 8.5,
-        "vol_score": 1,
-        "pure": 9.5,
-        "valuation": 7.5,
-        "trend": 5,
-        "raw": 8.32,
-        "std": 2.32
-      },
-      "system_reason": {
-        "why_yes": [
-          "Pure 分數高",
-          "估值合理"
-        ],
-        "why_no": [],
-        "seed_why_yes": [
-          "位於 AI / 雲端主鏈，具長期觀察價值",
-          "具成長屬性，適合擴充大池並觀察是否升核心",
-          "適合納入大池，先作 extended pool 樣本"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "適合先納入大池，再觀察是否升核心",
-        "位於 AI / 雲端主鏈，具長期觀察價值",
-        "具成長屬性，適合擴充大池並觀察是否升核心"
-      ],
-      "ai_reason_detail": {
-        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
@@ -12219,6 +12142,79 @@
       }
     },
     {
+      "symbol": "VRTX",
+      "name": "Vertex Pharmaceuticals",
+      "sector": "HEALTHCARE",
+      "subsector": "BIOTECH",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "medium"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "growth",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "core",
+        "seed_bucket": "stock_pool_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "growth"
+      },
+      "engine_score": {
+        "baseline": 8.5,
+        "vol_score": 1,
+        "pure": 9.5,
+        "valuation": 7.5,
+        "trend": 5,
+        "raw": 8.32,
+        "std": 2.32
+      },
+      "system_reason": {
+        "why_yes": [
+          "Pure 分數高",
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [
+          "具成長屬性，適合擴充大池並觀察是否升核心",
+          "適合納入大池，先作 extended pool 樣本"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "適合先納入大池，再觀察是否升核心",
+        "具成長屬性，適合擴充大池並觀察是否升核心",
+        "適合納入大池，先作 extended pool 樣本"
+      ],
+      "ai_reason_detail": {
+        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "AAPL",
       "name": "Apple",
       "sector": "PLATFORM",
@@ -12886,6 +12882,80 @@
       }
     },
     {
+      "symbol": "ABNB",
+      "name": "Airbnb",
+      "sector": "AI_APPLICATION",
+      "subsector": "TRAVEL_PLATFORM",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "medium"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "growth",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "core",
+        "seed_bucket": "stock_pool_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "growth"
+      },
+      "engine_score": {
+        "baseline": 7,
+        "vol_score": 1,
+        "pure": 8,
+        "valuation": 7.5,
+        "trend": 5,
+        "raw": 7.42,
+        "std": 1.42
+      },
+      "system_reason": {
+        "why_yes": [
+          "Pure 分數高",
+          "估值合理"
+        ],
+        "why_no": [],
+        "seed_why_yes": [
+          "位於 AI / 雲端主鏈，具長期觀察價值",
+          "具成長屬性，適合擴充大池並觀察是否升核心",
+          "適合納入大池，先作 extended pool 樣本"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "適合先納入大池，再觀察是否升核心",
+        "位於 AI / 雲端主鏈，具長期觀察價值",
+        "具成長屬性，適合擴充大池並觀察是否升核心"
+      ],
+      "ai_reason_detail": {
+        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "AMZN",
       "name": "Amazon",
       "sector": "AI_APPLICATION",
@@ -13241,80 +13311,6 @@
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "MDB",
-      "name": "MongoDB",
-      "sector": "AI_APPLICATION",
-      "subsector": "DATABASE",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "medium"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "growth",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "core",
-        "seed_bucket": "stock_pool_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "growth"
-      },
-      "engine_score": {
-        "baseline": 7,
-        "vol_score": 1,
-        "pure": 8,
-        "valuation": 7.5,
-        "trend": 5,
-        "raw": 7.42,
-        "std": 1.42
-      },
-      "system_reason": {
-        "why_yes": [
-          "Pure 分數高",
-          "估值合理"
-        ],
-        "why_no": [],
-        "seed_why_yes": [
-          "位於 AI / 雲端主鏈，具長期觀察價值",
-          "具成長屬性，適合擴充大池並觀察是否升核心",
-          "適合納入大池，先作 extended pool 樣本"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "適合先納入大池，再觀察是否升核心",
-        "位於 AI / 雲端主鏈，具長期觀察價值",
-        "具成長屬性，適合擴充大池並觀察是否升核心"
-      ],
-      "ai_reason_detail": {
-        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
       "research": {
         "status": "not_started",
@@ -13982,80 +13978,6 @@
       ],
       "ai_reason_detail": {
         "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "SBUX",
-      "name": "Starbucks",
-      "sector": "CONSUMER",
-      "subsector": "RESTAURANT",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "income",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "core",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "income"
-      },
-      "engine_score": {
-        "baseline": 7,
-        "vol_score": 1,
-        "pure": 8,
-        "valuation": 6,
-        "trend": 5,
-        "raw": 7.05,
-        "std": 1.05
-      },
-      "system_reason": {
-        "why_yes": [
-          "Pure 分數高",
-          "估值合理"
-        ],
-        "why_no": [],
-        "seed_why_yes": [
-          "可提供收益 / 防禦視角，利於大池風格平衡"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
@@ -14883,77 +14805,6 @@
       }
     },
     {
-      "symbol": "ABBV",
-      "name": "AbbVie",
-      "sector": "HEALTHCARE",
-      "subsector": "PHARMA",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "income",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "income"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可提供收益 / 防禦視角，利於大池風格平衡"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "BLK",
       "name": "BlackRock",
       "sector": "FINANCIAL",
@@ -15007,77 +14858,6 @@
         "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "JNJ",
-      "name": "Johnson & Johnson",
-      "sector": "HEALTHCARE",
-      "subsector": "PHARMA_MEDTECH",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "defensive",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "defensive"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可平衡大池波動，補足防禦與對照組"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可平衡大池波動，補足防禦與對照組",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -15150,77 +14930,6 @@
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "KO",
-      "name": "Coca-Cola",
-      "sector": "CONSUMER",
-      "subsector": "BEVERAGE",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "defensive",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "defensive"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可平衡大池波動，補足防禦與對照組"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可平衡大池波動，補足防禦與對照組",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
       "research": {
         "status": "not_started",
@@ -15362,6 +15071,77 @@
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "PG",
+      "name": "Procter & Gamble",
+      "sector": "CONSUMER",
+      "subsector": "STAPLES",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "defensive",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "watch_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "defensive"
+      },
+      "engine_score": {
+        "baseline": 4.5,
+        "vol_score": 1,
+        "pure": 5.5,
+        "valuation": 5,
+        "trend": 5,
+        "raw": 5.3,
+        "std": -0.7
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可平衡大池波動，補足防禦與對照組"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可平衡大池波動，補足防禦與對照組",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
       "research": {
         "status": "not_started",
@@ -15659,77 +15439,6 @@
       }
     },
     {
-      "symbol": "XLE",
-      "name": "Energy Select Sector SPDR",
-      "sector": "ETF",
-      "subsector": "ENERGY_ETF",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "income",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "income"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可提供收益 / 防禦視角，利於大池風格平衡"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "ETF 提供 market proxy 與籃子視角，有助於校準大池與題材偏差。 ETF 更偏校準與對照，不宜只用單一新聞判定。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "XLF",
       "name": "Financial Select Sector SPDR",
       "sector": "ETF",
@@ -15778,77 +15487,6 @@
       "ai_reason_short": [
         "保留觀察價值，但目前不是優先升級對象",
         "可提供收益 / 防禦視角，利於大池風格平衡",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "ETF 提供 market proxy 與籃子視角，有助於校準大池與題材偏差。 ETF 更偏校準與對照，不宜只用單一新聞判定。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
-      "symbol": "XLV",
-      "name": "Health Care Select Sector SPDR",
-      "sector": "ETF",
-      "subsector": "HEALTHCARE_ETF",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "defensive",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "watch_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "defensive"
-      },
-      "engine_score": {
-        "baseline": 4.5,
-        "vol_score": 1,
-        "pure": 5.5,
-        "valuation": 5,
-        "trend": 5,
-        "raw": 5.3,
-        "std": -0.7
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可平衡大池波動，補足防禦與對照組"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可平衡大池波動，補足防禦與對照組",
         "目前較適合觀察，不急著升入 pool30"
       ],
       "ai_reason_detail": {
@@ -15945,20 +15583,20 @@
       }
     },
     {
-      "symbol": "ABNB",
-      "name": "Airbnb",
-      "sector": "AI_APPLICATION",
-      "subsector": "TRAVEL_PLATFORM",
+      "symbol": "ABBV",
+      "name": "AbbVie",
+      "sector": "HEALTHCARE",
+      "subsector": "PHARMA",
       "identity": {
         "is_new_stock": true,
         "already_in_pool30": false,
         "source": "ai_suggested",
-        "priority": "medium"
+        "priority": "low"
       },
       "human_override": {
         "into_stock_pool": true,
         "into_pool30": false,
-        "final_category": "growth",
+        "final_category": "income",
         "note": ""
       },
       "system_recommendation": {
@@ -15966,10 +15604,10 @@
         "into_stock_pool": true,
         "into_pool30": false,
         "suggested_category": "defensive",
-        "seed_bucket": "stock_pool_candidate",
+        "seed_bucket": "watch_candidate",
         "seed_into_stock_pool": true,
         "seed_into_pool30": false,
-        "seed_category": "growth"
+        "seed_category": "income"
       },
       "engine_score": {
         "baseline": 5,
@@ -15984,21 +15622,21 @@
         "why_yes": [],
         "why_no": [],
         "seed_why_yes": [
-          "位於 AI / 雲端主鏈，具長期觀察價值",
-          "具成長屬性，適合擴充大池並觀察是否升核心",
-          "適合納入大池，先作 extended pool 樣本"
+          "可提供收益 / 防禦視角，利於大池風格平衡"
         ],
-        "seed_why_no": []
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
       },
       "ai_reason_short": [
-        "適合先納入大池，再觀察是否升核心",
-        "位於 AI / 雲端主鏈，具長期觀察價值",
-        "具成長屬性，適合擴充大池並觀察是否升核心"
+        "保留觀察價值，但目前不是優先升級對象",
+        "可提供收益 / 防禦視角，利於大池風格平衡",
+        "目前較適合觀察，不急著升入 pool30"
       ],
       "ai_reason_detail": {
-        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
+        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -17367,6 +17005,77 @@
       }
     },
     {
+      "symbol": "DDOG",
+      "name": "Datadog",
+      "sector": "AI_APPLICATION",
+      "subsector": "OBSERVABILITY",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "medium"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "growth",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "stock_pool_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "growth"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "位於 AI / 雲端主鏈，具長期觀察價值",
+          "具成長屬性，適合擴充大池並觀察是否升核心",
+          "適合納入大池，先作 extended pool 樣本"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "適合先納入大池，再觀察是否升核心",
+        "位於 AI / 雲端主鏈，具長期觀察價值",
+        "具成長屬性，適合擴充大池並觀察是否升核心"
+      ],
+      "ai_reason_detail": {
+        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "DECK",
       "name": "Deckers",
       "sector": "CONSUMER",
@@ -18711,6 +18420,77 @@
       }
     },
     {
+      "symbol": "JNJ",
+      "name": "Johnson & Johnson",
+      "sector": "HEALTHCARE",
+      "subsector": "PHARMA_MEDTECH",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "defensive",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "defensive"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可平衡大池波動，補足防禦與對照組"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可平衡大池波動，補足防禦與對照組",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "KKR",
       "name": "KKR",
       "sector": "FINANCIAL",
@@ -18764,6 +18544,77 @@
         "growth": "金融股提供利率、支付、交易與風險偏好維度，不宜在大池中缺席。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "KO",
+      "name": "Coca-Cola",
+      "sector": "CONSUMER",
+      "subsector": "BEVERAGE",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "defensive",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "defensive"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可平衡大池波動，補足防禦與對照組"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可平衡大池波動，補足防禦與對照組",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -19188,6 +19039,77 @@
         "growth": "AI 算力、先進製程、網通與設備需求延續，是大池擴張的核心來源。 若後續基本面與訂單驗證持續，適合提升權重。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "MDB",
+      "name": "MongoDB",
+      "sector": "AI_APPLICATION",
+      "subsector": "DATABASE",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "medium"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "growth",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "stock_pool_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "growth"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "位於 AI / 雲端主鏈，具長期觀察價值",
+          "具成長屬性，適合擴充大池並觀察是否升核心",
+          "適合納入大池，先作 extended pool 樣本"
+        ],
+        "seed_why_no": []
+      },
+      "ai_reason_short": [
+        "適合先納入大池，再觀察是否升核心",
+        "位於 AI / 雲端主鏈，具長期觀察價值",
+        "具成長屬性，適合擴充大池並觀察是否升核心"
+      ],
+      "ai_reason_detail": {
+        "growth": "企業軟體、雲端平台與 AI 應用層，承接 monetization 與企業支出循環。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
@@ -19990,77 +19912,6 @@
       }
     },
     {
-      "symbol": "PG",
-      "name": "Procter & Gamble",
-      "sector": "CONSUMER",
-      "subsector": "STAPLES",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "low"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "defensive",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "watch_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "defensive"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "可平衡大池波動，補足防禦與對照組"
-        ],
-        "seed_why_no": [
-          "目前較適合觀察，不急著升入 pool30"
-        ]
-      },
-      "ai_reason_short": [
-        "保留觀察價值，但目前不是優先升級對象",
-        "可平衡大池波動，補足防禦與對照組",
-        "目前較適合觀察，不急著升入 pool30"
-      ],
-      "ai_reason_detail": {
-        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "PINS",
       "name": "Pinterest",
       "sector": "PLATFORM",
@@ -20473,6 +20324,77 @@
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "即使接近 Pool30 標準，仍需補做專業搜索，確認買賣點、技術位置與風險承受度。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "SBUX",
+      "name": "Starbucks",
+      "sector": "CONSUMER",
+      "subsector": "RESTAURANT",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "income",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "income"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可提供收益 / 防禦視角，利於大池風格平衡"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可提供收益 / 防禦視角，利於大池風格平衡",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "消費股提供景氣、需求韌性與品牌力的對照樣本，平衡科技集中度。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
       "research": {
         "status": "not_started",
@@ -21625,76 +21547,6 @@
       }
     },
     {
-      "symbol": "VRTX",
-      "name": "Vertex Pharmaceuticals",
-      "sector": "HEALTHCARE",
-      "subsector": "BIOTECH",
-      "identity": {
-        "is_new_stock": true,
-        "already_in_pool30": false,
-        "source": "ai_suggested",
-        "priority": "medium"
-      },
-      "human_override": {
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "final_category": "growth",
-        "note": ""
-      },
-      "system_recommendation": {
-        "bucket": "stock_pool_candidate",
-        "into_stock_pool": true,
-        "into_pool30": false,
-        "suggested_category": "defensive",
-        "seed_bucket": "stock_pool_candidate",
-        "seed_into_stock_pool": true,
-        "seed_into_pool30": false,
-        "seed_category": "growth"
-      },
-      "engine_score": {
-        "baseline": 5,
-        "vol_score": 1,
-        "pure": 6,
-        "valuation": 3,
-        "trend": 5,
-        "raw": 5.1,
-        "std": -0.9
-      },
-      "system_reason": {
-        "why_yes": [],
-        "why_no": [],
-        "seed_why_yes": [
-          "具成長屬性，適合擴充大池並觀察是否升核心",
-          "適合納入大池，先作 extended pool 樣本"
-        ],
-        "seed_why_no": []
-      },
-      "ai_reason_short": [
-        "適合先納入大池，再觀察是否升核心",
-        "具成長屬性，適合擴充大池並觀察是否升核心",
-        "適合納入大池，先作 extended pool 樣本"
-      ],
-      "ai_reason_detail": {
-        "growth": "醫療與生技提供防禦、政策與創新雙重視角，可平衡 AI/景氣循環。",
-        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
-        "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
-        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
-        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
-      },
-      "research": {
-        "status": "not_started",
-        "fundamental": "",
-        "industry": "",
-        "valuation_analysis": "",
-        "trading_plan": "",
-        "technical_analysis": "",
-        "pool30_fit": "",
-        "risk": "",
-        "final_conclusion": "",
-        "attachments": []
-      }
-    },
-    {
       "symbol": "WFC",
       "name": "Wells Fargo",
       "sector": "FINANCIAL",
@@ -21910,6 +21762,77 @@
       }
     },
     {
+      "symbol": "XLE",
+      "name": "Energy Select Sector SPDR",
+      "sector": "ETF",
+      "subsector": "ENERGY_ETF",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "income",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "income"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可提供收益 / 防禦視角，利於大池風格平衡"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可提供收益 / 防禦視角，利於大池風格平衡",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "ETF 提供 market proxy 與籃子視角，有助於校準大池與題材偏差。 ETF 更偏校準與對照，不宜只用單一新聞判定。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
       "symbol": "XLK",
       "name": "Technology Select Sector SPDR",
       "sector": "ETF",
@@ -21963,6 +21886,77 @@
         "growth": "ETF 提供 market proxy 與籃子視角，有助於校準大池與題材偏差。 ETF 更偏校準與對照，不宜只用單一新聞判定。",
         "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
         "competition": "公司在所屬子產業具一定辨識度，可作為領先者、次領先者或對照組樣本。",
+        "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
+        "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
+      },
+      "research": {
+        "status": "not_started",
+        "fundamental": "",
+        "industry": "",
+        "valuation_analysis": "",
+        "trading_plan": "",
+        "technical_analysis": "",
+        "pool30_fit": "",
+        "risk": "",
+        "final_conclusion": "",
+        "attachments": []
+      }
+    },
+    {
+      "symbol": "XLV",
+      "name": "Health Care Select Sector SPDR",
+      "sector": "ETF",
+      "subsector": "HEALTHCARE_ETF",
+      "identity": {
+        "is_new_stock": true,
+        "already_in_pool30": false,
+        "source": "ai_suggested",
+        "priority": "low"
+      },
+      "human_override": {
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "final_category": "defensive",
+        "note": ""
+      },
+      "system_recommendation": {
+        "bucket": "stock_pool_candidate",
+        "into_stock_pool": true,
+        "into_pool30": false,
+        "suggested_category": "defensive",
+        "seed_bucket": "watch_candidate",
+        "seed_into_stock_pool": true,
+        "seed_into_pool30": false,
+        "seed_category": "defensive"
+      },
+      "engine_score": {
+        "baseline": 5,
+        "vol_score": 1,
+        "pure": 6,
+        "valuation": 3,
+        "trend": 5,
+        "raw": 5.1,
+        "std": -0.9
+      },
+      "system_reason": {
+        "why_yes": [],
+        "why_no": [],
+        "seed_why_yes": [
+          "可平衡大池波動，補足防禦與對照組"
+        ],
+        "seed_why_no": [
+          "目前較適合觀察，不急著升入 pool30"
+        ]
+      },
+      "ai_reason_short": [
+        "保留觀察價值，但目前不是優先升級對象",
+        "可平衡大池波動，補足防禦與對照組",
+        "目前較適合觀察，不急著升入 pool30"
+      ],
+      "ai_reason_detail": {
+        "growth": "ETF 提供 market proxy 與籃子視角，有助於校準大池與題材偏差。 ETF 更偏校準與對照，不宜只用單一新聞判定。",
+        "industry": "該子產業可補足現有 pool 的觀察維度，適合作為比較樣本。",
+        "competition": "競爭壓力與替代風險較高，納入後需搭配更嚴格的追蹤標準。",
         "valuation": "初步定位為合理至合理偏高，適合先納入大池，再交由 engine 與人工複核。",
         "risk": "短線情緒、產業循環與波動仍是主要風險；若要升入 Pool30，建議先完成專業搜索。"
       },
