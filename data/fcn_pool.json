@@ -4353,6 +4353,67 @@
   }
 },
   {
+  "date": "2026-06-25",
+  "fcn_id": "FCN943P 富邦",
+  "basket": [
+    "ARM",
+    "AVGO",
+    "IBM",
+    "SMH",
+    "SNPS"
+  ],
+  "tenor": 7,
+  "rate": 0,
+  "autocall": 100,
+  "strike": 60,
+  "ki": 48,
+  "eki": true,
+  "bank": "BBVA",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-06-25T16:39",
+  "entry_time": "2026-06-25T16:39",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "ARM": 353.3122,
+    "AVGO": 380.7867,
+    "IBM": 260.1468,
+    "SMH": 632.0733,
+    "SNPS": 458.555
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "IBM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SMH": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SNPS": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
