@@ -31,39 +31,39 @@
     {
       "symbol": "0050.TW",
       "name": null,
-      "today_price": 108.8,
+      "today_price": 108.35,
       "forecast": {
         "1d": {
           "horizon_days": 1,
           "price_models": {
             "linear": {
-              "raw_today_price": 105.54,
-              "raw_future_price": 105.8,
-              "today_adjustment_factor": 0.970029,
-              "adjusted_price": 109.07,
-              "adjusted_factor": 1.002437,
+              "raw_today_price": 104.49,
+              "raw_future_price": 104.74,
+              "today_adjustment_factor": 0.964381,
+              "adjusted_price": 108.61,
+              "adjusted_factor": 1.002391,
               "adjusted_upside_pct": 0.24,
-              "r2": 0.8891,
+              "r2": 0.8727,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 110.48,
-              "raw_future_price": 111.03,
-              "today_adjustment_factor": 1.01547,
-              "adjusted_price": 109.34,
-              "adjusted_factor": 1.004945,
+              "raw_today_price": 109.32,
+              "raw_future_price": 109.85,
+              "today_adjustment_factor": 1.008924,
+              "adjusted_price": 108.88,
+              "adjusted_factor": 1.004867,
               "adjusted_upside_pct": 0.49,
-              "r2": 0.9789,
+              "r2": 0.9619,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 106.21,
-              "raw_future_price": 106.57,
-              "today_adjustment_factor": 0.976201,
-              "adjusted_price": 109.17,
-              "adjusted_factor": 1.003392,
-              "adjusted_upside_pct": 0.34,
-              "r2": 0.94,
+              "raw_today_price": 105.03,
+              "raw_future_price": 105.37,
+              "today_adjustment_factor": 0.969344,
+              "adjusted_price": 108.71,
+              "adjusted_factor": 1.003295,
+              "adjusted_upside_pct": 0.33,
+              "r2": 0.9261,
               "status": "ok"
             }
           },
@@ -78,19 +78,19 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 109.19,
-            "weighted_factor": 1.003594,
-            "weighted_upside_pct": 0.36
+            "weighted_price": 108.73,
+            "weighted_factor": 1.003516,
+            "weighted_upside_pct": 0.35
           },
           "decision_adjustment": {
             "mode": "A",
-            "direction": "down",
-            "before_price": 109.19,
-            "after_price": 109.0
+            "direction": "up",
+            "before_price": 108.73,
+            "after_price": 108.54
           },
           "final": {
-            "weighted_price_final": 109.0,
-            "weighted_factor_final": 1.001792,
+            "weighted_price_final": 108.54,
+            "weighted_factor_final": 1.001754,
             "weighted_upside_pct_final": 0.18
           }
         },
@@ -98,33 +98,33 @@
           "horizon_days": 5,
           "price_models": {
             "linear": {
-              "raw_today_price": 105.54,
-              "raw_future_price": 106.83,
-              "today_adjustment_factor": 0.970029,
-              "adjusted_price": 110.13,
-              "adjusted_factor": 1.012186,
-              "adjusted_upside_pct": 1.22,
-              "r2": 0.8891,
+              "raw_today_price": 104.49,
+              "raw_future_price": 105.74,
+              "today_adjustment_factor": 0.964381,
+              "adjusted_price": 109.65,
+              "adjusted_factor": 1.011954,
+              "adjusted_upside_pct": 1.2,
+              "r2": 0.8727,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 110.48,
-              "raw_future_price": 113.24,
-              "today_adjustment_factor": 1.01547,
-              "adjusted_price": 111.51,
-              "adjusted_factor": 1.024939,
-              "adjusted_upside_pct": 2.49,
-              "r2": 0.9789,
+              "raw_today_price": 109.32,
+              "raw_future_price": 112.0,
+              "today_adjustment_factor": 1.008924,
+              "adjusted_price": 111.01,
+              "adjusted_factor": 1.024546,
+              "adjusted_upside_pct": 2.45,
+              "r2": 0.9619,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 106.21,
-              "raw_future_price": 108.02,
-              "today_adjustment_factor": 0.976201,
-              "adjusted_price": 110.66,
-              "adjusted_factor": 1.017075,
-              "adjusted_upside_pct": 1.71,
-              "r2": 0.94,
+              "raw_today_price": 105.03,
+              "raw_future_price": 106.77,
+              "today_adjustment_factor": 0.969344,
+              "adjusted_price": 110.15,
+              "adjusted_factor": 1.016582,
+              "adjusted_upside_pct": 1.66,
+              "r2": 0.9261,
               "status": "ok"
             }
           },
@@ -139,53 +139,53 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 110.76,
-            "weighted_factor": 1.017978,
-            "weighted_upside_pct": 1.8
+            "weighted_price": 110.26,
+            "weighted_factor": 1.01761,
+            "weighted_upside_pct": 1.76
           },
           "decision_adjustment": {
             "mode": "A",
-            "direction": "down",
-            "before_price": 110.76,
-            "after_price": 109.78
+            "direction": "up",
+            "before_price": 110.26,
+            "after_price": 109.3
           },
           "final": {
-            "weighted_price_final": 109.78,
-            "weighted_factor_final": 1.009007,
-            "weighted_upside_pct_final": 0.9
+            "weighted_price_final": 109.3,
+            "weighted_factor_final": 1.008814,
+            "weighted_upside_pct_final": 0.88
           }
         },
         "1m": {
           "horizon_days": 21,
           "price_models": {
             "linear": {
-              "raw_today_price": 105.54,
-              "raw_future_price": 110.94,
-              "today_adjustment_factor": 0.970029,
-              "adjusted_price": 114.37,
-              "adjusted_factor": 1.051183,
-              "adjusted_upside_pct": 5.12,
-              "r2": 0.8891,
+              "raw_today_price": 104.49,
+              "raw_future_price": 109.74,
+              "today_adjustment_factor": 0.964381,
+              "adjusted_price": 113.79,
+              "adjusted_factor": 1.050207,
+              "adjusted_upside_pct": 5.02,
+              "r2": 0.8727,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 110.48,
-              "raw_future_price": 122.46,
-              "today_adjustment_factor": 1.01547,
-              "adjusted_price": 120.59,
-              "adjusted_factor": 1.108378,
-              "adjusted_upside_pct": 10.84,
-              "r2": 0.9789,
+              "raw_today_price": 109.32,
+              "raw_future_price": 120.98,
+              "today_adjustment_factor": 1.008924,
+              "adjusted_price": 119.91,
+              "adjusted_factor": 1.106679,
+              "adjusted_upside_pct": 10.67,
+              "r2": 0.9619,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 106.21,
-              "raw_future_price": 114.04,
-              "today_adjustment_factor": 0.976201,
-              "adjusted_price": 116.82,
-              "adjusted_factor": 1.073697,
-              "adjusted_upside_pct": 7.37,
-              "r2": 0.94,
+              "raw_today_price": 105.03,
+              "raw_future_price": 112.54,
+              "today_adjustment_factor": 0.969344,
+              "adjusted_price": 116.1,
+              "adjusted_factor": 1.071514,
+              "adjusted_upside_pct": 7.15,
+              "r2": 0.9261,
               "status": "ok"
             }
           },
@@ -200,36 +200,36 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 117.22,
-            "weighted_factor": 1.077353,
-            "weighted_upside_pct": 7.74
+            "weighted_price": 116.55,
+            "weighted_factor": 1.075681,
+            "weighted_upside_pct": 7.57
           },
           "decision_adjustment": {
             "mode": "A",
-            "direction": "down",
-            "before_price": 117.22,
-            "after_price": 113.01
+            "direction": "up",
+            "before_price": 116.55,
+            "after_price": 112.45
           },
           "final": {
-            "weighted_price_final": 113.01,
-            "weighted_factor_final": 1.038695,
-            "weighted_upside_pct_final": 3.87
+            "weighted_price_final": 112.45,
+            "weighted_factor_final": 1.03784,
+            "weighted_upside_pct_final": 3.78
           }
         }
       },
       "flat": {
         "decision_mode": "A",
         "decision_label": "A",
-        "short_direction": "down",
-        "timing_slope": 0.00031129,
-        "timing_dispersion": 0.00490075,
-        "timing_consistency_ratio": 0.1721,
-        "price_weighted_before_decision_1d": 109.19,
-        "price_weighted_before_decision_1w": 110.76,
-        "price_weighted_before_decision_1m": 117.22,
-        "final_weighted_1d": 109.0,
-        "final_weighted_1w": 109.78,
-        "final_weighted_1m": 113.01
+        "short_direction": "up",
+        "timing_slope": -1.636e-05,
+        "timing_dispersion": 0.00598243,
+        "timing_consistency_ratio": 0.0326,
+        "price_weighted_before_decision_1d": 108.73,
+        "price_weighted_before_decision_1w": 110.26,
+        "price_weighted_before_decision_1m": 116.55,
+        "final_weighted_1d": 108.54,
+        "final_weighted_1w": 109.3,
+        "final_weighted_1m": 112.45
       },
       "debug": {
         "model_scope": "M6 v9.1 fixed: pure price models + timing decision + decision adjusted price",
@@ -249,37 +249,37 @@
         "series": [
           {
             "x_day": -252,
-            "price": 48.65,
+            "price": 49.32,
             "source": "price_ref_12m"
           },
           {
             "x_day": -126,
-            "price": 63.35,
+            "price": 63.45,
             "source": "price_ref_6m"
           },
           {
             "x_day": -63,
-            "price": 75.0,
+            "price": 73.9,
             "source": "price_ref_3m"
           },
           {
             "x_day": -21,
-            "price": 105.7,
+            "price": 107.6,
             "source": "price_ref_1m"
           },
           {
             "x_day": -5,
-            "price": 107.2,
+            "price": 103.1,
             "source": "price_ref_1w"
           },
           {
             "x_day": -1,
-            "price": 109.69,
+            "price": 108.8,
             "source": "price_ref_1d"
           },
           {
             "x_day": 0,
-            "price": 108.8,
+            "price": 108.35,
             "source": "price_now"
           }
         ],
@@ -287,29 +287,29 @@
         "price_fit_summary": {
           "linear": {
             "status": "ok",
-            "r2": 0.8891,
+            "r2": 0.8727,
             "coefficients": [
-              105.53910968,
-              0.25723028
+              104.49063446,
+              0.24981718
             ],
             "log_mode": false
           },
           "quadratic": {
             "status": "ok",
-            "r2": 0.9789,
+            "r2": 0.9619,
             "coefficients": [
-              110.48308768,
-              0.54510169,
-              0.00119447
+              109.31694787,
+              0.53083737,
+              0.00116605
             ],
             "log_mode": false
           },
           "log": {
             "status": "ok",
-            "r2": 0.94,
+            "r2": 0.9261,
             "coefficients": [
-              4.66542449,
-              0.00338608
+              4.65423068,
+              0.00328915
             ],
             "log_mode": true
           }
@@ -317,41 +317,41 @@
       },
       "timing_structure": {
         "raw_returns": {
-          "ret_1d_pct": -0.8114,
-          "ret_1w_pct": 1.4925,
-          "ret_1m_pct": 2.9328
+          "ret_1d_pct": -0.4136,
+          "ret_1w_pct": 5.0921,
+          "ret_1m_pct": 0.697
         },
         "daily_normalized_returns": {
-          "ret_1d_daily_pct": -0.8114,
-          "ret_1w_daily_pct": 0.2985,
-          "ret_1m_daily_pct": 0.1397
+          "ret_1d_daily_pct": -0.4136,
+          "ret_1w_daily_pct": 1.0184,
+          "ret_1m_daily_pct": 0.0332
         },
-        "slope": 0.00031129,
-        "slope_r2": 0.3013,
-        "mean_daily": -0.00124404,
-        "dispersion": 0.00490075,
-        "consistency_ratio": 0.1721,
+        "slope": -1.636e-05,
+        "slope_r2": 0.0006,
+        "mean_daily": 0.00212671,
+        "dispersion": 0.00598243,
+        "consistency_ratio": 0.0326,
         "same_sign": false,
         "strength_consistent": false,
         "dispersion_ok": true,
         "strength_ok": true,
-        "direction": "down",
+        "direction": "up",
         "decision_mode": "A",
         "decision_label": "A",
         "rule": "B if same_sign and consistency_ratio>=0.55 and dispersion<=0.006 and abs(mean_daily)>=0.00025; else A"
       },
       "decision_mode": "A",
       "decision_label": "A",
-      "short_direction": "down",
-      "m7_linear_price": 114.37,
-      "m7_quadratic_price": 120.59,
-      "m7_log_price": 116.82,
-      "weighted_price_1d": 109.0,
-      "weighted_price_1w": 109.78,
-      "weighted_price_1m": 113.01,
+      "short_direction": "up",
+      "m7_linear_price": 113.79,
+      "m7_quadratic_price": 119.91,
+      "m7_log_price": 116.1,
+      "weighted_price_1d": 108.54,
+      "weighted_price_1w": 109.3,
+      "weighted_price_1m": 112.45,
       "weighted_upside_pct_1d": 0.18,
-      "weighted_upside_pct_1w": 0.9,
-      "weighted_upside_pct_1m": 3.87
+      "weighted_upside_pct_1w": 0.88,
+      "weighted_upside_pct_1m": 3.78
     },
     {
       "symbol": "AAL",
@@ -10106,39 +10106,39 @@
     {
       "symbol": "CL=F",
       "name": null,
-      "today_price": 68.51,
+      "today_price": 68.36,
       "forecast": {
         "1d": {
           "horizon_days": 1,
           "price_models": {
             "linear": {
-              "raw_today_price": 78.87,
-              "raw_future_price": 78.92,
-              "today_adjustment_factor": 1.151244,
-              "adjusted_price": 68.55,
-              "adjusted_factor": 1.000581,
-              "adjusted_upside_pct": 0.06,
-              "r2": 0.0702,
+              "raw_today_price": 78.44,
+              "raw_future_price": 78.48,
+              "today_adjustment_factor": 1.147428,
+              "adjusted_price": 68.4,
+              "adjusted_factor": 1.00052,
+              "adjusted_upside_pct": 0.05,
+              "r2": 0.0553,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 76.41,
-              "raw_future_price": 76.31,
-              "today_adjustment_factor": 1.115257,
-              "adjusted_price": 68.42,
-              "adjusted_factor": 0.998713,
+              "raw_today_price": 76.04,
+              "raw_future_price": 75.94,
+              "today_adjustment_factor": 1.112338,
+              "adjusted_price": 68.27,
+              "adjusted_factor": 0.998692,
               "adjusted_upside_pct": -0.13,
-              "r2": 0.1259,
+              "r2": 0.1078,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 77.63,
-              "raw_future_price": 77.68,
-              "today_adjustment_factor": 1.133189,
-              "adjusted_price": 68.55,
-              "adjusted_factor": 1.000628,
-              "adjusted_upside_pct": 0.06,
-              "r2": 0.0842,
+              "raw_today_price": 77.11,
+              "raw_future_price": 77.15,
+              "today_adjustment_factor": 1.127968,
+              "adjusted_price": 68.4,
+              "adjusted_factor": 1.000547,
+              "adjusted_upside_pct": 0.05,
+              "r2": 0.0636,
               "status": "ok"
             }
           },
@@ -10153,18 +10153,18 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 68.51,
+            "weighted_price": 68.36,
             "weighted_factor": 1.000015,
             "weighted_upside_pct": 0.0
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "down",
-            "before_price": 68.51,
-            "after_price": 68.51
+            "before_price": 68.36,
+            "after_price": 68.36
           },
           "final": {
-            "weighted_price_final": 68.51,
+            "weighted_price_final": 68.36,
             "weighted_factor_final": 1.0,
             "weighted_upside_pct_final": -0.0
           }
@@ -10173,33 +10173,33 @@
           "horizon_days": 5,
           "price_models": {
             "linear": {
-              "raw_today_price": 78.87,
-              "raw_future_price": 79.1,
-              "today_adjustment_factor": 1.151244,
-              "adjusted_price": 68.71,
-              "adjusted_factor": 1.002904,
-              "adjusted_upside_pct": 0.29,
-              "r2": 0.0702,
+              "raw_today_price": 78.44,
+              "raw_future_price": 78.64,
+              "today_adjustment_factor": 1.147428,
+              "adjusted_price": 68.54,
+              "adjusted_factor": 1.002598,
+              "adjusted_upside_pct": 0.26,
+              "r2": 0.0553,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 76.41,
-              "raw_future_price": 75.9,
-              "today_adjustment_factor": 1.115257,
-              "adjusted_price": 68.06,
-              "adjusted_factor": 0.993409,
-              "adjusted_upside_pct": -0.66,
-              "r2": 0.1259,
+              "raw_today_price": 76.04,
+              "raw_future_price": 75.53,
+              "today_adjustment_factor": 1.112338,
+              "adjusted_price": 67.9,
+              "adjusted_factor": 0.993306,
+              "adjusted_upside_pct": -0.67,
+              "r2": 0.1078,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 77.63,
-              "raw_future_price": 77.88,
-              "today_adjustment_factor": 1.133189,
-              "adjusted_price": 68.73,
-              "adjusted_factor": 1.003146,
-              "adjusted_upside_pct": 0.31,
-              "r2": 0.0842,
+              "raw_today_price": 77.11,
+              "raw_future_price": 77.32,
+              "today_adjustment_factor": 1.127968,
+              "adjusted_price": 68.55,
+              "adjusted_factor": 1.002736,
+              "adjusted_upside_pct": 0.27,
+              "r2": 0.0636,
               "status": "ok"
             }
           },
@@ -10214,81 +10214,81 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 68.52,
-            "weighted_factor": 1.00019,
-            "weighted_upside_pct": 0.02
-          },
-          "decision_adjustment": {
-            "mode": "A",
-            "direction": "down",
-            "before_price": 68.52,
-            "after_price": 68.52
-          },
-          "final": {
-            "weighted_price_final": 68.52,
-            "weighted_factor_final": 1.000073,
-            "weighted_upside_pct_final": 0.01
-          }
-        },
-        "1m": {
-          "horizon_days": 21,
-          "price_models": {
-            "linear": {
-              "raw_today_price": 78.87,
-              "raw_future_price": 79.83,
-              "today_adjustment_factor": 1.151244,
-              "adjusted_price": 69.35,
-              "adjusted_factor": 1.012199,
-              "adjusted_upside_pct": 1.22,
-              "r2": 0.0702,
-              "status": "ok"
-            },
-            "quadratic": {
-              "raw_today_price": 76.41,
-              "raw_future_price": 74.09,
-              "today_adjustment_factor": 1.115257,
-              "adjusted_price": 66.43,
-              "adjusted_factor": 0.969698,
-              "adjusted_upside_pct": -3.03,
-              "r2": 0.1259,
-              "status": "ok"
-            },
-            "log": {
-              "raw_today_price": 77.63,
-              "raw_future_price": 78.67,
-              "today_adjustment_factor": 1.133189,
-              "adjusted_price": 69.42,
-              "adjusted_factor": 1.013278,
-              "adjusted_upside_pct": 1.33,
-              "r2": 0.0842,
-              "status": "ok"
-            }
-          },
-          "price_weighted_before_decision": {
-            "model_weights_configured": {
-              "linear": 0.3,
-              "quadratic": 0.3,
-              "log": 0.4
-            },
-            "model_weights_used": {
-              "linear": 0.3,
-              "quadratic": 0.3,
-              "log": 0.4
-            },
-            "weighted_price": 68.5,
+            "weighted_price": 68.35,
             "weighted_factor": 0.999883,
             "weighted_upside_pct": -0.01
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "down",
-            "before_price": 68.5,
-            "after_price": 68.51
+            "before_price": 68.35,
+            "after_price": 68.36
           },
           "final": {
-            "weighted_price_final": 68.51,
+            "weighted_price_final": 68.36,
             "weighted_factor_final": 0.999927,
             "weighted_upside_pct_final": -0.01
+          }
+        },
+        "1m": {
+          "horizon_days": 21,
+          "price_models": {
+            "linear": {
+              "raw_today_price": 78.44,
+              "raw_future_price": 79.29,
+              "today_adjustment_factor": 1.147428,
+              "adjusted_price": 69.11,
+              "adjusted_factor": 1.010913,
+              "adjusted_upside_pct": 1.09,
+              "r2": 0.0553,
+              "status": "ok"
+            },
+            "quadratic": {
+              "raw_today_price": 76.04,
+              "raw_future_price": 73.71,
+              "today_adjustment_factor": 1.112338,
+              "adjusted_price": 66.26,
+              "adjusted_factor": 0.969323,
+              "adjusted_upside_pct": -3.07,
+              "r2": 0.1078,
+              "status": "ok"
+            },
+            "log": {
+              "raw_today_price": 77.11,
+              "raw_future_price": 78.0,
+              "today_adjustment_factor": 1.127968,
+              "adjusted_price": 69.15,
+              "adjusted_factor": 1.011541,
+              "adjusted_upside_pct": 1.15,
+              "r2": 0.0636,
+              "status": "ok"
+            }
+          },
+          "price_weighted_before_decision": {
+            "model_weights_configured": {
+              "linear": 0.3,
+              "quadratic": 0.3,
+              "log": 0.4
+            },
+            "model_weights_used": {
+              "linear": 0.3,
+              "quadratic": 0.3,
+              "log": 0.4
+            },
+            "weighted_price": 68.27,
+            "weighted_factor": 0.998698,
+            "weighted_upside_pct": -0.13
+          },
+          "decision_adjustment": {
+            "mode": "A",
+            "direction": "down",
+            "before_price": 68.27,
+            "after_price": 68.32
+          },
+          "final": {
+            "weighted_price_final": 68.32,
+            "weighted_factor_final": 0.999342,
+            "weighted_upside_pct_final": -0.07
           }
         }
       },
@@ -10296,15 +10296,15 @@
         "decision_mode": "A",
         "decision_label": "A",
         "short_direction": "down",
-        "timing_slope": -0.00048121,
-        "timing_dispersion": 0.00496755,
-        "timing_consistency_ratio": 0.0796,
-        "price_weighted_before_decision_1d": 68.51,
-        "price_weighted_before_decision_1w": 68.52,
-        "price_weighted_before_decision_1m": 68.5,
-        "final_weighted_1d": 68.51,
-        "final_weighted_1w": 68.52,
-        "final_weighted_1m": 68.51
+        "timing_slope": -0.0005184,
+        "timing_dispersion": 0.00483301,
+        "timing_consistency_ratio": 0.1832,
+        "price_weighted_before_decision_1d": 68.36,
+        "price_weighted_before_decision_1w": 68.35,
+        "price_weighted_before_decision_1m": 68.27,
+        "final_weighted_1d": 68.36,
+        "final_weighted_1w": 68.36,
+        "final_weighted_1m": 68.32
       },
       "debug": {
         "model_scope": "M6 v9.1 fixed: pure price models + timing decision + decision adjusted price",
@@ -10324,37 +10324,37 @@
         "series": [
           {
             "x_day": -252,
-            "price": 67.0,
+            "price": 67.93,
             "source": "price_ref_12m"
           },
           {
             "x_day": -126,
-            "price": 58.01,
+            "price": 58.38,
             "source": "price_ref_6m"
           },
           {
             "x_day": -63,
-            "price": 102.88,
+            "price": 101.38,
             "source": "price_ref_3m"
           },
           {
             "x_day": -21,
-            "price": 93.76,
+            "price": 96.02,
             "source": "price_ref_1m"
           },
           {
             "x_day": -5,
-            "price": 71.92,
+            "price": 69.23,
             "source": "price_ref_1w"
           },
           {
             "x_day": -1,
-            "price": 68.58,
+            "price": 68.69,
             "source": "price_ref_1d"
           },
           {
             "x_day": 0,
-            "price": 68.51,
+            "price": 68.36,
             "source": "price_now"
           }
         ],
@@ -10362,29 +10362,29 @@
         "price_fit_summary": {
           "linear": {
             "status": "ok",
-            "r2": 0.0702,
+            "r2": 0.0553,
             "coefficients": [
-              78.87169989,
-              0.04581602
+              78.4381869,
+              0.04076348
             ],
             "log_mode": false
           },
           "quadratic": {
             "status": "ok",
-            "r2": 0.1259,
+            "r2": 0.1078,
             "coefficients": [
-              76.40622702,
-              -0.09774027,
-              -0.00059566
+              76.03944241,
+              -0.09890744,
+              -0.00057954
             ],
             "log_mode": false
           },
           "log": {
             "status": "ok",
-            "r2": 0.0842,
+            "r2": 0.0636,
             "coefficients": [
-              4.35201582,
-              0.00062813
+              4.3452054,
+              0.00054643
             ],
             "log_mode": true
           }
@@ -10392,20 +10392,20 @@
       },
       "timing_structure": {
         "raw_returns": {
-          "ret_1d_pct": -0.1021,
-          "ret_1w_pct": -4.7414,
-          "ret_1m_pct": -26.9305
+          "ret_1d_pct": -0.4804,
+          "ret_1w_pct": -1.2567,
+          "ret_1m_pct": -28.8065
         },
         "daily_normalized_returns": {
-          "ret_1d_daily_pct": -0.1021,
-          "ret_1w_daily_pct": -0.9483,
-          "ret_1m_daily_pct": -1.2824
+          "ret_1d_daily_pct": -0.4804,
+          "ret_1w_daily_pct": -0.2513,
+          "ret_1m_daily_pct": -1.3717
         },
-        "slope": -0.00048121,
-        "slope_r2": 0.7007,
-        "mean_daily": -0.00777583,
-        "dispersion": 0.00496755,
-        "consistency_ratio": 0.0796,
+        "slope": -0.0005184,
+        "slope_r2": 0.8591,
+        "mean_daily": -0.00701166,
+        "dispersion": 0.00483301,
+        "consistency_ratio": 0.1832,
         "same_sign": true,
         "strength_consistent": false,
         "dispersion_ok": true,
@@ -10418,15 +10418,15 @@
       "decision_mode": "A",
       "decision_label": "A",
       "short_direction": "down",
-      "m7_linear_price": 69.35,
-      "m7_quadratic_price": 66.43,
-      "m7_log_price": 69.42,
-      "weighted_price_1d": 68.51,
-      "weighted_price_1w": 68.52,
-      "weighted_price_1m": 68.51,
+      "m7_linear_price": 69.11,
+      "m7_quadratic_price": 66.26,
+      "m7_log_price": 69.15,
+      "weighted_price_1d": 68.36,
+      "weighted_price_1w": 68.36,
+      "weighted_price_1m": 68.32,
       "weighted_upside_pct_1d": -0.0,
-      "weighted_upside_pct_1w": 0.01,
-      "weighted_upside_pct_1m": -0.01
+      "weighted_upside_pct_1w": -0.01,
+      "weighted_upside_pct_1m": -0.07
     },
     {
       "symbol": "CLSK",
@@ -16281,39 +16281,39 @@
     {
       "symbol": "DX-Y.NYB",
       "name": null,
-      "today_price": 100.85,
+      "today_price": 100.87,
       "forecast": {
         "1d": {
           "horizon_days": 1,
           "price_models": {
             "linear": {
-              "raw_today_price": 100.93,
-              "raw_future_price": 100.94,
-              "today_adjustment_factor": 1.000783,
-              "adjusted_price": 100.87,
-              "adjusted_factor": 1.00017,
-              "adjusted_upside_pct": 0.02,
-              "r2": 0.8329,
+              "raw_today_price": 100.69,
+              "raw_future_price": 100.7,
+              "today_adjustment_factor": 0.998188,
+              "adjusted_price": 100.89,
+              "adjusted_factor": 1.000145,
+              "adjusted_upside_pct": 0.01,
+              "r2": 0.8211,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 101.02,
-              "raw_future_price": 101.04,
-              "today_adjustment_factor": 1.001679,
-              "adjusted_price": 100.87,
-              "adjusted_factor": 1.000222,
-              "adjusted_upside_pct": 0.02,
-              "r2": 0.8392,
+              "raw_today_price": 100.95,
+              "raw_future_price": 100.98,
+              "today_adjustment_factor": 1.000755,
+              "adjusted_price": 100.9,
+              "adjusted_factor": 1.000294,
+              "adjusted_upside_pct": 0.03,
+              "r2": 0.892,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 100.93,
-              "raw_future_price": 100.95,
-              "today_adjustment_factor": 1.000804,
-              "adjusted_price": 100.87,
-              "adjusted_factor": 1.000173,
-              "adjusted_upside_pct": 0.02,
-              "r2": 0.8365,
+              "raw_today_price": 100.69,
+              "raw_future_price": 100.7,
+              "today_adjustment_factor": 0.998188,
+              "adjusted_price": 100.89,
+              "adjusted_factor": 1.000147,
+              "adjusted_upside_pct": 0.01,
+              "r2": 0.8237,
               "status": "ok"
             }
           },
@@ -16328,19 +16328,19 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 100.87,
-            "weighted_factor": 1.000218,
+            "weighted_price": 100.89,
+            "weighted_factor": 1.000208,
             "weighted_upside_pct": 0.02
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "down",
-            "before_price": 100.87,
-            "after_price": 100.86
+            "before_price": 100.89,
+            "after_price": 100.88
           },
           "final": {
-            "weighted_price_final": 100.86,
-            "weighted_factor_final": 1.000109,
+            "weighted_price_final": 100.88,
+            "weighted_factor_final": 1.000089,
             "weighted_upside_pct_final": 0.01
           }
         },
@@ -16348,33 +16348,33 @@
           "horizon_days": 5,
           "price_models": {
             "linear": {
-              "raw_today_price": 100.93,
-              "raw_future_price": 101.01,
-              "today_adjustment_factor": 1.000783,
-              "adjusted_price": 100.93,
-              "adjusted_factor": 1.000849,
-              "adjusted_upside_pct": 0.08,
-              "r2": 0.8329,
+              "raw_today_price": 100.69,
+              "raw_future_price": 100.76,
+              "today_adjustment_factor": 0.998188,
+              "adjusted_price": 100.95,
+              "adjusted_factor": 1.000724,
+              "adjusted_upside_pct": 0.07,
+              "r2": 0.8211,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 101.02,
-              "raw_future_price": 101.13,
-              "today_adjustment_factor": 1.001679,
-              "adjusted_price": 100.96,
-              "adjusted_factor": 1.001114,
-              "adjusted_upside_pct": 0.11,
-              "r2": 0.8392,
+              "raw_today_price": 100.95,
+              "raw_future_price": 101.1,
+              "today_adjustment_factor": 1.000755,
+              "adjusted_price": 101.02,
+              "adjusted_factor": 1.001484,
+              "adjusted_upside_pct": 0.15,
+              "r2": 0.892,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 100.93,
-              "raw_future_price": 101.02,
-              "today_adjustment_factor": 1.000804,
-              "adjusted_price": 100.94,
-              "adjusted_factor": 1.000866,
-              "adjusted_upside_pct": 0.09,
-              "r2": 0.8365,
+              "raw_today_price": 100.69,
+              "raw_future_price": 100.76,
+              "today_adjustment_factor": 0.998188,
+              "adjusted_price": 100.95,
+              "adjusted_factor": 1.000735,
+              "adjusted_upside_pct": 0.07,
+              "r2": 0.8237,
               "status": "ok"
             }
           },
@@ -16389,19 +16389,19 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 100.94,
-            "weighted_factor": 1.000942,
-            "weighted_upside_pct": 0.09
+            "weighted_price": 100.97,
+            "weighted_factor": 1.000981,
+            "weighted_upside_pct": 0.1
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "down",
-            "before_price": 100.94,
-            "after_price": 100.89
+            "before_price": 100.97,
+            "after_price": 100.92
           },
           "final": {
-            "weighted_price_final": 100.89,
-            "weighted_factor_final": 1.000456,
+            "weighted_price_final": 100.92,
+            "weighted_factor_final": 1.000486,
             "weighted_upside_pct_final": 0.05
           }
         },
@@ -16409,33 +16409,33 @@
           "horizon_days": 21,
           "price_models": {
             "linear": {
-              "raw_today_price": 100.93,
-              "raw_future_price": 101.29,
-              "today_adjustment_factor": 1.000783,
-              "adjusted_price": 101.21,
-              "adjusted_factor": 1.003566,
-              "adjusted_upside_pct": 0.36,
-              "r2": 0.8329,
+              "raw_today_price": 100.69,
+              "raw_future_price": 101.0,
+              "today_adjustment_factor": 0.998188,
+              "adjusted_price": 101.18,
+              "adjusted_factor": 1.00304,
+              "adjusted_upside_pct": 0.3,
+              "r2": 0.8211,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 101.02,
-              "raw_future_price": 101.5,
-              "today_adjustment_factor": 1.001679,
-              "adjusted_price": 101.33,
-              "adjusted_factor": 1.004752,
-              "adjusted_upside_pct": 0.48,
-              "r2": 0.8392,
+              "raw_today_price": 100.95,
+              "raw_future_price": 101.6,
+              "today_adjustment_factor": 1.000755,
+              "adjusted_price": 101.52,
+              "adjusted_factor": 1.006442,
+              "adjusted_upside_pct": 0.64,
+              "r2": 0.892,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 100.93,
-              "raw_future_price": 101.3,
-              "today_adjustment_factor": 1.000804,
-              "adjusted_price": 101.22,
-              "adjusted_factor": 1.003642,
-              "adjusted_upside_pct": 0.36,
-              "r2": 0.8365,
+              "raw_today_price": 100.69,
+              "raw_future_price": 101.0,
+              "today_adjustment_factor": 0.998188,
+              "adjusted_price": 101.18,
+              "adjusted_factor": 1.003091,
+              "adjusted_upside_pct": 0.31,
+              "r2": 0.8237,
               "status": "ok"
             }
           },
@@ -16450,19 +16450,19 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 101.25,
-            "weighted_factor": 1.003986,
-            "weighted_upside_pct": 0.4
+            "weighted_price": 101.28,
+            "weighted_factor": 1.004065,
+            "weighted_upside_pct": 0.41
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "down",
-            "before_price": 101.25,
-            "after_price": 101.05
+            "before_price": 101.28,
+            "after_price": 101.08
           },
           "final": {
-            "weighted_price_final": 101.05,
-            "weighted_factor_final": 1.001993,
+            "weighted_price_final": 101.08,
+            "weighted_factor_final": 1.002022,
             "weighted_upside_pct_final": 0.2
           }
         }
@@ -16471,15 +16471,15 @@
         "decision_mode": "A",
         "decision_label": "A",
         "short_direction": "down",
-        "timing_slope": 0.00025327,
-        "timing_dispersion": 0.00255789,
-        "timing_consistency_ratio": 0.1462,
-        "price_weighted_before_decision_1d": 100.87,
-        "price_weighted_before_decision_1w": 100.94,
-        "price_weighted_before_decision_1m": 101.25,
-        "final_weighted_1d": 100.86,
-        "final_weighted_1w": 100.89,
-        "final_weighted_1m": 101.05
+        "timing_slope": 4.734e-05,
+        "timing_dispersion": 0.00066833,
+        "timing_consistency_ratio": 0.1236,
+        "price_weighted_before_decision_1d": 100.89,
+        "price_weighted_before_decision_1w": 100.97,
+        "price_weighted_before_decision_1m": 101.28,
+        "final_weighted_1d": 100.88,
+        "final_weighted_1w": 100.92,
+        "final_weighted_1m": 101.08
       },
       "debug": {
         "model_scope": "M6 v9.1 fixed: pure price models + timing decision + decision adjusted price",
@@ -16499,37 +16499,37 @@
         "series": [
           {
             "x_day": -252,
-            "price": 96.78,
+            "price": 97.48,
             "source": "price_ref_12m"
           },
           {
             "x_day": -126,
-            "price": 98.29,
+            "price": 97.94,
             "source": "price_ref_6m"
           },
           {
             "x_day": -63,
-            "price": 100.51,
+            "price": 99.96,
             "source": "price_ref_3m"
           },
           {
             "x_day": -21,
-            "price": 99.22,
+            "price": 99.53,
             "source": "price_ref_1m"
           },
           {
             "x_day": -5,
-            "price": 101.43,
+            "price": 101.36,
             "source": "price_ref_1w"
           },
           {
             "x_day": -1,
-            "price": 101.39,
+            "price": 100.86,
             "source": "price_ref_1d"
           },
           {
             "x_day": 0,
-            "price": 100.848,
+            "price": 100.872,
             "source": "price_now"
           }
         ],
@@ -16537,29 +16537,29 @@
         "price_fit_summary": {
           "linear": {
             "status": "ok",
-            "r2": 0.8329,
+            "r2": 0.8211,
             "coefficients": [
-              100.92691515,
-              0.01713761
+              100.6892314,
+              0.01457823
             ],
             "log_mode": false
           },
           "quadratic": {
             "status": "ok",
-            "r2": 0.8392,
+            "r2": 0.892,
             "coefficients": [
-              101.01728653,
-              0.02239964,
-              2.183e-05
+              100.94813785,
+              0.0296535,
+              6.255e-05
             ],
             "log_mode": false
           },
           "log": {
             "status": "ok",
-            "r2": 0.8365,
+            "r2": 0.8237,
             "coefficients": [
-              4.61441815,
-              0.0001731
+              4.61203843,
+              0.00014695
             ],
             "log_mode": true
           }
@@ -16567,24 +16567,24 @@
       },
       "timing_structure": {
         "raw_returns": {
-          "ret_1d_pct": -0.5346,
-          "ret_1w_pct": -0.5738,
-          "ret_1m_pct": 1.6408
+          "ret_1d_pct": 0.0119,
+          "ret_1w_pct": -0.4815,
+          "ret_1m_pct": 1.3483
         },
         "daily_normalized_returns": {
-          "ret_1d_daily_pct": -0.5346,
-          "ret_1w_daily_pct": -0.1148,
-          "ret_1m_daily_pct": 0.0781
+          "ret_1d_daily_pct": 0.0119,
+          "ret_1w_daily_pct": -0.0963,
+          "ret_1m_daily_pct": 0.0642
         },
-        "slope": 0.00025327,
-        "slope_r2": 0.732,
-        "mean_daily": -0.00190398,
-        "dispersion": 0.00255789,
-        "consistency_ratio": 0.1462,
+        "slope": 4.734e-05,
+        "slope_r2": 0.3747,
+        "mean_daily": -6.728e-05,
+        "dispersion": 0.00066833,
+        "consistency_ratio": 0.1236,
         "same_sign": false,
         "strength_consistent": false,
         "dispersion_ok": true,
-        "strength_ok": true,
+        "strength_ok": false,
         "direction": "down",
         "decision_mode": "A",
         "decision_label": "A",
@@ -16593,12 +16593,12 @@
       "decision_mode": "A",
       "decision_label": "A",
       "short_direction": "down",
-      "m7_linear_price": 101.21,
-      "m7_quadratic_price": 101.33,
-      "m7_log_price": 101.22,
-      "weighted_price_1d": 100.86,
-      "weighted_price_1w": 100.89,
-      "weighted_price_1m": 101.05,
+      "m7_linear_price": 101.18,
+      "m7_quadratic_price": 101.52,
+      "m7_log_price": 101.18,
+      "weighted_price_1d": 100.88,
+      "weighted_price_1w": 100.92,
+      "weighted_price_1m": 101.08,
       "weighted_upside_pct_1d": 0.01,
       "weighted_upside_pct_1w": 0.05,
       "weighted_upside_pct_1m": 0.2
@@ -18231,39 +18231,39 @@
     {
       "symbol": "GC=F",
       "name": null,
-      "today_price": 4136.2,
+      "today_price": 4191.5,
       "forecast": {
         "1d": {
           "horizon_days": 1,
           "price_models": {
             "linear": {
-              "raw_today_price": 4321.5,
-              "raw_future_price": 4324.12,
-              "today_adjustment_factor": 1.0448,
-              "adjusted_price": 4138.7,
-              "adjusted_factor": 1.000605,
+              "raw_today_price": 4364.8,
+              "raw_future_price": 4367.52,
+              "today_adjustment_factor": 1.041347,
+              "adjusted_price": 4194.11,
+              "adjusted_factor": 1.000622,
               "adjusted_upside_pct": 0.06,
-              "r2": 0.3476,
+              "r2": 0.3493,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 4115.5,
-              "raw_future_price": 4106.07,
-              "today_adjustment_factor": 0.994996,
-              "adjusted_price": 4126.72,
-              "adjusted_factor": 0.997709,
-              "adjusted_upside_pct": -0.23,
-              "r2": 0.9376,
+              "raw_today_price": 4147.34,
+              "raw_future_price": 4137.35,
+              "today_adjustment_factor": 0.989465,
+              "adjusted_price": 4181.4,
+              "adjusted_factor": 0.997589,
+              "adjusted_upside_pct": -0.24,
+              "r2": 0.9618,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 4327.57,
-              "raw_future_price": 4330.64,
-              "today_adjustment_factor": 1.046267,
-              "adjusted_price": 4139.13,
-              "adjusted_factor": 1.000709,
+              "raw_today_price": 4372.11,
+              "raw_future_price": 4375.32,
+              "today_adjustment_factor": 1.043089,
+              "adjusted_price": 4194.58,
+              "adjusted_factor": 1.000735,
               "adjusted_upside_pct": 0.07,
-              "r2": 0.3894,
+              "r2": 0.3943,
               "status": "ok"
             }
           },
@@ -18278,19 +18278,19 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 4135.28,
-            "weighted_factor": 0.999777,
+            "weighted_price": 4190.48,
+            "weighted_factor": 0.999758,
             "weighted_upside_pct": -0.02
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "up",
-            "before_price": 4135.28,
-            "after_price": 4135.74
+            "before_price": 4190.48,
+            "after_price": 4190.99
           },
           "final": {
-            "weighted_price_final": 4135.74,
-            "weighted_factor_final": 0.999889,
+            "weighted_price_final": 4190.99,
+            "weighted_factor_final": 0.999878,
             "weighted_upside_pct_final": -0.01
           }
         },
@@ -18298,33 +18298,33 @@
           "horizon_days": 5,
           "price_models": {
             "linear": {
-              "raw_today_price": 4321.5,
-              "raw_future_price": 4334.58,
-              "today_adjustment_factor": 1.0448,
-              "adjusted_price": 4148.72,
-              "adjusted_factor": 1.003027,
-              "adjusted_upside_pct": 0.3,
-              "r2": 0.3476,
+              "raw_today_price": 4364.8,
+              "raw_future_price": 4378.39,
+              "today_adjustment_factor": 1.041347,
+              "adjusted_price": 4204.54,
+              "adjusted_factor": 1.003112,
+              "adjusted_upside_pct": 0.31,
+              "r2": 0.3493,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 4115.5,
-              "raw_future_price": 4067.36,
-              "today_adjustment_factor": 0.994996,
-              "adjusted_price": 4087.82,
-              "adjusted_factor": 0.988303,
-              "adjusted_upside_pct": -1.17,
-              "r2": 0.9376,
+              "raw_today_price": 4147.34,
+              "raw_future_price": 4096.3,
+              "today_adjustment_factor": 0.989465,
+              "adjusted_price": 4139.92,
+              "adjusted_factor": 0.987693,
+              "adjusted_upside_pct": -1.23,
+              "r2": 0.9618,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 4327.57,
-              "raw_future_price": 4342.92,
-              "today_adjustment_factor": 1.046267,
-              "adjusted_price": 4150.88,
-              "adjusted_factor": 1.003548,
-              "adjusted_upside_pct": 0.35,
-              "r2": 0.3894,
+              "raw_today_price": 4372.11,
+              "raw_future_price": 4388.19,
+              "today_adjustment_factor": 1.043089,
+              "adjusted_price": 4206.92,
+              "adjusted_factor": 1.003678,
+              "adjusted_upside_pct": 0.37,
+              "r2": 0.3943,
               "status": "ok"
             }
           },
@@ -18339,19 +18339,19 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 4131.31,
-            "weighted_factor": 0.998819,
-            "weighted_upside_pct": -0.12
+            "weighted_price": 4186.11,
+            "weighted_factor": 0.998713,
+            "weighted_upside_pct": -0.13
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "up",
-            "before_price": 4131.31,
-            "after_price": 4133.76
+            "before_price": 4186.11,
+            "after_price": 4188.81
           },
           "final": {
-            "weighted_price_final": 4133.76,
-            "weighted_factor_final": 0.999409,
+            "weighted_price_final": 4188.81,
+            "weighted_factor_final": 0.999357,
             "weighted_upside_pct_final": -0.06
           }
         },
@@ -18359,33 +18359,33 @@
           "horizon_days": 21,
           "price_models": {
             "linear": {
-              "raw_today_price": 4321.5,
-              "raw_future_price": 4376.44,
-              "today_adjustment_factor": 1.0448,
-              "adjusted_price": 4188.78,
-              "adjusted_factor": 1.012712,
-              "adjusted_upside_pct": 1.27,
-              "r2": 0.3476,
+              "raw_today_price": 4364.8,
+              "raw_future_price": 4421.86,
+              "today_adjustment_factor": 1.041347,
+              "adjusted_price": 4246.29,
+              "adjusted_factor": 1.013071,
+              "adjusted_upside_pct": 1.31,
+              "r2": 0.3493,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 4115.5,
-              "raw_future_price": 3896.59,
-              "today_adjustment_factor": 0.994996,
-              "adjusted_price": 3916.19,
-              "adjusted_factor": 0.946809,
-              "adjusted_upside_pct": -5.32,
-              "r2": 0.9376,
+              "raw_today_price": 4147.34,
+              "raw_future_price": 3915.32,
+              "today_adjustment_factor": 0.989465,
+              "adjusted_price": 3957.01,
+              "adjusted_factor": 0.944056,
+              "adjusted_upside_pct": -5.59,
+              "r2": 0.9618,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 4327.57,
-              "raw_future_price": 4392.43,
-              "today_adjustment_factor": 1.046267,
-              "adjusted_price": 4198.19,
-              "adjusted_factor": 1.014987,
-              "adjusted_upside_pct": 1.5,
-              "r2": 0.3894,
+              "raw_today_price": 4372.11,
+              "raw_future_price": 4440.05,
+              "today_adjustment_factor": 1.043089,
+              "adjusted_price": 4256.64,
+              "adjusted_factor": 1.01554,
+              "adjusted_upside_pct": 1.55,
+              "r2": 0.3943,
               "status": "ok"
             }
           },
@@ -18400,20 +18400,20 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 4110.77,
-            "weighted_factor": 0.993851,
-            "weighted_upside_pct": -0.61
+            "weighted_price": 4163.65,
+            "weighted_factor": 0.993355,
+            "weighted_upside_pct": -0.66
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "up",
-            "before_price": 4110.77,
-            "after_price": 4123.49
+            "before_price": 4163.65,
+            "after_price": 4177.57
           },
           "final": {
-            "weighted_price_final": 4123.49,
-            "weighted_factor_final": 0.996926,
-            "weighted_upside_pct_final": -0.31
+            "weighted_price_final": 4177.57,
+            "weighted_factor_final": 0.996678,
+            "weighted_upside_pct_final": -0.33
           }
         }
       },
@@ -18421,15 +18421,15 @@
         "decision_mode": "A",
         "decision_label": "A",
         "short_direction": "up",
-        "timing_slope": -0.00089028,
-        "timing_dispersion": 0.00836202,
-        "timing_consistency_ratio": 0.2243,
-        "price_weighted_before_decision_1d": 4135.28,
-        "price_weighted_before_decision_1w": 4131.31,
-        "price_weighted_before_decision_1m": 4110.77,
-        "final_weighted_1d": 4135.74,
-        "final_weighted_1w": 4133.76,
-        "final_weighted_1m": 4123.49
+        "timing_slope": -0.00092405,
+        "timing_dispersion": 0.00898929,
+        "timing_consistency_ratio": 0.1374,
+        "price_weighted_before_decision_1d": 4190.48,
+        "price_weighted_before_decision_1w": 4186.11,
+        "price_weighted_before_decision_1m": 4163.65,
+        "final_weighted_1d": 4190.99,
+        "final_weighted_1w": 4188.81,
+        "final_weighted_1m": 4177.57
       },
       "debug": {
         "model_scope": "M6 v9.1 fixed: pure price models + timing decision + decision adjusted price",
@@ -18449,37 +18449,37 @@
         "series": [
           {
             "x_day": -252,
-            "price": 3331.6001,
+            "price": 3332.2,
             "source": "price_ref_12m"
           },
           {
             "x_day": -126,
-            "price": 4444.6001,
+            "price": 4482.7998,
             "source": "price_ref_6m"
           },
           {
             "x_day": -63,
-            "price": 4526.0,
+            "price": 4647.6001,
             "source": "price_ref_3m"
           },
           {
             "x_day": -21,
-            "price": 4489.1001,
+            "price": 4436.7002,
             "source": "price_ref_1m"
           },
           {
             "x_day": -5,
-            "price": 4030.5,
+            "price": 4078.7,
             "source": "price_ref_1w"
           },
           {
             "x_day": -1,
-            "price": 4068.3,
+            "price": 4112.7002,
             "source": "price_ref_1d"
           },
           {
             "x_day": 0,
-            "price": 4136.2002,
+            "price": 4191.5,
             "source": "price_now"
           }
         ],
@@ -18487,29 +18487,29 @@
         "price_fit_summary": {
           "linear": {
             "status": "ok",
-            "r2": 0.3476,
+            "r2": 0.3493,
             "coefficients": [
-              4321.50313298,
-              2.61585768
+              4364.80436367,
+              2.71673152
             ],
             "log_mode": false
           },
           "quadratic": {
             "status": "ok",
-            "r2": 0.9376,
+            "r2": 0.9618,
             "coefficients": [
-              4115.50068388,
-              -9.3789803,
-              -0.04977053
+              4147.34394305,
+              -9.94526606,
+              -0.0525388
             ],
             "log_mode": false
           },
           "log": {
             "status": "ok",
-            "r2": 0.3894,
+            "r2": 0.3943,
             "coefficients": [
-              8.3727615,
-              0.00070837
+              8.38300037,
+              0.00073431
             ],
             "log_mode": true
           }
@@ -18517,20 +18517,20 @@
       },
       "timing_structure": {
         "raw_returns": {
-          "ret_1d_pct": 1.669,
-          "ret_1w_pct": 2.6225,
-          "ret_1m_pct": -7.8613
+          "ret_1d_pct": 1.916,
+          "ret_1w_pct": 2.7656,
+          "ret_1m_pct": -5.5266
         },
         "daily_normalized_returns": {
-          "ret_1d_daily_pct": 1.669,
-          "ret_1w_daily_pct": 0.5245,
-          "ret_1m_daily_pct": -0.3743
+          "ret_1d_daily_pct": 1.916,
+          "ret_1w_daily_pct": 0.5531,
+          "ret_1m_daily_pct": -0.2632
         },
-        "slope": -0.00089028,
-        "slope_r2": 0.8464,
-        "mean_daily": 0.00606387,
-        "dispersion": 0.00836202,
-        "consistency_ratio": 0.2243,
+        "slope": -0.00092405,
+        "slope_r2": 0.789,
+        "mean_daily": 0.00735319,
+        "dispersion": 0.00898929,
+        "consistency_ratio": 0.1374,
         "same_sign": false,
         "strength_consistent": false,
         "dispersion_ok": false,
@@ -18543,15 +18543,15 @@
       "decision_mode": "A",
       "decision_label": "A",
       "short_direction": "up",
-      "m7_linear_price": 4188.78,
-      "m7_quadratic_price": 3916.19,
-      "m7_log_price": 4198.19,
-      "weighted_price_1d": 4135.74,
-      "weighted_price_1w": 4133.76,
-      "weighted_price_1m": 4123.49,
+      "m7_linear_price": 4246.29,
+      "m7_quadratic_price": 3957.01,
+      "m7_log_price": 4256.64,
+      "weighted_price_1d": 4190.99,
+      "weighted_price_1w": 4188.81,
+      "weighted_price_1m": 4177.57,
       "weighted_upside_pct_1d": -0.01,
       "weighted_upside_pct_1w": -0.06,
-      "weighted_upside_pct_1m": -0.31
+      "weighted_upside_pct_1m": -0.33
     },
     {
       "symbol": "GE",
@@ -23431,100 +23431,39 @@
     {
       "symbol": "JPY=X",
       "name": null,
-      "today_price": 161.18,
+      "today_price": 161.39,
       "forecast": {
         "1d": {
           "horizon_days": 1,
           "price_models": {
             "linear": {
-              "raw_today_price": 161.96,
-              "raw_future_price": 162.02,
-              "today_adjustment_factor": 1.004892,
-              "adjusted_price": 161.23,
-              "adjusted_factor": 1.000346,
-              "adjusted_upside_pct": 0.03,
-              "r2": 0.9797,
-              "status": "ok"
-            },
-            "quadratic": {
-              "raw_today_price": 161.68,
-              "raw_future_price": 161.72,
-              "today_adjustment_factor": 1.00313,
-              "adjusted_price": 161.21,
-              "adjusted_factor": 1.000244,
-              "adjusted_upside_pct": 0.02,
-              "r2": 0.9866,
-              "status": "ok"
-            },
-            "log": {
-              "raw_today_price": 162.01,
-              "raw_future_price": 162.07,
-              "today_adjustment_factor": 1.005201,
-              "adjusted_price": 161.23,
-              "adjusted_factor": 1.000362,
-              "adjusted_upside_pct": 0.04,
-              "r2": 0.9783,
-              "status": "ok"
-            }
-          },
-          "price_weighted_before_decision": {
-            "model_weights_configured": {
-              "linear": 0.3,
-              "quadratic": 0.3,
-              "log": 0.4
-            },
-            "model_weights_used": {
-              "linear": 0.3,
-              "quadratic": 0.3,
-              "log": 0.4
-            },
-            "weighted_price": 161.22,
-            "weighted_factor": 1.000304,
-            "weighted_upside_pct": 0.03
-          },
-          "decision_adjustment": {
-            "mode": "A",
-            "direction": "down",
-            "before_price": 161.22,
-            "after_price": 161.2
-          },
-          "final": {
-            "weighted_price_final": 161.2,
-            "weighted_factor_final": 1.00014,
-            "weighted_upside_pct_final": 0.01
-          }
-        },
-        "1w": {
-          "horizon_days": 5,
-          "price_models": {
-            "linear": {
-              "raw_today_price": 161.96,
-              "raw_future_price": 162.24,
-              "today_adjustment_factor": 1.004892,
-              "adjusted_price": 161.45,
-              "adjusted_factor": 1.001729,
-              "adjusted_upside_pct": 0.17,
-              "r2": 0.9797,
-              "status": "ok"
-            },
-            "quadratic": {
-              "raw_today_price": 161.68,
+              "raw_today_price": 161.83,
               "raw_future_price": 161.88,
-              "today_adjustment_factor": 1.00313,
-              "adjusted_price": 161.37,
-              "adjusted_factor": 1.00121,
-              "adjusted_upside_pct": 0.12,
-              "r2": 0.9866,
+              "today_adjustment_factor": 1.002728,
+              "adjusted_price": 161.44,
+              "adjusted_factor": 1.000303,
+              "adjusted_upside_pct": 0.03,
+              "r2": 0.971,
+              "status": "ok"
+            },
+            "quadratic": {
+              "raw_today_price": 161.4,
+              "raw_future_price": 161.42,
+              "today_adjustment_factor": 1.000064,
+              "adjusted_price": 161.41,
+              "adjusted_factor": 1.000148,
+              "adjusted_upside_pct": 0.01,
+              "r2": 0.9915,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 162.01,
-              "raw_future_price": 162.31,
-              "today_adjustment_factor": 1.005201,
-              "adjusted_price": 161.47,
-              "adjusted_factor": 1.001811,
-              "adjusted_upside_pct": 0.18,
-              "r2": 0.9783,
+              "raw_today_price": 161.87,
+              "raw_future_price": 161.92,
+              "today_adjustment_factor": 1.002988,
+              "adjusted_price": 161.44,
+              "adjusted_factor": 1.000315,
+              "adjusted_upside_pct": 0.03,
+              "r2": 0.9687,
               "status": "ok"
             }
           },
@@ -23540,52 +23479,113 @@
               "log": 0.4
             },
             "weighted_price": 161.43,
-            "weighted_factor": 1.001607,
-            "weighted_upside_pct": 0.16
+            "weighted_factor": 1.000266,
+            "weighted_upside_pct": 0.03
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "down",
             "before_price": 161.43,
-            "after_price": 161.3
+            "after_price": 161.41
           },
           "final": {
-            "weighted_price_final": 161.3,
-            "weighted_factor_final": 1.000791,
-            "weighted_upside_pct_final": 0.08
+            "weighted_price_final": 161.41,
+            "weighted_factor_final": 1.00013,
+            "weighted_upside_pct_final": 0.01
+          }
+        },
+        "1w": {
+          "horizon_days": 5,
+          "price_models": {
+            "linear": {
+              "raw_today_price": 161.83,
+              "raw_future_price": 162.07,
+              "today_adjustment_factor": 1.002728,
+              "adjusted_price": 161.63,
+              "adjusted_factor": 1.001513,
+              "adjusted_upside_pct": 0.15,
+              "r2": 0.971,
+              "status": "ok"
+            },
+            "quadratic": {
+              "raw_today_price": 161.4,
+              "raw_future_price": 161.52,
+              "today_adjustment_factor": 1.000064,
+              "adjusted_price": 161.51,
+              "adjusted_factor": 1.000725,
+              "adjusted_upside_pct": 0.07,
+              "r2": 0.9915,
+              "status": "ok"
+            },
+            "log": {
+              "raw_today_price": 161.87,
+              "raw_future_price": 162.13,
+              "today_adjustment_factor": 1.002988,
+              "adjusted_price": 161.64,
+              "adjusted_factor": 1.001577,
+              "adjusted_upside_pct": 0.16,
+              "r2": 0.9687,
+              "status": "ok"
+            }
+          },
+          "price_weighted_before_decision": {
+            "model_weights_configured": {
+              "linear": 0.3,
+              "quadratic": 0.3,
+              "log": 0.4
+            },
+            "model_weights_used": {
+              "linear": 0.3,
+              "quadratic": 0.3,
+              "log": 0.4
+            },
+            "weighted_price": 161.6,
+            "weighted_factor": 1.001301,
+            "weighted_upside_pct": 0.13
+          },
+          "decision_adjustment": {
+            "mode": "A",
+            "direction": "down",
+            "before_price": 161.6,
+            "after_price": 161.49
+          },
+          "final": {
+            "weighted_price_final": 161.49,
+            "weighted_factor_final": 1.000657,
+            "weighted_upside_pct_final": 0.07
           }
         },
         "1m": {
           "horizon_days": 21,
           "price_models": {
             "linear": {
-              "raw_today_price": 161.96,
-              "raw_future_price": 163.14,
-              "today_adjustment_factor": 1.004892,
-              "adjusted_price": 162.35,
-              "adjusted_factor": 1.007263,
-              "adjusted_upside_pct": 0.73,
-              "r2": 0.9797,
+              "raw_today_price": 161.83,
+              "raw_future_price": 162.86,
+              "today_adjustment_factor": 1.002728,
+              "adjusted_price": 162.41,
+              "adjusted_factor": 1.006353,
+              "adjusted_upside_pct": 0.64,
+              "r2": 0.971,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 161.68,
-              "raw_future_price": 162.48,
-              "today_adjustment_factor": 1.00313,
-              "adjusted_price": 161.97,
-              "adjusted_factor": 1.00494,
-              "adjusted_upside_pct": 0.49,
-              "r2": 0.9866,
+              "raw_today_price": 161.4,
+              "raw_future_price": 161.85,
+              "today_adjustment_factor": 1.000064,
+              "adjusted_price": 161.84,
+              "adjusted_factor": 1.002829,
+              "adjusted_upside_pct": 0.28,
+              "r2": 0.9915,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 162.01,
-              "raw_future_price": 163.25,
-              "today_adjustment_factor": 1.005201,
-              "adjusted_price": 162.4,
-              "adjusted_factor": 1.007629,
-              "adjusted_upside_pct": 0.76,
-              "r2": 0.9783,
+              "raw_today_price": 161.87,
+              "raw_future_price": 162.95,
+              "today_adjustment_factor": 1.002988,
+              "adjusted_price": 162.46,
+              "adjusted_factor": 1.006641,
+              "adjusted_upside_pct": 0.66,
+              "r2": 0.9687,
               "status": "ok"
             }
           },
@@ -23601,19 +23601,19 @@
               "log": 0.4
             },
             "weighted_price": 162.26,
-            "weighted_factor": 1.006707,
-            "weighted_upside_pct": 0.67
+            "weighted_factor": 1.005397,
+            "weighted_upside_pct": 0.54
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "down",
             "before_price": 162.26,
-            "after_price": 161.72
+            "after_price": 161.82
           },
           "final": {
-            "weighted_price_final": 161.72,
-            "weighted_factor_final": 1.003366,
-            "weighted_upside_pct_final": 0.34
+            "weighted_price_final": 161.82,
+            "weighted_factor_final": 1.002702,
+            "weighted_upside_pct_final": 0.27
           }
         }
       },
@@ -23621,15 +23621,15 @@
         "decision_mode": "A",
         "decision_label": "A",
         "short_direction": "down",
-        "timing_slope": 0.00035132,
-        "timing_dispersion": 0.00414888,
-        "timing_consistency_ratio": 0.0402,
-        "price_weighted_before_decision_1d": 161.22,
-        "price_weighted_before_decision_1w": 161.43,
+        "timing_slope": 4.459e-05,
+        "timing_dispersion": 0.00040422,
+        "timing_consistency_ratio": 0.7661,
+        "price_weighted_before_decision_1d": 161.43,
+        "price_weighted_before_decision_1w": 161.6,
         "price_weighted_before_decision_1m": 162.26,
-        "final_weighted_1d": 161.2,
-        "final_weighted_1w": 161.3,
-        "final_weighted_1m": 161.72
+        "final_weighted_1d": 161.41,
+        "final_weighted_1w": 161.49,
+        "final_weighted_1m": 161.82
       },
       "debug": {
         "model_scope": "M6 v9.1 fixed: pure price models + timing decision + decision adjusted price",
@@ -23649,37 +23649,37 @@
         "series": [
           {
             "x_day": -252,
-            "price": 147.295,
+            "price": 148.761,
             "source": "price_ref_12m"
           },
           {
             "x_day": -126,
-            "price": 156.013,
+            "price": 156.731,
             "source": "price_ref_6m"
           },
           {
             "x_day": -63,
-            "price": 158.688,
+            "price": 159.78,
             "source": "price_ref_3m"
           },
           {
             "x_day": -21,
-            "price": 159.968,
+            "price": 159.99,
             "source": "price_ref_1m"
           },
           {
             "x_day": -5,
-            "price": 161.763,
+            "price": 161.787,
             "source": "price_ref_1w"
           },
           {
             "x_day": -1,
-            "price": 162.628,
+            "price": 161.449,
             "source": "price_ref_1d"
           },
           {
             "x_day": 0,
-            "price": 161.175,
+            "price": 161.388,
             "source": "price_now"
           }
         ],
@@ -23687,29 +23687,29 @@
         "price_fit_summary": {
           "linear": {
             "status": "ok",
-            "r2": 0.9797,
+            "r2": 0.971,
             "coefficients": [
-              161.96345866,
-              0.05601324
+              161.82834401,
+              0.0489581
             ],
             "log_mode": false
           },
           "quadratic": {
             "status": "ok",
-            "r2": 0.9866,
+            "r2": 0.9915,
             "coefficients": [
-              161.67942783,
-              0.03947507,
-              -6.862e-05
+              161.39839158,
+              0.0239234,
+              -0.00010388
             ],
             "log_mode": false
           },
           "log": {
             "status": "ok",
-            "r2": 0.9783,
+            "r2": 0.9687,
             "coefficients": [
-              5.08767841,
-              0.0003619
+              5.08679529,
+              0.00031518
             ],
             "log_mode": true
           }
@@ -23717,24 +23717,24 @@
       },
       "timing_structure": {
         "raw_returns": {
-          "ret_1d_pct": -0.8935,
-          "ret_1w_pct": -0.3635,
-          "ret_1m_pct": 0.7545
+          "ret_1d_pct": -0.0378,
+          "ret_1w_pct": -0.2466,
+          "ret_1m_pct": 0.8738
         },
         "daily_normalized_returns": {
-          "ret_1d_daily_pct": -0.8935,
-          "ret_1w_daily_pct": -0.0727,
-          "ret_1m_daily_pct": 0.0359
+          "ret_1d_daily_pct": -0.0378,
+          "ret_1w_daily_pct": -0.0493,
+          "ret_1m_daily_pct": 0.0416
         },
-        "slope": 0.00035132,
-        "slope_r2": 0.5354,
-        "mean_daily": -0.00310074,
-        "dispersion": 0.00414888,
-        "consistency_ratio": 0.0402,
+        "slope": 4.459e-05,
+        "slope_r2": 0.9087,
+        "mean_daily": -0.00015167,
+        "dispersion": 0.00040422,
+        "consistency_ratio": 0.7661,
         "same_sign": false,
-        "strength_consistent": false,
+        "strength_consistent": true,
         "dispersion_ok": true,
-        "strength_ok": true,
+        "strength_ok": false,
         "direction": "down",
         "decision_mode": "A",
         "decision_label": "A",
@@ -23743,15 +23743,15 @@
       "decision_mode": "A",
       "decision_label": "A",
       "short_direction": "down",
-      "m7_linear_price": 162.35,
-      "m7_quadratic_price": 161.97,
-      "m7_log_price": 162.4,
-      "weighted_price_1d": 161.2,
-      "weighted_price_1w": 161.3,
-      "weighted_price_1m": 161.72,
+      "m7_linear_price": 162.41,
+      "m7_quadratic_price": 161.84,
+      "m7_log_price": 162.46,
+      "weighted_price_1d": 161.41,
+      "weighted_price_1w": 161.49,
+      "weighted_price_1m": 161.82,
       "weighted_upside_pct_1d": 0.01,
-      "weighted_upside_pct_1w": 0.08,
-      "weighted_upside_pct_1m": 0.34
+      "weighted_upside_pct_1w": 0.07,
+      "weighted_upside_pct_1m": 0.27
     },
     {
       "symbol": "KLAC",
@@ -44582,100 +44582,39 @@
     {
       "symbol": "TWD=X",
       "name": null,
-      "today_price": 31.9,
+      "today_price": 31.92,
       "forecast": {
         "1d": {
           "horizon_days": 1,
           "price_models": {
             "linear": {
-              "raw_today_price": 32.01,
-              "raw_future_price": 32.02,
-              "today_adjustment_factor": 1.003192,
-              "adjusted_price": 31.91,
-              "adjusted_factor": 1.000299,
-              "adjusted_upside_pct": 0.03,
-              "r2": 0.8371,
-              "status": "ok"
-            },
-            "quadratic": {
-              "raw_today_price": 31.78,
-              "raw_future_price": 31.77,
-              "today_adjustment_factor": 0.996043,
-              "adjusted_price": 31.9,
-              "adjusted_factor": 0.999882,
-              "adjusted_upside_pct": -0.01,
-              "r2": 0.967,
-              "status": "ok"
-            },
-            "log": {
               "raw_today_price": 32.02,
               "raw_future_price": 32.03,
-              "today_adjustment_factor": 1.003517,
-              "adjusted_price": 31.91,
-              "adjusted_factor": 1.000314,
+              "today_adjustment_factor": 1.003075,
+              "adjusted_price": 31.93,
+              "adjusted_factor": 1.000287,
               "adjusted_upside_pct": 0.03,
-              "r2": 0.8366,
-              "status": "ok"
-            }
-          },
-          "price_weighted_before_decision": {
-            "model_weights_configured": {
-              "linear": 0.3,
-              "quadratic": 0.3,
-              "log": 0.4
-            },
-            "model_weights_used": {
-              "linear": 0.3,
-              "quadratic": 0.3,
-              "log": 0.4
-            },
-            "weighted_price": 31.91,
-            "weighted_factor": 1.000094,
-            "weighted_upside_pct": 0.01
-          },
-          "decision_adjustment": {
-            "mode": "A",
-            "direction": "up",
-            "before_price": 31.91,
-            "after_price": 31.91
-          },
-          "final": {
-            "weighted_price_final": 31.91,
-            "weighted_factor_final": 1.000094,
-            "weighted_upside_pct_final": 0.01
-          }
-        },
-        "1w": {
-          "horizon_days": 5,
-          "price_models": {
-            "linear": {
-              "raw_today_price": 32.01,
-              "raw_future_price": 32.05,
-              "today_adjustment_factor": 1.003192,
-              "adjusted_price": 31.95,
-              "adjusted_factor": 1.001497,
-              "adjusted_upside_pct": 0.15,
-              "r2": 0.8371,
+              "r2": 0.8631,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 31.78,
-              "raw_future_price": 31.76,
-              "today_adjustment_factor": 0.996043,
-              "adjusted_price": 31.88,
-              "adjusted_factor": 0.999374,
-              "adjusted_upside_pct": -0.06,
-              "r2": 0.967,
+              "raw_today_price": 31.83,
+              "raw_future_price": 31.83,
+              "today_adjustment_factor": 0.997089,
+              "adjusted_price": 31.92,
+              "adjusted_factor": 0.999938,
+              "adjusted_upside_pct": -0.01,
+              "r2": 0.9653,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 32.02,
-              "raw_future_price": 32.07,
-              "today_adjustment_factor": 1.003517,
-              "adjusted_price": 31.95,
-              "adjusted_factor": 1.00157,
-              "adjusted_upside_pct": 0.16,
-              "r2": 0.8366,
+              "raw_today_price": 32.03,
+              "raw_future_price": 32.04,
+              "today_adjustment_factor": 1.003359,
+              "adjusted_price": 31.93,
+              "adjusted_factor": 1.0003,
+              "adjusted_upside_pct": 0.03,
+              "r2": 0.8621,
               "status": "ok"
             }
           },
@@ -44691,52 +44630,52 @@
               "log": 0.4
             },
             "weighted_price": 31.93,
-            "weighted_factor": 1.000784,
-            "weighted_upside_pct": 0.08
+            "weighted_factor": 1.000063,
+            "weighted_upside_pct": 0.01
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "up",
             "before_price": 31.93,
-            "after_price": 31.92
+            "after_price": 31.93
           },
           "final": {
-            "weighted_price_final": 31.92,
-            "weighted_factor_final": 1.000407,
-            "weighted_upside_pct_final": 0.04
+            "weighted_price_final": 31.93,
+            "weighted_factor_final": 1.000078,
+            "weighted_upside_pct_final": 0.01
           }
         },
-        "1m": {
-          "horizon_days": 21,
+        "1w": {
+          "horizon_days": 5,
           "price_models": {
             "linear": {
-              "raw_today_price": 32.01,
-              "raw_future_price": 32.21,
-              "today_adjustment_factor": 1.003192,
-              "adjusted_price": 32.1,
-              "adjusted_factor": 1.006286,
-              "adjusted_upside_pct": 0.63,
-              "r2": 0.8371,
+              "raw_today_price": 32.02,
+              "raw_future_price": 32.07,
+              "today_adjustment_factor": 1.003075,
+              "adjusted_price": 31.97,
+              "adjusted_factor": 1.001435,
+              "adjusted_upside_pct": 0.14,
+              "r2": 0.8631,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 31.78,
-              "raw_future_price": 31.68,
-              "today_adjustment_factor": 0.996043,
-              "adjusted_price": 31.8,
-              "adjusted_factor": 0.99679,
-              "adjusted_upside_pct": -0.32,
-              "r2": 0.967,
+              "raw_today_price": 31.83,
+              "raw_future_price": 31.82,
+              "today_adjustment_factor": 0.997089,
+              "adjusted_price": 31.91,
+              "adjusted_factor": 0.99966,
+              "adjusted_upside_pct": -0.03,
+              "r2": 0.9653,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 32.02,
-              "raw_future_price": 32.23,
-              "today_adjustment_factor": 1.003517,
-              "adjusted_price": 32.11,
-              "adjusted_factor": 1.006609,
-              "adjusted_upside_pct": 0.66,
-              "r2": 0.8366,
+              "raw_today_price": 32.03,
+              "raw_future_price": 32.08,
+              "today_adjustment_factor": 1.003359,
+              "adjusted_price": 31.97,
+              "adjusted_factor": 1.0015,
+              "adjusted_upside_pct": 0.15,
+              "r2": 0.8621,
               "status": "ok"
             }
           },
@@ -44751,20 +44690,81 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 32.01,
-            "weighted_factor": 1.003448,
-            "weighted_upside_pct": 0.34
+            "weighted_price": 31.95,
+            "weighted_factor": 1.000846,
+            "weighted_upside_pct": 0.08
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "up",
-            "before_price": 32.01,
-            "after_price": 31.96
+            "before_price": 31.95,
+            "after_price": 31.94
           },
           "final": {
-            "weighted_price_final": 31.96,
-            "weighted_factor_final": 1.001661,
-            "weighted_upside_pct_final": 0.17
+            "weighted_price_final": 31.94,
+            "weighted_factor_final": 1.000392,
+            "weighted_upside_pct_final": 0.04
+          }
+        },
+        "1m": {
+          "horizon_days": 21,
+          "price_models": {
+            "linear": {
+              "raw_today_price": 32.02,
+              "raw_future_price": 32.22,
+              "today_adjustment_factor": 1.003075,
+              "adjusted_price": 32.12,
+              "adjusted_factor": 1.006028,
+              "adjusted_upside_pct": 0.6,
+              "r2": 0.8631,
+              "status": "ok"
+            },
+            "quadratic": {
+              "raw_today_price": 31.83,
+              "raw_future_price": 31.77,
+              "today_adjustment_factor": 0.997089,
+              "adjusted_price": 31.86,
+              "adjusted_factor": 0.998083,
+              "adjusted_upside_pct": -0.19,
+              "r2": 0.9653,
+              "status": "ok"
+            },
+            "log": {
+              "raw_today_price": 32.03,
+              "raw_future_price": 32.23,
+              "today_adjustment_factor": 1.003359,
+              "adjusted_price": 32.13,
+              "adjusted_factor": 1.006316,
+              "adjusted_upside_pct": 0.63,
+              "r2": 0.8621,
+              "status": "ok"
+            }
+          },
+          "price_weighted_before_decision": {
+            "model_weights_configured": {
+              "linear": 0.3,
+              "quadratic": 0.3,
+              "log": 0.4
+            },
+            "model_weights_used": {
+              "linear": 0.3,
+              "quadratic": 0.3,
+              "log": 0.4
+            },
+            "weighted_price": 32.05,
+            "weighted_factor": 1.00379,
+            "weighted_upside_pct": 0.38
+          },
+          "decision_adjustment": {
+            "mode": "A",
+            "direction": "up",
+            "before_price": 32.05,
+            "after_price": 31.99
+          },
+          "final": {
+            "weighted_price_final": 31.99,
+            "weighted_factor_final": 1.001958,
+            "weighted_upside_pct_final": 0.2
           }
         }
       },
@@ -44772,15 +44772,15 @@
         "decision_mode": "A",
         "decision_label": "A",
         "short_direction": "up",
-        "timing_slope": -5.435e-05,
-        "timing_dispersion": 0.00073672,
-        "timing_consistency_ratio": 0.2761,
-        "price_weighted_before_decision_1d": 31.91,
-        "price_weighted_before_decision_1w": 31.93,
-        "price_weighted_before_decision_1m": 32.01,
-        "final_weighted_1d": 31.91,
-        "final_weighted_1w": 31.92,
-        "final_weighted_1m": 31.96
+        "timing_slope": 3.203e-05,
+        "timing_dispersion": 0.00035807,
+        "timing_consistency_ratio": 0.2897,
+        "price_weighted_before_decision_1d": 31.93,
+        "price_weighted_before_decision_1w": 31.95,
+        "price_weighted_before_decision_1m": 32.05,
+        "final_weighted_1d": 31.93,
+        "final_weighted_1w": 31.94,
+        "final_weighted_1m": 31.99
       },
       "debug": {
         "model_scope": "M6 v9.1 fixed: pure price models + timing decision + decision adjusted price",
@@ -44800,37 +44800,37 @@
         "series": [
           {
             "x_day": -252,
-            "price": 29.213,
+            "price": 29.3881,
             "source": "price_ref_12m"
           },
           {
             "x_day": -126,
-            "price": 31.3178,
+            "price": 31.3035,
             "source": "price_ref_6m"
           },
           {
             "x_day": -63,
-            "price": 32.002,
+            "price": 31.963,
             "source": "price_ref_3m"
           },
           {
             "x_day": -21,
-            "price": 31.4782,
+            "price": 31.503,
             "source": "price_ref_1m"
           },
           {
             "x_day": -5,
-            "price": 31.808,
+            "price": 31.847,
             "source": "price_ref_1w"
           },
           {
             "x_day": -1,
-            "price": 31.8344,
+            "price": 31.9309,
             "source": "price_ref_1d"
           },
           {
             "x_day": 0,
-            "price": 31.904,
+            "price": 31.925,
             "source": "price_now"
           }
         ],
@@ -44838,29 +44838,29 @@
         "price_fit_summary": {
           "linear": {
             "status": "ok",
-            "r2": 0.8371,
+            "r2": 0.8631,
             "coefficients": [
-              32.00584939,
-              0.00958023
+              32.02316548,
+              0.00919158
             ],
             "log_mode": false
           },
           "quadratic": {
             "status": "ok",
-            "r2": 0.967,
+            "r2": 0.9653,
             "coefficients": [
-              31.77775991,
-              -0.00370067,
-              -5.511e-05
+              31.83205994,
+              -0.00193586,
+              -4.617e-05
             ],
             "log_mode": false
           },
           "log": {
             "status": "ok",
-            "r2": 0.8366,
+            "r2": 0.8621,
             "coefficients": [
-              3.46624181,
-              0.00031368
+              3.46674229,
+              0.0002998
             ],
             "log_mode": true
           }
@@ -44868,21 +44868,21 @@
       },
       "timing_structure": {
         "raw_returns": {
-          "ret_1d_pct": 0.2186,
-          "ret_1w_pct": 0.3018,
-          "ret_1m_pct": 1.3527
+          "ret_1d_pct": -0.0185,
+          "ret_1w_pct": 0.2449,
+          "ret_1m_pct": 1.3396
         },
         "daily_normalized_returns": {
-          "ret_1d_daily_pct": 0.2186,
-          "ret_1w_daily_pct": 0.0604,
-          "ret_1m_daily_pct": 0.0644
+          "ret_1d_daily_pct": -0.0185,
+          "ret_1w_daily_pct": 0.049,
+          "ret_1m_daily_pct": 0.0638
         },
-        "slope": -5.435e-05,
-        "slope_r2": 0.4064,
-        "mean_daily": 0.00114468,
-        "dispersion": 0.00073672,
-        "consistency_ratio": 0.2761,
-        "same_sign": true,
+        "slope": 3.203e-05,
+        "slope_r2": 0.5973,
+        "mean_daily": 0.0003143,
+        "dispersion": 0.00035807,
+        "consistency_ratio": 0.2897,
+        "same_sign": false,
         "strength_consistent": false,
         "dispersion_ok": true,
         "strength_ok": true,
@@ -44894,15 +44894,15 @@
       "decision_mode": "A",
       "decision_label": "A",
       "short_direction": "up",
-      "m7_linear_price": 32.1,
-      "m7_quadratic_price": 31.8,
-      "m7_log_price": 32.11,
-      "weighted_price_1d": 31.91,
-      "weighted_price_1w": 31.92,
-      "weighted_price_1m": 31.96,
+      "m7_linear_price": 32.12,
+      "m7_quadratic_price": 31.86,
+      "m7_log_price": 32.13,
+      "weighted_price_1d": 31.93,
+      "weighted_price_1w": 31.94,
+      "weighted_price_1m": 31.99,
       "weighted_upside_pct_1d": 0.01,
       "weighted_upside_pct_1w": 0.04,
-      "weighted_upside_pct_1m": 0.17
+      "weighted_upside_pct_1m": 0.2
     },
     {
       "symbol": "TWLO",
@@ -52382,7 +52382,7 @@
     {
       "symbol": "^TNX",
       "name": null,
-      "today_price": 4.48,
+      "today_price": 4.49,
       "forecast": {
         "1d": {
           "horizon_days": 1,
@@ -52390,31 +52390,31 @@
             "linear": {
               "raw_today_price": 4.43,
               "raw_future_price": 4.43,
-              "today_adjustment_factor": 0.987896,
+              "today_adjustment_factor": 0.988053,
               "adjusted_price": 4.49,
-              "adjusted_factor": 1.000204,
+              "adjusted_factor": 1.000197,
               "adjusted_upside_pct": 0.02,
-              "r2": 0.4475,
+              "r2": 0.5076,
               "status": "ok"
             },
             "quadratic": {
               "raw_today_price": 4.48,
               "raw_future_price": 4.48,
-              "today_adjustment_factor": 0.998711,
+              "today_adjustment_factor": 0.998007,
               "adjusted_price": 4.49,
-              "adjusted_factor": 1.000834,
+              "adjusted_factor": 1.000778,
               "adjusted_upside_pct": 0.08,
-              "r2": 0.802,
+              "r2": 0.8702,
               "status": "ok"
             },
             "log": {
               "raw_today_price": 4.43,
               "raw_future_price": 4.43,
-              "today_adjustment_factor": 0.987689,
+              "today_adjustment_factor": 0.987908,
               "adjusted_price": 4.49,
-              "adjusted_factor": 1.000207,
+              "adjusted_factor": 1.000201,
               "adjusted_upside_pct": 0.02,
-              "r2": 0.4439,
+              "r2": 0.5031,
               "status": "ok"
             }
           },
@@ -52451,31 +52451,31 @@
             "linear": {
               "raw_today_price": 4.43,
               "raw_future_price": 4.44,
-              "today_adjustment_factor": 0.987896,
+              "today_adjustment_factor": 0.988053,
               "adjusted_price": 4.49,
-              "adjusted_factor": 1.001018,
+              "adjusted_factor": 1.000986,
               "adjusted_upside_pct": 0.1,
-              "r2": 0.4475,
+              "r2": 0.5076,
               "status": "ok"
             },
             "quadratic": {
               "raw_today_price": 4.48,
-              "raw_future_price": 4.5,
-              "today_adjustment_factor": 0.998711,
+              "raw_future_price": 4.49,
+              "today_adjustment_factor": 0.998007,
               "adjusted_price": 4.5,
-              "adjusted_factor": 1.004225,
-              "adjusted_upside_pct": 0.42,
-              "r2": 0.802,
+              "adjusted_factor": 1.00394,
+              "adjusted_upside_pct": 0.39,
+              "r2": 0.8702,
               "status": "ok"
             },
             "log": {
               "raw_today_price": 4.43,
-              "raw_future_price": 4.43,
-              "today_adjustment_factor": 0.987689,
+              "raw_future_price": 4.44,
+              "today_adjustment_factor": 0.987908,
               "adjusted_price": 4.49,
-              "adjusted_factor": 1.001036,
+              "adjusted_factor": 1.001004,
               "adjusted_upside_pct": 0.1,
-              "r2": 0.4439,
+              "r2": 0.5031,
               "status": "ok"
             }
           },
@@ -52512,31 +52512,31 @@
             "linear": {
               "raw_today_price": 4.43,
               "raw_future_price": 4.45,
-              "today_adjustment_factor": 0.987896,
+              "today_adjustment_factor": 0.988053,
               "adjusted_price": 4.5,
-              "adjusted_factor": 1.004274,
-              "adjusted_upside_pct": 0.43,
-              "r2": 0.4475,
+              "adjusted_factor": 1.004141,
+              "adjusted_upside_pct": 0.41,
+              "r2": 0.5076,
               "status": "ok"
             },
             "quadratic": {
               "raw_today_price": 4.48,
-              "raw_future_price": 4.56,
-              "today_adjustment_factor": 0.998711,
-              "adjusted_price": 4.57,
-              "adjusted_factor": 1.018623,
-              "adjusted_upside_pct": 1.86,
-              "r2": 0.802,
+              "raw_future_price": 4.55,
+              "today_adjustment_factor": 0.998007,
+              "adjusted_price": 4.56,
+              "adjusted_factor": 1.017357,
+              "adjusted_upside_pct": 1.74,
+              "r2": 0.8702,
               "status": "ok"
             },
             "log": {
               "raw_today_price": 4.43,
               "raw_future_price": 4.45,
-              "today_adjustment_factor": 0.987689,
+              "today_adjustment_factor": 0.987908,
               "adjusted_price": 4.5,
-              "adjusted_factor": 1.00436,
-              "adjusted_upside_pct": 0.44,
-              "r2": 0.4439,
+              "adjusted_factor": 1.004225,
+              "adjusted_upside_pct": 0.42,
+              "r2": 0.5031,
               "status": "ok"
             }
           },
@@ -52552,8 +52552,8 @@
               "log": 0.4
             },
             "weighted_price": 4.52,
-            "weighted_factor": 1.008027,
-            "weighted_upside_pct": 0.8
+            "weighted_factor": 1.007358,
+            "weighted_upside_pct": 0.74
           },
           "decision_adjustment": {
             "mode": "A",
@@ -52572,9 +52572,9 @@
         "decision_mode": "A",
         "decision_label": "A",
         "short_direction": "up",
-        "timing_slope": -0.00088689,
-        "timing_dispersion": 0.01237226,
-        "timing_consistency_ratio": 0.0124,
+        "timing_slope": -0.00013826,
+        "timing_dispersion": 0.00159814,
+        "timing_consistency_ratio": 0.0757,
         "price_weighted_before_decision_1d": 4.49,
         "price_weighted_before_decision_1w": 4.49,
         "price_weighted_before_decision_1m": 4.52,
@@ -52605,12 +52605,12 @@
           },
           {
             "x_day": -126,
-            "price": 4.151,
+            "price": 4.169,
             "source": "price_ref_6m"
           },
           {
             "x_day": -63,
-            "price": 4.328,
+            "price": 4.342,
             "source": "price_ref_3m"
           },
           {
@@ -52620,12 +52620,12 @@
           },
           {
             "x_day": -5,
-            "price": 4.509,
+            "price": 4.392,
             "source": "price_ref_1w"
           },
           {
             "x_day": -1,
-            "price": 4.372,
+            "price": 4.475,
             "source": "price_ref_1d"
           },
           {
@@ -52638,29 +52638,29 @@
         "price_fit_summary": {
           "linear": {
             "status": "ok",
-            "r2": 0.4475,
+            "r2": 0.5076,
             "coefficients": [
-              4.43071243,
-              0.00090168
+              4.43141984,
+              0.0008738
             ],
             "log_mode": false
           },
           "quadratic": {
             "status": "ok",
-            "r2": 0.802,
+            "r2": 0.8702,
             "coefficients": [
-              4.47921843,
-              0.00372603,
-              1.172e-05
+              4.47606077,
+              0.00347309,
+              1.079e-05
             ],
             "log_mode": false
           },
           "log": {
             "status": "ok",
-            "r2": 0.4439,
+            "r2": 0.5031,
             "coefficients": [
-              1.48835096,
-              0.00020717
+              1.48857331,
+              0.00020077
             ],
             "log_mode": true
           }
@@ -52668,23 +52668,23 @@
       },
       "timing_structure": {
         "raw_returns": {
-          "ret_1d_pct": 2.5846,
-          "ret_1w_pct": -0.5323,
+          "ret_1d_pct": 0.2235,
+          "ret_1w_pct": 2.1175,
           "ret_1m_pct": 0.6734
         },
         "daily_normalized_returns": {
-          "ret_1d_daily_pct": 2.5846,
-          "ret_1w_daily_pct": -0.1065,
+          "ret_1d_daily_pct": 0.2235,
+          "ret_1w_daily_pct": 0.4235,
           "ret_1m_daily_pct": 0.0321
         },
-        "slope": -0.00088689,
-        "slope_r2": 0.3837,
-        "mean_daily": 0.00836743,
-        "dispersion": 0.01237226,
-        "consistency_ratio": 0.0124,
-        "same_sign": false,
+        "slope": -0.00013826,
+        "slope_r2": 0.5588,
+        "mean_daily": 0.00226344,
+        "dispersion": 0.00159814,
+        "consistency_ratio": 0.0757,
+        "same_sign": true,
         "strength_consistent": false,
-        "dispersion_ok": false,
+        "dispersion_ok": true,
         "strength_ok": true,
         "direction": "up",
         "decision_mode": "A",
@@ -52695,7 +52695,7 @@
       "decision_label": "A",
       "short_direction": "up",
       "m7_linear_price": 4.5,
-      "m7_quadratic_price": 4.57,
+      "m7_quadratic_price": 4.56,
       "m7_log_price": 4.5,
       "weighted_price_1d": 4.49,
       "weighted_price_1w": 4.49,
@@ -52707,39 +52707,39 @@
     {
       "symbol": "^TWII",
       "name": null,
-      "today_price": 46744.16,
+      "today_price": 46780.62,
       "forecast": {
         "1d": {
           "horizon_days": 1,
           "price_models": {
             "linear": {
-              "raw_today_price": 45422.52,
-              "raw_future_price": 45526.51,
-              "today_adjustment_factor": 0.971726,
-              "adjusted_price": 46851.17,
-              "adjusted_factor": 1.002289,
+              "raw_today_price": 45088.28,
+              "raw_future_price": 45190.06,
+              "today_adjustment_factor": 0.963824,
+              "adjusted_price": 46886.22,
+              "adjusted_factor": 1.002257,
               "adjusted_upside_pct": 0.23,
-              "r2": 0.8837,
+              "r2": 0.8671,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 47496.62,
-              "raw_future_price": 47721.88,
-              "today_adjustment_factor": 1.016097,
-              "adjusted_price": 46965.85,
-              "adjusted_factor": 1.004743,
+              "raw_today_price": 47112.15,
+              "raw_future_price": 47332.26,
+              "today_adjustment_factor": 1.007087,
+              "adjusted_price": 46999.18,
+              "adjusted_factor": 1.004672,
               "adjusted_upside_pct": 0.47,
-              "r2": 0.9799,
+              "r2": 0.9609,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 45628.08,
-              "raw_future_price": 45769.21,
-              "today_adjustment_factor": 0.976124,
-              "adjusted_price": 46888.74,
-              "adjusted_factor": 1.003093,
-              "adjusted_upside_pct": 0.31,
-              "r2": 0.9301,
+              "raw_today_price": 45253.82,
+              "raw_future_price": 45390.96,
+              "today_adjustment_factor": 0.967362,
+              "adjusted_price": 46922.4,
+              "adjusted_factor": 1.003031,
+              "adjusted_upside_pct": 0.3,
+              "r2": 0.9166,
               "status": "ok"
             }
           },
@@ -52754,53 +52754,53 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 46900.6,
-            "weighted_factor": 1.003347,
+            "weighted_price": 46934.58,
+            "weighted_factor": 1.003291,
             "weighted_upside_pct": 0.33
           },
           "decision_adjustment": {
             "mode": "A",
-            "direction": "down",
-            "before_price": 46900.6,
-            "after_price": 46822.38
+            "direction": "up",
+            "before_price": 46934.58,
+            "after_price": 46857.6
           },
           "final": {
-            "weighted_price_final": 46822.38,
-            "weighted_factor_final": 1.001673,
-            "weighted_upside_pct_final": 0.17
+            "weighted_price_final": 46857.6,
+            "weighted_factor_final": 1.001646,
+            "weighted_upside_pct_final": 0.16
           }
         },
         "1w": {
           "horizon_days": 5,
           "price_models": {
             "linear": {
-              "raw_today_price": 45422.52,
-              "raw_future_price": 45942.46,
-              "today_adjustment_factor": 0.971726,
-              "adjusted_price": 47279.23,
-              "adjusted_factor": 1.011447,
-              "adjusted_upside_pct": 1.14,
-              "r2": 0.8837,
+              "raw_today_price": 45088.28,
+              "raw_future_price": 45597.18,
+              "today_adjustment_factor": 0.963824,
+              "adjusted_price": 47308.62,
+              "adjusted_factor": 1.011287,
+              "adjusted_upside_pct": 1.13,
+              "r2": 0.8671,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 47496.62,
-              "raw_future_price": 48632.93,
-              "today_adjustment_factor": 1.016097,
-              "adjusted_price": 47862.47,
-              "adjusted_factor": 1.023924,
-              "adjusted_upside_pct": 2.39,
-              "r2": 0.9799,
+              "raw_today_price": 47112.15,
+              "raw_future_price": 48222.48,
+              "today_adjustment_factor": 1.007087,
+              "adjusted_price": 47883.15,
+              "adjusted_factor": 1.023568,
+              "adjusted_upside_pct": 2.36,
+              "r2": 0.9609,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 45628.08,
-              "raw_future_price": 46338.11,
-              "today_adjustment_factor": 0.976124,
-              "adjusted_price": 47471.55,
-              "adjusted_factor": 1.015561,
-              "adjusted_upside_pct": 1.56,
-              "r2": 0.9301,
+              "raw_today_price": 45253.82,
+              "raw_future_price": 45943.72,
+              "today_adjustment_factor": 0.967362,
+              "adjusted_price": 47493.8,
+              "adjusted_factor": 1.015245,
+              "adjusted_upside_pct": 1.52,
+              "r2": 0.9166,
               "status": "ok"
             }
           },
@@ -52815,53 +52815,53 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 47531.13,
-            "weighted_factor": 1.016836,
-            "weighted_upside_pct": 1.68
+            "weighted_price": 47555.05,
+            "weighted_factor": 1.016555,
+            "weighted_upside_pct": 1.66
           },
           "decision_adjustment": {
             "mode": "A",
-            "direction": "down",
-            "before_price": 47531.13,
-            "after_price": 47137.64
+            "direction": "up",
+            "before_price": 47555.05,
+            "after_price": 47167.84
           },
           "final": {
-            "weighted_price_final": 47137.64,
-            "weighted_factor_final": 1.008418,
-            "weighted_upside_pct_final": 0.84
+            "weighted_price_final": 47167.84,
+            "weighted_factor_final": 1.008277,
+            "weighted_upside_pct_final": 0.83
           }
         },
         "1m": {
           "horizon_days": 21,
           "price_models": {
             "linear": {
-              "raw_today_price": 45422.52,
-              "raw_future_price": 47606.29,
-              "today_adjustment_factor": 0.971726,
-              "adjusted_price": 48991.47,
-              "adjusted_factor": 1.048077,
-              "adjusted_upside_pct": 4.81,
-              "r2": 0.8837,
+              "raw_today_price": 45088.28,
+              "raw_future_price": 47225.67,
+              "today_adjustment_factor": 0.963824,
+              "adjusted_price": 48998.23,
+              "adjusted_factor": 1.047404,
+              "adjusted_upside_pct": 4.74,
+              "r2": 0.8671,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 47496.62,
-              "raw_future_price": 52437.51,
-              "today_adjustment_factor": 1.016097,
-              "adjusted_price": 51606.77,
-              "adjusted_factor": 1.104026,
-              "adjusted_upside_pct": 10.4,
-              "r2": 0.9799,
+              "raw_today_price": 47112.15,
+              "raw_future_price": 51939.86,
+              "today_adjustment_factor": 1.007087,
+              "adjusted_price": 51574.37,
+              "adjusted_factor": 1.102473,
+              "adjusted_upside_pct": 10.25,
+              "r2": 0.9609,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 45628.08,
-              "raw_future_price": 48685.29,
-              "today_adjustment_factor": 0.976124,
-              "adjusted_price": 49876.15,
-              "adjusted_factor": 1.067003,
-              "adjusted_upside_pct": 6.7,
-              "r2": 0.9301,
+              "raw_today_price": 45253.82,
+              "raw_future_price": 48222.9,
+              "today_adjustment_factor": 0.967362,
+              "adjusted_price": 49849.88,
+              "adjusted_factor": 1.06561,
+              "adjusted_upside_pct": 6.56,
+              "r2": 0.9166,
               "status": "ok"
             }
           },
@@ -52876,36 +52876,36 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 50129.93,
-            "weighted_factor": 1.072432,
-            "weighted_upside_pct": 7.24
+            "weighted_price": 50111.73,
+            "weighted_factor": 1.071207,
+            "weighted_upside_pct": 7.12
           },
           "decision_adjustment": {
             "mode": "A",
-            "direction": "down",
-            "before_price": 50129.93,
-            "after_price": 48437.05
+            "direction": "up",
+            "before_price": 50111.73,
+            "after_price": 48446.18
           },
           "final": {
-            "weighted_price_final": 48437.05,
-            "weighted_factor_final": 1.036216,
-            "weighted_upside_pct_final": 3.62
+            "weighted_price_final": 48446.18,
+            "weighted_factor_final": 1.035604,
+            "weighted_upside_pct_final": 3.56
           }
         }
       },
       "flat": {
         "decision_mode": "A",
         "decision_label": "A",
-        "short_direction": "down",
-        "timing_slope": 0.00023746,
-        "timing_dispersion": 0.00356392,
-        "timing_consistency_ratio": 0.2122,
-        "price_weighted_before_decision_1d": 46900.6,
-        "price_weighted_before_decision_1w": 47531.13,
-        "price_weighted_before_decision_1m": 50129.93,
-        "final_weighted_1d": 46822.38,
-        "final_weighted_1w": 47137.64,
-        "final_weighted_1m": 48437.05
+        "short_direction": "up",
+        "timing_slope": -0.0001872,
+        "timing_dispersion": 0.00441464,
+        "timing_consistency_ratio": 0.0332,
+        "price_weighted_before_decision_1d": 46934.58,
+        "price_weighted_before_decision_1w": 47555.05,
+        "price_weighted_before_decision_1m": 50111.73,
+        "final_weighted_1d": 46857.6,
+        "final_weighted_1w": 47167.84,
+        "final_weighted_1m": 48446.18
       },
       "debug": {
         "model_scope": "M6 v9.1 fixed: pure price models + timing decision + decision adjusted price",
@@ -52925,37 +52925,37 @@
         "series": [
           {
             "x_day": -252,
-            "price": 22577.7402,
+            "price": 22712.9707,
             "source": "price_ref_12m"
           },
           {
             "x_day": -126,
-            "price": 28024.75,
+            "price": 28198.0195,
             "source": "price_ref_6m"
           },
           {
             "x_day": -63,
-            "price": 33112.5898,
+            "price": 32518.1602,
             "source": "price_ref_3m"
           },
           {
             "x_day": -21,
-            "price": 45557.3086,
+            "price": 46459.1602,
             "source": "price_ref_1m"
           },
           {
             "x_day": -5,
-            "price": 46255.2617,
+            "price": 44571.7617,
             "source": "price_ref_1w"
           },
           {
             "x_day": -1,
-            "price": 47018.9883,
+            "price": 46744.1602,
             "source": "price_ref_1d"
           },
           {
             "x_day": 0,
-            "price": 46744.16,
+            "price": 46780.6211,
             "source": "price_now"
           }
         ],
@@ -52963,29 +52963,29 @@
         "price_fit_summary": {
           "linear": {
             "status": "ok",
-            "r2": 0.8837,
+            "r2": 0.8671,
             "coefficients": [
-              45422.51779892,
-              103.98894427
+              45088.28274044,
+              101.78018305
             ],
             "log_mode": false
           },
           "quadratic": {
             "status": "ok",
-            "r2": 0.9799,
+            "r2": 0.9609,
             "coefficients": [
-              47496.62046319,
-              224.75704929,
-              0.50110664
+              47112.14517089,
+              219.62296622,
+              0.48896852
             ],
             "log_mode": false
           },
           "log": {
             "status": "ok",
-            "r2": 0.9301,
+            "r2": 0.9166,
             "coefficients": [
-              10.72827863,
-              0.00308827
+              10.72004228,
+              0.00302605
             ],
             "log_mode": true
           }
@@ -52993,78 +52993,78 @@
       },
       "timing_structure": {
         "raw_returns": {
-          "ret_1d_pct": -0.5845,
-          "ret_1w_pct": 1.057,
-          "ret_1m_pct": 2.6052
+          "ret_1d_pct": 0.078,
+          "ret_1w_pct": 4.9557,
+          "ret_1m_pct": 0.6919
         },
         "daily_normalized_returns": {
-          "ret_1d_daily_pct": -0.5845,
-          "ret_1w_daily_pct": 0.2114,
-          "ret_1m_daily_pct": 0.1241
+          "ret_1d_daily_pct": 0.078,
+          "ret_1w_daily_pct": 0.9911,
+          "ret_1m_daily_pct": 0.0329
         },
-        "slope": 0.00023746,
-        "slope_r2": 0.3315,
-        "mean_daily": -0.00083019,
-        "dispersion": 0.00356392,
-        "consistency_ratio": 0.2122,
-        "same_sign": false,
+        "slope": -0.0001872,
+        "slope_r2": 0.1343,
+        "mean_daily": 0.00367366,
+        "dispersion": 0.00441464,
+        "consistency_ratio": 0.0332,
+        "same_sign": true,
         "strength_consistent": false,
         "dispersion_ok": true,
         "strength_ok": true,
-        "direction": "down",
+        "direction": "up",
         "decision_mode": "A",
         "decision_label": "A",
         "rule": "B if same_sign and consistency_ratio>=0.55 and dispersion<=0.006 and abs(mean_daily)>=0.00025; else A"
       },
       "decision_mode": "A",
       "decision_label": "A",
-      "short_direction": "down",
-      "m7_linear_price": 48991.47,
-      "m7_quadratic_price": 51606.77,
-      "m7_log_price": 49876.15,
-      "weighted_price_1d": 46822.38,
-      "weighted_price_1w": 47137.64,
-      "weighted_price_1m": 48437.05,
-      "weighted_upside_pct_1d": 0.17,
-      "weighted_upside_pct_1w": 0.84,
-      "weighted_upside_pct_1m": 3.62
+      "short_direction": "up",
+      "m7_linear_price": 48998.23,
+      "m7_quadratic_price": 51574.37,
+      "m7_log_price": 49849.88,
+      "weighted_price_1d": 46857.6,
+      "weighted_price_1w": 47167.84,
+      "weighted_price_1m": 48446.18,
+      "weighted_upside_pct_1d": 0.16,
+      "weighted_upside_pct_1w": 0.83,
+      "weighted_upside_pct_1m": 3.56
     },
     {
       "symbol": "^VIX",
       "name": null,
-      "today_price": 16.15,
+      "today_price": 15.81,
       "forecast": {
         "1d": {
           "horizon_days": 1,
           "price_models": {
             "linear": {
-              "raw_today_price": 17.96,
-              "raw_future_price": 17.96,
-              "today_adjustment_factor": 1.11198,
-              "adjusted_price": 16.16,
-              "adjusted_factor": 1.000319,
-              "adjusted_upside_pct": 0.03,
-              "r2": 0.0212,
+              "raw_today_price": 17.46,
+              "raw_future_price": 17.46,
+              "today_adjustment_factor": 1.104468,
+              "adjusted_price": 15.81,
+              "adjusted_factor": 1.0,
+              "adjusted_upside_pct": 0.0,
+              "r2": 0.0,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 17.45,
-              "raw_future_price": 17.42,
-              "today_adjustment_factor": 1.080206,
-              "adjusted_price": 16.13,
-              "adjusted_factor": 0.998608,
-              "adjusted_upside_pct": -0.14,
-              "r2": 0.0679,
+              "raw_today_price": 17.21,
+              "raw_future_price": 17.2,
+              "today_adjustment_factor": 1.088563,
+              "adjusted_price": 15.8,
+              "adjusted_factor": 0.999146,
+              "adjusted_upside_pct": -0.09,
+              "r2": 0.0124,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 17.69,
-              "raw_future_price": 17.7,
-              "today_adjustment_factor": 1.095377,
-              "adjusted_price": 16.16,
-              "adjusted_factor": 1.000341,
-              "adjusted_upside_pct": 0.03,
-              "r2": 0.0287,
+              "raw_today_price": 17.21,
+              "raw_future_price": 17.21,
+              "today_adjustment_factor": 1.08862,
+              "adjusted_price": 15.81,
+              "adjusted_factor": 1.000016,
+              "adjusted_upside_pct": 0.0,
+              "r2": 0.0001,
               "status": "ok"
             }
           },
@@ -53079,18 +53079,18 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 16.15,
-            "weighted_factor": 1.000062,
-            "weighted_upside_pct": 0.01
+            "weighted_price": 15.81,
+            "weighted_factor": 0.99981,
+            "weighted_upside_pct": -0.02
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "down",
-            "before_price": 16.15,
-            "after_price": 16.15
+            "before_price": 15.81,
+            "after_price": 15.81
           },
           "final": {
-            "weighted_price_final": 16.15,
+            "weighted_price_final": 15.81,
             "weighted_factor_final": 1.0,
             "weighted_upside_pct_final": 0.0
           }
@@ -53099,33 +53099,33 @@
           "horizon_days": 5,
           "price_models": {
             "linear": {
-              "raw_today_price": 17.96,
-              "raw_future_price": 17.99,
-              "today_adjustment_factor": 1.11198,
-              "adjusted_price": 16.18,
-              "adjusted_factor": 1.001594,
-              "adjusted_upside_pct": 0.16,
-              "r2": 0.0212,
+              "raw_today_price": 17.46,
+              "raw_future_price": 17.46,
+              "today_adjustment_factor": 1.104468,
+              "adjusted_price": 15.81,
+              "adjusted_factor": 1.000001,
+              "adjusted_upside_pct": 0.0,
+              "r2": 0.0,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 17.45,
-              "raw_future_price": 17.32,
-              "today_adjustment_factor": 1.080206,
-              "adjusted_price": 16.04,
-              "adjusted_factor": 0.9929,
-              "adjusted_upside_pct": -0.71,
-              "r2": 0.0679,
+              "raw_today_price": 17.21,
+              "raw_future_price": 17.14,
+              "today_adjustment_factor": 1.088563,
+              "adjusted_price": 15.74,
+              "adjusted_factor": 0.995659,
+              "adjusted_upside_pct": -0.43,
+              "r2": 0.0124,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 17.69,
-              "raw_future_price": 17.72,
-              "today_adjustment_factor": 1.095377,
-              "adjusted_price": 16.18,
-              "adjusted_factor": 1.001708,
-              "adjusted_upside_pct": 0.17,
-              "r2": 0.0287,
+              "raw_today_price": 17.21,
+              "raw_future_price": 17.21,
+              "today_adjustment_factor": 1.08862,
+              "adjusted_price": 15.81,
+              "adjusted_factor": 1.000082,
+              "adjusted_upside_pct": 0.01,
+              "r2": 0.0001,
               "status": "ok"
             }
           },
@@ -53140,53 +53140,53 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 16.14,
-            "weighted_factor": 0.999257,
-            "weighted_upside_pct": -0.07
+            "weighted_price": 15.79,
+            "weighted_factor": 0.998672,
+            "weighted_upside_pct": -0.13
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "down",
-            "before_price": 16.14,
-            "after_price": 16.14
+            "before_price": 15.79,
+            "after_price": 15.8
           },
           "final": {
-            "weighted_price_final": 16.14,
-            "weighted_factor_final": 0.99969,
-            "weighted_upside_pct_final": -0.03
+            "weighted_price_final": 15.8,
+            "weighted_factor_final": 0.999367,
+            "weighted_upside_pct_final": -0.06
           }
         },
         "1m": {
           "horizon_days": 21,
           "price_models": {
             "linear": {
-              "raw_today_price": 17.96,
-              "raw_future_price": 18.08,
-              "today_adjustment_factor": 1.11198,
-              "adjusted_price": 16.26,
-              "adjusted_factor": 1.006695,
-              "adjusted_upside_pct": 0.67,
-              "r2": 0.0212,
+              "raw_today_price": 17.46,
+              "raw_future_price": 17.46,
+              "today_adjustment_factor": 1.104468,
+              "adjusted_price": 15.81,
+              "adjusted_factor": 1.000004,
+              "adjusted_upside_pct": 0.0,
+              "r2": 0.0,
               "status": "ok"
             },
             "quadratic": {
-              "raw_today_price": 17.45,
+              "raw_today_price": 17.21,
               "raw_future_price": 16.88,
-              "today_adjustment_factor": 1.080206,
-              "adjusted_price": 15.63,
-              "adjusted_factor": 0.967791,
-              "adjusted_upside_pct": -3.22,
-              "r2": 0.0679,
+              "today_adjustment_factor": 1.088563,
+              "adjusted_price": 15.5,
+              "adjusted_factor": 0.980581,
+              "adjusted_upside_pct": -1.94,
+              "r2": 0.0124,
               "status": "ok"
             },
             "log": {
-              "raw_today_price": 17.69,
-              "raw_future_price": 17.82,
-              "today_adjustment_factor": 1.095377,
-              "adjusted_price": 16.27,
-              "adjusted_factor": 1.007193,
-              "adjusted_upside_pct": 0.72,
-              "r2": 0.0287,
+              "raw_today_price": 17.21,
+              "raw_future_price": 17.22,
+              "today_adjustment_factor": 1.08862,
+              "adjusted_price": 15.82,
+              "adjusted_factor": 1.000345,
+              "adjusted_upside_pct": 0.03,
+              "r2": 0.0001,
               "status": "ok"
             }
           },
@@ -53201,20 +53201,20 @@
               "quadratic": 0.3,
               "log": 0.4
             },
-            "weighted_price": 16.07,
-            "weighted_factor": 0.995356,
-            "weighted_upside_pct": -0.46
+            "weighted_price": 15.72,
+            "weighted_factor": 0.994371,
+            "weighted_upside_pct": -0.56
           },
           "decision_adjustment": {
             "mode": "A",
             "direction": "down",
-            "before_price": 16.07,
-            "after_price": 16.11
+            "before_price": 15.72,
+            "after_price": 15.76
           },
           "final": {
-            "weighted_price_final": 16.11,
-            "weighted_factor_final": 0.997523,
-            "weighted_upside_pct_final": -0.25
+            "weighted_price_final": 15.76,
+            "weighted_factor_final": 0.997154,
+            "weighted_upside_pct_final": -0.28
           }
         }
       },
@@ -53222,15 +53222,15 @@
         "decision_mode": "A",
         "decision_label": "A",
         "short_direction": "down",
-        "timing_slope": 0.00152672,
-        "timing_dispersion": 0.01366774,
-        "timing_consistency_ratio": 0.0396,
-        "price_weighted_before_decision_1d": 16.15,
-        "price_weighted_before_decision_1w": 16.14,
-        "price_weighted_before_decision_1m": 16.07,
-        "final_weighted_1d": 16.15,
-        "final_weighted_1w": 16.14,
-        "final_weighted_1m": 16.11
+        "timing_slope": 0.00121655,
+        "timing_dispersion": 0.01164652,
+        "timing_consistency_ratio": 0.0262,
+        "price_weighted_before_decision_1d": 15.81,
+        "price_weighted_before_decision_1w": 15.79,
+        "price_weighted_before_decision_1m": 15.72,
+        "final_weighted_1d": 15.81,
+        "final_weighted_1w": 15.8,
+        "final_weighted_1m": 15.76
       },
       "debug": {
         "model_scope": "M6 v9.1 fixed: pure price models + timing decision + decision adjusted price",
@@ -53250,37 +53250,37 @@
         "series": [
           {
             "x_day": -252,
-            "price": 16.38,
+            "price": 17.79,
             "source": "price_ref_12m"
           },
           {
             "x_day": -126,
-            "price": 14.0,
+            "price": 13.47,
             "source": "price_ref_6m"
           },
           {
             "x_day": -63,
-            "price": 25.25,
+            "price": 24.54,
             "source": "price_ref_3m"
           },
           {
             "x_day": -21,
-            "price": 15.77,
+            "price": 16.06,
             "source": "price_ref_1m"
           },
           {
             "x_day": -5,
-            "price": 18.89,
+            "price": 18.41,
             "source": "price_ref_1w"
           },
           {
             "x_day": -1,
-            "price": 16.59,
+            "price": 16.15,
             "source": "price_ref_1d"
           },
           {
             "x_day": 0,
-            "price": 16.15,
+            "price": 15.81,
             "source": "price_now"
           }
         ],
@@ -53288,29 +53288,29 @@
         "price_fit_summary": {
           "linear": {
             "status": "ok",
-            "r2": 0.0212,
+            "r2": 0.0,
             "coefficients": [
-              17.9584689,
-              0.00572496
+              17.46164297,
+              3.2e-06
             ],
             "log_mode": false
           },
           "quadratic": {
             "status": "ok",
-            "r2": 0.0679,
+            "r2": 0.0124,
             "coefficients": [
-              17.44532773,
-              -0.02415354,
-              -0.00012398
+              17.21018113,
+              -0.01463858,
+              -6.075e-05
             ],
             "log_mode": false
           },
           "log": {
             "status": "ok",
-            "r2": 0.0287,
+            "r2": 0.0001,
             "coefficients": [
-              2.87301895,
-              0.00034129
+              2.84555354,
+              1.641e-05
             ],
             "log_mode": true
           }
@@ -53318,21 +53318,21 @@
       },
       "timing_structure": {
         "raw_returns": {
-          "ret_1d_pct": -2.6522,
-          "ret_1w_pct": -14.505,
-          "ret_1m_pct": 2.4096
+          "ret_1d_pct": -2.1053,
+          "ret_1w_pct": -14.1228,
+          "ret_1m_pct": -1.5567
         },
         "daily_normalized_returns": {
-          "ret_1d_daily_pct": -2.6522,
-          "ret_1w_daily_pct": -2.901,
-          "ret_1m_daily_pct": 0.1147
+          "ret_1d_daily_pct": -2.1053,
+          "ret_1w_daily_pct": -2.8246,
+          "ret_1m_daily_pct": -0.0741
         },
-        "slope": 0.00152672,
-        "slope_r2": 0.9317,
-        "mean_daily": -0.01812822,
-        "dispersion": 0.01366774,
-        "consistency_ratio": 0.0396,
-        "same_sign": false,
+        "slope": 0.00121655,
+        "slope_r2": 0.8147,
+        "mean_daily": -0.0166798,
+        "dispersion": 0.01164652,
+        "consistency_ratio": 0.0262,
+        "same_sign": true,
         "strength_consistent": false,
         "dispersion_ok": false,
         "strength_ok": true,
@@ -53344,15 +53344,15 @@
       "decision_mode": "A",
       "decision_label": "A",
       "short_direction": "down",
-      "m7_linear_price": 16.26,
-      "m7_quadratic_price": 15.63,
-      "m7_log_price": 16.27,
-      "weighted_price_1d": 16.15,
-      "weighted_price_1w": 16.14,
-      "weighted_price_1m": 16.11,
+      "m7_linear_price": 15.81,
+      "m7_quadratic_price": 15.5,
+      "m7_log_price": 15.82,
+      "weighted_price_1d": 15.81,
+      "weighted_price_1w": 15.8,
+      "weighted_price_1m": 15.76,
       "weighted_upside_pct_1d": 0.0,
-      "weighted_upside_pct_1w": -0.03,
-      "weighted_upside_pct_1m": -0.25
+      "weighted_upside_pct_1w": -0.06,
+      "weighted_upside_pct_1m": -0.28
     }
   ]
 }
