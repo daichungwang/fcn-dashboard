@@ -4646,6 +4646,116 @@
   }
 },
   {
+  "date": "2026-07-06",
+  "fcn_id": "FCN2603084 永豐",
+  "basket": [
+    "AMD",
+    "MU",
+    "INTC",
+    "SNDK"
+  ],
+  "tenor": 5,
+  "rate": 36.6,
+  "autocall": 100,
+  "strike": 55,
+  "ki": 50,
+  "eki": true,
+  "bank": "M.S",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "永豐",
+  "created_time": "2026-07-06T20:53",
+  "entry_time": "2026-07-06T20:53",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "AMD": 552.0499877929688,
+    "MU": 984.75,
+    "INTC": 122.19999694824219,
+    "SNDK": 1744.43
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "AMD": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "INTC": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SNDK": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-07-06",
+  "fcn_id": "FCN2603099 永豐",
+  "basket": [
+    "ARM",
+    "MU",
+    "INTC",
+    "AMD"
+  ],
+  "tenor": 4,
+  "rate": 36.7,
+  "autocall": 85,
+  "strike": 60,
+  "ki": 50,
+  "eki": true,
+  "bank": "M.S",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "永豐",
+  "created_time": "2026-07-06T20:53",
+  "entry_time": "2026-07-06T20:53",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "ARM": 322.239990234375,
+    "MU": 984.75,
+    "INTC": 122.19999694824219,
+    "AMD": 552.0499877929688
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "INTC": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AMD": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
