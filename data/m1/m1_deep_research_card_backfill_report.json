@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-14T03:39:45.014347Z",
+  "generated_at": "2026-07-15T03:40:14.866561Z",
   "mode": "detect_only_backfill_queue",
   "policy": {
     "deep_card_priority": true,
@@ -826,7 +826,7 @@
       "symbol": "AXP",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 5,
+      "source_order": 6,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -838,20 +838,6 @@
     },
     {
       "symbol": "PH",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 8,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "PLD",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 9,
@@ -910,7 +896,7 @@
       "symbol": "CRWD",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 17,
+      "source_order": 18,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -924,7 +910,7 @@
       "symbol": "DDOG",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 18,
+      "source_order": 19,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -936,20 +922,6 @@
     },
     {
       "symbol": "DIA",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 19,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "DUK",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 20,
@@ -966,20 +938,6 @@
       "symbol": "GS",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 21,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "JNJ",
-      "source": "candidate80",
-      "priority_rank": 2,
       "source_order": 22,
       "in_pool30": false,
       "in_candidate80": true,
@@ -991,7 +949,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "JPM",
+      "symbol": "IWM",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 23,
@@ -1005,7 +963,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "KO",
+      "symbol": "JPM",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 24,
@@ -1019,7 +977,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "MS",
+      "symbol": "KLAC",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 25,
@@ -1027,13 +985,13 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
+      "in_m1_stock_profile_all": true,
+      "coverage_status": "legacy_fallback_only",
       "queue_eligible": true,
       "skip_reason": null
     },
     {
-      "symbol": "NEE",
+      "symbol": "LRCX",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 26,
@@ -1041,13 +999,13 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
+      "in_m1_stock_profile_all": true,
+      "coverage_status": "legacy_fallback_only",
       "queue_eligible": true,
       "skip_reason": null
     },
     {
-      "symbol": "NET",
+      "symbol": "MS",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 27,
@@ -1061,10 +1019,10 @@
       "skip_reason": null
     },
     {
-      "symbol": "OKTA",
+      "symbol": "NEE",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 28,
+      "source_order": 29,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -1075,21 +1033,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "PANW",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 29,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": true,
-      "coverage_status": "legacy_fallback_only",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "SBUX",
+      "symbol": "NET",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 30,
@@ -1103,7 +1047,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "SCHW",
+      "symbol": "OKTA",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 31,
@@ -1117,7 +1061,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "SNOW",
+      "symbol": "PANW",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 32,
@@ -1131,35 +1075,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "SO",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 33,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "SPY",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 34,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "VPU",
+      "symbol": "SBUX",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 35,
@@ -1173,7 +1089,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "WMT",
+      "symbol": "SCHW",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 36,
@@ -1187,7 +1103,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "XLE",
+      "symbol": "SHOP",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 37,
@@ -1195,27 +1111,13 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
+      "in_m1_stock_profile_all": true,
+      "coverage_status": "legacy_fallback_only",
       "queue_eligible": true,
       "skip_reason": null
     },
     {
-      "symbol": "XLF",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 38,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "XLP",
+      "symbol": "SNOW",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 39,
@@ -1223,13 +1125,13 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
+      "in_m1_stock_profile_all": true,
+      "coverage_status": "legacy_fallback_only",
       "queue_eligible": true,
       "skip_reason": null
     },
     {
-      "symbol": "XLU",
+      "symbol": "SPY",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 40,
@@ -1243,7 +1145,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "XLV",
+      "symbol": "VPU",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 41,
@@ -1257,7 +1159,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "ZM",
+      "symbol": "XLE",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 42,
@@ -1271,7 +1173,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "ABBV",
+      "symbol": "XLF",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 43,
@@ -1285,7 +1187,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "BMY",
+      "symbol": "XLU",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 44,
@@ -1299,7 +1201,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "CI",
+      "symbol": "ZM",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 45,
@@ -1313,7 +1215,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "COP",
+      "symbol": "CAT",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 46,
@@ -1327,7 +1229,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "CVX",
+      "symbol": "CI",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 47,
@@ -1341,7 +1243,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "ELV",
+      "symbol": "COP",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 48,
@@ -1355,7 +1257,21 @@
       "skip_reason": null
     },
     {
-      "symbol": "O",
+      "symbol": "CVX",
+      "source": "candidate80",
+      "priority_rank": 2,
+      "source_order": 49,
+      "in_pool30": false,
+      "in_candidate80": true,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "ELV",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 50,
@@ -1369,7 +1285,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "OXY",
+      "symbol": "O",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 51,
@@ -1383,7 +1299,21 @@
       "skip_reason": null
     },
     {
-      "symbol": "UPS",
+      "symbol": "OXY",
+      "source": "candidate80",
+      "priority_rank": 2,
+      "source_order": 52,
+      "in_pool30": false,
+      "in_candidate80": true,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "TXN",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 54,
@@ -1397,21 +1327,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "XOM",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 55,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "MA",
+      "symbol": "UPS",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 56,
@@ -1425,7 +1341,21 @@
       "skip_reason": null
     },
     {
-      "symbol": "LLY",
+      "symbol": "XOM",
+      "source": "candidate80",
+      "priority_rank": 2,
+      "source_order": 57,
+      "in_pool30": false,
+      "in_candidate80": true,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "MA",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 58,
@@ -1433,16 +1363,16 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": true,
-      "coverage_status": "legacy_fallback_only",
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
       "queue_eligible": true,
       "skip_reason": null
     },
     {
-      "symbol": "FDX",
+      "symbol": "AIPO",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 59,
+      "source_order": 60,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -1456,7 +1386,7 @@
       "symbol": "ECL",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 60,
+      "source_order": 61,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -1495,7 +1425,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "ROKU",
+      "symbol": "LLY",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 65,
@@ -1503,16 +1433,16 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
+      "in_m1_stock_profile_all": true,
+      "coverage_status": "legacy_fallback_only",
       "queue_eligible": true,
       "skip_reason": null
     },
     {
-      "symbol": "TWLO",
+      "symbol": "PLD",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 67,
+      "source_order": 66,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -1523,7 +1453,21 @@
       "skip_reason": null
     },
     {
-      "symbol": "VRTX",
+      "symbol": "RIVN",
+      "source": "candidate80",
+      "priority_rank": 2,
+      "source_order": 68,
+      "in_pool30": false,
+      "in_candidate80": true,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "ROKU",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 69,
@@ -1537,10 +1481,10 @@
       "skip_reason": null
     },
     {
-      "symbol": "ZAP",
+      "symbol": "TWLO",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 70,
+      "source_order": 71,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -1551,10 +1495,10 @@
       "skip_reason": null
     },
     {
-      "symbol": "DE",
+      "symbol": "VOLT",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 73,
+      "source_order": 72,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -1565,7 +1509,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "GE",
+      "symbol": "VRTX",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 74,
@@ -1579,7 +1523,7 @@
       "skip_reason": null
     },
     {
-      "symbol": "KLAC",
+      "symbol": "ZAP",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 75,
@@ -1587,22 +1531,22 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": true,
-      "coverage_status": "legacy_fallback_only",
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
       "queue_eligible": true,
       "skip_reason": null
     },
     {
-      "symbol": "LRCX",
+      "symbol": "GE",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 76,
+      "source_order": 77,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": true,
-      "coverage_status": "legacy_fallback_only",
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
       "queue_eligible": true,
       "skip_reason": null
     },
@@ -1667,34 +1611,6 @@
       "source": "universe150",
       "priority_rank": 3,
       "source_order": 28,
-      "in_pool30": false,
-      "in_candidate80": false,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "SHOP",
-      "source": "universe150",
-      "priority_rank": 3,
-      "source_order": 29,
-      "in_pool30": false,
-      "in_candidate80": false,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": true,
-      "coverage_status": "legacy_fallback_only",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "RIVN",
-      "source": "universe150",
-      "priority_rank": 3,
-      "source_order": 31,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -1775,10 +1691,10 @@
       "skip_reason": null
     },
     {
-      "symbol": "CAT",
+      "symbol": "DE",
       "source": "universe150",
       "priority_rank": 3,
-      "source_order": 48,
+      "source_order": 49,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -1803,10 +1719,38 @@
       "skip_reason": null
     },
     {
+      "symbol": "WMT",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 53,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
       "symbol": "PG",
       "source": "universe150",
       "priority_rank": 3,
       "source_order": 55,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "KO",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 56,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -1831,10 +1775,38 @@
       "skip_reason": null
     },
     {
+      "symbol": "JNJ",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 58,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
       "symbol": "PFE",
       "source": "universe150",
       "priority_rank": 3,
       "source_order": 59,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "ABBV",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 60,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -1859,10 +1831,24 @@
       "skip_reason": null
     },
     {
-      "symbol": "IWM",
+      "symbol": "XLV",
       "source": "universe150",
       "priority_rank": 3,
-      "source_order": 69,
+      "source_order": 72,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "XLP",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 74,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -1897,20 +1883,6 @@
       "in_m1_stock_profile": false,
       "in_m1_stock_profile_all": true,
       "coverage_status": "legacy_fallback_only",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "TXN",
-      "source": "universe150",
-      "priority_rank": 3,
-      "source_order": 81,
-      "in_pool30": false,
-      "in_candidate80": false,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
       "queue_eligible": true,
       "skip_reason": null
     },
@@ -1961,6 +1933,48 @@
       "source": "universe150",
       "priority_rank": 3,
       "source_order": 87,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "BMY",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 88,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "DUK",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 89,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "SO",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 91,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -2031,6 +2045,20 @@
       "source": "universe150",
       "priority_rank": 3,
       "source_order": 99,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null
+    },
+    {
+      "symbol": "FDX",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 101,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -2177,34 +2205,6 @@
       "in_m1_stock_profile": false,
       "in_m1_stock_profile_all": true,
       "coverage_status": "legacy_fallback_only",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "AIPO",
-      "source": "universe150",
-      "priority_rank": 3,
-      "source_order": 135,
-      "in_pool30": false,
-      "in_candidate80": false,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null
-    },
-    {
-      "symbol": "VOLT",
-      "source": "universe150",
-      "priority_rank": 3,
-      "source_order": 136,
-      "in_pool30": false,
-      "in_candidate80": false,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
       "queue_eligible": true,
       "skip_reason": null
     },
@@ -2875,7 +2875,7 @@
       "symbol": "AXP",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 5,
+      "source_order": 6,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -2888,21 +2888,6 @@
     },
     {
       "symbol": "PH",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 8,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "PLD",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 9,
@@ -2965,7 +2950,7 @@
       "symbol": "CRWD",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 17,
+      "source_order": 18,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -2980,7 +2965,7 @@
       "symbol": "DDOG",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 18,
+      "source_order": 19,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -2993,21 +2978,6 @@
     },
     {
       "symbol": "DIA",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 19,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "DUK",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 20,
@@ -3025,21 +2995,6 @@
       "symbol": "GS",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 21,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "JNJ",
-      "source": "candidate80",
-      "priority_rank": 2,
       "source_order": 22,
       "in_pool30": false,
       "in_candidate80": true,
@@ -3052,7 +3007,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "JPM",
+      "symbol": "IWM",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 23,
@@ -3067,7 +3022,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "KO",
+      "symbol": "JPM",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 24,
@@ -3082,7 +3037,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "MS",
+      "symbol": "KLAC",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 25,
@@ -3090,14 +3045,14 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
+      "in_m1_stock_profile_all": true,
+      "coverage_status": "legacy_fallback_only",
       "queue_eligible": true,
       "skip_reason": null,
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "NEE",
+      "symbol": "LRCX",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 26,
@@ -3105,14 +3060,14 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
+      "in_m1_stock_profile_all": true,
+      "coverage_status": "legacy_fallback_only",
       "queue_eligible": true,
       "skip_reason": null,
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "NET",
+      "symbol": "MS",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 27,
@@ -3127,10 +3082,10 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "OKTA",
+      "symbol": "NEE",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 28,
+      "source_order": 29,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -3142,22 +3097,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "PANW",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 29,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": true,
-      "coverage_status": "legacy_fallback_only",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "SBUX",
+      "symbol": "NET",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 30,
@@ -3172,7 +3112,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "SCHW",
+      "symbol": "OKTA",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 31,
@@ -3187,7 +3127,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "SNOW",
+      "symbol": "PANW",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 32,
@@ -3202,37 +3142,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "SO",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 33,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "SPY",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 34,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "VPU",
+      "symbol": "SBUX",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 35,
@@ -3247,7 +3157,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "WMT",
+      "symbol": "SCHW",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 36,
@@ -3262,7 +3172,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "XLE",
+      "symbol": "SHOP",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 37,
@@ -3270,29 +3180,14 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
+      "in_m1_stock_profile_all": true,
+      "coverage_status": "legacy_fallback_only",
       "queue_eligible": true,
       "skip_reason": null,
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "XLF",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 38,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "XLP",
+      "symbol": "SNOW",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 39,
@@ -3300,14 +3195,14 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
+      "in_m1_stock_profile_all": true,
+      "coverage_status": "legacy_fallback_only",
       "queue_eligible": true,
       "skip_reason": null,
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "XLU",
+      "symbol": "SPY",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 40,
@@ -3322,7 +3217,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "XLV",
+      "symbol": "VPU",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 41,
@@ -3337,7 +3232,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "ZM",
+      "symbol": "XLE",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 42,
@@ -3352,7 +3247,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "ABBV",
+      "symbol": "XLF",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 43,
@@ -3367,7 +3262,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "BMY",
+      "symbol": "XLU",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 44,
@@ -3382,7 +3277,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "CI",
+      "symbol": "ZM",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 45,
@@ -3397,7 +3292,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "COP",
+      "symbol": "CAT",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 46,
@@ -3412,7 +3307,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "CVX",
+      "symbol": "CI",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 47,
@@ -3427,7 +3322,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "ELV",
+      "symbol": "COP",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 48,
@@ -3442,7 +3337,22 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "O",
+      "symbol": "CVX",
+      "source": "candidate80",
+      "priority_rank": 2,
+      "source_order": 49,
+      "in_pool30": false,
+      "in_candidate80": true,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "ELV",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 50,
@@ -3457,7 +3367,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "OXY",
+      "symbol": "O",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 51,
@@ -3472,7 +3382,22 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "UPS",
+      "symbol": "OXY",
+      "source": "candidate80",
+      "priority_rank": 2,
+      "source_order": 52,
+      "in_pool30": false,
+      "in_candidate80": true,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "TXN",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 54,
@@ -3487,22 +3412,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "XOM",
-      "source": "candidate80",
-      "priority_rank": 2,
-      "source_order": 55,
-      "in_pool30": false,
-      "in_candidate80": true,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "MA",
+      "symbol": "UPS",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 56,
@@ -3517,7 +3427,22 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "LLY",
+      "symbol": "XOM",
+      "source": "candidate80",
+      "priority_rank": 2,
+      "source_order": 57,
+      "in_pool30": false,
+      "in_candidate80": true,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "MA",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 58,
@@ -3525,17 +3450,17 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": true,
-      "coverage_status": "legacy_fallback_only",
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
       "queue_eligible": true,
       "skip_reason": null,
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "FDX",
+      "symbol": "AIPO",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 59,
+      "source_order": 60,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -3550,7 +3475,7 @@
       "symbol": "ECL",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 60,
+      "source_order": 61,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -3592,7 +3517,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "ROKU",
+      "symbol": "LLY",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 65,
@@ -3600,17 +3525,17 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
+      "in_m1_stock_profile_all": true,
+      "coverage_status": "legacy_fallback_only",
       "queue_eligible": true,
       "skip_reason": null,
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "TWLO",
+      "symbol": "PLD",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 67,
+      "source_order": 66,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -3622,7 +3547,22 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "VRTX",
+      "symbol": "RIVN",
+      "source": "candidate80",
+      "priority_rank": 2,
+      "source_order": 68,
+      "in_pool30": false,
+      "in_candidate80": true,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "ROKU",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 69,
@@ -3637,10 +3577,10 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "ZAP",
+      "symbol": "TWLO",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 70,
+      "source_order": 71,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -3652,10 +3592,10 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "DE",
+      "symbol": "VOLT",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 73,
+      "source_order": 72,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
@@ -3667,7 +3607,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "GE",
+      "symbol": "VRTX",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 74,
@@ -3682,7 +3622,7 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "KLAC",
+      "symbol": "ZAP",
       "source": "candidate80",
       "priority_rank": 2,
       "source_order": 75,
@@ -3690,23 +3630,23 @@
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": true,
-      "coverage_status": "legacy_fallback_only",
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
       "queue_eligible": true,
       "skip_reason": null,
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "LRCX",
+      "symbol": "GE",
       "source": "candidate80",
       "priority_rank": 2,
-      "source_order": 76,
+      "source_order": 77,
       "in_pool30": false,
       "in_candidate80": true,
       "in_universe150": true,
       "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": true,
-      "coverage_status": "legacy_fallback_only",
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
       "queue_eligible": true,
       "skip_reason": null,
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
@@ -3776,36 +3716,6 @@
       "source": "universe150",
       "priority_rank": 3,
       "source_order": 28,
-      "in_pool30": false,
-      "in_candidate80": false,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "SHOP",
-      "source": "universe150",
-      "priority_rank": 3,
-      "source_order": 29,
-      "in_pool30": false,
-      "in_candidate80": false,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": true,
-      "coverage_status": "legacy_fallback_only",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "RIVN",
-      "source": "universe150",
-      "priority_rank": 3,
-      "source_order": 31,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -3892,10 +3802,10 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "CAT",
+      "symbol": "DE",
       "source": "universe150",
       "priority_rank": 3,
-      "source_order": 48,
+      "source_order": 49,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -3922,10 +3832,40 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
+      "symbol": "WMT",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 53,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
       "symbol": "PG",
       "source": "universe150",
       "priority_rank": 3,
       "source_order": 55,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "KO",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 56,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -3952,10 +3892,40 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
+      "symbol": "JNJ",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 58,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
       "symbol": "PFE",
       "source": "universe150",
       "priority_rank": 3,
       "source_order": 59,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "ABBV",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 60,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -3982,10 +3952,25 @@
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
     },
     {
-      "symbol": "IWM",
+      "symbol": "XLV",
       "source": "universe150",
       "priority_rank": 3,
-      "source_order": 69,
+      "source_order": 72,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "XLP",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 74,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -4022,21 +4007,6 @@
       "in_m1_stock_profile": false,
       "in_m1_stock_profile_all": true,
       "coverage_status": "legacy_fallback_only",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "TXN",
-      "source": "universe150",
-      "priority_rank": 3,
-      "source_order": 81,
-      "in_pool30": false,
-      "in_candidate80": false,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
       "queue_eligible": true,
       "skip_reason": null,
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
@@ -4091,6 +4061,51 @@
       "source": "universe150",
       "priority_rank": 3,
       "source_order": 87,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "BMY",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 88,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "DUK",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 89,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "SO",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 91,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -4166,6 +4181,21 @@
       "source": "universe150",
       "priority_rank": 3,
       "source_order": 99,
+      "in_pool30": false,
+      "in_candidate80": false,
+      "in_universe150": true,
+      "in_m1_stock_profile": false,
+      "in_m1_stock_profile_all": false,
+      "coverage_status": "missing_deep_card",
+      "queue_eligible": true,
+      "skip_reason": null,
+      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
+    },
+    {
+      "symbol": "FDX",
+      "source": "universe150",
+      "priority_rank": 3,
+      "source_order": 101,
       "in_pool30": false,
       "in_candidate80": false,
       "in_universe150": true,
@@ -4322,36 +4352,6 @@
       "in_m1_stock_profile": false,
       "in_m1_stock_profile_all": true,
       "coverage_status": "legacy_fallback_only",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "AIPO",
-      "source": "universe150",
-      "priority_rank": 3,
-      "source_order": 135,
-      "in_pool30": false,
-      "in_candidate80": false,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
-      "queue_eligible": true,
-      "skip_reason": null,
-      "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
-    },
-    {
-      "symbol": "VOLT",
-      "source": "universe150",
-      "priority_rank": 3,
-      "source_order": 136,
-      "in_pool30": false,
-      "in_candidate80": false,
-      "in_universe150": true,
-      "in_m1_stock_profile": false,
-      "in_m1_stock_profile_all": false,
-      "coverage_status": "missing_deep_card",
       "queue_eligible": true,
       "skip_reason": null,
       "recommended_action": "prepare sourced deep research card before updating m1_stock_profile.json"
