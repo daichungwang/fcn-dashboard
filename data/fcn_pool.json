@@ -4811,6 +4811,61 @@
   }
 },
   {
+  "date": "2025-07-14",
+  "fcn_id": "FCN199Q 富邦",
+  "basket": [
+    "ARM",
+    "AVGO",
+    "NVDA",
+    "TSM"
+  ],
+  "tenor": 9,
+  "rate": 25,
+  "autocall": 100,
+  "strike": 54.25,
+  "ki": 50,
+  "eki": true,
+  "bank": "DBS",
+  "has_position": true,
+  "amt": 20000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2025-07-14T09:00",
+  "entry_time": "2025-07-14T09:00",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "標的價格=VWAP",
+  "entry_prices": {
+    "ARM": 300.1,
+    "AVGO": 389,
+    "NVDA": 206.5,
+    "TSM": 427.7
+  },
+  "maturity_time": "2026-07-25T09:00",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+}
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
