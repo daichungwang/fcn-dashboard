@@ -4811,7 +4811,7 @@
   }
 },
   {
-  "date": "2025-07-14",
+  "date": "2026-07-14",
   "fcn_id": "FCN199Q 富邦",
   "basket": [
     "ARM",
@@ -4831,8 +4831,8 @@
   "currency": "USD",
   "status": "active",
   "tw_bank": "富邦",
-  "created_time": "2025-07-14T09:00",
-  "entry_time": "2025-07-14T09:00",
+  "created_time": "2026-07-14T09:00",
+  "entry_time": "2026-07-14T09:00",
   "exit_time": "",
   "decision_flag": "manual",
   "is_portfolio": true,
@@ -4843,7 +4843,7 @@
     "NVDA": 206.5,
     "TSM": 427.7
   },
-  "maturity_time": "2026-07-25T09:00",
+  "maturity_time": "",
   "has_ki_breach": false,
   "first_ki_breach_time": "",
   "early_exit_record": {
