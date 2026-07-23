@@ -4866,6 +4866,61 @@
   }
 },
   {
+  "date": "2026-07-20",
+  "fcn_id": "FCN330Q 富邦",
+  "basket": [
+    "INTC",
+    "MU",
+    "NVDA",
+    "TSM"
+  ],
+  "tenor": 6,
+  "rate": 18,
+  "autocall": 100,
+  "strike": 54,
+  "ki": 49,
+  "eki": true,
+  "bank": "UBS",
+  "has_position": true,
+  "amt": 10000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-07-20T14:57",
+  "entry_time": "2026-07-20T14:57",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "INTC": 97.1,
+    "MU": 865.5,
+    "NVDA": 203.28,
+    "TSM": 402.3
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "INTC": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
