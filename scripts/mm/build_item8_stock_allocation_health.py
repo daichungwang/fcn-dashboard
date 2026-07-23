@@ -4,8 +4,9 @@
 from __future__ import annotations
 
 import json
+import re
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -15,9 +16,15 @@ OUT_PATH = ROOT / "data" / "mm" / "item8_stock_allocation_health.json"
 
 SOURCE = "scripts/mm/build_item8_stock_allocation_health.py"
 VERSION = "v1_item8_stock_allocation_health"
+IMPACT_METHOD = "per_underlying_full_notional"
 
-AMOUNT_FIELDS = ("amount", "notional", "principal", "investment_amount", "face_value", "amt")
-SYMBOL_FIELDS = ("symbols", "underlyings", "basket", "stocks", "stock", "underlying")
+AMOUNT_FIELDS = ("amount", "notional", "principal", "investment_amount", "face_value", "issue_amount", "amt")
+SYMBOL_FIELDS = ("symbols", "underlyings", "basket", "stocks", "stock", "underlying", "tickers")
+EXCLUDED_STATUS = {"closed", "expired", "redeemed", "early_exit", "settled", "inactive"}
+EXIT_FIELDS = ("exit_date", "exit_time")
+MATURITY_FIELDS = ("maturity_date", "expiry_date", "maturity_time", "expiry_time", "maturity", "expiry")
+SYMBOL_SPLIT_RE = re.compile(r"[,+/;|&\s]+")
+NUMBER_RE = re.compile(r"[-+]?\d[\d,]*(?:\.\d+)?")
 ETF_SYMBOLS = {"SMH", "QQQ", "LQD"}
 THEMES = {
     "AI_SEMI",
@@ -40,6 +47,54 @@ CATEGORY_TARGETS = {
     "Defensive / Income": 15.0,
     "Speculative": 10.0,
     "ETF": 10.0,
+}
+STOCK_LIMIT_OVERRIDES = {
+    "NVDA": 900000.0,
+    "TSM": 900000.0,
+    "SMH": 700000.0,
+    "AVGO": 700000.0,
+    "GOOG": 700000.0,
+    "MSFT": 700000.0,
+    "AAPL": 600000.0,
+    "MRVL": 300000.0,
+    "AMD": 300000.0,
+    "COIN": 30000.0,
+    "ALAB": 30000.0,
+    "CRDO": 30000.0,
+    "LITE": 30000.0,
+    "NKE": 30000.0,
+}
+STOCK_CATEGORY_LIMITS = {
+    "core": 500000.0,
+    "growth": 300000.0,
+    "defensive": 300000.0,
+    "income": 300000.0,
+    "defensive / income": 300000.0,
+    "etf": 700000.0,
+    "speculative": 30000.0,
+    "watch": 100000.0,
+    "unknown": 100000.0,
+}
+CATEGORY_IMPACT_LIMITS = {
+    "Core": 1800000.0,
+    "Growth": 1200000.0,
+    "Defensive / Income": 1000000.0,
+    "ETF": 900000.0,
+    "Speculative": 120000.0,
+    "Unknown": 100000.0,
+}
+THEME_IMPACT_LIMITS = {
+    "AI_SEMI": 1800000.0,
+    "AI_APPLICATION": 1200000.0,
+    "AI_INFRA": 700000.0,
+    "AI_POWER": 700000.0,
+    "PLATFORM": 700000.0,
+    "HEALTHCARE": 700000.0,
+    "CONSUMER": 500000.0,
+    "TRAVEL": 300000.0,
+    "FINANCIAL": 100000.0,
+    "ETF": 900000.0,
+    "Unknown": 100000.0,
 }
 
 
@@ -67,34 +122,92 @@ def as_number(value: Any) -> float:
         return 0.0
     if isinstance(value, (int, float)):
         return float(value)
-    text = str(value).replace(",", "").strip()
+    text = str(value).strip()
+    match = NUMBER_RE.search(text)
+    if not match:
+        return 0.0
+    text = match.group(0).replace(",", "")
     try:
         return float(text)
     except ValueError:
         return 0.0
 
 
-def extract_notional(row: dict[str, Any]) -> float:
+def extract_notional(row: dict[str, Any]) -> tuple[float, str | None]:
     for field in AMOUNT_FIELDS:
         amount = as_number(row.get(field))
         if amount > 0:
-            return amount
-    return 0.0
+            return amount, field
+    return 0.0, None
+
+
+def has_value(value: Any) -> bool:
+    return value is not None and str(value).strip() != ""
+
+
+def is_truthy(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    if value is None:
+        return False
+    return str(value).strip().lower() in {"1", "true", "yes", "y"}
+
+
+def is_falsey(value: Any) -> bool:
+    if isinstance(value, bool):
+        return not value
+    if value is None:
+        return False
+    return str(value).strip().lower() in {"0", "false", "no", "n"}
+
+
+def parse_date(value: Any) -> date | None:
+    if not has_value(value):
+        return None
+    text = str(value).strip()
+    for token in (text[:10], text):
+        try:
+            return datetime.fromisoformat(token.replace("Z", "+00:00")).date()
+        except ValueError:
+            continue
+    return None
+
+
+def active_status(row: dict[str, Any], today: date) -> tuple[bool, str | None]:
+    status = str(row.get("status") or "").strip().lower()
+    if status in EXCLUDED_STATUS:
+        return False, f"status_{status}"
+    if "is_active" in row and is_falsey(row.get("is_active")):
+        return False, "is_active_false"
+    for flag in ("closed", "redeemed", "early_exit"):
+        if is_truthy(row.get(flag)):
+            return False, f"{flag}_true"
+    for field in EXIT_FIELDS:
+        if has_value(row.get(field)):
+            return False, f"{field}_present"
+
+    explicit_active = is_truthy(row.get("is_active"))
+    if not explicit_active:
+        for field in MATURITY_FIELDS:
+            d = parse_date(row.get(field))
+            if d and d < today:
+                return False, f"{field}_past"
+    return True, None
 
 
 def flatten_symbols(value: Any) -> list[str]:
     if value is None:
         return []
     if isinstance(value, str):
-        return [value]
+        return [part for part in SYMBOL_SPLIT_RE.split(value) if part]
     if isinstance(value, dict):
         candidates: list[str] = []
-        for key in ("symbol", "ticker", "name"):
+        for key in ("symbol", "ticker", "name", "underlying"):
             if key in value:
                 candidates.extend(flatten_symbols(value.get(key)))
         if not candidates:
-            candidates.extend(flatten_symbols(k) for k in value.keys())
-            return [item for group in candidates for item in group]
+            for key in value.keys():
+                candidates.extend(flatten_symbols(key))
         return candidates
     if isinstance(value, list):
         result: list[str] = []
@@ -196,6 +309,57 @@ def pct(value: float, total: float) -> float:
     return round((value / total * 100.0), 2) if total > 0 else 0.0
 
 
+def limit_status(amount: float, limit: float) -> tuple[float, str]:
+    usage = pct(amount, limit)
+    if limit <= 0:
+        return 0.0, "OK"
+    if amount > limit:
+        return usage, "Over Limit"
+    if usage >= 80.0:
+        return usage, "Near Limit"
+    return usage, "OK"
+
+
+def health_light(amount: float, limit: float, danger_count: int = 0, watch_count: int = 0) -> tuple[str, str]:
+    usage, status = limit_status(amount, limit)
+    if danger_count > 0 or status == "Over Limit":
+        return status, "Red"
+    if watch_count > 0 or usage >= 80.0:
+        return status, "Yellow"
+    return status, "Green"
+
+
+def limit_action(status: str, danger_count: int = 0, watch_count: int = 0) -> str:
+    if status == "Over Limit":
+        return "暫停新增"
+    if danger_count > 0:
+        return "優先處理"
+    if status == "Near Limit" or watch_count > 0:
+        return "只觀察，不主動加碼"
+    return "可維持"
+
+
+def stock_limit(symbol: str, category: str) -> float:
+    if symbol in STOCK_LIMIT_OVERRIDES:
+        return STOCK_LIMIT_OVERRIDES[symbol]
+    key = str(category or "unknown").strip().lower()
+    return STOCK_CATEGORY_LIMITS.get(key, STOCK_CATEGORY_LIMITS["unknown"])
+
+
+def impact_fields(amount: float, limit: float, danger_count: int = 0, watch_count: int = 0) -> dict[str, Any]:
+    usage, status = limit_status(amount, limit)
+    status, light = health_light(amount, limit, danger_count, watch_count)
+    return {
+        "linked_impact_amount": round(amount, 2),
+        "impact_limit": round(limit, 2),
+        "impact_room": round(limit - amount, 2),
+        "limit_usage_pct": usage,
+        "limit_status": status,
+        "light": light,
+        "action": limit_action(status, danger_count, watch_count),
+    }
+
+
 def build_allocation(items: dict[str, float], total: float, order: list[str] | None = None) -> list[dict[str, Any]]:
     keys = order or sorted(items, key=lambda key: (-items[key], key))
     return [
@@ -203,6 +367,35 @@ def build_allocation(items: dict[str, float], total: float, order: list[str] | N
         for key in keys
         if key in items or order
     ]
+
+
+def build_impact_allocation(
+    items: dict[str, float],
+    total: float,
+    limits: dict[str, float],
+    health_counts: dict[str, dict[str, int]],
+    top_symbols: dict[str, list[str]],
+    order: list[str] | None = None,
+) -> list[dict[str, Any]]:
+    rows = []
+    for row in build_allocation(items, total, order):
+        name = row["name"]
+        counts = health_counts.get(name, {})
+        danger_count = int(counts.get("danger_count", 0))
+        watch_count = int(counts.get("watch_count", 0))
+        healthy_count = int(counts.get("healthy_count", 0))
+        limit = limits.get(name, limits.get("Unknown", 100000.0))
+        row.update(
+            impact_fields(row["exposure"], limit, danger_count, watch_count)
+            | {
+                "danger_count": danger_count,
+                "watch_count": watch_count,
+                "healthy_count": healthy_count,
+                "top_symbols": top_symbols.get(name, [])[:5],
+            }
+        )
+        rows.append(row)
+    return rows
 
 
 def warning(severity: str, code: str, message: str, weight: float | None = None) -> dict[str, Any]:
@@ -235,6 +428,18 @@ def valuation_risk(row: dict[str, Any]) -> str | None:
         if value:
             return str(value)
     return None
+
+
+def exposure_health_counts(symbol: str, deal_count: int, m2_stocks: dict[str, Any]) -> dict[str, int]:
+    row = m2_stocks.get(symbol)
+    danger_count = int(as_number(row.get("danger"))) if isinstance(row, dict) else 0
+    watch_count = int(as_number(row.get("watch"))) if isinstance(row, dict) else 0
+    healthy_count = max(int(deal_count) - danger_count - watch_count, 0)
+    return {
+        "danger_count": max(danger_count, 0),
+        "watch_count": max(watch_count, 0),
+        "healthy_count": healthy_count,
+    }
 
 
 def build_recommendations(
@@ -322,22 +527,41 @@ def main() -> None:
     m1 = index_by_symbol(read_json("data/m1/m1_scores.json", {}))
     m7 = index_by_symbol(read_json("data/m7_sandbox/m7_v2_scores.json", {}))
     m2_exposure = read_json("data/m7/m2_stock_exposure.json", {})
+    m2_stocks = m2_exposure.get("stocks", {}) if isinstance(m2_exposure, dict) and isinstance(m2_exposure.get("stocks"), dict) else {}
 
     exposure_by_symbol: dict[str, float] = defaultdict(float)
     deal_count_by_symbol: dict[str, int] = defaultdict(int)
     total_worst_of_exposure = 0.0
+    amount_field_usage: dict[str, int] = defaultdict(int)
+    excluded_reason_counts: dict[str, int] = defaultdict(int)
+    active_deal_count = 0
+    excluded_deal_count = 0
+    total_raw_deal_count = len(fcn_pool) if isinstance(fcn_pool, list) else 0
+    today = datetime.now(timezone.utc).date()
 
     for row in fcn_pool if isinstance(fcn_pool, list) else []:
         if not isinstance(row, dict):
+            excluded_deal_count += 1
+            excluded_reason_counts["invalid_row"] += 1
             continue
-        if str(row.get("status") or "").lower() in {"closed", "expired", "redeemed", "inactive"}:
+        is_active, excluded_reason = active_status(row, today)
+        if not is_active:
+            excluded_deal_count += 1
+            excluded_reason_counts[excluded_reason or "not_active"] += 1
             continue
-        notional = extract_notional(row)
+        notional, amount_field = extract_notional(row)
         if notional <= 0:
+            excluded_deal_count += 1
+            excluded_reason_counts["missing_amount"] += 1
             continue
         symbols = extract_symbols(row)
         if not symbols:
+            excluded_deal_count += 1
+            excluded_reason_counts["missing_symbols"] += 1
             continue
+        active_deal_count += 1
+        if amount_field:
+            amount_field_usage[amount_field] += 1
         for symbol in symbols:
             exposure_by_symbol[symbol] += notional
             deal_count_by_symbol[symbol] += 1
@@ -386,8 +610,18 @@ def main() -> None:
             warnings.append(warning("Watch", "CATEGORY_OVERWEIGHT", f"{category} > target + 10% → Overweight", weight_value))
 
     single_name_concentration = []
+    stock_health = []
+    category_health_counts: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    theme_health_counts: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    category_top_symbols: dict[str, list[str]] = defaultdict(list)
+    theme_top_symbols: dict[str, list[str]] = defaultdict(list)
     for symbol, exposure in sorted(exposure_by_symbol.items(), key=lambda item: (-item[1], item[0])):
         weight_value = pct(exposure, total_worst_of_exposure)
+        category = classify_category(symbol, pool30, universe)
+        theme = classify_theme(symbol, pool30, universe)
+        counts = exposure_health_counts(symbol, deal_count_by_symbol.get(symbol, 0), m2_stocks)
+        limit = stock_limit(symbol, category)
+        impact = impact_fields(exposure, limit, counts["danger_count"], counts["watch_count"])
         concentration_level = "Normal"
         if weight_value > 30.0:
             concentration_level = "High"
@@ -399,17 +633,25 @@ def main() -> None:
             warnings.append(
                 warning("Watch", "CONCENTRATION_WATCH", f"{symbol} > 20% total exposure → Concentration Watch", weight_value)
             )
-        single_name_concentration.append(
-            {
-                "symbol": symbol,
-                "exposure": round(exposure, 2),
-                "weight": weight_value,
-                "category": classify_category(symbol, pool30, universe),
-                "theme": classify_theme(symbol, pool30, universe),
-                "deal_count": deal_count_by_symbol.get(symbol, 0),
-                "concentration": concentration_level,
-            }
-        )
+        row = {
+            "symbol": symbol,
+            "exposure": round(exposure, 2),
+            "weight": weight_value,
+            "category": category,
+            "theme": theme,
+            "deal_count": deal_count_by_symbol.get(symbol, 0),
+            "fcn_count": deal_count_by_symbol.get(symbol, 0),
+            "concentration": concentration_level,
+            **counts,
+            **impact,
+        }
+        single_name_concentration.append(row)
+        stock_health.append(row)
+        for key in ("danger_count", "watch_count", "healthy_count"):
+            category_health_counts[category][key] += counts[key]
+            theme_health_counts[theme][key] += counts[key]
+        category_top_symbols[category].append(symbol)
+        theme_top_symbols[theme].append(symbol)
 
     ai_semi_weight = theme_weights.get("AI_SEMI", 0.0)
     if ai_semi_weight > 45.0:
@@ -451,14 +693,47 @@ def main() -> None:
         "version": VERSION,
         "summary": {
             "total_worst_of_exposure": round(total_worst_of_exposure, 2),
+            "total_linked_impact_amount": round(total_worst_of_exposure, 2),
+            "impact_method": IMPACT_METHOD,
+            "impact_method_note": "Each underlying receives the full FCN notional. Example: 30,000 FCN linked to TSM/NVDA/COIN counts 30,000 impact for each symbol.",
             "overall_health": health_from_warnings(warnings),
             "top_warnings": warnings[:10],
         },
-        "category_allocation": build_allocation(category_exposure, total_worst_of_exposure, CATEGORY_ORDER),
-        "theme_allocation": build_allocation(theme_exposure, total_worst_of_exposure),
+        "category_allocation": build_impact_allocation(
+            category_exposure,
+            total_worst_of_exposure,
+            CATEGORY_IMPACT_LIMITS,
+            category_health_counts,
+            category_top_symbols,
+            CATEGORY_ORDER,
+        ),
+        "theme_allocation": build_impact_allocation(
+            theme_exposure,
+            total_worst_of_exposure,
+            THEME_IMPACT_LIMITS,
+            theme_health_counts,
+            theme_top_symbols,
+        ),
         "single_name_concentration": single_name_concentration,
+        "stock_health": stock_health,
         "market_mainstream_gap": market_mainstream_gap,
         "recommendation_priority": recommendation_priority,
+        "debug": {
+            "active_deal_count": active_deal_count,
+            "excluded_deal_count": excluded_deal_count,
+            "total_raw_deal_count": total_raw_deal_count,
+            "amount_field_usage": dict(sorted(amount_field_usage.items())),
+            "excluded_reason_counts": dict(sorted(excluded_reason_counts.items())),
+            "top_symbol_deal_counts": [
+                {
+                    "symbol": symbol,
+                    "deal_count": deal_count_by_symbol[symbol],
+                    "exposure": round(exposure_by_symbol[symbol], 2),
+                }
+                for symbol in sorted(exposure_by_symbol, key=lambda item: (-deal_count_by_symbol[item], item))[:20]
+            ],
+            "impact_method": IMPACT_METHOD,
+        },
     }
     write_json(OUT_PATH, payload)
 
