@@ -5410,6 +5410,49 @@
   }
 },
   {
+  "date": "2026-08-18",
+  "fcn_id": "FCN2603861 永豐",
+  "basket": [
+    "SPCS",
+    "SNDK"
+  ],
+  "tenor": 4,
+  "rate": 21.18,
+  "autocall": 95,
+  "strike": 55,
+  "ki": 50,
+  "eki": true,
+  "bank": "UBS",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "永豐",
+  "created_time": "2026-08-18T15:48",
+  "entry_time": "2026-08-18T15:48",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "SPCS": 143.34,
+    "SNDK": 1625.78
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "SPCS": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SNDK": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
