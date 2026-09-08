@@ -5453,6 +5453,61 @@
   }
 },
   {
+  "date": "2026-09-01",
+  "fcn_id": "DACN2600280 永豐",
+  "basket": [
+    "NVDA",
+    "AVGO",
+    "AMD",
+    "SIMO"
+  ],
+  "tenor": 12,
+  "rate": 41,
+  "autocall": 90,
+  "strike": 65,
+  "ki": 65,
+  "eki": false,
+  "bank": "MS",
+  "has_position": true,
+  "amt": 10000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "永豐",
+  "created_time": "2026-09-01T15:51",
+  "entry_time": "2026-09-01T15:51",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "NVDA": 217.44,
+    "AVGO": 369.68,
+    "AMD": 459.57,
+    "SIMO": 237.35
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AMD": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "SIMO": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
