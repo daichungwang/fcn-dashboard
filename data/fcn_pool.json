@@ -5508,6 +5508,67 @@
   }
 },
   {
+  "date": "2026-09-04",
+  "fcn_id": "FCN307R 富邦",
+  "basket": [
+    "AAPL",
+    "ARM",
+    "AMZN",
+    "GOOG",
+    "MU"
+  ],
+  "tenor": 12,
+  "rate": 20,
+  "autocall": 100,
+  "strike": 67,
+  "ki": 55,
+  "eki": true,
+  "bank": "法國外貿",
+  "has_position": true,
+  "amt": 20000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-09-04T08:50",
+  "entry_time": "2026-09-04T08:50",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "AAPL": 320.8592,
+    "ARM": 251.882,
+    "AMZN": 258.2262,
+    "GOOG": 338.806,
+    "MU": 1003.476
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "AAPL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AMZN": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "GOOG": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
