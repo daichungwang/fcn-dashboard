@@ -51,6 +51,13 @@
     return `${n.toFixed(2)}%`;
   }
 
+  function fmtTime(v) {
+    if (!v) return "--";
+    const d = new Date(v);
+    if (Number.isNaN(d.getTime())) return String(v);
+    return d.toLocaleString();
+  }
+
   function arr(v) {
     return Array.isArray(v) ? v : [];
   }
@@ -61,6 +68,40 @@
     if (text.includes("watch") || text.includes("under") || text.includes("concentration")) return "warn";
     if (text.includes("healthy") || text.includes("normal")) return "ok";
     return "neutral";
+  }
+
+  function lightClass(v) {
+    const text = String(v || "").toLowerCase();
+    if (text === "red") return "bad";
+    if (text === "yellow") return "warn";
+    if (text === "green") return "ok";
+    return "neutral";
+  }
+
+  function lightCell(v) {
+    const label = v || "--";
+    return `<span class="mm-item8-light ${lightClass(label)}"></span><b>${esc(label)}</b>`;
+  }
+
+  function limitRoom(row) {
+    return `${fmtAmount(row.impact_limit)} / ${fmtAmount(row.impact_room)} <span>${fmtPct(row.limit_usage_pct)}</span>`;
+  }
+
+  function countsText(row) {
+    return `${num(row.danger_count, 0)} / ${num(row.watch_count, 0)} / ${num(row.healthy_count, 0)}`;
+  }
+
+  function detailCell(row) {
+    return `
+      <details class="mm-item8-row-detail">
+        <summary>Detail</summary>
+        <div>Limit Status: <b>${esc(row.limit_status || "--")}</b></div>
+        <div>Usage: <b>${fmtPct(row.limit_usage_pct)}</b></div>
+        <div>Weight: <b>${fmtPct(row.weight)}</b></div>
+        <div>Category: <b>${esc(row.category || row.name || "--")}</b></div>
+        <div>Theme: <b>${esc(row.theme || "--")}</b></div>
+      </details>
+    `;
   }
 
   function healthLabel(row, warnings, type) {
@@ -129,48 +170,52 @@
 
   function render(data) {
     const warnings = arr(data.summary && data.summary.top_warnings);
-    const holdings = arr(data.single_name_concentration);
+    const holdings = arr(data.stock_health).length ? arr(data.stock_health) : arr(data.single_name_concentration);
     const categories = arr(data.category_allocation);
     const themes = arr(data.theme_allocation);
     const recs = arr(data.recommendation_priority);
     const health = data.summary && data.summary.overall_health;
 
     const categoryRows = categories.map(row => {
-      const health = healthLabel(row, warnings, "category");
       return `
         <tr>
           <td><b>${esc(row.name)}</b></td>
-          <td>${fmtAmount(row.exposure)}</td>
-          <td>${fmtPct(row.weight)}</td>
-          <td>${TARGETS[row.name] !== undefined ? fmtPct(TARGETS[row.name]) : "--"}</td>
-          <td><span class="mm-item8-pill ${tone(health)}">${esc(health)}</span></td>
-          <td>${esc(topHoldings(holdings, "category", row.name))}</td>
-          <td>${esc(actionForCategory(row, warnings))}</td>
+          <td>${lightCell(row.light)}</td>
+          <td>${fmtAmount(row.linked_impact_amount ?? row.exposure)}</td>
+          <td>${limitRoom(row)}</td>
+          <td>${countsText(row)}</td>
+          <td>${esc(arr(row.top_symbols).join(" / ") || topHoldings(holdings, "category", row.name))}</td>
+          <td>${esc(row.action || actionForCategory(row, warnings))}</td>
         </tr>
       `;
     });
 
     const themeRows = themes.map(row => {
-      const health = healthLabel(row, warnings, "theme");
       return `
         <tr>
           <td><b>${esc(row.name)}</b></td>
-          <td>${fmtAmount(row.exposure)}</td>
-          <td>${fmtPct(row.weight)}</td>
-          <td><span class="mm-item8-pill ${tone(health)}">${esc(health)}</span></td>
-          <td>${esc(topHoldings(holdings, "theme", row.name))}</td>
+          <td>${lightCell(row.light)}</td>
+          <td>${fmtAmount(row.linked_impact_amount ?? row.exposure)}</td>
+          <td>${limitRoom(row)}</td>
+          <td>${countsText(row)}</td>
+          <td>${esc(arr(row.top_symbols).join(" / ") || topHoldings(holdings, "theme", row.name))}</td>
+          <td>${esc(row.action || "可維持")}</td>
         </tr>
       `;
     });
 
-    const concentrationRows = holdings.slice(0, 20).map(row => {
-      const health = healthLabel(row, warnings, "symbol");
+    const stockRows = holdings.slice(0, 30).map(row => {
       return `
         <tr>
           <td><b>${esc(row.symbol)}</b></td>
-          <td>${fmtAmount(row.exposure)}</td>
-          <td>${fmtPct(row.weight)}</td>
-          <td><span class="mm-item8-pill ${tone(health)}">${esc(health)}</span></td>
+          <td>${esc(row.category || "--")}</td>
+          <td>${lightCell(row.light)}</td>
+          <td>${fmtAmount(row.fcn_count ?? row.deal_count)}</td>
+          <td>${fmtAmount(row.linked_impact_amount ?? row.exposure)}</td>
+          <td>${limitRoom(row)}</td>
+          <td>${countsText(row)}</td>
+          <td>${esc(row.action || "可維持")}</td>
+          <td>${detailCell(row)}</td>
         </tr>
       `;
     });
@@ -200,8 +245,9 @@
           </div>
           <div class="mm-item8-score ${tone(health)}">
             <span>${esc(health || "--")}</span>
-            <b>${fmtAmount(data.summary && data.summary.total_worst_of_exposure)}</b>
-            <em>Total worst-of exposure</em>
+            <b>${fmtAmount(data.summary && (data.summary.total_linked_impact_amount ?? data.summary.total_worst_of_exposure))}</b>
+            <em>Total linked impact</em>
+            <em>Updated ${esc(fmtTime(data.generated_at))}</em>
           </div>
         </div>
 
@@ -211,18 +257,18 @@
         </section>
 
         <section class="mm-item8-block">
-          <h3>Category Allocation</h3>
-          ${table(["Category", "Invested Amount", "Weight %", "Target %", "Health", "Top Holdings", "Action"], categoryRows)}
+          <h3>Stock Impact Health</h3>
+          ${table(["Symbol", "Category", "Light", "FCN Count", "Impact", "Limit / Room", "Danger / Watch / Healthy", "Action", "Detail"], stockRows, "wide")}
         </section>
 
         <section class="mm-item8-block">
-          <h3>Theme Allocation</h3>
-          ${table(["Theme", "Invested Amount", "Weight %", "Health / Risk Note", "Top Holdings"], themeRows)}
+          <h3>Category Impact Health</h3>
+          ${table(["Name", "Light", "Impact", "Limit / Room", "Danger / Watch / Healthy", "Top Symbols", "Action"], categoryRows)}
         </section>
 
         <section class="mm-item8-block">
-          <h3>Single Name Concentration</h3>
-          ${table(["Symbol", "Invested Amount", "Weight %", "Health / Warning"], concentrationRows)}
+          <h3>Theme Impact Health</h3>
+          ${table(["Name", "Light", "Impact", "Limit / Room", "Danger / Watch / Healthy", "Top Symbols", "Action"], themeRows)}
         </section>
 
         <section class="mm-item8-block">
@@ -281,6 +327,14 @@
         .mm-item8-table tbody tr:last-child td{border-bottom:0}
         .mm-item8-pill{display:inline-block;border:1px solid #d0d5dd;border-radius:999px;background:#fff;padding:3px 7px;font-size:11px;font-weight:1000;white-space:nowrap}
         .mm-item8-pill.neutral{background:#f8fafc;color:#475467;border-color:#d8e4ef}
+        .mm-item8-light{display:inline-block;width:10px;height:10px;border-radius:999px;margin-right:6px;vertical-align:middle;border:1px solid rgba(0,0,0,.08)}
+        .mm-item8-light.ok{background:#22c55e}
+        .mm-item8-light.warn{background:#f59e0b}
+        .mm-item8-light.bad{background:#ef4444}
+        .mm-item8-light.neutral{background:#94a3b8}
+        .mm-item8-table td span{color:#667085;font-size:11px;margin-left:4px}
+        .mm-item8-row-detail summary{cursor:pointer;color:#174ea6;font-weight:1000}
+        .mm-item8-row-detail div{font-size:11px;color:#667085;line-height:1.5;margin-top:2px}
         @media (max-width: 760px){
           .mm-item8-panel{display:grid}
           .mm-item8-score{text-align:left;min-width:0}
