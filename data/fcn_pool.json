@@ -5722,6 +5722,55 @@
   }
 },
   {
+  "date": "2026-09-09",
+  "fcn_id": "FCN2604265 永豐",
+  "basket": [
+    "ORCL",
+    "MRVL",
+    "AMD"
+  ],
+  "tenor": 6,
+  "rate": 24.14,
+  "autocall": 95,
+  "strike": 70,
+  "ki": 60,
+  "eki": true,
+  "bank": "香港野村",
+  "has_position": true,
+  "amt": 20000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "永豐",
+  "created_time": "2026-09-09T10:34",
+  "entry_time": "2026-09-09T10:34",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "ORCL": 163.89,
+    "MRVL": 223.9,
+    "AMD": 507.32
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "ORCL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MRVL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AMD": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
