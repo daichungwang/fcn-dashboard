@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-17T08:01:47+08:00",
+  "generated_at": "2026-09-17T08:12:00+08:00",
   "source": "scripts/runtime/update_prepost_runtime.py",
   "version": "v1_prepost_runtime",
   "timezone": "Asia/Taipei",
@@ -15,7 +15,7 @@
       "change_active": -0.0369,
       "change_active_pct": -0.289,
       "previous_close": 12.77,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "AAPL": {
@@ -28,7 +28,7 @@
       "change_active": 2.09,
       "change_active_pct": 0.6308,
       "previous_close": 331.34,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "ALAB": {
@@ -41,7 +41,7 @@
       "change_active": 22.16,
       "change_active_pct": 8.7748,
       "previous_close": 252.54,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "AMAT": {
@@ -54,7 +54,7 @@
       "change_active": -0.17,
       "change_active_pct": -0.0404,
       "previous_close": 421.17,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "AMD": {
@@ -67,7 +67,7 @@
       "change_active": 14.8465,
       "change_active_pct": 2.9446,
       "previous_close": 504.2,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "AMZN": {
@@ -80,20 +80,20 @@
       "change_active": -0.62,
       "change_active_pct": -0.2496,
       "previous_close": 248.42,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "ANET": {
       "symbol": "ANET",
       "price_regular": 197.54,
       "price_pre": null,
-      "price_post": 199.7,
-      "price_active": 199.7,
+      "price_post": 199.85,
+      "price_active": 199.85,
       "session": "post_market",
-      "change_active": 6.86,
-      "change_active_pct": 3.5574,
+      "change_active": 7.01,
+      "change_active_pct": 3.6351,
       "previous_close": 192.84,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "APLD": {
@@ -106,7 +106,7 @@
       "change_active": 1.46,
       "change_active_pct": 6.234,
       "previous_close": 23.42,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "ARM": {
@@ -119,7 +119,7 @@
       "change_active": 6.18,
       "change_active_pct": 2.5555,
       "previous_close": 241.83,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "ASML": {
@@ -132,7 +132,7 @@
       "change_active": 23.5685,
       "change_active_pct": 1.4809,
       "previous_close": 1591.48,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "AVGO": {
@@ -145,7 +145,7 @@
       "change_active": 3.23,
       "change_active_pct": 0.952,
       "previous_close": 339.27,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "BE": {
@@ -158,7 +158,7 @@
       "change_active": 19.0,
       "change_active_pct": 7.326,
       "previous_close": 259.35,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "BTDR": {
@@ -171,7 +171,7 @@
       "change_active": 0.35,
       "change_active_pct": 3.2081,
       "previous_close": 10.91,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "CCL": {
@@ -184,7 +184,7 @@
       "change_active": 0.3102,
       "change_active_pct": 1.403,
       "previous_close": 22.11,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "CEG": {
@@ -197,7 +197,7 @@
       "change_active": 1.11,
       "change_active_pct": 0.4271,
       "previous_close": 259.89,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "CIEN": {
@@ -210,7 +210,7 @@
       "change_active": 10.4305,
       "change_active_pct": 3.1198,
       "previous_close": 334.33,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "CLSK": {
@@ -223,7 +223,7 @@
       "change_active": 0.33,
       "change_active_pct": 2.6149,
       "previous_close": 12.62,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "COHR": {
@@ -236,7 +236,7 @@
       "change_active": 23.83,
       "change_active_pct": 8.7878,
       "previous_close": 271.17,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "COIN": {
@@ -249,7 +249,7 @@
       "change_active": -5.9368,
       "change_active_pct": -3.4494,
       "previous_close": 172.11,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "CORZ": {
@@ -262,7 +262,7 @@
       "change_active": 1.0701,
       "change_active_pct": 6.6714,
       "previous_close": 16.04,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "COST": {
@@ -275,7 +275,7 @@
       "change_active": -6.8517,
       "change_active_pct": -0.7602,
       "previous_close": 901.35,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "CRDO": {
@@ -288,33 +288,33 @@
       "change_active": 15.91,
       "change_active_pct": 10.5792,
       "previous_close": 150.39,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "EL": {
       "symbol": "EL",
       "price_regular": 95.6,
       "price_pre": null,
-      "price_post": 95.27,
-      "price_active": 95.27,
+      "price_post": 95.67,
+      "price_active": 95.67,
       "session": "post_market",
-      "change_active": -0.98,
-      "change_active_pct": -1.0182,
+      "change_active": -0.58,
+      "change_active_pct": -0.6026,
       "previous_close": 96.25,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "ETN": {
       "symbol": "ETN",
       "price_regular": 397.8,
       "price_pre": null,
-      "price_post": 401.0,
-      "price_active": 401.0,
+      "price_post": 400.65,
+      "price_active": 400.65,
       "session": "post_market",
-      "change_active": 8.6,
-      "change_active_pct": 2.1916,
+      "change_active": 8.25,
+      "change_active_pct": 2.1024,
       "previous_close": 392.4,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "GLW": {
@@ -327,7 +327,7 @@
       "change_active": 2.4424,
       "change_active_pct": 1.7012,
       "previous_close": 143.57,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "GOOG": {
@@ -340,7 +340,7 @@
       "change_active": 0.45,
       "change_active_pct": 0.1318,
       "previous_close": 341.43,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "HIVE": {
@@ -353,7 +353,7 @@
       "change_active": 0.04,
       "change_active_pct": 1.3841,
       "previous_close": 2.89,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "IBM": {
@@ -366,7 +366,7 @@
       "change_active": -9.9101,
       "change_active_pct": -3.9901,
       "previous_close": 248.37,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "INTC": {
@@ -379,7 +379,7 @@
       "change_active": 5.57,
       "change_active_pct": 5.734,
       "previous_close": 97.14,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "IREN": {
@@ -392,7 +392,7 @@
       "change_active": 2.2701,
       "change_active_pct": 5.4596,
       "previous_close": 41.58,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "LITE": {
@@ -405,7 +405,7 @@
       "change_active": 90.04,
       "change_active_pct": 10.7323,
       "previous_close": 838.96,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "LQD": {
@@ -418,7 +418,7 @@
       "change_active": 0.0976,
       "change_active_pct": 0.0936,
       "previous_close": 104.28,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "LVS": {
@@ -431,7 +431,7 @@
       "change_active": -0.12,
       "change_active_pct": -0.2908,
       "previous_close": 41.27,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "META": {
@@ -444,7 +444,7 @@
       "change_active": 8.44,
       "change_active_pct": 1.2593,
       "previous_close": 670.24,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "MRVL": {
@@ -457,7 +457,7 @@
       "change_active": 12.25,
       "change_active_pct": 5.5255,
       "previous_close": 221.7,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "MSFT": {
@@ -470,7 +470,7 @@
       "change_active": -4.6,
       "change_active_pct": -0.9253,
       "previous_close": 497.12,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "MU": {
@@ -483,7 +483,7 @@
       "change_active": 6.9,
       "change_active_pct": 0.7439,
       "previous_close": 927.6,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "NKE": {
@@ -496,7 +496,7 @@
       "change_active": -0.19,
       "change_active_pct": -0.5246,
       "previous_close": 36.22,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "NVDA": {
@@ -509,7 +509,7 @@
       "change_active": 3.51,
       "change_active_pct": 1.6543,
       "previous_close": 212.17,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "ON": {
@@ -522,7 +522,7 @@
       "change_active": -5.325,
       "change_active_pct": -7.2746,
       "previous_close": 73.2,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "ORCL": {
@@ -535,7 +535,7 @@
       "change_active": 4.2052,
       "change_active_pct": 2.9962,
       "previous_close": 140.35,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "PLTR": {
@@ -548,7 +548,7 @@
       "change_active": 2.73,
       "change_active_pct": 1.5821,
       "previous_close": 172.56,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "PWR": {
@@ -561,7 +561,7 @@
       "change_active": 11.65,
       "change_active_pct": 1.8994,
       "previous_close": 613.35,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "QCOM": {
@@ -574,7 +574,7 @@
       "change_active": -1.8,
       "change_active_pct": -0.9585,
       "previous_close": 187.8,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "REGN": {
@@ -587,7 +587,7 @@
       "change_active": 2.89,
       "change_active_pct": 0.3733,
       "previous_close": 774.11,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "RIOT": {
@@ -600,7 +600,7 @@
       "change_active": 0.77,
       "change_active_pct": 3.9086,
       "previous_close": 19.7,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "SIMO": {
@@ -613,7 +613,7 @@
       "change_active": 6.8,
       "change_active_pct": 2.8428,
       "previous_close": 239.2,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "SNDK": {
@@ -626,7 +626,7 @@
       "change_active": 7.59,
       "change_active_pct": 0.4958,
       "previous_close": 1530.9,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "SNPS": {
@@ -639,7 +639,7 @@
       "change_active": 11.9265,
       "change_active_pct": 3.2435,
       "previous_close": 367.7,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "SOFI": {
@@ -652,7 +652,7 @@
       "change_active": -0.12,
       "change_active_pct": -0.703,
       "previous_close": 17.07,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "SOXX": {
@@ -665,7 +665,7 @@
       "change_active": 8.85,
       "change_active_pct": 1.7741,
       "previous_close": 498.85,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "SPCS": {
@@ -678,7 +678,7 @@
       "change_active": null,
       "change_active_pct": null,
       "previous_close": null,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": "yfinance_fast_info_error: 'currentTradingPeriod'"
     },
     "SPCX": {
@@ -691,7 +691,7 @@
       "change_active": 8.59,
       "change_active_pct": 5.9865,
       "previous_close": 143.49,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "SVGO": {
@@ -704,20 +704,20 @@
       "change_active": null,
       "change_active_pct": null,
       "previous_close": null,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": "yfinance_fast_info_error: 'currentTradingPeriod'"
     },
     "TGT": {
       "symbol": "TGT",
       "price_regular": 154.68,
       "price_pre": null,
-      "price_post": 154.7296,
-      "price_active": 154.7296,
+      "price_post": 154.86,
+      "price_active": 154.86,
       "session": "post_market",
-      "change_active": 0.3296,
-      "change_active_pct": 0.2135,
+      "change_active": 0.46,
+      "change_active_pct": 0.2979,
       "previous_close": 154.4,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "TSLA": {
@@ -730,7 +730,7 @@
       "change_active": 3.28,
       "change_active_pct": 0.9198,
       "previous_close": 356.58,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "TSM": {
@@ -743,7 +743,7 @@
       "change_active": 8.4675,
       "change_active_pct": 2.052,
       "previous_close": 412.643,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "UNH": {
@@ -756,7 +756,7 @@
       "change_active": 0.13,
       "change_active_pct": 0.0346,
       "previous_close": 375.93,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     },
     "VRT": {
@@ -769,7 +769,7 @@
       "change_active": 8.91,
       "change_active_pct": 3.7978,
       "previous_close": 234.61,
-      "updated_at": "2026-09-17T08:01:47+08:00",
+      "updated_at": "2026-09-17T08:12:00+08:00",
       "data_warning": null
     }
   }
