@@ -5826,6 +5826,61 @@
   }
 },
   {
+  "date": "2026-09-18",
+  "fcn_id": "FCN610R 富邦",
+  "basket": [
+    "COHR",
+    "MRVL",
+    "NVDA",
+    "TSM"
+  ],
+  "tenor": 7,
+  "rate": 21.24,
+  "autocall": 100,
+  "strike": 65,
+  "ki": 55,
+  "eki": true,
+  "bank": "BBVA",
+  "has_position": true,
+  "amt": 20000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-09-18T20:50",
+  "entry_time": "2026-09-18T20:50",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "COHR": 310.4804,
+    "MRVL": 239.4377,
+    "NVDA": 219.8002,
+    "TSM": 431.329
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "COHR": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MRVL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
