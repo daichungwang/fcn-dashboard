@@ -6163,6 +6163,61 @@
 },
   {
   "date": "2026-09-30",
+  "fcn_id": "FCN777R 富邦",
+  "basket": [
+    "SPCX",
+    "GOOG",
+    "AAPL",
+    "COHR"
+  ],
+  "tenor": 7,
+  "rate": 16.31,
+  "autocall": 100,
+  "strike": 65,
+  "ki": 65,
+  "eki": false,
+  "bank": "香港匯豐",
+  "has_position": true,
+  "amt": 10000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-09-30T11:44",
+  "entry_time": "2026-09-30T11:44",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "SPCX": 148.36,
+    "GOOG": 334.98,
+    "AAPL": 337.02,
+    "COHR": 300.6
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "SPCX": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "GOOG": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AAPL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "COHR": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-09-30",
   "fcn_id": "FCN985R 富邦",
   "basket": [
     "MRVL",
