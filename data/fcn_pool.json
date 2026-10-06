@@ -5890,7 +5890,7 @@
     "MRVL"
   ],
   "tenor": 6,
-  "rate": 0,
+  "rate": 25,
   "autocall": 100,
   "strike": 64.11,
   "ki": 55,
@@ -5930,6 +5930,122 @@
       "first_hit_time": ""
     },
     "MRVL": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-09-23",
+  "fcn_id": "FCN820R 富邦",
+  "basket": [
+    "AAPL",
+    "MSFT",
+    "NVDA",
+    "META",
+    "ARM"
+  ],
+  "tenor": 6,
+  "rate": 18.18,
+  "autocall": 100,
+  "strike": 66,
+  "ki": 55,
+  "eki": true,
+  "bank": "BBVA",
+  "has_position": true,
+  "amt": 20000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-09-23T10:48",
+  "entry_time": "2026-09-23T10:48",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "AAPL": 1337.485,
+    "MSFT": 499.639,
+    "NVDA": 225.9431,
+    "META": 749.3383,
+    "ARM": 330.5201
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "AAPL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MSFT": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "META": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
+  "date": "2026-09-23",
+  "fcn_id": "FCN810R 富邦",
+  "basket": [
+    "AVGO",
+    "ARM",
+    "COHR",
+    "TSM"
+  ],
+  "tenor": 9,
+  "rate": 19.63,
+  "autocall": 100,
+  "strike": 65,
+  "ki": 50,
+  "eki": true,
+  "bank": "BBVA",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-09-23T10:48",
+  "entry_time": "2026-09-23T10:48",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "AVGO": 354.99,
+    "ARM": 332.56,
+    "COHR": 300.6,
+    "TSM": 446.57
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "COHR": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
       "hit": false,
       "first_hit_time": ""
     }
