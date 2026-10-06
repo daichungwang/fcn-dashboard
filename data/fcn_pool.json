@@ -6223,6 +6223,67 @@
   }
 },
   {
+  "date": "2026-09-30",
+  "fcn_id": "FCN961R 睿睿",
+  "basket": [
+    "MU",
+    "TSM",
+    "NVDA",
+    "MRVL",
+    "ARM"
+  ],
+  "tenor": 12,
+  "rate": 20.19,
+  "autocall": 100,
+  "strike": 60,
+  "ki": 50,
+  "eki": true,
+  "bank": "法國興業",
+  "has_position": true,
+  "amt": 10000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-09-30T10:48",
+  "entry_time": "2026-09-30T10:48",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "MU": 1070.5855,
+    "TSM": 458.0407,
+    "NVDA": 230.0983,
+    "MRVL": 261.6884,
+    "ARM": 288.628
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "MU": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "TSM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MRVL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
