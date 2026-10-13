@@ -6339,6 +6339,55 @@
   }
 },
   {
+  "date": "2026-10-01",
+  "fcn_id": "FCN047S 富邦",
+  "basket": [
+    "ARM",
+    "MRVL",
+    "NVDA"
+  ],
+  "tenor": 12,
+  "rate": 20.35,
+  "autocall": 100,
+  "strike": 60,
+  "ki": 55,
+  "eki": true,
+  "bank": "SG",
+  "has_position": true,
+  "amt": 30000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-10-01T15:01",
+  "entry_time": "2026-10-01T15:01",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "ARM": 292.421,
+    "MRVL": 265.3606,
+    "NVDA": 230.5264
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "ARM": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "MRVL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "NVDA": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
     "date": "2026-03-26",
     "fcn_id": "FCN901M 富邦",
     "basket": [
