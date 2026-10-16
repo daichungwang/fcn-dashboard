@@ -6388,6 +6388,61 @@
   }
 },
   {
+  "date": "2026-10-07",
+  "fcn_id": "FCN239S 富邦",
+  "basket": [
+    "TSLA",
+    "ORCL",
+    "AVGO",
+    "QCOM"
+  ],
+  "tenor": 12,
+  "rate": 21.144,
+  "autocall": 95,
+  "strike": 70.33,
+  "ki": 55,
+  "eki": false,
+  "bank": "CIB",
+  "has_position": true,
+  "amt": 10000,
+  "currency": "USD",
+  "status": "active",
+  "tw_bank": "富邦",
+  "created_time": "2026-10-16T10:12",
+  "entry_time": "2026-10-16T10:12",
+  "exit_time": "",
+  "decision_flag": "manual",
+  "is_portfolio": true,
+  "note": "",
+  "entry_prices": {
+    "TSLA": 376.8775,
+    "ORCL": 143.4981,
+    "AVGO": 373.4578,
+    "QCOM": 177.5431
+  },
+  "maturity_time": "",
+  "has_ki_breach": false,
+  "first_ki_breach_time": "",
+  "early_exit_record": {
+    "TSLA": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "ORCL": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "AVGO": {
+      "hit": false,
+      "first_hit_time": ""
+    },
+    "QCOM": {
+      "hit": false,
+      "first_hit_time": ""
+    }
+  }
+},
+  {
   "date": "2026-10-12",
   "fcn_id": "FCN359S 富邦",
   "basket": [
