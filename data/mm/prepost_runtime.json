@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-12T05:28:46+08:00",
+  "generated_at": "2026-11-12T05:29:48+08:00",
   "source": "scripts/runtime/update_prepost_runtime.py",
   "version": "v1_prepost_runtime",
   "timezone": "Asia/Taipei",
@@ -9,26 +9,26 @@
       "symbol": "AAL",
       "price_regular": 14.1,
       "price_pre": null,
-      "price_post": 14.0803,
-      "price_active": 14.0803,
+      "price_post": 14.0991,
+      "price_active": 14.0991,
       "session": "post_market",
-      "change_active": -0.0297,
-      "change_active_pct": -0.2105,
+      "change_active": -0.0109,
+      "change_active_pct": -0.0773,
       "previous_close": 14.11,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "AAPL": {
       "symbol": "AAPL",
       "price_regular": 355.63,
       "price_pre": null,
-      "price_post": 355.63,
-      "price_active": 355.63,
+      "price_post": 355.2139,
+      "price_active": 355.2139,
       "session": "post_market",
-      "change_active": 7.12,
-      "change_active_pct": 2.043,
+      "change_active": 6.7039,
+      "change_active_pct": 1.9236,
       "previous_close": 348.51,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "ALAB": {
@@ -41,7 +41,7 @@
       "change_active": 15.33,
       "change_active_pct": 7.0913,
       "previous_close": 216.18,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "AMAT": {
@@ -54,33 +54,33 @@
       "change_active": 23.97,
       "change_active_pct": 6.4344,
       "previous_close": 372.53,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "AMD": {
       "symbol": "AMD",
       "price_regular": 552.9,
       "price_pre": null,
-      "price_post": 552.8,
-      "price_active": 552.8,
+      "price_post": 552.5,
+      "price_active": 552.5,
       "session": "post_market",
-      "change_active": 37.59,
-      "change_active_pct": 7.2961,
+      "change_active": 37.29,
+      "change_active_pct": 7.2378,
       "previous_close": 515.21,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "AMZN": {
       "symbol": "AMZN",
       "price_regular": 266.17,
       "price_pre": null,
-      "price_post": 265.8018,
-      "price_active": 265.8018,
+      "price_post": 265.8036,
+      "price_active": 265.8036,
       "session": "post_market",
-      "change_active": -5.0682,
-      "change_active_pct": -1.8711,
+      "change_active": -5.0664,
+      "change_active_pct": -1.8704,
       "previous_close": 270.87,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "ANET": {
@@ -93,7 +93,7 @@
       "change_active": 11.66,
       "change_active_pct": 6.302,
       "previous_close": 185.02,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "APLD": {
@@ -106,7 +106,7 @@
       "change_active": 1.32,
       "change_active_pct": 7.9137,
       "previous_close": 16.68,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "ARM": {
@@ -119,7 +119,7 @@
       "change_active": 22.91,
       "change_active_pct": 12.6233,
       "previous_close": 181.49,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "ASML": {
@@ -132,7 +132,7 @@
       "change_active": 28.15,
       "change_active_pct": 1.8669,
       "previous_close": 1507.85,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "AVGO": {
@@ -145,20 +145,20 @@
       "change_active": 13.24,
       "change_active_pct": 3.9882,
       "previous_close": 331.98,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "BE": {
       "symbol": "BE",
       "price_regular": 209.47,
       "price_pre": null,
-      "price_post": 209.47,
-      "price_active": 209.47,
+      "price_post": 211.0566,
+      "price_active": 211.0566,
       "session": "post_market",
-      "change_active": 24.05,
-      "change_active_pct": 12.9706,
+      "change_active": 25.6366,
+      "change_active_pct": 13.8262,
       "previous_close": 185.42,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "BTDR": {
@@ -171,7 +171,7 @@
       "change_active": 0.62,
       "change_active_pct": 9.6724,
       "previous_close": 6.41,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "CCL": {
@@ -184,20 +184,20 @@
       "change_active": 0.08,
       "change_active_pct": 0.2602,
       "previous_close": 30.74,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "CEG": {
       "symbol": "CEG",
       "price_regular": 274.73,
       "price_pre": null,
-      "price_post": 274.73,
-      "price_active": 274.73,
+      "price_post": 274.44,
+      "price_active": 274.44,
       "session": "post_market",
-      "change_active": 6.97,
-      "change_active_pct": 2.6031,
+      "change_active": 6.68,
+      "change_active_pct": 2.4948,
       "previous_close": 267.76,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "CIEN": {
@@ -210,7 +210,7 @@
       "change_active": 23.94,
       "change_active_pct": 8.7982,
       "previous_close": 272.1,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "CLSK": {
@@ -223,33 +223,33 @@
       "change_active": 0.34,
       "change_active_pct": 5.175,
       "previous_close": 6.57,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "COHR": {
       "symbol": "COHR",
       "price_regular": 234.51,
       "price_pre": null,
-      "price_post": 234.51,
-      "price_active": 234.51,
+      "price_post": 235.92,
+      "price_active": 235.92,
       "session": "post_market",
-      "change_active": 19.85,
-      "change_active_pct": 9.2472,
+      "change_active": 21.26,
+      "change_active_pct": 9.904,
       "previous_close": 214.66,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "COIN": {
       "symbol": "COIN",
       "price_regular": 136.27,
       "price_pre": null,
-      "price_post": 136.35,
-      "price_active": 136.35,
+      "price_post": 136.32,
+      "price_active": 136.32,
       "session": "post_market",
-      "change_active": 4.22,
-      "change_active_pct": 3.1938,
+      "change_active": 4.19,
+      "change_active_pct": 3.1711,
       "previous_close": 132.13,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "CORZ": {
@@ -262,33 +262,33 @@
       "change_active": 1.41,
       "change_active_pct": 10.7388,
       "previous_close": 13.13,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "COST": {
       "symbol": "COST",
       "price_regular": 1087.61,
       "price_pre": null,
-      "price_post": 1087.61,
-      "price_active": 1087.61,
+      "price_post": 1086.25,
+      "price_active": 1086.25,
       "session": "post_market",
-      "change_active": 21.47,
-      "change_active_pct": 2.0138,
+      "change_active": 20.11,
+      "change_active_pct": 1.8862,
       "previous_close": 1066.14,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "CRDO": {
       "symbol": "CRDO",
       "price_regular": 141.41,
       "price_pre": null,
-      "price_post": 141.41,
-      "price_active": 141.41,
+      "price_post": 142.21,
+      "price_active": 142.21,
       "session": "post_market",
-      "change_active": 11.61,
-      "change_active_pct": 8.9445,
+      "change_active": 12.41,
+      "change_active_pct": 9.5609,
       "previous_close": 129.8,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "EL": {
@@ -301,7 +301,7 @@
       "change_active": -1.1,
       "change_active_pct": -0.9698,
       "previous_close": 113.43,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "ETN": {
@@ -314,7 +314,7 @@
       "change_active": 6.4,
       "change_active_pct": 1.8068,
       "previous_close": 354.22,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "GLW": {
@@ -327,20 +327,20 @@
       "change_active": 8.33,
       "change_active_pct": 7.4289,
       "previous_close": 112.13,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "GOOG": {
       "symbol": "GOOG",
       "price_regular": 290.63,
       "price_pre": null,
-      "price_post": 290.53,
-      "price_active": 290.53,
+      "price_post": 290.4258,
+      "price_active": 290.4258,
       "session": "post_market",
-      "change_active": 5.61,
-      "change_active_pct": 1.969,
+      "change_active": 5.5058,
+      "change_active_pct": 1.9324,
       "previous_close": 284.92,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "HIVE": {
@@ -353,7 +353,7 @@
       "change_active": 0.04,
       "change_active_pct": 2.3256,
       "previous_close": 1.72,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "IBM": {
@@ -366,20 +366,20 @@
       "change_active": 3.69,
       "change_active_pct": 1.509,
       "previous_close": 244.53,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "INTC": {
       "symbol": "INTC",
       "price_regular": 62.5,
       "price_pre": null,
-      "price_post": 62.4509,
-      "price_active": 62.4509,
+      "price_post": 62.5,
+      "price_active": 62.5,
       "session": "post_market",
-      "change_active": 4.3209,
-      "change_active_pct": 7.4332,
+      "change_active": 4.37,
+      "change_active_pct": 7.5176,
       "previous_close": 58.13,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "IREN": {
@@ -392,20 +392,20 @@
       "change_active": 1.19,
       "change_active_pct": 6.0314,
       "previous_close": 19.73,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "LITE": {
       "symbol": "LITE",
       "price_regular": 648.06,
       "price_pre": null,
-      "price_post": 652.1732,
-      "price_active": 652.1732,
+      "price_post": 653.5188,
+      "price_active": 653.5188,
       "session": "post_market",
-      "change_active": 66.6032,
-      "change_active_pct": 11.3741,
+      "change_active": 67.9488,
+      "change_active_pct": 11.6039,
       "previous_close": 585.57,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "LQD": {
@@ -418,7 +418,7 @@
       "change_active": 0.08,
       "change_active_pct": 0.077,
       "previous_close": 103.88,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "LVS": {
@@ -431,59 +431,59 @@
       "change_active": -0.59,
       "change_active_pct": -1.4454,
       "previous_close": 40.82,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "META": {
       "symbol": "META",
       "price_regular": 628.77,
       "price_pre": null,
-      "price_post": 630.1652,
-      "price_active": 630.1652,
+      "price_post": 629.9788,
+      "price_active": 629.9788,
       "session": "post_market",
-      "change_active": -11.2248,
-      "change_active_pct": -1.7501,
+      "change_active": -11.4112,
+      "change_active_pct": -1.7791,
       "previous_close": 641.39,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "MRVL": {
       "symbol": "MRVL",
       "price_regular": 168.8,
       "price_pre": null,
-      "price_post": 169.5571,
-      "price_active": 169.5571,
+      "price_post": 169.6,
+      "price_active": 169.6,
       "session": "post_market",
-      "change_active": 15.1671,
-      "change_active_pct": 9.8239,
+      "change_active": 15.21,
+      "change_active_pct": 9.8517,
       "previous_close": 154.39,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "MSFT": {
       "symbol": "MSFT",
       "price_regular": 521.125,
       "price_pre": null,
-      "price_post": 521.125,
-      "price_active": 521.125,
+      "price_post": 519.8147,
+      "price_active": 519.8147,
       "session": "post_market",
-      "change_active": -12.035,
-      "change_active_pct": -2.2573,
+      "change_active": -13.3453,
+      "change_active_pct": -2.5031,
       "previous_close": 533.16,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "MU": {
       "symbol": "MU",
       "price_regular": 811.3,
       "price_pre": null,
-      "price_post": 813.01,
-      "price_active": 813.01,
+      "price_post": 813.11,
+      "price_active": 813.11,
       "session": "post_market",
-      "change_active": 87.9,
-      "change_active_pct": 12.1223,
+      "change_active": 88.0,
+      "change_active_pct": 12.1361,
       "previous_close": 725.11,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "NKE": {
@@ -496,20 +496,20 @@
       "change_active": -0.35,
       "change_active_pct": -0.9051,
       "previous_close": 38.67,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "NVDA": {
       "symbol": "NVDA",
       "price_regular": 173.73,
       "price_pre": null,
-      "price_post": 174.0587,
-      "price_active": 174.0587,
+      "price_post": 174.09,
+      "price_active": 174.09,
       "session": "post_market",
-      "change_active": 5.2631,
-      "change_active_pct": 3.118,
+      "change_active": 5.2944,
+      "change_active_pct": 3.1366,
       "previous_close": 168.7956,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "ON": {
@@ -522,20 +522,20 @@
       "change_active": 4.01,
       "change_active_pct": 5.7607,
       "previous_close": 69.61,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "ORCL": {
       "symbol": "ORCL",
       "price_regular": 128.38,
       "price_pre": null,
-      "price_post": 128.6,
-      "price_active": 128.6,
+      "price_post": 128.7213,
+      "price_active": 128.7213,
       "session": "post_market",
-      "change_active": 10.62,
-      "change_active_pct": 9.0015,
+      "change_active": 10.7413,
+      "change_active_pct": 9.1043,
       "previous_close": 117.98,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "PLTR": {
@@ -548,7 +548,7 @@
       "change_active": 3.58,
       "change_active_pct": 2.1206,
       "previous_close": 168.82,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "PWR": {
@@ -561,7 +561,7 @@
       "change_active": 24.8,
       "change_active_pct": 4.2528,
       "previous_close": 583.14,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "QCOM": {
@@ -574,7 +574,7 @@
       "change_active": 3.04,
       "change_active_pct": 1.7519,
       "previous_close": 173.53,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "REGN": {
@@ -587,7 +587,7 @@
       "change_active": 43.35,
       "change_active_pct": 4.7322,
       "previous_close": 916.06,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "RIOT": {
@@ -600,7 +600,7 @@
       "change_active": 0.1249,
       "change_active_pct": 0.6908,
       "previous_close": 18.08,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "SIMO": {
@@ -613,20 +613,20 @@
       "change_active": 17.2587,
       "change_active_pct": 10.2116,
       "previous_close": 169.01,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "SNDK": {
       "symbol": "SNDK",
       "price_regular": 977.69,
       "price_pre": null,
-      "price_post": 982.0835,
-      "price_active": 982.0835,
+      "price_post": 982.1081,
+      "price_active": 982.1081,
       "session": "post_market",
-      "change_active": 122.0935,
-      "change_active_pct": 14.1971,
+      "change_active": 122.1181,
+      "change_active_pct": 14.1999,
       "previous_close": 859.99,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "SNPS": {
@@ -639,7 +639,7 @@
       "change_active": 2.17,
       "change_active_pct": 0.4718,
       "previous_close": 459.95,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "SOFI": {
@@ -652,20 +652,20 @@
       "change_active": -0.0615,
       "change_active_pct": -0.3757,
       "previous_close": 16.37,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "SOXX": {
       "symbol": "SOXX",
       "price_regular": 155.4,
       "price_pre": null,
-      "price_post": 155.2432,
-      "price_active": 155.2432,
+      "price_post": 155.231,
+      "price_active": 155.231,
       "session": "post_market",
-      "change_active": 8.6532,
-      "change_active_pct": 5.903,
+      "change_active": 8.641,
+      "change_active_pct": 5.8947,
       "previous_close": 146.59,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "SPCS": {
@@ -678,20 +678,20 @@
       "change_active": null,
       "change_active_pct": null,
       "previous_close": null,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": "yfinance_fast_info_error: 'currentTradingPeriod'"
     },
     "SPCX": {
       "symbol": "SPCX",
       "price_regular": 139.75,
       "price_pre": null,
-      "price_post": 140.22,
-      "price_active": 140.22,
+      "price_post": 140.24,
+      "price_active": 140.24,
       "session": "post_market",
-      "change_active": -2.87,
-      "change_active_pct": -2.0057,
+      "change_active": -2.85,
+      "change_active_pct": -1.9918,
       "previous_close": 143.09,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "SVGO": {
@@ -704,7 +704,7 @@
       "change_active": null,
       "change_active_pct": null,
       "previous_close": null,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": "yfinance_fast_info_error: 'currentTradingPeriod'"
     },
     "TGT": {
@@ -717,33 +717,33 @@
       "change_active": 0.92,
       "change_active_pct": 0.5687,
       "previous_close": 161.78,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "TSLA": {
       "symbol": "TSLA",
       "price_regular": 390.84,
       "price_pre": null,
-      "price_post": 390.6599,
-      "price_active": 390.6599,
+      "price_post": 390.6324,
+      "price_active": 390.6324,
       "session": "post_market",
-      "change_active": 10.8799,
-      "change_active_pct": 2.8648,
+      "change_active": 10.8524,
+      "change_active_pct": 2.8575,
       "previous_close": 379.78,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "TSM": {
       "symbol": "TSM",
       "price_regular": 413.35,
       "price_pre": null,
-      "price_post": 413.0489,
-      "price_active": 413.0489,
+      "price_post": 413.01,
+      "price_active": 413.01,
       "session": "post_market",
-      "change_active": 16.5689,
-      "change_active_pct": 4.179,
+      "change_active": 16.53,
+      "change_active_pct": 4.1692,
       "previous_close": 396.48,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "UNH": {
@@ -756,7 +756,7 @@
       "change_active": -2.18,
       "change_active_pct": -0.5381,
       "previous_close": 405.12,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     },
     "VRT": {
@@ -769,7 +769,7 @@
       "change_active": 12.29,
       "change_active_pct": 6.3279,
       "previous_close": 194.22,
-      "updated_at": "2026-11-12T05:28:46+08:00",
+      "updated_at": "2026-11-12T05:29:48+08:00",
       "data_warning": null
     }
   }
